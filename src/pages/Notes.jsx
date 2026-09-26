@@ -98,6 +98,8 @@ export default function Notes() {
                       selectedVolume={session.selectedVolume}
                       selectedChapter={session.selectedChapter}
                       selectedSubchapter={session.selectedSubchapter}
+                      chapterStudyMode={session.chapterStudyMode}
+                      onSetChapterStudyMode={session.setChapterStudyMode}
                       onBackToChapters={() => session.setSelectedChapter(null)}
                       onSelectSubchapter={session.setSelectedSubchapter}
                       completedSections={session.completedSections}

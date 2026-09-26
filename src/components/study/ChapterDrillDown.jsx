@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote, Target } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
@@ -9,6 +9,8 @@ export default function ChapterDrillDown({
   selectedVolume,
   selectedChapter,
   selectedSubchapter,
+  chapterStudyMode = 'GENERAL',
+  onSetChapterStudyMode,
   onBackToChapters,
   onSelectSubchapter,
   completedSections,
@@ -24,6 +26,7 @@ export default function ChapterDrillDown({
   const [localNoteText, setLocalNoteText] = useState('');
   const [expandedReferences, setExpandedReferences] = useState({});
   const [openPracticeSections, setOpenPracticeSections] = useState({});
+  const [expandedTheories, setExpandedTheories] = useState({});
 
   if (!subject) return null;
 
@@ -107,6 +110,13 @@ export default function ChapterDrillDown({
     }));
   };
 
+  const toggleTheory = (sectionId) => {
+    setExpandedTheories((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
+
   return (
     <div className="space-y-6 sm:space-y-8 pb-36 md:pb-24 animate-in fade-in duration-300">
       {/* Top Header: Breadcrumbs & Subchapter Dropdown */}
@@ -171,13 +181,70 @@ export default function ChapterDrillDown({
         </span>
       </div>
 
+      {/* Mode Switcher Banner: General Study vs Important Questions */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs">
+        <div className="flex items-center gap-2.5">
+          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
+            chapterStudyMode === 'QUESTIONS'
+              ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+              : 'bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]'
+          }`}>
+            {chapterStudyMode === 'QUESTIONS' ? <Target size={16} /> : <BookOpen size={16} />}
+          </div>
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+              Study Focus Mode
+            </span>
+            <h4 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
+              {chapterStudyMode === 'QUESTIONS' ? 'Important Questions & Exam Blueprints' : 'General Study & Complete NCERT Notes'}
+            </h4>
+          </div>
+        </div>
+
+        {/* Toggle Pills */}
+        <div className="flex items-center gap-1 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0 self-start sm:self-auto">
+          <button
+            onClick={() => onSetChapterStudyMode?.('GENERAL')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              chapterStudyMode === 'GENERAL'
+                ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            }`}
+          >
+            <BookOpen size={13} />
+            <span>General Study</span>
+          </button>
+          <button
+            onClick={() => onSetChapterStudyMode?.('QUESTIONS')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              chapterStudyMode === 'QUESTIONS'
+                ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            }`}
+          >
+            <Target size={13} />
+            <span>Important Questions</span>
+          </button>
+        </div>
+      </div>
+
+      {chapterStudyMode === 'QUESTIONS' && (
+        <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[var(--badge-recommended-bg)]/15 border border-[var(--badge-recommended-bg)]/30 text-xs text-[var(--text-accent)] font-medium shadow-2xs">
+          <Target size={16} className="shrink-0 text-[var(--text-accent)]" />
+          <span>
+            <strong>Important Questions Mode:</strong> Highlighting recurring Board Question Blueprints, Exam Question Framing, Key Formulas, and Instant Practice. Comprehensive theory is collapsed for fast revision.
+          </span>
+        </div>
+      )}
+
       {/* Sections List */}
       <div className="space-y-6 sm:space-y-8">
         {currentSubchapter.sections?.map((section) => {
           const isDone = completedSections.includes(section.id);
           const hasCustomNote = userNotes[section.id];
           const isEditing = activeNoteEdit === section.id;
-          const isRefExpanded = expandedReferences[section.id] !== false; // default expanded
+          const isRefExpanded = expandedReferences[section.id] !== false; // default expanded in general mode
+          const isTheoryExpanded = expandedTheories[section.id] === true;
 
           return (
             <div
@@ -217,99 +284,194 @@ export default function ChapterDrillDown({
                 </button>
               </div>
 
-              {/* 1. Core Explanation (Clean, aesthetic typography) */}
-              {section.explanation && (
-                <div className="space-y-2 bg-[var(--bg-base)]/50 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-[var(--border-subtle)]">
-                  <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)]" />
-                    <span>Explanation & Key Concepts</span>
-                  </div>
-                  <div
-                    className="font-sans text-[var(--text-primary)] text-xs sm:text-sm md:text-base leading-relaxed break-words"
-                    dangerouslySetInnerHTML={{ __html: formatMathString(section.explanation) }}
-                  />
-                </div>
-              )}
+              {/* CONDITIONAL LAYOUT: IMPORTANT QUESTIONS MODE VS GENERAL STUDY */}
+              {chapterStudyMode === 'QUESTIONS' ? (
+                <>
+                  {/* In Important Questions Mode: Exam Question Blueprint is FIRST and Highlighted */}
+                  {section.questionFraming && (
+                    <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
+                          <Target size={14} />
+                          High-Yield Board Exam Question Blueprint
+                        </span>
+                        <span className="text-[11px] font-cursive text-[var(--text-muted)]">
+                          frequently tested patterns
+                        </span>
+                      </div>
+                      <div
+                        className="font-sans text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words font-medium"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
+                      />
+                    </div>
+                  )}
 
-              {/* 2. Key Formulas with Variable Breakdown Card */}
-              {section.keyFormulas && section.keyFormulas.length > 0 && (
-                <FormulaCard
-                  formulaList={section.keyFormulas}
-                  derivations={section.derivations}
-                />
-              )}
-
-              {/* 3. How questions could be framed / asked (Pinterest Exam Flashcard) */}
-              {section.questionFraming && (
-                <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
-                      <HelpCircle size={14} />
-                      Exam Question Blueprint
-                    </span>
-                    <span className="text-[11px] font-cursive text-[var(--text-muted)]">
-                      frequently tested patterns
-                    </span>
-                  </div>
-                  <div
-                    className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words"
-                    dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
-                  />
-                </div>
-              )}
-
-              {/* 4. Detailed Textbook Reference (Editorial Collapsible Box) */}
-              {section.textbookRef && (
-                <div className="border border-[var(--border-subtle)] rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--bg-base)] shadow-xs">
-                  <button
-                    onClick={() => toggleReference(section.id)}
-                    className="w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-[var(--bg-elevated)] flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
-                  >
-                    <span className="flex items-center gap-2">
-                      <BookMarked size={14} className="text-[var(--accent-primary)] shrink-0" />
-                      Detailed NCERT Textbook Reference
-                    </span>
-                    {isRefExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                  </button>
-
-                  {isRefExpanded && (
-                    <div
-                      className="p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] break-words"
-                      dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }}
+                  {/* Key Formulas for Solving the Exam Questions */}
+                  {section.keyFormulas && section.keyFormulas.length > 0 && (
+                    <FormulaCard
+                      formulaList={section.keyFormulas}
+                      derivations={section.derivations}
                     />
                   )}
-                </div>
-              )}
 
-              {/* 5. Subtopic-Level 20 MCQs and Board PYQs Practice Drawer */}
-              <div className="pt-1">
-                <button
-                  onClick={() => togglePracticeSection(section.id)}
-                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
-                    openPracticeSections[section.id]
-                      ? 'bg-[var(--accent-primary)] text-white shadow-xs'
-                      : 'bg-[var(--bg-elevated)] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white'
-                  }`}
-                >
-                  <Sparkles size={13} />
-                  <span>
-                    {openPracticeSections[section.id]
-                      ? 'Hide Subtopic Practice'
-                      : 'Practice 20 MCQs & Board PYQs for this Subtopic'}
-                  </span>
-                </button>
+                  {/* Instant Practice Panel (MCQs & Board PYQs) */}
+                  <div className="pt-1">
+                    <button
+                      onClick={() => togglePracticeSection(section.id)}
+                      className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
+                        openPracticeSections[section.id]
+                          ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                          : 'bg-[var(--bg-elevated)] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white'
+                      }`}
+                    >
+                      <Sparkles size={13} />
+                      <span>
+                        {openPracticeSections[section.id]
+                          ? 'Hide Subtopic Practice'
+                          : 'Practice 20 MCQs & Board PYQs for this Subtopic'}
+                      </span>
+                    </button>
 
-                {openPracticeSections[section.id] && (
-                  <div className="mt-3.5">
-                    <SubtopicPracticePanel
-                      subjectId={selectedSubject}
-                      chapterId={selectedChapter}
-                      subtopicId={currentSubchapter.id}
-                      subtopicTitle={section.title}
-                    />
+                    {openPracticeSections[section.id] && (
+                      <div className="mt-3.5">
+                        <SubtopicPracticePanel
+                          subjectId={selectedSubject}
+                          chapterId={selectedChapter}
+                          subtopicId={currentSubchapter.id}
+                          subtopicTitle={section.title}
+                        />
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+
+                  {/* Collapsed Theory & Concept Reference Accordion */}
+                  {section.explanation && (
+                    <div className="border border-[var(--border-subtle)] rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--bg-base)]/50 shadow-2xs">
+                      <button
+                        onClick={() => toggleTheory(section.id)}
+                        className="w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-[var(--bg-elevated)]/60 flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+                      >
+                        <span className="flex items-center gap-2">
+                          <BookOpen size={14} className="text-[var(--accent-primary)] shrink-0" />
+                          Theoretical Concept & Detailed Background
+                        </span>
+                        {isTheoryExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                      </button>
+
+                      {isTheoryExpanded && (
+                        <div className="p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] space-y-3">
+                          <div dangerouslySetInnerHTML={{ __html: formatMathString(section.explanation) }} />
+                          {section.textbookRef && (
+                            <div className="pt-3 border-t border-[var(--border-subtle)] text-[var(--text-secondary)]">
+                              <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block mb-1">
+                                NCERT Textbook Context:
+                              </span>
+                              <div dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }} />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {/* General Study Mode: Full Comprehensive Textbook Notes */}
+                  {/* 1. Core Explanation (Clean, aesthetic typography) */}
+                  {section.explanation && (
+                    <div className="space-y-2 bg-[var(--bg-base)]/50 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-[var(--border-subtle)]">
+                      <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
+                        <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)]" />
+                        <span>Explanation & Key Concepts</span>
+                      </div>
+                      <div
+                        className="font-sans text-[var(--text-primary)] text-xs sm:text-sm md:text-base leading-relaxed break-words"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(section.explanation) }}
+                      />
+                    </div>
+                  )}
+
+                  {/* 2. Key Formulas with Variable Breakdown Card */}
+                  {section.keyFormulas && section.keyFormulas.length > 0 && (
+                    <FormulaCard
+                      formulaList={section.keyFormulas}
+                      derivations={section.derivations}
+                    />
+                  )}
+
+                  {/* 3. How questions could be framed / asked */}
+                  {section.questionFraming && (
+                    <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
+                          <HelpCircle size={14} />
+                          Exam Question Blueprint
+                        </span>
+                        <span className="text-[11px] font-cursive text-[var(--text-muted)]">
+                          frequently tested patterns
+                        </span>
+                      </div>
+                      <div
+                        className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
+                      />
+                    </div>
+                  )}
+
+                  {/* 4. Detailed Textbook Reference (Editorial Collapsible Box) */}
+                  {section.textbookRef && (
+                    <div className="border border-[var(--border-subtle)] rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--bg-base)] shadow-xs">
+                      <button
+                        onClick={() => toggleReference(section.id)}
+                        className="w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-[var(--bg-elevated)] flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+                      >
+                        <span className="flex items-center gap-2">
+                          <BookMarked size={14} className="text-[var(--accent-primary)] shrink-0" />
+                          Detailed NCERT Textbook Reference
+                        </span>
+                        {isRefExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                      </button>
+
+                      {isRefExpanded && (
+                        <div
+                          className="p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] break-words"
+                          dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }}
+                        />
+                      )}
+                    </div>
+                  )}
+
+                  {/* 5. Subtopic-Level 20 MCQs and Board PYQs Practice Drawer */}
+                  <div className="pt-1">
+                    <button
+                      onClick={() => togglePracticeSection(section.id)}
+                      className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
+                        openPracticeSections[section.id]
+                          ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                          : 'bg-[var(--bg-elevated)] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white'
+                      }`}
+                    >
+                      <Sparkles size={13} />
+                      <span>
+                        {openPracticeSections[section.id]
+                          ? 'Hide Subtopic Practice'
+                          : 'Practice 20 MCQs & Board PYQs for this Subtopic'}
+                      </span>
+                    </button>
+
+                    {openPracticeSections[section.id] && (
+                      <div className="mt-3.5">
+                        <SubtopicPracticePanel
+                          subjectId={selectedSubject}
+                          chapterId={selectedChapter}
+                          subtopicId={currentSubchapter.id}
+                          subtopicTitle={section.title}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
 
               {/* 6. Custom User Notepad for this subtopic */}
               <div className="pt-3 sm:pt-4 border-t border-[var(--border-subtle)]">

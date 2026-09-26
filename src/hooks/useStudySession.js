@@ -36,7 +36,8 @@ export function useStudySession() {
             ...parsed,
             selectedVolume: matchingVolume || parsed.selectedVolume || subject.volumes[0]?.id,
             selectedChapter: matchingChapter,
-            selectedSubchapter: matchingSub
+            selectedSubchapter: matchingSub,
+            chapterStudyMode: parsed.chapterStudyMode || 'GENERAL'
           };
         }
       }
@@ -49,6 +50,7 @@ export function useStudySession() {
       selectedVolume: null,
       selectedChapter: null,
       selectedSubchapter: null,
+      chapterStudyMode: 'GENERAL', // 'GENERAL' | 'QUESTIONS'
       completedSections: [],
       completedSubchapters: [],
       completedPortionChapters: [],
@@ -102,7 +104,7 @@ export function useStudySession() {
     }));
   }, []);
 
-  const setSelectedChapter = useCallback((chapterId) => {
+  const setSelectedChapter = useCallback((chapterId, mode = null) => {
     setSessionState(prev => {
       if (!chapterId) {
         return { ...prev, selectedChapter: null, selectedSubchapter: null };
@@ -127,9 +129,14 @@ export function useStudySession() {
         ...prev,
         selectedVolume: matchingVol,
         selectedChapter: chapterId,
-        selectedSubchapter: firstSub
+        selectedSubchapter: firstSub,
+        chapterStudyMode: mode || prev.chapterStudyMode || 'GENERAL'
       };
     });
+  }, []);
+
+  const setChapterStudyMode = useCallback((mode) => {
+    setSessionState(prev => ({ ...prev, chapterStudyMode: mode }));
   }, []);
 
   const setSelectedSubchapter = useCallback((subchapterId) => {
@@ -267,6 +274,7 @@ export function useStudySession() {
     setSelectedVolume,
     setSelectedChapter,
     setSelectedSubchapter,
+    setChapterStudyMode,
     toggleSection,
     markSubchapterCompleted,
     togglePortionChapter,

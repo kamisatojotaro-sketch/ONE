@@ -1,4 +1,4 @@
-import { CheckCircle2, ChevronRight, AlertCircle, Sparkles } from 'lucide-react';
+import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 
 export default function ChapterList({
@@ -101,8 +101,8 @@ export default function ChapterList({
               </div>
 
               {ch.available ? (
-                <div className="pt-4 mt-4 border-t border-[var(--border-subtle)]">
-                  <div className="flex items-center justify-between text-xs mb-2">
+                <div className="pt-4 mt-4 border-t border-[var(--border-subtle)] space-y-3">
+                  <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--text-muted)]">
                       {ch.subchapters?.length || 0} Topics • {stats.total} Sections
                     </span>
@@ -111,21 +111,38 @@ export default function ChapterList({
                     </span>
                   </div>
 
-                  <div className="w-full h-1.5 rounded-full bg-[var(--border-default)] overflow-hidden mb-3">
+                  <div className="w-full h-1.5 rounded-full bg-[var(--border-default)] overflow-hidden">
                     <div
                       className="h-full rounded-full bg-[var(--accent-primary)] transition-all duration-300"
                       style={{ width: `${stats.percentage}%` }}
                     />
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-[var(--accent-primary)] font-medium">
-                    <span className="flex items-center gap-1">
-                      {stats.percentage === 100 && (
-                        <CheckCircle2 size={13} className="text-[var(--accent-primary)]" />
-                      )}
-                      {stats.percentage === 100 ? 'Completed' : 'Study Notes'}
-                    </span>
-                    <ChevronRight size={15} />
+                  {/* Mode Selector Buttons */}
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectChapter(ch.id, 'GENERAL');
+                      }}
+                      className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-all cursor-pointer shadow-2xs"
+                      title="Read complete NCERT theory, derivations & notes"
+                    >
+                      <BookOpen size={13} className="text-[var(--accent-primary)] shrink-0" />
+                      <span className="truncate">General Study</span>
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectChapter(ch.id, 'QUESTIONS');
+                      }}
+                      className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-xs"
+                      title="Focus on important exam questions, blueprints & PYQs"
+                    >
+                      <Target size={13} className="shrink-0" />
+                      <span className="truncate">Important Qs</span>
+                    </button>
                   </div>
                 </div>
               ) : (

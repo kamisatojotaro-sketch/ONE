@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { CheckCircle2, XCircle, RotateCcw, CheckSquare, Filter, Sparkles, Trophy, RotateCw, ArrowRight } from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, CheckSquare, Filter, Sparkles, Trophy, RotateCw, ArrowRight, ChevronDown } from 'lucide-react';
 import { getGeneratedMCQs } from '../../data/questionEngine';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 
