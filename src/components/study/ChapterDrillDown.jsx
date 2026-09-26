@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 
 export default function ChapterDrillDown({
@@ -20,6 +20,7 @@ export default function ChapterDrillDown({
   const subject = NCERT_SYLLABUS[selectedSubject];
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
   const [localNoteText, setLocalNoteText] = useState('');
+  const [expandedReferences, setExpandedReferences] = useState({});
 
   if (!subject) return null;
   const volume = subject.volumes.find((v) => v.id === selectedVolume) || subject.volumes[0];
@@ -63,6 +64,13 @@ export default function ChapterDrillDown({
     setActiveNoteEdit(null);
   };
 
+  const toggleReference = (sectionId) => {
+    setExpandedReferences((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
+
   return (
     <div className="space-y-8 pb-20 animate-in fade-in duration-300">
       {/* Top Header: Breadcrumbs & Subchapter Dropdown */}
@@ -92,7 +100,7 @@ export default function ChapterDrillDown({
           <select
             value={currentSubchapter.id}
             onChange={(e) => onSelectSubchapter(e.target.value)}
-            className="w-full md:w-80 appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-4 py-2.5 pr-10 rounded-xl font-medium text-sm cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-sm"
+            className="w-full md:w-96 appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-4 py-2.5 pr-10 rounded-xl font-medium text-sm cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-sm"
           >
             {chapter.subchapters.map((sub) => {
               const subCompleted = completedSubchapters.includes(sub.id);
@@ -108,41 +116,42 @@ export default function ChapterDrillDown({
       </div>
 
       {/* Subchapter Title Banner */}
-      <div className="flex items-center justify-between p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
         <div className="flex items-center gap-2.5">
-          <BookOpen size={18} className="text-[var(--accent-primary)]" />
+          <BookOpen size={18} className="text-[var(--accent-primary)] shrink-0" />
           <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">
             {currentSubchapter.title}
           </h3>
         </div>
-        <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-secondary)]">
-          {activeSubchapterStats.completed} / {activeSubchapterStats.total} Sections Complete
+        <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-secondary)] self-start sm:self-auto">
+          {activeSubchapterStats.completed} / {activeSubchapterStats.total} Subtopics Complete
         </span>
       </div>
 
       {/* Sections List */}
-      <div className="space-y-6">
-        {currentSubchapter.sections?.map((section, idx) => {
+      <div className="space-y-8">
+        {currentSubchapter.sections?.map((section) => {
           const isDone = completedSections.includes(section.id);
           const hasCustomNote = userNotes[section.id];
           const isEditing = activeNoteEdit === section.id;
+          const isRefExpanded = expandedReferences[section.id] !== false; // default expanded
 
           return (
             <div
               key={section.id}
-              className={`p-6 md:p-8 rounded-2xl border transition-all duration-300 relative ${
+              className={`p-6 md:p-8 rounded-2xl border transition-all duration-300 relative space-y-6 ${
                 isDone
                   ? 'bg-[var(--bg-surface)] border-[var(--accent-primary)]/40 shadow-sm'
                   : 'bg-[var(--bg-surface)] border-[var(--border-default)] hover:border-[var(--border-default)]'
               }`}
             >
-              {/* Section Header */}
-              <div className="flex items-start justify-between gap-4 mb-5">
+              {/* Section Header with Clickable Circle Completion Tracker */}
+              <div className="flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] pb-4">
                 <div>
                   <span className="text-[11px] font-mono text-[var(--text-muted)] font-semibold uppercase tracking-wider block mb-1">
-                    Section {idx + 1}
+                    {currentSubchapter.title}
                   </span>
-                  <h4 className="font-serif text-xl font-bold text-[var(--text-primary)]">
+                  <h4 className="font-serif text-xl md:text-2xl font-bold text-[var(--text-primary)]">
                     {section.title}
                   </h4>
                 </div>
@@ -150,12 +159,12 @@ export default function ChapterDrillDown({
                 {/* Interactive Clickable Circle Tracker */}
                 <button
                   onClick={() => onToggleSection(section.id)}
-                  className={`p-2 rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center shrink-0 ${
+                  className={`p-2.5 rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center shrink-0 ${
                     isDone
                       ? 'bg-[var(--accent-primary)] text-white shadow-md scale-105 hover:bg-[var(--accent-primary-hover)]'
                       : 'border-2 border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
                   }`}
-                  title={isDone ? "Mark section incomplete" : "Mark section completed"}
+                  title={isDone ? "Mark subtopic incomplete" : "Mark subtopic completed"}
                 >
                   {isDone ? (
                     <CheckCircle2 size={24} className="fill-current text-white stroke-[var(--accent-primary)]" />
@@ -165,17 +174,38 @@ export default function ChapterDrillDown({
                 </button>
               </div>
 
-              {/* Theory Content */}
-              <div className="font-sans text-[var(--text-secondary)] text-sm md:text-base leading-relaxed whitespace-pre-wrap mb-6">
-                {section.theory}
-              </div>
+              {/* 1. Core Explanation */}
+              {section.explanation && (
+                <div className="space-y-2">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)] flex items-center gap-1.5">
+                    <BookOpen size={13} />
+                    Explanation
+                  </span>
+                  <div className="font-sans text-[var(--text-primary)] text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                    {section.explanation}
+                  </div>
+                </div>
+              )}
 
-              {/* Key Formulas / Highlights */}
+              {/* 2. How questions could be framed / asked */}
+              {section.questionFraming && (
+                <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2">
+                  <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
+                    <HelpCircle size={14} />
+                    How Questions Could Be Framed in Exams
+                  </span>
+                  <div className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap italic">
+                    {section.questionFraming}
+                  </div>
+                </div>
+              )}
+
+              {/* 3. Key Formulas / Relations */}
               {section.keyFormulas && section.keyFormulas.length > 0 && (
-                <div className="mb-6 p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2">
+                <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2">
                   <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--text-accent)] uppercase tracking-wider">
                     <Sparkles size={13} />
-                    <span>Key Formulas & Relations</span>
+                    <span>Key Formulas & Constants</span>
                   </div>
                   <ul className="space-y-1.5 font-mono text-xs md:text-sm text-[var(--text-primary)]">
                     {section.keyFormulas.map((f, i) => (
@@ -188,22 +218,48 @@ export default function ChapterDrillDown({
                 </div>
               )}
 
-              {/* Exam Tips */}
-              {section.examTips && (
-                <div className="mb-6 p-3.5 rounded-xl bg-[var(--badge-recommended-bg)]/10 border border-[var(--badge-recommended-bg)]/20 text-xs md:text-sm text-[var(--text-secondary)] flex items-start gap-2.5">
-                  <span className="font-bold text-[var(--text-accent)] shrink-0 font-mono">Exam Tip:</span>
-                  <span>{section.examTips}</span>
+              {/* 4. Derivations (if present) */}
+              {section.derivations && (
+                <div className="p-4 rounded-xl bg-[var(--badge-masterpiece-bg)]/10 border border-[var(--badge-masterpiece-border)]/30 space-y-2">
+                  <span className="text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
+                    Derivations & Mathematical Proofs
+                  </span>
+                  <div className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap">
+                    {section.derivations}
+                  </div>
                 </div>
               )}
 
-              {/* Custom User Notepad for this section */}
-              <div className="pt-4 border-t border-[var(--border-subtle)]">
+              {/* 5. Textbook Reference (Editorial Box) */}
+              {section.textbookRef && (
+                <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden bg-[var(--bg-base)]">
+                  <button
+                    onClick={() => toggleReference(section.id)}
+                    className="w-full px-4 py-2.5 bg-[var(--bg-elevated)] flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <BookMarked size={14} className="text-[var(--accent-primary)]" />
+                      Detailed Textbook Reference
+                    </span>
+                    {isRefExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  </button>
+
+                  {isRefExpanded && (
+                    <div className="p-4 font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)]">
+                      {section.textbookRef}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* 6. Custom User Notepad for this subtopic */}
+              <div className="pt-3 border-t border-[var(--border-subtle)]">
                 {isEditing ? (
                   <div className="space-y-3">
                     <textarea
                       value={localNoteText}
                       onChange={(e) => setLocalNoteText(e.target.value)}
-                      placeholder="Type your personal insights, mnemonics, or test solutions for this section..."
+                      placeholder="Type your personal insights, worked problem steps, or revision mnemonics..."
                       className="w-full p-3 rounded-xl bg-[var(--bg-base)] text-[var(--text-primary)] border border-[var(--border-default)] text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] min-h-[90px]"
                     />
                     <div className="flex justify-end gap-2">
@@ -225,13 +281,13 @@ export default function ChapterDrillDown({
                   <div className="flex items-center justify-between text-xs">
                     {hasCustomNote ? (
                       <div className="flex-1 pr-4">
-                        <span className="font-semibold text-[var(--text-primary)] block mb-1">Your Note:</span>
+                        <span className="font-semibold text-[var(--text-primary)] block mb-1">Your Personal Note:</span>
                         <p className="italic text-[var(--text-secondary)] line-clamp-2">
                           "{hasCustomNote}"
                         </p>
                       </div>
                     ) : (
-                      <span className="text-[var(--text-muted)] italic">No personal notes added yet.</span>
+                      <span className="text-[var(--text-muted)] italic">No personal notes added yet for this topic.</span>
                     )}
 
                     <button
@@ -265,19 +321,19 @@ export default function ChapterDrillDown({
           {isSubCompleted ? (
             <>
               <Check size={18} />
-              Subchapter Completed!
+              Subtopic Completed!
             </>
           ) : (
             <>
               <CheckCircle2 size={18} />
-              Subchapter Completed
+              Mark Subtopic Completed
             </>
           )}
         </button>
 
         {!activeSubchapterStats.isAllCompleted && !isSubCompleted && (
           <p className="text-xs text-[var(--text-muted)] font-sans">
-            Mark all {activeSubchapterStats.total} section circles completed above to unlock.
+            Mark the completion circle for this subtopic above to unlock.
           </p>
         )}
       </div>
