@@ -119,3 +119,25 @@
     @apply font-sans bg-bg-base text-text-primary antialiased min-h-screen selection:bg-accent-primary selection:text-white;
   }
 }
+
+/* Beautiful Editorial Math Fractions */
+.math-fraction {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0 4px;
+  line-height: 1.1;
+  font-size: 0.9em;
+}
+
+.math-fraction .num {
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 2px;
+  display: block;
+}
+
+.math-fraction .den {
+  padding-top: 2px;
+  display: block;
+}

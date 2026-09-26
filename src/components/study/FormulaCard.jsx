@@ -1,237 +1,324 @@
-import { Sparkles, Info } from 'lucide-react';
+import { Sparkles, BookOpen } from 'lucide-react';
 
-// Common scientific symbol glossary dictionary
-const SYMBOL_GLOSSARY = {
-  'p': 'Partial pressure of gas in vapour phase (atm or bar)',
-  'K_H': "Henry's Law constant (varies inversely with gas solubility; increases with temperature)",
-  'x': 'Mole fraction of the component in solution',
-  'P°_A': 'Vapour pressure of pure volatile component A',
-  'P_A': 'Partial vapour pressure of component A over the solution',
-  'P_total': 'Total vapour pressure of the binary solution',
-  'ΔT_b': 'Elevation in boiling point (T_b − T°_b)',
-  'K_b': 'Molal elevation constant / ebullioscopic constant (K·kg/mol)',
-  'm': 'Molality of solution (moles of solute per kg of solvent)',
-  'ΔT_f': 'Depression in freezing point (T°_f − T_f)',
-  'K_f': 'Molal depression constant / cryoscopic constant (K·kg/mol)',
-  'Π': 'Osmotic pressure of solution (atm)',
-  'C': 'Molar concentration (moles/L)',
-  'R': 'Universal gas constant (0.0821 L·atm/(mol·K) or 8.314 J/(mol·K))',
-  'T': 'Absolute temperature in Kelvin (K)',
-  'i': "Van 't Hoff factor (ratio of observed to calculated colligative property)",
-  'α': 'Degree of dissociation or association of electrolyte',
-  'E_cell': 'Electromotive force (EMF) of electrochemical cell under given concentrations',
-  'E°_cell': 'Standard cell potential at standard conditions (1 M, 1 bar, 298 K)',
-  'n': 'Number of electrons transferred in balanced redox half-reaction',
-  'Q': 'Reaction quotient ([Anode products] / [Cathode reactants])',
-  'K_c': 'Chemical equilibrium constant of cell reaction',
-  'ΔG°': 'Standard Gibbs free energy change (−nFE°_cell)',
-  'F': 'Faraday constant (charge of 1 mole of electrons ≈ 96500 C/mol)',
-  'κ': 'Specific conductivity (conductance per unit volume, S/cm or S/m)',
-  'Λm': 'Molar conductivity (κ × 1000 / C, S·cm²/mol)',
-  'Λ°m': 'Limiting molar conductivity at infinite dilution (zero concentration)',
-  'G*': 'Cell constant (l / A, cm⁻¹)',
-  'w': 'Mass of substance deposited at electrode (grams)',
-  'Z_electrochem': 'Electrochemical equivalent of substance (E / 96500)',
-  'F_e': 'Electrostatic Coulomb force between charges (Newtons)',
-  'q₁, q₂': 'Magnitudes of point charges (Coulombs)',
-  'r': 'Distance of separation between charges or conductors (meters)',
-  'ε₀': 'Permittivity of free space (8.854 × 10⁻¹² C²/(N·m²))',
-  'k': 'Coulomb constant (1 / (4πε₀) ≈ 9 × 10⁹ N·m²/C²)',
-  'E': 'Electric field intensity (N/C or V/m)',
-  'p_dipole': 'Electric dipole moment (q · 2a, C·m)',
-  'τ': 'Torque acting on dipole or current loop (N·m)',
-  'U': 'Potential energy stored in system / capacitor / inductor (Joules)',
-  'Φ': 'Electric or magnetic flux (Weber or N·m²/C)',
-  'V': 'Electric potential / voltage (Volts)',
-  'C_cap': 'Capacitance of capacitor (Farad, F)',
-  'I': 'Electric current (Amperes, A)',
-  'v_d': 'Drift velocity of conduction electrons (m/s)',
-  'μ': 'Mobility of charge carriers (v_d / E, m²/(V·s))',
-  'ρ': 'Electrical resistivity of conductor (Ω·m)',
-  'σ': 'Electrical conductivity (1 / ρ, S/m)',
-  'B': 'Magnetic field / magnetic flux density (Tesla, T)',
-  'μ₀': 'Permeability of free space (4π × 10⁻⁷ T·m/A)',
-  'X_L': 'Inductive reactance (ωL = 2πfL, Ω)',
-  'X_C': 'Capacitive reactance (1 / (ωC) = 1 / (2πfC), Ω)',
-  'Z': 'Total impedance of AC circuit (Ω)',
-  'cosφ': 'Power factor of AC circuit (R / Z)',
-  'I_rms': 'Root-mean-square effective current (I₀ / √2 ≈ 0.707 I₀)',
-  'I_mean': 'Average current over half cycle (2I₀ / π ≈ 0.637 I₀)',
-  'c': 'Speed of light in vacuum (3 × 10⁸ m/s)'
+// Curated dictionary of specific formulas and their exact, relevant variables
+const FORMULA_METADATA = {
+  // Chemistry 1: Solutions
+  'molarity': {
+    title: 'Molarity (Molar Concentration)',
+    display: 'Molarity (M) = <span class="math-fraction"><span class="num">n<sub>solute</sub></span><span class="den">V<sub>solution</sub> (in Litres)</span></span> = <span class="math-fraction"><span class="num">w<sub>2</sub> × 1000</span><span class="den">M<sub>2</sub> × V<sub>mL</sub></span></span>',
+    variables: [
+      { sym: 'M', desc: 'Molarity of solution (moles/L or M)' },
+      { sym: 'n<sub>solute</sub>', desc: 'Moles of solute (w₂ / M₂)' },
+      { sym: 'w<sub>2</sub>', desc: 'Mass of solute taken (in grams)' },
+      { sym: 'M<sub>2</sub>', desc: 'Molar mass of solute (g/mol)' },
+      { sym: 'V', desc: 'Total volume of solution (in Litres or mL)' }
+    ]
+  },
+  'molality': {
+    title: 'Molality (Mass Concentration)',
+    display: 'Molality (m) = <span class="math-fraction"><span class="num">n<sub>solute</sub></span><span class="den">W<sub>solvent</sub> (in kg)</span></span> = <span class="math-fraction"><span class="num">w<sub>2</sub> × 1000</span><span class="den">M<sub>2</sub> × w<sub>1</sub> (in g)</span></span>',
+    variables: [
+      { sym: 'm', desc: 'Molality of solution (moles/kg — temperature independent!)' },
+      { sym: 'w<sub>2</sub>', desc: 'Mass of solute dissolved (in grams)' },
+      { sym: 'M<sub>2</sub>', desc: 'Molar mass of solute (g/mol)' },
+      { sym: 'w<sub>1</sub>', desc: 'Mass of solvent in grams' }
+    ]
+  },
+  'mole fraction': {
+    title: 'Mole Fraction (x)',
+    display: 'x<sub>A</sub> = <span class="math-fraction"><span class="num">n<sub>A</sub></span><span class="den">n<sub>A</sub> + n<sub>B</sub></span></span>, &nbsp;&nbsp; x<sub>A</sub> + x<sub>B</sub> = 1',
+    variables: [
+      { sym: 'x<sub>A</sub>', desc: 'Mole fraction of component A' },
+      { sym: 'n<sub>A</sub>', desc: 'Moles of component A (w_A / M_A)' },
+      { sym: 'n<sub>B</sub>', desc: 'Moles of component B (w_B / M_B)' }
+    ]
+  },
+  'henry': {
+    title: "Henry's Law Equation",
+    display: 'p = K<sub>H</sub> · x',
+    variables: [
+      { sym: 'p', desc: 'Partial pressure of gas in vapour phase above liquid' },
+      { sym: 'K<sub>H</sub>', desc: "Henry's Law constant (varies inversely with gas solubility; higher in hot water)" },
+      { sym: 'x', desc: 'Mole fraction of gas dissolved in the liquid' }
+    ]
+  },
+  'raoult': {
+    title: "Raoult's Law for Volatile Binary Solutions",
+    display: 'p<sub>total</sub> = p<sub>A</sub> + p<sub>B</sub> = p°<sub>A</sub> x<sub>A</sub> + p°<sub>B</sub> x<sub>B</sub>',
+    variables: [
+      { sym: 'p<sub>total</sub>', desc: 'Total vapour pressure exerted by the binary solution' },
+      { sym: 'p°<sub>A</sub>, p°<sub>B</sub>', desc: 'Vapour pressures of pure volatile components A and B' },
+      { sym: 'x<sub>A</sub>, x<sub>B</sub>', desc: 'Mole fractions of components A and B in liquid solution' }
+    ]
+  },
+  'boiling': {
+    title: 'Elevation of Boiling Point',
+    display: 'ΔT<sub>b</sub> = i · K<sub>b</sub> · m = <span class="math-fraction"><span class="num">i · 1000 · K<sub>b</sub> · w<sub>2</sub></span><span class="den">M<sub>2</sub> · w<sub>1</sub></span></span>',
+    variables: [
+      { sym: 'ΔT<sub>b</sub>', desc: 'Elevation in boiling point (T_b − T°_b in Kelvin)' },
+      { sym: 'K<sub>b</sub>', desc: 'Molal elevation constant / ebullioscopic constant (K·kg/mol)' },
+      { sym: 'm', desc: 'Molality of solution' },
+      { sym: 'i', desc: "Van 't Hoff factor (corrects for dissociation or association)" }
+    ]
+  },
+  'freezing': {
+    title: 'Depression of Freezing Point',
+    display: 'ΔT<sub>f</sub> = i · K<sub>f</sub> · m = <span class="math-fraction"><span class="num">i · 1000 · K<sub>f</sub> · w<sub>2</sub></span><span class="den">M<sub>2</sub> · w<sub>1</sub></span></span>',
+    variables: [
+      { sym: 'ΔT<sub>f</sub>', desc: 'Depression in freezing point (T°_f − T_f in Kelvin)' },
+      { sym: 'K<sub>f</sub>', desc: 'Molal depression constant / cryoscopic constant (K·kg/mol)' },
+      { sym: 'w<sub>2</sub>', desc: 'Mass of solute dissolved' },
+      { sym: 'w<sub>1</sub>', desc: 'Mass of solvent in grams' }
+    ]
+  },
+  'osmotic': {
+    title: 'Osmotic Pressure Equation',
+    display: 'Π = i · C R T = <span class="math-fraction"><span class="num">i · w<sub>2</sub> R T</span><span class="den">M<sub>2</sub> · V</span></span>',
+    variables: [
+      { sym: 'Π', desc: 'Osmotic pressure (in atmospheres or bar)' },
+      { sym: 'C', desc: 'Molar concentration (moles/L)' },
+      { sym: 'R', desc: 'Universal gas constant (0.0821 L·atm/(mol·K))' },
+      { sym: 'T', desc: 'Absolute temperature in Kelvin' }
+    ]
+  },
+  'van': {
+    title: "Van 't Hoff Factor & Degree of Dissociation/Association",
+    display: 'i = <span class="math-fraction"><span class="num">Normal Molar Mass</span><span class="den">Abnormal Molar Mass</span></span> = 1 + (n − 1)α',
+    variables: [
+      { sym: 'i', desc: "Van 't Hoff factor (i > 1 for dissociation; i < 1 for association)" },
+      { sym: 'α', desc: 'Degree of dissociation or association of the solute' },
+      { sym: 'n', desc: 'Number of ions produced per formula unit upon complete dissociation' }
+    ]
+  },
+
+  // Chemistry 2: Electrochemistry
+  'nernst': {
+    title: 'Nernst Equation (at 298 K)',
+    display: 'E<sub>cell</sub> = E°<sub>cell</sub> − <span class="math-fraction"><span class="num">0.0591</span><span class="den">n</span></span> log <span class="math-fraction"><span class="num">[Anode oxidation products]</span><span class="den">[Cathode reduction reactants]</span></span>',
+    variables: [
+      { sym: 'E<sub>cell</sub>', desc: 'Cell potential / EMF under non-standard concentrations (V)' },
+      { sym: 'E°<sub>cell</sub>', desc: 'Standard cell potential (E°_cathode − E°_anode) at 1 M, 298 K' },
+      { sym: 'n', desc: 'Number of moles of electrons transferred in balanced redox reaction' },
+      { sym: '0.0591', desc: 'Value of (2.303 · R · T / F) at 298.15 K' }
+    ]
+  },
+  'gibbs': {
+    title: 'Standard Gibbs Free Energy & Equilibrium Constant',
+    display: 'ΔG° = −n F E°<sub>cell</sub> = −2.303 R T log K<sub>c</sub>',
+    variables: [
+      { sym: 'ΔG°', desc: 'Standard Gibbs free energy change (Joules/mol)' },
+      { sym: 'F', desc: 'Faraday constant (charge of 1 mole electrons ≈ 96500 C/mol)' },
+      { sym: 'K<sub>c</sub>', desc: 'Chemical equilibrium constant of the cell reaction' }
+    ]
+  },
+  'kohlrausch': {
+    title: "Kohlrausch's Law of Independent Ionic Migration",
+    display: 'Λ°<sub>m</sub> = ν<sub>+</sub> λ°<sub>+</sub> + ν<sub>−</sub> λ°<sub>−</sub>',
+    variables: [
+      { sym: 'Λ°<sub>m</sub>', desc: 'Limiting molar conductivity of electrolyte at infinite dilution (S·cm²/mol)' },
+      { sym: 'λ°<sub>+</sub>, λ°<sub>−</sub>', desc: 'Limiting ionic molar conductivities of individual cation and anion' },
+      { sym: 'ν<sub>+</sub>, ν<sub>−</sub>', desc: 'Number of cations and anions produced per formula unit' }
+    ]
+  },
+
+  // Physics 1: Electrostatics
+  'coulomb': {
+    title: "Coulomb's Law (Electrostatic Force)",
+    display: 'F = <span class="math-fraction"><span class="num">1</span><span class="den">4πε<sub>0</sub></span></span> · <span class="math-fraction"><span class="num">q<sub>1</sub> q<sub>2</sub></span><span class="den">r<sup>2</sup></span></span>',
+    variables: [
+      { sym: 'F', desc: 'Electrostatic force between two stationary point charges (Newtons)' },
+      { sym: 'q<sub>1</sub>, q<sub>2</sub>', desc: 'Magnitudes of charges in Coulombs (C)' },
+      { sym: 'r', desc: 'Distance of separation between charges (meters)' },
+      { sym: 'ε<sub>0</sub>', desc: 'Permittivity of free space (8.854 × 10⁻¹² C²/(N·m²))' },
+      { sym: 'k', desc: 'Coulomb constant = 1 / (4πε₀) ≈ 9 × 10⁹ N·m²/C²' }
+    ]
+  },
+  'electric field': {
+    title: 'Electric Field Intensity',
+    display: 'E = <span class="math-fraction"><span class="num">F</span><span class="den">q<sub>0</sub></span></span> = <span class="math-fraction"><span class="num">1</span><span class="den">4πε<sub>0</sub></span></span> · <span class="math-fraction"><span class="num">q</span><span class="den">r<sup>2</sup></span></span>',
+    variables: [
+      { sym: 'E', desc: 'Electric field intensity (N/C or V/m)' },
+      { sym: 'q<sub>0</sub>', desc: 'Vanishingly small positive test charge (C)' },
+      { sym: 'q', desc: 'Source charge producing the field' }
+    ]
+  },
+  'dipole': {
+    title: 'Electric Dipole Moment & Fields',
+    display: 'p = q · 2a, &nbsp;&nbsp; E<sub>axial</sub> ≈ <span class="math-fraction"><span class="num">2 k p</span><span class="den">r<sup>3</sup></span></span>, &nbsp;&nbsp; E<sub>equatorial</sub> ≈ <span class="math-fraction"><span class="num">k p</span><span class="den">r<sup>3</sup></span></span>',
+    variables: [
+      { sym: 'p', desc: 'Electric dipole moment (q · 2a, directed from −q to +q, C·m)' },
+      { sym: 'E<sub>axial</sub>', desc: 'Field along dipole axis (twice equatorial field for r >> a)' },
+      { sym: 'E<sub>equatorial</sub>', desc: 'Field on perpendicular bisector (opposite to p vector)' }
+    ]
+  },
+  'gauss': {
+    title: "Gauss's Theorem (Electric Flux)",
+    display: 'Φ = ∮ E · dA = <span class="math-fraction"><span class="num">q<sub>enclosed</sub></span><span class="den">ε<sub>0</sub></span></span>',
+    variables: [
+      { sym: 'Φ', desc: 'Total electric flux passing through closed Gaussian surface (N·m²/C)' },
+      { sym: 'q<sub>enclosed</sub>', desc: 'Net electric charge enclosed inside the surface' },
+      { sym: 'ε<sub>0</sub>', desc: 'Permittivity of free space' }
+    ]
+  },
+  'drift': {
+    title: 'Drift Velocity & Electric Current Relation',
+    display: 'I = n A e v<sub>d</sub>, &nbsp;&nbsp; v<sub>d</sub> = <span class="math-fraction"><span class="num">e E τ</span><span class="den">m</span></span>',
+    variables: [
+      { sym: 'I', desc: 'Steady electric current flowing through conductor (A)' },
+      { sym: 'n', desc: 'Number density of free conduction electrons (m⁻³)' },
+      { sym: 'A', desc: 'Cross-sectional area of conductor wire (m²)' },
+      { sym: 'e', desc: 'Elementary electron charge (1.602 × 10⁻¹⁹ C)' },
+      { sym: 'v<sub>d</sub>', desc: 'Average drift velocity acquired by electrons under field (m/s)' },
+      { sym: 'τ', desc: 'Average relaxation time between consecutive electron collisions (s)' }
+    ]
+  },
+  'wheatstone': {
+    title: 'Wheatstone Bridge Balance Condition',
+    display: '<span class="math-fraction"><span class="num">P</span><span class="den">Q</span></span> = <span class="math-fraction"><span class="num">R</span><span class="den">S</span></span> &nbsp;&nbsp; (when I<sub>g</sub> = 0)',
+    variables: [
+      { sym: 'P, Q, R', desc: 'Known bridge arm resistance values (Ω)' },
+      { sym: 'S', desc: 'Unknown resistance to be determined (Ω)' },
+      { sym: 'I<sub>g</sub>', desc: 'Current through central galvanometer branch (0 at balance)' }
+    ]
+  },
+  'biot': {
+    title: 'Biot-Savart Law',
+    display: 'dB = <span class="math-fraction"><span class="num">μ<sub>0</sub></span><span class="den">4π</span></span> · <span class="math-fraction"><span class="num">I dl sinθ</span><span class="den">r<sup>2</sup></span></span>',
+    variables: [
+      { sym: 'dB', desc: 'Magnetic field contribution of current element (Tesla, T)' },
+      { sym: 'μ<sub>0</sub>', desc: 'Permeability of free space (4π × 10⁻⁷ T·m/A)' },
+      { sym: 'I dl', desc: 'Current carrying infinitesimal wire element' },
+      { sym: 'θ', desc: 'Angle between current element vector dl and position vector r' }
+    ]
+  },
+  'resonance': {
+    title: 'Electrical Resonance in Series LCR Circuit',
+    display: 'X<sub>L</sub> = X<sub>C</sub> &nbsp; ⟹ &nbsp; ω<sub>0</sub> = <span class="math-fraction"><span class="num">1</span><span class="den">√(L C)</span></span>, &nbsp;&nbsp; f<sub>0</sub> = <span class="math-fraction"><span class="num">1</span><span class="den">2π √(L C)</span></span>',
+    variables: [
+      { sym: 'ω<sub>0</sub>', desc: 'Resonant angular frequency (rad/s) where Z = R (minimum impedance)' },
+      { sym: 'L', desc: 'Inductance of inductor (Henrys, H)' },
+      { sym: 'C', desc: 'Capacitance of capacitor (Farads, F)' },
+      { sym: 'X<sub>L</sub>, X<sub>C</sub>', desc: 'Inductive and capacitive reactances that cancel at resonance' }
+    ]
+  },
+  'rms': {
+    title: 'RMS and Mean Values of Alternating Current',
+    display: 'I<sub>rms</sub> = <span class="math-fraction"><span class="num">I<sub>0</sub></span><span class="den">√2</span></span> ≈ 0.707 I<sub>0</sub>, &nbsp;&nbsp; I<sub>mean</sub> = <span class="math-fraction"><span class="num">2 I<sub>0</sub></span><span class="den">π</span></span> ≈ 0.637 I<sub>0</sub>',
+    variables: [
+      { sym: 'I<sub>rms</sub>', desc: 'Root-mean-square effective current producing equivalent DC heating' },
+      { sym: 'I<sub>0</sub>', desc: 'Peak amplitude of sinusoidal alternating current' },
+      { sym: 'I<sub>mean</sub>', desc: 'Mean current value integrated over half a cycle' }
+    ]
+  }
 };
 
-// Formats text with subscripts, superscripts, and clean mathematical symbols
+// Universal formatter that converts raw programmer underscores to proper typographic subscripts
 export function formatMathString(str) {
   if (!str) return '';
 
   return str
-    // Common subscripts
-    .replace(/\bK_H\b/g, 'K<sub>H</sub>')
-    .replace(/\bP°_A\b/g, 'P°<sub>A</sub>')
-    .replace(/\bP°_B\b/g, 'P°<sub>B</sub>')
-    .replace(/\bx_A\b/g, 'x<sub>A</sub>')
-    .replace(/\bx_B\b/g, 'x<sub>B</sub>')
-    .replace(/\bp_A\b/g, 'p<sub>A</sub>')
-    .replace(/\bp_B\b/g, 'p<sub>B</sub>')
-    .replace(/\bp_total\b/g, 'p<sub>total</sub>')
-    .replace(/\bP_total\b/g, 'P<sub>total</sub>')
-    .replace(/\bΔT_b\b/g, 'ΔT<sub>b</sub>')
-    .replace(/\bK_b\b/g, 'K<sub>b</sub>')
-    .replace(/\bΔT_f\b/g, 'ΔT<sub>f</sub>')
-    .replace(/\bK_f\b/g, 'K<sub>f</sub>')
-    .replace(/\bT_b\b/g, 'T<sub>b</sub>')
-    .replace(/\bT°_b\b/g, 'T°<sub>b</sub>')
-    .replace(/\bT_f\b/g, 'T<sub>f</sub>')
-    .replace(/\bT°_f\b/g, 'T°<sub>f</sub>')
-    .replace(/\bE_cell\b/g, 'E<sub>cell</sub>')
-    .replace(/\bE°_cell\b/g, 'E°<sub>cell</sub>')
-    .replace(/\bK_c\b/g, 'K<sub>c</sub>')
-    .replace(/\bΔG°\b/g, 'ΔG°')
-    .replace(/\bΛm\b/g, 'Λ<sub>m</sub>')
-    .replace(/\bΛ°m\b/g, 'Λ°<sub>m</sub>')
-    .replace(/\bλ°₊\b/g, 'λ°<sub>+</sub>')
-    .replace(/\bλ°₋\b/g, 'λ°<sub>−</sub>')
-    .replace(/\bK_a\b/g, 'K<sub>a</sub>')
-    .replace(/\bq_enc\b/g, 'q<sub>enc</sub>')
-    .replace(/\bq_enclosed\b/g, 'q<sub>enclosed</sub>')
-    .replace(/\bv_d\b/g, 'v<sub>d</sub>')
-    .replace(/\bR_t\b/g, 'R<sub>t</sub>')
-    .replace(/\bR₀\b/g, 'R<sub>0</sub>')
-    .replace(/\bρ_t\b/g, 'ρ<sub>t</sub>')
-    .replace(/\bρ₀\b/g, 'ρ<sub>0</sub>')
-    .replace(/\bE_axial\b/g, 'E<sub>axial</sub>')
-    .replace(/\bE_equatorial\b/g, 'E<sub>equatorial</sub>')
-    .replace(/\bB_centre\b/g, 'B<sub>centre</sub>')
-    .replace(/\bB_axis\b/g, 'B<sub>axis</sub>')
-    .replace(/\bX_L\b/g, 'X<sub>L</sub>')
-    .replace(/\bX_C\b/g, 'X<sub>C</sub>')
-    .replace(/\bI_rms\b/g, 'I<sub>rms</sub>')
-    .replace(/\bV_rms\b/g, 'V<sub>rms</sub>')
-    .replace(/\bI_mean\b/g, 'I<sub>mean</sub>')
-    .replace(/\bI_d\b/g, 'I<sub>d</sub>')
-    .replace(/\bI_c\b/g, 'I<sub>c</sub>')
-    .replace(/\bI_g\b/g, 'I<sub>g</sub>')
-    .replace(/\bI₀\b/g, 'I<sub>0</sub>')
-    .replace(/\bV₀\b/g, 'V<sub>0</sub>')
-    .replace(/\be₀\b/g, 'e<sub>0</sub>')
-    .replace(/\bω₀\b/g, 'ω<sub>0</sub>')
-    .replace(/\bf₀\b/g, 'f<sub>0</sub>')
-    .replace(/\bN_s\b/g, 'N<sub>s</sub>')
-    .replace(/\bN_p\b/g, 'N<sub>p</sub>')
-    .replace(/\bV_s\b/g, 'V<sub>s</sub>')
-    .replace(/\bV_p\b/g, 'V<sub>p</sub>')
-    .replace(/\bI_s\b/g, 'I<sub>s</sub>')
-    .replace(/\bI_p\b/g, 'I<sub>p</sub>')
-    .replace(/\bε₀\b/g, 'ε<sub>0</sub>')
-    .replace(/\bμ₀\b/g, 'μ<sub>0</sub>')
-    .replace(/\bμ_r\b/g, 'μ<sub>r</sub>')
-    .replace(/\bχ_e\b/g, 'χ<sub>e</sub>')
-    .replace(/\bq₀\b/g, 'q<sub>0</sub>')
-    .replace(/\bq₁\b/g, 'q<sub>1</sub>')
-    .replace(/\bq₂\b/g, 'q<sub>2</sub>')
-    .replace(/\bw₁\b/g, 'w<sub>1</sub>')
-    .replace(/\bw₂\b/g, 'w<sub>2</sub>')
-    .replace(/\bM₁\b/g, 'M<sub>1</sub>')
-    .replace(/\bM₂\b/g, 'M<sub>2</sub>')
-    .replace(/\bC₁\b/g, 'C<sub>1</sub>')
-    .replace(/\bC₂\b/g, 'C<sub>2</sub>')
-    .replace(/\bC₀\b/g, 'C<sub>0</sub>')
-    .replace(/\bC_eq\b/g, 'C<sub>eq</sub>')
-    .replace(/\bF₁₂\b/g, 'F<sub>12</sub>')
-    .replace(/\bF₂₁\b/g, 'F<sub>21</sub>')
-    .replace(/\br₁₂\b/g, 'r<sub>12</sub>')
+    // Convert any word_sub pattern to word<sub>sub</sub>
+    .replace(/([A-Za-z0-9α-ωΑ-Ω°]+)_([A-Za-z0-9°+−]+)/g, '$1<sub>$2</sub>')
     // Superscripts
-    .replace(/\br²\b/g, 'r<sup>2</sup>')
-    .replace(/\br³\b/g, 'r<sup>3</sup>')
-    .replace(/\bx²\b/g, 'x<sup>2</sup>')
-    .replace(/\bx³\b/g, 'x<sup>3</sup>')
-    .replace(/\bV²\b/g, 'V<sup>2</sup>')
-    .replace(/\bI²\b/g, 'I<sup>2</sup>')
-    .replace(/\bQ²\b/g, 'Q<sup>2</sup>')
-    .replace(/\bB²\b/g, 'B<sup>2</sup>')
-    .replace(/\bl²\b/g, 'l<sup>2</sup>')
-    .replace(/\bv²\b/g, 'v<sup>2</sup>')
-    .replace(/\bn²\b/g, 'n<sup>2</sup>')
-    .replace(/\b10⁹\b/g, '10<sup>9</sup>')
-    .replace(/\b10⁻⁷\b/g, '10<sup>−7</sup>')
-    .replace(/\b10⁻¹²\b/g, '10<sup>−12</sup>')
-    .replace(/\b3 × 10⁸\b/g, '3 × 10<sup>8</sup>');
+    .replace(/\br\^2\b|\br²\b/g, 'r<sup>2</sup>')
+    .replace(/\br\^3\b|\br³\b/g, 'r<sup>3</sup>')
+    .replace(/\bx\^2\b|\bx²\b/g, 'x<sup>2</sup>')
+    .replace(/\bx\^3\b|\bx³\b/g, 'x<sup>3</sup>')
+    .replace(/\bV\^2\b|\bV²\b/g, 'V<sup>2</sup>')
+    .replace(/\bI\^2\b|\bI²\b/g, 'I<sup>2</sup>')
+    .replace(/\b10\^9\b|\b10⁹\b/g, '10<sup>9</sup>')
+    .replace(/\b10\^-7\b|\b10⁻⁷\b/g, '10<sup>−7</sup>')
+    .replace(/\b10\^-12\b|\b10⁻¹²\b/g, '10<sup>−12</sup>')
+    .replace(/\b3 × 10\^8\b|\b3 × 10⁸\b/g, '3 × 10<sup>8</sup>');
 }
 
-// Find symbols present in formula to render dynamic glossary pills
-function findGlossaryEntries(formulaStr) {
-  const matches = [];
-  const keys = Object.keys(SYMBOL_GLOSSARY);
+// Find curated metadata for a formula or create clean default
+function resolveFormulaMetadata(formulaStr) {
+  const lower = formulaStr.toLowerCase();
 
-  for (const k of keys) {
-    // Check if key is contained as a word or distinct symbol
-    if (formulaStr.includes(k)) {
-      matches.push({ symbol: k, meaning: SYMBOL_GLOSSARY[k] });
+  for (const [key, meta] of Object.entries(FORMULA_METADATA)) {
+    if (lower.includes(key)) {
+      return meta;
     }
   }
 
-  return matches;
+  // Fallback: clean formatting with no hallucinated glossary
+  return {
+    title: 'Formula Relation',
+    display: formatMathString(formulaStr),
+    variables: []
+  };
 }
 
 export default function FormulaCard({ formulaList, derivations }) {
   if (!formulaList || formulaList.length === 0) return null;
 
   return (
-    <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-5 md:p-6 shadow-xs space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-[var(--badge-recommended-bg)]/15 border border-[var(--badge-recommended-bg)]/30 flex items-center justify-center text-[var(--text-accent)]">
-            <Sparkles size={15} />
+    <div className="rounded-3xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-6 md:p-7 shadow-xs space-y-5">
+      {/* Pinterest-inspired Editorial Header */}
+      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-xl bg-[var(--text-accent)]/15 border border-[var(--text-accent)]/30 flex items-center justify-center text-[var(--text-accent)]">
+            <Sparkles size={16} />
           </div>
           <div>
-            <h5 className="font-serif text-base font-bold text-[var(--text-primary)]">
-              Core Formula & Variable Breakdown
+            <h5 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+              Core Formulas & Variable Meanings
             </h5>
-            <span className="text-[11px] font-cursive text-[var(--text-muted)]">
-              board-standard equations with variable meanings
+            <span className="text-xs font-cursive text-[var(--text-muted)]">
+              board-standard mathematical relations with variable definitions
             </span>
           </div>
         </div>
       </div>
 
-      {/* Formulas List with aesthetic typography */}
-      <div className="space-y-3">
+      {/* Aesthetic Formula Cards */}
+      <div className="space-y-4">
         {formulaList.map((formula, idx) => {
-          const glossaryItems = findGlossaryEntries(formula);
-          const formattedFormula = formatMathString(formula);
+          const meta = resolveFormulaMetadata(formula);
 
           return (
             <div
               key={idx}
-              className="p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3"
+              className="p-5 md:p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4 transition-all hover:border-[var(--accent-primary)]/50"
             >
-              {/* Formula Display */}
-              <div className="flex items-center gap-2.5">
-                <span className="text-xs font-mono font-bold text-[var(--accent-primary)] px-2 py-0.5 rounded bg-[var(--bg-elevated)] shrink-0">
+              {/* Equation Title Tag */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]">
+                  {meta.title}
+                </span>
+                <span className="text-[11px] font-mono text-[var(--text-muted)]">
                   Eq {idx + 1}
                 </span>
+              </div>
+
+              {/* Big, Clean Mathematical Typography */}
+              <div className="py-2 px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto">
                 <div
-                  className="font-serif text-base md:text-lg font-semibold tracking-wide text-[var(--text-primary)] flex-1 overflow-x-auto py-0.5"
-                  dangerouslySetInnerHTML={{ __html: formattedFormula }}
+                  className="font-serif text-lg md:text-xl font-bold tracking-wide text-[var(--text-primary)] text-center py-2"
+                  dangerouslySetInnerHTML={{ __html: meta.display }}
                 />
               </div>
 
-              {/* Variable Definitions / Meaning breakdown */}
-              {glossaryItems.length > 0 && (
-                <div className="pt-2.5 border-t border-[var(--border-subtle)] space-y-1.5">
-                  <div className="flex items-center gap-1 text-[11px] font-mono text-[var(--text-muted)] font-semibold uppercase tracking-wider">
-                    <Info size={11} className="text-[var(--accent-primary)]" />
-                    <span>Symbol Glossary</span>
-                  </div>
-                  <div className="grid grid-cols-1 gap-1.5 pt-1">
-                    {glossaryItems.slice(0, 4).map((item, gIdx) => (
-                      <div key={gIdx} className="text-xs flex items-baseline gap-2 font-sans text-[var(--text-secondary)]">
+              {/* Curated, Accurate Variable Breakdown (Only actual variables from this formula!) */}
+              {meta.variables && meta.variables.length > 0 && (
+                <div className="pt-3 border-t border-[var(--border-subtle)] space-y-2">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-bold block">
+                    Where:
+                  </span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {meta.variables.map((v, vIdx) => (
+                      <div
+                        key={vIdx}
+                        className="flex items-start gap-2.5 p-2 rounded-xl bg-[var(--bg-elevated)]/60 border border-[var(--border-subtle)] text-xs"
+                      >
                         <span
-                          className="font-serif font-bold text-[var(--text-primary)] px-1.5 py-0.5 rounded bg-[var(--bg-elevated)] border border-[var(--border-subtle)] shrink-0 text-xs"
-                          dangerouslySetInnerHTML={{ __html: formatMathString(item.symbol) }}
+                          className="font-serif font-bold text-[var(--text-primary)] px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-default)] shrink-0 font-mono text-xs"
+                          dangerouslySetInnerHTML={{ __html: v.sym }}
                         />
-                        <span className="text-xs leading-tight">{item.meaning}</span>
+                        <span className="font-sans text-[var(--text-secondary)] text-xs leading-snug self-center">
+                          {v.desc}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -242,14 +329,15 @@ export default function FormulaCard({ formulaList, derivations }) {
         })}
       </div>
 
-      {/* Derivation Notes if present */}
+      {/* Mathematical Proof / Derivations Card if present */}
       {derivations && (
-        <div className="p-4 rounded-xl bg-[var(--badge-masterpiece-bg)]/10 border border-[var(--badge-masterpiece-border)]/30 space-y-1.5">
-          <span className="text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
-            Mathematical Proof / Derivation Steps
-          </span>
+        <div className="p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] space-y-2 shadow-xs">
+          <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider">
+            <BookOpen size={14} />
+            <span>Derivation Steps & Mathematical Notes</span>
+          </div>
           <div
-            className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap"
+            className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)]"
             dangerouslySetInnerHTML={{ __html: formatMathString(derivations) }}
           />
         </div>
