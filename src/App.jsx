@@ -19,7 +19,9 @@ function App() {
         <Route path="/music" element={<Music />} />
         <Route path="/anime" element={<Anime />} />
         <Route path="/notes" element={<Notes />} />
+        <Route path="/notes/*" element={<Notes />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Notes />} />
       </Routes>
     </AppShell>
   );

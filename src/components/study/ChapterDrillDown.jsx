@@ -26,10 +26,36 @@ export default function ChapterDrillDown({
   const [openPracticeSections, setOpenPracticeSections] = useState({});
 
   if (!subject) return null;
-  const volume = subject.volumes.find((v) => v.id === selectedVolume) || subject.volumes[0];
-  const chapter = volume?.chapters.find((c) => c.id === selectedChapter);
 
-  if (!chapter) return null;
+  // Cross-volume lookup: find chapter across all volumes of this subject
+  let chapter = null;
+  let resolvedVolume = null;
+
+  for (const vol of subject.volumes) {
+    const found = vol.chapters.find((c) => c.id === selectedChapter);
+    if (found) {
+      chapter = found;
+      resolvedVolume = vol;
+      break;
+    }
+  }
+
+  // Fallback to first available chapter if not found
+  if (!chapter) {
+    resolvedVolume = subject.volumes.find((v) => v.id === selectedVolume) || subject.volumes[0];
+    chapter = resolvedVolume?.chapters?.[0];
+  }
+
+  if (!chapter) {
+    return (
+      <div className="p-8 text-center bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl space-y-3">
+        <p className="font-serif text-lg font-bold text-[var(--text-primary)]">Chapter not found</p>
+        <button onClick={onBackToChapters} className="px-4 py-2 rounded-xl bg-[var(--accent-primary)] text-white text-xs cursor-pointer">
+          Return to Chapter List
+        </button>
+      </div>
+    );
+  }
 
   // If chapter has no available content yet
   if (!chapter.available || !chapter.subchapters || chapter.subchapters.length === 0) {

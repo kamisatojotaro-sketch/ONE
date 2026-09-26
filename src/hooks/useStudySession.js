@@ -8,7 +8,37 @@ export function useStudySession() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored);
+        // Self-heal and validate state so no stale/mismatched IDs can break the app on page refresh
+        if (parsed.selectedSubject && NCERT_SYLLABUS[parsed.selectedSubject]) {
+          const subject = NCERT_SYLLABUS[parsed.selectedSubject];
+          let matchingChapter = null;
+          let matchingVolume = null;
+          let matchingSub = null;
+
+          if (parsed.selectedChapter) {
+            for (const vol of subject.volumes) {
+              const ch = vol.chapters.find(c => c.id === parsed.selectedChapter);
+              if (ch) {
+                matchingChapter = ch.id;
+                matchingVolume = vol.id;
+                if (parsed.selectedSubchapter && ch.subchapters?.some(s => s.id === parsed.selectedSubchapter)) {
+                  matchingSub = parsed.selectedSubchapter;
+                } else if (ch.subchapters?.length) {
+                  matchingSub = ch.subchapters[0].id;
+                }
+                break;
+              }
+            }
+          }
+
+          return {
+            ...parsed,
+            selectedVolume: matchingVolume || parsed.selectedVolume || subject.volumes[0]?.id,
+            selectedChapter: matchingChapter,
+            selectedSubchapter: matchingSub
+          };
+        }
       }
     } catch (e) {
       console.error('Error loading study session from storage:', e);
@@ -77,20 +107,25 @@ export function useStudySession() {
       if (!chapterId) {
         return { ...prev, selectedChapter: null, selectedSubchapter: null };
       }
-      // If selecting a chapter, find its first subchapter if available
+      // If selecting a chapter, find its containing volume and first subchapter
       const subject = NCERT_SYLLABUS[prev.selectedSubject];
       let firstSub = null;
+      let matchingVol = prev.selectedVolume;
       if (subject) {
         for (const vol of subject.volumes) {
           const ch = vol.chapters.find(c => c.id === chapterId);
-          if (ch && ch.subchapters?.length) {
-            firstSub = ch.subchapters[0].id;
+          if (ch) {
+            matchingVol = vol.id;
+            if (ch.subchapters?.length) {
+              firstSub = ch.subchapters[0].id;
+            }
             break;
           }
         }
       }
       return {
         ...prev,
+        selectedVolume: matchingVol,
         selectedChapter: chapterId,
         selectedSubchapter: firstSub
       };
