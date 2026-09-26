@@ -61,12 +61,22 @@ export default function Notes() {
 
               {/* Tab 2: Previous Year Questions */}
               {session.activeSidebarTab === 'PYQ' && (
-                <PyqTabContent selectedSubject={session.selectedSubject} />
+                <PyqTabContent
+                  selectedSubject={session.selectedSubject}
+                  selectedChapter={session.selectedChapter}
+                  selectedSubchapter={session.selectedSubchapter}
+                  onSelectChapter={session.setSelectedChapter}
+                />
               )}
 
               {/* Tab 3: Board MCQs Practice */}
               {session.activeSidebarTab === 'MCQ' && (
-                <McqTabContent selectedSubject={session.selectedSubject} />
+                <McqTabContent
+                  selectedSubject={session.selectedSubject}
+                  selectedChapter={session.selectedChapter}
+                  selectedSubchapter={session.selectedSubchapter}
+                  onSelectChapter={session.setSelectedChapter}
+                />
               )}
 
               {/* Tab 4: NOTES (Default NCERT Structured Notes) */}

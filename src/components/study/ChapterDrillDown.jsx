@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import FormulaCard, { formatMathString } from './FormulaCard';
+import SubtopicPracticePanel from './SubtopicPracticePanel';
 
 export default function ChapterDrillDown({
   selectedSubject,
@@ -22,6 +23,7 @@ export default function ChapterDrillDown({
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
   const [localNoteText, setLocalNoteText] = useState('');
   const [expandedReferences, setExpandedReferences] = useState({});
+  const [openPracticeSections, setOpenPracticeSections] = useState({});
 
   if (!subject) return null;
   const volume = subject.volumes.find((v) => v.id === selectedVolume) || subject.volumes[0];
@@ -67,6 +69,13 @@ export default function ChapterDrillDown({
 
   const toggleReference = (sectionId) => {
     setExpandedReferences((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
+
+  const togglePracticeSection = (sectionId) => {
+    setOpenPracticeSections((prev) => ({
       ...prev,
       [sectionId]: !prev[sectionId]
     }));
@@ -246,7 +255,37 @@ export default function ChapterDrillDown({
                 </div>
               )}
 
-              {/* 5. Custom User Notepad for this subtopic */}
+              {/* 5. Subtopic-Level 20 MCQs and Board PYQs Practice Drawer */}
+              <div className="pt-1">
+                <button
+                  onClick={() => togglePracticeSection(section.id)}
+                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
+                    openPracticeSections[section.id]
+                      ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                      : 'bg-[var(--bg-elevated)] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white'
+                  }`}
+                >
+                  <Sparkles size={13} />
+                  <span>
+                    {openPracticeSections[section.id]
+                      ? 'Hide Subtopic Practice'
+                      : 'Practice 20 MCQs & Board PYQs for this Subtopic'}
+                  </span>
+                </button>
+
+                {openPracticeSections[section.id] && (
+                  <div className="mt-3.5">
+                    <SubtopicPracticePanel
+                      subjectId={selectedSubject}
+                      chapterId={selectedChapter}
+                      subtopicId={currentSubchapter.id}
+                      subtopicTitle={section.title}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* 6. Custom User Notepad for this subtopic */}
               <div className="pt-3 sm:pt-4 border-t border-[var(--border-subtle)]">
                 {isEditing ? (
                   <div className="space-y-3">

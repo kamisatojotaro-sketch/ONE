@@ -1,112 +1,164 @@
-import { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Award } from 'lucide-react';
+import { useState, useMemo, useEffect } from 'react';
+import { ChevronDown, ChevronUp, Award, Filter, Sparkles, RotateCw, BookOpen } from 'lucide-react';
+import { getGeneratedPYQs } from '../../data/questionEngine';
+import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 
-const SAMPLE_PYQS = {
-  physics: [
-    {
-      id: 'phy-pyq-1',
-      year: 'CBSE 2023 (5 Marks)',
-      question: 'State Gauss\'s law in electrostatics. Using this law, derive an expression for the electric field due to an infinitely long straight wire of uniform linear charge density λ.',
-      solution: '1. Statement: Total electric flux through any closed Gaussian surface equals 1/ε₀ times net enclosed charge: ∮ E·dA = q_enc/ε₀.\n2. Gaussian Surface: Coaxial cylinder of radius r and length l around the wire.\n3. Flux calculation: Flux through circular flat ends is zero (E ⊥ dA). Flux through curved surface is E(2πrl).\n4. Applying Gauss\'s law: E(2πrl) = λl / ε₀  ⟹  E = λ / (2πε₀r).'
-    },
-    {
-      id: 'phy-pyq-2',
-      year: 'CBSE 2022 (3 Marks)',
-      question: 'Why do two electric field lines never cross each other? Write any other two properties of electric field lines.',
-      solution: '1. If two field lines crossed, at the point of intersection there would be two tangents, indicating two different directions of the electric field at a single point, which is physically impossible.\n2. Property A: Field lines start on positive charges and end on negative charges.\n3. Property B: Relative density of lines is proportional to field magnitude.'
-    },
-    {
-      id: 'phy-pyq-3',
-      year: 'CBSE 2020 (5 Marks)',
-      question: 'Define the term RMS value of an alternating current. Derive the relation between the RMS value and peak value of an alternating current.',
-      solution: '1. Definition: RMS value is that steady direct current which produces the same heating effect in a given resistor as the alternating current does over one complete cycle.\n2. Heat element: dH = I²R dt = I₀² sin²(ωt) R dt.\n3. Identity: sin²(ωt) = (1 − cos 2ωt) / 2.\n4. Integrating over period T gives H = I₀² R T / 2. Equating to I_rms² R T yields: I_rms = I₀ / √2 ≈ 0.707 I₀.'
-    }
-  ],
-  chemistry: [
-    {
-      id: 'chem-pyq-1',
-      year: 'CBSE 2023 (3 Marks)',
-      question: 'Why are aquatic species more comfortable in cold water than in warm water? State Henry\'s law.',
-      solution: '1. Henry\'s Law states that at constant temperature, the solubility of a gas in a liquid is directly proportional to the partial pressure of the gas above the liquid: p = K_H · x.\n2. Since Henry\'s constant K_H increases with increasing temperature, the solubility of gases in water decreases as temperature rises.\n3. Consequently, cold water contains a significantly higher concentration of dissolved oxygen, making aquatic organisms much more comfortable.'
-    },
-    {
-      id: 'chem-pyq-2',
-      year: 'CBSE 2022 (3 Marks)',
-      question: 'Differentiate between Lanthanoid contraction and Actinoid contraction with causes and consequences.',
-      solution: '1. Lanthanoid Contraction is the steady decrease in atomic/ionic radii across Ce to Lu due to poor shielding by 4f electrons.\n2. Actinoid Contraction is the decrease across Th to Lr due to even poorer shielding by 5f electrons.\n3. Actinoid contraction is greater in magnitude and more irregular than lanthanoid contraction.\n4. Consequence: Zirconium (Zr) and Hafnium (Hf) have almost identical atomic radii (~160 pm).'
-    },
-    {
-      id: 'chem-pyq-3',
-      year: 'CBSE 2020 (3 Marks)',
-      question: 'Why does a mercury cell provide a constant voltage of 1.35 V throughout its life?',
-      solution: 'The overall cell reaction for a mercury cell is:\nZn(Hg) + HgO(s) ⟶ ZnO(s) + Hg(l).\nThis overall reaction does not involve any ions in solution whose concentration can change during its period of operation. Hence, the potential remains constant at 1.35 V throughout its entire working life.'
-    }
-  ],
-  biology: [
-    {
-      id: 'bio-pyq-1',
-      year: 'CBSE 2023 (5 Marks)',
-      question: 'Explain double fertilization in angiosperms with the ploidy levels of the resulting structures.',
-      solution: '1. Definition: Double fertilization consists of two fusion events inside the embryo sac:\n   a. Syngamy: One male gamete (n) fuses with the egg cell (n) to produce the diploid Zygote (2n), which develops into the embryo.\n   b. Triple Fusion: The second male gamete (n) fuses with the two polar nuclei (n + n) in the central cell to produce the triploid Primary Endosperm Nucleus (PEN, 3n), which develops into nutritive endosperm.'
-    },
-    {
-      id: 'bio-pyq-2',
-      year: 'CBSE 2022 (3 Marks)',
-      question: 'State the Hardy-Weinberg principle. What are the factors that disturb this genetic equilibrium?',
-      solution: '1. Principle: Allele frequencies in a large, randomly mating population remain constant from generation to generation in the absence of evolutionary forces: p² + 2pq + q² = 1 (where p + q = 1).\n2. Factors that upset equilibrium: Gene migration/flow, Genetic drift, Mutation, Genetic recombination during meiosis, and Natural selection.'
-    }
-  ]
-};
-
-export default function PyqTabContent({ selectedSubject }) {
-  const pyqs = SAMPLE_PYQS[selectedSubject] || SAMPLE_PYQS.physics;
+export default function PyqTabContent({
+  selectedSubject,
+  selectedChapter,
+  selectedSubchapter,
+  onSelectChapter
+}) {
+  const [seed, setSeed] = useState(1);
   const [expandedId, setExpandedId] = useState(null);
+  const [chapterFilter, setChapterFilter] = useState(selectedChapter || 'ALL');
+
+  // Sync when selectedChapter changes from parent
+  useEffect(() => {
+    if (selectedChapter) {
+      setChapterFilter(selectedChapter);
+    } else {
+      setChapterFilter('ALL');
+    }
+    setExpandedId(null);
+  }, [selectedChapter]);
+
+  // Extract chapters for this subject
+  const subject = NCERT_SYLLABUS[selectedSubject];
+  const availableChapters = useMemo(() => {
+    if (!subject) return [];
+    const list = [];
+    subject.volumes.forEach(vol => {
+      vol.chapters.forEach(ch => {
+        list.push({ id: ch.id, title: `Ch ${ch.number}: ${ch.title}` });
+      });
+    });
+    return list;
+  }, [subject]);
+
+  // Fetch PYQs dynamically from engine
+  const pyqs = useMemo(() => {
+    const chId = chapterFilter === 'ALL' ? null : chapterFilter;
+    return getGeneratedPYQs(selectedSubject, chId, null, 25, seed);
+  }, [selectedSubject, chapterFilter, seed]);
+
+  const handleRefresh = () => {
+    setSeed(prev => prev + 1);
+    setExpandedId(null);
+  };
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
-      <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
-        <h3 className="font-serif text-xl sm:text-2xl font-bold text-[var(--text-primary)] flex items-center gap-2">
-          <Award size={20} className="text-[var(--accent-primary)] shrink-0" />
-          Previous Year Questions (PYQs)
-        </h3>
-        <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
-          Handpicked CBSE Class 12 board examination questions with official marking scheme solutions.
-        </p>
+      {/* Header Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] text-[11px] font-mono text-[var(--accent-primary)] font-semibold uppercase tracking-wider mb-1.5 border border-[var(--border-subtle)]">
+            <Sparkles size={11} />
+            <span>CBSE Board Examination Bank (1000+ Questions Pool)</span>
+          </div>
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <Award size={20} className="text-[var(--accent-primary)] shrink-0" />
+            Previous Year Questions (PYQs)
+          </h3>
+          <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
+            {chapterFilter === 'ALL'
+              ? 'Displaying handpicked board exam questions across all syllabus chapters.'
+              : `Scoped specifically to ${availableChapters.find(c => c.id === chapterFilter)?.title || 'this chapter'}.`}
+          </p>
+        </div>
+
+        {/* Filter & Refresh Controls */}
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
+          {/* Chapter Filter Selector */}
+          <div className="flex items-center gap-1.5 flex-1 sm:flex-none">
+            <Filter size={13} className="text-[var(--text-muted)] shrink-0" />
+            <div className="relative w-full sm:w-60">
+              <select
+                value={chapterFilter}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setChapterFilter(val);
+                  setExpandedId(null);
+                  if (onSelectChapter && val !== 'ALL') {
+                    onSelectChapter(val);
+                  }
+                }}
+                className="w-full appearance-none bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-xs"
+              >
+                <option value="ALL">All Syllabus Chapters</option>
+                {availableChapters.map((ch) => (
+                  <option key={ch.id} value={ch.id}>
+                    {ch.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+            </div>
+          </div>
+
+          <button
+            onClick={handleRefresh}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border-default)] text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors cursor-pointer shadow-xs"
+            title="Load different questions from 1000+ pool"
+          >
+            <RotateCw size={13} />
+            Refresh
+          </button>
+        </div>
       </div>
 
+      {/* Scope Status Bar */}
+      <div className="flex items-center justify-between px-1 text-xs text-[var(--text-muted)] font-mono">
+        <span>Showing {pyqs.length} Board Questions ({chapterFilter === 'ALL' ? 'All Chapters' : 'Active Chapter'})</span>
+        <span>Click chevron to expand marking scheme</span>
+      </div>
+
+      {/* Question Cards List */}
       <div className="space-y-3 sm:space-y-4">
-        {pyqs.map((item) => {
-          const isExpanded = expandedId === item.id;
+        {pyqs.map((item, idx) => {
+          const isExpanded = expandedId === item.id || (idx === 0 && expandedId === null);
 
           return (
             <div
-              key={item.id}
-              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-4 sm:p-6 transition-all shadow-sm"
+              key={item.id || idx}
+              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-4 sm:p-6 transition-all shadow-sm hover:border-[var(--border-default)]"
             >
               <div className="flex items-start justify-between gap-3 sm:gap-4">
                 <div className="flex-1 min-w-0">
-                  <span className="inline-block text-[11px] sm:text-xs font-mono font-bold text-[var(--text-accent)] bg-[var(--badge-recommended-bg)]/10 border border-[var(--badge-recommended-bg)]/20 px-2 sm:px-2.5 py-0.5 rounded-full mb-1.5 sm:mb-2">
-                    {item.year}
-                  </span>
+                  <div className="flex flex-wrap items-center gap-1.5 mb-2">
+                    <span className="inline-block text-[11px] sm:text-xs font-mono font-bold text-[var(--text-accent)] bg-[var(--badge-recommended-bg)]/10 border border-[var(--badge-recommended-bg)]/20 px-2.5 py-0.5 rounded-full">
+                      {item.year || 'CBSE Board Standard'}
+                    </span>
+                    {item.chapterName && (
+                      <span className="inline-block text-[10px] sm:text-[11px] font-mono text-[var(--text-secondary)] bg-[var(--bg-elevated)] border border-[var(--border-subtle)] px-2 py-0.5 rounded-md">
+                        {item.chapterName}
+                      </span>
+                    )}
+                  </div>
                   <p className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-relaxed">
                     {item.question}
                   </p>
                 </div>
 
                 <button
-                  onClick={() => setExpandedId(isExpanded ? null : item.id)}
-                  className="p-1.5 sm:p-2 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shrink-0 cursor-pointer"
-                  title={isExpanded ? "Hide solution" : "View solution"}
+                  onClick={() => setExpandedId(isExpanded ? 'NONE' : item.id)}
+                  className="p-1.5 sm:p-2 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shrink-0 cursor-pointer shadow-xs"
+                  title={isExpanded ? "Hide solution" : "View marking scheme solution"}
                 >
                   {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                 </button>
               </div>
 
               {isExpanded && (
-                <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-[var(--border-subtle)] space-y-2">
-                  <span className="text-[11px] sm:text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
-                    Marking Scheme Solution:
-                  </span>
+                <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-[var(--border-subtle)] space-y-2 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] sm:text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
+                      Official Stepwise Marking Scheme:
+                    </span>
+                    <span className="text-[10px] font-cursive text-[var(--text-muted)]">
+                      board examiner answer key
+                    </span>
+                  </div>
                   <div className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-elevated)] p-3.5 sm:p-4 rounded-xl border border-[var(--border-subtle)] break-words">
                     {item.solution}
                   </div>
