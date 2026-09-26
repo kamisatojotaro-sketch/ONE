@@ -254,18 +254,18 @@ export default function FormulaCard({ formulaList, derivations }) {
   if (!formulaList || formulaList.length === 0) return null;
 
   return (
-    <div className="rounded-3xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-6 md:p-7 shadow-xs space-y-5">
+    <div className="rounded-2xl sm:rounded-3xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-3.5 sm:p-6 md:p-7 shadow-xs space-y-3.5 sm:space-y-5">
       {/* Pinterest-inspired Editorial Header */}
-      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-[var(--text-accent)]/15 border border-[var(--text-accent)]/30 flex items-center justify-center text-[var(--text-accent)]">
-            <Sparkles size={16} />
+      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 sm:pb-4">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[var(--text-accent)]/15 border border-[var(--text-accent)]/30 flex items-center justify-center text-[var(--text-accent)] shrink-0">
+            <Sparkles size={15} />
           </div>
           <div>
-            <h5 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+            <h5 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)]">
               Core Formulas & Variable Meanings
             </h5>
-            <span className="text-xs font-cursive text-[var(--text-muted)]">
+            <span className="text-[11px] sm:text-xs font-cursive text-[var(--text-muted)] block">
               board-standard mathematical relations with variable definitions
             </span>
           </div>
@@ -273,50 +273,50 @@ export default function FormulaCard({ formulaList, derivations }) {
       </div>
 
       {/* Aesthetic Formula Cards */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {formulaList.map((formula, idx) => {
           const meta = resolveFormulaMetadata(formula);
 
           return (
             <div
               key={idx}
-              className="p-5 md:p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4 transition-all hover:border-[var(--accent-primary)]/50"
+              className="p-3.5 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3 sm:space-y-4 transition-all hover:border-[var(--accent-primary)]/50"
             >
               {/* Equation Title Tag */}
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] sm:text-xs font-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)] truncate">
                   {meta.title}
                 </span>
-                <span className="text-[11px] font-mono text-[var(--text-muted)]">
+                <span className="text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)] shrink-0">
                   Eq {idx + 1}
                 </span>
               </div>
 
               {/* Big, Clean Mathematical Typography */}
-              <div className="py-2 px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto">
+              <div className="py-2 px-2.5 sm:px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto">
                 <div
-                  className="font-serif text-lg md:text-xl font-bold tracking-wide text-[var(--text-primary)] text-center py-2"
+                  className="font-serif text-sm sm:text-lg md:text-xl font-bold tracking-wide text-[var(--text-primary)] text-center py-1 sm:py-2 min-w-min"
                   dangerouslySetInnerHTML={{ __html: meta.display }}
                 />
               </div>
 
               {/* Curated, Accurate Variable Breakdown (Only actual variables from this formula!) */}
               {meta.variables && meta.variables.length > 0 && (
-                <div className="pt-3 border-t border-[var(--border-subtle)] space-y-2">
+                <div className="pt-2.5 sm:pt-3 border-t border-[var(--border-subtle)] space-y-1.5 sm:space-y-2">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-bold block">
                     Where:
                   </span>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5 sm:gap-2">
                     {meta.variables.map((v, vIdx) => (
                       <div
                         key={vIdx}
-                        className="flex items-start gap-2.5 p-2 rounded-xl bg-[var(--bg-elevated)]/60 border border-[var(--border-subtle)] text-xs"
+                        className="flex items-start gap-2 p-1.5 sm:p-2 rounded-xl bg-[var(--bg-elevated)]/60 border border-[var(--border-subtle)] text-xs"
                       >
                         <span
-                          className="font-serif font-bold text-[var(--text-primary)] px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-default)] shrink-0 font-mono text-xs"
+                          className="font-serif font-bold text-[var(--text-primary)] px-1.5 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-default)] shrink-0 font-mono text-[11px] sm:text-xs"
                           dangerouslySetInnerHTML={{ __html: v.sym }}
                         />
-                        <span className="font-sans text-[var(--text-secondary)] text-xs leading-snug self-center">
+                        <span className="font-sans text-[var(--text-secondary)] text-[11px] sm:text-xs leading-snug self-center">
                           {v.desc}
                         </span>
                       </div>
@@ -331,13 +331,13 @@ export default function FormulaCard({ formulaList, derivations }) {
 
       {/* Mathematical Proof / Derivations Card if present */}
       {derivations && (
-        <div className="p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] space-y-2 shadow-xs">
+        <div className="p-3.5 sm:p-5 rounded-xl sm:rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] space-y-2 shadow-xs">
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider">
             <BookOpen size={14} />
             <span>Derivation Steps & Mathematical Notes</span>
           </div>
           <div
-            className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)]"
+            className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)] break-words"
             dangerouslySetInnerHTML={{ __html: formatMathString(derivations) }}
           />
         </div>

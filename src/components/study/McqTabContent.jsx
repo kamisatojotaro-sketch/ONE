@@ -59,11 +59,11 @@ export default function McqTabContent({ selectedSubject }) {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div className="flex items-center justify-between p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
+    <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
+      <div className="flex items-center justify-between p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
         <div>
-          <h3 className="font-serif text-2xl font-bold text-[var(--text-primary)] flex items-center gap-2">
-            <CheckSquare size={22} className="text-[var(--accent-primary)]" />
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+            <CheckSquare size={20} className="text-[var(--accent-primary)] shrink-0" />
             Board MCQ Quiz Practice
           </h3>
           <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
@@ -72,14 +72,14 @@ export default function McqTabContent({ selectedSubject }) {
         </div>
         <button
           onClick={resetQuiz}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[var(--border-default)] text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl border border-[var(--border-default)] text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors cursor-pointer shrink-0"
         >
-          <RotateCcw size={14} />
+          <RotateCcw size={13} />
           Reset
         </button>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {mcqs.map((q, idx) => {
           const userChoice = selectedAnswers[q.id];
           const isAnswered = userChoice !== undefined;
@@ -87,18 +87,18 @@ export default function McqTabContent({ selectedSubject }) {
           return (
             <div
               key={q.id}
-              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-6 shadow-sm space-y-4"
+              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-4 sm:p-6 shadow-sm space-y-3 sm:space-y-4"
             >
-              <div className="flex items-start gap-3">
-                <span className="font-mono text-xs font-bold px-2 py-1 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
+              <div className="flex items-start gap-2.5 sm:gap-3">
+                <span className="font-mono text-xs font-bold px-2 py-0.5 sm:py-1 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)] shrink-0">
                   Q{idx + 1}
                 </span>
-                <p className="font-serif text-lg font-bold text-[var(--text-primary)] leading-snug">
+                <p className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug">
                   {q.question}
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 pt-1 sm:pt-2">
                 {q.options.map((opt, i) => {
                   let btnStyle = 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-primary)] hover:border-[var(--accent-primary)]';
 
@@ -117,9 +117,9 @@ export default function McqTabContent({ selectedSubject }) {
                       key={i}
                       disabled={isAnswered}
                       onClick={() => handleSelectOption(q.id, i)}
-                      className={`p-3.5 rounded-xl border text-left text-sm transition-all flex items-center justify-between gap-2 cursor-pointer ${btnStyle}`}
+                      className={`p-3 sm:p-3.5 rounded-xl border text-left text-xs sm:text-sm transition-all flex items-center justify-between gap-2 cursor-pointer ${btnStyle}`}
                     >
-                      <span>{opt}</span>
+                      <span className="break-words">{opt}</span>
                       {isAnswered && i === q.correct && (
                         <CheckCircle2 size={16} className="text-green-600 shrink-0" />
                       )}

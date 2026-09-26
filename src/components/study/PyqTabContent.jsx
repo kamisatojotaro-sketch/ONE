@@ -63,39 +63,39 @@ export default function PyqTabContent({ selectedSubject }) {
   const [expandedId, setExpandedId] = useState(null);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div className="p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
-        <h3 className="font-serif text-2xl font-bold text-[var(--text-primary)] flex items-center gap-2">
-          <Award size={22} className="text-[var(--accent-primary)]" />
-          Previous Year Board Questions (PYQs)
+    <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
+      <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
+        <h3 className="font-serif text-xl sm:text-2xl font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <Award size={20} className="text-[var(--accent-primary)] shrink-0" />
+          Previous Year Questions (PYQs)
         </h3>
         <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
           Handpicked CBSE Class 12 board examination questions with official marking scheme solutions.
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {pyqs.map((item) => {
           const isExpanded = expandedId === item.id;
 
           return (
             <div
               key={item.id}
-              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-6 transition-all shadow-sm"
+              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-4 sm:p-6 transition-all shadow-sm"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <span className="inline-block text-xs font-mono font-bold text-[var(--text-accent)] bg-[var(--badge-recommended-bg)]/10 border border-[var(--badge-recommended-bg)]/20 px-2.5 py-0.5 rounded-full mb-2">
+              <div className="flex items-start justify-between gap-3 sm:gap-4">
+                <div className="flex-1 min-w-0">
+                  <span className="inline-block text-[11px] sm:text-xs font-mono font-bold text-[var(--text-accent)] bg-[var(--badge-recommended-bg)]/10 border border-[var(--badge-recommended-bg)]/20 px-2 sm:px-2.5 py-0.5 rounded-full mb-1.5 sm:mb-2">
                     {item.year}
                   </span>
-                  <p className="font-serif text-lg font-bold text-[var(--text-primary)] leading-relaxed">
+                  <p className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-relaxed">
                     {item.question}
                   </p>
                 </div>
 
                 <button
                   onClick={() => setExpandedId(isExpanded ? null : item.id)}
-                  className="p-2 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shrink-0"
+                  className="p-1.5 sm:p-2 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shrink-0 cursor-pointer"
                   title={isExpanded ? "Hide solution" : "View solution"}
                 >
                   {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -103,11 +103,11 @@ export default function PyqTabContent({ selectedSubject }) {
               </div>
 
               {isExpanded && (
-                <div className="mt-5 pt-4 border-t border-[var(--border-subtle)] space-y-2">
-                  <span className="text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
+                <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-[var(--border-subtle)] space-y-2">
+                  <span className="text-[11px] sm:text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
                     Marking Scheme Solution:
                   </span>
-                  <div className="font-sans text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-elevated)] p-4 rounded-xl border border-[var(--border-subtle)]">
+                  <div className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-elevated)] p-3.5 sm:p-4 rounded-xl border border-[var(--border-subtle)] break-words">
                     {item.solution}
                   </div>
                 </div>

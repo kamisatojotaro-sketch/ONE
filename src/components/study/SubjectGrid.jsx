@@ -43,27 +43,27 @@ export default function SubjectGrid({ onSelectSubject, completedSections, comple
   };
 
   return (
-    <div className="space-y-10 animate-in fade-in duration-500">
+    <div className="space-y-6 sm:space-y-10 animate-in fade-in duration-500">
       {/* Header section matching editorial theme */}
-      <div className="border-b border-[var(--border-default)] pb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-xs text-[var(--text-secondary)] font-sans uppercase tracking-wider mb-4">
-          <span>NCERT Class 12 Syllabus</span>
+      <div className="border-b border-[var(--border-default)] pb-5 sm:pb-8">
+        <div className="inline-flex items-center gap-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[11px] sm:text-xs text-[var(--text-secondary)] font-sans uppercase tracking-wider mb-3 sm:mb-4">
+          <span>NCERT Class 12</span>
           <span>•</span>
           <span className="font-semibold text-[var(--text-accent)]">CBSE Core</span>
         </div>
-        <h1 className="font-serif text-4xl md:text-5xl font-bold text-[var(--text-primary)] tracking-tight">
+        <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-bold text-[var(--text-primary)] tracking-tight">
           Study Session
-          <span className="font-cursive text-3xl md:text-4xl text-[var(--text-accent)] font-normal ml-3">
+          <span className="font-cursive text-xl sm:text-3xl md:text-4xl text-[var(--text-accent)] font-normal ml-2 sm:ml-3">
             quietly mastered
           </span>
         </h1>
-        <p className="font-sans text-[var(--text-secondary)] mt-3 max-w-2xl text-base leading-relaxed">
+        <p className="font-sans text-[var(--text-secondary)] mt-2 sm:mt-3 max-w-2xl text-xs sm:text-base leading-relaxed">
           Select a subject to explore textbook volumes, study high-yield NCERT notes, track completed subtopics, and practice exam portions.
         </p>
       </div>
 
       {/* 3 Subject Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         {subjects.map((subj) => {
           const progress = calculateSubjectProgress(subj);
           const portionChapters = EXAM_PORTIONS[subj.id] || [];
@@ -73,7 +73,7 @@ export default function SubjectGrid({ onSelectSubject, completedSections, comple
             <div
               key={subj.id}
               onClick={() => onSelectSubject(subj.id)}
-              className="group relative flex flex-col justify-between p-7 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 hover:border-[var(--accent-primary)] overflow-hidden"
+              className="group relative flex flex-col justify-between p-5 sm:p-7 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 hover:border-[var(--accent-primary)] overflow-hidden"
             >
               {/* Top Row: Icon & Code */}
               <div>

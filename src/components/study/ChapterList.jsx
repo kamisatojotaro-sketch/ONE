@@ -39,14 +39,14 @@ export default function ChapterList({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Volume Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-[var(--text-accent)] font-semibold">
+          <span className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[var(--text-accent)] font-semibold">
             {subject.name} • {volume.title}
           </span>
-          <h2 className="font-serif text-2xl font-bold text-[var(--text-primary)] mt-1">
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-[var(--text-primary)] mt-0.5 sm:mt-1">
             {volume.subtitle}
           </h2>
         </div>
@@ -56,7 +56,7 @@ export default function ChapterList({
       </div>
 
       {/* Chapters Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         {volume.chapters.map((ch) => {
           const stats = calculateChapterCompletion(ch);
           const isPortion = ch.isExamPortion;
@@ -66,21 +66,21 @@ export default function ChapterList({
             <div
               key={ch.id}
               onClick={() => onSelectChapter(ch.id)}
-              className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+              className={`p-4 sm:p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
                 ch.available
                   ? 'bg-[var(--bg-surface)] border-[var(--border-default)] hover:border-[var(--accent-primary)] hover:shadow-md hover:-translate-y-1'
                   : 'bg-[var(--bg-surface)]/60 border-[var(--border-subtle)] opacity-75'
               }`}
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">
+                <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
+                  <span className="text-xs font-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">
                     Chapter {ch.number}
                   </span>
 
                   <div className="flex items-center gap-1.5">
                     {isPortion && (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full bg-[var(--badge-recommended-bg)]/15 text-[var(--text-accent)] border border-[var(--badge-recommended-bg)]/30">
+                      <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-full bg-[var(--badge-recommended-bg)]/15 text-[var(--text-accent)] border border-[var(--badge-recommended-bg)]/30">
                         <Sparkles size={11} />
                         Exam Portion
                       </span>
@@ -95,7 +95,7 @@ export default function ChapterList({
                   </div>
                 </div>
 
-                <h3 className="font-serif text-xl font-bold text-[var(--text-primary)] mb-2 line-clamp-2">
+                <h3 className="font-serif text-lg sm:text-xl font-bold text-[var(--text-primary)] mb-2 line-clamp-2">
                   {ch.title}
                 </h3>
               </div>

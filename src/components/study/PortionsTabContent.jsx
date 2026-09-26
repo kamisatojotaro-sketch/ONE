@@ -37,16 +37,16 @@ export default function PortionsTabContent({
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
+    <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300">
       {/* Top Banner: Exam Readiness Progress Bar */}
-      <div className="p-6 md:p-8 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-sm">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+      <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-5">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] font-mono uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[10px] sm:text-xs text-[var(--text-secondary)] font-mono uppercase tracking-wider mb-2">
               <Target size={13} className="text-[var(--accent-primary)]" />
               <span>Target Exam Portions</span>
             </div>
-            <h2 className="font-serif text-3xl font-bold text-[var(--text-primary)]">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
               Exam Portions Tracker
             </h2>
             <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
@@ -54,18 +54,18 @@ export default function PortionsTabContent({
             </p>
           </div>
 
-          <div className="text-right">
-            <span className="font-mono text-3xl font-bold text-[var(--accent-primary)]">
+          <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center border-t sm:border-t-0 pt-2 sm:pt-0 border-[var(--border-subtle)]">
+            <span className="font-mono text-2xl sm:text-3xl font-bold text-[var(--accent-primary)]">
               {portionsStats.percentage}%
             </span>
-            <span className="block text-xs text-[var(--text-muted)] font-mono">
-              {portionsStats.completed} of {portionsStats.total} Chapters Completed
+            <span className="block text-[11px] sm:text-xs text-[var(--text-muted)] font-mono">
+              {portionsStats.completed} of {portionsStats.total} Chapters Done
             </span>
           </div>
         </div>
 
         {/* Master Progress Bar */}
-        <div className="w-full h-3 rounded-full bg-[var(--border-default)] overflow-hidden">
+        <div className="w-full h-2.5 sm:h-3 rounded-full bg-[var(--border-default)] overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500 bg-[var(--accent-primary)]"
             style={{ width: `${portionsStats.percentage}%` }}
@@ -74,7 +74,7 @@ export default function PortionsTabContent({
       </div>
 
       {/* 3 Subject Portions Breakdowns */}
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {['physics', 'biology', 'chemistry'].map((subjKey) => {
           const subject = NCERT_SYLLABUS[subjKey];
           const chapters = getSubjectPortionChapters(subjKey);
@@ -84,30 +84,30 @@ export default function PortionsTabContent({
           return (
             <div
               key={subjKey}
-              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-6 shadow-sm space-y-4"
+              className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-4 sm:p-6 shadow-sm space-y-3 sm:space-y-4"
             >
               {/* Subject Title & Sub-Progress */}
-              <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+              <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 sm:pb-4 gap-2">
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                  <div className="p-2 sm:p-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] shrink-0">
                     {getSubjectIcon(subjKey)}
                   </div>
-                  <div>
-                    <h3 className="font-serif text-xl font-bold text-[var(--text-primary)]">
+                  <div className="min-w-0">
+                    <h3 className="font-serif text-lg sm:text-xl font-bold text-[var(--text-primary)] truncate">
                       {subject.name}
                     </h3>
-                    <span className="text-xs text-[var(--text-muted)] font-sans">
+                    <span className="text-[11px] sm:text-xs text-[var(--text-muted)] font-sans">
                       {completedCount} / {chapters.length} Portion Chapters
                     </span>
                   </div>
                 </div>
 
-                <div className="w-32">
-                  <div className="flex justify-between text-xs font-mono mb-1 text-[var(--text-secondary)]">
+                <div className="w-24 sm:w-32 shrink-0">
+                  <div className="flex justify-between text-[11px] sm:text-xs font-mono mb-1 text-[var(--text-secondary)]">
                     <span>Progress</span>
                     <span>{subjectPct}%</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-[var(--border-default)] overflow-hidden">
+                  <div className="w-full h-1.5 sm:h-2 rounded-full bg-[var(--border-default)] overflow-hidden">
                     <div
                       className="h-full rounded-full bg-[var(--accent-primary)] transition-all duration-300"
                       style={{ width: `${subjectPct}%` }}
