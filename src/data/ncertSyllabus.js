@@ -1,6 +1,6 @@
-import { PHYSICS_CHAPTERS } from './physicsNotes';
-import { CHEMISTRY_CHAPTERS } from './chemistryNotes';
-import { BIOLOGY_CHAPTERS } from './biologyNotes';
+import { PHYSICS_CHAPTERS } from './physicsNotes.js';
+import { CHEMISTRY_CHAPTERS } from './chemistryNotes.js';
+import { BIOLOGY_CHAPTERS } from './biologyNotes.js';
 
 export const EXAM_PORTIONS = {
   physics: ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-4', 'phy-ch-5', 'phy-ch-6', 'phy-ch-7', 'phy-ch-8'],

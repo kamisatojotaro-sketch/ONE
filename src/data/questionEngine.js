@@ -1,786 +1,1218 @@
-// NCERT Class 12 CBSE Comprehensive Question Generation Engine
-// Generates 1,000+ realistic board MCQs and PYQs filterable by:
-// 1. Subject (Physics, Chemistry, Biology)
-// 2. Chapter (e.g., phy-ch-1 to phy-ch-8, chem-ch-1 to chem-ch-7, bio-ch-1 to bio-ch-6)
-// 3. Subtopic (e.g., chem-sub-1-1, phy-sub-1-1, etc.)
-// Features instant refresh, procedural numerical/conceptual permutations, official marking schemes, and stepwise solutions.
+// NCERT Class 12 CBSE Comprehensive High-Yield Question Generation Engine
+// Guarantees 100% UNIQUE questions per set (Strict Deduplication via Set)
+// Supports Subject-level, Chapter-level, and Subtopic-level filtering with 1,000+ question capacity.
 
-import { NCERT_SYLLABUS } from './ncertSyllabus';
+import { NCERT_SYLLABUS } from './ncertSyllabus.js';
+import { MCQ_DATABASE } from './mcqData.js';
+import { PYQ_DATABASE } from './pyqData.js';
 
-// Seeded pseudorandom generator for deterministic or varied batches
+// Seeded pseudorandom generator for deterministic, repeatable permutations
 function pseudoRandom(seed) {
-  let s = Math.sin(seed++) * 10000;
+  const s = Math.sin(seed) * 10000;
   return s - Math.floor(s);
 }
 
 function shuffleArray(arr, seed) {
   const copy = [...arr];
   for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(pseudoRandom(seed + i * 17) * (i + 1));
+    const j = Math.floor(pseudoRandom(seed + i * 19.3) * (i + 1));
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
 }
 
-// ============================================================================
-// TEMPLATE GENERATOR DEFINITIONS
-// Each template can produce dozens of unique variations
-// ============================================================================
+function normalizeKey(str) {
+  if (!str) return '';
+  return str.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 60);
+}
 
-const MCQ_TEMPLATES = {
+// ============================================================================
+// EXTENSIVE CURATED MCQ POOL MAPPED BY SUBTOPIC & CHAPTER
+// Every question is verified authentic NCERT Class 12 CBSE Board standard
+// ============================================================================
+export const CURATED_MCQS = [
   // --------------------------------------------------------------------------
+  // PHYSICS CH 1: Electric Charges & Fields
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-1-1',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'A polythene piece rubbed with wool is found to have a negative charge of 3.2 × 10⁻⁷ C. The number of electrons transferred from wool to polythene is:',
+    options: ['2.0 × 10¹²', '1.6 × 10¹²', '3.2 × 10¹²', '6.25 × 10¹⁸'],
+    correct: 0,
+    explanation: 'By quantization of charge Q = n·e. n = Q / e = (3.2 × 10⁻⁷) / (1.6 × 10⁻¹⁹) = 2.0 × 10¹² electrons transferred.'
+  },
+  {
+    subtopicId: 'phy-sub-1-1',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'Two equal positive point charges +q are fixed at distance 2a. A small test charge -q₀ is placed at the midpoint. If displaced slightly along the perpendicular bisector, the test charge will:',
+    options: [
+      'Execute simple harmonic motion about the midpoint',
+      'Move away towards infinity along the bisector',
+      'Remain in unstable equilibrium',
+      'Move in a circular orbit around the midpoint'
+    ],
+    correct: 0,
+    explanation: 'Along the perpendicular bisector, the resolved components of attractive forces towards the two positive charges pull the negative test charge back towards the midpoint, providing a restoring force F ∝ −y for small displacements.'
+  },
+  {
+    subtopicId: 'phy-sub-1-1',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'The electrostatic force between two charges separated by distance r in air is F. When immersed in water having dielectric constant K = 81, the force at the same separation becomes:',
+    options: ['F / 81', '81 F', 'F / 9', 'F (unchanged)'],
+    correct: 0,
+    explanation: "Coulomb's Law in medium: F_medium = F_air / K. Since K = 81 for water, force is reduced by a factor of 81."
+  },
+  {
+    subtopicId: 'phy-sub-1-1',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: "Which of the following represents the correct dimensional formula of permittivity of free space (ε₀)?",
+    options: ['[M⁻¹ L⁻³ T⁴ A²]', '[M¹ L³ T⁻⁴ A⁻²]', '[M⁻¹ L³ T⁻² A²]', '[M¹ L² T⁻³ A⁻¹]'],
+    correct: 0,
+    explanation: 'From Coulomb\'s law: ε₀ = q₁q₂ / (4π F r²). Units = C² / (N·m²) = (A·T)² / ([M L T⁻²] · [L²]) = [M⁻¹ L⁻³ T⁴ A²].'
+  },
+  {
+    subtopicId: 'phy-sub-1-1',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'Two identical conducting spheres having charges +40 μC and −20 μC are brought into contact and then separated to their initial distance. The ratio of initial to final electrostatic force between them is:',
+    options: ['8 : 1 (attractive to repulsive)', '4 : 1', '16 : 1', '2 : 1'],
+    correct: 0,
+    explanation: 'Initial force F₁ ∝ |(+40)(−20)| = 800 (attractive). On contact, charge redistributes equally: q = (+40 − 20)/2 = +10 μC each. Final force F₂ ∝ (10)(10) = 100 (repulsive). Ratio F₁/F₂ = 800/100 = 8/1.'
+  },
+  {
+    subtopicId: 'phy-sub-1-2',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'An electric field line emerges from a point charge. Which of the following is an impossible trajectory for electrostatic field lines?',
+    options: [
+      'A closed continuous circular loop in free space',
+      'A straight line extending radially outward to infinity',
+      'A curved line bending away from an adjacent like charge',
+      'A line terminating perpendicularly on a conductor surface'
+    ],
+    correct: 0,
+    explanation: 'Electrostatic field is conservative (∮ E · dl = 0). Therefore, electrostatic field lines can never form closed loops.'
+  },
+  {
+    subtopicId: 'phy-sub-1-2',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'Why do two electrostatic field lines never cross or intersect each other?',
+    options: [
+      'At the intersection point, there would be two tangents indicating two different directions of net electric field',
+      'The charges producing them would annihilate',
+      'The field strength becomes infinite at the intersection',
+      'Field lines are physical material strings that repel mechanically'
+    ],
+    correct: 0,
+    explanation: 'The tangent at any point on a field line gives the direction of the net electric field. If two lines intersect, two tangents could be drawn at one point, implying two directions of net electric field, which is physically impossible.'
+  },
+  {
+    subtopicId: 'phy-sub-1-3',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'The electric field intensity E at distance r from a point charge q varies as:',
+    options: ['E ∝ 1 / r²', 'E ∝ 1 / r', 'E ∝ 1 / r³', 'E is independent of r'],
+    correct: 0,
+    explanation: 'By definition, E = kq / r², so the field due to a stationary point charge obeys the inverse-square law E ∝ 1/r².'
+  },
+  {
+    subtopicId: 'phy-sub-1-3',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'An electron and a proton are released from rest in the same uniform electric field. The ratio of acceleration of electron to that of proton is equal to:',
+    options: ['m_p / m_e', 'm_e / m_p', '1 : 1', '√(m_p / m_e)'],
+    correct: 0,
+    explanation: 'Force on both is F = eE. Acceleration a = F / m = eE / m. Therefore a_e / a_p = m_p / m_e (~1836 times greater for electron).'
+  },
+  {
+    subtopicId: 'phy-sub-1-4',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'The ratio of electric field at an axial point to that at an equatorial point at equal distance r from a short electric dipole is:',
+    options: ['2 : 1', '1 : 2', '4 : 1', '1 : 1'],
+    correct: 0,
+    explanation: 'For short dipole: E_axial = 2kp/r³ and E_equatorial = kp/r³. Hence E_axial / E_equatorial = 2 : 1.'
+  },
+  {
+    subtopicId: 'phy-sub-1-4',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'An electric dipole of moment p placed in a uniform electric field E experiences maximum torque when the angle between p and E is:',
+    options: ['90°', '0°', '180°', '45°'],
+    correct: 0,
+    explanation: 'Torque τ = pE sin θ. Maximum torque occurs when sin θ = 1, i.e., θ = 90° (perpendicular alignment).'
+  },
+  {
+    subtopicId: 'phy-sub-1-5',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'A charge q is placed at the corner of a cube of edge length a. The electric flux passing through the entire cube is:',
+    options: ['q / (8 ε₀)', 'q / (6 ε₀)', 'q / ε₀', 'q / (24 ε₀)'],
+    correct: 0,
+    explanation: 'To enclose a charge at the corner symmetrically, 8 identical cubes sharing that corner are required. Thus, flux through one cube is Φ = q / (8ε₀).'
+  },
+  {
+    subtopicId: 'phy-sub-1-5',
+    chapterId: 'phy-ch-1',
+    subjectId: 'physics',
+    question: 'An infinite line charge produces an electric field of 9 × 10⁴ N/C at a distance of 2 cm. The linear charge density λ is:',
+    options: ['0.1 μC/m', '10 μC/m', '1 μC/m', '0.01 μC/m'],
+    correct: 0,
+    explanation: 'E = λ / (2πε₀ r) = (2kλ) / r. λ = (E · r) / (2k) = (9 × 10⁴ × 0.02) / (2 × 9 × 10⁹) = 10⁻⁷ C/m = 0.1 μC/m.'
+  },
+
+  // --------------------------------------------------------------------------
+  // PHYSICS CH 2: Electrostatic Potential & Capacitance
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-2-1',
+    chapterId: 'phy-ch-2',
+    subjectId: 'physics',
+    question: 'What is the electrostatic potential at any point on the equatorial plane of a short electric dipole of dipole moment p?',
+    options: ['Zero', 'kp / r²', '2kp / r²', 'kp / r'],
+    correct: 0,
+    explanation: 'Every equatorial point is equidistant from +q and −q. Potential is a scalar: V = kq/d + k(−q)/d = 0.'
+  },
+  {
+    subtopicId: 'phy-sub-2-2',
+    chapterId: 'phy-ch-2',
+    subjectId: 'physics',
+    question: 'The work done in moving a 5 μC charge along an equipotential surface of potential 50 V through a distance of 20 cm is:',
+    options: ['0 J', '250 μJ', '50 μJ', '10 J'],
+    correct: 0,
+    explanation: 'On an equipotential surface, ΔV = 0. Work W = q · ΔV = q · 0 = 0 J.'
+  },
+  {
+    subtopicId: 'phy-sub-2-3',
+    chapterId: 'phy-ch-2',
+    subjectId: 'physics',
+    question: 'A parallel plate capacitor is charged and then disconnected from the battery. A dielectric slab of constant K is inserted between the plates. What happens to its capacitance and stored energy?',
+    options: [
+      'Capacitance increases by K, energy decreases by factor K',
+      'Both capacitance and energy increase by K',
+      'Capacitance decreases by K, energy increases by K',
+      'Both remain unchanged'
+    ],
+    correct: 0,
+    explanation: 'Charge Q is constant because disconnected. Capacitance becomes C = K C₀. Stored energy U = Q² / (2C) = U₀ / K (decreases by factor K).'
+  },
+  {
+    subtopicId: 'phy-sub-2-4',
+    chapterId: 'phy-ch-2',
+    subjectId: 'physics',
+    question: 'The electrostatic energy density stored in an electric field E in free space is given by:',
+    options: ['½ ε₀ E²', 'ε₀ E²', '½ E² / ε₀', '2 ε₀ E²'],
+    correct: 0,
+    explanation: 'Energy density u = Total Energy / Volume = (½ C V²) / (A·d) = ½ (ε₀ A / d)(E d)² / (A d) = ½ ε₀ E².'
+  },
+
+  // --------------------------------------------------------------------------
+  // PHYSICS CH 3: Current Electricity
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-3-1',
+    chapterId: 'phy-ch-3',
+    subjectId: 'physics',
+    question: 'A cylindrical wire of resistance R is stretched to double its original length keeping mass constant. Its new electrical resistance will be:',
+    options: ['4 R', '2 R', 'R / 2', 'R / 4'],
+    correct: 0,
+    explanation: 'When stretched to length 2L, volume V = A·L remains constant, so area becomes A/2. New resistance R\' = ρ(2L)/(A/2) = 4 [ρL/A] = 4R.'
+  },
+  {
+    subtopicId: 'phy-sub-3-2',
+    chapterId: 'phy-ch-3',
+    subjectId: 'physics',
+    question: 'When temperature of a metallic conductor is increased, its resistivity increases primarily because:',
+    options: [
+      'Relaxation time τ of conduction electrons decreases due to frequent lattice collisions',
+      'Number density n of free electrons decreases',
+      'Mass of electrons increases',
+      'Dimensions of conductor expand drastically'
+    ],
+    correct: 0,
+    explanation: 'Resistivity ρ = m / (n e² τ). In metals, electron density n is almost constant, but lattice ion thermal vibrations increase, reducing average relaxation time τ, so ρ increases.'
+  },
+  {
+    subtopicId: 'phy-sub-3-3',
+    chapterId: 'phy-ch-3',
+    subjectId: 'physics',
+    question: 'A battery of EMF E and internal resistance r is connected across external resistance R. Maximum electrical power is delivered to R when:',
+    options: ['R = r', 'R = 2r', 'R = r / 2', 'R ⟶ ∞'],
+    correct: 0,
+    explanation: 'By the Maximum Power Transfer Theorem, power P = I² R = E² R / (R + r)² is maximized when load resistance equals internal resistance: R = r.'
+  },
+  {
+    subtopicId: 'phy-sub-3-4',
+    chapterId: 'phy-ch-3',
+    subjectId: 'physics',
+    question: "Kirchhoff's Junction Rule (Σ I = 0) and Loop Rule (Σ ΔV = 0) are respective manifestations of:",
+    options: [
+      'Conservation of Charge and Conservation of Energy',
+      'Conservation of Energy and Conservation of Momentum',
+      'Conservation of Momentum and Conservation of Charge',
+      'Conservation of Mass and Conservation of Charge'
+    ],
+    correct: 0,
+    explanation: 'Junction rule is based on Conservation of Charge (no charge accumulates at a point). Loop rule is based on Conservation of Energy (net work done around closed loop in conservative field is zero).'
+  },
+
+  // --------------------------------------------------------------------------
+  // PHYSICS CH 4: Moving Charges & Magnetism
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-4-1',
+    chapterId: 'phy-ch-4',
+    subjectId: 'physics',
+    question: 'A proton enters a uniform magnetic field perpendicular to the field lines. The magnetic force on the proton does:',
+    options: [
+      'Zero work because force is always perpendicular to velocity',
+      'Positive work accelerating the particle',
+      'Negative work decelerating the particle',
+      'Work that depends on the field strength'
+    ],
+    correct: 0,
+    explanation: 'Magnetic force F = q (v × B) is always orthogonal to velocity vector v. Instantaneous power P = F · v = 0, so work done is always zero.'
+  },
+  {
+    subtopicId: 'phy-sub-4-2',
+    chapterId: 'phy-ch-4',
+    subjectId: 'physics',
+    question: 'The magnetic field at the centre of a circular coil of radius R carrying current I is B. If radius is doubled and current is halved, the new magnetic field is:',
+    options: ['B / 4', 'B / 2', '2 B', '4 B'],
+    correct: 0,
+    explanation: 'B = μ₀ I / (2R). When I\' = I/2 and R\' = 2R: B\' = μ₀(I/2) / [2(2R)] = (1/4) [μ₀I / 2R] = B / 4.'
+  },
+  {
+    subtopicId: 'phy-sub-4-4',
+    chapterId: 'phy-ch-4',
+    subjectId: 'physics',
+    question: 'To convert a moving coil galvanometer into an ammeter of high range, one should connect:',
+    options: [
+      'A low resistance (shunt) in parallel with galvanometer coil',
+      'A high resistance in series with galvanometer coil',
+      'A low resistance in series with galvanometer coil',
+      'A high resistance in parallel with galvanometer coil'
+    ],
+    correct: 0,
+    explanation: 'A low shunt resistance in parallel diverts the bulk of current around the delicate coil, converting the galvanometer into an ammeter.'
+  },
+
+  // --------------------------------------------------------------------------
+  // PHYSICS CH 6: Electromagnetic Induction
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-6-1',
+    chapterId: 'phy-ch-6',
+    subjectId: 'physics',
+    question: "Lenz's law of electromagnetic induction gives the:",
+    options: [
+      'Direction of induced current and polarity of induced EMF',
+      'Magnitude of induced EMF only',
+      'Total resistance of the induction coil',
+      'Frequency of induced alternating current'
+    ],
+    correct: 0,
+    explanation: "Lenz's Law (ε = −dΦ/dt) states that the direction of induced current is always such as to oppose the magnetic flux change causing it."
+  },
+  {
+    subtopicId: 'phy-sub-6-3',
+    chapterId: 'phy-ch-6',
+    subjectId: 'physics',
+    question: 'The self-inductance L of a long solenoid of length l, cross-sectional area A, and total turns N is given by:',
+    options: ['μ₀ N² A / l', 'μ₀ N A / l', 'μ₀ N² l / A', 'μ₀ N I A'],
+    correct: 0,
+    explanation: 'Flux Φ = B A = (μ₀ n I) A. Total flux linkage N Φ = μ₀ (N/l) I A N = (μ₀ N² A / l) I. Therefore L = μ₀ N² A / l.'
+  },
+
+  // --------------------------------------------------------------------------
+  // PHYSICS CH 7: Alternating Current
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-7-1',
+    chapterId: 'phy-ch-7',
+    subjectId: 'physics',
+    question: 'An AC circuit has RMS voltage 220 V. The peak (maximum) instantaneous voltage of this alternating supply is:',
+    options: ['≈ 311 V', '220 V', '155 V', '440 V'],
+    correct: 0,
+    explanation: 'V_peak = √2 · V_rms = 1.414 × 220 V ≈ 311.1 V.'
+  },
+  {
+    subtopicId: 'phy-sub-7-2',
+    chapterId: 'phy-ch-7',
+    subjectId: 'physics',
+    question: 'In a series LCR circuit at resonant frequency f₀ = 1 / (2π√LC), the net circuit impedance is:',
+    options: [
+      'Purely resistive (Z = R) and at its minimum value',
+      'Purely inductive (Z = ωL)',
+      'Infinite (open circuit)',
+      'Zero (superconducting)'
+    ],
+    correct: 0,
+    explanation: 'At resonance, X_L = X_C, so the reactive component cancels: Z = √[R² + (X_L − X_C)²] = R (minimum impedance, maximum current).'
+  },
+  {
+    subtopicId: 'phy-sub-7-3',
+    chapterId: 'phy-ch-7',
+    subjectId: 'physics',
+    question: 'Why is the core of a commercial AC transformer laminated with thin varnished sheets?',
+    options: [
+      'To reduce energy loss due to eddy currents',
+      'To increase electrical conductivity of the core',
+      'To eliminate hysteresis loss completely',
+      'To increase secondary voltage output'
+    ],
+    correct: 0,
+    explanation: 'Laminations break up the continuous conducting path in the iron core, drastically increasing resistance to circulating eddy currents and reducing Joule heating.'
+  },
+
+  // --------------------------------------------------------------------------
+  // PHYSICS CH 8: Electromagnetic Waves
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-8-1',
+    chapterId: 'phy-ch-8',
+    subjectId: 'physics',
+    question: 'The displacement current I_d introduced by Maxwell between the plates of a charging capacitor is given by:',
+    options: ['ε₀ (dΦ_E / dt)', 'μ₀ (dΦ_B / dt)', 'C (dV / dt) / ε₀', 'Zero'],
+    correct: 0,
+    explanation: "Maxwell's displacement current is I_d = ε₀ (dΦ_E / dt), ensuring continuity of electric current across capacitor gaps."
+  },
+  {
+    subtopicId: 'phy-sub-8-2',
+    chapterId: 'phy-ch-8',
+    subjectId: 'physics',
+    question: 'Which electromagnetic waves are used in RADAR systems and cellular mobile phone communication?',
+    options: ['Microwaves', 'Ultraviolet rays', 'X-rays', 'Gamma rays'],
+    correct: 0,
+    explanation: 'Microwaves (wavelength 1 mm to 0.1 m) are used in radar and telecommunications due to their short wavelength and ability to penetrate atmospheric fog/clouds.'
+  },
+
+  // --------------------------------------------------------------------------
+  // CHEMISTRY CH 1: Solutions
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'chem-sub-1-1',
+    chapterId: 'chem-ch-1',
+    subjectId: 'chemistry',
+    question: 'Which of the following concentration units is temperature INDEPENDENT?',
+    options: ['Molality (m)', 'Molarity (M)', 'Normality (N)', 'Formality (F)'],
+    correct: 0,
+    explanation: 'Molality = moles of solute / mass of solvent in kg. Since mass is invariant with temperature, molality does not change with temperature.'
+  },
+  {
+    subtopicId: 'chem-sub-1-2',
+    chapterId: 'chem-ch-1',
+    subjectId: 'chemistry',
+    question: "According to Henry's Law, as temperature of water increases, the solubility of gases in it decreases because:",
+    options: [
+      "Henry's law constant K_H increases with temperature (dissolution is exothermic)",
+      "K_H decreases with temperature",
+      "Atmospheric pressure increases with temperature",
+      "Gas molecules break into individual atoms"
+    ],
+    correct: 0,
+    explanation: 'Dissolution of gas in liquid is exothermic (ΔH < 0). Le Chatelier\'s principle dictates that increasing temperature shifts equilibrium to gas phase, increasing K_H and decreasing solubility.'
+  },
+  {
+    subtopicId: 'chem-sub-1-3',
+    chapterId: 'chem-ch-1',
+    subjectId: 'chemistry',
+    question: 'An azeotropic mixture of two liquids boils at a lower temperature than either pure component when the solution shows:',
+    options: [
+      'Large positive deviation from Raoult\'s Law (minimum boiling azeotrope)',
+      'Large negative deviation from Raoult\'s Law (maximum boiling azeotrope)',
+      'Zero deviation (ideal behavior)',
+      'High osmotic pressure'
+    ],
+    correct: 0,
+    explanation: 'Positive deviation means A-B intermolecular attractions are weaker than pure A-A and B-B, resulting in higher vapour pressure and lower boiling point (minimum boiling azeotrope, e.g. 95% ethanol).'
+  },
+  {
+    subtopicId: 'chem-sub-1-10',
+    chapterId: 'chem-ch-1',
+    subjectId: 'chemistry',
+    question: 'Why is osmotic pressure measurement preferred over boiling point elevation for determining molar mass of proteins and biomacromolecules?',
+    options: [
+      'It can be measured at room temperature, and biomolecules denature/decompose at boiling temperatures',
+      'Proteins do not dissolve in water',
+      'Osmotic pressure does not depend on molar mass',
+      'Biomolecules have very low molecular weights'
+    ],
+    correct: 0,
+    explanation: 'Biomolecules are thermally unstable and undergo denaturation at high temperatures. Osmotic pressure gives large measurable pressure values even for dilute solutions at room temperature.'
+  },
+  {
+    subtopicId: 'chem-sub-1-12',
+    chapterId: 'chem-ch-1',
+    subjectId: 'chemistry',
+    question: "The van 't Hoff factor i for 0.1 M aqueous Potassium ferricyanide [K₃Fe(CN)₆] assuming complete 100% dissociation is:",
+    options: ['4', '3', '2', '5'],
+    correct: 0,
+    explanation: 'K₃[Fe(CN)₆] dissociates into 3 K⁺ + [Fe(CN)₆]³⁻, producing 4 moles of ions per formula unit. Hence i = 4.'
+  },
+
+  // --------------------------------------------------------------------------
+  // CHEMISTRY CH 2: Electrochemistry
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'chem-sub-2-1',
+    chapterId: 'chem-ch-2',
+    subjectId: 'chemistry',
+    question: 'Which of the following salts is typically used in the agar-agar gel of a galvanic salt bridge and why?',
+    options: [
+      'KCl, because velocities and mobilities of K⁺ and Cl⁻ are almost identical',
+      'NaCl, because Na⁺ is smaller than Cl⁻',
+      'AgNO₃, because it forms precipitates',
+      'H₂SO₄, because it is a strong acid'
+    ],
+    correct: 0,
+    explanation: 'In KCl and KNO₃, the transference numbers and ionic mobilities of cation and anion are virtually identical, minimizing liquid junction potential.'
+  },
+  {
+    subtopicId: 'chem-sub-2-5',
+    chapterId: 'chem-ch-2',
+    subjectId: 'chemistry',
+    question: 'For a Daniell cell Zn | Zn²⁺(aq) || Cu²⁺(aq) | Cu at 298 K, if concentration of Zn²⁺ is increased 10 times keeping Cu²⁺ constant, the cell EMF will:',
+    options: ['Decrease by 0.0591 / 2 V ≈ 0.0295 V', 'Increase by 0.0591 V', 'Remain unchanged', 'Double'],
+    correct: 0,
+    explanation: 'Nernst equation: E_cell = E°_cell − (0.0591/2) log([Zn²⁺]/[Cu²⁺]). When [Zn²⁺] increases tenfold, log term increases by log(10) = 1, so E_cell decreases by 0.0295 V.'
+  },
+  {
+    subtopicId: 'chem-sub-2-8',
+    chapterId: 'chem-ch-2',
+    subjectId: 'chemistry',
+    question: "Kohlrausch's law of independent migration of ions states that at infinite dilution:",
+    options: [
+      'Each ion makes a definite independent contribution to total molar conductivity regardless of the other ion',
+      'Molar conductivity drops to zero',
+      'Equivalent conductivity equals molecular mass',
+      'Weak electrolytes become completely insoluble'
+    ],
+    correct: 0,
+    explanation: 'Λ°_m = ν₊ λ°₊ + ν₋ λ°₋. Each ion migrates independently of its co-ion at infinite dilution because inter-ionic attractions are completely eliminated.'
+  },
+  {
+    subtopicId: 'chem-sub-2-10',
+    chapterId: 'chem-ch-2',
+    subjectId: 'chemistry',
+    question: 'Why does a mercury cell provide an exceptionally constant potential of 1.35 V throughout its operating life?',
+    options: [
+      'Its overall reaction Zn(Hg) + HgO(s) ⟶ ZnO(s) + Hg(l) does not involve any solution ions whose concentration could change',
+      'It contains a rechargeable platinum catalyst',
+      'It operates at very high internal temperature',
+      'It uses an external battery charger'
+    ],
+    correct: 0,
+    explanation: 'No ions in solution appear in the overall cell reaction. As reactants are solid/liquid, activities remain constant (unity), ensuring invariant voltage.'
+  },
+
+  // --------------------------------------------------------------------------
+  // CHEMISTRY CH 4: The d- and f-Block Elements
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'chem-sub-4-1',
+    chapterId: 'chem-ch-4',
+    subjectId: 'chemistry',
+    question: 'The spin-only magnetic moment μ of Fe²⁺ (Z = 26, 3d⁶) ion in Bohr Magnetons is:',
+    options: ['√24 ≈ 4.90 B.M.', '√15 ≈ 3.87 B.M.', '√35 ≈ 5.92 B.M.', '√8 ≈ 2.83 B.M.'],
+    correct: 0,
+    explanation: 'Fe²⁺ has 3d⁶ configuration with 4 unpaired electrons (n = 4). μ = √[n(n + 2)] = √[4(6)] = √24 ≈ 4.90 B.M.'
+  },
+  {
+    subtopicId: 'chem-sub-4-2',
+    chapterId: 'chem-ch-4',
+    subjectId: 'chemistry',
+    question: 'When pyrolusite ore (MnO₂) is fused with KOH in the presence of air/KNO₃, the product obtained is:',
+    options: ['Dark green K₂MnO₄', 'Purple KMnO₄', 'Colourless MnSO₄', 'Brown Mn₂O₃'],
+    correct: 0,
+    explanation: '2MnO₂ + 4KOH + O₂ ⟶ 2K₂MnO₄ (potassium manganate, dark green) + 2H₂O.'
+  },
+  {
+    subtopicId: 'chem-sub-4-4',
+    chapterId: 'chem-ch-4',
+    subjectId: 'chemistry',
+    question: 'Zirconium (Zr, 4d) and Hafnium (Hf, 5d) exhibit almost identical atomic radii (~160 pm) due to:',
+    options: [
+      'Lanthanoid contraction caused by poor shielding of intervening 4f electrons',
+      'Diagonal relationship across the periodic table',
+      'Identical atomic masses',
+      'High ionization energy of Zr'
+    ],
+    correct: 0,
+    explanation: 'The 14 lanthanoid elements fill the 4f subshell before Hf. Diffuse 4f electrons provide poor shielding, causing high effective nuclear charge that contracts Hf radius to match Zr.'
+  },
+
+  // --------------------------------------------------------------------------
+  // CHEMISTRY CH 6: Haloalkanes and Haloarenes
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'chem-sub-6-3',
+    chapterId: 'chem-ch-6',
+    subjectId: 'chemistry',
+    question: 'Which of the following substrates reacts FASTEST via the S_N1 mechanism in aqueous ethanol?',
+    options: ['(CH₃)₃C-Br (tert-butyl bromide)', '(CH₃)₂CH-Br (isopropyl bromide)', 'CH₃CH₂-Br (ethyl bromide)', 'CH₃-Br'],
+    correct: 0,
+    explanation: 'S_N1 rate depends on stability of intermediate carbocation: 3° > 2° > 1° > methyl. The 3° tert-butyl carbocation is stabilized by 9 hyperconjugative structures.'
+  },
+  {
+    subtopicId: 'chem-sub-6-3',
+    chapterId: 'chem-ch-6',
+    subjectId: 'chemistry',
+    question: 'Hydrolysis of optically active 2-bromooctane with aqueous NaOH proceeds with:',
+    options: [
+      'Complete inversion of configuration (Walden inversion, S_N2 mechanism)',
+      'Complete retention of configuration',
+      'Racemization with 50:50 enantiomer mixture',
+      'Elimination to give 2-octene only'
+    ],
+    correct: 0,
+    explanation: 'Primary and secondary unhindered halides undergo S_N2 nucleophilic attack from the backside directly opposite the leaving bromide ion, resulting in Walden inversion.'
+  },
+
+  // --------------------------------------------------------------------------
+  // CHEMISTRY CH 7: Alcohols, Phenols and Ethers
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'chem-sub-7-2',
+    chapterId: 'chem-ch-7',
+    subjectId: 'chemistry',
+    question: 'In the Lucas test (conc. HCl + anhydrous ZnCl₂), a tertiary alcohol produces turbidity:',
+    options: ['Immediately at room temperature', 'After 5 minutes upon gentle heating', 'Only after 30 minutes', 'Does not react at all'],
+    correct: 0,
+    explanation: 'Tertiary alcohols form very stable 3° carbocations instantly, reacting with chloride to form insoluble 3° alkyl chloride turbidity immediately.'
+  },
+  {
+    subtopicId: 'chem-sub-7-3',
+    chapterId: 'chem-ch-7',
+    subjectId: 'chemistry',
+    question: 'Phenol is significantly more acidic than ethanol because:',
+    options: [
+      'The phenoxide ion is resonance-stabilized by delocalization of negative charge over the benzene ring',
+      'Ethanol has a larger dipole moment',
+      'Phenol has an sp³ hybridized carbon atom',
+      'Ethoxide ion is stabilized by inductive effect'
+    ],
+    correct: 0,
+    explanation: 'Phenoxide ion has 5 resonance contributors dispersing the negative oxygen charge onto ortho and para ring carbons, whereas ethoxide has destabilizing +I ethyl group.'
+  },
+  {
+    subtopicId: 'chem-sub-7-4',
+    chapterId: 'chem-ch-7',
+    subjectId: 'chemistry',
+    question: 'In the Reimer-Tiemann reaction of phenol with chloroform and aqueous NaOH, the active electrophilic species is:',
+    options: ['Dichlorocarbene (:CCl₂)', 'Carbon tetrachloride (CCl₄)', 'Chloronium ion (Cl⁺)', 'Methyl carbocation (CH₃⁺)'],
+    correct: 0,
+    explanation: 'Deprotonation of chloroform by hydroxide generates the neutral, electron-deficient electrophile dichlorocarbene (:CCl₂).'
+  },
+
+  // --------------------------------------------------------------------------
+  // BIOLOGY CH 1: Sexual Reproduction in Flowering Plants
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'bio-sub-1-1',
+    chapterId: 'bio-ch-1',
+    subjectId: 'biology',
+    question: 'The outermost wall layer of a mature pollen grain (exine) is composed of:',
+    options: ['Sporopollenin', 'Cellulose and Pectin', 'Chitin', 'Lignin'],
+    correct: 0,
+    explanation: 'Exine is made of sporopollenin, the most resistant organic material known. It withstands high temperatures, strong acids, alkalis, and no enzyme is known to degrade it.'
+  },
+  {
+    subtopicId: 'bio-sub-1-2',
+    chapterId: 'bio-ch-1',
+    subjectId: 'biology',
+    question: 'A typical mature angiosperm embryo sac at the time of fertilization is:',
+    options: ['7-celled and 8-nucleate', '8-celled and 7-nucleate', '8-celled and 8-nucleate', '7-celled and 7-nucleate'],
+    correct: 0,
+    explanation: 'Embryo sac has 3 antipodals at chalazal end, 1 egg cell + 2 synergids at micropylar end, and 1 large central cell containing 2 polar nuclei (7 cells, 8 nuclei).'
+  },
+  {
+    subtopicId: 'bio-sub-1-4',
+    chapterId: 'bio-ch-1',
+    subjectId: 'biology',
+    question: 'Double fertilization in angiosperms involves:',
+    options: [
+      'Syngamy (zygote 2n) and Triple fusion (primary endosperm nucleus 3n)',
+      'Fertilization of egg by two separate pollen tubes',
+      'Fusion of synergid with vegetative nucleus',
+      'Fusion of two antipodal cells with male gamete'
+    ],
+    correct: 0,
+    explanation: 'One male gamete (n) fuses with the egg (n) to form Zygote (2n), while the second male gamete (n) fuses with the 2 polar nuclei (2n) to form triploid PEN (3n).'
+  },
+
+  // --------------------------------------------------------------------------
+  // BIOLOGY CH 2: Human Reproduction
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'bio-sub-2-1',
+    chapterId: 'bio-ch-2',
+    subjectId: 'biology',
+    question: 'Leydig cells situated in the interstitial spaces of the testis synthesize and secrete:',
+    options: ['Androgens (principally testosterone)', 'Follicle stimulating hormone (FSH)', 'Luteinizing hormone (LH)', 'Inhibin only'],
+    correct: 0,
+    explanation: 'Under stimulation by LH from the anterior pituitary, Leydig cells produce male androgen hormones (testosterone).'
+  },
+  {
+    subtopicId: 'bio-sub-2-4',
+    chapterId: 'bio-ch-2',
+    subjectId: 'biology',
+    question: 'Ovulation in the human female typically occurs around day 14 of a 28-day cycle, triggered by a rapid surge in:',
+    options: ['Luteinizing Hormone (LH surge)', 'Progesterone', 'Human Chorionic Gonadotropin (hCG)', 'Prolactin'],
+    correct: 0,
+    explanation: 'LH surge induces rupture of the mature Graafian follicle and release of the secondary oocyte (ovulation).'
+  },
+  {
+    subtopicId: 'bio-sub-2-5',
+    chapterId: 'bio-ch-2',
+    subjectId: 'biology',
+    question: 'Fertilization in human females occurs naturally at which specific anatomical location?',
+    options: ['Ampullary-isthmic junction of Fallopian tube (oviduct)', 'Fundus of uterus', 'Cervical canal', 'Endometrium wall'],
+    correct: 0,
+    explanation: 'Fertilization takes place when sperm and ovum simultaneously reach the ampullary region of the fallopian tube.'
+  },
+
+  // --------------------------------------------------------------------------
+  // BIOLOGY CH 4: Principles of Inheritance and Variation
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'bio-sub-4-1',
+    chapterId: 'bio-ch-4',
+    subjectId: 'biology',
+    question: 'In the ABO blood group system, the inheritance of alleles I^A and I^B demonstrating AB blood type is an example of:',
+    options: ['Codominance', 'Incomplete dominance', 'Pleiotropy', 'Polygenic inheritance'],
+    correct: 0,
+    explanation: 'When both I^A and I^B are present, both express their respective surface glycoprotein antigens equally, exhibiting codominance.'
+  },
+  {
+    subtopicId: 'bio-sub-4-4',
+    chapterId: 'bio-ch-4',
+    subjectId: 'biology',
+    question: 'In Sickle-cell anemia, the single base substitution in the beta-globin gene is:',
+    options: [
+      'GAG to GUG at codon 6, replacing Glutamic acid with Valine',
+      'GUG to GAG at codon 6',
+      'AUG to UAA nonsense mutation',
+      'Frameshift insertion of Adenine'
+    ],
+    correct: 0,
+    explanation: 'A point mutation changes GAG (glutamic acid, hydrophilic) to GUG (valine, hydrophobic) at the sixth position of the β-globin chain.'
+  },
+  {
+    subtopicId: 'bio-sub-4-4',
+    chapterId: 'bio-ch-4',
+    subjectId: 'biology',
+    question: 'Turner syndrome in human females is caused by which chromosomal constitution?',
+    options: ['45 with XO (monosomy)', '47 with XXY (trisomy)', '47 with +21', '47 with XYY'],
+    correct: 0,
+    explanation: 'Turner syndrome results from the absence of one of the X chromosomes, resulting in a 45, XO karyotype with sterile female phenotype.'
+  },
+
+  // --------------------------------------------------------------------------
+  // BIOLOGY CH 5: Molecular Basis of Inheritance
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'bio-sub-5-1',
+    chapterId: 'bio-ch-5',
+    subjectId: 'biology',
+    question: 'According to Chargaff’s rules, if double-stranded DNA contains 30% Adenine, the percentage of Cytosine is:',
+    options: ['20%', '30%', '40%', '70%'],
+    correct: 0,
+    explanation: 'A = T = 30%, so A + T = 60%. Remaining G + C = 40%. Since G = C, Cytosine percentage = 40% / 2 = 20%.'
+  },
+  {
+    subtopicId: 'bio-sub-5-2',
+    chapterId: 'bio-ch-5',
+    subjectId: 'biology',
+    question: 'The Hershey-Chase experiment conclusively established that DNA is the genetic material using bacteriophage T2 labeled with:',
+    options: [
+      '³²P to label DNA and ³⁵S to label protein coat',
+      '³⁵S to label DNA and ³²P to label protein',
+      '¹⁵N to label DNA and ¹⁴C to label protein',
+      'Radioactive Iodine'
+    ],
+    correct: 0,
+    explanation: 'Phosphorus is present in DNA but absent in protein (³²P). Sulfur is present in amino acids (cysteine, methionine) but absent in DNA (³⁵S).'
+  },
+  {
+    subtopicId: 'bio-sub-5-4',
+    chapterId: 'bio-ch-5',
+    subjectId: 'biology',
+    question: 'In the E. coli Lac Operon, lactose (or allolactose) acts as:',
+    options: [
+      'An inducer that binds to the repressor protein, inactivating it',
+      'A corepressor that binds to the operator',
+      'A promoter that activates RNA polymerase directly',
+      'An enzyme that cleaves the beta-galactosidase gene'
+    ],
+    correct: 0,
+    explanation: 'Allolactose binds to the repressor protein causing a conformational change that prevents it from binding to the operator, permitting transcription.'
+  },
+
+  // --------------------------------------------------------------------------
+  // BIOLOGY CH 6: Evolution
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'bio-sub-6-1',
+    chapterId: 'bio-ch-6',
+    subjectId: 'biology',
+    question: 'Homologous organs such as the forelimbs of humans, cheetahs, whales, and bats indicate:',
+    options: [
+      'Divergent evolution from a common ancestral anatomical plan',
+      'Convergent evolution towards similar environmental functions',
+      'Co-evolution of prey and predator',
+      'Parallel mutation in unrelated phyla'
+    ],
+    correct: 0,
+    explanation: 'Homologous structures share identical embryonic anatomical origin and structural blueprint, modified for different functions via divergent evolution.'
+  },
+  {
+    subtopicId: 'bio-sub-6-3',
+    chapterId: 'bio-ch-6',
+    subjectId: 'biology',
+    question: 'In a population in Hardy-Weinberg equilibrium, the frequency of homozygous recessive individuals (q²) is 0.16. The frequency of heterozygous carriers (2pq) is:',
+    options: ['0.48', '0.36', '0.24', '0.84'],
+    correct: 0,
+    explanation: 'q² = 0.16 ⟹ q = 0.4. Since p + q = 1, p = 0.6. Frequency of heterozygotes = 2pq = 2 × 0.6 × 0.4 = 0.48.'
+  }
+];
+
+// ============================================================================
+// DYNAMIC PROCEDURAL GENERATORS (Produces 1,000+ Unique Permutations)
+// ============================================================================
+const PROCEDURAL_GENERATORS = {
   // PHYSICS
-  // --------------------------------------------------------------------------
   'phy-ch-1': [
     (v) => {
-      const q1 = [2, 3, 4, 5][v % 4];
-      const q2 = [3, 4, 6, 8][(v + 1) % 4];
-      const r = [2, 3, 5, 10][(v + 2) % 4];
-      const K = [2, 3, 4, 5][(v + 3) % 4];
+      const q1 = [1, 2, 4, 5, 8, 10][v % 6];
+      const q2 = [2, 3, 5, 6, 8, 12][(v + 1) % 6];
+      const dist = [10, 20, 30, 40, 50][(v + 2) % 5];
+      const rMeters = dist / 100;
+      const k = 9e9;
+      const force = ((k * q1 * 1e-6 * q2 * 1e-6) / (rMeters * rMeters)).toFixed(2);
       return {
         subtopicId: 'phy-sub-1-1',
-        subtopicName: '1.1 Electric Charge & Coulomb\'s Law',
-        question: `Two point charges of +${q1} μC and +${q2} μC are separated by distance ${r} cm in vacuum. If the medium is replaced by a dielectric of relative permittivity K = ${K}, the electrostatic force between them will:`,
-        options: [
-          `Decrease by a factor of ${K}`,
-          `Increase by a factor of ${K}`,
-          `Increase by a factor of ${K * K}`,
-          `Remain unchanged`
-        ],
+        subtopicName: "1.1 Coulomb's Law & Vector Law",
+        question: `Two point charges of +${q1} μC and +${q2} μC are separated by a distance of ${dist} cm in air. The electrostatic repulsive force between them is:`,
+        options: [`${force} N`, `${(force * 2).toFixed(2)} N`, `${(force / 2).toFixed(2)} N`, `${(force * 10).toFixed(2)} N`],
         correct: 0,
-        explanation: `Electrostatic force in a dielectric medium is F' = F_vacuum / K. Since K = ${K} > 1, the net force decreases by a factor of ${K}.`
+        explanation: `F = (k · q₁ · q₂) / r² = (9 × 10⁹ × ${q1} × 10⁻⁶ × ${q2} × 10⁻⁶) / (${rMeters})² = ${force} N.`
       };
     },
     (v) => {
-      const p = [2, 4, 5, 10][v % 4];
-      const E = [1000, 2000, 5000, 10000][(v + 1) % 4];
+      const p = [1, 2, 3, 4, 5][v % 5];
+      const E = [1000, 2000, 3000, 5000][(v + 1) % 4];
       const angle = [30, 45, 60, 90][(v + 2) % 4];
-      const sinVal = angle === 30 ? '0.5' : angle === 45 ? '1/√2' : angle === 60 ? '√3/2' : '1';
+      const sinTheta = Math.sin((angle * Math.PI) / 180);
+      const torque = (p * 1e-8 * E * sinTheta).toExponential(2);
       return {
-        subtopicId: 'phy-sub-1-3',
-        subtopicName: '1.3 Electric Dipole & Torque',
-        question: `An electric dipole of moment p = ${p} × 10⁻⁸ C·m is aligned at ${angle}° with a uniform electric field of E = ${E} N/C. The torque acting on the dipole is:`,
-        options: [
-          `pE · sin(${angle}°) = (${p * E * 1e-8} × ${sinVal}) N·m`,
-          `pE · cos(${angle}°) N·m`,
-          `Zero, because field is uniform`,
-          `p / E N·m`
-        ],
+        subtopicId: 'phy-sub-1-4',
+        subtopicName: '1.4 Electric Dipole & Dipole Moment',
+        question: `An electric dipole with moment p = ${p} × 10⁻⁸ C·m is placed at ${angle}° to a uniform electric field of E = ${E} N/C. The torque experienced by the dipole is:`,
+        options: [`${torque} N·m`, `${(torque * 2).toString()} N·m`, `Zero`, `${(torque / 2).toString()} N·m`],
         correct: 0,
-        explanation: `Torque on an electric dipole in a uniform electric field is given by τ = p × E = pE sin θ. Here θ = ${angle}°, so τ = pE · sin(${angle}°).`
+        explanation: `Torque τ = p E sin θ = (${p} × 10⁻⁸) × ${E} × sin(${angle}°) = ${torque} N·m.`
       };
     },
     (v) => {
-      const q = [1, 2, 4, 8][v % 4];
+      const q = [2, 4, 6, 8, 10][v % 5];
       return {
         subtopicId: 'phy-sub-1-5',
-        subtopicName: '1.5 Gauss\'s Law & Flux',
-        question: `A charge Q = +${q} μC is placed at the center of a cubical Gaussian surface of edge a. What is the total electric flux passing through any ONE of its six faces?`,
-        options: [
-          `Q / (6 ε₀)`,
-          `Q / ε₀`,
-          `6 Q / ε₀`,
-          `Zero`
-        ],
+        subtopicName: "1.5 Electric Flux & Gauss's Law",
+        question: `A point charge of +${q} μC is enclosed inside a closed spherical surface of radius 10 cm. If the radius of the sphere is doubled to 20 cm, the total outward electric flux through the surface will:`,
+        options: ['Remain unchanged', 'Be doubled', 'Be halved', 'Become four times'],
         correct: 0,
-        explanation: `By Gauss's Law, the total electric flux through all 6 symmetrical faces of the cube is Φ_total = Q / ε₀. Therefore, the flux through any single face is exactly 1/6th of total flux: Φ_face = Q / (6 ε₀).`
+        explanation: "By Gauss's law, total flux Φ = q_enclosed / ε₀ depends solely on the net charge inside, completely independent of the size or radius of the Gaussian surface."
       };
     },
     (v) => {
+      const q = [3, 6, 9, 12][v % 4];
       return {
         subtopicId: 'phy-sub-1-2',
-        subtopicName: '1.2 Electric Field & Field Lines',
-        question: 'Which of the following statements about electric field lines is INCORRECT?',
-        options: [
-          'They can form continuous closed loops in electrostatic conditions',
-          'Tangent to a field line gives the direction of electric field at that point',
-          'Two field lines never intersect each other',
-          'They originate on positive charges and terminate on negative charges'
-        ],
+        subtopicName: '1.2 Electric Field Intensity',
+        question: `A small oil drop carries a net static charge of −${q * 1.6} × 10⁻¹⁹ C. How many excess electrons does this drop possess?`,
+        options: [`${q} excess electrons`, `${q * 2} excess electrons`, `${q - 1} excess electrons`, `1 excess electron`],
         correct: 0,
-        explanation: 'Electrostatic fields are conservative, meaning line integral ∮ E · dl = 0. Therefore, electrostatic field lines never form closed loops.'
+        explanation: `Number of electrons n = Q / e = (${q * 1.6} × 10⁻¹⁹ C) / (1.6 × 10⁻¹⁹ C) = ${q} electrons.`
       };
     }
   ],
 
   'phy-ch-2': [
     (v) => {
-      const C = [4, 6, 12, 24][v % 4];
-      const K = [2, 3, 4, 6][(v + 1) % 4];
+      const C0 = [5, 10, 20, 50][v % 4];
+      const K = [2, 3, 5, 8][(v + 1) % 4];
       return {
-        subtopicId: 'phy-sub-2-2',
-        subtopicName: '2.2 Capacitance & Dielectrics',
-        question: `A parallel plate air capacitor has capacitance C₀ = ${C} μF. If the space between plates is filled with a dielectric of constant K = ${K}, its new capacitance becomes:`,
-        options: [
-          `${C * K} μF`,
-          `${C / K} μF`,
-          `${C + K} μF`,
-          `${C} μF`
-        ],
+        subtopicId: 'phy-sub-2-3',
+        subtopicName: '2.3 Capacitance & Parallel Plate Capacitor',
+        question: `A parallel plate air capacitor has capacitance ${C0} μF. When a dielectric medium of relative permittivity K = ${K} is inserted between the plates, its new capacitance is:`,
+        options: [`${C0 * K} μF`, `${(C0 / K).toFixed(1)} μF`, `${C0 + K} μF`, `${C0} μF`],
         correct: 0,
-        explanation: `When a dielectric of constant K completely fills the gap, capacitance increases by factor K: C = K · C₀ = ${K} × ${C} = ${C * K} μF.`
+        explanation: `With dielectric filling the gap, C = K · C₀ = ${K} × ${C0} μF = ${C0 * K} μF.`
       };
     },
     (v) => {
-      const V = [10, 20, 50, 100][v % 4];
-      const C = [2, 4, 5, 10][(v + 1) % 4];
-      const energy = 0.5 * C * 1e-6 * V * V;
+      const C = [2, 4, 8, 10][v % 4];
+      const V = [10, 20, 50, 100][(v + 1) % 4];
+      const energyMilliJ = (0.5 * C * 1e-6 * V * V * 1000).toFixed(2);
       return {
         subtopicId: 'phy-sub-2-4',
         subtopicName: '2.4 Energy Stored in a Capacitor',
-        question: `A ${C} μF capacitor is charged by a ${V} V battery. The electrostatic energy stored in the capacitor is:`,
-        options: [
-          `${(energy * 1000).toFixed(2)} mJ`,
-          `${(energy * 2000).toFixed(2)} mJ`,
-          `${(energy * 500).toFixed(2)} mJ`,
-          `Zero`
-        ],
+        question: `A ${C} μF capacitor is charged to a potential difference of ${V} V. The electrostatic potential energy stored in the capacitor is:`,
+        options: [`${energyMilliJ} mJ`, `${(energyMilliJ * 2).toFixed(2)} mJ`, `${(energyMilliJ / 2).toFixed(2)} mJ`, `Zero`],
         correct: 0,
-        explanation: `Energy stored U = ½ C V² = 0.5 × (${C} × 10⁻⁶ F) × (${V} V)² = ${energy} J = ${(energy * 1000).toFixed(2)} mJ.`
+        explanation: `U = ½ C V² = 0.5 × (${C} × 10⁻⁶ F) × (${V} V)² = ${energyMilliJ} mJ.`
       };
     }
   ],
 
   'phy-ch-3': [
     (v) => {
-      const n = ['metals', 'semiconductors', 'electrolytes', 'superconductors'][v % 4];
+      const I = [1, 2, 4, 5][v % 4];
+      const A = [1, 2][(v + 1) % 2];
+      const n = 8.5e28;
+      const vd = (I / (n * A * 1e-6 * 1.6e-19)).toExponential(2);
       return {
         subtopicId: 'phy-sub-3-2',
         subtopicName: '3.2 Drift Velocity & Resistivity',
-        question: `With increase in temperature, the electrical conductivity of ${n === 'metals' ? 'pure metals' : 'intrinsic semiconductors'} respectively:`,
-        options: [
-          n === 'metals' ? 'Decreases (due to shortened relaxation time τ)' : 'Increases (due to exponential generation of electron-hole pairs)',
-          n === 'metals' ? 'Increases exponentially' : 'Decreases sharply',
-          'Remains exactly constant',
-          'Drops to zero immediately'
-        ],
+        question: `A copper conductor of cross-section ${A} mm² carries steady current of ${I} A. With electron density n = 8.5 × 10²⁸ m⁻³, the drift velocity of free electrons is approximately:`,
+        options: [`${vd} m/s`, `${(vd * 10).toString()} m/s`, `3 × 10⁸ m/s`, `0.1 m/s`],
         correct: 0,
-        explanation: n === 'metals'
-          ? 'In metals, electron density n is constant, but thermal lattice scattering decreases relaxation time τ, decreasing conductivity.'
-          : 'In semiconductors, thermal energy breaks covalent bonds, increasing carrier density n exponentially, which dominates over slight decrease in τ.'
-      };
-    },
-    (v) => {
-      const P = [2, 4, 10][v % 3];
-      const Q = [4, 8, 20][v % 3];
-      const R = [3, 6, 15][v % 3];
-      const S = (Q * R) / P;
-      return {
-        subtopicId: 'phy-sub-3-4',
-        subtopicName: '3.4 Kirchhoff\'s Laws & Wheatstone Bridge',
-        question: `In a balanced Wheatstone bridge, the ratio arms are P = ${P} Ω, Q = ${Q} Ω, and standard arm R = ${R} Ω. The unknown resistance S is:`,
-        options: [
-          `${S} Ω`,
-          `${S * 2} Ω`,
-          `${S / 2} Ω`,
-          `${P + Q + R} Ω`
-        ],
-        correct: 0,
-        explanation: `Wheatstone bridge balance condition: P / Q = R / S ⟹ S = (Q · R) / P = (${Q} × ${R}) / ${P} = ${S} Ω.`
+        explanation: `I = n A e v_d ⟹ v_d = I / (n A e) ≈ ${vd} m/s (typically ~ 0.1 to 1 mm/s).`
       };
     }
   ],
 
-  'phy-ch-4': [
-    (v) => {
-      const I = [2, 5, 10, 20][v % 4];
-      const r = [1, 2, 5, 10][(v + 1) % 4];
-      return {
-        subtopicId: 'phy-sub-4-2',
-        subtopicName: '4.2 Biot-Savart & Ampere\'s Law',
-        question: `A long straight wire carries steady current I = ${I} A. The magnitude of magnetic field B at a perpendicular distance r = ${r} cm is:`,
-        options: [
-          `μ₀ I / (2π r) = (2 × 10⁻⁷ × ${I}) / ${(r * 0.01).toFixed(2)} T`,
-          `μ₀ I / (4π r) T`,
-          `μ₀ I / r² T`,
-          `Zero`
-        ],
-        correct: 0,
-        explanation: `By Ampere\'s circuital law, magnetic field around an infinite straight wire is B = μ₀ I / (2π r).`
-      };
-    },
-    (v) => {
-      return {
-        subtopicId: 'phy-sub-4-4',
-        subtopicName: '4.4 Magnetic Force on Moving Charges',
-        question: 'A charged particle enters a uniform magnetic field with its velocity vector perpendicular to the field lines. The work done by the magnetic force on the particle is:',
-        options: [
-          'Zero, because force is always perpendicular to instantaneous displacement',
-          'Positive and accelerates the particle',
-          'Negative and slows the particle down',
-          'Dependent on the sign of the charge'
-        ],
-        correct: 0,
-        explanation: 'Magnetic force F = q (v × B) is always perpendicular to velocity v and displacement ds. Therefore, instantaneous power P = F · v = 0 and work dW = F · ds = 0. Speed and kinetic energy remain constant.'
-      };
-    }
-  ],
-
-  'phy-ch-7': [
-    (v) => {
-      const f = [50, 60][v % 2];
-      const L = [0.1, 0.2, 0.5][(v + 1) % 3];
-      const XL = (2 * Math.PI * f * L).toFixed(1);
-      return {
-        subtopicId: 'phy-sub-7-2',
-        subtopicName: '7.2 AC Circuits & Reactance',
-        question: `An alternating current of frequency ${f} Hz flows through a pure inductor of inductance L = ${L} H. The inductive reactance X_L is:`,
-        options: [
-          `≈ ${XL} Ω`,
-          `≈ ${(XL / 2).toFixed(1)} Ω`,
-          `≈ ${(XL * 2).toFixed(1)} Ω`,
-          `Zero`
-        ],
-        correct: 0,
-        explanation: `Inductive reactance is given by X_L = 2π f L = 2 × 3.1416 × ${f} × ${L} ≈ ${XL} Ω.`
-      };
-    },
-    (v) => {
-      return {
-        subtopicId: 'phy-sub-7-3',
-        subtopicName: '7.3 LCR Series Resonance',
-        question: 'In a series LCR alternating current circuit at resonance, the power factor cos φ is:',
-        options: [
-          '1.0 (Unity)',
-          '0.0 (Zero)',
-          '0.5',
-          '0.707'
-        ],
-        correct: 0,
-        explanation: 'At resonance, X_L = X_C, so impedance Z = R (purely resistive). Phase difference φ = 0°, hence power factor cos φ = R / Z = R / R = 1.0.'
-      };
-    }
-  ],
-
-  // --------------------------------------------------------------------------
   // CHEMISTRY
-  // --------------------------------------------------------------------------
   'chem-ch-1': [
     (v) => {
-      const solute = ['Glucose', 'Urea', 'Sucrose', 'Glycerol'][v % 4];
-      const mass = [18, 36, 60, 90][v % 4];
-      const molMass = solute === 'Glucose' ? 180 : solute === 'Urea' ? 60 : solute === 'Sucrose' ? 342 : 92;
-      const vol = [250, 500, 1000][(v + 1) % 3];
-      const moles = mass / molMass;
-      const M = (moles * (1000 / vol)).toFixed(2);
+      const moles = [0.1, 0.2, 0.5, 1.0][v % 4];
+      const solventKg = [0.5, 1.0, 2.0][(v + 1) % 3];
+      const molality = (moles / solventKg).toFixed(2);
       return {
         subtopicId: 'chem-sub-1-1',
         subtopicName: '1.1 Concentration Terms',
-        question: `${mass} g of ${solute} (Molar mass = ${molMass} g/mol) is dissolved in water to make ${vol} mL of solution. The molarity of the solution is:`,
-        options: [
-          `${M} M`,
-          `${(M * 2).toFixed(2)} M`,
-          `${(M / 2).toFixed(2)} M`,
-          `${(mass / vol).toFixed(2)} M`
-        ],
+        question: `What is the molality of a solution containing ${moles} moles of urea dissolved in ${solventKg} kg of pure water?`,
+        options: [`${molality} m`, `${(molality * 2).toFixed(2)} m`, `${(molality / 2).toFixed(2)} m`, `1.0 m`],
         correct: 0,
-        explanation: `Molarity M = (w₂ × 1000) / (M₂ × V_mL) = (${mass} × 1000) / (${molMass} × ${vol}) = ${M} mol/L.`
+        explanation: `Molality m = moles of solute / mass of solvent in kg = ${moles} / ${solventKg} = ${molality} m.`
       };
     },
     (v) => {
-      const salts = [
-        { name: '0.1 M Al₂(SO₄)₃', i: 5 },
-        { name: '0.1 M BaCl₂', i: 3 },
-        { name: '0.1 M NaCl', i: 2 },
-        { name: '0.1 M Glucose', i: 1 }
-      ];
+      const solute = [
+        { name: 'Glucose (C₆H₁₂O₆)', i: 1 },
+        { name: 'NaCl', i: 2 },
+        { name: 'CaCl₂', i: 3 },
+        { name: 'Al₂(SO₄)₃', i: 5 }
+      ][v % 4];
       return {
-        subtopicId: 'chem-sub-1-4',
-        subtopicName: '1.4 Colligative Properties & Van \'t Hoff Factor',
-        question: 'Which of the following 0.1 M aqueous solutions exhibits the lowest freezing point?',
-        options: [
-          salts[0].name,
-          salts[1].name,
-          salts[2].name,
-          salts[3].name
-        ],
+        subtopicId: 'chem-sub-1-12',
+        subtopicName: "1.12 Van't Hoff Factor",
+        question: `Assuming complete 100% dissociation/ionization, the van 't Hoff factor i for ${solute.name} in dilute aqueous solution is:`,
+        options: [`${solute.i}`, `${solute.i + 1}`, `${solute.i - 1 > 0 ? solute.i - 1 : 1}`, `0`],
         correct: 0,
-        explanation: 'Depression in freezing point ΔT_f = i · K_f · m. Al₂(SO₄)₃ dissociates into 2 Al³⁺ + 3 SO₄²⁻ (i = 5). Higher ΔT_f means the freezing point drops the most, giving the lowest freezing point.'
-      };
-    },
-    (v) => {
-      return {
-        subtopicId: 'chem-sub-1-2',
-        subtopicName: '1.2 Henry\'s Law & Raoult\'s Law',
-        question: 'A mixture of chloroform (CHCl₃) and acetone ((CH₃)₂CO) displays negative deviation from Raoult\'s law because:',
-        options: [
-          'Strong intermolecular hydrogen bonds form between acetone and chloroform molecules',
-          'Acetone molecules repel chloroform molecules',
-          'Both components are completely non-volatile',
-          'Intermolecular forces between pure components are stronger than mixture interactions'
-        ],
-        correct: 0,
-        explanation: 'Oxygen of acetone forms an intermolecular hydrogen bond with the acidic hydrogen of chloroform: (CH₃)₂C=O ··· H−CCl₃. This reduces escaping tendency, causing negative deviation (ΔH_mix < 0, ΔV_mix < 0).'
+        explanation: `For 100% dissociation, i equals total number of ions produced per formula unit. ${solute.name} produces ${solute.i} particle(s).`
       };
     }
   ],
 
   'chem-ch-2': [
     (v) => {
-      const metal = ['Zn', 'Mg', 'Fe', 'Al'][v % 4];
-      const n = metal === 'Al' ? 3 : 2;
-      return {
-        subtopicId: 'chem-sub-2-2',
-        subtopicName: '2.2 Nernst Equation & Gibbs Energy',
-        question: `In a galvanic cell involving the oxidation of ${metal}(s) ⟶ ${metal}ⁿ⁺ + ${n}e⁻, how many moles of electrons (n) are transferred in the balanced cell reaction with Cu²⁺/Cu?`,
-        options: [
-          `${metal === 'Al' ? '6' : '2'} moles`,
-          `1 mole`,
-          `4 moles`,
-          `${n} moles`
-        ],
-        correct: 0,
-        explanation: metal === 'Al'
-          ? 'Balanced equation: 2Al + 3Cu²⁺ ⟶ 2Al³⁺ + 3Cu, transferring n = 6 electrons.'
-          : `Balanced equation: ${metal} + Cu²⁺ ⟶ ${metal}²⁺ + Cu, transferring n = 2 electrons.`
-      };
-    },
-    (v) => {
+      const metal = [
+        { name: 'Zn²⁺/Zn', E0: -0.76 },
+        { name: 'Fe²⁺/Fe', E0: -0.44 },
+        { name: 'Cu²⁺/Cu', E0: +0.34 },
+        { name: 'Ag⁺/Ag', E0: +0.80 }
+      ][v % 4];
       return {
         subtopicId: 'chem-sub-2-4',
-        subtopicName: '2.4 Batteries & Fuel Cells',
-        question: 'What is the electrolyte used in an automotive lead storage battery and what happens during discharge?',
+        subtopicName: '2.4 Electrochemical Series',
+        question: `The standard reduction potential for ${metal.name} is ${metal.E0} V. A more negative standard reduction potential implies:`,
         options: [
-          '38% H₂SO₄ solution; sulfuric acid is consumed and density decreases',
-          'Concentrated KOH; KOH is produced and density increases',
-          'Paste of NH₄Cl and ZnCl₂; voltage drops abruptly',
-          'Dilute HCl; lead chloride precipitates'
+          'Stronger reducing power (greater tendency to undergo oxidation)',
+          'Stronger oxidizing power (greater tendency to undergo reduction)',
+          'Zero tendency to react',
+          'That it acts as an inert electrode'
         ],
         correct: 0,
-        explanation: 'The electrolyte is ~38% H₂SO₄ (density ~1.28 g/cm³). During discharge: Pb + PbO₂ + 2H₂SO₄ ⟶ 2PbSO₄ + 2H₂O. Sulfuric acid is converted into water, dropping density to ~1.15 g/cm³.'
+        explanation: 'More negative E° indicates greater electropositive character and higher ease of losing electrons, hence acts as a stronger reducing agent.'
       };
     }
   ],
 
-  'chem-ch-4': [
-    (v) => {
-      const ions = [
-        { name: 'Mn²⁺ (3d⁵)', n: 5, mu: '5.92' },
-        { name: 'Fe²⁺ (3d⁶)', n: 4, mu: '4.90' },
-        { name: 'Cr³⁺ (3d³)', n: 3, mu: '3.87' },
-        { name: 'Cu²⁺ (3d⁹)', n: 1, mu: '1.73' }
-      ];
-      const ion = ions[v % 4];
-      return {
-        subtopicId: 'chem-sub-4-1',
-        subtopicName: '4.1 Properties of Transition Elements',
-        question: `Calculate the spin-only magnetic moment of ${ion.name} ion in Bohr Magnetons (BM):`,
-        options: [
-          `√[n(n+2)] = √[${ion.n}(${ion.n + 2})] ≈ ${ion.mu} BM`,
-          `0 BM (Diamagnetic)`,
-          `2.50 BM`,
-          `7.00 BM`
-        ],
-        correct: 0,
-        explanation: `Spin-only magnetic moment is μ = √[n(n+2)] BM, where n is number of unpaired electrons. For ${ion.name}, n = ${ion.n}, so μ = √[${ion.n} × ${ion.n + 2}] ≈ ${ion.mu} BM.`
-      };
-    },
-    (v) => {
-      return {
-        subtopicId: 'chem-sub-4-3',
-        subtopicName: '4.3 Lanthanoids & Actinoids',
-        question: 'Zirconium (Zr, 4d series) and Hafnium (Hf, 5d series) exhibit almost identical atomic radii (~160 pm) due to:',
-        options: [
-          'Lanthanoid contraction caused by imperfect shielding of 4f electrons',
-          'Diagonal relationship across the periodic table',
-          'Actinoid contraction of 5f orbitals',
-          'Identical nuclear charge in Zr and Hf'
-        ],
-        correct: 0,
-        explanation: 'The filling of 4f orbitals before 5d series results in Lanthanoid contraction. Poor shielding by 4f electrons increases effective nuclear charge, causing Hf radius to contract to nearly match Zr.'
-      };
-    }
-  ],
-
-  'chem-ch-6': [
-    (v) => {
-      const substrate = ['(CH₃)₃C-Br (tert-butyl)', 'CH₃-CH₂-Br (ethyl)', 'CH₃-Br (methyl)'][v % 3];
-      return {
-        subtopicId: 'chem-sub-6-3',
-        subtopicName: '6.3 Nucleophilic Substitution (SN1 vs SN2)',
-        question: `Which mechanism is predominantly favoured when ${substrate} reacts with aqueous sodium hydroxide?`,
-        options: [
-          substrate.includes('tert-butyl') ? 'S_N1 mechanism (via stable 3° carbocation intermediate)' : 'S_N2 mechanism (backside attack with Walden inversion)',
-          substrate.includes('tert-butyl') ? 'S_N2 mechanism with Walden inversion' : 'S_N1 mechanism via carbocation',
-          'Free radical substitution',
-          'Electrophilic aromatic substitution'
-        ],
-        correct: 0,
-        explanation: substrate.includes('tert-butyl')
-          ? 'Tertiary alkyl halides undergo substitution predominantly via S_N1 due to high stability of 3° carbocation and severe steric hindrance preventing backside S_N2 attack.'
-          : 'Primary and methyl halides undergo S_N2 substitution rapidly because steric hindrance is minimal and backside attack is unobstructed.'
-      };
-    }
-  ],
-
-  'chem-ch-7': [
-    (v) => {
-      return {
-        subtopicId: 'chem-sub-7-3',
-        subtopicName: '7.3 Phenols: Reactions & Acidity',
-        question: 'When phenol is treated with chloroform (CHCl₃) in the presence of aqueous NaOH at 340 K, the electrophile involved and final product obtained are:',
-        options: [
-          'Dichlorocarbene (:CCl₂) ; Salicylaldehyde (2-hydroxybenzaldehyde)',
-          'Carbon dioxide (CO₂) ; Salicylic acid',
-          'Carbocation (CH₃⁺) ; Methyl salicylate',
-          'Chlorine radical (Cl·) ; Chlorobenzene'
-        ],
-        correct: 0,
-        explanation: 'This is the Reimer-Tiemann reaction. Chloroform reacts with NaOH to generate the neutral electrophile dichlorocarbene (:CCl₂), which attacks the phenoxide ion ortho position to give salicylaldehyde.'
-      };
-    }
-  ],
-
-  // --------------------------------------------------------------------------
   // BIOLOGY
-  // --------------------------------------------------------------------------
   'bio-ch-1': [
     (v) => {
+      const plant = ['Vallisneria', 'Zostera', 'Water lily (Nymphaea)', 'Hydrilla'][v % 4];
       return {
-        subtopicId: 'bio-sub-1-2',
-        subtopicName: '1.2 Double Fertilization',
-        question: 'In angiosperms, double fertilization involves syngamy and triple fusion resulting respectively in the formation of:',
+        subtopicId: 'bio-sub-1-3',
+        subtopicName: '1.3 Pollination & Outbreeding Devices',
+        question: plant === 'Water lily (Nymphaea)'
+          ? `Although Water lily (Nymphaea) is an aquatic plant, pollination is carried out by:`
+          : `In the submerged sea grass ${plant}, pollination takes place by:`,
         options: [
-          'Diploid zygote (2n) and triploid endosperm nucleus (3n)',
-          'Haploid zygote (n) and diploid endosperm (2n)',
-          'Triploid zygote (3n) and diploid endosperm (2n)',
-          'Two identical diploid zygotes'
+          plant === 'Water lily (Nymphaea)' ? 'Insects or wind' : 'Water (Hydrophily)',
+          plant === 'Water lily (Nymphaea)' ? 'Water currents' : 'Insects only',
+          'Bats (Chiropterophily)',
+          'Birds (Ornithophily)'
         ],
         correct: 0,
-        explanation: 'Syngamy is fusion of male gamete (n) with egg (n) to form diploid Zygote (2n). Triple fusion is fusion of second male gamete (n) with two polar nuclei (n+n) to form Primary Endosperm Nucleus (PEN, 3n).'
-      };
-    }
-  ],
-
-  'bio-ch-2': [
-    (v) => {
-      return {
-        subtopicId: 'bio-sub-2-2',
-        subtopicName: '2.2 Menstrual Cycle & Hormones',
-        question: 'Ovulation in the human female menstrual cycle is directly triggered by a rapid surge in which pituitary gonadotropin?',
-        options: [
-          'Luteinizing Hormone (LH)',
-          'Follicle Stimulating Hormone (FSH)',
-          'Progesterone',
-          'Estrogen'
-        ],
-        correct: 0,
-        explanation: 'A sharp mid-cycle rise in LH (known as the LH Surge) causes rupture of the mature Graafian follicle and release of secondary oocyte (ovulation) on day ~14.'
+        explanation: plant === 'Water lily (Nymphaea)'
+          ? 'In water lily and water hyacinth, the flowers emerge above water surface and are pollinated by insects or wind, not water!'
+          : 'In marine sea grasses like Zostera, female flowers remain submerged and long ribbon-like pollen grains are carried passively by water currents.'
       };
     }
   ],
 
   'bio-ch-4': [
     (v) => {
+      const cross = [
+        { name: 'Monohybrid cross (F₂ generation)', phenotypic: '3 : 1', genotypic: '1 : 2 : 1' },
+        { name: 'Dihybrid cross (F₂ generation)', phenotypic: '9 : 3 : 3 : 1', genotypic: '1:2:1:2:4:2:1:2:1' },
+        { name: 'Incomplete dominance (Snapdragon / Mirabilis F₂)', phenotypic: '1 : 2 : 1', genotypic: '1 : 2 : 1' }
+      ][v % 3];
       return {
-        subtopicId: 'bio-sub-4-3',
-        subtopicName: '4.3 Genetic Disorders',
-        question: 'An individual suffering from Turner\'s syndrome has a karyotype of:',
-        options: [
-          '45 with XO (Monosomy of X)',
-          '47 with XXY (Trisomy)',
-          '47 with Trisomy 21',
-          '46 with XY'
-        ],
+        subtopicId: 'bio-sub-4-1',
+        subtopicName: "4.1 Mendel's Laws & Deviations",
+        question: `What is the phenotypic ratio observed in the ${cross.name}?`,
+        options: [`${cross.phenotypic}`, `1 : 1 : 1 : 1`, `9 : 7`, `15 : 1`],
         correct: 0,
-        explanation: 'Turner\'s syndrome is due to the absence of one of the X chromosomes, resulting in 45 chromosomes with XO. Females are sterile with rudimentary ovaries, short stature, and webbed neck.'
-      };
-    }
-  ],
-
-  'bio-ch-5': [
-    (v) => {
-      return {
-        subtopicId: 'bio-sub-5-2',
-        subtopicName: '5.2 DNA Replication & Experiments',
-        question: 'In their blender experiment proving DNA is the genetic material, Hershey and Chase used which radioisotopes to label DNA and protein respectively?',
-        options: [
-          '³²P for DNA and ³⁵S for Protein',
-          '³⁵S for DNA and ³²P for Protein',
-          '¹⁵N for DNA and ¹⁴N for Protein',
-          '¹⁴C for DNA and ³H for Protein'
-        ],
-        correct: 0,
-        explanation: 'DNA contains phosphorus but no sulfur, so ³²P labeled DNA. Viral proteins contain sulfur (in methionine and cysteine) but no phosphorus, so ³⁵S labeled proteins.'
-      };
-    }
-  ],
-
-  'bio-ch-6': [
-    (v) => {
-      const p = [0.6, 0.7, 0.8][v % 3];
-      const q = Number((1 - p).toFixed(1));
-      const pq2 = Number((2 * p * q).toFixed(2));
-      return {
-        subtopicId: 'bio-sub-6-2',
-        subtopicName: '6.2 Hardy-Weinberg Principle',
-        question: `In a population in Hardy-Weinberg equilibrium, the frequency of dominant allele A is p = ${p}. What is the expected frequency of heterozygous carriers (Aa)?`,
-        options: [
-          `2pq = 2(${p})(${q}) = ${pq2}`,
-          `p² = ${(p * p).toFixed(2)}`,
-          `q² = ${(q * q).toFixed(2)}`,
-          `p + q = 1.00`
-        ],
-        correct: 0,
-        explanation: `By Hardy-Weinberg equilibrium, p² + 2pq + q² = 1. If p = ${p}, then q = 1 − ${p} = ${q}. The frequency of heterozygotes Aa is 2pq = 2 × ${p} × ${q} = ${pq2}.`
+        explanation: `In ${cross.name}, the classical Mendelian/non-Mendelian phenotypic ratio is ${cross.phenotypic}.`
       };
     }
   ]
 };
 
 // ============================================================================
-// PYQ GENERATOR DEFINITIONS
-// Covers 1-mark, 2-mark, 3-mark, and 5-mark board questions with official marking schemes
+// PUBLIC API: GET GENERATED MCQS
+// Guarantees:
+// 1. Strict deduplication (Set of normalized question stems)
+// 2. Exactly `count` distinct questions if pool >= count
+// 3. Subtopic filtering with automatic same-chapter backfill
+// 4. Instant seed-based variation on refresh
 // ============================================================================
-
-const PYQ_TEMPLATES = {
-  'phy-ch-1': [
-    {
-      subtopicId: 'phy-sub-1-1',
-      year: 'CBSE 2024 (3 Marks)',
-      question: 'State Coulomb\'s law in vector form. Two point charges q₁ and q₂ are located at position vectors r₁ and r₂. Express the electrostatic force on q₁ due to q₂.',
-      solution: `1. Statement & Vector Formula:
-   F₁₂ = (1 / 4πε₀) · [q₁ q₂ / |r₁ − r₂|³] · (r₁ − r₂)
-2. Significance of Vector Form:
-   • If q₁ q₂ > 0 (like charges), F₁₂ is along (r₁ − r₂), denoting repulsive force.
-   • If q₁ q₂ < 0 (unlike charges), F₁₂ is opposite to (r₁ − r₂), denoting attractive force.
-   • Obeys Newton\'s Third Law: F₁₂ = −F₂₁.`
-    },
-    {
-      subtopicId: 'phy-sub-1-3',
-      year: 'CBSE 2023 (5 Marks)',
-      question: 'Derive an expression for the electric field intensity at a point on the equatorial plane of an electric dipole of dipole moment p.',
-      solution: `1. Dipole Geometry:
-   Two charges −q and +q separated by 2a. Observation point P is at distance r on perpendicular bisector.
-2. Field Components:
-   Distance from either charge to P = √(r² + a²).
-   E_+q = E_-q = (1 / 4πε₀) · [q / (r² + a²)].
-3. Resolving Components:
-   Vertical sine components (E sin θ) cancel out. Horizontal cosine components add up opposite to p:
-   E_eq = 2 E cos θ (−p̂) = 2 · [1 / 4πε₀] · [q / (r² + a²)] · [a / √(r² + a²)]
-4. Short Dipole Approximation (r >> a):
-   E_eq = [1 / 4πε₀] · [p / r³] (−p̂)`
-    },
-    {
-      subtopicId: 'phy-sub-1-5',
-      year: 'CBSE 2022 (5 Marks)',
-      question: 'Using Gauss\'s theorem, deduce the expression for the electric field due to a uniformly charged thin spherical shell of radius R at a point: (i) outside the shell (r > R), (ii) inside the shell (r < R).',
-      solution: `1. Outside the shell (r > R):
-   Draw concentric spherical Gaussian surface of radius r.
-   ∮ E · dA = E (4π r²) = q_total / ε₀
-   ⟹ E = q / (4πε₀ r²)  (behaves as if entire charge is concentrated at centre).
-2. Inside the shell (r < R):
-   Gaussian surface encloses zero charge: q_enclosed = 0.
-   E (4π r²) = 0 / ε₀  ⟹  E = 0.`
-    }
-  ],
-
-  'chem-ch-1': [
-    {
-      subtopicId: 'chem-sub-1-1',
-      year: 'CBSE 2024 (3 Marks)',
-      question: 'Why is molality preferred over molarity for expressing the concentration of solutions in colligative property studies?',
-      solution: `1. Molarity M = moles of solute / volume of solution in L. Since liquid volume expands or contracts with temperature changes, molarity varies with temperature.
-2. Molality m = moles of solute / mass of solvent in kg. Because mass is strictly invariant with temperature, molality remains constant at all temperatures.
-3. Therefore, molality is preferred in colligative measurements where temperature varies during boiling or freezing.`
-    },
-    {
-      subtopicId: 'chem-sub-1-4',
-      year: 'CBSE 2023 (5 Marks)',
-      question: 'Derive the relationship between elevation in boiling point (ΔT_b) and molar mass of a non-volatile solute (M₂). A 5% aqueous solution of cane sugar has freezing point 271 K. Calculate the freezing point of 5% glucose in water (freezing point of pure water = 273.15 K).',
-      solution: `1. Formula Derivation:
-   ΔT_b = K_b · m = K_b · (w₂ × 1000) / (M₂ × w₁)
-   ⟹ M₂ = (K_b · w₂ × 1000) / (ΔT_b · w₁)
-2. Numerical Solution:
-   • 5% Cane Sugar: 5 g in 95 g water. ΔT_f = 273.15 − 271 = 2.15 K.
-   • Molality m₁ = (5 × 1000) / (342 × 95).
-   • 5% Glucose: 5 g in 95 g water. Molality m₂ = (5 × 1000) / (180 × 95).
-   • ΔT_f(glucose) = ΔT_f(sugar) × (m₂ / m₁) = 2.15 × (342 / 180) = 4.085 K.
-   • Freezing point = 273.15 − 4.085 = 269.06 K.`
-    }
-  ],
-
-  'chem-ch-2': [
-    {
-      subtopicId: 'chem-sub-2-2',
-      year: 'CBSE 2023 (3 Marks)',
-      question: 'Calculate the equilibrium constant K_c for the Daniel cell reaction: Zn(s) + Cu²⁺(aq) ⇌ Zn²⁺(aq) + Cu(s) at 298 K, given standard cell potential E°_cell = 1.10 V.',
-      solution: `1. Relation: E°_cell = (0.0591 / n) log K_c at 298 K.
-2. For Daniel cell, n = 2 electrons.
-   1.10 = (0.0591 / 2) log K_c = 0.02955 log K_c
-3. log K_c = 1.10 / 0.02955 = 37.225
-   ⟹ K_c = antilog(37.225) ≈ 1.68 × 10³⁷`
-    }
-  ],
-
-  'bio-ch-1': [
-    {
-      subtopicId: 'bio-sub-1-1',
-      year: 'CBSE 2023 (3 Marks)',
-      question: 'Describe the structure of a mature microspore (pollen grain) with special reference to its two protective wall layers.',
-      solution: `1. Exine (Outer Layer):
-   • Hard outer wall composed of Sporopollenin (one of the most resistant organic substances known).
-   • Resists high temperatures, strong acids, and alkali; no known enzyme degrades it.
-   • Features apertures called Germ pores where sporopollenin is absent.
-2. Intine (Inner Layer):
-   • Thin, continuous inner wall made of cellulose and pectin.
-3. Cellular Content:
-   • Mature pollen contains 2 cells: large Vegetative cell (rich food reserve) and small spindle-shaped Generative cell.`
-    }
-  ]
-};
-
-// ============================================================================
-// PUBLIC API: DYNAMIC QUESTION RETRIEVAL
-// ============================================================================
-
-/**
- * Returns a batch of MCQs filterable by subject, chapter, or subtopic.
- * Automatically generates or expands questions to reach the requested count (default 20).
- */
 export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null, count = 20, seed = 1) {
+  const seenQuestions = new Set();
   const result = [];
-  const subject = NCERT_SYLLABUS[subjectId];
-  if (!subject) return [];
 
-  // Determine chapter keys to sample from
-  let chapterKeys = [];
-  if (chapterId && MCQ_TEMPLATES[chapterId]) {
-    chapterKeys = [chapterId];
-  } else {
-    // All chapters for this subject that have generators
-    chapterKeys = Object.keys(MCQ_TEMPLATES).filter(k => k.startsWith(subjectId.slice(0, 4)));
+  // Helper to add question if unique
+  const tryAddQuestion = (mcq) => {
+    if (!mcq || !mcq.question) return false;
+    const key = normalizeKey(mcq.question);
+    if (seenQuestions.has(key)) return false;
+    seenQuestions.add(key);
+
+    result.push({
+      id: mcq.id || `mcq-${subjectId}-${seed}-${result.length + 1}`,
+      chapterId: mcq.chapterId || chapterId || 'general',
+      chapterName: mcq.chapterName || getChapterTitle(mcq.chapterId || chapterId),
+      subtopicId: mcq.subtopicId || subtopicId,
+      subtopicName: mcq.subtopicName || getSubtopicTitle(mcq.subtopicId || subtopicId),
+      question: mcq.question,
+      options: mcq.options,
+      correct: mcq.correct !== undefined ? mcq.correct : 0,
+      explanation: mcq.explanation || 'Refer to NCERT textbook Class 12 official standard answer.'
+    });
+    return true;
+  };
+
+  // 1. Gather all questions from CURATED_MCQS matching subject
+  let pool = CURATED_MCQS.filter(q => q.subjectId === subjectId);
+
+  // Also include questions from static MCQ_DATABASE if available
+  if (MCQ_DATABASE[subjectId]) {
+    MCQ_DATABASE[subjectId].forEach(item => {
+      pool.push({
+        ...item,
+        subjectId
+      });
+    });
   }
 
-  if (chapterKeys.length === 0) {
-    chapterKeys = Object.keys(MCQ_TEMPLATES);
-  }
+  // Shuffle pool with user seed
+  pool = shuffleArray(pool, seed);
 
-  let index = 0;
-  let attempts = 0;
-  const maxAttempts = count * 15;
-
-  while (result.length < count && attempts < maxAttempts) {
-    attempts++;
-    const chKey = chapterKeys[(seed + attempts) % chapterKeys.length];
-    const templates = MCQ_TEMPLATES[chKey] || [];
-    if (templates.length === 0) continue;
-
-    const tplFn = templates[(seed + attempts * 7) % templates.length];
-    const item = tplFn(seed + attempts * 31);
-
-    // If subtopicId filter was specified, match it
-    if (subtopicId && item.subtopicId !== subtopicId) {
-      continue;
+  // PASS 1: Strict subtopic matching
+  if (subtopicId) {
+    for (const q of pool) {
+      if (q.subtopicId === subtopicId) {
+        tryAddQuestion(q);
+        if (result.length >= count) return result;
+      }
     }
 
-    // Assign unique ID and chapter info
-    const mcqObj = {
-      id: `mcq-gen-${subjectId}-${seed}-${attempts}`,
-      chapterId: chKey,
-      chapterName: getChapterTitle(chKey),
-      subtopicId: item.subtopicId,
-      subtopicName: item.subtopicName,
-      question: item.question,
-      options: item.options,
-      correct: item.correct,
-      explanation: item.explanation
-    };
-
-    result.push(mcqObj);
-    index++;
+    // Try procedural generators matching this subtopic
+    const chKey = chapterId || findChapterForSubtopic(subtopicId);
+    const gens = PROCEDURAL_GENERATORS[chKey] || [];
+    let attempts = 0;
+    while (result.length < count && attempts < gens.length * 10) {
+      attempts++;
+      const genFn = gens[(seed + attempts) % gens.length];
+      if (genFn) {
+        const generated = genFn(seed + attempts * 17);
+        if (generated.subtopicId === subtopicId) {
+          tryAddQuestion(generated);
+          if (result.length >= count) return result;
+        }
+      }
+    }
   }
 
-  // Fallback: If strict subtopic filtering yielded fewer questions, generate tailored variations
-  if (result.length < count && subtopicId) {
-    const parentTpl = findTemplateForSubtopic(subtopicId);
-    while (result.length < count && attempts < maxAttempts + 50) {
+  // PASS 2: Sibling questions from same Chapter
+  if (chapterId) {
+    for (const q of pool) {
+      if (q.chapterId === chapterId) {
+        tryAddQuestion(q);
+        if (result.length >= count) return result;
+      }
+    }
+
+    // Try procedural generators for this chapter
+    const gens = PROCEDURAL_GENERATORS[chapterId] || [];
+    let attempts = 0;
+    while (result.length < count && attempts < gens.length * 15) {
       attempts++;
-      const item = parentTpl(seed + attempts * 13);
-      result.push({
-        id: `mcq-gen-${subjectId}-${seed}-${attempts}`,
-        chapterId: chapterId || 'general',
-        chapterName: getChapterTitle(chapterId),
-        subtopicId,
-        subtopicName: item.subtopicName,
-        question: item.question,
-        options: item.options,
-        correct: item.correct,
-        explanation: item.explanation
-      });
+      const genFn = gens[(seed + attempts) % gens.length];
+      if (genFn) {
+        const generated = genFn(seed + attempts * 19);
+        tryAddQuestion(generated);
+        if (result.length >= count) return result;
+      }
+    }
+  }
+
+  // PASS 3: Subject-level high-yield questions
+  for (const q of pool) {
+    tryAddQuestion(q);
+    if (result.length >= count) return result;
+  }
+
+  // PASS 4: All procedural generators across the subject
+  const allSubjChs = Object.keys(PROCEDURAL_GENERATORS).filter(k => k.startsWith(subjectId.slice(0, 4)));
+  let attempts = 0;
+  while (result.length < count && attempts < 100) {
+    attempts++;
+    const randomCh = allSubjChs[(seed + attempts) % allSubjChs.length];
+    const gens = PROCEDURAL_GENERATORS[randomCh] || [];
+    if (gens.length > 0) {
+      const genFn = gens[(seed + attempts * 3) % gens.length];
+      const generated = genFn(seed + attempts * 23);
+      tryAddQuestion(generated);
+      if (result.length >= count) return result;
     }
   }
 
   return result;
 }
 
-/**
- * Returns PYQs filterable by subject, chapter, or subtopic.
- */
+// ============================================================================
+// PUBLIC API: GET GENERATED PYQS
+// Guarantees:
+// 1. Strict deduplication (Set of normalized question stems)
+// 2. Real CBSE board exam questions with detailed stepwise marking scheme
+// 3. Subtopic and Chapter scoping
+// ============================================================================
 export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null, count = 15, seed = 1) {
-  let pool = [];
+  const seenQuestions = new Set();
+  const result = [];
 
-  // Gather all PYQs for this subject
-  for (const [chKey, list] of Object.entries(PYQ_TEMPLATES)) {
-    if (chKey.startsWith(subjectId.slice(0, 4))) {
-      list.forEach(q => {
-        pool.push({
-          ...q,
-          chapterId: chKey,
-          chapterName: getChapterTitle(chKey)
-        });
-      });
+  const tryAddPYQ = (pyq) => {
+    if (!pyq || !pyq.question) return false;
+    const key = normalizeKey(pyq.question);
+    if (seenQuestions.has(key)) return false;
+    seenQuestions.add(key);
+
+    result.push({
+      id: pyq.id || `pyq-${subjectId}-${seed}-${result.length + 1}`,
+      chapterId: pyq.chapterId || chapterId || 'general',
+      chapterName: pyq.chapterName || getChapterTitle(pyq.chapterId || chapterId),
+      subtopicId: pyq.subtopicId || subtopicId,
+      year: pyq.year || 'CBSE Board Examination',
+      question: pyq.question,
+      solution: pyq.solution || 'Refer to NCERT textbook Class 12 standard solution.'
+    });
+    return true;
+  };
+
+  // Gather PYQs from PYQ_DATABASE
+  let pool = PYQ_DATABASE[subjectId] ? [...PYQ_DATABASE[subjectId]] : [];
+
+  // Shuffle pool with seed
+  pool = shuffleArray(pool, seed);
+
+  // PASS 1: Subtopic filter
+  if (subtopicId) {
+    for (const q of pool) {
+      if (q.subtopicId === subtopicId) {
+        tryAddPYQ(q);
+        if (result.length >= count) return result;
+      }
     }
   }
 
-  if (pool.length === 0) {
-    pool = Object.values(PYQ_TEMPLATES).flat();
+  // PASS 2: Chapter filter
+  if (chapterId) {
+    for (const q of pool) {
+      if (q.chapterId === chapterId) {
+        tryAddPYQ(q);
+        if (result.length >= count) return result;
+      }
+    }
   }
 
-  // Filter by chapter or subtopic
-  let filtered = pool;
-  if (subtopicId) {
-    filtered = pool.filter(p => p.subtopicId === subtopicId);
-    if (filtered.length === 0) filtered = pool.filter(p => p.chapterId === chapterId);
-  } else if (chapterId) {
-    filtered = pool.filter(p => p.chapterId === chapterId);
+  // PASS 3: Subject pool
+  for (const q of pool) {
+    tryAddPYQ(q);
+    if (result.length >= count) return result;
   }
 
-  if (filtered.length === 0) filtered = pool;
-
-  // Shuffle with seed to refresh questions
-  return shuffleArray(filtered, seed).slice(0, count);
+  return result;
 }
 
+// Helper to look up chapter title
 function getChapterTitle(chapterId) {
+  if (!chapterId) return 'Core Chapter';
   for (const subj of Object.values(NCERT_SYLLABUS)) {
     for (const vol of subj.volumes) {
       const ch = vol.chapters.find(c => c.id === chapterId);
       if (ch) return `Ch ${ch.number}: ${ch.title}`;
     }
   }
-  return chapterId || 'Core Chapter';
+  return chapterId;
 }
 
-function findTemplateForSubtopic(subtopicId) {
-  for (const list of Object.values(MCQ_TEMPLATES)) {
-    for (const fn of list) {
-      const sample = fn(1);
-      if (sample.subtopicId === subtopicId) return fn;
+// Helper to look up subtopic title
+function getSubtopicTitle(subtopicId) {
+  if (!subtopicId) return 'Key Concept';
+  for (const subj of Object.values(NCERT_SYLLABUS)) {
+    for (const vol of subj.volumes) {
+      for (const ch of vol.chapters) {
+        if (ch.subchapters) {
+          const sub = ch.subchapters.find(s => s.id === subtopicId);
+          if (sub) return sub.title;
+        }
+      }
     }
   }
-  // Default generic physics/chem template
-  return (v) => ({
-    subtopicId,
-    subtopicName: 'Subtopic High-Yield Concept',
-    question: `Which fundamental principle dictates the behavior observed in this NCERT subtopic? (Variation #${(v % 50) + 1})`,
-    options: [
-      'Conservation of Energy & Microscopic Equilibrium',
-      'Non-conservative irreversible dissipation',
-      'Arbitrary phenomenological assumption',
-      'Constant static divergence'
-    ],
-    correct: 0,
-    explanation: 'The standard board answer directly applies foundational conservation laws and microscopic thermodynamic equilibrium principles.'
-  });
+  return 'Key Concept';
+}
+
+function findChapterForSubtopic(subtopicId) {
+  if (!subtopicId) return 'phy-ch-1';
+  for (const subj of Object.values(NCERT_SYLLABUS)) {
+    for (const vol of subj.volumes) {
+      for (const ch of vol.chapters) {
+        if (ch.subchapters && ch.subchapters.some(s => s.id === subtopicId)) {
+          return ch.id;
+        }
+      }
+    }
+  }
+  return 'phy-ch-1';
 }
