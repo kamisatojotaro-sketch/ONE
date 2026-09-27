@@ -780,6 +780,318 @@ export const CURATED_MCQS = [
     options: ['0.48', '0.36', '0.24', '0.84'],
     correct: 0,
     explanation: 'q² = 0.16 ⟹ q = 0.4. Since p + q = 1, p = 0.6. Frequency of heterozygotes = 2pq = 2 × 0.6 × 0.4 = 0.48.'
+  },
+
+  // --------------------------------------------------------------------------
+  // PSYCHOLOGY CH 1: Variations in Psychological Attributes
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'psy-sub-1-1',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: 'Intelligence is fundamentally distinguished from acquired knowledge because:',
+    options: [
+      'Intelligence represents the global capacity to learn, reason, and adapt, whereas knowledge is acquired information',
+      'Intelligence is completely fixed by genetics with zero environmental influence',
+      'Knowledge alone determines IQ score on standardized tests',
+      'Intelligence does not involve practical problem-solving'
+    ],
+    correct: 0,
+    explanation: 'Intelligence is the general mental capacity for reasoning, abstract thinking, and learning from experience, while knowledge represents specific acquired factual content.'
+  },
+  {
+    subtopicId: 'psy-sub-1-2',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: "Spearman's Two-Factor Theory of intelligence asserts that intellectual performance involves:",
+    options: [
+      'A universal General factor (g) operating across all tasks, plus Specific factors (s) unique to each task',
+      'Seven primary mental abilities that operate independently',
+      'A three-dimensional cube of operations, contents, and products',
+      'Multiple independent intelligences located in separate neural lobes'
+    ],
+    correct: 0,
+    explanation: "Charles Spearman (1904) proposed that all cognitive activities share a common general mental energy ('g'), while individual tasks also draw upon specific abilities ('s')."
+  },
+  {
+    subtopicId: 'psy-sub-1-2',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: "Which theorist rejected the single general factor 'g' and proposed Seven Primary Mental Abilities (including verbal comprehension, numerical ability, and spatial relations)?",
+    options: ['Louis Thurstone', 'Charles Spearman', 'Arthur Jensen', 'J.P. Guilford'],
+    correct: 0,
+    explanation: 'Louis Thurstone proposed that intelligence consists of 7 relatively independent Primary Mental Abilities (PMA), rather than a single unitary general factor.'
+  },
+  {
+    subtopicId: 'psy-sub-1-2',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: 'In the PASS Model (Das, Naglieri & Kirby), which cognitive process is responsible for setting goals, selecting strategies, and monitoring problem-solving?',
+    options: ['Planning (frontal lobe)', 'Attention-Arousal', 'Simultaneous Processing', 'Successive Processing'],
+    correct: 0,
+    explanation: 'Planning is mediated by the prefrontal cortex and allows an individual to formulate, execute, evaluate, and modify cognitive strategies to resolve problems.'
+  },
+  {
+    subtopicId: 'psy-sub-1-3',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: 'The highest correlation of intelligence test scores (r ≈ 0.90) is typically observed between:',
+    options: [
+      'Identical twins reared together in the same household',
+      'Identical twins reared apart in different families',
+      'Fraternal twins reared together',
+      'Siblings reared together'
+    ],
+    correct: 0,
+    explanation: 'Identical (monozygotic) twins reared together share 100% of genes and a shared environment, showing the highest known IQ correlation (approximately 0.90).'
+  },
+  {
+    subtopicId: 'psy-sub-1-4',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: 'Why are non-verbal and performance tests of intelligence particularly advantageous over verbal tests?',
+    options: [
+      'They do not require reading or language literacy and reduce cross-cultural linguistic bias',
+      'They take less time to administer than group tests',
+      'They measure emotional intelligence instead of cognitive ability',
+      'They produce higher IQ scores automatically'
+    ],
+    correct: 0,
+    explanation: 'Performance tests (e.g. block designs, object assembly) require manipulating materials rather than language, making them suitable for illiterate, young, or linguistically diverse subjects.'
+  },
+  {
+    subtopicId: 'psy-sub-1-5',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: "According to Joseph Renzulli's Three-Ring Model, giftedness emerges at the intersection of:",
+    options: [
+      'Above-Average Ability, High Creativity, and High Task Commitment',
+      'High IQ, High Emotional Stability, and Family Wealth',
+      'High Memory, Speed of Processing, and Spatial Reasoning',
+      'Musical Talent, Athletic Skill, and Physical Stamina'
+    ],
+    correct: 0,
+    explanation: "Renzulli's Three-Ring Conception posits that giftedness results from interaction among above-average general/specific ability, high creativity, and high task commitment (motivation/perseverance)."
+  },
+  {
+    subtopicId: 'psy-sub-1-6',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: 'An aptitude test is fundamentally different from an achievement test because:',
+    options: [
+      'An aptitude test predicts potential for future learning with training, whereas an achievement test evaluates past acquired knowledge',
+      'An aptitude test measures general personality traits',
+      'An achievement test can only be given individually',
+      'Aptitude tests are unstandardized'
+    ],
+    correct: 0,
+    explanation: 'Aptitude tests assess readiness or innate capacity to acquire specific skills (predictive), while achievement tests evaluate proficiency already mastered (evaluative).'
+  },
+  {
+    subtopicId: 'psy-sub-1-7',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: 'Thinking that involves generating multiple, varied, and novel solutions to an open-ended problem is termed:',
+    options: ['Divergent thinking', 'Convergent thinking', 'Algorithmic reasoning', 'Deductive logic'],
+    correct: 0,
+    explanation: 'Divergent thinking (fluency, flexibility, originality, and elaboration) generates multiple creative pathways, unlike convergent thinking which narrows down to a single correct answer.'
+  },
+  {
+    subtopicId: 'psy-sub-1-8',
+    chapterId: 'psy-ch-1',
+    subjectId: 'psychology',
+    question: 'Which of the following is NOT one of Daniel Goleman\'s core competencies of Emotional Intelligence?',
+    options: [
+      'Mechanical spatial aptitude',
+      'Self-awareness',
+      'Self-regulation',
+      'Empathy and Social Skills'
+    ],
+    correct: 0,
+    explanation: 'Goleman identified 5 emotional competencies: Self-Awareness, Self-Regulation, Motivation, Empathy, and Social Skills. Mechanical aptitude is an intellectual/physical domain.'
+  },
+
+  // --------------------------------------------------------------------------
+  // PSYCHOLOGY CH 2: Self and Personality
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'psy-sub-2-1',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: "An individual's ability to resist immediate temptations in order to achieve long-term future goals is known as:",
+    options: ['Delay of gratification (self-regulation)', 'Self-efficacy', 'Unconditional positive regard', 'External attribution'],
+    correct: 0,
+    explanation: 'Delay of gratification is the voluntary postponement of immediate pleasure in pursuit of more valuable long-term rewards, a key marker of self-regulation.'
+  },
+  {
+    subtopicId: 'psy-sub-2-3',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: 'In traditional Indian and Asian collectivist cultures, the self is predominantly characterized by:',
+    options: [
+      'An interdependent construal with fluid boundaries interconnected with family and social obligations',
+      'An independent construal with rigid boundaries prioritizing individual uniqueness',
+      'Extreme narcissistic self-promotion',
+      'Complete lack of self-awareness'
+    ],
+    correct: 0,
+    explanation: 'Collectivist societies foster an interdependent self where identity is deeply embedded in social roles, duty (dharma), kinship, and relational harmony.'
+  },
+  {
+    subtopicId: 'psy-sub-2-5',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: "In William Sheldon's somatotype theory, an individual with a rounded, soft physique and a relaxed, sociable, comfort-loving temperament (Viscerotonia) is classified as an:",
+    options: ['Endomorph', 'Mesomorph', 'Ectomorph', 'Ambivert'],
+    correct: 0,
+    explanation: 'Sheldon matched body types to temperaments: Endomorph (rounded/fat, relaxed/sociable), Mesomorph (muscular/strong, assertive/energetic), and Ectomorph (thin/linear, restrained/introverted).'
+  },
+  {
+    subtopicId: 'psy-sub-2-6',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: "Gordon Allport classified a pervasive, extraordinary trait that dominates and defines a person's entire life (such as Gandhi's non-violence) as a:",
+    options: ['Cardinal trait', 'Central trait', 'Secondary trait', 'Surface trait'],
+    correct: 0,
+    explanation: 'Cardinal traits are rare, overwhelming dispositions around which a person organizes their entire existence. Central traits are 5-10 core traits; secondary traits are situational preferences.'
+  },
+  {
+    subtopicId: 'psy-sub-2-6',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: 'Raymond Cattell utilized factor analysis to reduce thousands of descriptive terms into how many primary Source Traits in his 16PF test?',
+    options: ['16 Source Traits', '5 Big Factors', '3 PEN dimensions', '150 Abilities'],
+    correct: 0,
+    explanation: 'Cattell identified 16 fundamental source traits representing deep structural building blocks of personality, measured by the Sixteen Personality Factor Questionnaire (16PF).'
+  },
+  {
+    subtopicId: 'psy-sub-2-7',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: 'In Freudian psychoanalysis, which psychosexual stage is characterized by the Oedipus / Electra complex and awareness of gender roles?',
+    options: ['Phallic stage (3-6 years)', 'Oral stage (0-1 year)', 'Anal stage (1-3 years)', 'Latency stage (6-12 years)'],
+    correct: 0,
+    explanation: 'The Phallic stage (ages 3 to 6) focuses libido on the genitals and is marked by the Oedipus complex in boys and Electra complex in girls, resolved through identification with the same-sex parent.'
+  },
+  {
+    subtopicId: 'psy-sub-2-9',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: 'According to Carl Rogers, healthy personality development and self-actualisation require that a child receives:',
+    options: [
+      'Unconditional Positive Regard (acceptance and love without conditions attached)',
+      'Rigid conditions of worth',
+      'Strict behavioural operant punishment',
+      'Early toilet training'
+    ],
+    correct: 0,
+    explanation: 'Rogers emphasized that unconditional positive regard from significant caregivers prevents conditions of worth and allows the real self and ideal self to achieve harmony (congruence).'
+  },
+  {
+    subtopicId: 'psy-sub-2-10',
+    chapterId: 'psy-ch-2',
+    subjectId: 'psychology',
+    question: 'The Thematic Apperception Test (TAT) developed by Morgan and Murray is an assessment tool categorized under:',
+    options: [
+      'Projective techniques (interpreting ambiguous picture scenes)',
+      'Self-report structured inventories',
+      'Situational stress tests',
+      'Neuropsychological performance batteries'
+    ],
+    correct: 0,
+    explanation: 'TAT is a projective test where subjects compose stories about 30 ambiguous picture cards, projecting their underlying unconscious needs, motives, and intrapsychic conflicts.'
+  },
+
+  // --------------------------------------------------------------------------
+  // PSYCHOLOGY CH 3: Meeting Life Challenges
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'psy-sub-3-1',
+    chapterId: 'psy-ch-3',
+    subjectId: 'psychology',
+    question: 'In Lazarus and Folkman\'s Cognitive Appraisal Model, appraising a stressful event as a "Challenge" means:',
+    options: [
+      'Viewing the demand with expectation of potential gain, mastery, and personal growth',
+      'Viewing the damage that has already occurred',
+      'Anticipating irreversible catastrophe and defeat',
+      'Denying that any problem exists'
+    ],
+    correct: 0,
+    explanation: 'Challenge appraisals focus on potential for mastery, learning, and growth, fostering positive emotions and proactive problem-solving coping responses.'
+  },
+  {
+    subtopicId: 'psy-sub-3-2',
+    chapterId: 'psy-ch-3',
+    subjectId: 'psychology',
+    question: 'A college graduate must choose between two equally lucrative and prestigious job offers in attractive cities. This motivational dilemma exemplifies:',
+    options: [
+      'Approach-Approach conflict',
+      'Avoidance-Avoidance conflict',
+      'Approach-Avoidance conflict',
+      'Multiple frustration'
+    ],
+    correct: 0,
+    explanation: 'Approach-Approach conflict occurs when an individual must select between two equally desirable, mutually exclusive positive goals.'
+  },
+  {
+    subtopicId: 'psy-sub-3-3',
+    chapterId: 'psy-ch-3',
+    subjectId: 'psychology',
+    question: 'What physiological triad did Hans Selye identify in animals exposed to chronic, unrelenting stress during the Exhaustion stage of GAS?',
+    options: [
+      'Enlargement of adrenal cortex, shrinkage of lymphatic structures (thymus), and gastric ulcers',
+      'Decrease in blood pressure, slowing heart rate, and increased digestion',
+      'Excess insulin secretion, increased white blood cells, and bone density increase',
+      'Hyperactivity of the pineal gland, dilated pupils, and muscular relaxation'
+    ],
+    correct: 0,
+    explanation: 'Selye discovered the classic stress triad: hypertrophy/enlargement of the adrenal cortex, atrophy/shrinkage of thymus and lymph nodes, and deep bleeding gastric ulceration.'
+  },
+  {
+    subtopicId: 'psy-sub-3-4',
+    chapterId: 'psy-ch-3',
+    subjectId: 'psychology',
+    question: 'Psychoneuroimmunology studies indicate that chronic psychological stress suppresses the immune system primarily because:',
+    options: [
+      'Sustained cortisol elevation inhibits the production and cytotoxic activity of Natural Killer (NK) cells and T-lymphocytes',
+      'Stress causes rapid destruction of red blood cells',
+      'Sympathetic arousal immediately shuts down all brain activity',
+      'Endorphins destroy antibody receptor sites'
+    ],
+    correct: 0,
+    explanation: 'Chronic HPA axis activation leads to prolonged excess glucocorticoids (cortisol), which suppress immune cytokines, impair lymphocyte proliferation, and inhibit NK cell tumor defense.'
+  },
+  {
+    subtopicId: 'psy-sub-3-5',
+    chapterId: 'psy-ch-3',
+    subjectId: 'psychology',
+    question: 'Preparing a comprehensive study schedule, gathering reference books, and consulting teachers prior to board exams represents:',
+    options: [
+      'Problem-focused coping',
+      'Emotion-focused coping',
+      'Avoidance-oriented coping',
+      'Impulsive projection'
+    ],
+    correct: 0,
+    explanation: 'Problem-focused coping targets the objective source of stress through direct planning, constructive action, and instrumental resource mobilization.'
+  },
+  {
+    subtopicId: 'psy-sub-3-6',
+    chapterId: 'psy-ch-3',
+    subjectId: 'psychology',
+    question: 'Receiving financial assistance, study materials, or transport from family members during exam periods is classified as which type of social support?',
+    options: ['Tangible / Instrumental support', 'Informational support', 'Emotional support', 'Vicarious support'],
+    correct: 0,
+    explanation: 'Tangible or instrumental support involves direct material assistance, financial aid, or physical services provided to help alleviate stress.'
+  },
+  {
+    subtopicId: 'psy-sub-3-7',
+    chapterId: 'psy-ch-3',
+    subjectId: 'psychology',
+    question: 'The World Health Organization (WHO) identifies empathy, interpersonal communication, and relationship skills under which core life skill category?',
+    options: ['Social / Interpersonal Skills', 'Cognitive Skills', 'Emotional Skills', 'Physical Skills'],
+    correct: 0,
+    explanation: 'WHO groups the 10 life skills into Cognitive (problem-solving, decision-making), Emotional (coping with stress, emotions), and Social (effective communication, empathy, interpersonal relationships).'
   }
 ];
 
@@ -986,6 +1298,214 @@ const PROCEDURAL_GENERATORS = {
         explanation: `In ${cross.name}, the classical Mendelian/non-Mendelian phenotypic ratio is ${cross.phenotypic}.`
       };
     }
+  ],
+
+  // PSYCHOLOGY
+  'psy-ch-1': [
+    (v) => {
+      const cases = [
+        { ma: 12, ca: 10, iq: 120 },
+        { ma: 15, ca: 12, iq: 125 },
+        { ma: 8, ca: 10, iq: 80 },
+        { ma: 14, ca: 10, iq: 140 },
+        { ma: 9, ca: 12, iq: 75 },
+        { ma: 10, ca: 8, iq: 125 }
+      ];
+      const c = cases[v % cases.length];
+      return {
+        subtopicId: 'psy-sub-1-3',
+        subtopicName: '1.3 Assessment of Intelligence & IQ',
+        question: `Calculate the Intelligence Quotient (IQ) of a student whose Mental Age (MA) is ${c.ma} years and Chronological Age (CA) is ${c.ca} years.`,
+        options: [`${c.iq}`, `${c.iq - 10}`, `${c.iq + 15}`, `${Math.round((c.ca / c.ma) * 100)}`],
+        correct: 0,
+        explanation: `William Stern's formula gives IQ = (MA / CA) × 100 = (${c.ma} / ${c.ca}) × 100 = ${c.iq}.`
+      };
+    },
+    (v) => {
+      const intelligences = [
+        { type: 'Spatial Intelligence', prof: 'architect or sculptor', desc: 'visualizing patterns and mental transformations in three dimensions' },
+        { type: 'Bodily-Kinesthetic Intelligence', prof: 'surgeon or gymnast', desc: 'displaying extraordinary flexibility, motor dexterity, and bodily coordination' },
+        { type: 'Interpersonal Intelligence', prof: 'psychotherapist or diplomat', desc: 'discerning the hidden motives, temperaments, and intentions of others' },
+        { type: 'Intrapersonal Intelligence', prof: 'philosopher or spiritual mentor', desc: 'possessing deep awareness of inner feelings, self-identity, and personal motives' },
+        { type: 'Naturalistic Intelligence', prof: 'botanist or wildlife conservationist', desc: 'recognizing and categorizing fine nuances in flora, fauna, and natural habitats' },
+        { type: 'Musical Intelligence', prof: 'composer or vocalist', desc: 'sensitivity to pitch, timbre, rhythm, and tone structures' }
+      ];
+      const item = intelligences[v % intelligences.length];
+      return {
+        subtopicId: 'psy-sub-1-2',
+        subtopicName: '1.2 Theories of Intelligence',
+        question: `According to Howard Gardner's Theory of Multiple Intelligences, a person who excels as a ${item.prof} through ${item.desc} predominantly utilizes:`,
+        options: [
+          item.type,
+          intelligences[(v + 1) % intelligences.length].type,
+          intelligences[(v + 2) % intelligences.length].type,
+          intelligences[(v + 3) % intelligences.length].type
+        ],
+        correct: 0,
+        explanation: `Howard Gardner identified 8 distinct intelligences; ${item.desc} is the defining hallmark of ${item.type}.`
+      };
+    },
+    (v) => {
+      const passComponents = [
+        { comp: 'Planning', brain: 'Frontal and Prefrontal cortex', role: 'setting goals, selecting strategies, monitoring execution, and evaluating outcomes' },
+        { comp: 'Arousal / Attention', brain: 'Brainstem and Reticular Activating System (RAS)', role: 'maintaining optimal state of alert awareness to focus on relevant stimuli' },
+        { comp: 'Simultaneous Processing', brain: 'Occipital and Parietal lobes', role: 'integrating discrete stimuli into an interrelated spatial or holistic whole (e.g. Raven Progressive Matrices)' },
+        { comp: 'Successive Processing', brain: 'Frontal-Temporal lobes', role: 'recalling items in a strict step-by-step linear serial sequence (e.g. learning alphabets or digits)' }
+      ];
+      const p = passComponents[v % passComponents.length];
+      return {
+        subtopicId: 'psy-sub-1-2',
+        subtopicName: '1.2 Theories of Intelligence',
+        question: `In the PASS Model of Intelligence (Das, Naglieri, Kirby), the functional unit responsible for ${p.role} is primarily located in the:`,
+        options: [
+          p.brain,
+          passComponents[(v + 1) % passComponents.length].brain,
+          passComponents[(v + 2) % passComponents.length].brain,
+          'Cerebellum and Medulla'
+        ],
+        correct: 0,
+        explanation: `In the PASS cognitive assessment system, ${p.comp} is neuroanatomically linked with the ${p.brain}.`
+      };
+    }
+  ],
+
+  'psy-ch-2': [
+    (v) => {
+      const defMech = [
+        { name: 'Displacement', scenario: 'A corporate employee reprimanded by their boss comes home and uncharacteristically yells at their innocent children' },
+        { name: 'Sublimation', scenario: 'An individual with aggressive impulses redirects their energy into becoming a decorated Olympic boxing champion' },
+        { name: 'Reaction Formation', scenario: 'A person harboring strong unconscious jealousy toward a peer showers them with exaggerated, lavish public compliments' },
+        { name: 'Projection', scenario: 'A dishonest salesperson accuses all their business competitors of being crooked, deceitful, and corrupt' },
+        { name: 'Rationalization', scenario: 'A student who fails an entrance test claims they never really wanted admission into such a mediocre institution' },
+        { name: 'Regression', scenario: 'An adult hospitalized for minor surgery starts crying uncontrollably and sucking their thumb like a small child' }
+      ];
+      const dm = defMech[v % defMech.length];
+      return {
+        subtopicId: 'psy-sub-2-4',
+        subtopicName: '2.4 Psychodynamic Approach',
+        question: `Which Freudian defense mechanism is best demonstrated in the following scenario: "${dm.scenario}"?`,
+        options: [
+          dm.name,
+          defMech[(v + 1) % defMech.length].name,
+          defMech[(v + 2) % defMech.length].name,
+          defMech[(v + 3) % defMech.length].name
+        ],
+        correct: 0,
+        explanation: `${dm.name} occurs when: ${dm.scenario}. The Ego employs this unconscious defense mechanism to mitigate overwhelming anxiety.`
+      };
+    },
+    (v) => {
+      const somatos = [
+        { type: 'Endomorphic', body: 'round, plump, soft', temper: 'Viscerotonia (relaxed, comfort-loving, sociable, fond of food)' },
+        { type: 'Mesomorphic', body: 'muscular, strong, rectangular build', temper: 'Somatotonia (assertive, energetic, bold, risk-taking)' },
+        { type: 'Ectomorphic', body: 'tall, thin, fragile build', temper: 'Cerebrotonia (introverted, intellectual, sensitive, anxious)' }
+      ];
+      const s = somatos[v % somatos.length];
+      return {
+        subtopicId: 'psy-sub-2-2',
+        subtopicName: '2.2 Type Approaches to Personality',
+        question: `According to William Sheldon's somatotype classification, an individual characterized by a ${s.body} physique is classified as ${s.type} and typically exhibits:`,
+        options: [
+          s.temper,
+          somatos[(v + 1) % somatos.length].temper,
+          somatos[(v + 2) % somatos.length].temper,
+          'Extraverted intuition with sensation dominance'
+        ],
+        correct: 0,
+        explanation: `Sheldon correlated body build with temperament: ${s.type} individuals possess ${s.body} builds and are characterized by ${s.temper}.`
+      };
+    },
+    (v) => {
+      const ocean = [
+        { trait: 'Openness to Experience', high: 'curious, imaginative, open to novel ideas, artistic', low: 'conventional, pragmatic, rigid preferences' },
+        { trait: 'Conscientiousness', high: 'goal-directed, organized, dependable, disciplined', low: 'spontaneous, disorganized, careless, procrastinating' },
+        { trait: 'Extraversion', high: 'outgoing, energetic, talkative, assertive', low: 'reserved, quiet, solitary, reflective' },
+        { trait: 'Agreeableness', high: 'empathetic, cooperative, trusting, helpful', low: 'cynical, competitive, antagonistic, suspicious' },
+        { trait: 'Neuroticism', high: 'emotionally unstable, anxious, mood-swing prone, irritable', low: 'calm, emotionally stable, composed, resilient under pressure' }
+      ];
+      const o = ocean[v % ocean.length];
+      return {
+        subtopicId: 'psy-sub-2-3',
+        subtopicName: '2.3 Trait Approaches to Personality',
+        question: `In Paul Costa and Robert McCrae's Five-Factor Model (Big Five / OCEAN), an individual who is ${o.high} scores high on:`,
+        options: [
+          o.trait,
+          ocean[(v + 1) % ocean.length].trait,
+          ocean[(v + 2) % ocean.length].trait,
+          ocean[(v + 3) % ocean.length].trait
+        ],
+        correct: 0,
+        explanation: `The Big Five factor "${o.trait}" reflects individual differences in being ${o.high}.`
+      };
+    }
+  ],
+
+  'psy-ch-3': [
+    (v) => {
+      const conflicts = [
+        { type: 'Approach-Approach Conflict', desc: 'Choosing between two equally attractive, mutually exclusive job offers in dream companies' },
+        { type: 'Avoidance-Avoidance Conflict', desc: 'Choosing between undergoing a painful dental surgery or suffering agonizing toothache' },
+        { type: 'Approach-Avoidance Conflict', desc: 'Accepting an exciting high-paying job offer that requires relocating away from beloved aging parents' },
+        { type: 'Multiple Approach-Avoidance Conflict', desc: 'Weighing multiple university admissions where each campus possesses distinct pros and severe cons' }
+      ];
+      const cf = conflicts[v % conflicts.length];
+      return {
+        subtopicId: 'psy-sub-3-2',
+        subtopicName: '3.2 Types & Sources of Stress',
+        question: `Identify the psychological conflict type represented by: "${cf.desc}".`,
+        options: [
+          cf.type,
+          conflicts[(v + 1) % conflicts.length].type,
+          conflicts[(v + 2) % conflicts.length].type,
+          'Unilateral Environmental Barrier'
+        ],
+        correct: 0,
+        explanation: `${cf.type} arises when an individual faces: ${cf.desc}.`
+      };
+    },
+    (v) => {
+      const gasStages = [
+        { stage: 'Alarm Reaction Stage', feature: 'Release of adrenaline/noradrenaline via SAM axis, elevated heart rate, fight-or-flight mobilization' },
+        { stage: 'Resistance Stage', feature: 'Prolonged release of cortisol via HPA axis, parasympathetic attempts at compensation, continuous reserve drain' },
+        { stage: 'Exhaustion Stage', feature: 'Depletion of adaptive physiological reserves, enlargement of adrenal cortex, peptic ulcers, immune breakdown' }
+      ];
+      const g = gasStages[v % gasStages.length];
+      return {
+        subtopicId: 'psy-sub-3-3',
+        subtopicName: '3.3 Selye\'s GAS & Physiological Impact',
+        question: `In Hans Selye's General Adaptation Syndrome (GAS), which physiological phenomenon characterizes the "${g.stage}"?`,
+        options: [
+          g.feature,
+          gasStages[(v + 1) % gasStages.length].feature,
+          gasStages[(v + 2) % gasStages.length].feature,
+          'Complete parasympathetic hibernation and bradycardia'
+        ],
+        correct: 0,
+        explanation: `In Selye's tripartite GAS model, the ${g.stage} is defined by: ${g.feature}.`
+      };
+    },
+    (v) => {
+      const techniques = [
+        { tech: 'Biofeedback', desc: 'Training an individual to voluntarily regulate autonomic biological functions (such as heart rate or galvanic skin response) using electronic monitoring transducers' },
+        { tech: 'Creative Visualization', desc: 'Forming realistic, peaceful mental sensory imagery of tranquil environments to quiet autonomic arousal' },
+        { tech: 'Cognitive Restructuring', desc: 'Identifying distorted irrational thought patterns ("catastrophizing") and systematically reframing them with balanced beliefs' },
+        { tech: 'Autogenic Relaxation', desc: 'Using focused self-statements inducing sensations of warmth and heaviness in limbs to relax skeletal musculature' }
+      ];
+      const t = techniques[v % techniques.length];
+      return {
+        subtopicId: 'psy-sub-3-6',
+        subtopicName: '3.6 Stress Management Techniques',
+        question: `Which stress management technique is described as: "${t.desc}"?`,
+        options: [
+          t.tech,
+          techniques[(v + 1) % techniques.length].tech,
+          techniques[(v + 2) % techniques.length].tech,
+          'Electroconvulsive Desensitization'
+        ],
+        correct: 0,
+        explanation: `${t.tech} is an established stress intervention involving: ${t.desc}.`
+      };
+    }
   ]
 };
 
@@ -1094,17 +1614,19 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
   }
 
   // PASS 4: All procedural generators across the subject
-  const allSubjChs = Object.keys(PROCEDURAL_GENERATORS).filter(k => k.startsWith(subjectId.slice(0, 4)));
-  let attempts = 0;
-  while (result.length < count && attempts < 100) {
-    attempts++;
-    const randomCh = allSubjChs[(seed + attempts) % allSubjChs.length];
-    const gens = PROCEDURAL_GENERATORS[randomCh] || [];
-    if (gens.length > 0) {
-      const genFn = gens[(seed + attempts * 3) % gens.length];
-      const generated = genFn(seed + attempts * 23);
-      tryAddQuestion(generated);
-      if (result.length >= count) return result;
+  const allSubjChs = Object.keys(PROCEDURAL_GENERATORS).filter(k => k.startsWith(subjectId.slice(0, 3)));
+  if (allSubjChs.length > 0) {
+    let attempts = 0;
+    while (result.length < count && attempts < 100) {
+      attempts++;
+      const randomCh = allSubjChs[(seed + attempts) % allSubjChs.length];
+      const gens = PROCEDURAL_GENERATORS[randomCh] || [];
+      if (gens.length > 0) {
+        const genFn = gens[(seed + attempts * 3) % gens.length];
+        const generated = genFn(seed + attempts * 23);
+        tryAddQuestion(generated);
+        if (result.length >= count) return result;
+      }
     }
   }
 

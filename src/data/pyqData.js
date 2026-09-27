@@ -459,5 +459,409 @@ p² + 2pq + q² = 1  (where p = dominant allele freq, q = recessive allele freq,
 (iv) Genetic Recombination (crossing over during meiosis in sexual reproduction).
 (v) Natural Selection (differential reproductive success of favorable genotypes).`
     }
+  ],
+
+  psychology: [
+    {
+      id: 'psy-pyq-1',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-2',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Explain Howard Gardner\'s Theory of Multiple Intelligences. Describe any five types of intelligences identified by him with suitable examples.',
+      solution: `1. Core Proposition of Gardner's Theory:
+Howard Gardner proposed that intelligence is not a single, unitary mental entity, but consists of at least eight distinct and autonomous intelligences. Each operates independently and is anchored in separate neural modules of the brain. Damage to a specific brain region may impair one intelligence while leaving others completely intact.
+
+2. Five Types of Intelligences:
+(i) Linguistic Intelligence:
+• Capacity to use language fluently, flexibly, and creatively. Highly developed in poets, writers, lawyers, and orators (e.g. William Shakespeare, Sarojini Naidu).
+(ii) Logical-Mathematical Intelligence:
+• Capacity for abstract reasoning, scientific inquiry, logical thinking, and mathematical computation. Characteristic of scientists, mathematicians, and logicians (e.g. Albert Einstein, Srinivasa Ramanujan).
+(iii) Spatial Intelligence:
+• Capacity to form accurate mental representations of visual-spatial configurations and transform them mentally. Essential for architects, painters, sculptors, and pilots (e.g. M.F. Husain, pilots navigating 3D space).
+(iv) Bodily-Kinesthetic Intelligence:
+• Ability to use the entire body or parts of the body with great precision, flexibility, and coordination. Evident in athletes, dancers, surgeons, and craftspeople (e.g. Sachin Tendulkar, neurosurgeons).
+(v) Interpersonal Intelligence:
+• Ability to recognize, distinguish, and respond sensitively to the moods, motivations, intentions, and feelings of other people. Vital for psychologists, counsellors, teachers, and politicians (e.g. Mahatma Gandhi, Mother Teresa).`
+    },
+    {
+      id: 'psy-pyq-2',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-2',
+      year: 'CBSE 2022 (3 Marks)',
+      question: 'Describe the PASS Model of Intelligence proposed by J.P. Das, Jack Naglieri, and Kirby.',
+      solution: `1. Foundation:
+The PASS model is an Information-Processing approach based on the neuropsychological work of A.R. Luria, describing intellectual activity as an interdependent operation of three functional brain units.
+
+2. Four Cognitive Processes (PASS):
+(i) Planning (P):
+• Managed by the frontal lobes. Enables goal setting, strategy selection, implementation monitoring, and outcome evaluation.
+(ii) Attention-Arousal (A):
+• Governed by the reticular activating system and brainstem. Optimal arousal enables focused attention while inhibiting distracting extraneous stimuli.
+(iii) Simultaneous Processing (S):
+• Managed by the occipito-parietal regions. Integrates separate pieces of information into a unified spatial pattern or concept (e.g. Raven's Progressive Matrices).
+(iv) Successive Processing (S):
+• Managed by the frontal-temporal areas. Integrates information in a step-by-step, sequential serial order (e.g. remembering telephone numbers, alphabets).`
+    },
+    {
+      id: 'psy-pyq-3',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-7',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Explain Sigmund Freud\'s structural model of personality consisting of Id, Ego, and Superego. How does the Ego maintain intrapsychic balance?',
+      solution: `1. Structure of Personality:
+Freud conceptualized personality as governed by the dynamic interaction among three mental structures:
+
+(i) The Id:
+• Present at birth; reservoir of primitive biological drives and instinctual energy (libido, Eros and Thanatos).
+• Operates exclusively on the Pleasure Principle, demanding immediate gratification of impulses without regard for logic, morality, or social constraints.
+
+(ii) The Ego:
+• Develops out of the Id during the first year of life as a result of contact with reality.
+• Operates on the Reality Principle. Directs the Id's instinctual energy into socially acceptable, realistic avenues through realistic thinking.
+• Mediates between the aggressive/hedonistic demands of the Id, the moral prohibitions of the Superego, and external physical reality.
+
+(iii) The Superego:
+• The internalized moral arm and ethical conscience, acquired through socialization and parental identification (typically during the Phallic stage).
+• Operates on the Moral Principle, striving for perfection rather than pleasure or reality. Composed of the Conscience (punishes with guilt) and Ego-Ideal (rewards with pride).
+
+2. Ego Functioning & Intrapsychic Defense:
+When the Id and Superego place conflicting demands that threaten to overwhelm the Ego, intrapsychic anxiety is generated. The Ego deploys unconscious Defense Mechanisms (such as Repression, Projection, Rationalization, Reaction Formation, and Sublimation) to distort reality and shield the conscious self from debilitating anxiety.`
+    },
+    {
+      id: 'psy-pyq-4',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-10',
+      year: 'CBSE 2022 (3 Marks)',
+      question: 'What are projective techniques of personality assessment? Describe the Rorschach Inkblot Test.',
+      solution: `1. Projective Hypothesis:
+Projective techniques present unstructured, ambiguous stimuli (inkblots, pictures, incomplete sentences) that have no obvious or standardized meaning. The subject unconsciously projects their internal motives, latent needs, unconscious fantasies, and defense mechanisms onto the ambiguous stimulus.
+
+2. The Rorschach Inkblot Test:
+• Developed by Swiss psychiatrist Hermann Rorschach in 1921.
+• Consists of 10 standardized cards with symmetrical inkblots (5 achromatic black-and-white, 2 black-and-red, 3 multicoloured).
+• Administration: Conducted individually in two phases:
+  (a) Performance Proper: Subject freely responds to "What might this be?"
+  (b) Inquiry Phase: Examiner inquires where on the card the percept was seen and what characteristics determined it.
+• Scoring Dimensions:
+  - Location (whole blot, common detail, unusual detail, white space).
+  - Determinants (form, colour, shading, perceived movement).
+  - Content (human, animal, anatomical, nature, abstract).`
+    },
+    {
+      id: 'psy-pyq-5',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-3',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Describe Hans Selye\'s General Adaptation Syndrome (GAS) with a diagram. Explain the physiological changes during each stage.',
+      solution: `1. Definition of GAS:
+Hans Selye defined stress as the non-specific physiological response of the biological organism to any demand placed upon it. Chronic stress triggers a universal tripartite sequence termed the General Adaptation Syndrome.
+
+2. Three Stages of GAS:
+(i) Alarm Reaction Stage:
+• The immediate perception of a stressor triggers the sympathetic nervous system and the Sympathetic-Adrenal-Medullary (SAM) axis.
+• Adrenaline and noradrenaline are released; heart rate, blood pressure, respiration rate, and blood sugar spike to power the classic "fight-or-flight" response.
+
+(ii) Resistance Stage:
+• If stressor persists, the body adapts to the ongoing demand.
+• The Hypothalamic-Pituitary-Adrenal (HPA) axis releases Cortisol. Parasympathetic system attempts to restore some autonomic balance, but endocrine arousal remains abnormally elevated.
+• The organism displays outward coping, but internal physiological reserves are progressively taxed.
+
+(iii) Exhaustion Stage:
+• Under prolonged, continuous stressor exposure without resolution, the body's adaptive reserves are entirely depleted.
+• Manifestations: Enlargement of adrenal cortex, atrophy of lymphatic structures (thymus, spleen), gastric peptic ulceration, and severe immune collapse.
+• Results in psychosomatic diseases (hypertension, cardiovascular failure) or ultimate physical collapse.`
+    },
+    {
+      id: 'psy-pyq-6',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-5',
+      year: 'CBSE 2020 (3 Marks)',
+      question: 'Distinguish between Problem-Focused and Emotion-Focused coping strategies proposed by Lazarus and Folkman. Give one example of each.',
+      solution: `1. Problem-Focused Coping:
+• Aim: Directed at changing, eliminating, or resolving the stressful environment or demand itself.
+• Mechanism: Involves instrumental, action-oriented strategies such as gathering information, time management, problem-solving, assertiveness, and seeking direct guidance.
+• Optimal Utility: Most effective when the stressor is appraised as controllable and changeable (e.g. creating a disciplined revision schedule after receiving a poor diagnostic test score).
+
+2. Emotion-Focused Coping:
+• Aim: Directed at reducing, managing, or regulating the internal emotional distress and psychological tension generated by the stressor, rather than altering the objective reality.
+• Mechanism: Involves emotional venting, positive cognitive reappraisal, acceptance, relaxation, meditation, and seeking empathy from friends.
+• Optimal Utility: Most effective when the stressor is appraised as uncontrollable and irreversible (e.g. bereavement, loss of a loved one, incurable medical diagnosis).`
+    },
+    {
+      id: 'psy-pyq-7',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-2',
+      year: 'CBSE 2024 (6 Marks)',
+      question: 'Elaborate on Howard Gardner\'s Theory of Multiple Intelligences. Explain any six types of intelligences proposed by him with suitable examples.',
+      solution: `1. Core Philosophy of Gardner's Theory:
+Howard Gardner proposed that intelligence is not a single entity, but consists of multiple, relatively autonomous intelligences that operate in interaction. Each individual possesses a unique profile of these intelligences.
+
+2. Six Distinct Types of Intelligences:
+(i) Linguistic Intelligence:
+• Capacity to use language fluently, flexibly, and creatively.
+• Highly developed in poets, writers, journalists, and public orators (e.g. William Shakespeare, Rabindranath Tagore).
+
+(ii) Logical-Mathematical Intelligence:
+• Ability to think logically, critically, and solve abstract mathematical and scientific problems.
+• Characteristic of scientists, mathematicians, and physicists (e.g. Albert Einstein, Srinivasa Ramanujan).
+
+(iii) Spatial Intelligence:
+• Mental capacity to form visual images, transform 3D spatial representations mentally, and navigate complex spaces.
+• Prominent in architects, painters, sculptors, pilots, and chess grandmasters.
+
+(iv) Bodily-Kinesthetic Intelligence:
+• Ability to coordinate body movements with agility, balance, dexterity, and fine motor precision.
+• Exemplified by athletes, classical dancers, acrobats, and surgeons.
+
+(v) Interpersonal Intelligence:
+• Capacity to discern, understand, and respond adaptively to the moods, motivations, desires, and intentions of other people.
+• Seen in psychotherapists, political leaders, social workers, and diplomats (e.g. Mahatma Gandhi, Mother Teresa).
+
+(vi) Intrapersonal Intelligence:
+• Knowledge and deep awareness of one's internal states, feelings, identity, values, and personal strengths/limitations.
+• Evident in philosophers, spiritual teachers, and self-reflective thinkers (e.g. Swami Vivekananda).`
+    },
+    {
+      id: 'psy-pyq-8',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-3',
+      year: 'CBSE 2023 (4 Marks)',
+      question: 'Classify psychological tests of intelligence on the basis of: (a) Administration, (b) Nature of items, and (c) Cultural bias.',
+      solution: `1. On the Basis of Administration:
+• Individual Tests: Administered to one person at a time; allows building rapport and observing qualitative behavioral nuances (e.g. Stanford-Binet Test, Wechsler Intelligence Scale).
+• Group Tests: Administered simultaneously to a large cohort of individuals; cost-effective, objective, with printed instructions, but offers little opportunity to observe test-taking anxiety (e.g. Army Alpha Test).
+
+2. On the Basis of Nature of Items:
+• Verbal Tests: Require literacy and language comprehension; test-takers respond orally or in writing.
+• Non-Verbal Tests: Use symbols, geometric figures, or pictures to minimize language dependence (e.g. Raven's Progressive Matrices).
+• Performance Tests: Require active manual manipulation of physical objects and materials (e.g. Kohs Block Design Test, Bhatia's Battery of Performance Tests).
+
+3. On the Basis of Cultural Inclusivity:
+• Culture-Biased Tests: Standardized within a specific cultural milieu (usually Western urban middle class); unfairly penalize individuals from marginalized or differing cultural backgrounds.
+• Culture-Fair / Culture-Neutral Tests: Formulated with non-verbal geometric matrices and universally recognizable items to minimize cultural and linguistic disparities.`
+    },
+    {
+      id: 'psy-pyq-9',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-4',
+      year: 'CBSE 2022 (4 Marks)',
+      question: 'Differentiate between Intellectual Deficiency (Mental Retardation) and Intellectual Giftedness. Outline the AAMD criteria for intellectual disability.',
+      solution: `1. Intellectual Deficiency (AAMD / APA Definition):
+According to the American Association on Mental Deficiency (AAMD), intellectual disability is characterized by:
+• Significantly sub-average general intellectual functioning (IQ below 70, which is 2 standard deviations below the mean).
+• Concurrent deficits or impairments in adaptive behavior (communication, self-care, home living, social skills).
+• Manifested during the developmental period (prior to the age of 18).
+
+Levels of Intellectual Disability:
+- Mild (IQ 55–69): Educable; can acquire basic academic and vocational survival skills.
+- Moderate (IQ 40–54): Trainable in communication and daily motor living skills; requires sheltered supervision.
+- Severe (IQ 25–39) & Profound (IQ < 25): Require constant institutional care and custodial support.
+
+2. Intellectual Giftedness:
+• Refers to individuals exhibiting exceptional general intellectual capability (IQ generally 130 and above, representing top 2.2% of normal distribution).
+• Hallmarks (Terman & Lewis): Advanced logical processing, intrinsic motivation, divergent thinking, rapid information intake, superior memory, early language development, and acute moral sensitivity.`
+    },
+    {
+      id: 'psy-pyq-10',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-6',
+      year: 'CBSE 2020 (3 Marks)',
+      question: 'What is Emotional Intelligence? Identify any four key characteristics of emotionally intelligent individuals.',
+      solution: `1. Definition of Emotional Intelligence (EI / EQ):
+Salovey and Mayer define Emotional Intelligence as "the ability to monitor one's own and other people's emotions, to discriminate among them, and to use emotional information to guide thinking and actions."
+
+2. Four Characteristics of Emotionally Intelligent Individuals:
+• Accurate Emotional Perception: Ability to perceive, identify, and express emotions accurately in oneself and others through non-verbal and verbal cues.
+• Emotional Assimilation: Ability to facilitate cognitive thinking by harnessing emotions to prioritize attention and foster problem-solving.
+• Understanding Complex Emotional States: Ability to comprehend relationships among emotions, recognize shifts from anger to guilt, and interpret complex feelings.
+• Regulating and Managing Emotions: Capability to moderate negative emotions and sustain positive states in oneself and others without impulsive outbursts.`
+    },
+    {
+      id: 'psy-pyq-11',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-8',
+      year: 'CBSE 2019 (4 Marks)',
+      question: 'Explain the Indian concept of intelligence (Buddhi). How does it differ from the Western perspective?',
+      solution: `1. Concept of Buddhi in Indian Tradition:
+In the Indian psychological tradition (rooted in the Upanishads and Bhagavad Gita), intelligence is encapsulated in the concept of "Buddhi", which encompasses both cognitive competence and affective/moral/ethical maturity.
+
+2. Four Integral Facets of Buddhi (J.P. Das & Purnima Singh):
+• Cognitive Capacity: Sensitivity to context, understanding, discrimination, rapid problem comprehension.
+• Social Competence: Respect for social order, dedication to family and community elders, fulfilling societal duties (Dharma).
+• Emotional Competence: Self-regulation of desires and anger, modesty, empathy, detachment, and emotional balance.
+• Entrepreneurial Competence: Industriousness, commitment, hard work, persistence, and vigilance in pursuits.
+
+3. Contrast with Western Perspective:
+• Western Tradition: Primarily emphasizes cognitive prowess, atomistic logical analysis, speed, abstract symbol manipulation, and individualistic achievement.
+• Indian Tradition: Emphasizes holistic, contextual, communal harmony, moral-spiritual wisdom, and social interconnectedness over individual competitiveness.`
+    },
+    {
+      id: 'psy-pyq-12',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-4',
+      year: 'CBSE 2023 (4 Marks)',
+      question: 'Explain any four defense mechanisms proposed by Sigmund Freud with appropriate real-life illustrations.',
+      solution: `1. Function of Defense Mechanisms:
+Defense mechanisms are unconscious psychological strategies used by the Ego to protect the conscious self from overwhelming anxiety caused by intrapsychic conflict between Id impulses and Superego moral prohibitions.
+
+2. Four Primary Defense Mechanisms:
+(i) Repression:
+• Unacceptable thoughts, traumatic memories, and taboo impulses are pushed deep into the unconscious mind.
+• Example: A survivor of a devastating accident completely blocks out the memory of the catastrophic crash.
+
+(ii) Projection:
+• Attributing one's own unacceptable feelings, impulses, or flaws onto other individuals.
+• Example: A person harboring hostile feelings toward a colleague insists that "everyone in the office is trying to undermine me."
+
+(iii) Reaction Formation:
+• Behaving in a manner directly contrary to one's true, unacceptable unconscious desires.
+• Example: A person who secretly resents a sibling goes to excessive, flamboyant lengths to shower them with lavish gifts and praise.
+
+(iv) Sublimation:
+• Channeling socially unacceptable, destructive impulses into socially valued, constructive pursuits.
+• Example: An individual with aggressive inclinations channels that kinetic aggression into becoming an elite martial artist or surgeon.`
+    },
+    {
+      id: 'psy-pyq-13',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-5',
+      year: 'CBSE 2022 (6 Marks)',
+      question: 'Evaluate the contributions of Post-Freudian theorists: (a) Carl Jung, (b) Alfred Adler, and (c) Karen Horney.',
+      solution: `1. Carl Gustav Jung (Analytical Psychology):
+• Collective Unconscious: Jung proposed that beyond the individual unconscious lies the collective unconscious—a reservoir of ancestral memories, instincts, and universal archetypes shared across humanity.
+• Archetypes: Primordial symbolic images including the Persona (social mask), Anima (feminine archetype in men), Animus (masculine archetype in women), and Shadow (dark primal instincts).
+• Typology: Classified psychological attitudes into Extraversion (outward oriented) and Introversion (inward oriented).
+
+2. Alfred Adler (Individual Psychology):
+• Inferiority Complex: Adler argued that human behavior is driven not by sexual instincts, but by overcoming feelings of inadequacy and inferiority that arise in childhood.
+• Striving for Superiority: The foundational motivational force driving personal mastery, self-improvement, and social interest (Gemeinschaftsgefühl).
+• Lifestyle: The unique pattern of behaviors, beliefs, and compensatory mechanisms developed by an individual to attain significance.
+
+3. Karen Horney (Interpersonal Theory):
+• Critique of Freud: Challenged Freud's biological determinism and male-centric assumptions (e.g. penis envy), proposing "womb envy" instead.
+• Basic Anxiety: Arises from feelings of isolation and helplessness in a potentially hostile childhood environment due to parental indifference.
+• Interpersonal Coping Styles: Moving toward people (compliance/dependency), moving against people (aggression/dominance), or moving away from people (detachment/withdrawal).`
+    },
+    {
+      id: 'psy-pyq-14',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-6',
+      year: 'CBSE 2021 (4 Marks)',
+      question: 'Discuss Carl Rogers\' Humanistic Theory of Personality. Explain the significance of "Unconditional Positive Regard" and "Congruence".',
+      solution: `1. Core Humanistic Philosophy:
+Carl Rogers viewed human nature as intrinsically positive, creative, and motivated toward self-actualization—the inherent tendency to develop all capacities to enhance the organism.
+
+2. Real Self vs Ideal Self & Congruence:
+• Real Self: The person one actually is, based on genuine lived experiences and feelings.
+• Ideal Self: The person one aspires to be or feels one ought to be.
+• Congruence: A state of high consistency and harmony between the real self and ideal self. Results in psychological well-being, authentic self-worth, and openness to experience.
+• Incongruence: A large discrepancy between real self and ideal self leads to chronic defensive distortion, anxiety, and neurosis.
+
+3. Unconditional Positive Regard:
+• Complete, non-judgmental acceptance, warmth, and love provided to an individual regardless of their behaviors or mistakes.
+• When parents or therapists supply unconditional positive regard (rather than conditional love based on "conditions of worth"), the individual develops healthy self-esteem and evolves into a "Fully Functioning Person".`
+    },
+    {
+      id: 'psy-pyq-15',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-8',
+      year: 'CBSE 2024 (4 Marks)',
+      question: 'Describe Self-Report inventories for personality assessment. What are their inherent limitations? Name two popular self-report tests.',
+      solution: `1. Concept of Self-Report Inventories:
+Self-report inventories are structured, objective psychometric questionnaires wherein test-takers read standardized statements and respond using fixed rating scales (e.g. True/False or Likert scale 1–5).
+
+2. Inherent Limitations:
+• Social Desirability: Tendency of respondents to endorse answers they believe are socially favorable or acceptable rather than revealing their authentic thoughts.
+• Acquiescence Response Bias: Tendency of certain test-takers to agree with statements ("say yes") regardless of item content.
+• Lack of Self-Insight: Individuals may lack authentic conscious awareness of their deeper defense mechanisms, emotional conflicts, or behavioral blind spots.
+
+3. Two Prominent Examples:
+• MMPI (Minnesota Multiphasic Personality Inventory): Developed by Hathaway and McKinley; widely used diagnostic instrument containing clinical and validity scales (Lie scale, F scale, K scale).
+• 16 PF Questionnaire: Developed by Raymond B. Cattell using factor analysis to measure 16 primary source traits of personality.`
+    },
+    {
+      id: 'psy-pyq-16',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-1',
+      year: 'CBSE 2023 (4 Marks)',
+      question: 'Explain Richard Lazarus\' Cognitive Appraisal Model of Stress. How do Primary and Secondary Appraisals determine stress reaction?',
+      solution: `1. Cognitive Appraisal Paradigm:
+Richard Lazarus posited that an environmental event is not stressful in itself; it becomes a stressor only when perceived and cognitively appraised as taxing or exceeding an individual's personal resources.
+
+2. Primary Appraisal:
+The evaluation of the meaning, significance, and severity of the potential stressor. The event is perceived as:
+• Irrelevant: No personal bearing or consequence.
+• Benign-Positive: Pleasant, beneficial outcome.
+• Stressful: Evaluated in terms of:
+  - Harm/Loss: Assessment of damage already sustained (e.g. loss of job or illness).
+  - Threat: Anticipation of possible future damage or harm.
+  - Challenge: Anticipation of personal growth, mastery, and conquerable obstacles.
+
+3. Secondary Appraisal:
+• The assessment of one's available coping resources and cognitive strategies to manage, mitigate, or overcome the demand.
+• Evaluates internal resources (skills, resilience, knowledge) and external resources (money, medical help, social support).
+• If resources are appraised as adequate, stress is minimized; if appraised as insufficient, severe distress and panic ensue.`
+    },
+    {
+      id: 'psy-pyq-17',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-4',
+      year: 'CBSE 2022 (3 Marks)',
+      question: 'What is Psychoneuroimmunology? Explain how chronic stress weakens the immune system.',
+      solution: `1. Definition of Psychoneuroimmunology:
+Psychoneuroimmunology is the interdisciplinary field studying the complex bidirectional interactions among psychological processes (mind/emotions), the nervous system, and the immune system.
+
+2. Biological Pathway of Stress-Induced Immune Suppression:
+• Activation of HPA Axis: Chronic psychological stress triggers the hypothalamus to release CRH, which stimulates the pituitary gland to secrete ACTH, resulting in sustained cortisol secretion from the adrenal cortex.
+• Depletion of White Blood Cells: Elevated cortisol levels inhibit the production and proliferation of lymphocytes (T-cells, B-cells, and Natural Killer [NK] cells).
+• Impaired Cytokine Balance: Chronic distress diminishes the body's interferon and interleukin activity, retarding antibody response and antibody production against foreign antigens.
+• Result: Increased susceptibility to infectious illnesses, delayed wound healing, and accelerated progression of chronic degenerative conditions.`
+    },
+    {
+      id: 'psy-pyq-18',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-6',
+      year: 'CBSE 2024 (6 Marks)',
+      question: 'Discuss four effective stress management techniques and explain the role of social support in promoting positive health.',
+      solution: `1. Four Effective Stress Management Techniques:
+(i) Biofeedback:
+• Electronic instrumentation provides immediate visual or auditory feedback about physiological indicators (heart rate, skin conductance, muscle tension).
+• Individuals learn conscious voluntary self-regulation of autonomic bodily responses to reduce somatic arousal.
+
+(ii) Creative Visualization:
+• Guided mental imagery wherein an individual creates realistic, multi-sensory scenes of calm, tranquility, and triumph.
+• Replaces threatening cognitive appraisals with autonomic relaxation and confidence.
+
+(iii) Cognitive Restructuring:
+• Technique originating from Cognitive Behavior Therapy (CBT) wherein individuals identify irrational, catastrophic negative self-talk and replace them with rational, reality-based alternative thoughts.
+
+(iv) Progressive Muscle Relaxation (Jacobson):
+• Systematic cycle of tensing and consciously releasing muscle groups throughout the body, developing visceral sensitivity to physical tension and releasing somatic stress.
+
+2. Role of Social Support in Promoting Health:
+Social support refers to the perceived comfort, caring, esteem, and help available from family, friends, and community networks:
+• Tangible Support: Material aid such as financial assistance, physical resources, or goods.
+• Informational Support: Relevant guidance, advice, feedback, and strategies provided during crisis.
+• Emotional Support: Unconditional empathy, listening, affection, and reassurance that restores self-esteem.
+• Protective Buffer: High social support acts as a psychological buffer against toxic stress hormones, enhancing immune resilience and overall longevity.`
+    }
   ]
 };

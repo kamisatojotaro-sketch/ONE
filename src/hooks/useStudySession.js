@@ -246,24 +246,23 @@ export function useStudySession() {
 
   // Compute Portions Stats
   const portionsStats = useMemo(() => {
-    const totalPortionChapters = 
-      EXAM_PORTIONS.physics.length + 
-      EXAM_PORTIONS.chemistry.length + 
-      EXAM_PORTIONS.biology.length;
+    const totalPortionChapters = Object.values(EXAM_PORTIONS).reduce((acc, curr) => acc + curr.length, 0);
 
     const completedPortions = sessionState.completedPortionChapters.length;
-    const percentage = Math.round((completedPortions / totalPortionChapters) * 100);
+    const percentage = totalPortionChapters > 0 ? Math.round((completedPortions / totalPortionChapters) * 100) : 0;
 
     return {
       total: totalPortionChapters,
       completed: completedPortions,
       percentage,
       physicsCompleted: sessionState.completedPortionChapters.filter(id => id.startsWith('phy')).length,
-      physicsTotal: EXAM_PORTIONS.physics.length,
+      physicsTotal: EXAM_PORTIONS.physics?.length || 0,
       chemCompleted: sessionState.completedPortionChapters.filter(id => id.startsWith('chem')).length,
-      chemTotal: EXAM_PORTIONS.chemistry.length,
+      chemTotal: EXAM_PORTIONS.chemistry?.length || 0,
       bioCompleted: sessionState.completedPortionChapters.filter(id => id.startsWith('bio')).length,
-      bioTotal: EXAM_PORTIONS.biology.length
+      bioTotal: EXAM_PORTIONS.biology?.length || 0,
+      psyCompleted: sessionState.completedPortionChapters.filter(id => id.startsWith('psy')).length,
+      psyTotal: EXAM_PORTIONS.psychology?.length || 0
     };
   }, [sessionState.completedPortionChapters]);
 

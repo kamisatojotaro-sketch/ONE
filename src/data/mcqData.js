@@ -345,5 +345,168 @@ export const MCQ_DATABASE = {
       correct: 1,
       explanation: 'Homologous organs share a common anatomical origin, basic structural plan, and embryonic development, but have adapted to perform different functions in response to different ecological niches, illustrating divergent evolution.'
     }
+  ],
+
+  psychology: [
+    {
+      id: 'psy-mcq-1',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-2',
+      question: "According to Robert Sternberg's Triarchic Theory of Intelligence, an individual who excels at analyzing, planning, monitoring, and evaluating problem-solving steps is demonstrating high:",
+      options: [
+        'Componential (Analytical) Intelligence',
+        'Experiential (Creative) Intelligence',
+        'Contextual (Practical) Intelligence',
+        'Spatial Intelligence'
+      ],
+      correct: 0,
+      explanation: 'Componential or analytical intelligence involves the mental mechanisms used in information processing: meta-components (planning and evaluation), performance components (execution), and knowledge acquisition components.'
+    },
+    {
+      id: 'psy-mcq-2',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-4',
+      question: 'A 10-year-old child successfully solves items on the Stanford-Binet test designed for an average 13-year-old. What is the child\'s calculated Intelligence Quotient (IQ)?',
+      options: ['130', '100', '115', '77'],
+      correct: 0,
+      explanation: 'Using the historical formula IQ = (Mental Age / Chronological Age) × 100 = (13 / 10) × 100 = 130 (Superior / Very High intelligence).'
+    },
+    {
+      id: 'psy-mcq-3',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-5',
+      question: 'Which of the following is a mandatory diagnostic criterion for Intellectual Disability according to the DSM-5 / AAMR classification?',
+      options: [
+        'IQ score below 70, deficits in adaptive behaviour, with onset before the age of 18 years',
+        'IQ score below 90 accompanied by learning disability',
+        'Pure academic failure in school regardless of everyday social skills',
+        'High creativity combined with low arithmetic skills'
+      ],
+      correct: 0,
+      explanation: 'Intellectual disability requires: (1) significantly sub-average general intellectual functioning (IQ < 70), (2) concurrent deficits in adaptive behaviour (daily living, communication, social skills), and (3) manifestation during the developmental period (before 18 years).'
+    },
+    {
+      id: 'psy-mcq-4',
+      chapterId: 'psy-ch-1',
+      chapterName: 'Ch 1: Variations in Psychological Attributes',
+      subtopicId: 'psy-sub-1-7',
+      question: 'The "Threshold Theory" of the relationship between intelligence and creativity states that:',
+      options: [
+        'A certain minimum baseline level of intelligence (around IQ 110-120) is required for high creativity, but beyond that threshold they are relatively independent',
+        'High intelligence guarantees extraordinary creative genius',
+        'Creativity and intelligence are inversely related',
+        'Intelligence tests measure divergent thinking rather than convergent thinking'
+      ],
+      correct: 0,
+      explanation: 'Threshold theory posits that a minimum IQ (~110-120) is necessary to have the basic cognitive resources for creative thought, but beyond that level, non-cognitive factors (curiosity, task commitment, divergent thinking) determine creative achievement.'
+    },
+    {
+      id: 'psy-mcq-5',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-1',
+      question: 'Albert Bandura defined self-efficacy as:',
+      options: [
+        'An individual\'s belief in their own capability to organize and execute actions required to achieve designated goals',
+        'The overall positive or negative evaluation a person attaches to their self-worth',
+        'The degree to which personal behaviour is controlled by external environmental reinforcement',
+        'The unconditional acceptance received from parents in early childhood'
+      ],
+      correct: 0,
+      explanation: 'Self-efficacy refers to task-specific confidence in one\'s own abilities, which strongly influences the initiation of coping behaviour, amount of effort expended, and persistence in the face of obstacles.'
+    },
+    {
+      id: 'psy-mcq-6',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-5',
+      question: 'Individuals who are excessively competitive, impatient, chronically rushed for time, and prone to hostility are classified as having which personality type, and are at higher risk for:',
+      options: [
+        'Type A personality ; Coronary heart disease',
+        'Type B personality ; Peptic ulcers',
+        'Type C personality ; Rheumatoid arthritis',
+        'Type D personality ; Asthma'
+      ],
+      correct: 0,
+      explanation: 'Friedman and Rosenman established that Type A behaviour pattern (hostility, competitive drive, time urgency) is a potent independent risk factor for coronary heart disease and hypertension.'
+    },
+    {
+      id: 'psy-mcq-7',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-6',
+      question: 'In the Big Five (Five-Factor) Model of personality (OCEAN), an individual who is highly organized, dependable, disciplined, and goal-directed scores high on:',
+      options: [
+        'Conscientiousness',
+        'Openness to experience',
+        'Agreeableness',
+        'Extraversion'
+      ],
+      correct: 0,
+      explanation: 'Conscientiousness reflects impulse control, high organization, self-discipline, planfulness, and strong achievement orientation.'
+    },
+    {
+      id: 'psy-mcq-8',
+      chapterId: 'psy-ch-2',
+      chapterName: 'Ch 2: Self and Personality',
+      subtopicId: 'psy-sub-2-7',
+      question: 'In Freud\'s structural model of personality, the structure that operates entirely on the "reality principle" and acts as a mediator is the:',
+      options: [
+        'Ego',
+        'Id',
+        'Superego',
+        'Libido'
+      ],
+      correct: 0,
+      explanation: 'The Ego operates on the reality principle, delaying instinctual gratification until appropriate environmental conditions are found, mediating between the demands of the Id, Superego, and reality.'
+    },
+    {
+      id: 'psy-mcq-9',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-1',
+      question: 'According to Lazarus and Folkman\'s Cognitive Appraisal Model, "Secondary Appraisal" involves:',
+      options: [
+        'Assessing one\'s available personal and social coping resources and options to manage the stressor',
+        'Judging whether the event represents harm, threat, or challenge',
+        'Immediate sympathetic nervous system fight-or-flight discharge',
+        'Denial of the stressful situation through defense mechanisms'
+      ],
+      correct: 0,
+      explanation: 'Primary appraisal evaluates the nature and significance of the stressor (harm, threat, challenge), while secondary appraisal assesses the individual\'s coping resources, abilities, and strategies.'
+    },
+    {
+      id: 'psy-mcq-10',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-3',
+      question: 'In Hans Selye\'s General Adaptation Syndrome (GAS), during which stage does the body sustain prolonged physiological coping before its adaptive energy is depleted?',
+      options: [
+        'Resistance stage',
+        'Alarm reaction stage',
+        'Exhaustion stage',
+        'Homeostasis stage'
+      ],
+      correct: 0,
+      explanation: 'The three stages of GAS are: (1) Alarm Reaction, (2) Resistance Stage (where the body adapts and sustains coping efforts with elevated endocrine output), and (3) Exhaustion Stage (where reserves collapse).'
+    },
+    {
+      id: 'psy-mcq-11',
+      chapterId: 'psy-ch-3',
+      chapterName: 'Ch 3: Meeting Life Challenges',
+      subtopicId: 'psy-sub-3-5',
+      question: 'When a situation is genuinely uncontrollable (such as coping with the death of a close family member), which coping strategy is empirically found to be most adaptive?',
+      options: [
+        'Emotion-focused coping (seeking emotional support, acceptance, positive reappraisal)',
+        'Problem-focused coping (direct alteration of the external stressor)',
+        'Aggressive confrontation',
+        'Complete emotional suppression'
+      ],
+      correct: 0,
+      explanation: 'When external stressors cannot be changed (uncontrollable events like bereavement), emotion-focused coping helps regulate internal emotional turmoil and distress effectively.'
+    }
   ]
 };

@@ -1,4 +1,4 @@
-import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark } from 'lucide-react';
+import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 
 export default function SubjectGrid({ onSelectSubject, completedSections, completedPortionChapters }) {
@@ -12,6 +12,8 @@ export default function SubjectGrid({ onSelectSubject, completedSections, comple
         return <FlaskConical size={24} className="text-[#C75B3B]" />;
       case 'biology':
         return <Dna size={24} className="text-[#6B7F5E]" />;
+      case 'psychology':
+        return <Brain size={24} className="text-[#8E44AD]" />;
       default:
         return <Bookmark size={24} className="text-[var(--accent-primary)]" />;
     }
@@ -62,8 +64,8 @@ export default function SubjectGrid({ onSelectSubject, completedSections, comple
         </p>
       </div>
 
-      {/* 3 Subject Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+      {/* Subject Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {subjects.map((subj) => {
           const progress = calculateSubjectProgress(subj);
           const portionChapters = EXAM_PORTIONS[subj.id] || [];

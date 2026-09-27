@@ -1,11 +1,13 @@
 import { PHYSICS_CHAPTERS } from './physicsNotes.js';
 import { CHEMISTRY_CHAPTERS } from './chemistryNotes.js';
 import { BIOLOGY_CHAPTERS } from './biologyNotes.js';
+import { PSYCHOLOGY_CHAPTERS } from './psychologyNotes.js';
 
 export const EXAM_PORTIONS = {
   physics: ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-4', 'phy-ch-5', 'phy-ch-6', 'phy-ch-7', 'phy-ch-8'],
   biology: ['bio-ch-1', 'bio-ch-2', 'bio-ch-3', 'bio-ch-4', 'bio-ch-5', 'bio-ch-6'],
-  chemistry: ['chem-ch-1', 'chem-ch-2', 'chem-ch-4', 'chem-ch-6', 'chem-ch-7']
+  chemistry: ['chem-ch-1', 'chem-ch-2', 'chem-ch-4', 'chem-ch-6', 'chem-ch-7'],
+  psychology: ['psy-ch-1', 'psy-ch-2', 'psy-ch-3']
 };
 
 export const NCERT_SYLLABUS = {
@@ -96,6 +98,21 @@ export const NCERT_SYLLABUS = {
           { id: 'bio-ch-12', number: 12, title: 'Ecosystem', tag: 'Ecology', available: false, isExamPortion: false },
           { id: 'bio-ch-13', number: 13, title: 'Biodiversity and Conservation', tag: 'Ecology', available: false, isExamPortion: false }
         ]
+      }
+    ]
+  },
+  psychology: {
+    id: 'psychology',
+    name: 'Psychology',
+    code: '037',
+    accentColor: '#8E44AD',
+    description: 'Intelligence, Self & Personality, Life Challenges, Psychological Disorders & Therapeutic Approaches',
+    volumes: [
+      {
+        id: 'psy-vol-1',
+        title: 'NCERT Psychology Volume 1',
+        subtitle: 'Intelligence, Self & Personality, Stress & Life Challenges (Exam Portions 1-3)',
+        chapters: PSYCHOLOGY_CHAPTERS
       }
     ]
   }
