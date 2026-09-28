@@ -239,7 +239,12 @@ export default function McqTabContent({
                       onClick={() => handleSelectOption(q.id, i)}
                       className={`p-3 sm:p-3.5 rounded-xl border text-left text-xs sm:text-sm transition-all flex items-center justify-between gap-2 cursor-pointer ${btnStyle}`}
                     >
-                      <span className="break-words">{opt}</span>
+                      <div className="flex items-start gap-2.5">
+                        <span className="font-mono font-bold text-[11px] px-1.5 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] shrink-0 text-[var(--accent-primary)]">
+                          {String.fromCharCode(65 + i)}
+                        </span>
+                        <span className="break-words">{opt}</span>
+                      </div>
                       {isAnswered && i === q.correct && (
                         <CheckCircle2 size={16} className="text-green-600 shrink-0" />
                       )}

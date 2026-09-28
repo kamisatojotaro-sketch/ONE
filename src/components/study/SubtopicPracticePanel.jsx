@@ -194,7 +194,12 @@ export default function SubtopicPracticePanel({
                           onClick={() => handleSelectOption(q.id, i)}
                           className={`p-2.5 rounded-lg border text-left text-[11px] sm:text-xs transition-all flex items-center justify-between gap-1.5 cursor-pointer ${btnStyle}`}
                         >
-                          <span className="break-words">{opt}</span>
+                          <div className="flex items-start gap-2">
+                            <span className="font-mono font-bold text-[10px] px-1 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] shrink-0 text-[var(--accent-primary)]">
+                              {String.fromCharCode(65 + i)}
+                            </span>
+                            <span className="break-words">{opt}</span>
+                          </div>
                           {isAnswered && i === q.correct && (
                             <CheckCircle2 size={13} className="text-green-600 shrink-0" />
                           )}

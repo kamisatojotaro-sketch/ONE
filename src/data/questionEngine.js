@@ -26,6 +26,37 @@ function normalizeKey(str) {
   return str.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 60);
 }
 
+function hashString(str) {
+  if (!str) return 0;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
+  }
+  return Math.abs(hash);
+}
+
+// Fairly distributes correct answers across (A, B, C, D) by shuffling options while precisely tracking the correct choice
+function shuffleOptionsAndAdjustCorrect(options, correctIndex, qSeed) {
+  if (!Array.isArray(options) || options.length <= 1) {
+    return { options: options || [], correct: 0 };
+  }
+  const validCorrect = (correctIndex >= 0 && correctIndex < options.length) ? correctIndex : 0;
+  
+  const wrapped = options.map((opt, idx) => ({
+    text: opt,
+    isCorrect: idx === validCorrect
+  }));
+  
+  const shuffled = shuffleArray(wrapped, qSeed);
+  const newOptions = shuffled.map(item => item.text);
+  const newCorrect = shuffled.findIndex(item => item.isCorrect);
+  
+  return {
+    options: newOptions,
+    correct: newCorrect >= 0 ? newCorrect : 0
+  };
+}
+
 // ============================================================================
 // EXTENSIVE CURATED MCQ POOL MAPPED BY SUBTOPIC & CHAPTER
 // Every question is verified authentic NCERT Class 12 CBSE Board standard
@@ -1528,6 +1559,14 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
     if (seenQuestions.has(key)) return false;
     seenQuestions.add(key);
 
+    // Fairly randomize options placement across A, B, C, D while preserving accurate answer pointer
+    const qSeed = seed * 43 + (result.length + 1) * 19 + hashString(mcq.question);
+    const { options: shuffledOptions, correct: shuffledCorrect } = shuffleOptionsAndAdjustCorrect(
+      mcq.options,
+      mcq.correct !== undefined ? mcq.correct : 0,
+      qSeed
+    );
+
     result.push({
       id: mcq.id || `mcq-${subjectId}-${seed}-${result.length + 1}`,
       chapterId: mcq.chapterId || chapterId || 'general',
@@ -1535,8 +1574,8 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
       subtopicId: mcq.subtopicId || subtopicId,
       subtopicName: mcq.subtopicName || getSubtopicTitle(mcq.subtopicId || subtopicId),
       question: mcq.question,
-      options: mcq.options,
-      correct: mcq.correct !== undefined ? mcq.correct : 0,
+      options: shuffledOptions,
+      correct: shuffledCorrect,
       explanation: mcq.explanation || 'Refer to NCERT textbook Class 12 official standard answer.'
     });
     return true;
