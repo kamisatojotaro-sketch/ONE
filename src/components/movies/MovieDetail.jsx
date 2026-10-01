@@ -33,7 +33,7 @@ export default function MovieDetail({ movie, isOpen, onClose, onUpdate, onDelete
       <div className="relative -mx-6 -mt-6 mb-6 h-64 overflow-hidden rounded-t-2xl bg-[var(--bg-elevated)]">
         {movie.backdropUrl ? (
           <>
-            <img src={movie.backdropUrl} alt="" className="w-full h-full object-cover blur-sm opacity-50" />
+            <img src={movie.backdropUrl} alt="" referrerPolicy="no-referrer" className="w-full h-full object-cover blur-sm opacity-50" />
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-surface)] to-transparent" />
           </>
         ) : (
@@ -42,7 +42,7 @@ export default function MovieDetail({ movie, isOpen, onClose, onUpdate, onDelete
         <div className="absolute bottom-0 left-6 flex gap-6 translate-y-1/4">
           <div className="w-32 h-48 rounded-lg overflow-hidden shadow-xl border-2 border-[var(--bg-surface)] bg-[var(--bg-surface)]">
             {movie.posterUrl ? (
-              <img src={movie.posterUrl} alt={movie.title} className="w-full h-full object-cover" />
+              <img src={movie.posterUrl} alt={movie.title} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-[var(--text-muted)] text-center text-sm">No Poster</div>
             )}
@@ -82,8 +82,9 @@ export default function MovieDetail({ movie, isOpen, onClose, onUpdate, onDelete
                   onChange={(e) => setEditForm({...editForm, status: e.target.value})}
                   className="w-full p-2 bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-xl"
                 >
-                  <option value="want_to_watch">Want to Watch</option>
+                  <option value="watching">Watching</option>
                   <option value="watched">Watched</option>
+                  <option value="want_to_watch">Want to Watch</option>
                   <option value="rewatching">Rewatching</option>
                   <option value="dropped">Dropped</option>
                 </select>

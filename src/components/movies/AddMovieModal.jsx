@@ -3,7 +3,7 @@ import { Search, Loader2, Key, Check, Edit3 } from 'lucide-react';
 import Modal from '../shared/Modal';
 import { searchMovies, getMovieDetails, getImageUrl } from '../../api/tmdb';
 
-const STATUSES = ['want_to_watch', 'watched', 'rewatching', 'dropped'];
+const STATUSES = ['watching', 'want_to_watch', 'watched', 'rewatching', 'dropped'];
 
 export default function AddMovieModal({ isOpen, onClose, onAdd }) {
   const [query, setQuery] = useState('');

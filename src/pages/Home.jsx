@@ -23,6 +23,7 @@ export default function Home() {
 
   const playingGames = safeGames.filter(g => g?.status === 'playing').length;
   const watchedMovies = safeMovies.filter(m => m?.status === 'watched').length;
+  const watchingMovies = safeMovies.filter(m => m?.status === 'watching').length;
   const watchingAnime = safeAnime.filter(a => a?.status === 'watching').length;
   const pinnedNotes = safeNotes.filter(n => n?.isPinned).length;
   const onRepeatMusic = safeTracks.filter(t => t?.status === 'on_repeat' || t?.status === 'listening').length;
@@ -37,7 +38,14 @@ export default function Home() {
 
   const statCards = [
     { label: 'Games', count: safeGames.length, subText: `${playingGames} playing`, icon: Gamepad2, color: 'text-[#8B9F7E]', bg: 'bg-[#8B9F7E]/10' },
-    { label: 'Movies', count: safeMovies.length, subText: `${watchedMovies} watched`, icon: Film, color: 'text-[#C4A77D]', bg: 'bg-[#C4A77D]/10' },
+    { 
+      label: 'Movies', 
+      count: safeMovies.length, 
+      subText: watchingMovies > 0 ? `${watchedMovies} watched · ${watchingMovies} watching` : `${watchedMovies} watched`, 
+      icon: Film, 
+      color: 'text-[#C4A77D]', 
+      bg: 'bg-[#C4A77D]/10' 
+    },
     { label: 'Anime', count: safeAnime.length, subText: `${watchingAnime} watching`, icon: Tv, color: 'text-[#C75B3B]', bg: 'bg-[#C75B3B]/10' },
     { label: 'Notes', count: safeNotes.length, subText: `${pinnedNotes} pinned`, icon: NotebookPen, color: 'text-[#8A735E]', bg: 'bg-[#8A735E]/10' }
   ];

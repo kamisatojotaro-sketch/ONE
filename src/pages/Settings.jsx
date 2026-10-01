@@ -99,6 +99,7 @@ export default function Settings() {
       }
       
       setDeleteConfirm('');
+      localStorage.removeItem('one_tracker_movies_seeded_v1');
       alert('All data has been cleared.');
       window.location.reload();
     } catch (err) {

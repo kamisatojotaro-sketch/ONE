@@ -1,9 +1,11 @@
-import { Clock, Film, Star, Award } from 'lucide-react';
+import { Clock, Film, Star, Award, Eye } from 'lucide-react';
 
 export default function MovieStats({ movies }) {
   const watchedMovies = movies.filter(m => m.status === 'watched' || m.status === 'rewatching');
+  const watchingMovies = movies.filter(m => m.status === 'watching');
   
   const totalWatched = watchedMovies.length;
+  const totalWatching = watchingMovies.length;
   
   const totalRuntimeMin = watchedMovies.reduce((acc, m) => acc + (m.runtime || 0), 0);
   const totalRuntimeHours = Math.round(totalRuntimeMin / 60);
@@ -24,15 +26,16 @@ export default function MovieStats({ movies }) {
 
   const statCards = [
     { label: 'Watched', value: totalWatched, icon: Film, color: 'text-[#8B9F7E]' },
+    ...(totalWatching > 0 ? [{ label: 'Watching', value: totalWatching, icon: Eye, color: 'text-[#C75B3B]' }] : []),
     { label: 'Hours', value: totalRuntimeHours, icon: Clock, color: 'text-[#8A735E]' },
     { label: 'Avg. Rating', value: avgRating, icon: Star, color: 'text-[#C4A77D]' },
-    { label: 'Top Genre', value: topGenre, icon: Award, color: 'text-[#C75B3B]', isText: true }
+    { label: 'Top Genre', value: topGenre, icon: Award, color: 'text-[#8A735E]', isText: true }
   ];
 
   if (movies.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div className={`grid grid-cols-2 ${totalWatching > 0 ? 'md:grid-cols-3 lg:grid-cols-5' : 'md:grid-cols-4'} gap-4 mb-8`}>
       {statCards.map((stat, idx) => {
         const Icon = stat.icon;
         return (

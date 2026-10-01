@@ -11,8 +11,9 @@ import EmptyState from '../components/shared/EmptyState';
 
 const STATUS_FILTERS = [
   { value: 'all', label: 'All Movies' },
-  { value: 'want_to_watch', label: 'Want to Watch' },
+  { value: 'watching', label: 'Watching' },
   { value: 'watched', label: 'Watched' },
+  { value: 'want_to_watch', label: 'Want to Watch' },
   { value: 'rewatching', label: 'Rewatching' },
   { value: 'dropped', label: 'Dropped' }
 ];

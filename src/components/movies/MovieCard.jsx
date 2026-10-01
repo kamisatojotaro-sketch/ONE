@@ -12,6 +12,8 @@ export default function MovieCard({ movie, onClick }) {
           <img 
             src={movie.posterUrl} 
             alt={movie.title} 
+            referrerPolicy="no-referrer"
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (

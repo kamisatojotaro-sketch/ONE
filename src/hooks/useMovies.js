@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getDB } from '../db';
+import { SEED_MOVIES } from '../data/seedMovies';
 
 const STORE_NAME = 'movies';
+const SEED_VERSION_KEY = 'one_tracker_movies_seeded_v1';
 
 export const useMovies = () => {
   const [movies, setMovies] = useState([]);
@@ -11,11 +13,36 @@ export const useMovies = () => {
     setLoading(true);
     try {
       const db = await getDB();
-      const allMovies = (await db.getAll(STORE_NAME)) || [];
+      let allMovies = (await db.getAll(STORE_NAME)) || [];
+
+      // Ensure seed movies are present and correctly categorized
+      const hasSeeded = localStorage.getItem(SEED_VERSION_KEY);
+      if (!hasSeeded || allMovies.length === 0) {
+        for (const seed of SEED_MOVIES) {
+          const matchIndex = allMovies.findIndex(
+            m => m.id === seed.id || m.title.toLowerCase().trim() === seed.title.toLowerCase().trim()
+          );
+
+          if (matchIndex === -1) {
+            await db.put(STORE_NAME, seed);
+            allMovies.push(seed);
+          } else {
+            const current = allMovies[matchIndex];
+            if (current.status !== seed.status) {
+              const updated = { ...current, status: seed.status, updatedAt: new Date().toISOString() };
+              await db.put(STORE_NAME, updated);
+              allMovies[matchIndex] = updated;
+            }
+          }
+        }
+
+        localStorage.setItem(SEED_VERSION_KEY, 'true');
+      }
+
       setMovies(allMovies.sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0)));
     } catch (error) {
       console.error('Failed to load movies', error);
-      setMovies([]);
+      setMovies(SEED_MOVIES);
     } finally {
       setLoading(false);
     }
