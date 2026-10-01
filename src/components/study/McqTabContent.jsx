@@ -12,6 +12,8 @@ export default function McqTabContent({
   const [seed, setSeed] = useState(1);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [chapterFilter, setChapterFilter] = useState(selectedChapter || 'ALL');
+  const [subchapterFilter, setSubchapterFilter] = useState(selectedSubchapter || 'ALL');
+  const [difficultyFilter, setDifficultyFilter] = useState('ALL'); // 'ALL' | 'easy' | 'medium' | 'hard'
 
   // Sync when selectedChapter changes from parent
   useEffect(() => {
@@ -20,8 +22,9 @@ export default function McqTabContent({
     } else {
       setChapterFilter('ALL');
     }
+    setSubchapterFilter(selectedSubchapter || 'ALL');
     setSelectedAnswers({});
-  }, [selectedChapter]);
+  }, [selectedChapter, selectedSubchapter]);
 
   // Extract chapters for this subject
   const subject = NCERT_SYLLABUS[selectedSubject];
@@ -30,17 +33,28 @@ export default function McqTabContent({
     const list = [];
     subject.volumes.forEach(vol => {
       vol.chapters.forEach(ch => {
-        list.push({ id: ch.id, title: `Ch ${ch.number}: ${ch.title}` });
+        list.push({ id: ch.id, title: `Ch ${ch.number}: ${ch.title}`, raw: ch });
       });
     });
     return list;
   }, [subject]);
 
-  // Generate 20 MCQs dynamically based on scope and seed
+  // Extract subchapters when a specific chapter is selected
+  const availableSubchapters = useMemo(() => {
+    if (!subject || chapterFilter === 'ALL') return [];
+    for (const vol of subject.volumes) {
+      const ch = vol.chapters.find(c => c.id === chapterFilter);
+      if (ch && ch.subchapters) return ch.subchapters;
+    }
+    return [];
+  }, [subject, chapterFilter]);
+
+  // Generate 20 MCQs dynamically with strict scoping and difficulty filter
   const mcqs = useMemo(() => {
     const chId = chapterFilter === 'ALL' ? null : chapterFilter;
-    return getGeneratedMCQs(selectedSubject, chId, null, 20, seed);
-  }, [selectedSubject, chapterFilter, seed]);
+    const subId = subchapterFilter === 'ALL' ? null : subchapterFilter;
+    return getGeneratedMCQs(selectedSubject, chId, subId, 20, seed, difficultyFilter);
+  }, [selectedSubject, chapterFilter, subchapterFilter, seed, difficultyFilter]);
 
   const handleSelectOption = (questionId, optionIdx) => {
     if (selectedAnswers[questionId] !== undefined) return; // locked once chosen
@@ -82,10 +96,27 @@ export default function McqTabContent({
     };
   }, [mcqs, selectedAnswers]);
 
+  // Live breakdown of questions by difficulty
+  const difficultyCounts = useMemo(() => {
+    const fullBatch = getGeneratedMCQs(
+      selectedSubject,
+      chapterFilter === 'ALL' ? null : chapterFilter,
+      subchapterFilter === 'ALL' ? null : subchapterFilter,
+      50,
+      seed,
+      null
+    );
+    const counts = { ALL: fullBatch.length, easy: 0, medium: 0, hard: 0 };
+    fullBatch.forEach(q => {
+      if (counts[q.difficulty] !== undefined) counts[q.difficulty]++;
+    });
+    return counts;
+  }, [selectedSubject, chapterFilter, subchapterFilter, seed]);
+
   return (
     <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
-      {/* Top Banner with Quiz Stats & Chapter Filter */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
+      {/* Top Banner with Quiz Stats & Chapter/Subchapter Filter */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] text-[11px] font-mono text-[var(--accent-primary)] font-semibold uppercase tracking-wider mb-1.5 border border-[var(--border-subtle)]">
             <Sparkles size={11} />
@@ -98,21 +129,24 @@ export default function McqTabContent({
           <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
             {chapterFilter === 'ALL'
               ? 'Practicing full board mock set across all syllabus chapters.'
-              : `Focusing exclusively on ${availableChapters.find(c => c.id === chapterFilter)?.title || 'active chapter'}.`}
+              : subchapterFilter === 'ALL'
+              ? `Strictly scoped to ${availableChapters.find(c => c.id === chapterFilter)?.title || 'active chapter'}.`
+              : `Curated exclusively for subchapter: ${availableSubchapters.find(s => s.id === subchapterFilter)?.title || subchapterFilter}.`}
           </p>
         </div>
 
         {/* Filter & Controls */}
-        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           {/* Chapter Filter */}
-          <div className="flex items-center gap-1.5 flex-1 sm:flex-none">
+          <div className="flex items-center gap-1.5">
             <Filter size={13} className="text-[var(--text-muted)] shrink-0" />
-            <div className="relative w-full sm:w-56">
+            <div className="relative w-full sm:w-52">
               <select
                 value={chapterFilter}
                 onChange={(e) => {
                   const val = e.target.value;
                   setChapterFilter(val);
+                  setSubchapterFilter('ALL');
                   setSelectedAnswers({});
                   if (onSelectChapter && val !== 'ALL') {
                     onSelectChapter(val);
@@ -131,6 +165,28 @@ export default function McqTabContent({
             </div>
           </div>
 
+          {/* Subchapter Filter (when chapter is selected) */}
+          {chapterFilter !== 'ALL' && availableSubchapters.length > 0 && (
+            <div className="relative w-full sm:w-56">
+              <select
+                value={subchapterFilter}
+                onChange={(e) => {
+                  setSubchapterFilter(e.target.value);
+                  setSelectedAnswers({});
+                }}
+                className="w-full appearance-none bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-xs"
+              >
+                <option value="ALL">All Subchapters in Ch</option>
+                {availableSubchapters.map((sub) => (
+                  <option key={sub.id} value={sub.id}>
+                    {sub.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+            </div>
+          )}
+
           {/* Refresh New 20 Questions */}
           <button
             onClick={handleRefreshNewBatch}
@@ -140,6 +196,44 @@ export default function McqTabContent({
             <RotateCw size={13} />
             Next 20 Set
           </button>
+        </div>
+      </div>
+
+      {/* Difficulty Header Filter Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs">
+        <div className="flex items-center gap-2 text-xs">
+          <span className="font-bold text-[var(--text-primary)]">Difficulty Header:</span>
+          <span className="text-[var(--text-muted)] hidden sm:inline">•</span>
+          <span className="text-[var(--text-secondary)] hidden sm:inline">Filter by question cognitive depth</span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-1.5">
+          {[
+            { id: 'ALL', label: 'All Levels', count: difficultyCounts.ALL, color: 'border-[var(--border-default)]' },
+            { id: 'easy', label: 'Easy (NCERT Core)', count: difficultyCounts.easy, color: 'text-emerald-600 dark:text-emerald-400 border-emerald-500/30' },
+            { id: 'medium', label: 'Medium (Board)', count: difficultyCounts.medium, color: 'text-amber-600 dark:text-amber-400 border-amber-500/30' },
+            { id: 'hard', label: 'Hard (HOTS)', count: difficultyCounts.hard, color: 'text-rose-600 dark:text-rose-400 border-rose-500/30' }
+          ].map(lvl => (
+            <button
+              key={lvl.id}
+              onClick={() => {
+                setDifficultyFilter(lvl.id);
+                setSelectedAnswers({});
+              }}
+              className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-all cursor-pointer flex items-center gap-1.5 ${
+                difficultyFilter === lvl.id
+                  ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
+                  : `bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:bg-[var(--bg-surface-hover)] ${lvl.color}`
+              }`}
+            >
+              <span>{lvl.label}</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                difficultyFilter === lvl.id ? 'bg-white/20 text-white' : 'bg-[var(--bg-surface)] text-[var(--text-muted)]'
+              }`}>
+                {lvl.count}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -206,11 +300,22 @@ export default function McqTabContent({
                   Q{idx + 1}
                 </span>
                 <div className="flex-1 min-w-0">
-                  {q.chapterName && (
-                    <span className="inline-block text-[10px] font-mono text-[var(--text-muted)] mb-1">
-                      {q.chapterName} {q.subtopicName ? `• ${q.subtopicName}` : ''}
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    {q.chapterName && (
+                      <span className="text-[10px] font-mono text-[var(--text-muted)]">
+                        {q.chapterName} {q.subtopicName ? `• ${q.subtopicName}` : ''}
+                      </span>
+                    )}
+                    <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                      q.difficulty === 'hard'
+                        ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+                        : q.difficulty === 'medium'
+                        ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                        : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                    }`}>
+                      {q.difficulty === 'hard' ? 'Hard • HOTS' : q.difficulty === 'medium' ? 'Medium • Board' : 'Easy • Foundation'}
                     </span>
-                  )}
+                  </div>
                   <p className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug">
                     {q.question}
                   </p>

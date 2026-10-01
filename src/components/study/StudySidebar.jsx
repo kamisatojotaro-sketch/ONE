@@ -1,15 +1,16 @@
-import { BookOpen, FileQuestion, CheckSquare, Target } from 'lucide-react';
+import { BookOpen, FileQuestion, CheckSquare, Target, Sliders } from 'lucide-react';
 
 export default function StudySidebar({ activeTab, onTabChange }) {
   const tabs = [
     { id: 'NOTES', label: 'NOTES', icon: BookOpen, desc: 'Theory & High-Yield' },
     { id: 'PYQ', label: 'PYQ', icon: FileQuestion, desc: 'Previous Year Qs' },
     { id: 'MCQ', label: 'MCQ', icon: CheckSquare, desc: 'Board Practice' },
+    { id: 'TEST_MAKER', label: 'TEST MAKER', icon: Sliders, desc: 'Custom 30-Q Mock' },
     { id: 'PORTIONS', label: 'PORTIONS', icon: Target, desc: 'Exam Tracker' }
   ];
 
   return (
-    <aside className="w-full lg:w-56 shrink-0 flex flex-row lg:flex-col gap-1.5 sm:gap-2 bg-[var(--bg-surface)] border border-[var(--border-default)] p-1.5 sm:p-2.5 lg:p-3 rounded-2xl shadow-sm">
+    <aside className="w-full lg:w-56 shrink-0 flex flex-row lg:flex-col gap-1.5 sm:gap-2 bg-[var(--bg-surface)] border border-[var(--border-default)] p-1.5 sm:p-2.5 lg:p-3 rounded-2xl shadow-sm overflow-x-auto">
       <div className="hidden lg:block px-3 py-2 border-b border-[var(--border-subtle)] mb-1">
         <p className="font-cursive text-lg text-[var(--text-accent)] leading-none">Session Mode</p>
       </div>

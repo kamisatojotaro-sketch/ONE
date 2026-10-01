@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles,
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
+import ReactionDiagramCard from './ReactionDiagramCard';
 
 export default function ChapterDrillDown({
   selectedSubject,
@@ -314,6 +315,12 @@ export default function ChapterDrillDown({
                     />
                   )}
 
+                  {/* Visual Chemical Reaction & Mechanism Diagrams */}
+                  <ReactionDiagramCard
+                    subtopicId={currentSubchapter.id}
+                    chapterId={selectedChapter}
+                  />
+
                   {/* Instant Practice Panel (MCQs & Board PYQs) */}
                   <div className="pt-1">
                     <button
@@ -398,6 +405,12 @@ export default function ChapterDrillDown({
                       derivations={section.derivations}
                     />
                   )}
+
+                  {/* 2b. Visual Chemical Reaction & Mechanism Diagrams */}
+                  <ReactionDiagramCard
+                    subtopicId={currentSubchapter.id}
+                    chapterId={selectedChapter}
+                  />
 
                   {/* 3. How questions could be framed / asked */}
                   {section.questionFraming && (

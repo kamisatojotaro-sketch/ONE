@@ -13,16 +13,27 @@ export default function SubtopicPracticePanel({
   const [pyqSeed, setPyqSeed] = useState(1);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [expandedPyqId, setExpandedPyqId] = useState(null);
+  const [difficultyFilter, setDifficultyFilter] = useState('ALL'); // 'ALL' | 'easy' | 'medium' | 'hard'
 
-  // Generate 20 MCQs for this specific subtopic
+  // Generate MCQs strictly for this specific subtopic with optional difficulty filter
   const mcqs = useMemo(() => {
-    return getGeneratedMCQs(subjectId, chapterId, subtopicId, 20, mcqSeed);
-  }, [subjectId, chapterId, subtopicId, mcqSeed]);
+    return getGeneratedMCQs(subjectId, chapterId, subtopicId, 20, mcqSeed, difficultyFilter);
+  }, [subjectId, chapterId, subtopicId, mcqSeed, difficultyFilter]);
 
-  // Generate PYQs for this specific subtopic
+  // Generate PYQs strictly for this specific subtopic
   const pyqs = useMemo(() => {
     return getGeneratedPYQs(subjectId, chapterId, subtopicId, 15, pyqSeed);
   }, [subjectId, chapterId, subtopicId, pyqSeed]);
+
+  // Difficulty counts for the subtopic batch
+  const difficultyCounts = useMemo(() => {
+    const fullBatch = getGeneratedMCQs(subjectId, chapterId, subtopicId, 40, mcqSeed, null);
+    const counts = { ALL: fullBatch.length, easy: 0, medium: 0, hard: 0 };
+    fullBatch.forEach(q => {
+      if (counts[q.difficulty] !== undefined) counts[q.difficulty]++;
+    });
+    return counts;
+  }, [subjectId, chapterId, subtopicId, mcqSeed]);
 
   const handleSelectOption = (questionId, optionIdx) => {
     if (selectedAnswers[questionId] !== undefined) return;
@@ -153,6 +164,35 @@ export default function SubtopicPracticePanel({
             </div>
           )}
 
+          {/* Difficulty Filter Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-xs">
+            <span className="font-bold text-[var(--text-secondary)] text-[11px]">Difficulty Header:</span>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {[
+                { id: 'ALL', label: 'All', count: difficultyCounts.ALL },
+                { id: 'easy', label: 'Easy', count: difficultyCounts.easy, color: 'text-emerald-600 dark:text-emerald-400' },
+                { id: 'medium', label: 'Medium', count: difficultyCounts.medium, color: 'text-amber-600 dark:text-amber-400' },
+                { id: 'hard', label: 'Hard', count: difficultyCounts.hard, color: 'text-rose-600 dark:text-rose-400' }
+              ].map(lvl => (
+                <button
+                  key={lvl.id}
+                  onClick={() => {
+                    setDifficultyFilter(lvl.id);
+                    setSelectedAnswers({});
+                  }}
+                  className={`px-2 py-0.5 rounded-lg text-[11px] font-medium border transition-all cursor-pointer flex items-center gap-1 ${
+                    difficultyFilter === lvl.id
+                      ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] font-bold'
+                      : `bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] ${lvl.color || ''}`
+                  }`}
+                >
+                  <span>{lvl.label}</span>
+                  <span className="text-[10px] font-mono opacity-80">({lvl.count})</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Questions list */}
           <div className="space-y-3.5 max-h-[600px] overflow-y-auto pr-1">
             {mcqs.map((q, idx) => {
@@ -168,9 +208,22 @@ export default function SubtopicPracticePanel({
                     <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)] shrink-0">
                       Q{idx + 1}
                     </span>
-                    <p className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)] leading-snug">
-                      {q.question}
-                    </p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-1.5 py-0.2 rounded border ${
+                          q.difficulty === 'hard'
+                            ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+                            : q.difficulty === 'medium'
+                            ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                            : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                        }`}>
+                          {q.difficulty === 'hard' ? 'Hard • HOTS' : q.difficulty === 'medium' ? 'Medium' : 'Easy'}
+                        </span>
+                      </div>
+                      <p className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)] leading-snug">
+                        {q.question}
+                      </p>
+                    </div>
                   </div>
 
                   {/* 4 Options */}

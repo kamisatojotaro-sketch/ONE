@@ -7,6 +7,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-1',
       chapterId: 'phy-ch-1',
       chapterName: 'Ch 1: Electric Charges & Fields',
+      subtopicId: 'phy-sub-1-7',
+      difficulty: 'medium',
       question: 'An electric dipole of moment p is placed in a uniform electric field E. The torque τ and potential energy U of the dipole when in stable equilibrium are:',
       options: [
         'τ = pE, U = 0',
@@ -21,6 +23,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-2',
       chapterId: 'phy-ch-1',
       chapterName: 'Ch 1: Electric Charges & Fields',
+      subtopicId: 'phy-sub-1-9',
+      difficulty: 'easy',
       question: 'A spherical Gaussian surface encloses a point charge q. If the radius of the sphere is doubled, the total outward electric flux through the surface will:',
       options: [
         'Be doubled',
@@ -35,6 +39,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-3',
       chapterId: 'phy-ch-2',
       chapterName: 'Ch 2: Electrostatic Potential & Capacitance',
+      subtopicId: 'phy-sub-2-2',
+      difficulty: 'easy',
       question: 'The electric potential at an equatorial point due to a short electric dipole of dipole moment p at distance r is:',
       options: [
         'kp / r²',
@@ -49,6 +55,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-4',
       chapterId: 'phy-ch-2',
       chapterName: 'Ch 2: Electrostatic Potential & Capacitance',
+      subtopicId: 'phy-sub-2-7',
+      difficulty: 'medium',
       question: 'A dielectric slab of dielectric constant K is introduced between the plates of an isolated charged parallel-plate capacitor. Which quantity decreases?',
       options: [
         'Capacitance',
@@ -63,6 +71,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-5',
       chapterId: 'phy-ch-3',
       chapterName: 'Ch 3: Current Electricity',
+      subtopicId: 'phy-sub-3-3',
+      difficulty: 'medium',
       question: 'When temperature of a metallic conductor is increased, its electrical resistivity increases primarily because:',
       options: [
         'Conduction electron density n decreases',
@@ -77,6 +87,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-6',
       chapterId: 'phy-ch-3',
       chapterName: 'Ch 3: Current Electricity',
+      subtopicId: 'phy-sub-3-9',
+      difficulty: 'medium',
       question: 'In a Wheatstone bridge network, galvanometer shows null deflection. If the battery and galvanometer are interchanged, the balance condition:',
       options: [
         'Remains unchanged',
@@ -91,6 +103,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-7',
       chapterId: 'phy-ch-4',
       chapterName: 'Ch 4: Moving Charges & Magnetism',
+      subtopicId: 'phy-sub-4-6',
+      difficulty: 'hard',
       question: 'A proton and an alpha particle enter a uniform magnetic field with the same velocity perpendicular to the field. The ratio of radius of proton path to alpha particle path (r_p : r_α) is:',
       options: [
         '1 : 1',
@@ -105,6 +119,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-8',
       chapterId: 'phy-ch-6',
       chapterName: 'Ch 6: Electromagnetic Induction',
+      subtopicId: 'phy-sub-6-3',
+      difficulty: 'medium',
       question: 'A metallic ring is held horizontally and a bar magnet is dropped freely along the axis of the ring with its North pole downwards. The acceleration of the falling magnet is:',
       options: [
         'Equal to g',
@@ -119,6 +135,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-9',
       chapterId: 'phy-ch-7',
       chapterName: 'Ch 7: Alternating Current',
+      subtopicId: 'phy-sub-7-6',
+      difficulty: 'easy',
       question: 'In a series LCR resonant circuit, the phase angle between alternating applied voltage and circuit current is:',
       options: [
         'π / 2 (90°)',
@@ -133,6 +151,8 @@ export const MCQ_DATABASE = {
       id: 'phy-mcq-10',
       chapterId: 'phy-ch-8',
       chapterName: 'Ch 8: Electromagnetic Waves',
+      subtopicId: 'phy-sub-8-4',
+      difficulty: 'easy',
       question: 'Which of the following electromagnetic waves has the highest frequency and penetrating power in the electromagnetic spectrum?',
       options: [
         'Microwaves',
@@ -150,6 +170,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-1',
       chapterId: 'chem-ch-1',
       chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-8',
+      difficulty: 'medium',
       question: 'Which of the following aqueous solutions exhibits the highest boiling point elevation?',
       options: [
         '0.1 M Glucose',
@@ -164,6 +186,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-2',
       chapterId: 'chem-ch-1',
       chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-2',
+      difficulty: 'medium',
       question: 'The value of Henry\'s constant K_H for gases in water:',
       options: [
         'Increases with increase in temperature',
@@ -178,6 +202,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-3',
       chapterId: 'chem-ch-2',
       chapterName: 'Ch 2: Electrochemistry',
+      subtopicId: 'chem-sub-2-10',
+      difficulty: 'medium',
       question: 'During discharge of a lead storage battery in an automobile:',
       options: [
         'PbSO₄ is consumed and H₂SO₄ is formed',
@@ -192,6 +218,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-4',
       chapterId: 'chem-ch-2',
       chapterName: 'Ch 2: Electrochemistry',
+      subtopicId: 'chem-sub-2-8',
+      difficulty: 'hard',
       question: 'The limiting molar conductivities Λ°_m for NaCl, HCl, and CH₃COONa are 126.4, 425.9, and 91.0 S·cm²/mol respectively. The Λ°_m of CH₃COOH is:',
       options: [
         '516.9 S·cm²/mol',
@@ -206,6 +234,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-5',
       chapterId: 'chem-ch-4',
       chapterName: 'Ch 4: d and f Block Elements',
+      subtopicId: 'chem-sub-4-1',
+      difficulty: 'medium',
       question: 'The electronic configuration of a 3d transition metal ion with the maximum spin-only magnetic moment is:',
       options: [
         'Fe³⁺ (3d⁵)',
@@ -220,6 +250,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-6',
       chapterId: 'chem-ch-4',
       chapterName: 'Ch 4: d and f Block Elements',
+      subtopicId: 'chem-sub-4-7',
+      difficulty: 'easy',
       question: 'When acidified potassium dichromate (K₂Cr₂O₇) acts as an oxidizing agent, the oxidation state of chromium changes from:',
       options: [
         '+6 to +3',
@@ -234,6 +266,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-7',
       chapterId: 'chem-ch-6',
       chapterName: 'Ch 6: Haloalkanes and Haloarenes',
+      subtopicId: 'chem-sub-6-5',
+      difficulty: 'medium',
       question: 'Which of the following alkyl halides undergoes S_N1 substitution reaction at the fastest rate with aqueous KOH?',
       options: [
         'CH₃-CH₂-CH₂-CH₂-Cl',
@@ -248,6 +282,8 @@ export const MCQ_DATABASE = {
       id: 'chem-mcq-8',
       chapterId: 'chem-ch-7',
       chapterName: 'Ch 7: Alcohols, Phenols and Ethers',
+      subtopicId: 'chem-sub-7-6',
+      difficulty: 'hard',
       question: 'When anisole (methoxybenzene) is heated with concentrated hydroiodic acid (HI), the products formed are:',
       options: [
         'Iodobenzene + Methanol',
@@ -265,6 +301,8 @@ export const MCQ_DATABASE = {
       id: 'bio-mcq-1',
       chapterId: 'bio-ch-1',
       chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
+      subtopicId: 'bio-sub-1-2',
+      difficulty: 'medium',
       question: 'The functional megaspore in a typical angiosperm ovule develops into a female gametophyte (embryo sac) that is characterized by:',
       options: [
         '7-celled, 7-nucleate',
@@ -279,6 +317,8 @@ export const MCQ_DATABASE = {
       id: 'bio-mcq-2',
       chapterId: 'bio-ch-2',
       chapterName: 'Ch 2: Human Reproduction',
+      subtopicId: 'bio-sub-2-2',
+      difficulty: 'easy',
       question: 'The acrosome of a mature human spermatozoon is derived morphologically from which cellular organelle during spermiogenesis?',
       options: [
         'Mitochondria',
@@ -293,6 +333,8 @@ export const MCQ_DATABASE = {
       id: 'bio-mcq-3',
       chapterId: 'bio-ch-3',
       chapterName: 'Ch 3: Reproductive Health',
+      subtopicId: 'bio-sub-3-1',
+      difficulty: 'easy',
       question: 'Which of the following intrauterine devices (IUDs) releases copper ions (Cu²⁺) to suppress sperm motility and fertilizing capacity?',
       options: [
         'Lippes loop',
@@ -307,6 +349,8 @@ export const MCQ_DATABASE = {
       id: 'bio-mcq-4',
       chapterId: 'bio-ch-4',
       chapterName: 'Ch 4: Principles of Inheritance and Variation',
+      subtopicId: 'bio-sub-4-1',
+      difficulty: 'medium',
       question: 'A human male suffering from Klinefelter\'s syndrome has a chromosome complement of:',
       options: [
         '44 + XO (45 chromosomes)',
@@ -321,6 +365,8 @@ export const MCQ_DATABASE = {
       id: 'bio-mcq-5',
       chapterId: 'bio-ch-5',
       chapterName: 'Ch 5: Molecular Basis of Inheritance',
+      subtopicId: 'bio-sub-5-4',
+      difficulty: 'hard',
       question: 'In the Jacob-Monod Lac Operon model of Escherichia coli, the repressor protein synthesized by the regulator gene binds to the:',
       options: [
         'Promoter site',
@@ -335,6 +381,8 @@ export const MCQ_DATABASE = {
       id: 'bio-mcq-6',
       chapterId: 'bio-ch-6',
       chapterName: 'Ch 6: Evolution',
+      subtopicId: 'bio-sub-6-2',
+      difficulty: 'easy',
       question: 'The presence of homologous organs such as the forelimbs of humans, cheetahs, whales, and bats provides anatomical evidence for:',
       options: [
         'Convergent evolution',
@@ -353,6 +401,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-1',
       chapterName: 'Ch 1: Variations in Psychological Attributes',
       subtopicId: 'psy-sub-1-2',
+      difficulty: 'hard',
       question: "According to Robert Sternberg's Triarchic Theory of Intelligence, an individual who excels at analyzing, planning, monitoring, and evaluating problem-solving steps is demonstrating high:",
       options: [
         'Componential (Analytical) Intelligence',
@@ -368,6 +417,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-1',
       chapterName: 'Ch 1: Variations in Psychological Attributes',
       subtopicId: 'psy-sub-1-4',
+      difficulty: 'medium',
       question: 'A 10-year-old child successfully solves items on the Stanford-Binet test designed for an average 13-year-old. What is the child\'s calculated Intelligence Quotient (IQ)?',
       options: ['130', '100', '115', '77'],
       correct: 0,
@@ -378,6 +428,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-1',
       chapterName: 'Ch 1: Variations in Psychological Attributes',
       subtopicId: 'psy-sub-1-5',
+      difficulty: 'medium',
       question: 'Which of the following is a mandatory diagnostic criterion for Intellectual Disability according to the DSM-5 / AAMR classification?',
       options: [
         'IQ score below 70, deficits in adaptive behaviour, with onset before the age of 18 years',
@@ -393,6 +444,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-1',
       chapterName: 'Ch 1: Variations in Psychological Attributes',
       subtopicId: 'psy-sub-1-7',
+      difficulty: 'hard',
       question: 'The "Threshold Theory" of the relationship between intelligence and creativity states that:',
       options: [
         'A certain minimum baseline level of intelligence (around IQ 110-120) is required for high creativity, but beyond that threshold they are relatively independent',
@@ -408,6 +460,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-2',
       chapterName: 'Ch 2: Self and Personality',
       subtopicId: 'psy-sub-2-1',
+      difficulty: 'easy',
       question: 'Albert Bandura defined self-efficacy as:',
       options: [
         'An individual\'s belief in their own capability to organize and execute actions required to achieve designated goals',
@@ -423,6 +476,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-2',
       chapterName: 'Ch 2: Self and Personality',
       subtopicId: 'psy-sub-2-5',
+      difficulty: 'medium',
       question: 'Individuals who are excessively competitive, impatient, chronically rushed for time, and prone to hostility are classified as having which personality type, and are at higher risk for:',
       options: [
         'Type A personality ; Coronary heart disease',
@@ -438,6 +492,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-2',
       chapterName: 'Ch 2: Self and Personality',
       subtopicId: 'psy-sub-2-6',
+      difficulty: 'easy',
       question: 'In the Big Five (Five-Factor) Model of personality (OCEAN), an individual who is highly organized, dependable, disciplined, and goal-directed scores high on:',
       options: [
         'Conscientiousness',
@@ -453,6 +508,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-2',
       chapterName: 'Ch 2: Self and Personality',
       subtopicId: 'psy-sub-2-7',
+      difficulty: 'easy',
       question: 'In Freud\'s structural model of personality, the structure that operates entirely on the "reality principle" and acts as a mediator is the:',
       options: [
         'Ego',
@@ -468,6 +524,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-3',
       chapterName: 'Ch 3: Meeting Life Challenges',
       subtopicId: 'psy-sub-3-1',
+      difficulty: 'medium',
       question: 'According to Lazarus and Folkman\'s Cognitive Appraisal Model, "Secondary Appraisal" involves:',
       options: [
         'Assessing one\'s available personal and social coping resources and options to manage the stressor',
@@ -483,6 +540,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-3',
       chapterName: 'Ch 3: Meeting Life Challenges',
       subtopicId: 'psy-sub-3-3',
+      difficulty: 'easy',
       question: 'In Hans Selye\'s General Adaptation Syndrome (GAS), during which stage does the body sustain prolonged physiological coping before its adaptive energy is depleted?',
       options: [
         'Resistance stage',
@@ -498,6 +556,7 @@ export const MCQ_DATABASE = {
       chapterId: 'psy-ch-3',
       chapterName: 'Ch 3: Meeting Life Challenges',
       subtopicId: 'psy-sub-3-5',
+      difficulty: 'medium',
       question: 'When a situation is genuinely uncontrollable (such as coping with the death of a close family member), which coping strategy is empirically found to be most adaptive?',
       options: [
         'Emotion-focused coping (seeking emotional support, acceptance, positive reappraisal)',

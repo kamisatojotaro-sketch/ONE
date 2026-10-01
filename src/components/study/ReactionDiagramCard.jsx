@@ -1,0 +1,758 @@
+import { useState } from 'react';
+import { Sparkles, ArrowRight, BookOpen, Layers, CheckCircle2, AlertCircle, Info, ChevronDown, ChevronUp, Zap } from 'lucide-react';
+import { REACTION_DIAGRAMS } from '../../data/reactionDiagramsData';
+
+// Reusable SVG Chemical Structure Drawings
+function SvgBenzene({ label = '', sub = '', color = 'var(--text-primary)' }) {
+  return (
+    <div className="flex flex-col items-center justify-center p-2">
+      <svg width="80" height="92" viewBox="0 0 80 92" className="overflow-visible">
+        {/* Top attachment if label */}
+        {label && (
+          <g>
+            <line x1="40" y1="20" x2="40" y2="4" stroke={color} strokeWidth="2.5" />
+            <text x="40" y="0" textAnchor="middle" fill="var(--accent-primary)" fontSize="11" fontWeight="bold" fontFamily="monospace">
+              {label}
+            </text>
+          </g>
+        )}
+        {/* Hexagon ring */}
+        <polygon
+          points="40,20 68,36 68,68 40,84 12,68 12,36"
+          fill="none"
+          stroke={color}
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+        />
+        {/* Inner aromatic circle */}
+        <circle cx="40" cy="52" r="18" fill="none" stroke={color} strokeWidth="1.8" strokeDasharray="4 3" />
+      </svg>
+      {sub && <span className="text-[11px] font-mono text-[var(--text-muted)] text-center mt-1">{sub}</span>}
+    </div>
+  );
+}
+
+function SvgOrthoSubstitutedBenzene({ r1 = 'OH', r2 = 'CHO', sub = 'Salicylaldehyde' }) {
+  return (
+    <div className="flex flex-col items-center justify-center p-2">
+      <svg width="90" height="95" viewBox="0 0 90 95" className="overflow-visible">
+        {/* Top attachment R1 at C1 */}
+        <line x1="40" y1="24" x2="40" y2="8" stroke="var(--accent-primary)" strokeWidth="2.5" />
+        <text x="40" y="4" textAnchor="middle" fill="#ef4444" fontSize="11" fontWeight="bold" fontFamily="monospace">
+          {r1}
+        </text>
+
+        {/* Ortho attachment R2 at C2 */}
+        <line x1="68" y1="40" x2="84" y2="30" stroke="var(--accent-primary)" strokeWidth="2.5" />
+        <text x="86" y="28" textAnchor="start" fill="#3b82f6" fontSize="11" fontWeight="bold" fontFamily="monospace">
+          {r2}
+        </text>
+
+        {/* Hexagon ring */}
+        <polygon
+          points="40,24 68,40 68,72 40,88 12,72 12,40"
+          fill="none"
+          stroke="var(--text-primary)"
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+        />
+        {/* Inner aromatic circle */}
+        <circle cx="40" cy="56" r="18" fill="none" stroke="var(--text-primary)" strokeWidth="1.8" strokeDasharray="4 3" />
+      </svg>
+      {sub && <span className="text-[11px] font-mono font-bold text-[var(--text-primary)] text-center mt-1">{sub}</span>}
+    </div>
+  );
+}
+
+// Visual Reaction Diagram for a single reaction object
+export function SingleReactionDiagram({ rxn }) {
+  const [showMechanism, setShowMechanism] = useState(false);
+
+  return (
+    <div className="border border-[var(--border-default)] rounded-2xl bg-[var(--bg-surface)] p-4 sm:p-5 space-y-4 shadow-sm hover:border-[var(--accent-primary)]/50 transition-all">
+      {/* Header Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[var(--accent-primary)]/15 text-[var(--accent-primary)]">
+              {rxn.category.toUpperCase()} DIAGRAM
+            </span>
+            <span className="text-xs font-mono text-[var(--text-muted)]">
+              NCERT CBSE Class 12
+            </span>
+          </div>
+          <h4 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] mt-1">
+            {rxn.title}
+          </h4>
+          {rxn.subtitle && (
+            <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+              {rxn.subtitle}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Main Visual Reaction Diagram Flow Scheme */}
+      <div className="bg-[var(--bg-base)] p-3 sm:p-4 rounded-xl border border-[var(--border-subtle)] overflow-x-auto">
+        {/* Render Customized Visual Diagram by Type */}
+        {rxn.diagramType === 'cumene' && (
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 py-2 min-w-[500px]">
+            {/* Step 1 Reactant: Cumene */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)] shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase mb-1">Starting Material</span>
+              <SvgBenzene label="CH(CH₃)₂" sub="Cumene (Isopropylbenzene)" />
+            </div>
+
+            {/* Reaction Arrow 1: Air Oxidation */}
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">+ O₂ (Air)</span>
+              <div className="w-16 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">368–408 K</span>
+            </div>
+
+            {/* Intermediate: Cumene Hydroperoxide */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-amber-500/40 shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-1">Peroxide Intermediate</span>
+              <SvgBenzene label="C(CH₃)₂—OOH" sub="Cumene Hydroperoxide" />
+            </div>
+
+            {/* Reaction Arrow 2: Acid Hydrolysis */}
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-blue-600 dark:text-blue-400">dil. H₂SO₄</span>
+              <div className="w-16 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">H⁺ / H₂O (Δ)</span>
+            </div>
+
+            {/* Products: Phenol + Acetone */}
+            <div className="flex items-center gap-3 bg-[var(--bg-surface)] p-3 rounded-xl border border-emerald-500/40 shadow-2xs">
+              <div className="flex flex-col items-center">
+                <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">Main Product</span>
+                <SvgBenzene label="OH" sub="Phenol (Carbolic Acid)" color="#10b981" />
+              </div>
+              <span className="text-xl font-bold text-[var(--text-muted)]">+</span>
+              <div className="flex flex-col items-center p-2">
+                <span className="text-[10px] font-mono font-bold text-amber-600 dark:text-amber-400 uppercase mb-2">By-Product</span>
+                <div className="font-mono text-xs font-bold bg-[var(--bg-elevated)] p-2 rounded-lg border border-[var(--border-subtle)] text-center">
+                  CH₃—C(=O)—CH₃
+                </div>
+                <span className="text-[11px] font-mono text-[var(--text-muted)] mt-1">Acetone (Propanone)</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'reimer-tiemann' && (
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 py-2 min-w-[500px]">
+            {/* Reactant: Phenol */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)] shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase mb-1">Substrate</span>
+              <SvgBenzene label="OH" sub="Phenol" />
+            </div>
+
+            {/* Reaction Arrow */}
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">CHCl₃ + 3 NaOH (aq)</span>
+              <div className="w-20 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">340 K, then H⁺</span>
+            </div>
+
+            {/* Intermediate Carbenoid */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-amber-500/40 shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-1">Active Electrophile</span>
+              <div className="font-mono text-xs font-bold p-3 bg-[var(--bg-elevated)] rounded-lg text-center">
+                :CCl₂<br />
+                <span className="text-[10px] font-normal text-[var(--text-muted)]">Dichlorocarbene</span>
+              </div>
+            </div>
+
+            <ArrowRight size={20} className="text-[var(--text-muted)] shrink-0" />
+
+            {/* Product: Salicylaldehyde */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-emerald-500/40 shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">Major Product</span>
+              <SvgOrthoSubstitutedBenzene r1="OH" r2="CHO" sub="Salicylaldehyde (2-Hydroxybenzaldehyde)" />
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'kolbe' && (
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 py-2 min-w-[500px]">
+            {/* Reactant: Phenol */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)] shadow-2xs">
+              <SvgBenzene label="OH" sub="Phenol" />
+            </div>
+
+            {/* Arrow 1: NaOH */}
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-blue-600 dark:text-blue-400">+ NaOH (- H₂O)</span>
+              <div className="w-16 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+            </div>
+
+            {/* Phenoxide */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-blue-500/40 shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-blue-500 uppercase mb-1">Activated Intermediate</span>
+              <SvgBenzene label="O⁻ Na⁺" sub="Sodium Phenoxide" color="#3b82f6" />
+            </div>
+
+            {/* Arrow 2: CO2 + H+ */}
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">(i) CO₂ (400 K, 4–7 atm)</span>
+              <div className="w-20 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">(ii) H⁺ (Acidification)</span>
+            </div>
+
+            {/* Product: Salicylic Acid */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-emerald-500/40 shadow-2xs">
+              <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">Aspirin Precursor</span>
+              <SvgOrthoSubstitutedBenzene r1="OH" r2="COOH" sub="Salicylic Acid (2-Hydroxybenzoic Acid)" />
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'sn2' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 min-w-[550px]">
+              {/* Backside Attack */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)]">
+                <span className="text-[10px] font-mono font-bold text-blue-500 uppercase mb-1">180° Backside Attack</span>
+                <div className="font-mono text-sm font-bold p-3 text-center">
+                  <span className="text-blue-500">HO:⁻</span> ───&gt; <span className="text-amber-500">H₃C—Cl</span>
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Nucleophile approaches directly opposite Leaving Group</span>
+              </div>
+
+              <ArrowRight size={22} className="text-[var(--text-muted)] shrink-0" />
+
+              {/* Pentacoordinate Transition State */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border-2 border-dashed border-amber-500/60 shadow-xs">
+                <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-1">Pentacoordinate Transition State [‡]</span>
+                <div className="font-mono text-base font-bold p-3 text-center tracking-wider text-[var(--text-primary)]">
+                  [ <span className="text-blue-500">HO</span><span className="text-amber-500 font-normal"> ··· </span><span className="underline">CH₃</span><span className="text-amber-500 font-normal"> ··· </span><span className="text-rose-500">Cl</span> ]<sup className="text-xs">‡</sup>
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">C is sp² planar; simultaneous bond breaking & making</span>
+              </div>
+
+              <ArrowRight size={22} className="text-[var(--text-muted)] shrink-0" />
+
+              {/* Inverted Product */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-emerald-500/40 shadow-xs">
+                <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">100% Walden Inversion</span>
+                <div className="font-mono text-sm font-bold p-3 text-center">
+                  <span className="text-emerald-600 dark:text-emerald-400">HO—CH₃</span> + <span className="text-rose-500">Cl⁻</span>
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Inverted umbrella stereochemistry</span>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono text-center">
+              <strong className="text-[var(--text-primary)]">Order of Reactivity:</strong> CH₃X &gt; 1° &gt; 2° &gt; 3° (Tertiary is unreactive due to steric bulk)
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'sn1' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 min-w-[550px]">
+              {/* Step 1: Slow ionization */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)]">
+                <span className="text-[10px] font-mono font-bold text-rose-500 uppercase mb-1">Step 1 (Slow / r.d.s)</span>
+                <div className="font-mono text-sm font-bold p-3 text-center">
+                  (CH₃)₃C—Br ──&gt;
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Heterolytic cleavage in polar protic solvent</span>
+              </div>
+
+              {/* Planar Carbocation */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border-2 border-amber-500/50">
+                <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-1">Planar Intermediate</span>
+                <div className="font-mono text-base font-bold p-3 text-center">
+                  [(CH₃)₃C]⁺ + Br⁻
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">sp² Trigonal Planar (120° angles)</span>
+              </div>
+
+              {/* Step 2: 50/50 Attack */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-emerald-500/40">
+                <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">Step 2 (Fast Front/Back Attack)</span>
+                <div className="font-mono text-xs font-bold p-2 text-center space-y-1">
+                  <div>50% Retention: (CH₃)₃C—OH</div>
+                  <div>50% Inversion: HO—C(CH₃)₃</div>
+                </div>
+                <span className="text-[10px] font-mono text-emerald-500 font-bold">Racemic Mixture (Optically Inactive)</span>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono text-center">
+              <strong className="text-[var(--text-primary)]">Order of Reactivity:</strong> 3° &gt; 2° &gt; 1° &gt; CH₃X (Governed by stability of intermediate carbocation)
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'saytzeff' && (
+          <div className="space-y-3 py-2">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 min-w-[550px]">
+              {/* Reactant: 2-Bromobutane */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)]">
+                <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase mb-1">Substrate</span>
+                <div className="font-mono text-xs font-bold p-2 text-center">
+                  CH₃—CH₂—CH(Br)—CH₃<br />
+                  <span className="text-[10px] text-amber-500">β₂ (CH₂) &nbsp; α(C-Br) &nbsp; β₁(CH₃)</span>
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">2-Bromobutane</span>
+              </div>
+
+              {/* Arrow */}
+              <div className="flex flex-col items-center px-1">
+                <span className="text-[11px] font-mono font-bold text-rose-500">alc. KOH, Δ</span>
+                <div className="w-16 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                  <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">- HBr</span>
+              </div>
+
+              {/* Products Breakdown */}
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border-2 border-emerald-500/60 shadow-2xs">
+                  <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">81% Major Product</span>
+                  <div className="font-mono text-xs font-bold p-2 text-center text-emerald-600 dark:text-emerald-400">
+                    CH₃—CH=CH—CH₃
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-[var(--text-primary)]">But-2-ene (Saytzeff)</span>
+                  <span className="text-[10px] font-mono text-[var(--text-muted)]">More substituted (6 α-H)</span>
+                </div>
+
+                <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)] opacity-70">
+                  <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase mb-1">19% Minor Product</span>
+                  <div className="font-mono text-xs font-bold p-2 text-center">
+                    CH₃—CH₂—CH=CH₂
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-[var(--text-secondary)]">But-1-ene (Hofmann)</span>
+                  <span className="text-[10px] font-mono text-[var(--text-muted)]">Less substituted (2 α-H)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'daniell-cell' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 sm:gap-6 min-w-[550px]">
+              {/* Anode Half Cell */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-4 rounded-xl border-2 border-blue-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-blue-500 uppercase">ANODE (- Negative Terminal)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-500 font-bold">OXIDATION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Electrode:</strong> Zinc Plate (Zn)</div>
+                  <div><strong>Solution:</strong> 1.0 M ZnSO₄ (aq)</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-blue-500/30 text-blue-600 dark:text-blue-400 font-bold text-center">
+                    Zn(s) ⟶ Zn²⁺(aq) + 2e⁻ &nbsp; (E° = -0.76 V)
+                  </div>
+                </div>
+              </div>
+
+              {/* Salt Bridge & Wire */}
+              <div className="flex flex-col items-center justify-center p-2 min-w-[120px] text-center space-y-2">
+                <div className="px-2.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-[10px] font-mono font-bold text-amber-500">
+                  e⁻ Flow: Zn ⟶ Cu
+                </div>
+                <div className="w-16 h-8 border-t-2 border-r-2 border-l-2 border-amber-500/60 rounded-t-lg relative flex items-center justify-center">
+                  <span className="text-[9px] font-mono font-bold text-amber-500">Salt Bridge</span>
+                </div>
+                <div className="text-[10px] font-mono text-[var(--text-muted)]">
+                  KCl / Agar-Agar gel<br />
+                  Current: Cu ⟶ Zn
+                </div>
+              </div>
+
+              {/* Cathode Half Cell */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-4 rounded-xl border-2 border-emerald-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase">CATHODE (+ Positive Terminal)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold">REDUCTION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Electrode:</strong> Copper Plate (Cu)</div>
+                  <div><strong>Solution:</strong> 1.0 M CuSO₄ (aq)</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold text-center">
+                    Cu²⁺(aq) + 2e⁻ ⟶ Cu(s) &nbsp; (E° = +0.34 V)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between text-xs font-mono gap-2">
+              <div>
+                <strong>Cell Notation:</strong> Zn(s) | Zn²⁺(aq, 1 M) || Cu²⁺(aq, 1 M) | Cu(s)
+              </div>
+              <div className="font-bold text-[var(--accent-primary)]">
+                E°_cell = +0.34 V − (−0.76 V) = +1.10 V
+              </div>
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'kmno4-flow' && (
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 py-2 min-w-[500px]">
+            {/* Step 1: Pyrolusite */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)]">
+              <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase mb-1">Ore</span>
+              <div className="font-mono text-xs font-bold p-2 text-center">
+                MnO₂ (Black)
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">Pyrolusite Ore (Mn⁴⁺)</span>
+            </div>
+
+            {/* Fusion Arrow */}
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-emerald-600 dark:text-emerald-400">Fused with KOH + O₂</span>
+              <div className="w-16 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">Air oxidation</span>
+            </div>
+
+            {/* Intermediate: Manganate */}
+            <div className="flex flex-col items-center bg-emerald-950/20 p-3 rounded-xl border-2 border-emerald-600">
+              <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">Manganate Ion</span>
+              <div className="font-mono text-sm font-bold p-2 text-center text-emerald-600 dark:text-emerald-400">
+                K₂MnO₄ (Dark Green)
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">Paramagnetic [MnO₄]²⁻ (Mn⁶⁺)</span>
+            </div>
+
+            {/* Acid Disproportionation Arrow */}
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-purple-600 dark:text-purple-400">Acid Disproportionation (4H⁺)</span>
+              <div className="w-20 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">or Electrolytic Oxidation</span>
+            </div>
+
+            {/* Product: Permanganate */}
+            <div className="flex flex-col items-center bg-purple-950/20 p-3 rounded-xl border-2 border-purple-600 shadow-sm">
+              <span className="text-[10px] font-mono font-bold text-purple-600 dark:text-purple-400 uppercase mb-1">Permanganate Ion</span>
+              <div className="font-mono text-sm font-bold p-2 text-center text-purple-600 dark:text-purple-400">
+                KMnO₄ (Deep Purple)
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">Diamagnetic [MnO₄]⁻ (Mn⁷⁺)</span>
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'k2cr2o7-flow' && (
+          <div className="flex flex-col md:flex-row items-center justify-center gap-3 sm:gap-4 py-2 min-w-[550px]">
+            {/* Chromite ore */}
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-2.5 rounded-xl border border-[var(--border-default)]">
+              <span className="text-[9px] font-mono font-bold text-[var(--text-muted)] uppercase">Stage 1: Ore</span>
+              <div className="font-mono text-xs font-bold p-1 text-center">FeCr₂O₄ (Chromite)</div>
+            </div>
+
+            <ArrowRight size={16} className="text-[var(--text-muted)] shrink-0" />
+
+            {/* Yellow Chromate */}
+            <div className="flex flex-col items-center bg-amber-950/20 p-2.5 rounded-xl border border-amber-500">
+              <span className="text-[9px] font-mono font-bold text-amber-500 uppercase">Stage 2: Roast (Na₂CO₃ + O₂)</span>
+              <div className="font-mono text-xs font-bold p-1 text-center text-amber-500">Na₂CrO₄ (Yellow Solution)</div>
+            </div>
+
+            <ArrowRight size={16} className="text-[var(--text-muted)] shrink-0" />
+
+            {/* Orange Dichromate */}
+            <div className="flex flex-col items-center bg-orange-950/20 p-2.5 rounded-xl border border-orange-500">
+              <span className="text-[9px] font-mono font-bold text-orange-500 uppercase">Stage 3: Acidify (H⁺)</span>
+              <div className="font-mono text-xs font-bold p-1 text-center text-orange-500">Na₂Cr₂O₇ (Orange Solution)</div>
+            </div>
+
+            <ArrowRight size={16} className="text-[var(--text-muted)] shrink-0" />
+
+            {/* Potassium Exchange */}
+            <div className="flex flex-col items-center bg-orange-950/30 p-2.5 rounded-xl border-2 border-orange-600 shadow-xs">
+              <span className="text-[9px] font-mono font-bold text-orange-600 dark:text-orange-400 uppercase">Final Product (+ 2 KCl)</span>
+              <div className="font-mono text-xs font-bold p-1 text-center text-orange-600 dark:text-orange-400">
+                K₂Cr₂O₇ (Bright Orange Crystals)
+              </div>
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'williamson' && (
+          <div className="space-y-3 py-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              {/* Successful Path: 1° Halide */}
+              <div className="p-3.5 rounded-xl bg-[var(--bg-surface)] border-2 border-emerald-500/50 space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                  <CheckCircle2 size={15} />
+                  <span>SUCCESSFUL SYNTHESIS (Clean SN2)</span>
+                </div>
+                <div className="font-mono text-xs bg-[var(--bg-elevated)] p-2.5 rounded-lg space-y-1">
+                  <div><strong>1° Halide:</strong> CH₃—Br (Methyl bromide)</div>
+                  <div><strong>Alkoxide:</strong> (CH₃)₃C—O⁻ Na⁺ (Sodium tert-butoxide)</div>
+                  <div className="pt-1 text-emerald-600 dark:text-emerald-400 font-bold border-t border-[var(--border-subtle)]">
+                    ⟶ (CH₃)₃C—O—CH₃ (tert-Butyl methyl ether) + NaBr
+                  </div>
+                </div>
+                <span className="text-[10px] text-[var(--text-muted)] block">
+                  Uncrowded primary carbon allows rapid SN2 backside attack by bulky alkoxide.
+                </span>
+              </div>
+
+              {/* Failed Trap: 3° Halide */}
+              <div className="p-3.5 rounded-xl bg-[var(--bg-surface)] border-2 border-rose-500/50 space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-rose-500">
+                  <AlertCircle size={15} />
+                  <span>ELIMINATION TRAP (Exclusive E2)</span>
+                </div>
+                <div className="font-mono text-xs bg-[var(--bg-elevated)] p-2.5 rounded-lg space-y-1">
+                  <div><strong>3° Halide:</strong> (CH₃)₃C—Br (tert-Butyl bromide)</div>
+                  <div><strong>Base:</strong> CH₃—O⁻ Na⁺ (Sodium methoxide)</div>
+                  <div className="pt-1 text-rose-500 font-bold border-t border-[var(--border-subtle)]">
+                    ⟶ CH₃—C(CH₃)=CH₂ (2-Methylpropene alkene) + CH₃OH + NaBr
+                  </div>
+                </div>
+                <span className="text-[10px] text-[var(--text-muted)] block">
+                  Steric hindrance blocks SN2 backside approach; methoxide acts as strong base, abstracting a β-proton.
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'dehydration' && (
+          <div className="space-y-3 py-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              {/* 443 K Path */}
+              <div className="p-3.5 rounded-xl bg-[var(--bg-surface)] border-2 border-amber-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-amber-500">443 K (170°C) — HIGH TEMPERATURE</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-500 font-bold">ALKENE</span>
+                </div>
+                <div className="font-mono text-xs bg-[var(--bg-elevated)] p-2.5 rounded-lg space-y-1 text-center">
+                  <div>CH₃—CH₂—OH + conc. H₂SO₄ (443 K)</div>
+                  <div className="text-amber-500 font-bold text-sm pt-1">
+                    ⟶ CH₂=CH₂ (Ethene) + H₂O
+                  </div>
+                </div>
+                <p className="text-[11px] text-[var(--text-secondary)]">
+                  Intramolecular β-elimination via ethyl carbocation intermediate [CH₃CH₂⁺].
+                </p>
+              </div>
+
+              {/* 413 K Path */}
+              <div className="p-3.5 rounded-xl bg-[var(--bg-surface)] border-2 border-blue-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-blue-500">413 K (140°C) — LOWER TEMPERATURE</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-500 font-bold">ETHER</span>
+                </div>
+                <div className="font-mono text-xs bg-[var(--bg-elevated)] p-2.5 rounded-lg space-y-1 text-center">
+                  <div>2 C₂H₅—OH + conc. H₂SO₄ (413 K)</div>
+                  <div className="text-blue-500 font-bold text-sm pt-1">
+                    ⟶ C₂H₅—O—C₂H₅ (Diethyl Ether) + H₂O
+                  </div>
+                </div>
+                <p className="text-[11px] text-[var(--text-secondary)]">
+                  Intermolecular SN2 nucleophilic substitution by excess alcohol.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'chromate-dichromate' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 min-w-[500px]">
+              {/* Yellow Chromate */}
+              <div className="flex flex-col items-center bg-amber-950/20 p-4 rounded-xl border-2 border-amber-400 shadow-sm">
+                <span className="text-[10px] font-mono font-bold text-amber-500 uppercase">Discrete Tetrahedron</span>
+                <div className="font-mono text-base font-bold p-2 text-center text-amber-400">
+                  [CrO₄]²⁻
+                </div>
+                <span className="text-xs font-mono font-bold text-[var(--text-primary)]">Chromate Ion (Yellow)</span>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Stable in Alkaline pH (pH &gt; 7)</span>
+              </div>
+
+              {/* Equilibrium Arrows */}
+              <div className="flex flex-col items-center px-2 space-y-1">
+                <div className="flex items-center gap-1 text-[11px] font-mono font-bold text-orange-500">
+                  <span>+ 2 H⁺ (Acidic) ⟶</span>
+                </div>
+                <div className="w-24 h-0.5 bg-[var(--accent-primary)] relative" />
+                <div className="flex items-center gap-1 text-[11px] font-mono font-bold text-amber-500">
+                  <span>⟵ + 2 OH⁻ (Alkaline)</span>
+                </div>
+              </div>
+
+              {/* Orange Dichromate */}
+              <div className="flex flex-col items-center bg-orange-950/25 p-4 rounded-xl border-2 border-orange-500 shadow-sm">
+                <span className="text-[10px] font-mono font-bold text-orange-500 uppercase">Linked Tetrahedra (Cr—O—Cr 126°)</span>
+                <div className="font-mono text-base font-bold p-2 text-center text-orange-500">
+                  [Cr₂O₇]²⁻
+                </div>
+                <span className="text-xs font-mono font-bold text-[var(--text-primary)]">Dichromate Ion (Orange)</span>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Stable in Acidic pH (pH &lt; 7)</span>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono text-center">
+              <strong>Governing Equation:</strong> 2 CrO₄²⁻ (Yellow) + 2 H⁺ ⇌ Cr₂O₇²⁻ (Orange) + H₂O &nbsp; (Cr—O—Cr Bond Angle = 126°)
+            </div>
+          </div>
+        )}
+
+        {rxn.diagramType === 'corrosion' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 sm:gap-6 min-w-[550px]">
+              {/* Anodic Spot */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-3.5 rounded-xl border-2 border-rose-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-rose-500 uppercase">ANODIC REGION (Iron Pit)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/15 text-rose-500 font-bold">OXIDATION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Site:</strong> Surface strain / impurity defect</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-rose-500/30 text-rose-500 font-bold text-center">
+                    2 Fe(s) ⟶ 2 Fe²⁺(aq) + 4e⁻ &nbsp; (E° = -0.44 V)
+                  </div>
+                  <p className="text-[10px] text-[var(--text-muted)]">Fe dissolves as Fe²⁺ into moisture droplet.</p>
+                </div>
+              </div>
+
+              {/* Cathodic Spot */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-3.5 rounded-xl border-2 border-blue-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-blue-500 uppercase">CATHODIC REGION (Drop Rim)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-500 font-bold">REDUCTION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Site:</strong> High oxygen boundary at droplet edge</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-blue-500/30 text-blue-500 font-bold text-center">
+                    O₂ + 4 H⁺ + 4e⁻ ⟶ 2 H₂O &nbsp; (E° = +1.23 V)
+                  </div>
+                  <p className="text-[10px] text-[var(--text-muted)]">H⁺ supplied by dissolved atmospheric CO₂ (H₂CO₃).</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 bg-amber-950/20 rounded-xl border border-amber-600/40 text-xs font-mono text-center space-y-1">
+              <div><strong>Overall Cell Reaction:</strong> 2 Fe(s) + O₂(g) + 4 H⁺(aq) ⟶ 2 Fe²⁺(aq) + 2 H₂O(l) &nbsp; (E°_cell = +1.67 V)</div>
+              <div className="text-amber-500 font-bold">Hydrated Rust Formation: 4 Fe²⁺ + O₂ + 4 H₂O ⟶ 2 Fe₂O₃ + 8 H⁺ ──(+ x H₂O)──&gt; Fe₂O₃ · xH₂O (Rust)</div>
+            </div>
+          </div>
+        )}
+
+        {/* Generic or Table Style Representation for other diagram types */}
+        {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion'].includes(rxn.diagramType) && (
+          <div className="space-y-2 p-2">
+            {rxn.equation && (
+              <div className="font-mono text-sm sm:text-base font-bold p-3 rounded-xl bg-[var(--bg-elevated)] text-[var(--accent-primary)] text-center overflow-x-auto">
+                {rxn.equation}
+              </div>
+            )}
+            {rxn.reactions && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
+                {rxn.reactions.map((r, idx) => (
+                  <div key={idx} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1">
+                    <span className="text-xs font-mono font-bold text-[var(--accent-primary)] block">{r.name}</span>
+                    <div className="font-mono text-xs font-bold text-[var(--text-primary)]">{r.equation}</div>
+                    {r.note && <p className="text-[11px] text-[var(--text-secondary)]">{r.note}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+            {rxn.classes && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pt-1">
+                {rxn.classes.map((cls, idx) => (
+                  <div key={idx} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1.5">
+                    <span className="text-xs font-mono font-bold text-[var(--text-primary)] block">{cls.class}</span>
+                    <div className="font-mono text-[11px] text-[var(--accent-primary)]">{cls.example}</div>
+                    <p className="text-xs text-[var(--text-secondary)] leading-snug">{cls.observation}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Mechanism Walkthrough Accordion */}
+      {rxn.mechanismSteps && rxn.mechanismSteps.length > 0 && (
+        <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden bg-[var(--bg-base)]">
+          <button
+            onClick={() => setShowMechanism(!showMechanism)}
+            className="w-full px-3.5 py-2.5 flex items-center justify-between text-xs font-mono font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+          >
+            <span className="flex items-center gap-2">
+              <Zap size={14} className="text-amber-500" />
+              Detailed Reaction Mechanism & Electron Movement
+            </span>
+            {showMechanism ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          </button>
+          {showMechanism && (
+            <div className="p-3.5 space-y-2 border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+              {rxn.mechanismSteps.map((step, idx) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] mt-1.5 shrink-0" />
+                  <span>{step}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* CBSE Board Exam Tip Banner */}
+      {(rxn.boardTip || rxn.boardNote) && (
+        <div className="flex items-start gap-2.5 p-3 rounded-xl bg-[var(--badge-recommended-bg)]/15 border border-[var(--badge-recommended-bg)]/30 text-xs text-[var(--text-accent)] font-medium">
+          <Info size={15} className="shrink-0 mt-0.5 text-[var(--text-accent)]" />
+          <span>
+            <strong>CBSE Board Examiner Key:</strong> {rxn.boardTip || rxn.boardNote}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Master Container Component rendered inside Chapter Drill Down
+export default function ReactionDiagramCard({ subtopicId, chapterId }) {
+  // Find matching diagrams for this subtopic or chapter
+  const matchingDiagrams = REACTION_DIAGRAMS.filter(d => {
+    if (subtopicId && d.subtopicId === subtopicId) return true;
+    if (!subtopicId && chapterId && d.chapterId === chapterId) return true;
+    return false;
+  });
+
+  if (!matchingDiagrams || matchingDiagrams.length === 0) return null;
+
+  return (
+    <div className="space-y-4 my-4 animate-in fade-in duration-200">
+      <div className="flex items-center gap-2 px-1">
+        <Sparkles size={16} className="text-[var(--accent-primary)] shrink-0" />
+        <h3 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)]">
+          Visual Reaction Schemes & Mechanism Diagrams
+        </h3>
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)] font-semibold ml-auto">
+          {matchingDiagrams.length} Diagram{matchingDiagrams.length > 1 ? 's' : ''}
+        </span>
+      </div>
+
+      <div className="space-y-4">
+        {matchingDiagrams.map((rxn) => (
+          <SingleReactionDiagram key={rxn.id} rxn={rxn} />
+        ))}
+      </div>
+    </div>
+  );
+}

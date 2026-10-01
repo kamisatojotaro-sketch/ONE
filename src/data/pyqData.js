@@ -7,6 +7,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-1',
       chapterId: 'phy-ch-1',
       chapterName: 'Ch 1: Electric Charges & Fields',
+      subtopicId: 'phy-sub-1-11',
       year: 'CBSE 2023 (5 Marks)',
       question: 'State Gauss\'s law in electrostatics. Using this theorem, derive an expression for the electric field due to an infinitely long straight uniformly charged wire of linear charge density λ.',
       solution: `1. Statement of Gauss's Law:
@@ -31,6 +32,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-2',
       chapterId: 'phy-ch-1',
       chapterName: 'Ch 1: Electric Charges & Fields',
+      subtopicId: 'phy-sub-1-4',
       year: 'CBSE 2022 (3 Marks)',
       question: 'Why do two electric field lines never intersect each other? Write two other fundamental properties of electric field lines.',
       solution: `1. Non-intersection:
@@ -46,6 +48,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-3',
       chapterId: 'phy-ch-2',
       chapterName: 'Ch 2: Electrostatic Potential & Capacitance',
+      subtopicId: 'phy-sub-2-3',
       year: 'CBSE 2023 (3 Marks)',
       question: 'Define an equipotential surface. Show that the electric field is always directed normal to the equipotential surface at every point.',
       solution: `1. Definition:
@@ -65,6 +68,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-4',
       chapterId: 'phy-ch-2',
       chapterName: 'Ch 2: Electrostatic Potential & Capacitance',
+      subtopicId: 'phy-sub-2-8',
       year: 'CBSE 2020 (5 Marks)',
       question: 'Derive an expression for the energy stored in a parallel plate capacitor of capacitance C charged to a potential V. Hence deduce the formula for energy density.',
       solution: `1. Work Done in Charging:
@@ -88,6 +92,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-5',
       chapterId: 'phy-ch-3',
       chapterName: 'Ch 3: Current Electricity',
+      subtopicId: 'phy-sub-3-5',
       year: 'CBSE 2023 (3 Marks)',
       question: 'Define drift velocity of free electrons. Derive the relation between electric current I and drift velocity v_d.',
       solution: `1. Definition:
@@ -107,6 +112,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-6',
       chapterId: 'phy-ch-3',
       chapterName: 'Ch 3: Current Electricity',
+      subtopicId: 'phy-sub-3-9',
       year: 'CBSE 2022 (3 Marks)',
       question: 'State Kirchhoff\'s rules for electrical networks. Write the fundamental conservation law on which each rule is based.',
       solution: `1. First Rule (Junction Rule / Current Law):
@@ -123,6 +129,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-7',
       chapterId: 'phy-ch-4',
       chapterName: 'Ch 4: Moving Charges & Magnetism',
+      subtopicId: 'phy-sub-4-2',
       year: 'CBSE 2023 (5 Marks)',
       question: 'Derive an expression for the magnetic field at the centre of a circular current-carrying loop using Biot-Savart Law. State the rule used to determine its direction.',
       solution: `1. Biot-Savart Law for Current Element:
@@ -144,6 +151,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-8',
       chapterId: 'phy-ch-4',
       chapterName: 'Ch 4: Moving Charges & Magnetism',
+      subtopicId: 'phy-sub-4-8',
       year: 'CBSE 2020 (3 Marks)',
       question: 'Derive the expression for the magnetic force per unit length between two infinitely long straight parallel wires carrying steady currents I₁ and I₂ separated by distance d. Hence define 1 Ampere.',
       solution: `1. Magnetic Field of Wire 1 at Wire 2:
@@ -163,6 +171,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-9',
       chapterId: 'phy-ch-6',
       chapterName: 'Ch 6: Electromagnetic Induction',
+      subtopicId: 'phy-sub-6-3',
       year: 'CBSE 2023 (3 Marks)',
       question: 'State Lenz\'s law of electromagnetic induction. Show that Lenz\'s law is a direct consequence of the principle of conservation of energy.',
       solution: `1. Statement of Lenz's Law:
@@ -178,6 +187,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-10',
       chapterId: 'phy-ch-7',
       chapterName: 'Ch 7: Alternating Current',
+      subtopicId: 'phy-sub-7-6',
       year: 'CBSE 2023 (5 Marks)',
       question: 'Derive the condition for electrical resonance in a series LCR alternating current circuit. Draw the graph showing variation of circuit current with driving frequency for two different values of resistance R.',
       solution: `1. Impedance of Series LCR:
@@ -200,6 +210,7 @@ export const PYQ_DATABASE = {
       id: 'phy-pyq-11',
       chapterId: 'phy-ch-8',
       chapterName: 'Ch 8: Electromagnetic Waves',
+      subtopicId: 'phy-sub-8-3',
       year: 'CBSE 2022 (3 Marks)',
       question: 'Explain the concept of displacement current introduced by Maxwell. Write the modified Ampere-Maxwell law.',
       solution: `1. Need for Displacement Current:
@@ -220,6 +231,7 @@ export const PYQ_DATABASE = {
       id: 'chem-pyq-1',
       chapterId: 'chem-ch-1',
       chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-2',
       year: 'CBSE 2023 (3 Marks)',
       question: 'Why are aquatic species more comfortable in cold water than in warm water? State Henry\'s law and explain the physical significance of Henry\'s law constant K_H.',
       solution: `1. Henry\'s Law Statement:
@@ -237,6 +249,7 @@ export const PYQ_DATABASE = {
       id: 'chem-pyq-2',
       chapterId: 'chem-ch-1',
       chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-5',
       year: 'CBSE 2022 (3 Marks)',
       question: 'Explain why a solution of chloroform and acetone shows negative deviation from Raoult\'s law. What type of azeotrope does it form?',
       solution: `1. Intermolecular Forces:
@@ -256,6 +269,7 @@ export const PYQ_DATABASE = {
       id: 'chem-pyq-3',
       chapterId: 'chem-ch-1',
       chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-12',
       year: 'CBSE 2020 (5 Marks)',
       question: 'Define Van \'t Hoff factor. What values of i indicate: (i) association, (ii) dissociation? A 0.2 m aqueous solution of KCl freezes at −0.680 °C. Calculate the Van \'t Hoff factor and degree of dissociation of KCl. (K_f for water = 1.86 K·kg/mol).',
       solution: `1. Definition of Van 't Hoff factor (i):
@@ -279,6 +293,7 @@ export const PYQ_DATABASE = {
       id: 'chem-pyq-4',
       chapterId: 'chem-ch-2',
       chapterName: 'Ch 2: Electrochemistry',
+      subtopicId: 'chem-sub-2-4',
       year: 'CBSE 2023 (3 Marks)',
       question: 'Represent the cell in which the following reaction takes place:\nMg(s) + 2Ag⁺(0.0001 M) ⟶ Mg²⁺(0.130 M) + 2Ag(s)\nCalculate its E_cell at 298 K given E°_cell = 3.17 V.',
       solution: `1. Galvanic Cell Representation:
@@ -302,6 +317,7 @@ export const PYQ_DATABASE = {
       id: 'chem-pyq-5',
       chapterId: 'chem-ch-2',
       chapterName: 'Ch 2: Electrochemistry',
+      subtopicId: 'chem-sub-2-8',
       year: 'CBSE 2022 (3 Marks)',
       question: 'State Kohlrausch\'s law of independent migration of ions. How does this law help in determining the limiting molar conductivity of weak electrolytes like CH₃COOH?',
       solution: `1. Statement:
@@ -320,6 +336,7 @@ export const PYQ_DATABASE = {
       id: 'chem-pyq-6',
       chapterId: 'chem-ch-4',
       chapterName: 'Ch 4: d and f Block Elements',
+      subtopicId: 'chem-sub-4-5',
       year: 'CBSE 2023 (3 Marks)',
       question: 'Account for the following observations:\n(i) Transition metals show variable oxidation states.\n(ii) Zr and Hf have almost identical atomic radii (~160 pm).\n(iii) Transition metals and their compounds act as excellent catalysts.',
       solution: `(i) Variable Oxidation States:
@@ -337,6 +354,7 @@ Transition elements exhibit catalytic activity due to:
       id: 'chem-pyq-7',
       chapterId: 'chem-ch-6',
       chapterName: 'Ch 6: Haloalkanes and Haloarenes',
+      subtopicId: 'chem-sub-6-5',
       year: 'CBSE 2023 (3 Marks)',
       question: 'Differentiate between S_N1 and S_N2 reaction mechanisms on the basis of: (i) kinetics, (ii) stereochemical outcome, (iii) order of reactivity of alkyl halides.',
       solution: `Property | S_N1 Mechanism | S_N2 Mechanism
@@ -350,6 +368,7 @@ Transition elements exhibit catalytic activity due to:
       id: 'chem-pyq-8',
       chapterId: 'chem-ch-7',
       chapterName: 'Ch 7: Alcohols, Phenols and Ethers',
+      subtopicId: 'chem-sub-7-5',
       year: 'CBSE 2022 (3 Marks)',
       question: 'Write chemical equations with reaction conditions for:\n(i) Reimer-Tiemann reaction\n(ii) Kolbe\'s reaction\n(iii) Williamson ether synthesis of anisole.',
       solution: `(i) Reimer-Tiemann Reaction:
@@ -369,6 +388,7 @@ Sodium phenoxide (C₆H₅O⁻Na⁺) + Methyl iodide (CH₃-I) ⟶ Anisole (C₆
       id: 'bio-pyq-1',
       chapterId: 'bio-ch-1',
       chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
+      subtopicId: 'bio-sub-1-4',
       year: 'CBSE 2023 (5 Marks)',
       question: 'What is double fertilization? Describe the process in angiosperms with the ploidy levels of the resulting structures.',
       solution: `1. Definition:
@@ -390,6 +410,7 @@ Prevents wasteful endosperm development unless fertilization of the ovum is conf
       id: 'bio-pyq-2',
       chapterId: 'bio-ch-2',
       chapterName: 'Ch 2: Human Reproduction',
+      subtopicId: 'bio-sub-2-3',
       year: 'CBSE 2023 (5 Marks)',
       question: 'Explain the hormonal regulation of the human female menstrual cycle during: (i) Follicular phase, (ii) Ovulatory phase, (iii) Luteal phase.',
       solution: `(i) Follicular Phase (Days 6–13):
@@ -410,6 +431,7 @@ Prevents wasteful endosperm development unless fertilization of the ovum is conf
       id: 'bio-pyq-3',
       chapterId: 'bio-ch-4',
       chapterName: 'Ch 4: Principles of Inheritance and Variation',
+      subtopicId: 'bio-sub-4-3',
       year: 'CBSE 2022 (3 Marks)',
       question: 'Why did T.H. Morgan choose Drosophila melanogaster for his genetical studies? State four reasons.',
       solution: `T.H. Morgan chose Drosophila melanogaster (fruit fly) because:
@@ -423,6 +445,7 @@ Prevents wasteful endosperm development unless fertilization of the ovum is conf
       id: 'bio-pyq-4',
       chapterId: 'bio-ch-5',
       chapterName: 'Ch 5: Molecular Basis of Inheritance',
+      subtopicId: 'bio-sub-5-2',
       year: 'CBSE 2023 (5 Marks)',
       question: 'Describe the Hershey-Chase blender experiment that proved DNA is the genetic material and not protein.',
       solution: `1. Experimental System:
@@ -446,6 +469,7 @@ c. Centrifugation: Spun at high speed to separate heavy bacterial cells (pellet)
       id: 'bio-pyq-5',
       chapterId: 'bio-ch-6',
       chapterName: 'Ch 6: Evolution',
+      subtopicId: 'bio-sub-6-3',
       year: 'CBSE 2020 (3 Marks)',
       question: 'State Hardy-Weinberg Principle. Write five factors that disturb this genetic equilibrium.',
       solution: `1. Principle:

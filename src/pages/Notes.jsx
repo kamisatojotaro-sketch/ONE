@@ -7,6 +7,7 @@ import ChapterDrillDown from '../components/study/ChapterDrillDown';
 import PortionsTabContent from '../components/study/PortionsTabContent';
 import PyqTabContent from '../components/study/PyqTabContent';
 import McqTabContent from '../components/study/McqTabContent';
+import TestMakerTabContent from '../components/study/TestMakerTabContent';
 
 export default function Notes() {
   const session = useStudySession();
@@ -79,7 +80,16 @@ export default function Notes() {
                 />
               )}
 
-              {/* Tab 4: NOTES (Default NCERT Structured Notes) */}
+              {/* Tab 4: Custom Test Maker */}
+              {session.activeSidebarTab === 'TEST_MAKER' && (
+                <TestMakerTabContent
+                  selectedSubject={session.selectedSubject}
+                  selectedChapter={session.selectedChapter}
+                  onJumpToChapter={handleJumpToChapter}
+                />
+              )}
+
+              {/* Tab 5: NOTES (Default NCERT Structured Notes) */}
               {session.activeSidebarTab === 'NOTES' && (
                 <>
                   {/* Chapter List (when no chapter is selected) */}

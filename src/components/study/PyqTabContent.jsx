@@ -12,16 +12,18 @@ export default function PyqTabContent({
   const [seed, setSeed] = useState(1);
   const [expandedId, setExpandedId] = useState(null);
   const [chapterFilter, setChapterFilter] = useState(selectedChapter || 'ALL');
+  const [subchapterFilter, setSubchapterFilter] = useState(selectedSubchapter || 'ALL');
 
-  // Sync when selectedChapter changes from parent
+  // Sync when selectedChapter or selectedSubchapter changes from parent
   useEffect(() => {
     if (selectedChapter) {
       setChapterFilter(selectedChapter);
     } else {
       setChapterFilter('ALL');
     }
+    setSubchapterFilter(selectedSubchapter || 'ALL');
     setExpandedId(null);
-  }, [selectedChapter]);
+  }, [selectedChapter, selectedSubchapter]);
 
   // Extract chapters for this subject
   const subject = NCERT_SYLLABUS[selectedSubject];
@@ -36,11 +38,22 @@ export default function PyqTabContent({
     return list;
   }, [subject]);
 
-  // Fetch PYQs dynamically from engine
+  // Extract subchapters when a specific chapter is selected
+  const availableSubchapters = useMemo(() => {
+    if (!subject || chapterFilter === 'ALL') return [];
+    for (const vol of subject.volumes) {
+      const ch = vol.chapters.find(c => c.id === chapterFilter);
+      if (ch && ch.subchapters) return ch.subchapters;
+    }
+    return [];
+  }, [subject, chapterFilter]);
+
+  // Fetch PYQs dynamically from engine with strict scoping
   const pyqs = useMemo(() => {
     const chId = chapterFilter === 'ALL' ? null : chapterFilter;
-    return getGeneratedPYQs(selectedSubject, chId, null, 25, seed);
-  }, [selectedSubject, chapterFilter, seed]);
+    const subId = subchapterFilter === 'ALL' ? null : subchapterFilter;
+    return getGeneratedPYQs(selectedSubject, chId, subId, 25, seed);
+  }, [selectedSubject, chapterFilter, subchapterFilter, seed]);
 
   const handleRefresh = () => {
     setSeed(prev => prev + 1);
@@ -50,7 +63,7 @@ export default function PyqTabContent({
   return (
     <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-300">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] text-[11px] font-mono text-[var(--accent-primary)] font-semibold uppercase tracking-wider mb-1.5 border border-[var(--border-subtle)]">
             <Sparkles size={11} />
@@ -63,21 +76,24 @@ export default function PyqTabContent({
           <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
             {chapterFilter === 'ALL'
               ? 'Displaying handpicked board exam questions across all syllabus chapters.'
-              : `Scoped specifically to ${availableChapters.find(c => c.id === chapterFilter)?.title || 'this chapter'}.`}
+              : subchapterFilter === 'ALL'
+              ? `Scoped specifically to ${availableChapters.find(c => c.id === chapterFilter)?.title || 'this chapter'}.`
+              : `Curated exclusively for subchapter: ${availableSubchapters.find(s => s.id === subchapterFilter)?.title || subchapterFilter}.`}
           </p>
         </div>
 
         {/* Filter & Refresh Controls */}
-        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           {/* Chapter Filter Selector */}
-          <div className="flex items-center gap-1.5 flex-1 sm:flex-none">
+          <div className="flex items-center gap-1.5">
             <Filter size={13} className="text-[var(--text-muted)] shrink-0" />
-            <div className="relative w-full sm:w-60">
+            <div className="relative w-full sm:w-52">
               <select
                 value={chapterFilter}
                 onChange={(e) => {
                   const val = e.target.value;
                   setChapterFilter(val);
+                  setSubchapterFilter('ALL');
                   setExpandedId(null);
                   if (onSelectChapter && val !== 'ALL') {
                     onSelectChapter(val);
@@ -95,6 +111,28 @@ export default function PyqTabContent({
               <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
             </div>
           </div>
+
+          {/* Subchapter Filter Selector */}
+          {chapterFilter !== 'ALL' && availableSubchapters.length > 0 && (
+            <div className="relative w-full sm:w-56">
+              <select
+                value={subchapterFilter}
+                onChange={(e) => {
+                  setSubchapterFilter(e.target.value);
+                  setExpandedId(null);
+                }}
+                className="w-full appearance-none bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-xs"
+              >
+                <option value="ALL">All Subchapters in Ch</option>
+                {availableSubchapters.map((sub) => (
+                  <option key={sub.id} value={sub.id}>
+                    {sub.title}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+            </div>
+          )}
 
           <button
             onClick={handleRefresh}
