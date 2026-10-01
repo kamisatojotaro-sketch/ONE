@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { Key, Moon, Sun, Download, Upload, Trash2, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { Key, Moon, Sun, Download, Upload, Trash2, AlertTriangle, CheckCircle2, Film } from 'lucide-react';
 import { openDB } from 'idb';
 import { useTheme } from '../context/ThemeContext';
+import { isOwnerDevice } from '../hooks/useMovies';
 
 const DB_NAME = 'one-tracker-db';
 
@@ -99,12 +100,44 @@ export default function Settings() {
       }
       
       setDeleteConfirm('');
+      localStorage.removeItem('one_tracker_owner_mode');
       localStorage.removeItem('one_tracker_movies_seeded_v1');
+      localStorage.removeItem('one_tracker_test_guest');
       alert('All data has been cleared.');
       window.location.reload();
     } catch (err) {
       console.error('Clear failed', err);
       alert('Failed to clear data');
+    }
+  };
+
+  const isOwner = isOwnerDevice();
+
+  const handleActivateOwner = () => {
+    const pass = window.prompt("Enter owner key to load personal archive:");
+    if (pass && (pass.toLowerCase() === 'jaasim' || pass.toLowerCase() === 'owner' || pass === '1')) {
+      localStorage.removeItem('one_tracker_test_guest');
+      localStorage.setItem('one_tracker_owner_mode', 'true');
+      localStorage.removeItem('one_tracker_movies_seeded_v1');
+      alert("Owner profile activated! Reloading your archive...");
+      window.location.reload();
+    } else if (pass) {
+      alert("Incorrect key.");
+    }
+  };
+
+  const handleSyncOwnerMovies = () => {
+    localStorage.removeItem('one_tracker_movies_seeded_v1');
+    alert("Re-syncing personal archive...");
+    window.location.reload();
+  };
+
+  const handleSwitchToGuest = () => {
+    if (window.confirm("Switch this device to Guest Mode? Seeded movies will be cleared to test guest view.")) {
+      localStorage.removeItem('one_tracker_owner_mode');
+      localStorage.removeItem('one_tracker_movies_seeded_v1');
+      localStorage.setItem('one_tracker_test_guest', 'true');
+      window.location.reload();
     }
   };
 
@@ -227,20 +260,20 @@ export default function Settings() {
           <p className="text-[var(--text-secondary)] mt-1">Your data is yours. Back it up, restore it, or destroy it.</p>
         </div>
         <div className="p-6 space-y-8">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 bg-[var(--bg-elevated)] p-5 rounded-xl border border-[var(--border-default)]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-[var(--bg-elevated)] p-5 rounded-xl border border-[var(--border-default)] flex flex-col">
               <Download className="text-[#8B9F7E] mb-3" size={24} />
               <h3 className="font-medium text-[var(--text-primary)] mb-1">Export Data</h3>
-              <p className="text-sm text-[var(--text-secondary)] mb-4">Download a JSON file containing all your games, movies, anime, and notes.</p>
-              <button onClick={exportData} className="px-4 py-2 bg-[#8B9F7E] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+              <p className="text-sm text-[var(--text-secondary)] mb-4 flex-grow">Download a JSON file containing all your games, movies, anime, and notes.</p>
+              <button onClick={exportData} className="px-4 py-2 bg-[#8B9F7E] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity self-start">
                 Export Backup
               </button>
             </div>
             
-            <div className="flex-1 bg-[var(--bg-elevated)] p-5 rounded-xl border border-[var(--border-default)]">
+            <div className="bg-[var(--bg-elevated)] p-5 rounded-xl border border-[var(--border-default)] flex flex-col">
               <Upload className="text-[#C4A77D] mb-3" size={24} />
               <h3 className="font-medium text-[var(--text-primary)] mb-1">Import Data</h3>
-              <p className="text-sm text-[var(--text-secondary)] mb-4">Restore from a previous backup. This will merge with existing data.</p>
+              <p className="text-sm text-[var(--text-secondary)] mb-4 flex-grow">Restore from a previous backup. This will merge with existing data.</p>
               <input 
                 type="file" 
                 accept=".json" 
@@ -248,9 +281,35 @@ export default function Settings() {
                 onChange={handleImport} 
                 className="hidden" 
               />
-              <button onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-[#C4A77D] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+              <button onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-[#C4A77D] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity self-start">
                 Import Backup
               </button>
+            </div>
+
+            <div className="bg-[var(--bg-elevated)] p-5 rounded-xl border border-[var(--border-default)] flex flex-col">
+              <Film className="text-[var(--accent-primary)] mb-3" size={24} />
+              <h3 className="font-medium text-[var(--text-primary)] mb-1">Personal Watchlist</h3>
+              <p className="text-sm text-[var(--text-secondary)] mb-4 flex-grow">
+                {isOwner 
+                  ? "Owner profile active on this device (17 curated titles synced)." 
+                  : "Guest mode active. Guests fill tabs themselves; owner can load personal watchlist here."}
+              </p>
+              <div className="flex flex-wrap gap-2 mt-auto">
+                {isOwner ? (
+                  <>
+                    <button onClick={handleSyncOwnerMovies} className="px-3 py-2 bg-[var(--accent-primary)] text-white rounded-lg text-xs font-medium hover:opacity-90 transition-opacity">
+                      Re-sync Library
+                    </button>
+                    <button onClick={handleSwitchToGuest} className="px-3 py-2 bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-default)] rounded-lg text-xs font-medium hover:text-[var(--text-primary)]">
+                      Guest View
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={handleActivateOwner} className="px-4 py-2 bg-[var(--accent-primary)] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+                    Load My Watchlist
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 

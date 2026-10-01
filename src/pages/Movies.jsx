@@ -19,7 +19,7 @@ const STATUS_FILTERS = [
 ];
 
 export default function Movies() {
-  const { movies, loading, addMovie, updateMovie, deleteMovie } = useMovies();
+  const { movies, loading, addMovie, updateMovie, deleteMovie, isOwner, activateOwnerMode } = useMovies();
   
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
@@ -80,13 +80,32 @@ export default function Movies() {
       </div>
 
       {filteredMovies.length === 0 ? (
-        <EmptyState 
-          icon={Film}
-          title={search ? "No movies found" : "No movies yet"}
-          description={search ? "Try adjusting your search or filters." : "Start tracking the movies you want to watch or have watched."}
-          actionLabel={!search ? "Add Movie" : null}
-          onAction={() => setIsAddOpen(true)}
-        />
+        <div className="space-y-4">
+          <EmptyState 
+            icon={Film}
+            title={search ? "No movies found" : "No movies yet"}
+            description={search ? "Try adjusting your search or filters." : "Start tracking the movies you want to watch or have watched."}
+            actionLabel={!search ? "Add Movie" : null}
+            onAction={() => setIsAddOpen(true)}
+          />
+          {!search && !isOwner && (
+            <div className="text-center pt-2">
+              <button
+                onClick={() => {
+                  const pass = window.prompt("Enter owner key to load personal archive:");
+                  if (pass && (pass.toLowerCase() === 'jaasim' || pass.toLowerCase() === 'owner' || pass === '1')) {
+                    activateOwnerMode();
+                  } else if (pass) {
+                    alert("Incorrect key.");
+                  }
+                }}
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors underline cursor-pointer"
+              >
+                Owner? Load personal archive
+              </button>
+            </div>
+          )}
+        </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredMovies.map(movie => (
