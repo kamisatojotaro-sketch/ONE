@@ -229,7 +229,12 @@ export function formatMathString(str) {
     .replace(/\b10\^9\b|\b10⁹\b/g, '10<sup>9</sup>')
     .replace(/\b10\^-7\b|\b10⁻⁷\b/g, '10<sup>−7</sup>')
     .replace(/\b10\^-12\b|\b10⁻¹²\b/g, '10<sup>−12</sup>')
-    .replace(/\b3 × 10\^8\b|\b3 × 10⁸\b/g, '3 × 10<sup>8</sup>');
+    .replace(/\b3 × 10\^8\b|\b3 × 10⁸\b/g, '3 × 10<sup>8</sup>')
+    // Chemical Reaction Arrows & Indicators
+    .replace(/⟶|-->/g, ' <span class="font-bold text-[var(--accent-primary)] px-1">⟶</span> ')
+    .replace(/⇌|<=>/g, ' <span class="font-bold text-amber-500 px-1">⇌</span> ')
+    .replace(/↑/g, '<sup>↑</sup>')
+    .replace(/↓/g, '<sub>↓</sub>');
 }
 
 // Find curated metadata for a formula or create clean default

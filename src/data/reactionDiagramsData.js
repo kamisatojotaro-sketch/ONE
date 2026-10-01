@@ -295,7 +295,7 @@ export const REACTION_DIAGRAMS = [
 
   {
     id: 'rxn-kolbe-reaction',
-    subtopicId: 'chem-sub-7-4',
+    subtopicId: 'chem-sub-7-5',
     chapterId: 'chem-ch-7',
     title: 'Kolbe’s Reaction (Synthesis of Salicylic Acid)',
     subtitle: 'Carboxylation of Sodium Phenoxide to 2-Hydroxybenzoic Acid',
@@ -339,7 +339,7 @@ export const REACTION_DIAGRAMS = [
 
   {
     id: 'rxn-reimer-tiemann',
-    subtopicId: 'chem-sub-7-4',
+    subtopicId: 'chem-sub-7-5',
     chapterId: 'chem-ch-7',
     title: 'Reimer-Tiemann Reaction',
     subtitle: 'Formylation of Phenol to Salicylaldehyde via Dichlorocarbene Intermediate',
@@ -381,7 +381,7 @@ export const REACTION_DIAGRAMS = [
 
   {
     id: 'rxn-williamson-ether',
-    subtopicId: 'chem-sub-7-5',
+    subtopicId: 'chem-sub-7-6',
     chapterId: 'chem-ch-7',
     title: 'Williamson Ether Synthesis',
     subtitle: 'SN2 Nucleophilic Displacement for Symmetrical and Unsymmetrical Ethers',
@@ -404,7 +404,7 @@ export const REACTION_DIAGRAMS = [
 
   {
     id: 'rxn-alcohol-dehydration',
-    subtopicId: 'chem-sub-7-3',
+    subtopicId: 'chem-sub-7-6',
     chapterId: 'chem-ch-7',
     title: 'Dehydration of Alcohols: Temperature-Controlled Pathways',
     subtitle: 'Acid-Catalyzed Elimination to Alkene vs Substitution to Ether',
@@ -430,7 +430,7 @@ export const REACTION_DIAGRAMS = [
 
   {
     id: 'rxn-lucas-test',
-    subtopicId: 'chem-sub-7-7',
+    subtopicId: 'chem-sub-7-4',
     chapterId: 'chem-ch-7',
     title: 'Lucas Test for Distinguishing 1°, 2° and 3° Alcohols',
     subtitle: 'Differential Turbidity Formation with Conc. HCl + Anhydrous ZnCl₂',
@@ -466,7 +466,7 @@ export const REACTION_DIAGRAMS = [
   // ==========================================================================
   {
     id: 'rxn-kmno4-prep',
-    subtopicId: 'chem-sub-4-2',
+    subtopicId: 'chem-sub-4-4',
     chapterId: 'chem-ch-4',
     title: 'Manufacture of Potassium Permanganate (KMnO₄)',
     subtitle: 'From Pyrolusite Ore (MnO₂) via Oxidative Fusion and Disproportionation',
@@ -493,7 +493,7 @@ export const REACTION_DIAGRAMS = [
 
   {
     id: 'rxn-k2cr2o7-prep',
-    subtopicId: 'chem-sub-4-3',
+    subtopicId: 'chem-sub-4-4',
     chapterId: 'chem-ch-4',
     title: 'Manufacture of Potassium Dichromate (K₂Cr₂O₇)',
     subtitle: 'From Chromite Ore (FeCr₂O₄) via 3-Stage Chemical Process',
@@ -614,5 +614,181 @@ export const REACTION_DIAGRAMS = [
       rustHydration: 'Fe₂O₃ + x H₂O ⟶ Fe₂O₃ · xH₂O (Rust, reddish-brown flaky solid)'
     },
     prevention: 'Sacrificial Protection (Galvanisation with Zinc, E°_Zn = −0.76 V corrodes preferentially to protect Iron E°_Fe = −0.44 V).'
+  },
+
+  {
+    id: 'rxn-sandmeyer',
+    subtopicId: 'chem-sub-6-3',
+    chapterId: 'chem-ch-6',
+    title: 'Sandmeyer & Gattermann Reactions (Aryl Halide Synthesis)',
+    subtitle: 'Replacement of Diazonium Group by Halogen using Cu(I) Salts or Copper Powder',
+    category: 'organic',
+    boardNote: 'Sandmeyer reaction uses cuprous halides (Cu₂Cl₂/HCl or Cu₂Br₂/HBr) giving higher yields than Gattermann reaction (Cu powder/HX). For Iodobenzene, simply warm with aqueous KI (no copper needed!).',
+    diagramType: 'sandmeyer',
+    equation: 'Ar—NH₂ ──(NaNO₂ + HCl, 273–278 K)──> Ar—N₂⁺Cl⁻ ──(Cu₂Cl₂ / HCl)──> Ar—Cl + N₂↑',
+    steps: [
+      { name: '1. Diazotisation', equation: 'Aniline + NaNO₂ + 2 HCl (0–5 °C) ⟶ Benzene Diazonium Chloride + NaCl + 2 H₂O' },
+      { name: '2. Sandmeyer (Chloro)', equation: 'C₆H₅—N₂⁺Cl⁻ ──(Cu₂Cl₂ / HCl)──> Chlorobenzene (C₆H₅Cl) + N₂↑' },
+      { name: '3. Sandmeyer (Bromo)', equation: 'C₆H₅—N₂⁺Cl⁻ ──(Cu₂Br₂ / HBr)──> Bromobenzene (C₆H₅Br) + N₂↑' },
+      { name: '4. Direct KI (Iodo)', equation: 'C₆H₅—N₂⁺Cl⁻ + KI (Warm) ⟶ Iodobenzene (C₆H₅I) + KCl + N₂↑' }
+    ],
+    boardTip: 'Why is Sandmeyer preferred over Gattermann? The yield of haloarenes is significantly higher in Sandmeyer reaction using cuprous halides than Gattermann reaction with Cu powder.'
+  },
+
+  {
+    id: 'rxn-dows-process',
+    subtopicId: 'chem-sub-6-7',
+    chapterId: 'chem-ch-6',
+    title: 'Dow’s Process: Nucleophilic Substitution of Chlorobenzene',
+    subtitle: 'Conversion of Aryl Halide to Phenol under Drastic High Temperature & Pressure',
+    category: 'organic',
+    boardNote: 'Examiner Focus: Explain why chlorobenzene requires extreme conditions (623 K, 300 atm) whereas 2,4,6-trinitrochlorobenzene reacts with mere warm water.',
+    diagramType: 'dows-process',
+    equation: 'C₆H₅—Cl + 2 NaOH ──(623 K, 300 atm)──> C₆H₅—O⁻Na⁺ ──(dil. HCl)──> C₆H₅—OH (Phenol) + NaCl',
+    explanation: 'Due to resonance (partial double bond character of C—Cl) and sp² hybridization of benzene ring carbon, nucleophilic displacement is extremely difficult. It requires 623 K and 300 atm to form sodium phenoxide, which on acidification yields phenol.'
+  },
+
+  {
+    id: 'rxn-phosgene-chloroform',
+    subtopicId: 'chem-sub-6-8',
+    chapterId: 'chem-ch-6',
+    title: 'Photo-Oxidation of Chloroform to Poisonous Phosgene',
+    subtitle: 'Storage Precaution & Ethanol Quenching Mechanism',
+    category: 'organic',
+    boardNote: 'Board Question: Why is chloroform stored in closed dark brown bottles completely filled up to the brim?',
+    diagramType: 'phosgene',
+    equation: '2 CHCl₃ + O₂ ──(Light / Air)──> 2 COCl₂ (Phosgene, Carbonyl Chloride) + 2 HCl',
+    quenching: 'COCl₂ + 2 C₂H₅OH ⟶ (C₂H₅O)₂C=O (Diethyl Carbonate, Non-toxic) + 2 HCl',
+    boardTip: 'Answer: In presence of light and oxygen, chloroform is oxidized to extremely poisonous phosgene (COCl₂). Dark bottles prevent light entry; filling to brim excludes air. Adding 1% ethanol converts any phosgene formed into harmless diethyl carbonate.'
+  },
+
+  {
+    id: 'rxn-cu-dehydrogenation',
+    subtopicId: 'chem-sub-7-4',
+    chapterId: 'chem-ch-7',
+    title: 'Catalytic Dehydrogenation of Alcohols over Hot Cu at 573 K',
+    subtitle: 'Distinct Outcomes for 1°, 2°, and 3° Alcohols (Key Distinction Test)',
+    category: 'organic',
+    boardNote: 'Crucial Board Distinction: 1° alcohols give Aldehydes (loss of H₂), 2° alcohols give Ketones (loss of H₂), but 3° alcohols undergo DEHYDRATION (loss of H₂O) yielding Alkenes!',
+    diagramType: 'dehydrogenation',
+    reactions: [
+      { alcohol: 'Primary (1°) Alcohol', reactant: 'R—CH₂—OH', product: 'R—CHO (Aldehyde) + H₂↑', type: 'Dehydrogenation' },
+      { alcohol: 'Secondary (2°) Alcohol', reactant: 'R—CH(OH)—R’', product: 'R—CO—R’ (Ketone) + H₂↑', type: 'Dehydrogenation' },
+      { alcohol: 'Tertiary (3°) Alcohol', reactant: '(CH₃)₃C—OH', product: '(CH₃)₂C=CH₂ (2-Methylpropene) + H₂O', type: 'Dehydration (Elimination)' }
+    ]
+  },
+
+  {
+    id: 'rxn-lead-storage',
+    subtopicId: 'chem-sub-2-10',
+    chapterId: 'chem-ch-2',
+    title: 'Lead Storage Secondary Battery (Accumulator)',
+    subtitle: 'Rechargeable Redox System: Discharge vs Recharge Chemistry',
+    category: 'electrochem',
+    boardNote: 'Board Question: Write the cell reactions taking place at anode and cathode during discharging of a lead storage battery. What happens during recharging?',
+    diagramType: 'lead-storage',
+    electrolyte: '38% w/w H₂SO₄ aqueous solution (density 1.30 g/mL)',
+    voltage: '2.0 V per cell (12 V battery contains 6 cells in series)',
+    discharging: {
+      anode: 'Pb(s) + SO₄²⁻(aq) ⟶ PbSO₄(s) + 2e⁻',
+      cathode: 'PbO₂(s) + SO₄²⁻(aq) + 4 H⁺(aq) + 2e⁻ ⟶ PbSO₄(s) + 2 H₂O(l)',
+      overall: 'Pb(s) + PbO₂(s) + 2 H₂SO₄(aq) ──(Discharge)──> 2 PbSO₄(s) + 2 H₂O(l)'
+    },
+    recharging: {
+      overall: '2 PbSO₄(s) + 2 H₂O(l) ──(External DC Source)──> Pb(s) + PbO₂(s) + 2 H₂SO₄(aq)'
+    },
+    boardTip: 'During discharge, H₂SO₄ is consumed, reducing electrolyte density. During recharge, reactions reverse and H₂SO₄ is regenerated, restoring density to 1.30 g/mL.'
+  },
+
+  {
+    id: 'rxn-fuel-cell',
+    subtopicId: 'chem-sub-2-10',
+    chapterId: 'chem-ch-2',
+    title: 'Hydrogen-Oxygen (H₂–O₂) Fuel Cell (Apollo Space Cell)',
+    subtitle: 'Direct Conversion of Combustion Energy of Fuel into Electricity',
+    category: 'electrochem',
+    boardNote: 'Board Question: Write electrode reactions of H₂–O₂ fuel cell. Mention two advantages over conventional thermal plants.',
+    diagramType: 'fuel-cell',
+    electrolyte: 'Hot concentrated aqueous KOH solution (approx. 473 K, 50 atm)',
+    anode: '2 H₂(g) + 4 OH⁻(aq) ⟶ 4 H₂O(l) + 4e⁻',
+    cathode: 'O₂(g) + 2 H₂O(l) + 4e⁻ ⟶ 4 OH⁻(aq)',
+    overall: '2 H₂(g) + O₂(g) ⟶ 2 H₂O(l)  (E°_cell = +1.23 V)',
+    advantages: [
+      '1. High Thermodynamic Efficiency: Around 70% efficiency compared to 40% for thermal power plants.',
+      '2. Zero Pollution: Only by-product is pure drinking water, which was condensed and consumed by Apollo astronauts.',
+      '3. Continuous Operation: Supplies electrical power indefinitly as long as reactants (H₂ and O₂) are continuously fed.'
+    ]
+  },
+
+  {
+    id: 'rxn-kohlrausch-graph',
+    subtopicId: 'chem-sub-2-8',
+    chapterId: 'chem-ch-2',
+    title: 'Molar Conductivity Variation with √c & Kohlrausch’s Law',
+    subtitle: 'Debye-Hückel-Onsager Relation vs Ostwald Dilution Behavior',
+    category: 'electrochem',
+    boardNote: 'Examiner Focus: Explain why Λm of strong electrolytes increases slowly with dilution (linear extrapolation to Λ°m), whereas for weak electrolytes it increases steeply at high dilution and cannot be extrapolated to zero concentration.',
+    diagramType: 'kohlrausch-graph',
+    equation: 'Λm = Λ°m − A√c  (Debye-Hückel-Onsager equation for strong electrolytes)',
+    kohlrauschLaw: 'Λ°m = ν₊ λ°₊ + ν₋ λ°₋  (Independent Migration of Ions)',
+    application: 'Calculation of Λ°m(CH₃COOH) = Λ°m(CH₃COONa) + Λ°m(HCl) − Λ°m(NaCl)'
+  },
+
+  {
+    id: 'rxn-reverse-osmosis',
+    subtopicId: 'chem-sub-1-10',
+    chapterId: 'chem-ch-1',
+    title: 'Osmosis vs Reverse Osmosis (RO Desalination)',
+    subtitle: 'Flow Reversal by Applying Hydrostatic Pressure Greater than Osmotic Pressure (P > Π)',
+    category: 'physical',
+    boardNote: 'Board Question: What is reverse osmosis? Mention its main practical application and the modern material used as semipermeable membrane (SPM).',
+    diagramType: 'reverse-osmosis',
+    condition: 'Applied Pressure P > Osmotic Pressure (Π)',
+    spmMaterial: 'Porous cellulose acetate film supported on a perforated plate',
+    direction: 'Water moves from concentrated solution (seawater) to pure solvent (fresh water)',
+    application: 'Desalination of sea water to obtain pure drinking water in arid and coastal regions'
+  },
+
+  {
+    id: 'rxn-raoult-deviations',
+    subtopicId: 'chem-sub-1-5',
+    chapterId: 'chem-ch-1',
+    title: 'Positive & Negative Deviations from Raoult’s Law',
+    subtitle: 'Vapour Pressure vs Mole Fraction Thermodynamics & Azeotrope Formation',
+    category: 'physical',
+    boardNote: 'Board Question: Explain molecular basis of positive and negative deviation with examples and enthalpy/volume changes.',
+    diagramType: 'raoult-deviations',
+    positive: {
+      cause: 'Solute-solvent interactions are weaker: A-B < A-A and B-B',
+      thermo: 'ΔH_mix > 0 (Endothermic), ΔV_mix > 0 (Expansion)',
+      vp: 'Total vapour pressure is HIGHER than ideal value',
+      azeotrope: 'Forms Minimum-Boiling Azeotrope (e.g. 95.6% Ethanol + 4.4% Water, b.p. 351.15 K)',
+      examples: 'Ethanol + Acetone, CS₂ + Acetone, Ethanol + Water'
+    },
+    negative: {
+      cause: 'Solute-solvent interactions are stronger: A-B > A-A and B-B (e.g. H-bonding)',
+      thermo: 'ΔH_mix < 0 (Exothermic), ΔV_mix < 0 (Contraction)',
+      vp: 'Total vapour pressure is LOWER than ideal value',
+      azeotrope: 'Forms Maximum-Boiling Azeotrope (e.g. 68% HNO₃ + 32% Water, b.p. 393.5 K)',
+      examples: 'Chloroform + Acetone, Phenol + Aniline, HNO₃ + Water'
+    }
+  },
+
+  {
+    id: 'rxn-lanthanoid-contraction',
+    subtopicId: 'chem-sub-4-6',
+    chapterId: 'chem-ch-4',
+    title: 'Lanthanoid Contraction in 4f Series (La³⁺ to Lu³⁺)',
+    subtitle: 'Steady Radius Decrease Caused by Imperfect Shielding of 4f Electrons',
+    category: 'inorganic',
+    boardNote: 'Frequently Asked 3-Mark Question: What is lanthanoid contraction? What is its cause? State two important consequences.',
+    diagramType: 'lanthanoid-contraction',
+    cause: '4f orbitals have poor, diffused shielding effect. With increasing atomic number, nuclear charge increases by +1 at each step, pulling outer electrons inward.',
+    radiiChange: 'La³⁺ (103 pm) ⟶ Lu³⁺ (86 pm) — steady 17 pm contraction',
+    consequences: [
+      '1. Similarity in Size of 4d and 5d Series: Zr (160 pm) and Hf (159 pm) have virtually identical radii ("chemical twins"), making separation difficult.',
+      '2. Decrease in Basicity of Hydroxides: Covalent character increases from La(OH)₃ to Lu(OH)₃, so basic strength decreases: La(OH)₃ is most basic, Lu(OH)₃ is least basic.',
+      '3. High Density of 5d Transition Metals: Radius stays small while mass doubles, leading to exceptionally high densities (e.g. Osmium and Iridium).'
+    ]
   }
 ];

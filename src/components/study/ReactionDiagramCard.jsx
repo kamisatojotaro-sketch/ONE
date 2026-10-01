@@ -652,8 +652,410 @@ export function SingleReactionDiagram({ rxn }) {
           </div>
         )}
 
+        {/* Lead Storage Battery Diagram */}
+        {rxn.diagramType === 'lead-storage' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 min-w-[550px]">
+              {/* Anode Half */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-3.5 rounded-xl border-2 border-slate-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-slate-400 uppercase">ANODE (-) Negative</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-400 font-bold">OXIDATION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Grid:</strong> Spongy Lead (Pb)</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-slate-500/30 text-blue-400 font-bold text-center">
+                    Pb(s) + SO₄²⁻(aq) ⟶ PbSO₄(s) + 2e⁻
+                  </div>
+                </div>
+              </div>
+
+              {/* Central Electrolyte */}
+              <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-amber-500/10 border border-amber-500/40 text-center space-y-1 min-w-[140px]">
+                <span className="text-[10px] font-mono font-bold text-amber-500 uppercase">Aqueous Electrolyte</span>
+                <span className="font-mono text-xs font-bold text-[var(--text-primary)]">38% w/w H₂SO₄</span>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Density: 1.30 g/mL (Fully charged)</span>
+                <span className="text-[10px] font-mono text-rose-500">Drops to &lt; 1.20 g/mL on discharge</span>
+              </div>
+
+              {/* Cathode Half */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-3.5 rounded-xl border-2 border-amber-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-amber-500 uppercase">CATHODE (+) Positive</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold">REDUCTION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Grid:</strong> Lead Dioxide (PbO₂)</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-amber-500/30 text-emerald-400 font-bold text-center">
+                    PbO₂(s) + SO₄²⁻ + 4H⁺ + 2e⁻ ⟶ PbSO₄(s) + 2H₂O
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+              <div className="p-3 bg-blue-950/20 rounded-xl border border-blue-500/30 space-y-1">
+                <span className="font-bold text-blue-400">⚡ Discharging (Acting as Galvanic Cell):</span>
+                <p className="text-[var(--text-primary)] font-bold">Pb(s) + PbO₂(s) + 2 H₂SO₄(aq) ⟶ 2 PbSO₄(s) + 2 H₂O(l)</p>
+                <span className="text-[11px] text-[var(--text-muted)] block">PbSO₄ precipitates onto both plates; H₂SO₄ consumed.</span>
+              </div>
+              <div className="p-3 bg-emerald-950/20 rounded-xl border border-emerald-500/30 space-y-1">
+                <span className="font-bold text-emerald-400">🔌 Recharging (External DC Electrolytic Action):</span>
+                <p className="text-[var(--text-primary)] font-bold">2 PbSO₄(s) + 2 H₂O(l) ⟶ Pb(s) + PbO₂(s) + 2 H₂SO₄(aq)</p>
+                <span className="text-[11px] text-[var(--text-muted)] block">Reactions reverse completely; H₂SO₄ regenerated.</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* H2-O2 Fuel Cell Diagram */}
+        {rxn.diagramType === 'fuel-cell' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 min-w-[550px]">
+              {/* Anode Fuel Inlet */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-3.5 rounded-xl border-2 border-cyan-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-cyan-400 uppercase">ANODE (-): H₂ Inlet</span>
+                  <span className="text-[10px] font-mono text-cyan-400 font-bold">Fuel Gas</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Electrode:</strong> Porous Carbon + Pt/Pd Catalyst</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-cyan-500/30 text-cyan-400 font-bold text-center">
+                    2 H₂(g) + 4 OH⁻(aq) ⟶ 4 H₂O(l) + 4e⁻
+                  </div>
+                </div>
+              </div>
+
+              {/* Central Aqueous KOH */}
+              <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-purple-500/10 border border-purple-500/40 text-center space-y-1 min-w-[140px]">
+                <span className="text-[10px] font-mono font-bold text-purple-400 uppercase">Electrolyte</span>
+                <span className="font-mono text-xs font-bold text-[var(--text-primary)]">Hot conc. KOH</span>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">T ≈ 473 K, P ≈ 50 atm</span>
+                <span className="text-[10px] font-mono text-emerald-400 font-bold">η ≈ 70% Efficiency</span>
+              </div>
+
+              {/* Cathode Oxygen Inlet */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-3.5 rounded-xl border-2 border-emerald-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-emerald-400 uppercase">CATHODE (+): O₂ Inlet</span>
+                  <span className="text-[10px] font-mono text-emerald-400 font-bold">Oxidant Gas</span>
+                </div>
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Electrode:</strong> Porous Carbon + Catalyst</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-emerald-500/30 text-emerald-400 font-bold text-center">
+                    O₂(g) + 2 H₂O(l) + 4e⁻ ⟶ 4 OH⁻(aq)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 bg-emerald-950/20 rounded-xl border border-emerald-500/30 flex flex-col sm:flex-row items-center justify-between text-xs font-mono gap-2">
+              <div>
+                <strong>Overall Cell Reaction:</strong> 2 H₂(g) + O₂(g) ⟶ 2 H₂O(l) &nbsp; (E°_cell = +1.23 V)
+              </div>
+              <div className="text-emerald-400 font-bold">
+                By-Product: Pure Drinking Water (Apollo Space Mission)
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Kohlrausch Graph Diagram */}
+        {rxn.diagramType === 'kohlrausch-graph' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-6 p-4 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)]">
+              {/* SVG Graphic Curve */}
+              <div className="relative">
+                <svg width="260" height="180" viewBox="0 0 260 180" className="overflow-visible">
+                  {/* Axes */}
+                  <line x1="40" y1="20" x2="40" y2="150" stroke="var(--text-muted)" strokeWidth="2" />
+                  <line x1="40" y1="150" x2="240" y2="150" stroke="var(--text-muted)" strokeWidth="2" />
+                  
+                  {/* Axis Labels */}
+                  <text x="35" y="15" textAnchor="end" fill="var(--text-primary)" fontSize="11" fontWeight="bold" fontFamily="monospace">Λm</text>
+                  <text x="245" y="155" textAnchor="start" fill="var(--text-primary)" fontSize="11" fontWeight="bold" fontFamily="monospace">√c</text>
+                  
+                  {/* Strong Electrolyte (KCl) - Straight line with extrapolation */}
+                  <line x1="40" y1="50" x2="90" y2="65" stroke="#3b82f6" strokeWidth="2" strokeDasharray="3 3" />
+                  <line x1="90" y1="65" x2="220" y2="105" stroke="#3b82f6" strokeWidth="2.5" />
+                  <circle cx="40" cy="50" r="4" fill="#3b82f6" />
+                  <text x="48" y="48" fill="#3b82f6" fontSize="10" fontWeight="bold" fontFamily="monospace">Λ°m (KCl intercept)</text>
+                  <text x="225" y="105" fill="#3b82f6" fontSize="10" fontWeight="bold" fontFamily="monospace">KCl (Strong)</text>
+
+                  {/* Weak Electrolyte (CH3COOH) - Steep curve */}
+                  <path d="M 45,25 Q 52,110 220,135" fill="none" stroke="#ef4444" strokeWidth="2.5" />
+                  <text x="75" y="32" fill="#ef4444" fontSize="10" fontWeight="bold" fontFamily="monospace">CH₃COOH (Weak - Steep asymptote)</text>
+                </svg>
+              </div>
+
+              {/* Explanatory Cards */}
+              <div className="flex-1 space-y-2.5 text-xs font-mono">
+                <div className="p-3 rounded-lg bg-[var(--bg-elevated)] border border-blue-500/30">
+                  <span className="font-bold text-blue-400 block mb-1">Strong Electrolytes (e.g. KCl):</span>
+                  <p className="text-[var(--text-secondary)]">Obeys Debye-Hückel-Onsager: <strong>Λm = Λ°m − A√c</strong>. Completely ionized; on dilution, inter-ionic attractions decrease slightly. Linear graph extrapolates to zero to give Λ°m.</p>
+                </div>
+                <div className="p-3 rounded-lg bg-[var(--bg-elevated)] border border-rose-500/30">
+                  <span className="font-bold text-rose-400 block mb-1">Weak Electrolytes (e.g. CH₃COOH):</span>
+                  <p className="text-[var(--text-secondary)]">Poorly ionized. Near infinite dilution, degree of dissociation α shoots up steeply towards 1. Graph runs asymptotic to y-axis; <strong>Λ°m cannot be found by extrapolation</strong>.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono text-center">
+              <strong className="text-[var(--accent-primary)]">Kohlrausch’s Solution for Weak Electrolytes:</strong><br />
+              Λ°m(CH₃COOH) = Λ°m(CH₃COONa) + Λ°m(HCl) − Λ°m(NaCl)
+            </div>
+          </div>
+        )}
+
+        {/* Reverse Osmosis Diagram */}
+        {rxn.diagramType === 'reverse-osmosis' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 p-4 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] min-w-[550px]">
+              {/* Saline Side under Piston Pressure */}
+              <div className="flex-1 p-3.5 bg-blue-950/20 rounded-xl border-2 border-blue-500/50 space-y-2 text-center">
+                <span className="text-[10px] font-mono font-bold text-blue-400 uppercase">High Pressure Chamber</span>
+                <div className="p-2 bg-blue-500/20 rounded font-mono text-xs font-bold text-blue-300">
+                  Piston Pressure P &gt; Π (Osmotic Pressure)
+                </div>
+                <p className="text-xs font-mono text-[var(--text-primary)]">Concentrated Salt Water (Sea Water)</p>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Water molecules forced backwards</span>
+              </div>
+
+              {/* Semipermeable Membrane Barrier */}
+              <div className="flex flex-col items-center justify-center p-3 rounded-xl bg-amber-500/10 border-2 border-dashed border-amber-500 min-w-[140px] text-center space-y-1">
+                <span className="text-[10px] font-mono font-bold text-amber-500 uppercase">SPM Barrier</span>
+                <span className="font-mono text-xs font-bold text-[var(--text-primary)]">Cellulose Acetate</span>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">Permeable to H₂O only; impermeable to Na⁺ & Cl⁻</span>
+                <div className="text-emerald-400 font-bold text-xs">─── H₂O Flow ───&gt;</div>
+              </div>
+
+              {/* Fresh Water Outlet */}
+              <div className="flex-1 p-3.5 bg-emerald-950/20 rounded-xl border-2 border-emerald-500/50 space-y-2 text-center">
+                <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase">Pure Water Outlet</span>
+                <div className="p-2 bg-emerald-500/20 rounded font-mono text-xs font-bold text-emerald-300">
+                  Atmospheric Pressure (P = 1 atm)
+                </div>
+                <p className="text-xs font-mono text-[var(--text-primary)]">Fresh Potable Drinking Water</p>
+                <span className="text-[10px] font-mono text-emerald-400 font-bold">Desalination Accomplished</span>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono text-center">
+              <strong>Core Rule:</strong> If P &lt; Π, normal osmosis occurs (pure water enters saline). When <strong>P &gt; Π</strong>, flow reverses, forcing pure water out of solution!
+            </div>
+          </div>
+        )}
+
+        {/* Raoult's Law Deviations Diagram */}
+        {rxn.diagramType === 'raoult-deviations' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
+            {/* Positive Deviation Card */}
+            <div className="p-4 bg-[var(--bg-surface)] rounded-xl border-2 border-blue-500/40 space-y-3">
+              <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+                <span className="font-mono text-xs font-bold text-blue-400 uppercase">Positive Deviation</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-400 font-bold">P_total &gt; P_ideal</span>
+              </div>
+              <ul className="text-xs font-mono space-y-1.5 text-[var(--text-secondary)]">
+                <li>• <strong>Intermolecular Forces:</strong> A-B interactions &lt; A-A and B-B</li>
+                <li>• <strong>Enthalpy:</strong> ΔH_mixing &gt; 0 (Endothermic)</li>
+                <li>• <strong>Volume:</strong> ΔV_mixing &gt; 0 (Expansion)</li>
+                <li>• <strong>Vapour Pressure:</strong> Higher; molecules escape more readily</li>
+                <li>• <strong>Azeotrope:</strong> Minimum-Boiling (e.g. 95.6% Ethanol + 4.4% Water, b.p. 351.15 K)</li>
+                <li>• <strong>Classic Pairs:</strong> Ethanol + Acetone, CS₂ + Acetone</li>
+              </ul>
+            </div>
+
+            {/* Negative Deviation Card */}
+            <div className="p-4 bg-[var(--bg-surface)] rounded-xl border-2 border-rose-500/40 space-y-3">
+              <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+                <span className="font-mono text-xs font-bold text-rose-400 uppercase">Negative Deviation</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 font-bold">P_total &lt; P_ideal</span>
+              </div>
+              <ul className="text-xs font-mono space-y-1.5 text-[var(--text-secondary)]">
+                <li>• <strong>Intermolecular Forces:</strong> A-B interactions &gt; A-A and B-B (New H-bonding)</li>
+                <li>• <strong>Enthalpy:</strong> ΔH_mixing &lt; 0 (Exothermic)</li>
+                <li>• <strong>Volume:</strong> ΔV_mixing &lt; 0 (Contraction)</li>
+                <li>• <strong>Vapour Pressure:</strong> Lower; molecules held tightly in liquid</li>
+                <li>• <strong>Azeotrope:</strong> Maximum-Boiling (e.g. 68% HNO₃ + 32% Water, b.p. 393.5 K)</li>
+                <li>• <strong>Classic Pairs:</strong> Chloroform + Acetone, Phenol + Aniline</li>
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Lanthanoid Contraction Diagram */}
+        {rxn.diagramType === 'lanthanoid-contraction' && (
+          <div className="space-y-4 py-2">
+            <div className="p-4 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-default)] space-y-3">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2 text-xs font-mono">
+                <span className="font-bold text-amber-500 uppercase">Ionic Radius Step-Down: La³⁺ (Z=57) ⟶ Lu³⁺ (Z=71)</span>
+                <span className="text-emerald-400 font-bold">103 pm ⟶ 86 pm (17 pm Contraction)</span>
+              </div>
+
+              {/* Visual Ladder */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono">
+                <div className="p-2.5 bg-[var(--bg-elevated)] rounded-lg border border-[var(--border-subtle)]">
+                  <span className="text-blue-400 font-bold block">La³⁺ (57)</span>
+                  <span className="text-sm font-bold text-[var(--text-primary)]">103 pm</span>
+                  <span className="text-[10px] text-[var(--text-muted)] block">Largest radius</span>
+                </div>
+                <div className="p-2.5 bg-[var(--bg-elevated)] rounded-lg border border-[var(--border-subtle)]">
+                  <span className="text-blue-400 font-bold block">Ce³⁺ (58)</span>
+                  <span className="text-sm font-bold text-[var(--text-primary)]">101 pm</span>
+                  <span className="text-[10px] text-[var(--text-muted)] block">4f¹ electron</span>
+                </div>
+                <div className="p-2.5 bg-[var(--bg-elevated)] rounded-lg border border-[var(--border-subtle)]">
+                  <span className="text-blue-400 font-bold block">Gd³⁺ (64)</span>
+                  <span className="text-sm font-bold text-[var(--text-primary)]">94 pm</span>
+                  <span className="text-[10px] text-[var(--text-muted)] block">Half-filled 4f⁷</span>
+                </div>
+                <div className="p-2.5 bg-[var(--bg-elevated)] rounded-lg border border-rose-500/40">
+                  <span className="text-rose-400 font-bold block">Lu³⁺ (71)</span>
+                  <span className="text-sm font-bold text-rose-400">86 pm</span>
+                  <span className="text-[10px] text-[var(--text-muted)] block">Smallest radius</span>
+                </div>
+              </div>
+
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-lg text-xs font-mono space-y-1">
+                <div><strong>Cause:</strong> Poor shielding by diffuse 4f electrons fails to compensate for +1 unit increase in nuclear charge at each successive element.</div>
+                <div className="text-emerald-400 font-bold">Consequence: Zr (160 pm) and Hf (159 pm) are almost identical in size ("Chemical Twins"), making separation very difficult!</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Sandmeyer Diagram */}
+        {rxn.diagramType === 'sandmeyer' && (
+          <div className="space-y-4 py-2">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 min-w-[550px]">
+              {/* Step 1: Diazotisation */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)]">
+                <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase mb-1">Starting Amine</span>
+                <SvgBenzene label="NH₂" sub="Aniline" />
+              </div>
+
+              <div className="flex flex-col items-center px-1">
+                <span className="text-[11px] font-mono font-bold text-blue-500">NaNO₂ + 2 HCl</span>
+                <div className="w-16 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                  <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+                </div>
+                <span className="text-[10px] font-mono text-[var(--text-muted)]">273–278 K (0–5 °C)</span>
+              </div>
+
+              {/* Intermediate: Diazonium Salt */}
+              <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border-2 border-amber-500/50">
+                <span className="text-[10px] font-mono font-bold text-amber-500 uppercase mb-1">Diazonium Salt</span>
+                <SvgBenzene label="N₂⁺ Cl⁻" sub="Benzene Diazonium Chloride" color="#f59e0b" />
+              </div>
+
+              {/* Branching into 3 Halides */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 p-2 bg-[var(--bg-surface)] rounded-lg border border-[var(--border-subtle)] text-xs font-mono">
+                  <span className="text-emerald-400 font-bold">Cu₂Cl₂/HCl ⟶</span>
+                  <span className="font-bold">Chlorobenzene + N₂↑</span>
+                </div>
+                <div className="flex items-center gap-2 p-2 bg-[var(--bg-surface)] rounded-lg border border-[var(--border-subtle)] text-xs font-mono">
+                  <span className="text-amber-400 font-bold">Cu₂Br₂/HBr ⟶</span>
+                  <span className="font-bold">Bromobenzene + N₂↑</span>
+                </div>
+                <div className="flex items-center gap-2 p-2 bg-[var(--bg-surface)] rounded-lg border border-[var(--border-subtle)] text-xs font-mono">
+                  <span className="text-purple-400 font-bold">Warm KI ⟶</span>
+                  <span className="font-bold">Iodobenzene + N₂↑</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Dow's Process Diagram */}
+        {rxn.diagramType === 'dows-process' && (
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 py-2 min-w-[500px]">
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-[var(--border-default)]">
+              <span className="text-[10px] font-mono font-bold text-[var(--text-muted)] uppercase mb-1">Unreactive Halide</span>
+              <SvgBenzene label="Cl" sub="Chlorobenzene (sp² C)" />
+            </div>
+
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-rose-500">623 K, 300 atm</span>
+              <div className="w-20 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">+ 2 NaOH (aq)</span>
+            </div>
+
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border border-blue-500/40">
+              <span className="text-[10px] font-mono font-bold text-blue-400 uppercase mb-1">Salt Intermediate</span>
+              <SvgBenzene label="O⁻Na⁺" sub="Sodium Phenoxide" color="#3b82f6" />
+            </div>
+
+            <div className="flex flex-col items-center px-1">
+              <span className="text-[11px] font-mono font-bold text-emerald-400">dil. HCl</span>
+              <div className="w-16 h-0.5 bg-[var(--accent-primary)] my-1 relative">
+                <span className="absolute right-0 -top-1 border-t-4 border-b-4 border-l-6 border-t-transparent border-b-transparent border-l-[var(--accent-primary)]" />
+              </div>
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">Acidification</span>
+            </div>
+
+            <div className="flex flex-col items-center bg-[var(--bg-surface)] p-3 rounded-xl border-2 border-emerald-500/50">
+              <span className="text-[10px] font-mono font-bold text-emerald-400 uppercase mb-1">Product</span>
+              <SvgBenzene label="OH" sub="Phenol" color="#10b981" />
+            </div>
+          </div>
+        )}
+
+        {/* Phosgene Diagram */}
+        {rxn.diagramType === 'phosgene' && (
+          <div className="space-y-3 py-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+              <div className="p-3.5 bg-rose-950/20 rounded-xl border border-rose-500/40 space-y-1.5">
+                <span className="text-rose-400 font-bold uppercase block">⚠️ Poisonous Photo-Oxidation:</span>
+                <p className="text-[var(--text-primary)] font-bold">2 CHCl₃ + O₂ ──(Light / Air)──&gt; 2 COCl₂ (Phosgene) + 2 HCl</p>
+                <span className="text-[11px] text-[var(--text-muted)] block">Phosgene (carbonyl chloride) is an extremely deadly suffocating gas.</span>
+              </div>
+              <div className="p-3.5 bg-emerald-950/20 rounded-xl border border-emerald-500/40 space-y-1.5">
+                <span className="text-emerald-400 font-bold uppercase block">🛡️ Quenching by 1% Ethanol:</span>
+                <p className="text-[var(--text-primary)] font-bold">COCl₂ + 2 C₂H₅OH ⟶ (C₂H₅O)₂C=O + 2 HCl</p>
+                <span className="text-[11px] text-emerald-400 block font-semibold">Converts poisonous phosgene into harmless Diethyl Carbonate!</span>
+              </div>
+            </div>
+            <div className="p-2.5 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono text-center">
+              <strong>Storage Precaution:</strong> Stored in dark amber-coloured bottles filled to the brim to exclude air and light.
+            </div>
+          </div>
+        )}
+
+        {/* Catalytic Dehydrogenation Diagram */}
+        {rxn.diagramType === 'dehydrogenation' && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 py-2 text-xs font-mono">
+            <div className="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-blue-500/40 space-y-2 text-center">
+              <span className="text-[10px] font-bold text-blue-400 uppercase">1° Alcohol (Primary)</span>
+              <div className="font-bold text-[var(--text-primary)]">R—CH₂—OH</div>
+              <div className="text-[11px] text-blue-400">── Cu, 573 K ──&gt;</div>
+              <div className="p-2 bg-[var(--bg-elevated)] rounded font-bold text-emerald-400">R—CHO (Aldehyde) + H₂↑</div>
+              <span className="text-[10px] text-[var(--text-muted)]">Dehydrogenation</span>
+            </div>
+
+            <div className="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-amber-500/40 space-y-2 text-center">
+              <span className="text-[10px] font-bold text-amber-500 uppercase">2° Alcohol (Secondary)</span>
+              <div className="font-bold text-[var(--text-primary)]">R—CH(OH)—R’</div>
+              <div className="text-[11px] text-amber-500">── Cu, 573 K ──&gt;</div>
+              <div className="p-2 bg-[var(--bg-elevated)] rounded font-bold text-emerald-400">R—CO—R’ (Ketone) + H₂↑</div>
+              <span className="text-[10px] text-[var(--text-muted)]">Dehydrogenation</span>
+            </div>
+
+            <div className="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-rose-500/40 space-y-2 text-center">
+              <span className="text-[10px] font-bold text-rose-400 uppercase">3° Alcohol (Tertiary Exception!)</span>
+              <div className="font-bold text-[var(--text-primary)]">(CH₃)₃C—OH</div>
+              <div className="text-[11px] text-rose-400">── Cu, 573 K ──&gt;</div>
+              <div className="p-2 bg-[var(--bg-elevated)] rounded font-bold text-rose-400">(CH₃)₂C=CH₂ + H₂O</div>
+              <span className="text-[10px] text-rose-400 font-bold">DEHYDRATION (Alkene formed!)</span>
+            </div>
+          </div>
+        )}
+
         {/* Generic or Table Style Representation for other diagram types */}
-        {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion'].includes(rxn.diagramType) && (
+        {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion', 'lead-storage', 'fuel-cell', 'kohlrausch-graph', 'reverse-osmosis', 'raoult-deviations', 'lanthanoid-contraction', 'sandmeyer', 'dows-process', 'phosgene', 'dehydrogenation'].includes(rxn.diagramType) && (
           <div className="space-y-2 p-2">
             {rxn.equation && (
               <div className="font-mono text-sm sm:text-base font-bold p-3 rounded-xl bg-[var(--bg-elevated)] text-[var(--accent-primary)] text-center overflow-x-auto">

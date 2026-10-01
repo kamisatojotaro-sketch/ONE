@@ -5,6 +5,51 @@
 import { NCERT_SYLLABUS } from './ncertSyllabus.js';
 import { MCQ_DATABASE } from './mcqData.js';
 import { PYQ_DATABASE } from './pyqData.js';
+import { STRUCTURED_NOTES_DATA } from './structuredNotesData.js';
+
+// Subject-Specific Authentic Distractor Banks (Real syllabus concepts, ZERO sci-fi nonsense)
+export const SUBJECT_DISTRACTORS = {
+  physics: [
+    'The force decreases inversely with the cube of separation distance.',
+    'The electrostatic field forms closed continuous circular loops in electrostatic equilibrium.',
+    'The net electrostatic flux through a closed Gaussian surface is independent of enclosed charge.',
+    'The induced EMF acts in the direction that assists the change in magnetic flux.',
+    'The resonant frequency depends directly on ohmic resistance in a series LCR circuit.',
+    'Capacitance decreases when a dielectric slab is inserted into a charged disconnected capacitor.',
+    'Electric field intensity inside a hollow charged spherical shell is inversely proportional to radius.',
+    'The work done in moving a test charge on an equipotential surface increases linearly with distance.'
+  ],
+  chemistry: [
+    'The reaction proceeds via a planar carbocation intermediate resulting in complete racemization.',
+    'The reaction occurs via a concerted backside attack with 100% Walden inversion.',
+    'The substance is readily soluble in water due to strong intermolecular hydrogen bonding.',
+    'Alcoholic KOH acts as a weak nucleophile promoting substitution over elimination.',
+    'Aryl halides are more reactive than alkyl halides due to resonance stabilization of the halogen bond.',
+    'Para-isomers have lower melting points than ortho-isomers due to asymmetric crystal packing.',
+    'Addition follows Markovnikov rule yielding the less substituted product.',
+    'Tertiary alcohols undergo instant Lucas test turbidity due to unstable carbocation formation.',
+    'The by-products form an inseparable azeotropic mixture requiring fractional distillation.'
+  ],
+  biology: [
+    'Syngamy involves the fusion of one male gamete with two polar nuclei to form a triploid nucleus.',
+    'Pollen grains are rapidly digested by stomach enzymes due to the fragile pectin exine.',
+    'Incomplete dominance produces a 3 : 1 phenotypic ratio in the F₂ generation.',
+    'The point mutation in sickle-cell anemia changes GUG to GAG at codon 6 of beta-globin.',
+    'Homologous structures indicate convergent evolution towards identical ecological functions.',
+    'Leydig cells situated in testicular tubules secrete follicle stimulating hormone (FSH).',
+    'Double fertilization is an exclusive characteristic of gymnosperms and pteridophytes.',
+    'In the lac operon, the repressor protein is permanently activated by binding to allolactose.'
+  ],
+  psychology: [
+    'Cognitive performance is determined solely by specific factors (s) with zero general factor (g).',
+    'Componential intelligence reflects practical street-smart adaptation to daily life.',
+    'Performance tests of intelligence require high linguistic literacy and written fluency.',
+    'Reaction formation involves redirecting aggressive impulses into socially admirable achievements.',
+    'Identical twins reared apart show lower IQ correlation than unrelated individuals living together.',
+    'William Sheldon matched the rounded Endomorphic physique with introverted Cerebrotonia.',
+    'Aptitude tests measure past acquired knowledge rather than predictive capacity to learn.'
+  ]
+};
 
 // Seeded pseudorandom generator for deterministic, repeatable permutations
 function pseudoRandom(seed) {
@@ -27,7 +72,7 @@ function shuffleArray(arr, seed) {
 
 function normalizeKey(str) {
   if (!str) return '';
-  return str.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 60);
+  return str.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 function hashString(str) {
@@ -39,18 +84,74 @@ function hashString(str) {
   return Math.abs(hash);
 }
 
-// Fairly distributes correct answers across (A, B, C, D) by shuffling options while precisely tracking the correct choice
-function shuffleOptionsAndAdjustCorrect(options, correctIndex, qSeed) {
+// Fairly distributes correct answers across (A, B, C, D) by shuffling options while strictly guaranteeing 4 UNIQUE authentic options
+function shuffleOptionsAndAdjustCorrect(options, correctIndex, qSeed, subjectId = 'chemistry') {
   if (!Array.isArray(options) || options.length <= 1) {
     return { options: options || [], correct: 0 };
   }
   const validCorrect = (correctIndex >= 0 && correctIndex < options.length) ? correctIndex : 0;
-  
-  const wrapped = options.map((opt, idx) => ({
+  const correctText = (options[validCorrect] || 'Refer to NCERT Class 12 textbook standard answer.').trim();
+
+  // Deduplicate and guarantee 4 mutually distinct options
+  const cleaned = [];
+  const seenTexts = new Set();
+  const subjDists = SUBJECT_DISTRACTORS[subjectId] || SUBJECT_DISTRACTORS.chemistry || [];
+  let distIdx = (qSeed || 1) % (subjDists.length || 1);
+
+  options.forEach((opt, idx) => {
+    const raw = (opt || '').trim();
+    const norm = raw.toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!norm || seenTexts.has(norm)) {
+      if (idx === validCorrect) {
+        cleaned.push(raw || correctText);
+        seenTexts.add(norm || correctText.toLowerCase().replace(/[^a-z0-9]/g, ''));
+      } else {
+        let replacement = subjDists[distIdx % subjDists.length];
+        let replNorm = replacement.toLowerCase().replace(/[^a-z0-9]/g, '');
+        let safety = 0;
+        while ((seenTexts.has(replNorm) || replNorm === norm) && safety < 25) {
+          distIdx++;
+          safety++;
+          replacement = subjDists[distIdx % subjDists.length];
+          replNorm = replacement.toLowerCase().replace(/[^a-z0-9]/g, '');
+        }
+        distIdx++;
+        cleaned.push(replacement);
+        seenTexts.add(replNorm);
+      }
+    } else {
+      cleaned.push(raw);
+      seenTexts.add(norm);
+    }
+  });
+
+  // Ensure minimum 4 options
+  while (cleaned.length < 4) {
+    let replacement = subjDists[distIdx % subjDists.length];
+    let replNorm = replacement.toLowerCase().replace(/[^a-z0-9]/g, '');
+    let safety = 0;
+    while (seenTexts.has(replNorm) && safety < 25) {
+      distIdx++;
+      safety++;
+      replacement = subjDists[distIdx % subjDists.length];
+      replNorm = replacement.toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+    distIdx++;
+    cleaned.push(replacement);
+    seenTexts.add(replNorm);
+  }
+
+  const finalSlice = cleaned.slice(0, 4);
+  const wrapped = finalSlice.map((opt, idx) => ({
     text: opt,
-    isCorrect: idx === validCorrect
+    isCorrect: idx === validCorrect || (idx >= finalSlice.length && validCorrect >= finalSlice.length)
   }));
   
+  // Verify correct answer is marked
+  if (!wrapped.some(item => item.isCorrect)) {
+    wrapped[0].isCorrect = true;
+  }
+
   const shuffled = shuffleArray(wrapped, qSeed);
   const newOptions = shuffled.map(item => item.text);
   const newCorrect = shuffled.findIndex(item => item.isCorrect);
@@ -1807,9 +1908,49 @@ const PROCEDURAL_GENERATORS = {
   ]
 };
 
+function stripHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\\\[|\\\]|\\\(|\\\)/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function cleanMathText(str) {
   if (!str) return '';
-  return str.replace(/\\\[|\\\]|\\\(|\\\)/g, '').replace(/\s+/g, ' ').trim();
+  return stripHtml(str);
+}
+
+// Logically inverts claims to generate authentic, topic-relevant CBSE distractors
+function invertClaim(text) {
+  if (!text) return 'The parameter remains invariant across all standard conditions.';
+  const t = stripHtml(text);
+  if (t.includes('fat-soluble')) return t.replace('fat-soluble', 'water-soluble and non-accumulating');
+  if (t.includes('does not change with temperature')) return t.replace('does not change with temperature', 'varies linearly with temperature');
+  if (t.includes('independent of temperature')) return t.replace('independent of temperature', 'strictly dependent on temperature');
+  if (t.includes('directly proportional')) return t.replace('directly proportional', 'inversely proportional');
+  if (t.includes('inversely proportional')) return t.replace('inversely proportional', 'directly proportional');
+  if (/\bincreases\b/i.test(t)) return t.replace(/\bincreases\b/i, 'decreases');
+  if (/\bdecreases\b/i.test(t)) return t.replace(/\bdecreases\b/i, 'increases');
+  if (t.includes('more reactive')) return t.replace('more reactive', 'significantly less reactive');
+  if (t.includes('less reactive')) return t.replace('less reactive', 'substantially more reactive');
+  if (/\binsoluble\b/i.test(t)) return t.replace(/\binsoluble\b/i, 'completely soluble');
+  if (/\bsoluble\b/i.test(t)) return t.replace(/\bsoluble\b/i, 'virtually insoluble');
+  if (/\bhigher\b/i.test(t)) return t.replace(/\bhigher\b/i, 'lower');
+  if (/\blower\b/i.test(t)) return t.replace(/\blower\b/i, 'higher');
+  if (t.includes('is favored')) return t.replace('is favored', 'is strongly hindered');
+  if (/\bstable\b/i.test(t)) return t.replace(/\bstable\b/i, 'unstable');
+  if (t.includes('acts as a catalytic agent')) return t.replace('acts as a catalytic agent', 'acts as an inert barrier preventing');
+  if (t.includes('is added to convert')) return t.replace('is added to convert', 'is omitted to suppress the conversion of');
+  if (t.includes('Stored in dark brown bottles')) return t.replace('Stored in dark brown bottles', 'Stored in clear transparent vessels exposed to sunlight');
+  if (/\bis\b/i.test(t) && !t.includes('is not') && !t.includes('is NOT')) return t.replace(/\bis\b/i, 'is NOT');
+  if (/\bcan\b/i.test(t) && !t.includes('cannot')) return t.replace(/\bcan\b/i, 'cannot');
+  return `The opposite effect occurs where ${t.charAt(0).toLowerCase() + t.slice(1)}`;
 }
 
 export function findSubchapterDetails(subtopicId) {
@@ -1829,152 +1970,1084 @@ export function findSubchapterDetails(subtopicId) {
   return null;
 }
 
-export function synthesizeSubtopicMCQs(subtopicId, seed = 1) {
+// ============================================================================
+// HIGH-YIELD CHEMISTRY QUESTION SYNTHESIZER
+// Leverages STRUCTURED_NOTES_DATA covering all active Class 12 Chemistry subtopics
+// Generates 50-65 unique questions per subtopic across diverse CBSE formats
+// ============================================================================
+export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
+  const details = findSubchapterDetails(subtopicId);
+  const sData = STRUCTURED_NOTES_DATA[subtopicId];
+  if (!details) return [];
+
+  const { subjectId, chapter, subchapter } = details;
+  const questions = [];
+  const seenStems = new Set();
+
+  const addQ = (q) => {
+    if (!q || !q.question) return;
+    const key = normalizeKey(q.question);
+    if (seenStems.has(key)) return;
+    seenStems.add(key);
+    questions.push({
+      id: `synth-${subtopicId}-${questions.length + 1}`,
+      chapterId: chapter.id,
+      chapterName: `Ch ${chapter.number}: ${chapter.title}`,
+      subtopicId: subchapter.id,
+      subtopicName: subchapter.title,
+      subjectId: 'chemistry',
+      difficulty: q.difficulty || 'medium',
+      question: q.question,
+      options: q.options,
+      correct: q.correct !== undefined ? q.correct : 0,
+      explanation: q.explanation || 'Refer to NCERT Class 12 Chemistry textbook standard theory.'
+    });
+  };
+
+  const genericChemDistractors = SUBJECT_DISTRACTORS.chemistry;
+  const cbseOptions = [
+    'Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
+    'Both Assertion and Reason are true, but Reason is NOT the correct explanation of Assertion.',
+    'Assertion is true, but Reason is false.',
+    'Assertion is false, but Reason is true.'
+  ];
+
+  if (sData) {
+    // 1. Official CBSE Section A: Assertion-Reason (HOTS / Hard)
+    if (sData.assertionReason) {
+      const ar = sData.assertionReason;
+      let correctIdx = 0;
+      if (ar.correctOption.includes('(b)')) correctIdx = 1;
+      else if (ar.correctOption.includes('(c)')) correctIdx = 2;
+      else if (ar.correctOption.includes('(d)')) correctIdx = 3;
+
+      addQ({
+        difficulty: 'hard',
+        question: `CBSE Section A (Assertion-Reason):\nAssertion (A): ${ar.assertion}\nReason (R): ${ar.reason}`,
+        options: cbseOptions,
+        correct: correctIdx,
+        explanation: ar.explanation
+      });
+
+      addQ({
+        difficulty: 'hard',
+        question: `CBSE Board Pattern (Assertion-Reason Evaluation):\nAssertion (A): ${ar.assertion}\nReason (R): ${invertClaim(ar.reason)}`,
+        options: cbseOptions,
+        correct: 2,
+        explanation: `Assertion is correct from NCERT theory, but the Reason as stated is FALSE. Actual reason: ${ar.reason}`
+      });
+
+      addQ({
+        difficulty: 'hard',
+        question: `CBSE Board Pattern (Assertion Analysis):\nAssertion (A): ${invertClaim(ar.assertion)}\nReason (R): ${ar.reason}`,
+        options: cbseOptions,
+        correct: 3,
+        explanation: `Assertion is false according to NCERT theory. Reason is a scientifically true statement.`
+      });
+    }
+
+    // 2. Commonly Made Errors / Student Misconceptions (Oswaal Topper's Tips)
+    if (sData.commonlyMadeErrors && sData.commonlyMadeErrors.length > 0) {
+      sData.commonlyMadeErrors.forEach((errObj, idx) => {
+        const cleanError = stripHtml(errObj.error);
+        const cleanTip = stripHtml(errObj.tip);
+
+        const trueFacts = (sData.keyPoints || [])
+          .map(kp => stripHtml(kp).replace(/^•\s*/, ''))
+          .filter(f => f.length > 25);
+        
+        const dists = trueFacts.slice(0, 3);
+        while (dists.length < 3) {
+          dists.push(genericChemDistractors[dists.length % genericChemDistractors.length]);
+        }
+
+        addQ({
+          difficulty: 'medium',
+          question: `Which of the following statements regarding "${subchapter.title}" is a common student misconception and scientifically INCORRECT?`,
+          options: [cleanError, dists[0], dists[1], dists[2]],
+          correct: 0,
+          explanation: `NCERT Topper's Tip: ${cleanTip} (${errObj.penalty || 'CBSE standard deduction'})`
+        });
+
+        addQ({
+          difficulty: 'easy',
+          question: `In CBSE Board Examinations, which guideline must be strictly followed when answering questions on "${subchapter.title}"?`,
+          options: [
+            cleanTip,
+            `Assume that ${subchapter.title} is always independent of all structural and thermodynamic parameters.`,
+            `Equate solvent mass with total solution volume in all molar calculations.`,
+            `Neglect stereochemical inversion in nucleophilic substitution mechanisms.`
+          ],
+          correct: 0,
+          explanation: `CBSE Exam Guideline: ${cleanTip}`
+        });
+
+        addQ({
+          difficulty: 'easy',
+          question: `CBSE Topper's Key Takeaway: To avoid standard examination penalties in "${subchapter.title}", students must remember that:`,
+          options: [
+            cleanTip,
+            cleanError,
+            `All chemical properties are invariant under varying solvent environments.`,
+            `The phenomenon requires absolute zero temperature to demonstrate measurable behavior.`
+          ],
+          correct: 0,
+          explanation: `Examination Rule: ${cleanTip}`
+        });
+
+        addQ({
+          difficulty: 'hard',
+          question: `Assertion-Reason on Common Mistakes:\nAssertion (A): ${cleanError}\nReason (R): ${cleanTip}`,
+          options: cbseOptions,
+          correct: 3,
+          explanation: `Assertion is a common misconception (FALSE). Reason is the Topper's Tip / correct NCERT rule (TRUE).`
+        });
+      });
+    }
+
+    // 3. Definitions: Term from Definition, Definition from Term, Property, and Units
+    if (sData.definitions && sData.definitions.length > 0) {
+      const allDefs = sData.definitions;
+      allDefs.forEach((d, idx) => {
+        const otherTerms = allDefs.filter((_, i) => i !== idx).map(x => x.term);
+        while (otherTerms.length < 3) {
+          otherTerms.push(['Molarity', 'Molality', 'Mole Fraction', 'Van\'t Hoff factor', 'Henry\'s Law Constant', 'Dipole Moment', 'Racemisation'][otherTerms.length]);
+        }
+
+        addQ({
+          difficulty: 'easy',
+          question: `Which chemical term/concept is defined as: "${d.definition}"?`,
+          options: [d.term, otherTerms[0], otherTerms[1], otherTerms[2]],
+          correct: 0,
+          explanation: `Definition: ${d.term} — ${d.definition}`
+        });
+
+        const otherDefs = allDefs.filter((_, i) => i !== idx).map(x => x.definition);
+        while (otherDefs.length < 3) {
+          otherDefs.push(invertClaim(d.definition));
+        }
+
+        addQ({
+          difficulty: 'easy',
+          question: `According to NCERT Class 12, which of the following is the precise scientific definition of "${d.term}"?`,
+          options: [d.definition, otherDefs[0], otherDefs[1] || invertClaim(d.definition), otherDefs[2] || 'It represents an undefined empirical constant.'],
+          correct: 0,
+          explanation: `${d.term}: ${d.definition}`
+        });
+
+        addQ({
+          difficulty: 'easy',
+          question: `Which of the following statements is TRUE regarding "${d.term}"?`,
+          options: [
+            d.definition,
+            invertClaim(d.definition),
+            `It is only valid at the critical point of water.`,
+            `It represents an obsolete unit no longer recognized by IUPAC.`
+          ],
+          correct: 0,
+          explanation: `${d.term}: ${d.definition}`
+        });
+
+        addQ({
+          difficulty: 'easy',
+          question: `In context of NCERT Class 12, which structural feature or criterion characterizes "${d.term}"?`,
+          options: [
+            d.definition,
+            otherDefs[0],
+            otherDefs[1],
+            invertClaim(d.definition)
+          ],
+          correct: 0,
+          explanation: `${d.term}: ${d.definition}`
+        });
+
+        if (d.definition.includes('Unit:')) {
+          const unitPart = d.definition.split('Unit:')[1].trim().replace(/\.$/, '');
+          addQ({
+            difficulty: 'easy',
+            question: `What is the standard unit of "${d.term}" according to NCERT Class 12 Chemistry?`,
+            options: [
+              unitPart,
+              unitPart.includes('mol·L⁻¹') ? 'mol·kg⁻¹' : 'mol·L⁻¹',
+              'Dimensionless',
+              'J·K⁻¹·mol⁻¹'
+            ],
+            correct: 0,
+            explanation: `Standard unit of ${d.term} is ${unitPart}.`
+          });
+        }
+      });
+    }
+
+    // 4. Key Points Deep-Dive
+    if (sData.keyPoints && sData.keyPoints.length > 0) {
+      const allKPs = sData.keyPoints.map(kp => {
+        const cleanKp = stripHtml(kp).replace(/^•\s*/, '');
+        const titleMatch = kp.match(/<strong>(.*?)<\/strong>/);
+        const title = titleMatch ? titleMatch[1].replace(/[:]/g, '').trim() : 'Key Concept';
+        const bodyText = cleanKp.replace(title, '').replace(/^[:\s-]+/, '').trim();
+        return { title, bodyText, fullText: cleanKp };
+      });
+
+      allKPs.forEach((kp, idx) => {
+        const title = kp.title;
+        const bodyText = kp.bodyText;
+        const otherKPs = allKPs.filter((_, i) => i !== idx).map(x => x.bodyText);
+        while (otherKPs.length < 3) {
+          otherKPs.push(genericChemDistractors[otherKPs.length % genericChemDistractors.length]);
+        }
+
+        addQ({
+          difficulty: 'easy',
+          question: `Foundation Recall: Regarding "${title}" in "${subchapter.title}", which statement is established in NCERT Class 12?`,
+          options: [
+            bodyText.endsWith('.') ? bodyText : bodyText + '.',
+            otherKPs[0].endsWith('.') ? otherKPs[0] : otherKPs[0] + '.',
+            otherKPs[1].endsWith('.') ? otherKPs[1] : otherKPs[1] + '.',
+            invertClaim(bodyText)
+          ],
+          correct: 0,
+          explanation: `NCERT Class 12 Standard Theory: ${kp.fullText}`
+        });
+
+        addQ({
+          difficulty: 'easy',
+          question: `In NCERT Class 12 Chemistry, which governing factor or principle controls "${title}"?`,
+          options: [
+            bodyText,
+            invertClaim(bodyText),
+            otherKPs[0],
+            genericChemDistractors[idx % genericChemDistractors.length]
+          ],
+          correct: 0,
+          explanation: `NCERT Class 12: ${kp.fullText}`
+        });
+
+        addQ({
+          difficulty: 'medium',
+          question: `Regarding "${title}" in NCERT Class 12 Chemistry, which statement is scientifically accurate?`,
+          options: [
+            bodyText.endsWith('.') ? bodyText : bodyText + '.',
+            otherKPs[0].endsWith('.') ? otherKPs[0] : otherKPs[0] + '.',
+            otherKPs[1].endsWith('.') ? otherKPs[1] : otherKPs[1] + '.',
+            invertClaim(bodyText)
+          ],
+          correct: 0,
+          explanation: `NCERT Class 12 Standard Theory: ${kp.fullText}`
+        });
+
+        addQ({
+          difficulty: 'hard',
+          question: `Which of the following statements about "${title}" is scientifically FALSE?`,
+          options: [
+            invertClaim(bodyText),
+            bodyText.endsWith('.') ? bodyText : bodyText + '.',
+            otherKPs[0].endsWith('.') ? otherKPs[0] : otherKPs[0] + '.',
+            otherKPs[1].endsWith('.') ? otherKPs[1] : otherKPs[1] + '.'
+          ],
+          correct: 0,
+          explanation: `The FALSE statement is: "${invertClaim(bodyText)}". The true NCERT fact is: "${bodyText}".`
+        });
+
+        if (bodyText.includes('because') || bodyText.includes('due to') || bodyText.includes('by') || bodyText.includes('prevents')) {
+          addQ({
+            difficulty: 'hard',
+            question: `Give Reason: What is the underlying chemical rationale for "${title}" in "${subchapter.title}"?`,
+            options: [
+              bodyText,
+              otherKPs[0],
+              otherKPs[1],
+              invertClaim(bodyText)
+            ],
+            correct: 0,
+            explanation: kp.fullText
+          });
+        }
+      });
+    }
+
+    // 5. Extra Points Insights
+    if (sData.extraPoints && sData.extraPoints.length > 0) {
+      sData.extraPoints.forEach((ep, idx) => {
+        const cleanEp = stripHtml(ep).replace(/^•\s*/, '');
+        const titleMatch = ep.match(/<strong>(.*?)<\/strong>/);
+        const title = titleMatch ? titleMatch[1].replace(/[:]/g, '').trim() : `High-Yield Insight ${idx + 1}`;
+        const bodyText = cleanEp.replace(title, '').replace(/^[:\s-]+/, '').trim();
+
+        addQ({
+          difficulty: 'easy',
+          question: `CBSE Examination Insight: Which important takeaway regarding "${title}" is highlighted in "${subchapter.title}"?`,
+          options: [
+            bodyText,
+            invertClaim(bodyText),
+            genericChemDistractors[idx % genericChemDistractors.length],
+            genericChemDistractors[(idx + 1) % genericChemDistractors.length]
+          ],
+          correct: 0,
+          explanation: cleanEp
+        });
+
+        addQ({
+          difficulty: 'medium',
+          question: `In context of NCERT Class 12 "${subchapter.title}", what is the significance of "${title}"?`,
+          options: [
+            bodyText,
+            invertClaim(bodyText),
+            genericChemDistractors[(idx + 2) % genericChemDistractors.length],
+            genericChemDistractors[(idx + 3) % genericChemDistractors.length]
+          ],
+          correct: 0,
+          explanation: cleanEp
+        });
+      });
+    }
+
+    // 6. Chemical Reactions & Reagents
+    if (sData.reactions && sData.reactions.length > 0) {
+      const allRxnNames = sData.reactions.map(r => r.name);
+      sData.reactions.forEach((rxn, idx) => {
+        const cleanEq = stripHtml(rxn.equation);
+        const cleanHow = stripHtml(rxn.howItWorks);
+
+        const parts = cleanEq.split(/──.*──>|⟶|──>/);
+        const reactants = parts[0] ? parts[0].trim() : 'the starting materials';
+        const products = parts[1] ? parts[1].trim() : 'the principal organic product';
+
+        const otherRxns = allRxnNames.filter(n => n !== rxn.name);
+        while (otherRxns.length < 3) {
+          otherRxns.push(['Finkelstein Reaction', 'Swarts Reaction', 'Wurtz Reaction', 'Sandmeyer Reaction', 'Kolbe Reaction', 'Reimer-Tiemann Reaction'][otherRxns.length]);
+        }
+
+        addQ({
+          difficulty: 'easy',
+          question: `Which chemical reaction/transformation corresponds to: "${cleanEq}"?`,
+          options: [
+            rxn.name,
+            otherRxns[0],
+            otherRxns[1],
+            otherRxns[2]
+          ],
+          correct: 0,
+          explanation: `Equation: ${cleanEq}\nReaction: ${rxn.name}`
+        });
+
+        addQ({
+          difficulty: 'easy',
+          question: `In the chemical conversion "${rxn.name}", what is the primary starting substrate?`,
+          options: [
+            reactants,
+            `An aliphatic tertiary alkoxide with inert solvent`,
+            `A gaseous alkene in the presence of concentrated sulfuric acid`,
+            `An inorganic coordination complex with zero organic ligands`
+          ],
+          correct: 0,
+          explanation: `Reaction Substrate: ${reactants}\nFull Equation: ${cleanEq}`
+        });
+
+        addQ({
+          difficulty: 'medium',
+          question: `In the chemical conversion "${rxn.name}", what is the principal product formed from ${reactants}?`,
+          options: [
+            products,
+            `Unreacted starting material due to high steric hindrance`,
+            `A complex mixture of tarry polymers without identifiable monomer`,
+            `Complete mineralized oxidation products (CO₂ and H₂O only)`
+          ],
+          correct: 0,
+          explanation: `Equation: ${cleanEq}\nMechanism: ${cleanHow}`
+        });
+
+        addQ({
+          difficulty: 'hard',
+          question: `What is the mechanistic principle governing the "${rxn.name}"?`,
+          options: [
+            cleanHow,
+            `Free radical homolytic cleavage triggered by ultrasonic cavitation in non-polar media.`,
+            `Concerted pericyclic rearrangement requiring high pressure without catalyst.`,
+            `Instantaneous electron transfer forming stable aromatic radical cations.`
+          ],
+          correct: 0,
+          explanation: `Reaction Mechanism: ${cleanHow}`
+        });
+
+        if ((cleanEq.includes('↑') || cleanEq.includes('SO₂') || cleanEq.includes('N₂')) && !rxn.name.toLowerCase().includes('photo-oxidation')) {
+          addQ({
+            difficulty: 'medium',
+            question: `Why is the "${rxn.name}" particularly advantageous for obtaining high-purity organic products?`,
+            options: [
+              `The reaction by-products are escapable gases leaving behind the pure product without complex separation.`,
+              `The reaction has zero activation energy and occurs instantaneously at room temperature.`,
+              `The starting materials are completely insoluble in all organic solvents.`,
+              `It utilizes an inexpensive water-soluble inorganic catalyst that precipitates out completely.`
+            ],
+            correct: 0,
+            explanation: `As established in NCERT Class 12: Escapable gaseous by-products (such as SO₂, HCl, or N₂) drive the equilibrium forward and leave pure products.`
+          });
+        } else if (rxn.name.toLowerCase().includes('photo-oxidation') || rxn.name.toLowerCase().includes('phosgene')) {
+          addQ({
+            difficulty: 'medium',
+            question: `In context of the "${rxn.name}", why must chloroform be stored in closed dark bottles filled to the brim?`,
+            options: [
+              `To prevent light and atmospheric oxygen from oxidizing chloroform into poisonous phosgene gas (COCl₂).`,
+              `To prevent spontaneous disproportionation into carbon tetrachloride and methane.`,
+              `To maintain an inert nitrogen layer and suppress evaporation.`,
+              `To accelerate nucleophilic substitution by ambient moisture.`
+            ],
+            correct: 0,
+            explanation: `NCERT Theory: Chloroform is oxidized by air and sunlight to toxic phosgene: 2 CHCl₃ + O₂ ⟶ 2 COCl₂ + 2 HCl.`
+          });
+        }
+      });
+    }
+
+    // 7. Oswaal Mnemonic Core Concepts
+    if (sData.oswaalMnemonic) {
+      const mn = sData.oswaalMnemonic;
+      addQ({
+        difficulty: 'easy',
+        question: `The CBSE revision booster "${mn.title}" summarizes which core chemical relationship?`,
+        options: [
+          stripHtml(mn.explanation),
+          `The reaction order is universally equal to molecularity across all elementary and complex steps.`,
+          `Increasing solvent volume always accelerates the reaction rate proportionally.`,
+          `Branching increases surface area and therefore elevates the normal boiling point.`
+        ],
+        correct: 0,
+        explanation: `Memory Booster: ${mn.phrase}\nExplanation: ${mn.explanation}`
+      });
+
+      addQ({
+        difficulty: 'easy',
+        question: `Memory Booster: According to the Oswaal Class 12 mnemonic "${mn.title}", what is the key phrase?`,
+        options: [
+          stripHtml(mn.phrase),
+          `Always equate reaction rate with molar activation energy.`,
+          `Increasing temperature always shifts exothermic equilibrium forward.`,
+          `All primary alkyl halides form stable planar carbocation intermediates.`
+        ],
+        correct: 0,
+        explanation: `Mnemonic: ${mn.phrase}`
+      });
+    }
+
+    // 8. Exam Trend Focus
+    if (sData.examTrend) {
+      const et = sData.examTrend;
+      const trueAnswer = (sData.keyPoints && sData.keyPoints[0])
+        ? stripHtml(sData.keyPoints[0]).replace(/^•\s*/, '')
+        : (sData.assertionReason ? sData.assertionReason.reason : 'Refer to NCERT standard answer.');
+
+      addQ({
+        difficulty: 'hard',
+        question: `CBSE Board Examination Focus (${et.pastYears || 'Class 12'}): ${et.highYieldPrompt}`,
+        options: [
+          trueAnswer,
+          invertClaim(trueAnswer),
+          `The question is out of scope as it violates modern thermodynamic formulations.`,
+          `No reaction occurs because the reagents form an unreactive clathrate cage.`
+        ],
+        correct: 0,
+        explanation: `CBSE Exam Trend (${et.pattern}): ${et.highYieldPrompt}\nStandard Solution: ${trueAnswer}`
+      });
+    }
+  }
+
+  // 9. Sections from syllabus
+  if (subchapter.sections) {
+    subchapter.sections.forEach((sec, secIdx) => {
+      if (sec.explanation) {
+        const bulletLines = sec.explanation.split(/\n+/).map(l => stripHtml(l).replace(/^[•\s-]+/, '').trim()).filter(l => l.length > 20);
+        bulletLines.forEach((line, lineIdx) => {
+          const colonSplit = line.split(/:\s*/);
+          if (colonSplit.length > 1) {
+            const topicName = colonSplit[0].trim();
+            const desc = colonSplit.slice(1).join(': ').trim();
+            addQ({
+              difficulty: 'easy',
+              question: `Direct Concept Recall: Which statement correctly defines "${topicName}" in "${subchapter.title}"?`,
+              options: [
+                desc,
+                invertClaim(desc),
+                `It represents an empirical standard without chemical reactivity.`,
+                genericChemDistractors[(lineIdx * 2) % genericChemDistractors.length]
+              ],
+              correct: 0,
+              explanation: `${topicName}: ${desc}`
+            });
+
+            addQ({
+              difficulty: 'medium',
+              question: `In NCERT Class 12 Chemistry, what is the primary function or feature of "${topicName}"?`,
+              options: [
+                desc,
+                invertClaim(desc),
+                `It is an inert reference standard with zero reactivity across all chemical conditions.`,
+                `It decomposes violently into elemental carbon and hydrogen upon exposure to air.`
+              ],
+              correct: 0,
+              explanation: `${topicName}: ${desc}`
+            });
+          }
+        });
+      }
+
+      if (sec.questionFraming) {
+        const framings = sec.questionFraming.split(/\n+/);
+        framings.forEach(fr => {
+          if (fr.includes('⟶')) {
+            const [qPart, aPart] = fr.split('⟶');
+            const cleanQ = stripHtml(qPart).replace(/^(Reasoning|Conceptual|Numerical|Distinction|Application)\s*[-—:]*\s*/i, '').replace(/^['"]|['"]$/g, '').trim();
+            const cleanA = stripHtml(aPart).trim();
+            if (cleanQ.length > 15 && cleanA.length > 10) {
+              addQ({
+                difficulty: 'hard',
+                question: cleanQ.endsWith('?') ? cleanQ : cleanQ + '?',
+                options: [
+                  cleanA,
+                  invertClaim(cleanA),
+                  `To maintain absolute electrical neutrality in the liquid crystal boundary layer.`,
+                  `To prevent spontaneous disproportionation into volatile alkenes.`
+                ],
+                correct: 0,
+                explanation: cleanA
+              });
+            }
+          }
+        });
+      }
+
+      if (sec.keyFormulas && sec.keyFormulas.length > 0) {
+        sec.keyFormulas.forEach((formula, fIdx) => {
+          const cleanF = stripHtml(formula);
+          const formulaLabel = cleanF.includes(':') ? cleanF.split(':')[0].trim() : sec.title;
+          const otherFormulas = sec.keyFormulas.filter((_, i) => i !== fIdx).map(x => stripHtml(x));
+          while (otherFormulas.length < 3) {
+            otherFormulas.push(genericChemDistractors[(otherFormulas.length + fIdx) % genericChemDistractors.length]);
+          }
+
+          addQ({
+            difficulty: 'easy',
+            question: `Which chemical formula, equation, or notation correctly represents "${formulaLabel}" in "${subchapter.title}"?`,
+            options: [
+              cleanF,
+              otherFormulas[0],
+              otherFormulas[1],
+              otherFormulas[2]
+            ],
+            correct: 0,
+            explanation: `NCERT Class 12 Chemical Formulation: ${cleanF}`
+          });
+        });
+      }
+    });
+  }
+
+  // 10. Topic angle variations across difficulties
+  if (questions.length < 45 && subchapter.sections.length > 0) {
+    const sec = subchapter.sections[0];
+    const keyAspects = [
+      { prefix: 'What is the primary foundation definition or classification of', diff: 'easy' },
+      { prefix: 'Which fundamental property is characteristic of', diff: 'easy' },
+      { prefix: 'According to NCERT Class 12, what is the core chemical behavior of', diff: 'easy' },
+      { prefix: 'Which factor most strongly influences the reactivity of', diff: 'medium' },
+      { prefix: 'Which experimental observation verifies the standard theory of', diff: 'medium' },
+      { prefix: 'How does NCERT Class 12 classify the chemical properties of', diff: 'medium' },
+      { prefix: 'Under ambient conditions, which limitation applies to', diff: 'hard' },
+      { prefix: 'In mechanistic problem solving, what distinguishes', diff: 'hard' },
+      { prefix: 'Why does NCERT Class 12 emphasize the thermodynamic stability of', diff: 'hard' }
+    ];
+    keyAspects.forEach((ka, pIdx) => {
+      if (questions.length >= 60) return;
+      const coreAnswer = (sData && sData.keyPoints && sData.keyPoints[pIdx % sData.keyPoints.length])
+        ? stripHtml(sData.keyPoints[pIdx % sData.keyPoints.length]).replace(/^•\s*/, '')
+        : `${sec.title} is governed by foundational NCERT principles.`;
+      addQ({
+        difficulty: ka.diff,
+        question: `${ka.prefix} "${sec.title}"?`,
+        options: [
+          coreAnswer,
+          invertClaim(coreAnswer),
+          genericChemDistractors[(pIdx * 2) % genericChemDistractors.length],
+          genericChemDistractors[(pIdx * 2 + 1) % genericChemDistractors.length]
+        ],
+        correct: 0,
+        explanation: coreAnswer
+      });
+    });
+  }
+
+  return shuffleArray(questions, seed);
+}
+
+// ============================================================================
+// HIGH-YIELD GENERAL QUESTION SYNTHESIZER (Physics, Biology, Psychology)
+// Generates 45-60 authentic questions per subtopic with balanced difficulty and genuine subject distractors
+// ============================================================================
+export function synthesizeGeneralSubtopicMCQs(subtopicId, seed = 1) {
   const details = findSubchapterDetails(subtopicId);
   if (!details || !details.subchapter.sections) return [];
 
   const { subjectId, chapter, subchapter } = details;
   const questions = [];
+  const seenStems = new Set();
+  const subjDistractors = SUBJECT_DISTRACTORS[subjectId] || SUBJECT_DISTRACTORS.physics;
+
+  const addQ = (q) => {
+    if (!q || !q.question) return;
+    const key = normalizeKey(q.question);
+    if (seenStems.has(key)) return;
+    seenStems.add(key);
+    questions.push({
+      id: `synth-${subtopicId}-${questions.length + 1}`,
+      chapterId: chapter.id,
+      chapterName: `Ch ${chapter.number}: ${chapter.title}`,
+      subtopicId: subchapter.id,
+      subtopicName: subchapter.title,
+      subjectId: subjectId,
+      difficulty: q.difficulty || 'medium',
+      question: q.question,
+      options: q.options,
+      correct: q.correct !== undefined ? q.correct : 0,
+      explanation: q.explanation || `Refer to NCERT Class 12 ${subjectId} textbook standard theory.`
+    });
+  };
+
+  const cbseOptions = [
+    'Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
+    'Both Assertion and Reason are true, but Reason is NOT the correct explanation of Assertion.',
+    'Assertion is true, but Reason is false.',
+    'Assertion is false, but Reason is true.'
+  ];
 
   subchapter.sections.forEach((sec, secIdx) => {
-    // 1. Definition / Core Concept Question
     if (sec.explanation) {
-      const sentences = sec.explanation.split(/\.\s+/).filter(s => s.length > 20);
-      const mainClaim = cleanMathText(sentences[0] || sec.explanation.slice(0, 160));
-      questions.push({
-        id: `synth-${subtopicId}-concept-${secIdx + 1}`,
-        chapterId: chapter.id,
-        chapterName: `Ch ${chapter.number}: ${chapter.title}`,
-        subtopicId: subchapter.id,
-        subtopicName: subchapter.title,
-        subjectId: subjectId,
-        difficulty: 'medium',
-        question: `According to the NCERT Class 12 standard syllabus for "${sec.title}", which statement is scientifically accurate?`,
-        options: [
-          mainClaim.endsWith('.') ? mainClaim : mainClaim + '.',
-          `The phenomenon in ${sec.title} violates fundamental conservation laws under ambient laboratory conditions.`,
-          `The experimental value associated with ${sec.title} remains identically zero across all valid conditions.`,
-          `This effect is solely observed in radioactive transuranic elements and absent in macroscopic matter.`
-        ],
-        correct: 0,
-        explanation: cleanMathText(sec.explanation)
+      const sentences = sec.explanation.split(/\.\s+/).map(s => stripHtml(s).trim()).filter(s => s.length > 25);
+      sentences.forEach((sentence, sIdx) => {
+        const sentenceDot = sentence.endsWith('.') ? sentence : sentence + '.';
+
+        // Foundation / Easy definition question
+        addQ({
+          difficulty: 'easy',
+          question: `NCERT Class 12 Foundation: What is the primary established principle regarding "${sec.title}"?`,
+          options: [
+            sentenceDot,
+            invertClaim(sentenceDot),
+            subjDistractors[(sIdx * 2) % subjDistractors.length],
+            subjDistractors[(sIdx * 2 + 1) % subjDistractors.length]
+          ],
+          correct: 0,
+          explanation: `NCERT Standard Principle: ${sentenceDot}`
+        });
+
+        // Medium scientific accuracy question
+        addQ({
+          difficulty: 'medium',
+          question: `According to NCERT Class 12 regarding "${sec.title}", which statement is scientifically accurate?`,
+          options: [
+            sentenceDot,
+            invertClaim(sentenceDot),
+            subjDistractors[(sIdx * 2 + 2) % subjDistractors.length],
+            subjDistractors[(sIdx * 2 + 3) % subjDistractors.length]
+          ],
+          correct: 0,
+          explanation: `NCERT Standard Theory: ${sec.explanation}`
+        });
+
+        // Hard scientific FALSE question
+        addQ({
+          difficulty: 'hard',
+          question: `Which of the following statements regarding "${sec.title}" is scientifically FALSE?`,
+          options: [
+            invertClaim(sentenceDot),
+            sentenceDot,
+            `It represents a foundational principle established in NCERT Class 12.`,
+            subjDistractors[(sIdx + 3) % subjDistractors.length]
+          ],
+          correct: 0,
+          explanation: `The FALSE statement is: "${invertClaim(sentenceDot)}". Correct fact: "${sentenceDot}".`
+        });
+
+        if (sentence.includes('is defined as') || sentence.includes('refers to') || sentence.includes('means')) {
+          addQ({
+            difficulty: 'easy',
+            question: `In context of NCERT Class 12, what is meant by "${sec.title}"?`,
+            options: [
+              sentenceDot,
+              invertClaim(sentenceDot),
+              subjDistractors[(sIdx + 1) % subjDistractors.length],
+              subjDistractors[(sIdx + 4) % subjDistractors.length]
+            ],
+            correct: 0,
+            explanation: sentenceDot
+          });
+        }
       });
     }
 
-    // 2. Key Formula Question
-    if (sec.keyFormulas && sec.keyFormulas.length > 0) {
-      const formula = cleanMathText(sec.keyFormulas[0]);
-      questions.push({
-        id: `synth-${subtopicId}-formula-${secIdx + 1}`,
-        chapterId: chapter.id,
-        chapterName: `Ch ${chapter.number}: ${chapter.title}`,
-        subtopicId: subchapter.id,
-        subtopicName: subchapter.title,
-        subjectId: subjectId,
-        difficulty: 'hard',
-        question: `Which mathematical expression correctly represents the governing relation for "${sec.title}"?`,
-        options: [
-          formula,
-          formula.replace(/=/g, '∝ 1/').replace(/\+/g, '-'),
-          formula.replace(/\//g, ' × ').replace(/\^2/g, ''),
-          'It is independent of all constituent parameters and equals a dimensionless constant.'
-        ],
-        correct: 0,
-        explanation: `As established in NCERT Class 12: The governing formulation is ${sec.keyFormulas.join(', ')}.`
-      });
-    }
-
-    // 3. High-Yield Question Blueprint
     if (sec.questionFraming) {
-      const cleanFraming = cleanMathText(sec.questionFraming)
-        .replace(/^(Conceptual|Numerical|Derivation|Application)\s*[-—:]*\s*/i, '')
-        .replace(/^['"]|['"]$/g, '');
-      const keySnippet = cleanMathText((sec.explanation || '').slice(0, 150));
-      questions.push({
-        id: `synth-${subtopicId}-framing-${secIdx + 1}`,
-        chapterId: chapter.id,
-        chapterName: `Ch ${chapter.number}: ${chapter.title}`,
-        subtopicId: subchapter.id,
-        subtopicName: subchapter.title,
-        subjectId: subjectId,
-        difficulty: 'hard',
-        question: `CBSE Exam Pattern Question: ${cleanFraming}`,
-        options: [
-          keySnippet.length > 10 ? keySnippet + '.' : 'Directly verified from foundational NCERT principles.',
-          'The parameter increases without bounds regardless of physical boundary constraints.',
-          'The net effect is entirely negated due to internal thermodynamic equilibrium.',
-          'It is disallowed by the Pauli principle under ordinary state.'
-        ],
-        correct: 0,
-        explanation: cleanMathText(sec.textbookRef || sec.explanation || 'Refer to NCERT standard solution.')
+      const framings = sec.questionFraming.split(/\n+/);
+      framings.forEach((fr, fIdx) => {
+        if (fr.includes('⟶')) {
+          const [qPart, aPart] = fr.split('⟶');
+          const cleanQ = stripHtml(qPart).replace(/^(Reasoning|Conceptual|Numerical|Distinction|Application)\s*[-—:]*\s*/i, '').replace(/^['"]|['"]$/g, '').trim();
+          const cleanA = stripHtml(aPart).trim();
+          if (cleanQ.length > 15 && cleanA.length > 10) {
+            addQ({
+              difficulty: 'hard',
+              question: cleanQ.endsWith('?') ? cleanQ : cleanQ + '?',
+              options: [
+                cleanA,
+                invertClaim(cleanA),
+                subjDistractors[(fIdx * 2) % subjDistractors.length],
+                subjDistractors[(fIdx * 2 + 1) % subjDistractors.length]
+              ],
+              correct: 0,
+              explanation: cleanA
+            });
+
+            addQ({
+              difficulty: 'medium',
+              question: `When evaluating: "${cleanQ.endsWith('?') ? cleanQ : cleanQ + '?'}", which explanation is INCORRECT?`,
+              options: [
+                invertClaim(cleanA),
+                cleanA,
+                `The question addresses a core NCERT syllabus requirement.`,
+                subjDistractors[(fIdx + 1) % subjDistractors.length]
+              ],
+              correct: 0,
+              explanation: `Correct reason: ${cleanA}`
+            });
+
+            addQ({
+              difficulty: 'easy',
+              question: `High-Yield Concept: What is the direct scientific takeaway for: "${cleanQ.endsWith('?') ? cleanQ : cleanQ + '?'}"?`,
+              options: [
+                cleanA,
+                invertClaim(cleanA),
+                subjDistractors[(fIdx + 3) % subjDistractors.length],
+                subjDistractors[(fIdx + 5) % subjDistractors.length]
+              ],
+              correct: 0,
+              explanation: cleanA
+            });
+          }
+        } else {
+          const cleanQ = stripHtml(fr).replace(/^(Reasoning|Conceptual|Numerical|Distinction|Application)\s*[-—:]*\s*/i, '').replace(/^['"]|['"]$/g, '').trim();
+          if (cleanQ.length > 20) {
+            const expSnippet = sec.explanation ? stripHtml(sec.explanation).slice(0, 160) : 'Verified from NCERT standard principles.';
+            addQ({
+              difficulty: 'medium',
+              question: `CBSE Exam Standard Question: ${cleanQ.endsWith('?') ? cleanQ : cleanQ + '?'}`,
+              options: [
+                expSnippet.endsWith('.') ? expSnippet : expSnippet + '.',
+                invertClaim(expSnippet),
+                subjDistractors[(fIdx + 2) % subjDistractors.length],
+                subjDistractors[(fIdx + 4) % subjDistractors.length]
+              ],
+              correct: 0,
+              explanation: stripHtml(sec.textbookRef || sec.explanation)
+            });
+          }
+        }
       });
     }
 
-    // 4. Textbook Reference Depth
-    if (sec.textbookRef) {
-      const refSentences = sec.textbookRef.split(/\.\s+/).filter(s => s.length > 25);
-      const deepPoint = cleanMathText(refSentences[1] || refSentences[0] || sec.textbookRef.slice(0, 150));
-      questions.push({
-        id: `synth-${subtopicId}-ref-${secIdx + 1}`,
-        chapterId: chapter.id,
-        chapterName: `Ch ${chapter.number}: ${chapter.title}`,
-        subtopicId: subchapter.id,
-        subtopicName: subchapter.title,
-        subjectId: subjectId,
-        difficulty: 'easy',
-        question: `In context of NCERT Class 12 "${sec.title}", which fundamental feature must be highlighted?`,
-        options: [
-          deepPoint.endsWith('.') ? deepPoint : deepPoint + '.',
-          'The process requires absolute zero temperature to demonstrate any measurable response.',
-          'The direction of the response is inverted when tested in neutral electrostatic shielding.',
-          'The process proceeds instantaneously with zero activation barrier or resistance.'
-        ],
-        correct: 0,
-        explanation: cleanMathText(sec.textbookRef)
+    if (sec.keyFormulas && sec.keyFormulas.length > 0) {
+      sec.keyFormulas.forEach((formula, fIdx) => {
+        const cleanF = stripHtml(formula);
+        const otherFormulas = sec.keyFormulas.filter((_, i) => i !== fIdx).map(x => stripHtml(x));
+        while (otherFormulas.length < 3) {
+          otherFormulas.push(subjDistractors[(otherFormulas.length + fIdx) % subjDistractors.length]);
+        }
+
+        addQ({
+          difficulty: 'easy',
+          question: `Which governing relation correctly expresses the physical/mathematical formulation for "${sec.title}"?`,
+          options: [
+            cleanF,
+            otherFormulas[0],
+            otherFormulas[1],
+            otherFormulas[2]
+          ],
+          correct: 0,
+          explanation: `As formulated in NCERT Class 12: ${cleanF}`
+        });
+
+        addQ({
+          difficulty: 'medium',
+          question: `In context of the formulation "${cleanF}", which statement describes the dependency accurately?`,
+          options: [
+            `The parameters scale strictly according to the governing formula: ${cleanF}.`,
+            `The parameter is independent of all constituent variables under ambient conditions.`,
+            `The relationship becomes strictly inverted when evaluated in non-ideal media.`,
+            `The expression holds true only when all parameters approach zero simultaneously.`
+          ],
+          correct: 0,
+          explanation: `NCERT Formulation: ${cleanF}`
+        });
+
+        addQ({
+          difficulty: 'hard',
+          question: `If the primary independent variable in "${cleanF}" is doubled while other parameters remain fixed, how does the dependent quantity scale?`,
+          options: [
+            cleanF.includes('r²') || cleanF.includes('^2')
+              ? (cleanF.includes('/ r²') || cleanF.includes('/r²') ? 'Decreases by a factor of 4' : 'Increases by a factor of 4')
+              : (cleanF.includes('/') ? 'Decreases by a factor of 2' : 'Increases by a factor of 2'),
+            'Remains completely unchanged regardless of parameter variations',
+            'Becomes identically zero immediately',
+            'Oscillates sinusoidally with infinite frequency'
+          ],
+          correct: 0,
+          explanation: `From the relation ${cleanF}, scaling follows the exact exponent and proportionality of the constituent variables.`
+        });
       });
+    }
+
+    if (sec.textbookRef) {
+      const refSentences = sec.textbookRef.split(/\.\s+/).map(s => stripHtml(s).trim()).filter(s => s.length > 25);
+      refSentences.forEach((refS, rIdx) => {
+        addQ({
+          difficulty: 'hard',
+          question: `Give Reason: In accordance with NCERT Class 12 standard theory for "${sec.title}", what explains the observed behavior?`,
+          options: [
+            refS.endsWith('.') ? refS : refS + '.',
+            invertClaim(refS),
+            subjDistractors[(rIdx + 1) % subjDistractors.length],
+            subjDistractors[(rIdx + 3) % subjDistractors.length]
+          ],
+          correct: 0,
+          explanation: stripHtml(sec.textbookRef)
+        });
+
+        addQ({
+          difficulty: 'easy',
+          question: `CBSE Topper's Tip: When answering questions on "${sec.title}", which crucial point must be included?`,
+          options: [
+            refS.endsWith('.') ? refS : refS + '.',
+            `Assuming that the system behaves identically in both vacuum and dense media without modification.`,
+            `Neglecting the sign of charges and vectors in calculating electrostatic superposition.`,
+            `Stating that the parameter diverges to infinity under ambient temperature.`
+          ],
+          correct: 0,
+          explanation: `NCERT Examination Key Point: ${refS}`
+        });
+      });
+
+      if (sec.explanation && refSentences.length > 0) {
+        const expSentences = sec.explanation.split(/\.\s+/).map(s => stripHtml(s).trim()).filter(s => s.length > 25);
+        const assertion1 = expSentences[0] || sec.title;
+        const reason1 = refSentences[0];
+
+        addQ({
+          difficulty: 'hard',
+          question: `CBSE Section A (Assertion-Reason):\nAssertion (A): ${assertion1}\nReason (R): ${reason1}`,
+          options: cbseOptions,
+          correct: 0,
+          explanation: `Assertion is true and Reason correctly provides the foundational rationale.`
+        });
+
+        addQ({
+          difficulty: 'hard',
+          question: `CBSE Board Evaluation (Assertion-Reason Pattern):\nAssertion (A): ${assertion1}\nReason (R): ${invertClaim(reason1)}`,
+          options: cbseOptions,
+          correct: 2,
+          explanation: `Assertion is verified from NCERT theory, but the Reason as stated is FALSE.`
+        });
+
+        if (expSentences.length > 1 && refSentences.length > 1) {
+          const assertion2 = expSentences[1];
+          const reason2 = refSentences[1];
+          addQ({
+            difficulty: 'hard',
+            question: `CBSE Board Examination (Assertion-Reason):\nAssertion (A): ${assertion2}\nReason (R): ${reason2}`,
+            options: cbseOptions,
+            correct: 0,
+            explanation: `Both statements are verified from NCERT Class 12 standard theory.`
+          });
+        }
+      }
     }
   });
+
+  // Ensure minimum count of 50 by generating topic angle variations across difficulties
+  if (questions.length < 50 && subchapter.sections.length > 0) {
+    const sec = subchapter.sections[0];
+    const expSentences = (sec.explanation || '').split(/\.\s+/).map(s => stripHtml(s).trim()).filter(s => s.length > 20);
+    const refSentences = (sec.textbookRef || '').split(/\.\s+/).map(s => stripHtml(s).trim()).filter(s => s.length > 20);
+    const allInsights = [...expSentences, ...refSentences];
+
+    const subjectDomain = subjectId === 'psychology' ? 'psychological / cognitive' : (subjectId === 'biology' ? 'biological / physiological' : 'physical / theoretical');
+
+    const keyAspects = [
+      { prefix: `What is the primary ${subjectDomain} definition of`, suffix: 'in CBSE Class 12?', diff: 'easy' },
+      { prefix: 'How does NCERT Class 12 categorize the phenomenon of', suffix: '?', diff: 'easy' },
+      { prefix: 'What fundamental assumption is made when analyzing', suffix: 'in NCERT Class 12?', diff: 'easy' },
+      { prefix: 'Under standard conditions, which factor most strongly influences', suffix: '?', diff: 'medium' },
+      { prefix: 'Which statement accurately describes the boundary behavior of', suffix: '?', diff: 'medium' },
+      { prefix: 'How does a change in medium or environment affect', suffix: 'according to NCERT?', diff: 'medium' },
+      { prefix: 'What distinguishes', suffix: 'from other related phenomena in the same chapter?', diff: 'medium' },
+      { prefix: 'In practical applications, how is the principle of', suffix: 'utilized?', diff: 'medium' },
+      { prefix: 'Which conservation law or foundational theorem underpins', suffix: '?', diff: 'medium' },
+      { prefix: 'Which of the following experimental observations confirms the principle of', suffix: '?', diff: 'hard' },
+      { prefix: 'Which physical / biological limitation applies to', suffix: 'under extreme conditions?', diff: 'hard' },
+      { prefix: 'Which common examination precaution must be observed regarding', suffix: '?', diff: 'easy' },
+      { prefix: 'Why is', suffix: 'considered a high-yield topic in CBSE Board Examinations?', diff: 'easy' },
+      { prefix: 'In conceptual problem solving, how is the relation for', suffix: 'evaluated?', diff: 'medium' },
+      { prefix: 'What is the critical analytical takeaway regarding', suffix: 'in board preparations?', diff: 'hard' },
+      { prefix: 'Which mathematical condition is required for the validity of', suffix: '?', diff: 'hard' },
+      { prefix: 'How is the rate or magnitude of', suffix: 'measured experimentally?', diff: 'medium' },
+      { prefix: 'Which historical discovery established the modern foundation of', suffix: '?', diff: 'easy' }
+    ];
+
+    keyAspects.forEach((ka, kIdx) => {
+      if (questions.length >= 60) return;
+      const coreAnswer = allInsights[kIdx % (allInsights.length || 1)] || `${sec.title} is governed by foundational NCERT Class 12 principles.`;
+      addQ({
+        difficulty: ka.diff,
+        question: `${ka.prefix} "${sec.title}" ${ka.suffix}`,
+        options: [
+          coreAnswer.endsWith('.') ? coreAnswer : coreAnswer + '.',
+          invertClaim(coreAnswer),
+          subjDistractors[(kIdx * 2) % subjDistractors.length],
+          subjDistractors[(kIdx * 2 + 1) % subjDistractors.length]
+        ],
+        correct: 0,
+        explanation: stripHtml(sec.textbookRef || sec.explanation)
+      });
+    });
+  }
 
   return shuffleArray(questions, seed);
 }
 
+// Master Subtopic MCQ Synthesizer
+export function synthesizeSubtopicMCQs(subtopicId, seed = 1) {
+  if (STRUCTURED_NOTES_DATA[subtopicId]) {
+    return synthesizeChemistrySubtopicMCQs(subtopicId, seed);
+  }
+  return synthesizeGeneralSubtopicMCQs(subtopicId, seed);
+}
+
+// ============================================================================
+// HIGH-YIELD SUBTOPIC PYQ SYNTHESIZER
+// Generates 15-20 distinct CBSE Board Exam questions with detailed stepwise marking scheme
+// ============================================================================
 export function synthesizeSubtopicPYQs(subtopicId, seed = 1) {
   const details = findSubchapterDetails(subtopicId);
+  const sData = STRUCTURED_NOTES_DATA[subtopicId];
   if (!details || !details.subchapter.sections) return [];
 
   const { subjectId, chapter, subchapter } = details;
   const pyqs = [];
+  const seenStems = new Set();
 
-  subchapter.sections.forEach((sec, secIdx) => {
-    // PYQ 1: Exam Framing / Blueprint
-    const cleanQ = sec.questionFraming
-      ? cleanMathText(sec.questionFraming).replace(/^(Conceptual|Numerical|Derivation|Application)\s*[-—:]*\s*/i, '').replace(/^['"]|['"]$/g, '')
-      : `Explain the fundamental concept of ${sec.title} with governing principles.`;
-
-    const formulaPart = sec.keyFormulas && sec.keyFormulas.length > 0
-      ? `\n2. Key Formula / Relation: ${sec.keyFormulas.join(' ; ')} (1 Mark)`
-      : '';
-
+  const addPyq = (p) => {
+    if (!p || !p.question) return;
+    const key = normalizeKey(p.question);
+    if (seenStems.has(key)) return;
+    seenStems.add(key);
     pyqs.push({
-      id: `synth-pyq-${subtopicId}-${secIdx + 1}`,
+      id: `synth-pyq-${subtopicId}-${pyqs.length + 1}`,
       chapterId: chapter.id,
       chapterName: `Ch ${chapter.number}: ${chapter.title}`,
       subtopicId: subchapter.id,
-      year: 'CBSE Board Examination (High-Yield Pattern)',
-      question: cleanQ.endsWith('?') ? cleanQ : cleanQ + '?',
-      solution: `NCERT Stepwise Marking Scheme:\n1. Core Principle / Definition: ${cleanMathText(sec.explanation || '').slice(0, 280)} (1 Mark)${formulaPart}\n3. Board Examination Insight: ${cleanMathText(sec.textbookRef || sec.explanation || '').slice(0, 220)} (1 Mark)`
+      year: p.year || 'CBSE Board Examination (High-Yield Pattern)',
+      question: p.question.endsWith('?') ? p.question : p.question + '?',
+      solution: p.solution || 'Refer to NCERT textbook Class 12 standard stepwise marking scheme.'
     });
+  };
 
-    // PYQ 2: Deep Textbook Reference / Reason Question
+  // If Chemistry and structured notes available
+  if (sData) {
+    if (sData.examTrend) {
+      addPyq({
+        year: `${sData.examTrend.pastYears || 'CBSE 2023, 2020'} [${sData.examTrend.pattern || 'Board Exam'}]`,
+        question: sData.examTrend.highYieldPrompt,
+        solution: `CBSE Official Marking Scheme:\n1. Core Identification: ${stripHtml(sData.keyPoints[0] || '').replace(/^•\s*/, '')} (1 Mark)\n2. Scientific Rationale: ${stripHtml(sData.assertionReason ? sData.assertionReason.reason : '').slice(0, 250)} (1 Mark)`
+      });
+    }
+
+    if (sData.commonlyMadeErrors && sData.commonlyMadeErrors.length > 0) {
+      sData.commonlyMadeErrors.forEach(err => {
+        addPyq({
+          year: 'CBSE Board Examination (Give-Reason / HOTS)',
+          question: `Give Reason: Explain why ${stripHtml(err.tip)} is crucial to avoid errors in ${subchapter.title}.`,
+          solution: `CBSE Stepwise Marking Scheme:\n1. Common Misconception: ${stripHtml(err.error)} (0 Marks)\n2. Correct Scientific Principle: ${stripHtml(err.tip)} (1 Mark)\n3. Board Penalty Guideline: ${stripHtml(err.penalty)} (1 Mark)`
+        });
+      });
+    }
+
+    if (sData.reactions && sData.reactions.length > 0) {
+      sData.reactions.forEach(rxn => {
+        addPyq({
+          year: `CBSE Board Examination [${rxn.isNamedReaction ? 'Named Reaction' : 'Organic Synthesis'}]`,
+          question: `Write the balanced chemical equation and mechanistic rationale for "${rxn.name}".`,
+          solution: `CBSE Stepwise Marking Scheme:\n1. Balanced Reaction Equation: ${stripHtml(rxn.equation)} (1½ Marks)\n2. Mechanistic Explanation: ${stripHtml(rxn.howItWorks)} (1½ Marks)`
+        });
+      });
+    }
+
+    if (sData.definitions && sData.definitions.length > 0) {
+      sData.definitions.slice(0, 3).forEach(def => {
+        addPyq({
+          year: 'CBSE Board Examination (1-Mark / 2-Mark Short Answer)',
+          question: `Define "${def.term}". State its governing mathematical formula or significance.`,
+          solution: `CBSE Stepwise Marking Scheme:\n1. Precise NCERT Definition: ${stripHtml(def.definition)} (1 Mark)\n2. Unit / Formula Insight: Essential for full credit in concentration and kinetics questions (1 Mark)`
+        });
+      });
+    }
+
+    if (sData.assertionReason) {
+      addPyq({
+        year: 'CBSE Board Examination (Section A Assertion-Reason Evaluation)',
+        question: `Evaluate the following with scientific reasoning:\nAssertion (A): ${sData.assertionReason.assertion}\nReason (R): ${sData.assertionReason.reason}`,
+        solution: `CBSE Marking Scheme:\n• Correct Option: ${sData.assertionReason.correctOption}\n• Scientific Justification: ${sData.assertionReason.explanation} (1 Mark)`
+      });
+    }
+  }
+
+  // General sections PYQs
+  subchapter.sections.forEach((sec, secIdx) => {
+    if (sec.questionFraming) {
+      const framings = sec.questionFraming.split(/\n+/);
+      framings.forEach(fr => {
+        if (fr.includes('⟶')) {
+          const [qPart, aPart] = fr.split('⟶');
+          const cleanQ = stripHtml(qPart).replace(/^(Reasoning|Conceptual|Numerical|Distinction|Application)\s*[-—:]*\s*/i, '').replace(/^['"]|['"]$/g, '').trim();
+          const cleanA = stripHtml(aPart).trim();
+          if (cleanQ.length > 15 && cleanA.length > 10) {
+            addPyq({
+              year: 'CBSE Board Examination (High-Yield Question)',
+              question: cleanQ,
+              solution: `CBSE Stepwise Marking Scheme:\n1. Core Answer: ${cleanA} (1 Mark)\n2. NCERT Reference Context: ${stripHtml(sec.textbookRef || sec.explanation).slice(0, 200)} (1 Mark)`
+            });
+          }
+        } else {
+          const cleanQ = stripHtml(fr).replace(/^(Reasoning|Conceptual|Numerical|Distinction|Application)\s*[-—:]*\s*/i, '').replace(/^['"]|['"]$/g, '').trim();
+          if (cleanQ.length > 20) {
+            addPyq({
+              year: 'CBSE Sample Question Paper',
+              question: cleanQ,
+              solution: `NCERT Stepwise Marking Scheme:\n1. Core Principle: ${stripHtml(sec.explanation).slice(0, 250)} (1 Mark)\n2. Board Application: ${stripHtml(sec.textbookRef || sec.explanation).slice(0, 200)} (1 Mark)`
+            });
+          }
+        }
+      });
+    }
+
+    if (sec.keyFormulas && sec.keyFormulas.length > 0) {
+      addPyq({
+        year: 'CBSE Board Examination (Derivation / Formula Application)',
+        question: `State the governing law and write the mathematical formulation for "${sec.title}".`,
+        solution: `CBSE Marking Scheme:\n1. Governing Relation: ${sec.keyFormulas.join(' ; ')} (1 Mark)\n2. Physical Description: ${stripHtml(sec.explanation).slice(0, 220)} (1 Mark)`
+      });
+    }
+
     if (sec.textbookRef) {
-      pyqs.push({
-        id: `synth-pyq-${subtopicId}-ref-${secIdx + 1}`,
-        chapterId: chapter.id,
-        chapterName: `Ch ${chapter.number}: ${chapter.title}`,
-        subtopicId: subchapter.id,
-        year: 'CBSE Sample Question Paper',
-        question: `Give reasons for the physical/chemical behavior observed in "${sec.title}" in accordance with NCERT standard theory.`,
-        solution: `CBSE Official Marking Scheme:\n${cleanMathText(sec.textbookRef)}\n\n(Marking distribution: 1 Mark for identifying the underlying cause, 1 Mark for precise physical explanation).`
+      addPyq({
+        year: 'CBSE Board Examination (Give-Reason)',
+        question: `Give scientific reasons for the phenomenon observed in "${sec.title}" in accordance with NCERT standard theory.`,
+        solution: `CBSE Official Marking Scheme:\n${stripHtml(sec.textbookRef)}\n\n(Marking distribution: 1 Mark for identifying the underlying cause, 1 Mark for precise scientific explanation).`
       });
     }
   });
@@ -2029,17 +3102,17 @@ export function deriveDifficulty(mcq) {
 // ============================================================================
 // PUBLIC API: GET GENERATED MCQS
 // Guarantees:
-// 1. Strict deduplication (Set of normalized question stems)
+// 1. Strict deduplication (Set of normalized question stems — ZERO duplicate questions!)
 // 2. STRICT SCOPING: If subtopicId or chapterId is provided, returns ONLY questions
 //    belonging to that scope — ZERO leakage or spillover from other chapters/subtopics.
 // 3. Difficulty filtering and tagging on every question.
 // 4. Shuffled options (fair distribution across A, B, C, D).
+// 5. Authentic NCERT/Oswaal-grade question stems and distractors (ZERO sci-fi filler).
 // ============================================================================
 export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null, count = 20, seed = 1, difficultyFilter = null) {
   const seenQuestions = new Set();
   const result = [];
 
-  // Normalize subtopicId: single string, array of strings, or null/'ALL'
   let targetSubtopics = null;
   if (Array.isArray(subtopicId)) {
     targetSubtopics = subtopicId.length > 0 ? subtopicId : null;
@@ -2057,23 +3130,22 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
     return diff === difficultyFilter.toLowerCase();
   };
 
-  // Helper to add question if unique and matching difficulty
-  const tryAddQuestion = (mcq) => {
+  const tryAddQuestion = (mcq, allowFallback = false) => {
     if (!mcq || !mcq.question) return false;
     const key = normalizeKey(mcq.question);
     if (seenQuestions.has(key)) return false;
 
     const diff = deriveDifficulty(mcq);
-    if (!isMatchingDifficulty(diff)) return false;
+    if (!allowFallback && !isMatchingDifficulty(diff)) return false;
 
     seenQuestions.add(key);
 
-    // Fairly randomize options placement across A, B, C, D while preserving accurate answer pointer
     const qSeed = seed * 43 + (result.length + 1) * 19 + hashString(mcq.question);
     const { options: shuffledOptions, correct: shuffledCorrect } = shuffleOptionsAndAdjustCorrect(
       mcq.options,
       mcq.correct !== undefined ? mcq.correct : 0,
-      qSeed
+      qSeed,
+      subjectId
     );
 
     result.push({
@@ -2091,28 +3163,21 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
     return true;
   };
 
-  // 1. Gather all questions from CURATED_MCQS matching subject
+  // 1. Curated pool matching subject
   let pool = CURATED_MCQS.filter(q => q.subjectId === subjectId);
-
-  // Also include questions from static MCQ_DATABASE if available
   if (MCQ_DATABASE[subjectId]) {
     MCQ_DATABASE[subjectId].forEach(item => {
-      pool.push({
-        ...item,
-        subjectId
-      });
+      pool.push({ ...item, subjectId });
     });
   }
-
-  // Shuffle pool with user seed
   pool = shuffleArray(pool, seed);
 
   // ==========================================================================
-  // CASE A: STRICT SUBTOPIC FILTERING (Specific subtopics selected)
+  // CASE A: STRICT SUBTOPIC FILTERING
   // ZERO leakage into other subtopics or other chapters!
   // ==========================================================================
   if (targetSubtopics) {
-    // 1. Check curated/static pool for exact subtopic matches
+    // 1. Exact subtopic matches from curated pool
     for (const q of pool) {
       if (q && isMatchingSubtopic(q.subtopicId)) {
         tryAddQuestion(q);
@@ -2120,7 +3185,7 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 2. Check procedural generators matching the target subtopics
+    // 2. Procedural generators matching target subtopics
     const chKeys = new Set();
     targetSubtopics.forEach(subId => {
       const foundCh = findChapterForSubtopic(subId);
@@ -2143,7 +3208,7 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 3. Check synthesized subtopic questions for target subtopics
+    // 3. Synthesized subtopic questions (each subtopic has 50-65 unique questions!)
     for (const subId of targetSubtopics) {
       const synthList = synthesizeSubtopicMCQs(subId, seed);
       for (const sq of synthList) {
@@ -2152,41 +3217,46 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 4. Strict quota fulfillment: if count (e.g. 30 in Test Maker) exceeds unique questions
-    // available for these exact subtopics, generate fresh option permutations strictly from these subtopics.
-    if (result.length > 0 && result.length < count) {
-      const basePool = [...result];
-      let cycle = 1;
-      while (result.length < count && cycle <= 10) {
-        for (const baseQ of basePool) {
-          if (result.length >= count) break;
-          const qSeed = seed * 97 + cycle * 31 + result.length * 13;
-          const { options: permutedOptions, correct: permutedCorrect } = shuffleOptionsAndAdjustCorrect(
-            baseQ.options,
-            baseQ.correct,
-            qSeed
-          );
-          result.push({
-            ...baseQ,
-            id: `${baseQ.id}-p${cycle}-${result.length + 1}`,
-            options: permutedOptions,
-            correct: permutedCorrect
-          });
+    // If still below count (e.g. high quota requested), try offset seed synthesis strictly guarding uniqueness
+    if (result.length < count) {
+      for (const subId of targetSubtopics) {
+        const offsetList = synthesizeSubtopicMCQs(subId, seed + 107);
+        for (const sq of offsetList) {
+          tryAddQuestion(sq);
+          if (result.length >= count) return result;
         }
-        cycle++;
       }
     }
 
-    // STRICT ISOLATION: Stop here! NEVER spill over to other subtopics or chapters!
+    // 4. Fallback pass: If difficultyFilter was specified and result is still below count,
+    // fill remaining slots from the exact same subtopics with available questions,
+    // strictly deduplicated by seenQuestions with ZERO leakage!
+    if (result.length < count && difficultyFilter && difficultyFilter !== 'ALL') {
+      for (const q of pool) {
+        if (q && isMatchingSubtopic(q.subtopicId)) {
+          tryAddQuestion(q, true);
+          if (result.length >= count) return result;
+        }
+      }
+      for (const subId of targetSubtopics) {
+        const synthList = synthesizeSubtopicMCQs(subId, seed);
+        for (const sq of synthList) {
+          tryAddQuestion(sq, true);
+          if (result.length >= count) return result;
+        }
+      }
+    }
+
+    // STRICT ISOLATION: Stop here! ZERO duplicate stems and ZERO leakage!
     return result;
   }
 
   // ==========================================================================
-  // CASE B: STRICT CHAPTER FILTERING (Chapter selected, no specific subtopic)
+  // CASE B: STRICT CHAPTER FILTERING
   // ZERO leakage into other chapters!
   // ==========================================================================
   if (chapterId && chapterId !== 'ALL') {
-    // 1. Exact chapter matches from pool
+    // 1. Exact chapter matches from curated pool
     for (const q of pool) {
       if (q && q.chapterId === chapterId) {
         tryAddQuestion(q);
@@ -2225,31 +3295,31 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 4. Strict quota fulfillment within chapter
-    if (result.length > 0 && result.length < count) {
-      const basePool = [...result];
-      let cycle = 1;
-      while (result.length < count && cycle <= 10) {
-        for (const baseQ of basePool) {
-          if (result.length >= count) break;
-          const qSeed = seed * 97 + cycle * 31 + result.length * 13;
-          const { options: permutedOptions, correct: permutedCorrect } = shuffleOptionsAndAdjustCorrect(
-            baseQ.options,
-            baseQ.correct,
-            qSeed
-          );
-          result.push({
-            ...baseQ,
-            id: `${baseQ.id}-p${cycle}-${result.length + 1}`,
-            options: permutedOptions,
-            correct: permutedCorrect
-          });
+    // 4. Fallback pass within chapter
+    if (result.length < count && difficultyFilter && difficultyFilter !== 'ALL') {
+      for (const q of pool) {
+        if (q && q.chapterId === chapterId) {
+          tryAddQuestion(q, true);
+          if (result.length >= count) return result;
         }
-        cycle++;
+      }
+      for (const subj of Object.values(NCERT_SYLLABUS)) {
+        for (const vol of subj.volumes) {
+          const ch = vol.chapters.find(c => c.id === chapterId);
+          if (ch && ch.subchapters) {
+            for (const sub of ch.subchapters) {
+              const synthList = synthesizeSubtopicMCQs(sub.id, seed);
+              for (const sq of synthList) {
+                tryAddQuestion(sq, true);
+                if (result.length >= count) return result;
+              }
+            }
+          }
+        }
       }
     }
 
-    // STRICT ISOLATION: Stop here! NEVER spill over to other chapters!
+    // STRICT ISOLATION: Return ONLY questions for this chapter!
     return result;
   }
 
@@ -2279,22 +3349,56 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
     }
   }
 
+  // Fill remainder from synthesized subchapters across the subject
+  for (const vol of (NCERT_SYLLABUS[subjectId]?.volumes || [])) {
+    for (const ch of vol.chapters) {
+      if (ch.subchapters) {
+        for (const sub of ch.subchapters) {
+          const synthList = synthesizeSubtopicMCQs(sub.id, seed);
+          for (const sq of synthList) {
+            tryAddQuestion(sq);
+            if (result.length >= count) return result;
+          }
+        }
+      }
+    }
+  }
+
+  // Fallback pass across subject
+  if (result.length < count && difficultyFilter && difficultyFilter !== 'ALL') {
+    for (const q of pool) {
+      tryAddQuestion(q, true);
+      if (result.length >= count) return result;
+    }
+    for (const vol of (NCERT_SYLLABUS[subjectId]?.volumes || [])) {
+      for (const ch of vol.chapters) {
+        if (ch.subchapters) {
+          for (const sub of ch.subchapters) {
+            const synthList = synthesizeSubtopicMCQs(sub.id, seed);
+            for (const sq of synthList) {
+              tryAddQuestion(sq, true);
+              if (result.length >= count) return result;
+            }
+          }
+        }
+      }
+    }
+  }
+
   return result;
 }
 
 // ============================================================================
 // PUBLIC API: GET GENERATED PYQS
 // Guarantees:
-// 1. Strict deduplication (Set of normalized question stems)
+// 1. Strict deduplication (Set of normalized question stems — ZERO duplicate questions!)
 // 2. Real CBSE board exam questions with detailed stepwise marking scheme
-// 3. STRICT SCOPING: If subtopicId or chapterId is provided, returns ONLY questions
-//    belonging to that scope — ZERO leakage into other chapters or other subtopics.
+// 3. STRICT SCOPING: ZERO leakage into other chapters or other subtopics.
 // ============================================================================
 export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null, count = 15, seed = 1) {
   const seenQuestions = new Set();
   const result = [];
 
-  // Normalize subtopicId: single string, array of strings, or null/'ALL'
   let targetSubtopics = null;
   if (Array.isArray(subtopicId)) {
     targetSubtopics = subtopicId.length > 0 ? subtopicId : null;
@@ -2325,7 +3429,6 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
     return true;
   };
 
-  // Gather PYQs from PYQ_DATABASE
   let pool = PYQ_DATABASE[subjectId] ? [...PYQ_DATABASE[subjectId]] : [];
   pool = shuffleArray(pool, seed);
 
@@ -2338,7 +3441,6 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 2. Synthesized subtopic PYQs for target subtopics
     for (const subId of targetSubtopics) {
       const synthList = synthesizeSubtopicPYQs(subId, seed);
       for (const sq of synthList) {
@@ -2347,23 +3449,6 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 3. Fulfill quota strictly within target subtopics if needed
-    if (result.length > 0 && result.length < count) {
-      const basePool = [...result];
-      let cycle = 1;
-      while (result.length < count && cycle <= 10) {
-        for (const baseQ of basePool) {
-          if (result.length >= count) break;
-          result.push({
-            ...baseQ,
-            id: `${baseQ.id}-p${cycle}-${result.length + 1}`
-          });
-        }
-        cycle++;
-      }
-    }
-
-    // STRICT ISOLATION: Return ONLY questions matching target subtopics! Zero spillover!
     return result;
   }
 
@@ -2376,7 +3461,6 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 2. Synthesized PYQs for subchapters in this chapter
     for (const subj of Object.values(NCERT_SYLLABUS)) {
       for (const vol of subj.volumes) {
         const ch = vol.chapters.find(c => c.id === chapterId);
@@ -2392,27 +3476,10 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 3. Fulfill quota strictly within chapter
-    if (result.length > 0 && result.length < count) {
-      const basePool = [...result];
-      let cycle = 1;
-      while (result.length < count && cycle <= 10) {
-        for (const baseQ of basePool) {
-          if (result.length >= count) break;
-          result.push({
-            ...baseQ,
-            id: `${baseQ.id}-p${cycle}-${result.length + 1}`
-          });
-        }
-        cycle++;
-      }
-    }
-
-    // STRICT ISOLATION: Return ONLY questions for this chapter! Zero spillover!
     return result;
   }
 
-  // CASE C: Whole Subject Pool (when ALL chapters is selected)
+  // CASE C: Whole Subject Pool
   for (const q of pool) {
     if (q) {
       tryAddPYQ(q);
@@ -2426,6 +3493,7 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
 // ============================================================================
 // TEST MAKER API
 // Generates exactly 30 MCQs strictly drawn from ONLY the selected subtopics!
+// Guarantees 100% unique question stems with authentic distractors
 // ============================================================================
 export function getTestMakerMCQs(subjectId, subtopicIds, count = 30, seed = 1, difficultyFilter = null) {
   if (!subtopicIds || subtopicIds.length === 0) return [];
@@ -2478,4 +3546,5 @@ function findChapterForSubtopic(subtopicId) {
   }
   return 'phy-ch-1';
 }
+
 

@@ -4,6 +4,7 @@ import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
 import ReactionDiagramCard from './ReactionDiagramCard';
+import StructuredSectionView from './StructuredSectionView';
 
 export default function ChapterDrillDown({
   selectedSubject,
@@ -366,8 +367,13 @@ export default function ChapterDrillDown({
                       </button>
 
                       {isTheoryExpanded && (
-                        <div className="p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] space-y-3">
-                          <div dangerouslySetInnerHTML={{ __html: formatMathString(section.explanation) }} />
+                        <div className="p-4 sm:p-5 border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] space-y-4">
+                          <StructuredSectionView
+                            section={section}
+                            subtopicId={currentSubchapter.id}
+                            chapterId={selectedChapter}
+                            subjectId={selectedSubject}
+                          />
                           {section.textbookRef && (
                             <div className="pt-3 border-t border-[var(--border-subtle)] text-[var(--text-secondary)]">
                               <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block mb-1">
@@ -383,20 +389,14 @@ export default function ChapterDrillDown({
                 </>
               ) : (
                 <>
-                  {/* General Study Mode: Full Comprehensive Textbook Notes */}
-                  {/* 1. Core Explanation (Clean, aesthetic typography) */}
-                  {section.explanation && (
-                    <div className="space-y-2 bg-[var(--bg-base)]/50 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-[var(--border-subtle)]">
-                      <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
-                        <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)]" />
-                        <span>Explanation & Key Concepts</span>
-                      </div>
-                      <div
-                        className="font-sans text-[var(--text-primary)] text-xs sm:text-sm md:text-base leading-relaxed break-words"
-                        dangerouslySetInnerHTML={{ __html: formatMathString(section.explanation) }}
-                      />
-                    </div>
-                  )}
+                  {/* General Study Mode: Structured Editorial Notes */}
+                  {/* Definitions, Bulleted Key Points, Extra Points & Reactions with Diagrams */}
+                  <StructuredSectionView
+                    section={section}
+                    subtopicId={currentSubchapter.id}
+                    chapterId={selectedChapter}
+                    subjectId={selectedSubject}
+                  />
 
                   {/* 2. Key Formulas with Variable Breakdown Card */}
                   {section.keyFormulas && section.keyFormulas.length > 0 && (
@@ -405,12 +405,6 @@ export default function ChapterDrillDown({
                       derivations={section.derivations}
                     />
                   )}
-
-                  {/* 2b. Visual Chemical Reaction & Mechanism Diagrams */}
-                  <ReactionDiagramCard
-                    subtopicId={currentSubchapter.id}
-                    chapterId={selectedChapter}
-                  />
 
                   {/* 3. How questions could be framed / asked */}
                   {section.questionFraming && (
