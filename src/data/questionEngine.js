@@ -1950,7 +1950,10 @@ function invertClaim(text) {
   if (t.includes('Stored in dark brown bottles')) return t.replace('Stored in dark brown bottles', 'Stored in clear transparent vessels exposed to sunlight');
   if (/\bis\b/i.test(t) && !t.includes('is not') && !t.includes('is NOT')) return t.replace(/\bis\b/i, 'is NOT');
   if (/\bcan\b/i.test(t) && !t.includes('cannot')) return t.replace(/\bcan\b/i, 'cannot');
-  return `The opposite effect occurs where ${t.charAt(0).toLowerCase() + t.slice(1)}`;
+  if (/\bdoes\b/i.test(t) && !t.includes('does not')) return t.replace(/\bdoes\b/i, 'does not');
+  if (/\bforms\b/i.test(t)) return t.replace(/\bforms\b/i, 'fails to form');
+  if (/\bproceeds\b/i.test(t)) return t.replace(/\bproceeds\b/i, 'fails to proceed');
+  return `Contrary to standard theory, ${t.charAt(0).toLowerCase() + t.slice(1)}`;
 }
 
 export function findSubchapterDetails(subtopicId) {
@@ -2088,8 +2091,8 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
           options: [
             cleanTip,
             cleanError,
-            `All chemical properties are invariant under varying solvent environments.`,
-            `The phenomenon requires absolute zero temperature to demonstrate measurable behavior.`
+            `Substrate steric hindrance and leaving group ability have zero effect on the reaction course.`,
+            `Reagents can be interchanged freely without altering chemical selectivity or yields.`
           ],
           correct: 0,
           explanation: `Examination Rule: ${cleanTip}`
@@ -2123,14 +2126,17 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
         });
 
         const otherDefs = allDefs.filter((_, i) => i !== idx).map(x => x.definition);
-        while (otherDefs.length < 3) {
-          otherDefs.push(invertClaim(d.definition));
+        let distDefs = [...otherDefs];
+        let dIdx = 0;
+        while (distDefs.length < 3) {
+          distDefs.push(genericChemDistractors[dIdx % genericChemDistractors.length]);
+          dIdx++;
         }
 
         addQ({
           difficulty: 'easy',
           question: `According to NCERT Class 12, which of the following is the precise scientific definition of "${d.term}"?`,
-          options: [d.definition, otherDefs[0], otherDefs[1] || invertClaim(d.definition), otherDefs[2] || 'It represents an undefined empirical constant.'],
+          options: [d.definition, distDefs[0], distDefs[1], distDefs[2]],
           correct: 0,
           explanation: `${d.term}: ${d.definition}`
         });
@@ -2140,9 +2146,9 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
           question: `Which of the following statements is TRUE regarding "${d.term}"?`,
           options: [
             d.definition,
-            invertClaim(d.definition),
-            `It is only valid at the critical point of water.`,
-            `It represents an obsolete unit no longer recognized by IUPAC.`
+            distDefs[0],
+            distDefs[1],
+            distDefs[2]
           ],
           correct: 0,
           explanation: `${d.term}: ${d.definition}`
@@ -2153,9 +2159,9 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
           question: `In context of NCERT Class 12, which structural feature or criterion characterizes "${d.term}"?`,
           options: [
             d.definition,
-            otherDefs[0],
-            otherDefs[1],
-            invertClaim(d.definition)
+            distDefs[0],
+            distDefs[1],
+            distDefs[2]
           ],
           correct: 0,
           explanation: `${d.term}: ${d.definition}`
@@ -2460,33 +2466,36 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
         bulletLines.forEach((line, lineIdx) => {
           const colonSplit = line.split(/:\s*/);
           if (colonSplit.length > 1) {
-            const topicName = colonSplit[0].trim();
-            const desc = colonSplit.slice(1).join(': ').trim();
-            addQ({
-              difficulty: 'easy',
-              question: `Direct Concept Recall: Which statement correctly defines "${topicName}" in "${subchapter.title}"?`,
-              options: [
-                desc,
-                invertClaim(desc),
-                `It represents an empirical standard without chemical reactivity.`,
-                genericChemDistractors[(lineIdx * 2) % genericChemDistractors.length]
-              ],
-              correct: 0,
-              explanation: `${topicName}: ${desc}`
-            });
+            const rawTopic = colonSplit[0].trim();
+            if (rawTopic.length > 0 && rawTopic.length <= 40 && !rawTopic.includes('.')) {
+              const topicName = rawTopic;
+              const desc = colonSplit.slice(1).join(': ').trim();
+              addQ({
+                difficulty: 'easy',
+                question: `Direct Concept Recall: Which statement correctly defines "${topicName}" in "${subchapter.title}"?`,
+                options: [
+                  desc,
+                  invertClaim(desc),
+                  genericChemDistractors[(lineIdx * 2) % genericChemDistractors.length],
+                  genericChemDistractors[(lineIdx * 2 + 1) % genericChemDistractors.length]
+                ],
+                correct: 0,
+                explanation: `${topicName}: ${desc}`
+              });
 
-            addQ({
-              difficulty: 'medium',
-              question: `In NCERT Class 12 Chemistry, what is the primary function or feature of "${topicName}"?`,
-              options: [
-                desc,
-                invertClaim(desc),
-                `It is an inert reference standard with zero reactivity across all chemical conditions.`,
-                `It decomposes violently into elemental carbon and hydrogen upon exposure to air.`
-              ],
-              correct: 0,
-              explanation: `${topicName}: ${desc}`
-            });
+              addQ({
+                difficulty: 'medium',
+                question: `In NCERT Class 12 Chemistry, what is the primary function or feature of "${topicName}"?`,
+                options: [
+                  desc,
+                  invertClaim(desc),
+                  genericChemDistractors[(lineIdx * 2 + 2) % genericChemDistractors.length],
+                  genericChemDistractors[(lineIdx * 2 + 3) % genericChemDistractors.length]
+                ],
+                correct: 0,
+                explanation: `${topicName}: ${desc}`
+              });
+            }
           }
         });
       }
