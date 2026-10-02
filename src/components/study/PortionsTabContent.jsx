@@ -1,11 +1,13 @@
 import { Target, CheckCircle2, Circle, ArrowRight, Zap, FlaskConical, Dna, Brain } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
+import PriorityBadge from './PriorityBadge';
 
 export default function PortionsTabContent({
   completedPortionChapters,
   onTogglePortionChapter,
   onJumpToChapter,
-  portionsStats
+  portionsStats,
+  getPriority
 }) {
   const getSubjectIcon = (subjKey) => {
     switch (subjKey) {
@@ -154,15 +156,27 @@ export default function PortionsTabContent({
                         </div>
                       </button>
 
-                      {ch.available && (
-                        <button
-                          onClick={() => onJumpToChapter(subjKey, ch.volumeId, ch.id)}
-                          className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)] transition-colors shrink-0"
-                          title="Open chapter notes"
-                        >
-                          <ArrowRight size={16} />
-                        </button>
-                      )}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {getPriority && (
+                          <PriorityBadge
+                            id={ch.id}
+                            rating={getPriority(ch.id)}
+                            interactive={false}
+                            size="sm"
+                            showMeter={false}
+                          />
+                        )}
+
+                        {ch.available && (
+                          <button
+                            onClick={() => onJumpToChapter(subjKey, ch.volumeId, ch.id)}
+                            className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-surface)] transition-colors shrink-0"
+                            title="Open chapter notes"
+                          >
+                            <ArrowRight size={16} />
+                          </button>
+                        )}
+                      </div>
                     </div>
                   );
                 })}

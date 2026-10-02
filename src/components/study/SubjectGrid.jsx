@@ -76,7 +76,7 @@ export default function SubjectGrid({
           {/* Universal Search Button Trigger */}
           <button
             onClick={onOpenUniversalSearch}
-            className="flex-1 flex items-center justify-between gap-3 px-4 py-3 bg-[var(--bg-surface)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] rounded-xl text-left text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all hover:shadow-xs cursor-pointer group"
+            className="flex-1 flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 bg-[var(--bg-surface)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] rounded-xl text-left text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all hover:shadow-xs cursor-pointer group touch-manipulation active:scale-[0.99]"
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-8 h-8 rounded-lg bg-[var(--accent-primary)]/15 flex items-center justify-center text-[var(--accent-primary)] shrink-0">
@@ -107,7 +107,7 @@ export default function SubjectGrid({
         </div>
 
         {/* Quick Subject Search Scope Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none text-xs">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none touch-pan-x text-xs">
           <span className="text-[var(--text-muted)] text-[11px] font-medium shrink-0 flex items-center gap-1">
             <Sparkles size={12} className="text-[var(--accent-primary)]" />
             Subject Search:
@@ -116,7 +116,7 @@ export default function SubjectGrid({
             <button
               key={s.id}
               onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(s.id)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer shrink-0 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
             >
               {getSubjectIcon(s.id, 13)}
               <span>Search {s.name}</span>
@@ -136,7 +136,7 @@ export default function SubjectGrid({
             <div
               key={subj.id}
               onClick={() => onSelectSubject(subj.id)}
-              className="group relative flex flex-col justify-between p-5 sm:p-7 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 hover:border-[var(--accent-primary)] overflow-hidden"
+              className="group relative flex flex-col justify-between p-5 sm:p-7 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 hover:border-[var(--accent-primary)] overflow-hidden touch-manipulation"
             >
               {/* Top Row: Icon & Code & Search */}
               <div>
@@ -151,7 +151,7 @@ export default function SubjectGrid({
                         e.stopPropagation();
                         onOpenSubjectSearch && onOpenSubjectSearch(subj.id);
                       }}
-                      className="p-1.5 rounded-lg border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
+                      className="p-2 rounded-xl border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center touch-manipulation active:scale-90"
                       title={`Search topics & words in ${subj.name}`}
                     >
                       <Search size={14} />

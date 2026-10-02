@@ -8,11 +8,14 @@ import {
 import { getTestMakerMCQs, getTestMakerPYQs } from '../../data/questionEngine';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { formatMathString } from './FormulaCard';
+import PriorityBadge from './PriorityBadge';
 
 export default function TestMakerTabContent({
   selectedSubject: initialSubject = 'physics',
   selectedChapter: initialChapter = null,
-  onJumpToChapter
+  onJumpToChapter,
+  getPriority,
+  onSetPriority
 }) {
   const [currentSubjectKey, setCurrentSubjectKey] = useState(initialSubject || 'physics');
   const [currentChapterId, setCurrentChapterId] = useState(initialChapter || null);
@@ -109,6 +112,15 @@ export default function TestMakerTabContent({
   // Clear all subchapters
   const handleClearAll = () => {
     setSelectedSubtopicIds([]);
+  };
+
+  // Select only high priority (>= 8/10) subchapters
+  const handleSelectHighPriority = () => {
+    const highIds = subchapters.filter(s => {
+      const p = getPriority ? getPriority(s.id) : 8;
+      return p >= 8;
+    }).map(s => s.id);
+    setSelectedSubtopicIds(highIds.length > 0 ? highIds : subchapters.map(s => s.id));
   };
 
   // Generate MCQs strictly from ONLY the selected subtopics
@@ -347,6 +359,15 @@ export default function TestMakerTabContent({
               <div className="flex items-center gap-2 flex-1 min-w-[240px]">
                 <BookOpen size={16} className="text-[var(--accent-primary)] shrink-0" />
                 <span className="text-xs font-bold text-[var(--text-secondary)] shrink-0">Select Chapter:</span>
+                {activeChapter && (
+                  <PriorityBadge
+                    id={activeChapter.id}
+                    rating={getPriority ? getPriority(activeChapter.id) : undefined}
+                    onChangePriority={onSetPriority}
+                    title={activeChapter.title}
+                    size="sm"
+                  />
+                )}
                 <div className="relative flex-1">
                   <select
                     value={currentChapterId || ''}
@@ -411,6 +432,15 @@ export default function TestMakerTabContent({
 
                 <div className="flex items-center gap-2">
                   <button
+                    onClick={handleSelectHighPriority}
+                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-500 hover:text-amber-400 cursor-pointer"
+                    title="Select only topics with Exam Priority rating 8 or higher"
+                  >
+                    <Zap size={12} className="text-amber-500 fill-amber-500" />
+                    <span>High Priority (≥8)</span>
+                  </button>
+                  <span className="text-[var(--text-muted)]">•</span>
+                  <button
                     onClick={handleSelectAll}
                     className="text-[11px] font-medium text-[var(--accent-primary)] hover:underline cursor-pointer"
                   >
@@ -442,7 +472,7 @@ export default function TestMakerTabContent({
                           toggleSubchapter(sub.id);
                         }
                       }}
-                      className={`flex items-start gap-3 p-3 rounded-xl border text-xs cursor-pointer select-none transition-all ${
+                      className={`flex items-start gap-3 p-3 rounded-xl border text-xs cursor-pointer select-none transition-all touch-manipulation min-h-[44px] active:scale-[0.99] ${
                         isChecked
                           ? 'bg-[var(--accent-primary)]/10 border-[var(--accent-primary)] shadow-xs font-medium text-[var(--text-primary)]'
                           : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)]/50'
@@ -456,9 +486,18 @@ export default function TestMakerTabContent({
                         className="pointer-events-none mt-0.5 w-4 h-4 rounded text-[var(--accent-primary)] focus:ring-[var(--accent-primary)] cursor-pointer"
                       />
                       <div className="flex-1 min-w-0 pointer-events-none">
-                        <span className="block font-medium text-[var(--text-primary)] leading-tight">
-                          {sub.title}
-                        </span>
+                        <div className="flex items-center justify-between gap-1.5">
+                          <span className="block font-medium text-[var(--text-primary)] leading-tight">
+                            {sub.title}
+                          </span>
+                          <PriorityBadge
+                            id={sub.id}
+                            rating={getPriority ? getPriority(sub.id) : undefined}
+                            interactive={false}
+                            size="sm"
+                            showMeter={false}
+                          />
+                        </div>
                         <span className="text-[10px] font-mono text-[var(--text-muted)] mt-0.5 block">
                           ID: {sub.id}
                         </span>
@@ -483,7 +522,7 @@ export default function TestMakerTabContent({
                         <button
                           key={cnt}
                           onClick={() => setQuestionCount(cnt)}
-                          className={`flex-1 py-1 px-2 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer ${
+                          className={`flex-1 py-2 sm:py-1 px-2 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer touch-manipulation active:scale-95 ${
                             questionCount === cnt
                               ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs'
                               : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/50'
@@ -510,7 +549,7 @@ export default function TestMakerTabContent({
                         <button
                           key={lvl.id}
                           onClick={() => setDifficultyFilter(lvl.id)}
-                          className={`flex-1 py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+                          className={`flex-1 py-2 sm:py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer touch-manipulation active:scale-95 ${
                             difficultyFilter === lvl.id
                               ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
                               : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/50'
@@ -530,7 +569,7 @@ export default function TestMakerTabContent({
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => setInstantFeedbackMode(false)}
-                        className={`flex-1 py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+                        className={`flex-1 py-2 sm:py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer touch-manipulation active:scale-95 ${
                           !instantFeedbackMode
                             ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
                             : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)]'
@@ -541,7 +580,7 @@ export default function TestMakerTabContent({
                       </button>
                       <button
                         onClick={() => setInstantFeedbackMode(true)}
-                        className={`flex-1 py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+                        className={`flex-1 py-2 sm:py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer touch-manipulation active:scale-95 ${
                           instantFeedbackMode
                             ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
                             : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)]'
@@ -574,7 +613,7 @@ export default function TestMakerTabContent({
                 <button
                   disabled={selectedSubtopicIds.length === 0}
                   onClick={handleStartTest}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs font-bold font-serif hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-2.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs sm:text-sm font-bold font-serif hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto touch-manipulation min-h-[44px]"
                 >
                   <Play size={14} fill="currentColor" />
                   <span>Start {questionCount}-Question Custom Test</span>
@@ -855,9 +894,9 @@ export default function TestMakerTabContent({
                 <button
                   disabled={currentQIndex === 0}
                   onClick={() => setCurrentQIndex(prev => Math.max(0, prev - 1))}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border-default)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 sm:py-1.5 rounded-xl border border-[var(--border-default)] text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation active:scale-95 min-h-[40px]"
                 >
-                  <ArrowLeft size={13} />
+                  <ArrowLeft size={14} />
                   <span>Previous</span>
                 </button>
 
@@ -869,7 +908,7 @@ export default function TestMakerTabContent({
                         delete nextAns[generatedMCQs[currentQIndex]?.id];
                         setUserAnswers(nextAns);
                       }}
-                      className="text-xs text-[var(--text-muted)] hover:text-red-500 underline cursor-pointer"
+                      className="text-xs text-[var(--text-muted)] hover:text-red-500 underline cursor-pointer p-2 touch-manipulation"
                     >
                       Clear Selection
                     </button>
@@ -879,10 +918,10 @@ export default function TestMakerTabContent({
                 <button
                   disabled={currentQIndex === generatedMCQs.length - 1}
                   onClick={() => setCurrentQIndex(prev => Math.min(generatedMCQs.length - 1, prev + 1))}
-                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs font-bold hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-5 py-2 sm:py-1.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs font-bold hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed shadow-xs touch-manipulation active:scale-95 min-h-[40px]"
                 >
                   <span>Next</span>
-                  <ArrowRight size={13} />
+                  <ArrowRight size={14} />
                 </button>
               </div>
             </div>

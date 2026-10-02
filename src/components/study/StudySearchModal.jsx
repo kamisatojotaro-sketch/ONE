@@ -6,13 +6,15 @@ import {
 } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { searchStudyContent, POPULAR_SEARCH_SUGGESTIONS } from '../../utils/studySearch';
+import PriorityBadge from './PriorityBadge';
 
 export default function StudySearchModal({
   isOpen,
   onClose,
   initialScope = 'all', // 'all' | 'physics' | 'chemistry' | 'biology' | 'psychology'
   onNavigate,
-  currentSubject = null
+  currentSubject = null,
+  getPriority
 }) {
   const [query, setQuery] = useState('');
   const [scope, setScope] = useState(initialScope || 'all');
@@ -198,25 +200,28 @@ export default function StudySearchModal({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-start justify-center pt-8 sm:pt-16 p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 cursor-pointer"
+      className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-16 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 cursor-pointer"
       onClick={onClose}
     >
       <div 
-        className="w-full max-w-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-150 cursor-default"
+        className="w-full sm:max-w-3xl bg-[var(--bg-surface)] border-t sm:border border-[var(--border-default)] rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[94vh] sm:h-auto sm:max-h-[85vh] animate-in slide-in-from-bottom sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Mobile Swipe / Grab Handle */}
+        <div className="sm:hidden w-12 h-1.5 bg-[var(--border-default)] rounded-full mx-auto mt-2.5 mb-1 shrink-0" />
+
         {/* Top Header & Search Bar */}
-        <div className="p-3.5 sm:p-4 border-b border-[var(--border-default)] bg-[var(--bg-elevated)]/60">
-          <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="p-3 sm:p-4 border-b border-[var(--border-default)] bg-[var(--bg-elevated)]/60">
+          <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-3">
             {/* Scope Switcher Buttons */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none touch-pan-x">
               {subjectTabs.map((tab) => {
                 const isActive = scope === tab.id;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setScope(tab.id)}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer touch-manipulation active:scale-95 ${
                       isActive
                         ? 'bg-[var(--accent-primary)] text-white shadow-sm font-semibold'
                         : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)]'
@@ -231,7 +236,7 @@ export default function StudySearchModal({
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-hover)] transition-colors cursor-pointer shrink-0"
+              className="p-2 sm:p-1.5 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-hover)] transition-colors cursor-pointer shrink-0 min-w-[36px] min-h-[36px] flex items-center justify-center touch-manipulation"
               title="Close search (Esc)"
             >
               <X size={18} />
@@ -241,7 +246,7 @@ export default function StudySearchModal({
           {/* Search Input Box */}
           <div className="relative flex items-center">
             <div className="absolute left-3.5 pointer-events-none text-[var(--text-muted)]">
-              <Search size={20} className="text-[var(--accent-primary)]" />
+              <Search size={18} className="text-[var(--accent-primary)]" />
             </div>
 
             <input
@@ -251,17 +256,17 @@ export default function StudySearchModal({
               onChange={(e) => setQuery(e.target.value)}
               placeholder={
                 scope === 'all'
-                  ? 'Search topics, definitions, formulas, reactions & words across all subjects...'
-                  : `Search topics, words, formulas & definitions in ${NCERT_SYLLABUS[scope]?.name || scope}...`
+                  ? 'Search topics, words, formulas, reactions...'
+                  : `Search in ${NCERT_SYLLABUS[scope]?.name || scope}...`
               }
-              className="w-full pl-11 pr-20 py-3 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-xl text-sm sm:text-base text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent transition-all shadow-inner"
+              className="w-full pl-10 pr-20 py-2.5 sm:py-3 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-xl text-base text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-transparent transition-all shadow-inner"
             />
 
-            <div className="absolute right-3 flex items-center gap-1.5">
+            <div className="absolute right-2.5 flex items-center gap-1.5">
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="p-1 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] text-xs cursor-pointer"
+                  className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] text-xs cursor-pointer touch-manipulation"
                   title="Clear search"
                 >
                   <X size={14} />
@@ -274,7 +279,7 @@ export default function StudySearchModal({
           </div>
 
           {/* Filter Pills */}
-          <div className="flex items-center gap-1.5 mt-2.5 overflow-x-auto pb-0.5 scrollbar-none text-xs">
+          <div className="flex items-center gap-1.5 mt-2 sm:mt-2.5 overflow-x-auto pb-0.5 scrollbar-none touch-pan-x text-xs">
             {filterPills.map((pill) => {
               const isPillActive = filterType === pill.id;
               return (
@@ -400,6 +405,17 @@ export default function StudySearchModal({
                         <span>{item.typeLabel || typeInfo.label}</span>
                       </span>
 
+                      {/* Exam Priority Badge */}
+                      {getPriority && (item.subchapterId || item.chapterId) && (
+                        <PriorityBadge
+                          id={item.subchapterId || item.chapterId}
+                          rating={getPriority(item.subchapterId || item.chapterId)}
+                          interactive={false}
+                          size="sm"
+                          showMeter={false}
+                        />
+                      )}
+
                       {/* Breadcrumbs */}
                       <div className="hidden sm:flex items-center gap-1 text-[11px] text-[var(--text-muted)] ml-auto truncate">
                         <span className="truncate">{item.chapterTitle}</span>
@@ -438,21 +454,26 @@ export default function StudySearchModal({
         </div>
 
         {/* Footer Navigation Bar */}
-        <div className="px-4 py-2.5 border-t border-[var(--border-default)] bg-[var(--bg-elevated)]/80 flex items-center justify-between text-xs text-[var(--text-muted)]">
+        <div className="px-4 py-2.5 border-t border-[var(--border-default)] bg-[var(--bg-elevated)]/90 flex items-center justify-between text-xs text-[var(--text-muted)] shrink-0">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded text-[10px] font-mono">↑</kbd>
-              <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded text-[10px] font-mono">↓</kbd>
-              <span className="ml-0.5 text-[11px]">Navigate</span>
+            <span className="sm:hidden text-[11px] text-[var(--text-secondary)] font-medium">
+              Tap any result to jump to note
             </span>
-            <span className="inline-flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded text-[10px] font-mono">↵</kbd>
-              <span className="ml-0.5 text-[11px]">Select</span>
-            </span>
+            <div className="hidden sm:flex items-center gap-3">
+              <span className="inline-flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded text-[10px] font-mono">↑</kbd>
+                <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded text-[10px] font-mono">↓</kbd>
+                <span className="ml-0.5 text-[11px]">Navigate</span>
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded text-[10px] font-mono">↵</kbd>
+                <span className="ml-0.5 text-[11px]">Select</span>
+              </span>
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono">Class 12 NCERT Core</span>
+            <span className="text-[11px] font-mono text-[var(--text-muted)]">Class 12 NCERT</span>
           </div>
         </div>
       </div>

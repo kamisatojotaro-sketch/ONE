@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../data/ncertSyllabus';
+import { getDefaultPriority } from '../data/priorityData';
 
 const STORAGE_KEY = 'one_study_session_v1';
 
@@ -37,7 +38,8 @@ export function useStudySession() {
             selectedVolume: matchingVolume || parsed.selectedVolume || subject.volumes[0]?.id,
             selectedChapter: matchingChapter,
             selectedSubchapter: matchingSub,
-            chapterStudyMode: parsed.chapterStudyMode || 'GENERAL'
+            chapterStudyMode: parsed.chapterStudyMode || 'GENERAL',
+            userPriorities: parsed.userPriorities || {}
           };
         }
       }
@@ -54,7 +56,8 @@ export function useStudySession() {
       completedSections: [],
       completedSubchapters: [],
       completedPortionChapters: [],
-      userNotes: {}
+      userNotes: {},
+      userPriorities: {}
     };
   });
 
@@ -179,6 +182,29 @@ export function useStudySession() {
       userNotes: { ...prev.userNotes, [sectionId]: text }
     }));
   }, []);
+
+  const setItemPriority = useCallback((id, rating) => {
+    const clamped = Math.max(0, Math.min(10, Math.round(Number(rating) || 0)));
+    setSessionState(prev => ({
+      ...prev,
+      userPriorities: { ...(prev.userPriorities || {}), [id]: clamped }
+    }));
+  }, []);
+
+  const resetItemPriority = useCallback((id) => {
+    setSessionState(prev => {
+      const next = { ...(prev.userPriorities || {}) };
+      delete next[id];
+      return { ...prev, userPriorities: next };
+    });
+  }, []);
+
+  const getPriority = useCallback((id) => {
+    if (sessionState.userPriorities && sessionState.userPriorities[id] !== undefined) {
+      return sessionState.userPriorities[id];
+    }
+    return getDefaultPriority(id);
+  }, [sessionState.userPriorities]);
 
   // Compute Volume Progress
   const volumeProgress = useMemo(() => {
@@ -320,6 +346,9 @@ export function useStudySession() {
     markSubchapterCompleted,
     togglePortionChapter,
     saveUserNote,
+    setItemPriority,
+    resetItemPriority,
+    getPriority,
     jumpToLocation,
     volumeProgress,
     activeSubchapterStats,

@@ -5,6 +5,7 @@ import FormulaCard, { formatMathString } from './FormulaCard';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
 import ReactionDiagramCard from './ReactionDiagramCard';
 import StructuredSectionView from './StructuredSectionView';
+import PriorityBadge from './PriorityBadge';
 
 export default function ChapterDrillDown({
   selectedSubject,
@@ -21,7 +22,10 @@ export default function ChapterDrillDown({
   onMarkSubchapterCompleted,
   userNotes,
   onSaveUserNote,
-  activeSubchapterStats
+  activeSubchapterStats,
+  getPriority,
+  onSetPriority,
+  onResetPriority
 }) {
   const subject = NCERT_SYLLABUS[selectedSubject];
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
@@ -132,10 +136,20 @@ export default function ChapterDrillDown({
             <ArrowLeft size={16} />
           </button>
           <div className="min-w-0">
-            <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] font-mono">
-              <span className="truncate">{subject.name}</span>
-              <span>/</span>
-              <span className="shrink-0">Ch {chapter.number}</span>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] font-mono">
+                <span className="truncate">{subject.name}</span>
+                <span>/</span>
+                <span className="shrink-0">Ch {chapter.number}</span>
+              </div>
+              <PriorityBadge
+                id={chapter.id}
+                rating={getPriority ? getPriority(chapter.id) : undefined}
+                onChangePriority={onSetPriority}
+                onResetPriority={onResetPriority}
+                title={chapter.title}
+                size="sm"
+              />
             </div>
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] mt-0.5 truncate">
               {chapter.title}
@@ -152,9 +166,11 @@ export default function ChapterDrillDown({
           >
             {chapter.subchapters.map((sub) => {
               const subCompleted = completedSubchapters.includes(sub.id);
+              const pRating = getPriority ? getPriority(sub.id) : undefined;
+              const pTag = pRating !== undefined ? `[P: ${pRating}/10] ` : '';
               return (
                 <option key={sub.id} value={sub.id} className="bg-[var(--bg-surface)] text-[var(--text-primary)]">
-                  {subCompleted ? '✓ ' : ''}{sub.title}
+                  {subCompleted ? '✓ ' : ''}{pTag}{sub.title}
                 </option>
               );
             })}
@@ -170,9 +186,19 @@ export default function ChapterDrillDown({
             <BookOpen size={16} />
           </div>
           <div className="min-w-0">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
-              Active NCERT Subtopic
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+                Active NCERT Subtopic
+              </span>
+              <PriorityBadge
+                id={currentSubchapter.id}
+                rating={getPriority ? getPriority(currentSubchapter.id) : undefined}
+                onChangePriority={onSetPriority}
+                onResetPriority={onResetPriority}
+                title={currentSubchapter.title}
+                size="sm"
+              />
+            </div>
             <h3 className="font-serif text-base sm:text-lg md:text-xl font-bold text-[var(--text-primary)] truncate">
               {currentSubchapter.title}
             </h3>
@@ -204,10 +230,10 @@ export default function ChapterDrillDown({
         </div>
 
         {/* Toggle Pills */}
-        <div className="flex items-center gap-1 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0 self-start sm:self-auto">
+        <div className="flex items-center gap-1 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0 w-full sm:w-auto">
           <button
             onClick={() => onSetChapterStudyMode?.('GENERAL')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] ${
               chapterStudyMode === 'GENERAL'
                 ? 'bg-[var(--accent-primary)] text-white shadow-xs'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -218,7 +244,7 @@ export default function ChapterDrillDown({
           </button>
           <button
             onClick={() => onSetChapterStudyMode?.('QUESTIONS')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] ${
               chapterStudyMode === 'QUESTIONS'
                 ? 'bg-[var(--accent-primary)] text-white shadow-xs'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'

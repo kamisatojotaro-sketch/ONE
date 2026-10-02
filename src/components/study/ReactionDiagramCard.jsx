@@ -93,7 +93,7 @@ export function SingleReactionDiagram({ rxn }) {
       </div>
 
       {/* Main Visual Reaction Diagram Flow Scheme */}
-      <div className="bg-[var(--bg-base)] p-3 sm:p-4 rounded-xl border border-[var(--border-subtle)] overflow-x-auto">
+      <div className="bg-[var(--bg-base)] p-3 sm:p-4 rounded-xl border border-[var(--border-subtle)] overflow-x-auto scrollbar-none touch-pan-x">
         {/* Render Customized Visual Diagram by Type */}
         {rxn.diagramType === 'cumene' && (
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 py-2 min-w-[500px]">

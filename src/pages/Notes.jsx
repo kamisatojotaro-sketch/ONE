@@ -119,6 +119,7 @@ export default function Notes() {
                   onTogglePortionChapter={session.togglePortionChapter}
                   onJumpToChapter={handleJumpToChapter}
                   portionsStats={session.portionsStats}
+                  getPriority={session.getPriority}
                 />
               )}
 
@@ -148,6 +149,8 @@ export default function Notes() {
                   selectedSubject={session.selectedSubject}
                   selectedChapter={session.selectedChapter}
                   onJumpToChapter={handleJumpToChapter}
+                  getPriority={session.getPriority}
+                  onSetPriority={session.setItemPriority}
                 />
               )}
 
@@ -162,6 +165,9 @@ export default function Notes() {
                       onSelectChapter={session.setSelectedChapter}
                       completedSections={session.completedSections}
                       completedPortionChapters={session.completedPortionChapters}
+                      getPriority={session.getPriority}
+                      onSetPriority={session.setItemPriority}
+                      onResetPriority={session.resetItemPriority}
                     />
                   ) : (
                     /* Chapter Drill-down View */
@@ -181,6 +187,9 @@ export default function Notes() {
                       userNotes={session.userNotes}
                       onSaveUserNote={session.saveUserNote}
                       activeSubchapterStats={session.activeSubchapterStats}
+                      getPriority={session.getPriority}
+                      onSetPriority={session.setItemPriority}
+                      onResetPriority={session.resetItemPriority}
                     />
                   )}
                 </>
@@ -197,6 +206,7 @@ export default function Notes() {
         initialScope={searchScope}
         onNavigate={handleNavigateSearchResult}
         currentSubject={session.selectedSubject}
+        getPriority={session.getPriority}
       />
     </div>
   );

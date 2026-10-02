@@ -1,13 +1,22 @@
-import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target, ArrowDownUp, Filter, Flame } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import PriorityBadge from './PriorityBadge';
+import { getDefaultPriority } from '../../data/priorityData';
 
 export default function ChapterList({
   selectedSubject,
   selectedVolume,
   onSelectChapter,
-  completedSections,
-  completedPortionChapters
+  completedSections = [],
+  completedPortionChapters = [],
+  getPriority,
+  onSetPriority,
+  onResetPriority
 }) {
+  const [priorityFilter, setPriorityFilter] = useState('ALL'); // 'ALL' | 'HIGH' | 'MED' | 'LOW'
+  const [sortBy, setSortBy] = useState('DEFAULT'); // 'DEFAULT' | 'PRIORITY_DESC' | 'PRIORITY_ASC'
+
   const subject = NCERT_SYLLABUS[selectedSubject];
   if (!subject) return null;
 
@@ -38,6 +47,52 @@ export default function ChapterList({
     };
   };
 
+  // Enrich chapters with priority ratings
+  const chaptersWithPriority = useMemo(() => {
+    return volume.chapters.map((ch) => {
+      const priority = getPriority ? getPriority(ch.id) : getDefaultPriority(ch.id);
+      return {
+        ...ch,
+        priority
+      };
+    });
+  }, [volume.chapters, getPriority]);
+
+  // Priority count stats for filter tabs
+  const priorityStats = useMemo(() => {
+    let high = 0;
+    let med = 0;
+    let low = 0;
+    chaptersWithPriority.forEach((c) => {
+      if (c.priority >= 8) high++;
+      else if (c.priority >= 5) med++;
+      else low++;
+    });
+    return {
+      all: chaptersWithPriority.length,
+      high,
+      med,
+      low
+    };
+  }, [chaptersWithPriority]);
+
+  // Filtered & Sorted Chapter List
+  const displayedChapters = useMemo(() => {
+    let list = chaptersWithPriority.filter((c) => {
+      if (priorityFilter === 'HIGH') return c.priority >= 8;
+      if (priorityFilter === 'MED') return c.priority >= 5 && c.priority <= 7;
+      if (priorityFilter === 'LOW') return c.priority <= 4;
+      return true;
+    });
+
+    if (sortBy === 'PRIORITY_DESC') {
+      list = [...list].sort((a, b) => b.priority - a.priority);
+    } else if (sortBy === 'PRIORITY_ASC') {
+      list = [...list].sort((a, b) => a.priority - b.priority);
+    }
+    return list;
+  }, [chaptersWithPriority, priorityFilter, sortBy]);
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Volume Banner */}
@@ -55,9 +110,82 @@ export default function ChapterList({
         </div>
       </div>
 
+      {/* Filter and Sort Toolbar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xs">
+        {/* Priority Filter Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+          <button
+            onClick={() => setPriorityFilter('ALL')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer touch-manipulation ${
+              priorityFilter === 'ALL'
+                ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            All Chapters ({priorityStats.all})
+          </button>
+          <button
+            onClick={() => setPriorityFilter('HIGH')}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer touch-manipulation ${
+              priorityFilter === 'HIGH'
+                ? 'bg-amber-600 text-white shadow-xs'
+                : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-amber-500 border border-[var(--border-subtle)]'
+            }`}
+          >
+            <Flame size={13} className={priorityFilter === 'HIGH' ? 'text-white' : 'text-amber-500'} />
+            High Priority 8-10 ({priorityStats.high})
+          </button>
+          <button
+            onClick={() => setPriorityFilter('MED')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer touch-manipulation ${
+              priorityFilter === 'MED'
+                ? 'bg-sky-600 text-white shadow-xs'
+                : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-sky-500 border border-[var(--border-subtle)]'
+            }`}
+          >
+            Core 5-7 ({priorityStats.med})
+          </button>
+          <button
+            onClick={() => setPriorityFilter('LOW')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer touch-manipulation ${
+              priorityFilter === 'LOW'
+                ? 'bg-stone-600 text-white shadow-xs'
+                : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            Low 0-4 ({priorityStats.low})
+          </button>
+        </div>
+
+        {/* Sort Controls */}
+        <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+          <span className="text-[11px] font-mono text-[var(--text-muted)] hidden md:inline">Sort:</span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="text-xs font-semibold bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 rounded-xl cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)]"
+          >
+            <option value="DEFAULT">Syllabus Order</option>
+            <option value="PRIORITY_DESC">🔥 Priority: High to Low</option>
+            <option value="PRIORITY_ASC">⚡ Priority: Low to High</option>
+          </select>
+        </div>
+      </div>
+
       {/* Chapters Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-        {volume.chapters.map((ch) => {
+      {displayedChapters.length === 0 ? (
+        <div className="p-8 text-center bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl space-y-3">
+          <p className="text-sm font-sans text-[var(--text-secondary)]">No chapters match the selected priority filter.</p>
+          <button
+            onClick={() => setPriorityFilter('ALL')}
+            className="px-4 py-2 rounded-xl bg-[var(--accent-primary)] text-white text-xs font-bold cursor-pointer"
+          >
+            Show All Chapters
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+          {displayedChapters.map((ch) => {
           const stats = calculateChapterCompletion(ch);
           const isPortion = ch.isExamPortion;
           const isPortionMarked = completedPortionChapters.includes(ch.id);
@@ -74,9 +202,19 @@ export default function ChapterList({
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">
-                    Chapter {ch.number}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">
+                      Chapter {ch.number}
+                    </span>
+                    <PriorityBadge
+                      id={ch.id}
+                      rating={ch.priority}
+                      title={ch.title}
+                      onChangePriority={onSetPriority}
+                      onResetPriority={onResetPriority}
+                      size="sm"
+                    />
+                  </div>
 
                   <div className="flex items-center gap-1.5">
                     {isPortion && (
@@ -155,6 +293,7 @@ export default function ChapterList({
           );
         })}
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
 }

@@ -363,7 +363,7 @@ export default function FormulaCard({ formulaList, derivations }) {
               </div>
 
               {/* Big, Clean Mathematical Typography */}
-              <div className="py-2 px-2.5 sm:px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto">
+              <div className="py-2 px-2.5 sm:px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto scrollbar-none touch-pan-x">
                 <div
                   className="font-serif text-sm sm:text-lg md:text-xl font-bold tracking-wide text-[var(--text-primary)] text-center py-1 sm:py-2 min-w-min"
                   dangerouslySetInnerHTML={{ __html: meta.display }}
