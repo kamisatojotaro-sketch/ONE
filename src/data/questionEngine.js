@@ -1416,6 +1416,55 @@ const PROCEDURAL_GENERATORS = {
         correct: 0,
         explanation: `Motional EMF ε = B · L · v = ${B} × ${L_m} × ${vel} = ${emf} V.`
       };
+    },
+    (v) => {
+      const N = [100, 200, 500][v % 3];
+      const deltaB = [0.2, 0.4, 0.5][(v + 1) % 3];
+      const area_cm2 = [50, 100, 200][(v + 2) % 3];
+      const dt = [0.1, 0.05, 0.2][v % 3];
+      const A_m2 = area_cm2 * 1e-4;
+      const emf = ((N * A_m2 * deltaB) / dt).toFixed(1);
+      return {
+        subtopicId: 'phy-sub-6-2',
+        subtopicName: '6.2 Faraday’s Laws of Electromagnetic Induction',
+        difficulty: 'medium',
+        question: `A tightly wound circular coil of ${N} turns and cross-sectional area ${area_cm2} cm² is placed perpendicular to a magnetic field. If the field drops to zero in ${dt} s from an initial value of ${deltaB} T, the magnitude of the induced EMF is:`,
+        options: [`${emf} V`, `${(emf * 2).toFixed(1)} V`, `${(emf / 2).toFixed(1)} V`, '0 V'],
+        correct: 0,
+        explanation: `According to Faraday's 2nd Law, |ε| = N · (ΔΦ / Δt) = N · (A · ΔB) / Δt = ${N} × (${A_m2} × ${deltaB}) / ${dt} = ${emf} V.`
+      };
+    },
+    (v) => {
+      return {
+        subtopicId: 'phy-sub-6-2',
+        subtopicName: '6.2 Faraday’s Laws of Electromagnetic Induction',
+        difficulty: 'hard',
+        question: `A bar magnet is moved rapidly towards a coil in time t₁, and later moved slowly into the same coil in time t₂ (where t₂ > t₁). If q₁ and q₂ are the total charges induced, and ε₁ and ε₂ are the induced EMFs, which relationship is correct?`,
+        options: [
+          'ε₁ > ε₂, but q₁ = q₂ (charge is strictly independent of time)',
+          'ε₁ > ε₂, and q₁ > q₂',
+          'ε₁ = ε₂, and q₁ = q₂',
+          'ε₁ < ε₂, but q₁ = q₂'
+        ],
+        correct: 0,
+        explanation: `CBSE Exam Favorite: Induced EMF depends on time rate of flux change (|ε| = ΔΦ/Δt), so rapid motion produces greater EMF (ε₁ > ε₂). However, total induced charge q = ΔΦ/R is completely independent of time and speed, so q₁ = q₂!`
+      };
+    },
+    (v) => {
+      return {
+        subtopicId: 'phy-sub-6-2',
+        subtopicName: '6.2 Faraday’s Laws of Electromagnetic Induction',
+        difficulty: 'easy',
+        question: `A powerful bar magnet with a field of 5.0 T is held stationary inside a closed coil of 1,000 turns and resistance 10 Ω. What is the induced current flowing in the coil?`,
+        options: [
+          '0 A (because magnetic flux is not changing with time)',
+          '500 A',
+          '50 A',
+          '0.5 A'
+        ],
+        correct: 0,
+        explanation: `Faraday’s 1st Law requires that magnetic flux linked with the circuit MUST CHANGE with time (dΦ/dt ≠ 0). For a stationary magnet (v = 0), dΦ/dt = 0, so induced EMF and induced current are strictly 0 A.`
+      };
     }
   ],
 
@@ -1514,6 +1563,66 @@ const PROCEDURAL_GENERATORS = {
         ],
         correct: 0,
         explanation: 'More negative E° indicates greater electropositive character and higher ease of losing electrons, hence acts as a stronger reducing agent.'
+      };
+    },
+    (v) => {
+      const target = [
+        { ion: 'Al³⁺ to Al', n: 3, mass: '27 g', faradays: 3, C: '289,500 C' },
+        { ion: 'Cu²⁺ to Cu', n: 2, mass: '63.5 g', faradays: 2, C: '193,000 C' },
+        { ion: 'Ag⁺ to Ag', n: 1, mass: '108 g', faradays: 1, C: '96,500 C' },
+        { ion: '1 mol of H₂O to O₂', n: 4, mass: '32 g of O₂', faradays: 4, C: '386,000 C' }
+      ][v % 4];
+      return {
+        subtopicId: 'chem-sub-2-7',
+        subtopicName: '2.7 Faraday’s Laws of Electrolysis',
+        difficulty: 'medium',
+        question: `How much quantity of electricity (in Coulombs) is required to reduce 1 mole of ${target.ion}?`,
+        options: [
+          `${target.C} (${target.faradays} F)`,
+          `${(target.faradays * 96500 / 2).toLocaleString()} C (${target.faradays / 2} F)`,
+          '96,500 C (1 F)',
+          `${(target.faradays * 2 * 96500).toLocaleString()} C (${target.faradays * 2} F)`
+        ],
+        correct: 0,
+        explanation: `Reduction of ${target.ion} involves transfer of ${target.n} mole(s) of electrons. Since 1 mole of electrons carries 1 Faraday (96,500 C), total charge Q = ${target.n} × 96,500 C = ${target.C} (${target.faradays} F).`
+      };
+    },
+    (v) => {
+      const current = [1.5, 2.0, 3.0][v % 3];
+      const time_min = [20, 30, 40][(v + 1) % 3];
+      const time_sec = time_min * 60;
+      const M = 63.5;
+      const n = 2;
+      const mass = ((M * current * time_sec) / (n * 96500)).toFixed(3);
+      return {
+        subtopicId: 'chem-sub-2-7',
+        subtopicName: '2.7 Faraday’s Laws of Electrolysis',
+        difficulty: 'hard',
+        question: `A solution of CuSO₄ is electrolysed for ${time_min} minutes with a steady current of ${current} A. What mass of copper (M = 63.5 g/mol) is deposited at the cathode? (1 F = 96500 C/mol)`,
+        options: [
+          `${mass} g`,
+          `${(mass * 2).toFixed(3)} g`,
+          `${(mass / 2).toFixed(3)} g`,
+          `${(mass * 1.5).toFixed(3)} g`
+        ],
+        correct: 0,
+        explanation: `By Faraday's 1st Law: w = (M · I · t) / (n · 96500). Time must be converted to seconds: t = ${time_min} × 60 = ${time_sec} s. Here n = 2 for Cu²⁺. Hence w = (63.5 × ${current} × ${time_sec}) / (2 × 96500) = ${mass} g.`
+      };
+    },
+    (v) => {
+      return {
+        subtopicId: 'chem-sub-2-7',
+        subtopicName: '2.7 Faraday’s Laws of Electrolysis',
+        difficulty: 'medium',
+        question: `Two electrolytic cells containing AgNO₃ and CuSO₄ solutions are connected in series. If a certain quantity of electricity deposits 1.08 g of Ag (M = 108 g/mol), what mass of Cu (M = 63.5 g/mol) will be deposited simultaneously?`,
+        options: [
+          '0.3175 g',
+          '0.635 g',
+          '1.08 g',
+          '0.158 g'
+        ],
+        correct: 0,
+        explanation: `According to Faraday's 2nd Law, for series cells: (w₁ / w₂) = (E₁ / E₂). Equivalent weight of Ag = 108/1 = 108. Equivalent weight of Cu = 63.5/2 = 31.75. Therefore, w_Cu = w_Ag × (E_Cu / E_Ag) = 1.08 × (31.75 / 108) = 0.3175 g.`
       };
     }
   ],

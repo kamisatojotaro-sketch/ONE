@@ -790,5 +790,56 @@ export const REACTION_DIAGRAMS = [
       '2. Decrease in Basicity of Hydroxides: Covalent character increases from La(OH)₃ to Lu(OH)₃, so basic strength decreases: La(OH)₃ is most basic, Lu(OH)₃ is least basic.',
       '3. High Density of 5d Transition Metals: Radius stays small while mass doubles, leading to exceptionally high densities (e.g. Osmium and Iridium).'
     ]
+  },
+
+  {
+    id: 'rxn-faraday-electrolysis',
+    subtopicId: 'chem-sub-2-7',
+    chapterId: 'chem-ch-2',
+    title: 'Faraday’s Laws of Electrolysis (Quantitative Deposition)',
+    subtitle: 'Charge-to-Mass Relationship in Electrolytic Cells (w = zIt = M·I·t / n·F)',
+    category: 'physical',
+    boardNote: 'CBSE Formula Focus: w = z·I·t = (M·I·t)/(n·96500). Time t must strictly be in SECONDS. 1 Faraday (96500 C) deposits 1 mole equivalent.',
+    diagramType: 'faraday-electrolysis',
+    firstLaw: {
+      formula: 'w = z · Q = z · I · t = (M · I · t) / (n · 96500)',
+      statement: 'Mass deposited is directly proportional to quantity of electric charge passed (Q = I · t).'
+    },
+    secondLaw: {
+      formula: 'w₁ / w₂ = E₁ / E₂ = (M₁ / n₁) / (M₂ / n₂)',
+      statement: 'When same charge passes through series cells, masses deposited are proportional to equivalent weights.'
+    },
+    depositionRequirements: [
+      { metal: 'Ag⁺ + e⁻ ⟶ Ag(s)', charge: '1 F (96,500 C)', mass: '108 g (1 mol)', equiv: '108 g/equiv' },
+      { metal: 'Cu²⁺ + 2e⁻ ⟶ Cu(s)', charge: '2 F (193,000 C)', mass: '63.5 g (1 mol)', equiv: '31.75 g/equiv' },
+      { metal: 'Al³⁺ + 3e⁻ ⟶ Al(s)', charge: '3 F (289,500 C)', mass: '27.0 g (1 mol)', equiv: '9.0 g/equiv' },
+      { metal: '2 H₂O ⟶ O₂ + 4H⁺ + 4e⁻', charge: '4 F (386,000 C)', mass: '32.0 g (1 mol O₂)', equiv: '8.0 g/equiv' }
+    ]
+  },
+
+  {
+    id: 'rxn-faraday-induction',
+    subtopicId: 'phy-sub-6-2',
+    chapterId: 'phy-ch-6',
+    title: 'Faraday’s Laws of Electromagnetic Induction & Lenz’s Law',
+    subtitle: 'Generation of Induced EMF by Time-Varying Magnetic Flux (ε = −N dΦ/dt)',
+    category: 'physics',
+    boardNote: 'CBSE Rule: Induced EMF depends on velocity/time rate (ε = ΔΦ/Δt), but total induced charge q = ΔΦ/R is STRICTLY INDEPENDENT of speed and time!',
+    diagramType: 'faraday-induction',
+    firstLaw: {
+      statement: 'Whenever magnetic flux linked with a closed circuit changes with time, an EMF is induced in it, persisting as long as flux change continues.'
+    },
+    secondLaw: {
+      formula: '|ε| = N |dΦ_B / dt|',
+      statement: 'Magnitude of induced EMF is proportional to time rate of change of magnetic flux.'
+    },
+    lenzLaw: {
+      formula: 'ε = −N (dΦ_B / dt)',
+      statement: 'Induced current direction always opposes the magnetic flux change causing it (Conservation of Energy).'
+    },
+    chargeLaw: {
+      formula: 'q = (N · ΔΦ_B) / R',
+      statement: 'Total induced charge depends solely on flux change ΔΦ and resistance R (Zero time dependence!).'
+    }
   }
 ];

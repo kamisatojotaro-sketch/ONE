@@ -120,6 +120,28 @@ const FORMULA_METADATA = {
       { sym: 'ν<sub>+</sub>, ν<sub>−</sub>', desc: 'Number of cations and anions produced per formula unit' }
     ]
   },
+  'zit': {
+    title: "Faraday's First Law of Electrolysis",
+    display: 'w = z · I · t = <span class="math-fraction"><span class="num">M · I · t</span><span class="den">n · 96500</span></span>',
+    variables: [
+      { sym: 'w', desc: 'Mass of substance deposited at electrode (in grams)' },
+      { sym: 'z', desc: 'Electrochemical equivalent (z = M / (n·F) in g/C)' },
+      { sym: 'I', desc: 'Steady electric current in Amperes (A)' },
+      { sym: 't', desc: 'Time of current passage strictly in SECONDS (s)' },
+      { sym: 'M', desc: 'Molar mass of substance deposited (g/mol)' },
+      { sym: 'n', desc: 'Valence electron count transferred in redox reaction' },
+      { sym: '96500', desc: 'Faraday constant F (Coulombs per mole of electrons)' }
+    ]
+  },
+  'faraday constant': {
+    title: "Faraday Constant (F)",
+    display: '1 F = N<sub>A</sub> · e ≈ 96487 ≈ 96500 C/mol',
+    variables: [
+      { sym: 'F', desc: 'Faraday constant = absolute charge of 1 mole electrons (C/mol)' },
+      { sym: 'N<sub>A</sub>', desc: 'Avogadro’s number (6.022 × 10²³ mol⁻¹)' },
+      { sym: 'e', desc: 'Elementary electron charge (1.602 × 10⁻¹⁹ C)' }
+    ]
+  },
 
   // Physics 1: Electrostatics
   'coulomb': {
@@ -208,6 +230,49 @@ const FORMULA_METADATA = {
       { sym: 'I<sub>rms</sub>', desc: 'Root-mean-square effective current producing equivalent DC heating' },
       { sym: 'I<sub>0</sub>', desc: 'Peak amplitude of sinusoidal alternating current' },
       { sym: 'I<sub>mean</sub>', desc: 'Mean current value integrated over half a cycle' }
+    ]
+  },
+  'faraday': {
+    title: "Faraday's Law of Induction & Lenz's Law",
+    display: 'ε = −N <span class="math-fraction"><span class="num">dΦ<sub>B</sub></span><span class="den">dt</span></span>, &nbsp;&nbsp; q = <span class="math-fraction"><span class="num">N · ΔΦ<sub>B</sub></span><span class="den">R</span></span>',
+    variables: [
+      { sym: 'ε', desc: 'Induced electromotive force (EMF) across circuit ends (Volts, V)' },
+      { sym: 'N', desc: 'Number of turns in the coil' },
+      { sym: 'Φ<sub>B</sub>', desc: 'Magnetic flux linked with coil (Φ = B · A · cosθ in Weber, Wb)' },
+      { sym: 'dΦ<sub>B</sub> / dt', desc: 'Time rate of change of magnetic flux' },
+      { sym: '− (negative sign)', desc: 'Lenz’s law: Induced EMF opposes the flux change causing it' },
+      { sym: 'q', desc: 'Total induced electric charge (Coulombs) — INDEPENDENT of time and speed!' },
+      { sym: 'R', desc: 'Total electrical resistance of closed circuit (Ω)' }
+    ]
+  },
+  'dφ': {
+    title: "Faraday's Law of Electromagnetic Induction",
+    display: 'ε = −N <span class="math-fraction"><span class="num">dΦ<sub>B</sub></span><span class="den">dt</span></span>, &nbsp;&nbsp; I = <span class="math-fraction"><span class="num">ε</span><span class="den">R</span></span>',
+    variables: [
+      { sym: 'ε', desc: 'Induced EMF in Volts (V)' },
+      { sym: 'N', desc: 'Number of turns in coil' },
+      { sym: 'dΦ / dt', desc: 'Rate of change of magnetic flux (Wb/s)' },
+      { sym: 'I', desc: 'Induced electric current in closed loop of resistance R' }
+    ]
+  },
+  'magnetic flux': {
+    title: 'Magnetic Flux (Φ)',
+    display: 'Φ = B · A · cos θ = B⃗ · A⃗',
+    variables: [
+      { sym: 'Φ', desc: 'Magnetic flux passing through coil surface (Weber, Wb or T·m²)' },
+      { sym: 'B', desc: 'Uniform magnetic field strength (Tesla, T)' },
+      { sym: 'A', desc: 'Surface area enclosed by coil loop (m²)' },
+      { sym: 'θ', desc: 'Angle between magnetic field B and normal area vector A' }
+    ]
+  },
+  'independent of time': {
+    title: "Induced Charge (Time-Independent)",
+    display: 'q = <span class="math-fraction"><span class="num">N · ΔΦ<sub>B</sub></span><span class="den">R</span></span>',
+    variables: [
+      { sym: 'q', desc: 'Total induced electric charge in Coulombs (C)' },
+      { sym: 'ΔΦ<sub>B</sub>', desc: 'Net change in magnetic flux through coil (Wb)' },
+      { sym: 'R', desc: 'Total circuit resistance (Ω)' },
+      { sym: 'Golden Rule', desc: 'Total charge q is strictly independent of time and magnet velocity!' }
     ]
   }
 };

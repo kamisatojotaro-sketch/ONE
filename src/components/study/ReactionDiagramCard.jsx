@@ -1054,8 +1054,203 @@ export function SingleReactionDiagram({ rxn }) {
           </div>
         )}
 
+        {/* Faraday's Laws of Electrolysis Diagram */}
+        {rxn.diagramType === 'faraday-electrolysis' && (
+          <div className="space-y-4 py-2">
+            {/* Top Circuit & Cell Schematic */}
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-4 sm:gap-6 min-w-[550px]">
+              {/* Anode (+ Oxidation) */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-4 rounded-xl border-2 border-rose-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-rose-500 uppercase">ANODE (+ Positive Terminal)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/15 text-rose-500 font-bold">OXIDATION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1.5">
+                  <div><strong>Action:</strong> Electrons leave solution (Loss of e⁻)</div>
+                  <div><strong>e.g. In Cu refining:</strong> Cu(s) ⟶ Cu²⁺(aq) + 2e⁻ (Dissolves)</div>
+                  <div><strong>e.g. In aq. NaCl:</strong> 2Cl⁻ ⟶ Cl₂↑ + 2e⁻ (Overpotential!)</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-rose-500/30 text-rose-600 dark:text-rose-400 font-bold text-center">
+                    Current Enters Cell (e⁻ Leaves)
+                  </div>
+                </div>
+              </div>
+
+              {/* Power Supply & Charge Flow Box */}
+              <div className="flex flex-col items-center justify-center p-3 min-w-[140px] text-center space-y-2 bg-[var(--bg-elevated)] rounded-xl border border-amber-500/40">
+                <div className="px-2.5 py-1 rounded-full bg-amber-500/20 text-[10px] font-mono font-bold text-amber-500">
+                  DC Power Source
+                </div>
+                <div className="text-xs font-mono font-bold text-[var(--text-primary)]">
+                  Q = I · t
+                </div>
+                <div className="text-[10px] font-mono text-[var(--text-secondary)]">
+                  I = Current (Amperes)<br />
+                  t = Time in <strong>SECONDS</strong>
+                </div>
+                <div className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-500 font-bold">
+                  1 F ≈ 96500 C/mol e⁻
+                </div>
+              </div>
+
+              {/* Cathode (- Reduction) */}
+              <div className="flex-1 bg-[var(--bg-surface)] p-4 rounded-xl border-2 border-emerald-500/50 space-y-2">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase">CATHODE (− Negative Terminal)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold">REDUCTION</span>
+                </div>
+                <div className="font-mono text-xs space-y-1.5">
+                  <div><strong>Action:</strong> Deposition / Plating of Metal Layer</div>
+                  <div><strong>Reduction:</strong> Mⁿ⁺(aq) + n e⁻ ⟶ M(s) (Deposited)</div>
+                  <div><strong>Deposited Mass:</strong> w = z · I · t = (M · I · t)/(n · 96500)</div>
+                  <div className="p-2 bg-[var(--bg-elevated)] rounded border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 font-bold text-center">
+                    Cu²⁺ + 2e⁻ ⟶ Cu(s) [Layer Forms]
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Two Laws Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="p-3 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-[var(--accent-primary)] uppercase">Faraday's 1st Law</span>
+                  <span className="text-[10px] font-mono text-[var(--text-muted)]">w = z · Q</span>
+                </div>
+                <div className="font-mono text-xs font-bold text-[var(--text-primary)]">
+                  w = z · I · t = <span className="text-amber-500">(M · I · t) / (n · 96500)</span>
+                </div>
+                <p className="text-[11px] text-[var(--text-secondary)]">
+                  Mass deposited is directly proportional to charge passed (Q = I·t). Always substitute time t in <strong>seconds</strong>!
+                </p>
+              </div>
+
+              <div className="p-3 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-[var(--accent-primary)] uppercase">Faraday's 2nd Law</span>
+                  <span className="text-[10px] font-mono text-[var(--text-muted)]">Series Cells</span>
+                </div>
+                <div className="font-mono text-xs font-bold text-[var(--text-primary)]">
+                  w₁ / w₂ = E₁ / E₂ = <span className="text-amber-500">(M₁ / n₁) / (M₂ / n₂)</span>
+                </div>
+                <p className="text-[11px] text-[var(--text-secondary)]">
+                  Same charge passed through different electrolytic cells deposits masses proportional to chemical equivalent weights.
+                </p>
+              </div>
+            </div>
+
+            {/* Stoichiometric Requirements Table */}
+            {rxn.depositionRequirements && (
+              <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] p-3 space-y-2">
+                <span className="text-xs font-mono font-bold text-[var(--text-primary)] uppercase block">
+                  Stoichiometric Electron & Charge Requirements (CBSE High-Yield):
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {rxn.depositionRequirements.map((req, idx) => (
+                    <div key={idx} className="p-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-center space-y-1">
+                      <div className="font-mono text-[11px] font-bold text-[var(--accent-primary)]">{req.metal}</div>
+                      <div className="font-mono text-xs font-bold text-amber-500">{req.charge}</div>
+                      <div className="text-[10px] text-[var(--text-secondary)]">{req.mass}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Faraday's Laws of Electromagnetic Induction Diagram */}
+        {rxn.diagramType === 'faraday-induction' && (
+          <div className="space-y-4 py-2">
+            {/* Induction Experiments Comparative Columns */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Case 1: Magnet Approaching Coil */}
+              <div className="bg-[var(--bg-surface)] p-4 rounded-xl border-2 border-blue-500/50 space-y-3">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-blue-500 uppercase">Case 1: Magnet Approaching Coil (v ⟶)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-500 font-bold">FLUX INCREASING</span>
+                </div>
+
+                <div className="p-3 bg-[var(--bg-elevated)] rounded-xl flex items-center justify-center gap-3">
+                  {/* Bar Magnet */}
+                  <div className="flex border-2 border-[var(--border-default)] rounded overflow-hidden shadow-xs text-xs font-mono font-bold">
+                    <span className="px-2.5 py-1.5 bg-rose-500 text-white">N</span>
+                    <span className="px-2.5 py-1.5 bg-blue-600 text-white">S</span>
+                  </div>
+                  <div className="text-blue-500 font-mono text-xs font-bold animate-pulse">
+                    ⟶ v (approaching)
+                  </div>
+                  {/* Coil Face */}
+                  <div className="w-12 h-12 rounded-full border-4 border-dashed border-blue-500 flex flex-col items-center justify-center font-mono font-bold text-xs text-blue-500">
+                    <span>N</span>
+                    <span className="text-[8px]">repels</span>
+                  </div>
+                </div>
+
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Magnetic Flux:</strong> Φ_B INCREASES (dΦ/dt &gt; 0)</div>
+                  <div><strong>Lenz’s Law Opposing Face:</strong> <strong>North Pole</strong> (repels approach)</div>
+                  <div><strong>Induced Current Direction:</strong> Counter-Clockwise (↺ Anticlockwise)</div>
+                  <div><strong>Galvanometer:</strong> Deflects to the RIGHT (+ deflection)</div>
+                </div>
+              </div>
+
+              {/* Case 2: Magnet Withdrawn from Coil */}
+              <div className="bg-[var(--bg-surface)] p-4 rounded-xl border-2 border-purple-500/50 space-y-3">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-1.5">
+                  <span className="text-xs font-mono font-bold text-purple-500 uppercase">Case 2: Magnet Withdrawing (⟵ v)</span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/15 text-purple-500 font-bold">FLUX DECREASING</span>
+                </div>
+
+                <div className="p-3 bg-[var(--bg-elevated)] rounded-xl flex items-center justify-center gap-3">
+                  {/* Coil Face */}
+                  <div className="w-12 h-12 rounded-full border-4 border-dashed border-purple-500 flex flex-col items-center justify-center font-mono font-bold text-xs text-purple-500">
+                    <span>S</span>
+                    <span className="text-[8px]">attracts</span>
+                  </div>
+                  <div className="text-purple-500 font-mono text-xs font-bold animate-pulse">
+                    ⟵ v (withdrawing)
+                  </div>
+                  {/* Bar Magnet */}
+                  <div className="flex border-2 border-[var(--border-default)] rounded overflow-hidden shadow-xs text-xs font-mono font-bold">
+                    <span className="px-2.5 py-1.5 bg-rose-500 text-white">N</span>
+                    <span className="px-2.5 py-1.5 bg-blue-600 text-white">S</span>
+                  </div>
+                </div>
+
+                <div className="font-mono text-xs space-y-1">
+                  <div><strong>Magnetic Flux:</strong> Φ_B DECREASES (dΦ/dt &lt; 0)</div>
+                  <div><strong>Lenz’s Law Opposing Face:</strong> <strong>South Pole</strong> (attracts, resists retreat)</div>
+                  <div><strong>Induced Current Direction:</strong> Clockwise (↻ Clockwise)</div>
+                  <div><strong>Galvanometer:</strong> Deflects to the LEFT (− deflection)</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Golden Equations & Stationary Magnet Trap */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+                <span className="text-xs font-mono font-bold text-rose-500 uppercase block">Stationary Magnet Trap (v = 0)</span>
+                <div className="font-mono text-xs font-bold text-[var(--text-primary)]">dΦ / dt = 0 ⟹ ε = 0, I = 0</div>
+                <p className="text-[11px] text-[var(--text-secondary)]">Even in a 100 T magnetic field, zero relative motion produces ZERO EMF!</p>
+              </div>
+
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+                <span className="text-xs font-mono font-bold text-amber-500 uppercase block">Induced EMF (Rate Dependent)</span>
+                <div className="font-mono text-xs font-bold text-[var(--text-primary)]">|ε| = N |dΦ / dt| ∝ 1 / Δt</div>
+                <p className="text-[11px] text-[var(--text-secondary)]">Faster motion (smaller Δt) produces MUCH HIGHER induced EMF and peak deflection!</p>
+              </div>
+
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border-2 border-emerald-500/60 space-y-1">
+                <span className="text-xs font-mono font-bold text-emerald-500 uppercase block">Total Induced Charge (CBSE Trap!)</span>
+                <div className="font-mono text-xs font-bold text-emerald-500">q = (N · ΔΦ) / R</div>
+                <p className="text-[11px] text-[var(--text-secondary)]"><strong>INDEPENDENT OF TIME & SPEED!</strong> Slow and fast motion transfer the EXACT SAME total charge q!</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Generic or Table Style Representation for other diagram types */}
-        {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion', 'lead-storage', 'fuel-cell', 'kohlrausch-graph', 'reverse-osmosis', 'raoult-deviations', 'lanthanoid-contraction', 'sandmeyer', 'dows-process', 'phosgene', 'dehydrogenation'].includes(rxn.diagramType) && (
+        {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion', 'lead-storage', 'fuel-cell', 'kohlrausch-graph', 'reverse-osmosis', 'raoult-deviations', 'lanthanoid-contraction', 'sandmeyer', 'dows-process', 'phosgene', 'dehydrogenation', 'faraday-electrolysis', 'faraday-induction'].includes(rxn.diagramType) && (
           <div className="space-y-2 p-2">
             {rxn.equation && (
               <div className="font-mono text-sm sm:text-base font-bold p-3 rounded-xl bg-[var(--bg-elevated)] text-[var(--accent-primary)] text-center overflow-x-auto">

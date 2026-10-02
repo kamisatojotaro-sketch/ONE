@@ -705,11 +705,17 @@ export const PHYSICS_CHAPTERS = [
         sections: [
           {
             id: 'phy-sec-6-2',
-            title: "Faraday's Induction Laws",
-            explanation: "Faraday's first law states that whenever the magnetic flux linked with a circuit changes, an EMF is induced in it; his second law quantifies this as ε = −dΦ/dt — the induced EMF equals the negative rate of change of flux. This is the foundational law behind generators, transformers, and induction-based devices.",
-            questionFraming: "Conceptual — 'State Faraday\'s laws of electromagnetic induction.'",
-            textbookRef: "Faraday's first law states that an EMF is induced in a circuit whenever the magnetic flux linked with it changes with time. His second law quantifies the magnitude of this induced EMF as being directly proportional to the rate of change of flux linkage: ε = −N(dΦ/dt) for a coil of N turns. The negative sign indicates that the induced EMF opposes the very change in flux that produces it.",
-            keyFormulas: ["ε = −dΦ / dt", "For N turns: ε = −N (dΦ / dt)"]
+            title: "Faraday's Induction Laws & Quantitative Formulation",
+            explanation: "• <strong>Faraday's First Law (Qualitative):</strong> Whenever the magnetic flux (Φ_B = B · A · cos θ) linked with a closed electric circuit changes with time, an electromotive force (EMF) is induced in the circuit. The induced EMF lasts as long as the change in magnetic flux continues.\n• <strong>Faraday's Second Law (Quantitative):</strong> The magnitude of the induced EMF is directly proportional to the time rate of change of magnetic flux linked with the circuit: |ε| = N · |dΦ_B / dt|, where N is the number of turns in the coil.\n• <strong>Combined Law with Lenz's Rule:</strong> Including direction, ε = −N (dΦ_B / dt). The negative sign signifies that the induced EMF opposes the flux change that produces it (a direct consequence of Law of Conservation of Energy).\n• <strong>Induced Current & Charge:</strong> For a closed circuit of total resistance R:\n  - Induced Current: I = ε / R = −(N / R) (dΦ / dt).\n  - Induced Charge: q = ∫ I dt = (N / R) · ΔΦ_B. CRITICAL BOARD RULE: The total charge induced is completely INDEPENDENT OF TIME and speed of the magnet!",
+            questionFraming: "CBSE Board Exam Blueprint [CBSE 2024, 2023, 2020, 2018]:\n• 2-Mark Question: 'State Faraday\'s laws of electromagnetic induction and write its mathematical equation.'\n• 2-Mark Conceptual: 'A bar magnet is moved rapidly towards a coil, and then moved slowly. Compare: (i) the induced EMF, and (ii) the total charge flown.' [Ans: (i) EMF is much larger when moved rapidly (ε ∝ 1/Δt); (ii) Total charge q = ΔΦ/R is identical in both cases since q is independent of time!]\n• 3-Mark Numerical: 'A circular coil of 200 turns and radius 10 cm is placed perpendicular to a 0.5 T magnetic field. If the field drops to zero in 0.05 s, calculate the induced EMF.' [Ans: A = π(0.1)² = 0.0314 m², ΔΦ = B · A = 0.0157 Wb. ε = 200 × (0.0157 / 0.05) = 62.8 V].",
+            textbookRef: "Faraday's landmark series of experiments (1831):\n1. Magnet-Coil Relative Motion: Relative motion between a bar magnet and a stationary coil produces a deflection in the galvanometer. Moving faster produces larger deflection. Moving the magnet away reverses the deflection. A stationary magnet (v = 0) produces zero deflection!\n2. Current-Carrying Coil C₁ and Secondary Coil C₂: Varying current in C₁ produces identical induction in C₂.\nMathematical Formulation: Magnetic flux Φ_B = B⃗ · A⃗ = B A cos θ. Induced EMF: ε = −N (dΦ_B / dt). Induced Charge: q = (N / R) · ΔΦ_B.",
+            keyFormulas: [
+              "ε = −dΦ / dt",
+              "For N turns: ε = −N (dΦ / dt)",
+              "Magnetic Flux: Φ = B · A · cos θ",
+              "Induced Current: I = ε / R = −(N / R) (dΦ / dt)",
+              "Induced Charge: q = ΔΦ / R (Independent of Time!)"
+            ]
           }
         ]
       },

@@ -886,54 +886,73 @@ export const STRUCTURED_NOTES_DATA = {
   "chem-sub-2-7": {
     "definitions": [
       {
-        "term": "Conductance (G)",
-        "definition": "The ease with which electric current flows through an electrolytic conductor, defined as the reciprocal of resistance: G = 1 / R. Unit: Siemens (S) or Ω⁻¹."
+        "term": "Faraday’s First Law of Electrolysis",
+        "definition": "The mass (w) of a substance deposited or liberated at any electrode during electrolysis is directly proportional to the quantity of electricity (electric charge Q) passed through the electrolyte: w = z · Q = z · I · t."
       },
       {
-        "term": "Conductivity / Specific Conductance (κ)",
-        "definition": "The conductance of an electrolytic solution contained between two electrodes of 1 m² (or 1 cm²) area placed 1 m (or 1 cm) apart: κ = G · (l / A). Unit: S·m⁻¹ or S·cm⁻¹."
+        "term": "Faraday’s Second Law of Electrolysis",
+        "definition": "When the same quantity of electricity is passed through different electrolytic solutions connected in series, the masses of different substances deposited at the electrodes are directly proportional to their chemical equivalent weights: w₁ / w₂ = E₁ / E₂."
       },
       {
-        "term": "Molar Conductivity (Λ_m)",
-        "definition": "The conducting power of all ions produced by dissolving 1 mole of an electrolyte in solution: Λ_m = (1000 · κ) / M. Unit: S·cm²·mol⁻¹."
+        "term": "Electrochemical Equivalent (z)",
+        "definition": "The mass of a substance deposited by the passage of 1 Coulomb of electric charge (1 Ampere for 1 second): z = Equivalent Weight / F = M / (n · F). Unit: g/C or kg/C."
       },
       {
-        "term": "Cell Constant (G*)",
-        "definition": "The geometric ratio of distance between electrodes (l) to electrode cross-sectional area (A): G* = l / A = R · κ."
+        "term": "Faraday Constant (F)",
+        "definition": "The absolute electric charge carried by 1 mole of electrons: 1 F = N_A · e = (6.022 × 10²³ mol⁻¹) × (1.602 × 10⁻¹⁹ C) = 96487 C/mol ≈ 96500 C/mol."
       }
     ],
     "keyPoints": [
-      "• <strong>Conductivity on Dilution:</strong> Conductivity (κ) ALWAYS DECREASES upon dilution because the number of current-carrying ions per unit volume of solution decreases.",
-      "• <strong>Molar Conductivity on Dilution:</strong> Molar conductivity (Λ_m) ALWAYS INCREASES upon dilution because the increase in total volume containing 1 mole of electrolyte far outweighs the decrease in κ.",
-      "• <strong>Unit Conversion Trap:</strong> In formula Λ_m = (1000 · κ) / M, κ must be in S·cm⁻¹ to yield Λ_m in S·cm²·mol⁻¹. If κ is in S·m⁻¹, Λ_m = κ / (1000 · M) in S·m²·mol⁻¹.",
-      "• <strong>Resistance Measurement:</strong> An Alternating Current (AC) source must be used instead of Direct Current (DC) with a Wheatstone bridge to prevent electrolysis and changes in solution composition."
+      "• <strong>Fundamental Calculation Equation:</strong> Mass deposited w = (M · I · t) / (n · 96500), where M = molar mass (g/mol), I = current (A), t = time in SECONDS (s), n = valence electrons transferred, F = 96500 C/mol.",
+      "• <strong>Stoichiometric Deposition Requirements (Must-Memorize):</strong>\n  - Al³⁺ + 3e⁻ ⟶ Al (27 g) requires 3 Faradays (3 × 96500 C = 289,500 C).\n  - Cu²⁺ + 2e⁻ ⟶ Cu (63.5 g) requires 2 Faradays (2 × 96500 C = 193,000 C).\n  - Ag⁺ + e⁻ ⟶ Ag (108 g) requires 1 Faraday (96500 C).\n  - 1 mol of O₂ from H₂O requires 4 Faradays (2 H₂O ⟶ O₂ + 4H⁺ + 4e⁻)!",
+      "• <strong>Series Electrolysis (Second Law Application):</strong> If cells containing AgNO₃ and CuSO₄ are in series: (Mass of Ag / Mass of Cu) = (Equiv. wt of Ag / Equiv. wt of Cu) = (108/1) / (63.5/2) = 108 / 31.75 = 3.40.",
+      "• <strong>Overpotential & Product Prediction at Electrodes:</strong>\n  - <em>Electrolysis of Molten NaCl</em>: Na at cathode, Cl₂ at anode.\n  - <em>Electrolysis of Aqueous NaCl</em>: H₂ gas at cathode (reduction of water is easier than Na⁺ reduction); Cl₂ gas at anode instead of O₂ because liberation of O₂ requires extra activation voltage (OVERPOTENTIAL!).\n  - <em>Electrolysis of Aqueous CuSO₄ with Pt electrodes</em>: Cu deposits at cathode, O₂ gas evolves at anode.\n  - <em>Electrolysis of Aqueous CuSO₄ with Cu electrodes</em>: Cu deposits at cathode, Cu dissolves from anode (Electrolytic refining)."
     ],
     "extraPoints": [
-      "• <strong>Board Question:</strong> \"Why does κ decrease while Λ_m increases on dilution?\" κ decreases because ionic concentration per cm³ falls; Λ_m increases because total volume expands much more."
+      "• <strong>Current Efficiency (η):</strong> Actual mass obtained / Theoretical mass calculated × 100%. Often industrial cells run at 90–95% efficiency due to secondary side reactions.",
+      "• <strong>Time Trap Warning:</strong> In board numerics, time is always given in minutes or hours (e.g. 20 minutes, 2 hours). You MUST multiply by 60 or 3600 to convert to seconds before plugging into w = zIt!"
     ],
-    "reactions": [],
+    "reactions": [
+      {
+        "name": "Quantitative Electrolytic Deposition of Copper",
+        "isNamedReaction": false,
+        "equation": "Cathode: Cu²⁺(aq) + 2e⁻ ⟶ Cu(s)  [Requires 2 F = 2 × 96500 C per mole]",
+        "howItWorks": "Two moles of electrons are transferred per mole of copper deposited on the cathode surface.",
+        "diagramId": "rxn-faraday-electrolysis"
+      }
+    ],
     "oswaalMnemonic": {
-      "title": "Conductivity Drops, Molar Conductivity Climbs",
-      "phrase": "Dilution dilutes ions per cm³ ⟶ Conductivity κ DROPS! | Volume containing 1 mole expands enormously ⟶ Molar Conductivity Λ_m CLIMBS!",
-      "explanation": "Conductivity is per unit volume; dilution reduces ions per cm³. Molar conductivity is per mole; expanding volume dominates."
+      "title": "Faraday Charge Formula: Q = I · t and n · F Deposits 1 Mole",
+      "phrase": "Charge Q = I × t (time in seconds!) | 1 Faraday = 96500 C = 1 Mole Electrons! | Al³⁺ takes 3F, Cu²⁺ takes 2F, Ag⁺ takes 1F!",
+      "explanation": "To deposit 1 mole of any metal M, charge needed is exactly n × 96500 C, where n is its cationic charge (valency)."
     },
     "commonlyMadeErrors": [
       {
-        "error": "Mixing up units in Λ_m = (1000 · κ) / M.",
-        "tip": "When using 1000 in numerator, κ must be in S·cm⁻¹ to give Λ_m in S·cm²·mol⁻¹!",
-        "penalty": "Calculation off by a factor of 10⁶."
+        "error": "Forgetting to convert time in minutes/hours into seconds in w = (M · I · t) / (n · F).",
+        "tip": "Always substitute t in SECONDS! If time = 10 min, t = 10 × 60 = 600 s. If time = 2 hr, t = 2 × 3600 = 7200 s.",
+        "penalty": "Complete numerical answer lost (typically 2 marks)."
+      },
+      {
+        "error": "Predicting O₂ evolution at the anode in electrolysis of concentrated aqueous NaCl.",
+        "tip": "Due to the OVERPOTENTIAL of oxygen, oxidation of Cl⁻ to Cl₂ gas occurs at the anode instead of H₂O oxidation!",
+        "penalty": "1 mark deduction on electrolysis products question."
+      },
+      {
+        "error": "Confusing Faraday (charge) with Farad (capacitance).",
+        "tip": "Faraday (F) is the unit of electric charge (96500 C). Farad (F) is the unit of capacitance (Coulomb/Volt).",
+        "penalty": "Loss of unit marks."
       }
     ],
     "assertionReason": {
-      "assertion": "Conductivity of all electrolytes decreases with decrease in concentration (dilution).",
-      "reason": "The number of ions per unit volume that carry current in a solution decreases on dilution.",
+      "assertion": "The mass of copper deposited by passing 2 Faradays of electricity through CuSO₄ solution is 63.5 g.",
+      "reason": "Reduction of one mole of Cu²⁺ to Cu requires 2 moles of electrons: Cu²⁺ + 2e⁻ ⟶ Cu.",
       "correctOption": "Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",
-      "explanation": "Current carrying capacity per unit volume decreases as solution is diluted."
+      "explanation": "Cu²⁺ has valency n = 2. Therefore 1 mole of Cu (63.5 g) requires 2 Faradays (2 × 96500 C)."
     },
     "examTrend": {
-      "pattern": "2-Mark Give-Reason / 3-Mark Numerical [CBSE 2023, 2022, 2020, 2018]",
-      "pastYears": "CBSE 2023, 2022, 2020",
-      "highYieldPrompt": "Why does conductivity decrease with dilution while molar conductivity increases with dilution?"
+      "pattern": "3-Mark Numerical on Faraday’s Laws [CBSE 2024, 2023, 2022, 2020, 2019, 2016]",
+      "pastYears": "CBSE 2024, 2023, 2022, 2020",
+      "highYieldPrompt": "A solution of CuSO₄ is electrolyzed for 20 minutes with a current of 1.5 A. Calculate the mass of copper deposited at the cathode. (Molar mass of Cu = 63.5 g/mol, 1 F = 96500 C/mol)."
     }
   },
   "chem-sub-2-8": {
@@ -992,49 +1011,54 @@ export const STRUCTURED_NOTES_DATA = {
   "chem-sub-2-9": {
     "definitions": [
       {
-        "term": "Faraday’s First Law of Electrolysis",
-        "definition": "The mass of a substance deposited or liberated at any electrode during electrolysis is directly proportional to the quantity of electric charge (Q) passed through the electrolyte: w = z · Q = z · I · t."
+        "term": "Conductance (G)",
+        "definition": "The ease with which electric current flows through an electrolytic conductor, defined as the reciprocal of resistance: G = 1 / R. Unit: Siemens (S) or Ω⁻¹."
       },
       {
-        "term": "Faraday’s Second Law of Electrolysis",
-        "definition": "When the same quantity of electricity is passed through solutions of different electrolytes connected in series, the masses of substances deposited at the electrodes are directly proportional to their chemical equivalent weights: w₁ / w₂ = E₁ / E₂."
+        "term": "Conductivity / Specific Conductance (κ)",
+        "definition": "The conductance of an electrolytic solution contained between two electrodes of 1 m² (or 1 cm²) area placed 1 m (or 1 cm) apart: κ = G · (l / A). Unit: S·m⁻¹ or S·cm⁻¹."
       },
       {
-        "term": "Faraday Constant (F)",
-        "definition": "The total electrical charge carried by one mole of electrons: 1 F = N_A · e = (6.022 × 10²³ mol⁻¹) × (1.602 × 10⁻¹⁹ C) ≈ 96487 C·mol⁻¹ ≈ 96500 C·mol⁻¹."
+        "term": "Molar Conductivity (Λ_m)",
+        "definition": "The conducting power of all ions produced by dissolving 1 mole of an electrolyte in solution: Λ_m = (1000 · κ) / M. Unit: S·cm²·mol⁻¹."
+      },
+      {
+        "term": "Cell Constant (G*)",
+        "definition": "The geometric ratio of distance between electrodes (l) to electrode cross-sectional area (A): G* = l / A = R · κ."
       }
     ],
     "keyPoints": [
-      "• <strong>Electrochemical Equivalent (z):</strong> z = M / (n · F), where M is molar mass and n is valence electrons transferred.",
-      "• <strong>Stoichiometric Deposition Requirements:</strong> Al³⁺ + 3e⁻ ⟶ Al requires 3 Faradays (3 × 96500 C) per mole; Cu²⁺ + 2e⁻ ⟶ Cu requires 2 Faradays (2 × 96500 C) per mole; Ag⁺ + e⁻ ⟶ Ag requires 1 Faraday (96500 C) per mole.",
-      "• <strong>Overpotential & Electrolysis Products:</strong> In electrolysis of aqueous NaCl, oxidation of Cl⁻ occurs at the anode instead of H₂O (which has thermodynamically lower potential) due to the extra kinetic voltage (overpotential) required for O₂ liberation."
+      "• <strong>Conductivity on Dilution:</strong> Conductivity (κ) ALWAYS DECREASES upon dilution because the number of current-carrying ions per unit volume (per cm³ or mL) of solution decreases.",
+      "• <strong>Molar Conductivity on Dilution:</strong> Molar conductivity (Λ_m) ALWAYS INCREASES upon dilution because the increase in total volume containing 1 mole of electrolyte far outweighs the decrease in κ.",
+      "• <strong>Strong vs Weak Electrolytes on Dilution:</strong>\n  - <em>Strong Electrolytes (e.g. KCl, HCl)</em>: Λ_m increases slowly and linearly with dilution because inter-ionic attractions weaken. Follows Debye-Hückel-Onsager equation: Λ_m = Λ°_m − A√C.\n  - <em>Weak Electrolytes (e.g. CH₃COOH)</em>: Λ_m increases steeply at high dilution because degree of dissociation (α) surges according to Ostwald’s dilution law.",
+      "• <strong>Effect of Temperature:</strong> In electrolytic conductors, conductance INCREASES with rising temperature because ionic mobility increases and viscosity of solvent decreases. (Opposite of metallic conductors where resistance rises with temperature!)."
     ],
     "extraPoints": [
-      "• <strong>Electrolysis of Aqueous CuSO₄:</strong> With inert Pt electrodes: Cu deposited at cathode, O₂ evolved at anode; with Cu electrodes: Cu deposited at cathode, Cu dissolved at anode (refining)."
+      "• <strong>Why Kohlrausch’s Law is needed for Weak Electrolytes:</strong> Since the Λ_m vs √C curve for weak electrolytes is asymptotic and runs parallel to the y-axis at infinite dilution, Λ°_m cannot be obtained by extrapolation; it MUST be calculated using Kohlrausch’s law!"
     ],
     "reactions": [],
     "oswaalMnemonic": {
-      "title": "Faraday Electron Stoichiometry",
-      "phrase": "1 Faraday (96500 C) = 1 mole of electrons. Al³⁺ needs 3 F, Cu²⁺ needs 2 F, Ag⁺ needs 1 F!",
-      "explanation": "The charge required to deposit 1 mole of metal equals its valence electrons multiplied by Faraday constant (n × 96500 C)."
+      "title": "Conductivity Drops, Molar Conductivity Climbs",
+      "phrase": "Dilution dilutes ions per cm³ ⟶ Conductivity κ DROPS! | Volume containing 1 mole expands enormously ⟶ Molar Conductivity Λ_m CLIMBS!",
+      "explanation": "Conductivity is per unit volume; dilution reduces ions per cm³. Molar conductivity is per mole; expanding volume dominates."
     },
     "commonlyMadeErrors": [
       {
-        "error": "Predicting O₂ evolution at the anode in electrolysis of concentrated aqueous NaCl.",
-        "tip": "Due to the OVERPOTENTIAL of oxygen, oxidation of Cl⁻ to Cl₂ gas occurs at the anode instead of H₂O oxidation!",
-        "penalty": "1 mark deduction on electrolysis products question."
+        "error": "Mixing up units in Λ_m = (1000 · κ) / M.",
+        "tip": "When using 1000 in numerator, κ must be in S·cm⁻¹ to give Λ_m in S·cm²·mol⁻¹!",
+        "penalty": "Calculation off by a factor of 10⁶."
       }
     ],
     "assertionReason": {
-      "assertion": "In the electrolysis of aqueous NaCl, chlorine gas is liberated at the anode in preference to oxygen.",
-      "reason": "Liberation of oxygen requires extra activation overpotential, making chlorine discharge kinetically faster.",
+      "assertion": "Conductivity of all electrolytes decreases with decrease in concentration (dilution).",
+      "reason": "The number of ions per unit volume that carry current in a solution decreases on dilution.",
       "correctOption": "Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",
-      "explanation": "Although oxidation of water has lower thermodynamic potential, high oxygen overvoltage favors Cl₂."
+      "explanation": "Current carrying capacity per unit volume decreases as solution is diluted."
     },
     "examTrend": {
-      "pattern": "3-Mark Numerical on Faraday’s Laws [CBSE 2023, 2021, 2019, 2016]",
-      "pastYears": "CBSE 2023, 2021, 2019",
-      "highYieldPrompt": "A solution of CuSO₄ is electrolyzed for 10 minutes with a current of 1.5 A. What is the mass of copper deposited at the cathode?"
+      "pattern": "2-Mark Give-Reason / 3-Mark Numerical [CBSE 2024, 2023, 2022, 2020, 2018]",
+      "pastYears": "CBSE 2024, 2023, 2022, 2020",
+      "highYieldPrompt": "Explain why conductivity decreases while molar conductivity increases with dilution for both strong and weak electrolytes."
     }
   },
   "chem-sub-2-10": {
@@ -2344,6 +2368,84 @@ export const STRUCTURED_NOTES_DATA = {
       "pattern": "2-Mark / 3-Mark Ether Cleavage Reactions [CBSE 2023, 2022, 2020, 2019, 2017]",
       "pastYears": "CBSE 2023, 2022, 2020",
       "highYieldPrompt": "Write the products formed when the following ethers are treated with HI: (i) Anisole, (ii) (CH₃)₃C—O—CH₃, (iii) C₂H₅—O—CH₃."
+    }
+  },
+  "phy-sub-6-2": {
+    "definitions": [
+      {
+        "term": "Magnetic Flux (Φ_B)",
+        "definition": "The total number of magnetic field lines passing normally through a given area: Φ_B = B⃗ · A⃗ = B · A · cos θ, where θ is the angle between the magnetic field vector and the normal area vector. SI Unit: Weber (Wb) or Tesla·metre² (T·m²). Scalar quantity."
+      },
+      {
+        "term": "Faraday’s First Law of Electromagnetic Induction",
+        "definition": "Whenever the magnetic flux linked with a closed circuit changes with time, an electromotive force (EMF) is induced in the circuit. The induced EMF persists as long as the change in magnetic flux continues."
+      },
+      {
+        "term": "Faraday’s Second Law of Electromagnetic Induction",
+        "definition": "The magnitude of the induced EMF is directly proportional to the time rate of change of magnetic flux linked with the circuit: |ε| = N · |dΦ_B / dt|, where N is the number of turns in the coil."
+      },
+      {
+        "term": "Lenz’s Law",
+        "definition": "The polarity of the induced EMF is such that it tends to produce an electric current whose magnetic effect opposes the change in magnetic flux that produces it: ε = −N · (dΦ_B / dt). This is a direct manifestation of the Law of Conservation of Energy."
+      },
+      {
+        "term": "Induced Current (I) & Induced Charge (q)",
+        "definition": "In a closed circuit of resistance R, Induced Current I = ε / R = −(N / R)(dΦ_B / dt). Induced Charge q = ∫ I dt = (N / R) · ΔΦ_B. Crucial Rule: Total induced charge is completely independent of time and magnet speed!"
+      }
+    ],
+    "keyPoints": [
+      "• <strong>Three Methods to Change Magnetic Flux (Φ_B = B A cos θ):</strong> (1) By changing the magnetic field strength B; (2) By changing the active coil surface area A enclosed within the field; (3) By rotating the coil to change the angle θ between B and normal A (the core operating principle of AC generators: ε = NBAω sin ωt).",
+      "• <strong>Open Circuit vs Closed Circuit:</strong> In an OPEN circuit, induced EMF is developed across the terminals, but NO induced current flows (I = 0). In a CLOSED circuit of resistance R, both induced EMF and induced current flow (I = ε / R).",
+      "• <strong>Relative Motion is Essential (Stationary Magnet Trap):</strong> A stationary magnet inside a coil—even with an immense field of 100 Tesla—produces ZERO induced EMF and ZERO current because dΦ_B / dt = 0! Flux must actively change with time.",
+      "• <strong>Induced Charge is Time-Independent (CBSE Top Ranker Trap):</strong> If a bar magnet is pushed rapidly into a coil (small Δt) vs pushed slowly (large Δt), the induced EMF is MUCH LARGER for rapid motion (ε ∝ 1/Δt). HOWEVER, the total induced charge q = ΔΦ_B / R is IDENTICAL in both cases, because time Δt cancels out!",
+      "• <strong>Conservation of Energy in Lenz’s Law:</strong> Mechanical work done by an external agent against the opposing magnetic force (repulsion during approach, attraction during withdrawal) is converted into electrical energy, which is ultimately dissipated as Joule heat (I²Rt)."
+    ],
+    "extraPoints": [
+      "• <strong>Faraday & Henry’s Three Landmark Experiments (1831):</strong> (1) Magnet-Coil relative motion; (2) Current-carrying primary coil C₁ moved relative to secondary coil C₂; (3) Tapping key make-and-break in stationary primary coil C₁ inducing momentary deflections in secondary C₂.",
+      "• <strong>Dimensional Formulas:</strong> Magnetic Flux [Φ_B] = [M L² T⁻² A⁻¹] (Weber). Induced EMF [ε] = [M L² T⁻³ A⁻¹] (Volt). Resistance [R] = [M L² T⁻³ A⁻²] (Ohm). Charge [q] = [A T] (Coulomb).",
+      "• <strong>Fleming's Right-Hand Rule:</strong> Used for straight conductor moving in a magnetic field: Stretch Thumb (Motion of conductor), Forefinger (Magnetic Field), and Central finger (Induced Current) mutually perpendicular to each other."
+    ],
+    "reactions": [
+      {
+        "name": "Faraday-Henry Electromagnetic Induction Experiment",
+        "isNamedReaction": true,
+        "equation": "Induced EMF: ε = −N · (dΦ_B / dt) &nbsp;|&nbsp; Induced Charge: q = (N · ΔΦ_B) / R",
+        "howItWorks": "Approaching North pole increases flux into coil; coil induces counter-clockwise current creating an opposing North pole (repulsion). Withdrawing magnet creates South pole (attraction), resisting separation.",
+        "diagramId": "rxn-faraday-induction"
+      }
+    ],
+    "oswaalMnemonic": {
+      "title": "Flux Change Sparks, Lenz Opposes the Cause",
+      "phrase": "EMF = −N (dΦ / dt) [No Flux CHANGE = Zero EMF!] | Charge q = ΔΦ / R (Strictly INDEPENDENT of speed and time!) | Lenz = Nature resists change in flux!",
+      "explanation": "A rapid motion gives high EMF but identical total charge q as a slow motion, because charge q = ΔΦ / R has no time variable."
+    },
+    "commonlyMadeErrors": [
+      {
+        "error": "Assuming that total induced charge depends on how fast the magnet is moved into the coil.",
+        "tip": "Induced EMF depends on speed/time (ε = ΔΦ / Δt), but induced charge q = ΔΦ / R is STRICTLY INDEPENDENT of time and speed!",
+        "penalty": "Complete loss of 2 marks on CBSE conceptual comparison questions."
+      },
+      {
+        "error": "Believing a stationary magnet placed inside a multi-turn coil generates an electric current.",
+        "tip": "Induction requires CHANGE in flux (dΦ/dt ≠ 0). For a stationary magnet (v = 0), flux is constant, so induced EMF = 0!",
+        "penalty": "1 mark deduction in CBSE assertion-reason or MCQs."
+      },
+      {
+        "error": "Omitting the negative sign in Faraday’s law: writing ε = N (dΦ/dt) without explanation.",
+        "tip": "Always write ε = −N (dΦ_B / dt) and explicitly state that the negative sign represents Lenz’s law (opposition to cause).",
+        "penalty": "½ mark deduction for missing vector polarity."
+      }
+    ],
+    "assertionReason": {
+      "assertion": "When a bar magnet is pushed rapidly into a coil, the galvanometer shows a larger deflection than when it is pushed slowly, but the total charge flowing through the coil is the same in both cases.",
+      "reason": "Induced EMF is inversely proportional to the time taken (ε = ΔΦ / Δt), while the total charge flown q = ΔΦ / R is independent of time.",
+      "correctOption": "Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",
+      "explanation": "Higher velocity reduces Δt, producing larger instantaneous EMF and galvanometer deflection. But total charge q = ∫ I dt = (ΔΦ / RΔt) · Δt = ΔΦ / R has no time dependency."
+    },
+    "examTrend": {
+      "pattern": "2-Mark & 3-Mark Derivation / Conceptual Blueprint [CBSE 2024, 2023, 2022, 2020, 2018]",
+      "pastYears": "CBSE 2024, 2023, 2022, 2020",
+      "highYieldPrompt": "State Faraday's laws of electromagnetic induction. A rectangular coil of resistance R is moved out of a uniform magnetic field in time t. Show that the charge induced depends only on the change in flux and resistance, and is independent of time."
     }
   }
 };
