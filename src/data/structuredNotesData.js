@@ -161,39 +161,61 @@ export const STRUCTURED_NOTES_DATA = {
       {
         "term": "Ideal Solution",
         "definition": "A binary solution which obeys Raoult’s law over the entire range of concentration and temperature, having zero enthalpy of mixing (ΔH_mix = 0) and zero volume change on mixing (ΔV_mix = 0)."
+      },
+      {
+        "term": "Non-Ideal Solution",
+        "definition": "A binary solution that does not obey Raoult’s law over the entire range of concentration and temperature, exhibiting non-zero enthalpy of mixing (ΔH_mix ≠ 0), non-zero volume change on mixing (ΔV_mix ≠ 0), and unequal intermolecular attractive forces (F_AB ≠ F_AA or F_BB)."
       }
     ],
     "keyPoints": [
-      "• <strong>Four Essential Criteria for Ideal Behavior:</strong> (1) Obeys Raoult’s law at all concentrations and temperatures; (2) Enthalpy of mixing is zero: ΔH_mix = 0; (3) Volume change on mixing is zero: ΔV_mix = 0; (4) Intermolecular attractive forces between A—B are identical in strength to A—A and B—B interactions.",
-      "• <strong>Thermodynamic Spontaneity:</strong> Although ΔH_mix = 0, ideal solutions mix spontaneously because entropy increases: ΔS_mix > 0, ensuring Gibbs free energy ΔG_mix = ΔH − TΔS < 0.",
-      "• <strong>Classic Ideal Pairs:</strong> (1) n-Hexane + n-Heptane; (2) Benzene + Toluene; (3) Bromoethane + Chloroethane; (4) Chlorobenzene + Bromobenzene."
+      "• <strong>Four Essential Criteria for Ideal Behavior:</strong> (1) Obeys Raoult’s law at all concentrations and temperatures (p_total = p°_A·x_A + p°_B·x_B); (2) Enthalpy of mixing is zero: ΔH_mix = 0; (3) Volume change on mixing is zero: ΔV_mix = 0; (4) Intermolecular attractive forces between A—B are identical in strength to A—A and B—B interactions.",
+      "• <strong>Core Signatures of Non-Ideal Behavior:</strong> (1) Does NOT obey Raoult’s law (observed vapour pressure differs from theoretical); (2) Heat is either evolved or absorbed during mixing: ΔH_mix ≠ 0; (3) Volume change occurs on mixing: ΔV_mix ≠ 0 (volume expands or contracts); (4) Intermolecular forces between A—B differ from pure A—A and B—B interactions.",
+      "• <strong>The Two Types of Non-Ideal Solutions:</strong> (1) <em>Positive Deviation:</em> A—B forces are WEAKER than A—A and B—B ⟹ higher vapour pressure, ΔH_mix > 0, ΔV_mix > 0 (e.g., Ethanol + Acetone); (2) <em>Negative Deviation:</em> A—B forces are STRONGER than A—A and B—B ⟹ lower vapour pressure, ΔH_mix < 0, ΔV_mix < 0 (e.g., Chloroform + Acetone).",
+      "• <strong>5-Point Board Distinction Table: Ideal vs Non-Ideal Solutions:</strong><br/>1. <em>Raoult’s Law:</em> Ideal obeys across all concentrations | Non-Ideal deviates from Raoult’s law.<br/>2. <em>Enthalpy Change:</em> Ideal has ΔH_mix = 0 | Non-Ideal has ΔH_mix ≠ 0.<br/>3. <em>Volume Change:</em> Ideal has ΔV_mix = 0 | Non-Ideal has ΔV_mix ≠ 0.<br/>4. <em>Forces:</em> Ideal has F_AB = F_AA = F_BB | Non-Ideal has F_AB ≠ F_AA and F_BB.<br/>5. <em>Distillation & Azeotropes:</em> Ideal does not form azeotropes (separated by fractional distillation) | Non-Ideal forms azeotropes (constant boiling mixtures).",
+      "• <strong>Thermodynamic Spontaneity:</strong> For BOTH ideal and non-ideal solutions, mixing is spontaneous only if ΔG_mix < 0. Entropy of mixing is ALWAYS positive (ΔS_mix > 0) in all homogeneous solutions because disorder increases upon intermixing.",
+      "• <strong>Classic Ideal Pairs:</strong> (1) n-Hexane + n-Heptane; (2) Benzene + Toluene; (3) Bromoethane + Chloroethane; (4) Chlorobenzene + Bromobenzene.",
+      "• <strong>Classic Non-Ideal Pairs:</strong> (1) Ethanol + Acetone (Positive deviation); (2) CS₂ + Acetone (Positive deviation); (3) Chloroform + Acetone (Negative deviation); (4) Phenol + Aniline (Negative deviation)."
     ],
     "extraPoints": [
-      "• <strong>Structural Similarity:</strong> Ideal solutions only form between components that have nearly identical molecular shapes, polarities, and intermolecular forces."
+      "• <strong>Structural Similarity Requirement:</strong> Ideal solutions only form between components that have nearly identical molecular shapes, polarities, and intermolecular forces (homologous series compounds).",
+      "• <strong>Azeotrope Connection:</strong> Non-ideal solutions showing large positive deviations form minimum boiling azeotropes, whereas those showing large negative deviations form maximum boiling azeotropes."
     ],
-    "reactions": [],
+    "reactions": [
+      {
+        "name": "Ideal vs Non-Ideal Solutions Master Comparison",
+        "isNamedReaction": false,
+        "equation": "Ideal: ΔH_mix = 0, ΔV_mix = 0, p = p°·x | Non-Ideal: ΔH_mix ≠ 0, ΔV_mix ≠ 0, p ≠ p°·x",
+        "howItWorks": "In ideal solutions, intermolecular forces are identical (A-B = A-A = B-B). In non-ideal solutions, forces differ (A-B ≠ A-A and B-B), leading to heat exchange, volume change, and vapour pressure departure.",
+        "diagramId": "rxn-ideal-vs-nonideal"
+      }
+    ],
     "oswaalMnemonic": {
-      "title": "Ideal Solution: No Heat, No Swell, Pure Harmony",
-      "phrase": "ΔH_mix = 0, ΔV_mix = 0, F_AB = F_AA = F_BB (Twins of Chemistry)",
-      "explanation": "Ideal solutions only form when molecular shapes and polarities are nearly identical, like Benzene + Toluene."
+      "title": "Ideal vs Non-Ideal Master Rule",
+      "phrase": "Ideal = All ZERO (ΔH=0, ΔV=0, Forces Match) | Non-Ideal = NOT Zero (ΔH≠0, ΔV≠0, Forces Mismatch ⟶ Positive or Negative Deviation)",
+      "explanation": "Benzene + Toluene matches forces (ideal). Acetone + Chloroform creates new stronger H-bonds (non-ideal negative deviation). Ethanol + Acetone weakens H-bonds (non-ideal positive deviation)."
     },
     "commonlyMadeErrors": [
       {
-        "error": "Writing that ΔS_mixing = 0 for ideal solutions.",
-        "tip": "ΔS_mixing is ALWAYS POSITIVE (entropy increases when two liquids mix). Only ΔH_mix and ΔV_mix are zero!",
+        "error": "Writing that ΔS_mixing = 0 for ideal solutions or negative for non-ideal solutions.",
+        "tip": "ΔS_mixing is ALWAYS POSITIVE (> 0) whenever two liquids mix spontaneously! Only ΔH_mix and ΔV_mix are zero for ideal solutions.",
         "penalty": "1 mark lost on thermodynamic criteria questions."
+      },
+      {
+        "error": "Confusing whether Chloroform + Acetone is ideal or non-ideal.",
+        "tip": "Chloroform + Acetone is NON-IDEAL with NEGATIVE deviation due to formation of new C—H···O=C hydrogen bonds.",
+        "penalty": "Loss of 1-2 marks in board multiple choice and give-reason questions."
       }
     ],
     "assertionReason": {
-      "assertion": "A mixture of benzene and toluene forms an almost ideal solution.",
-      "reason": "Benzene and toluene have similar molecular structures and identical magnitudes of intermolecular forces.",
+      "assertion": "A mixture of ethanol and acetone forms a non-ideal solution showing positive deviation from Raoult's law.",
+      "reason": "Acetone molecules get between ethanol molecules and break existing intermolecular hydrogen bonds, weakening solute-solvent interactions.",
       "correctOption": "Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.",
-      "explanation": "A-B forces equal A-A and B-B forces, so no heat is evolved/absorbed and no volume change occurs."
+      "explanation": "Because A-B interactions are weaker than in pure ethanol, molecules escape more easily into the vapour phase (p_total > p_calc) with ΔH_mix > 0 and ΔV_mix > 0."
     },
     "examTrend": {
-      "pattern": "2-Mark Definition & Examples [CBSE 2023, 2020, 2018]",
-      "pastYears": "CBSE 2023, 2020, 2018",
-      "highYieldPrompt": "State any two conditions for an ideal solution. Give two examples."
+      "pattern": "3-Mark Distinction Table & Examples [CBSE 2024, 2023, 2020, 2018, 2015]",
+      "pastYears": "CBSE 2024, 2023, 2020, 2018",
+      "highYieldPrompt": "Distinguish between ideal and non-ideal solutions on the basis of 4 criteria. Give one example of each."
     }
   },
   "chem-sub-1-5": {

@@ -519,7 +519,9 @@ export function searchStudyContent({
   if (!q) return [];
 
   const index = buildStudySearchIndex();
-  const searchTerms = q.split(/\s+/).filter(Boolean);
+  // Support both hyphenated ("non-ideal") and space-separated ("non ideal") search queries
+  const searchTerms = q.split(/[\s\-]+/).filter(Boolean);
+  const normalizedQuery = q.replace(/[-_]/g, ' ');
 
   const matched = [];
 
@@ -540,36 +542,44 @@ export function searchStudyContent({
       }
     }
 
-    // 3. Multi-word search matching
+    // 3. Multi-word search matching (resilient to hyphens and spaces)
     const fullText = item.searchableText;
-    const allMatch = searchTerms.every((term) => fullText.includes(term));
+    const normalizedFullText = fullText.replace(/[-_]/g, ' ');
+    const allMatch = searchTerms.every((term) => fullText.includes(term) || normalizedFullText.includes(term));
     if (!allMatch) continue;
 
     // 4. Relevance Scoring
     let score = 0;
     const itemTitleLower = item.title.toLowerCase();
+    const normalizedTitleLower = itemTitleLower.replace(/[-_]/g, ' ');
 
     // Exact query matches
-    if (itemTitleLower === q) {
-      score += 200;
-    } else if (itemTitleLower.startsWith(q)) {
+    if (itemTitleLower === q || normalizedTitleLower === normalizedQuery) {
+      score += 250;
+    } else if (itemTitleLower.startsWith(q) || normalizedTitleLower.startsWith(normalizedQuery)) {
+      score += 150;
+    } else if (itemTitleLower.includes(q) || normalizedTitleLower.includes(normalizedQuery)) {
+      score += 100;
+    }
+
+    // Specific boost for "non-ideal" queries
+    if ((normalizedQuery.includes('non ideal') || q.includes('non-ideal')) && 
+        (normalizedTitleLower.includes('non ideal') || item.subchapterId === 'chem-sub-1-4' || item.subchapterId === 'chem-sub-1-5')) {
       score += 120;
-    } else if (itemTitleLower.includes(q)) {
-      score += 80;
     }
 
     // Term-level scoring in title
     searchTerms.forEach((term) => {
-      if (itemTitleLower.includes(term)) {
+      if (itemTitleLower.includes(term) || normalizedTitleLower.includes(term)) {
         score += 30;
       }
     });
 
     // Type boosts
-    if (item.type === 'definition' && itemTitleLower.includes(q)) {
-      score += 50; // High value for definitions
+    if (item.type === 'definition' && (itemTitleLower.includes(q) || normalizedTitleLower.includes(normalizedQuery))) {
+      score += 60; // High value for definitions
     } else if (item.type === 'topic') {
-      score += 40; // High value for direct syllabus topics
+      score += 45; // High value for direct syllabus topics
     } else if (item.type === 'formula' || item.type === 'reaction') {
       score += 35;
     }
@@ -590,6 +600,7 @@ export function searchStudyContent({
 // Popular suggested search queries for quick launch
 export const POPULAR_SEARCH_SUGGESTIONS = {
   all: [
+    { label: "Ideal vs Non-Ideal Solutions", query: "Non ideal", type: "Chemistry" },
     { label: "Faraday's Law", query: "Faraday", type: "Universal" },
     { label: "Aldol Condensation", query: "Aldol", type: "Chemistry" },
     { label: "Raoult's Law & Colligative", query: "Raoult", type: "Chemistry" },
@@ -608,6 +619,7 @@ export const POPULAR_SEARCH_SUGGESTIONS = {
     { label: "Drift Velocity & Mobility", query: "Drift velocity", type: "Physics" },
   ],
   chemistry: [
+    { label: "Ideal & Non-Ideal Solutions", query: "Non ideal", type: "Chemistry" },
     { label: "Faraday's Electrolysis", query: "Faraday electrolysis", type: "Chemistry" },
     { label: "Aldol Condensation", query: "Aldol", type: "Chemistry" },
     { label: "Raoult's Law", query: "Raoult", type: "Chemistry" },

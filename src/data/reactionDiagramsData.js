@@ -750,6 +750,31 @@ export const REACTION_DIAGRAMS = [
   },
 
   {
+    id: 'rxn-ideal-vs-nonideal',
+    subtopicId: 'chem-sub-1-4',
+    chapterId: 'chem-ch-1',
+    title: 'Ideal vs Non-Ideal Solutions Master Comparison',
+    subtitle: 'Thermodynamic Criteria, Intermolecular Forces & Raoult’s Law Departure',
+    category: 'physical',
+    boardNote: 'High-Yield Board Question (3-5 Marks): Distinguish between ideal and non-ideal solutions based on Raoult’s law, enthalpy change, volume change, and molecular forces with two examples of each.',
+    diagramType: 'ideal-vs-nonideal',
+    ideal: {
+      raoult: "Obeys Raoult's law strictly across the entire range of concentration and temperature",
+      forces: "A—B attractive forces = A—A and B—B attractive forces (Identical bond energies)",
+      thermo: "ΔH_mixing = 0 (No heat evolved or absorbed) & ΔV_mixing = 0 (No contraction or expansion)",
+      azeotrope: "Does NOT form an azeotrope; components can be separated completely by fractional distillation",
+      examples: "n-Hexane + n-Heptane, Benzene + Toluene, Bromoethane + Chloroethane"
+    },
+    nonIdeal: {
+      raoult: "Does NOT obey Raoult's law; observed vapour pressure is higher or lower than theoretical",
+      forces: "A—B attractive forces ≠ A—A and B—B attractive forces (Unequal bond energies)",
+      thermo: "ΔH_mixing ≠ 0 (Heat absorbed [ΔH>0] or evolved [ΔH<0]) & ΔV_mixing ≠ 0 (Volume change occurs)",
+      azeotrope: "Forms azeotropes at specific composition (Minimum or Maximum boiling azeotropes)",
+      examples: "Ethanol + Acetone (Positive deviation), Chloroform + Acetone (Negative deviation)"
+    }
+  },
+
+  {
     id: 'rxn-raoult-deviations',
     subtopicId: 'chem-sub-1-5',
     chapterId: 'chem-ch-1',

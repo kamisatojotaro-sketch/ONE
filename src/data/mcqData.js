@@ -183,6 +183,54 @@ export const MCQ_DATABASE = {
 
   chemistry: [
     {
+      id: 'chem-mcq-solutions-nonideal-1',
+      chapterId: 'chem-ch-1',
+      chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-4',
+      difficulty: 'medium',
+      question: 'Which of the following conditions is TRUE for a non-ideal solution exhibiting positive deviation from Raoult\'s law?',
+      options: [
+        'ΔH_mixing > 0 and ΔV_mixing > 0 (A-B interactions are weaker than A-A and B-B)',
+        'ΔH_mixing < 0 and ΔV_mixing < 0 (A-B interactions are stronger than A-A and B-B)',
+        'ΔH_mixing = 0 and ΔV_mixing = 0 (A-B interactions equal A-A and B-B)',
+        'ΔH_mixing > 0 and ΔV_mixing < 0 (Vapour pressure decreases below Raoult\'s law)'
+      ],
+      correct: 0,
+      explanation: 'In non-ideal solutions with positive deviation, solute-solvent (A-B) interactions are weaker than pure component (A-A and B-B) interactions. Energy is absorbed to break stronger pure bonds (ΔH_mix > 0, endothermic), and weaker forces lead to expansion (ΔV_mix > 0). The escaping tendency into the vapour phase increases, producing higher vapour pressure.'
+    },
+    {
+      id: 'chem-mcq-solutions-nonideal-2',
+      chapterId: 'chem-ch-1',
+      chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-5',
+      difficulty: 'hard',
+      question: 'A mixture of chloroform (CHCl₃) and acetone (CH₃COCH₃) forms a non-ideal solution showing negative deviation because:',
+      options: [
+        'Acetone breaks the existing hydrogen bonds present in pure chloroform',
+        'Strong intermolecular hydrogen bonds form between the acidic C-H of chloroform and carbonyl oxygen of acetone',
+        'Both liquids have identical London dispersion forces resulting in zero enthalpy change',
+        'Chloroform undergoes dimerization in the presence of acetone molecules'
+      ],
+      correct: 1,
+      explanation: 'Neither pure chloroform nor pure acetone has intermolecular hydrogen bonding. However, upon mixing, a strong new hydrogen bond forms between the acidic hydrogen of chloroform and the carbonyl oxygen of acetone: Cl₃C—H···O=C(CH₃)₂. The resulting A-B interactions are stronger than pure A-A and B-B forces, lowering vapour pressure (negative deviation) with ΔH_mix < 0 and ΔV_mix < 0.'
+    },
+    {
+      id: 'chem-mcq-solutions-nonideal-3',
+      chapterId: 'chem-ch-1',
+      chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-4',
+      difficulty: 'easy',
+      question: 'Which of the following pairs forms an ideal solution obeying Raoult\'s law, unlike non-ideal solutions?',
+      options: [
+        'Ethanol + Acetone',
+        'Chloroform + Acetone',
+        'n-Hexane + n-Heptane',
+        'Nitric acid + Water'
+      ],
+      correct: 2,
+      explanation: 'n-Hexane and n-Heptane are homologous non-polar hydrocarbons of similar size and shape with nearly identical intermolecular forces (F_AB = F_AA = F_BB). They form an ideal solution (ΔH_mix = 0, ΔV_mix = 0). Ethanol + Acetone shows positive deviation, while Chloroform + Acetone and HNO₃ + Water show negative deviation.'
+    },
+    {
       id: 'chem-mcq-1',
       chapterId: 'chem-ch-1',
       chapterName: 'Ch 1: Solutions',

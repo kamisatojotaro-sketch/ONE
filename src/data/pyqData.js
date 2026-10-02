@@ -249,6 +249,30 @@ export const PYQ_DATABASE = {
 
   chemistry: [
     {
+      id: 'chem-pyq-solutions-nonideal-1',
+      chapterId: 'chem-ch-1',
+      chapterName: 'Ch 1: Solutions',
+      subtopicId: 'chem-sub-1-4',
+      year: 'CBSE 2023, 2020 (3 Marks)',
+      question: '(a) What is meant by a non-ideal solution? (b) Differentiate between an ideal solution and a non-ideal solution on the basis of: (i) Enthalpy of mixing (ΔH_mix), (ii) Volume change on mixing (ΔV_mix). (c) Why does a mixture of ethanol and acetone show positive deviation from Raoult\'s law?',
+      solution: `1. Definition of Non-Ideal Solution:
+   A binary solution that does NOT obey Raoult's law over the entire range of concentration and temperature, having ΔH_mixing ≠ 0 and ΔV_mixing ≠ 0, is called a non-ideal solution.
+
+2. Distinction:
+   • Enthalpy of Mixing (ΔH_mix):
+     - Ideal Solution: ΔH_mix = 0 (No heat is absorbed or evolved on mixing).
+     - Non-Ideal Solution: ΔH_mix ≠ 0 (Heat is either absorbed [ΔH > 0] or evolved [ΔH < 0]).
+   • Volume Change of Mixing (ΔV_mix):
+     - Ideal Solution: ΔV_mix = 0 (Total volume equals sum of components: V_total = V_A + V_B).
+     - Non-Ideal Solution: ΔV_mix ≠ 0 (Volume either expands [ΔV > 0] or contracts [ΔV < 0]).
+
+3. Reason for Positive Deviation in Ethanol + Acetone:
+   • In pure ethanol, molecules are held tightly by extensive intermolecular hydrogen bonding.
+   • When acetone is added, acetone molecules get between ethanol molecules and break some of the existing hydrogen bonds.
+   • The resulting solute-solvent attractive forces (A—B) are WEAKER than in pure ethanol (A—A).
+   • Consequently, molecules escape into the vapour phase more easily, resulting in a higher vapour pressure than predicted by Raoult's law (p_total > p_calc) with ΔH_mix > 0 and ΔV_mix > 0.`
+    },
+    {
       id: 'chem-pyq-1',
       chapterId: 'chem-ch-1',
       chapterName: 'Ch 1: Solutions',

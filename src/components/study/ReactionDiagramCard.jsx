@@ -847,6 +847,107 @@ export function SingleReactionDiagram({ rxn }) {
           </div>
         )}
 
+        {/* Ideal vs Non-Ideal Solutions Master Comparison Diagram */}
+        {rxn.diagramType === 'ideal-vs-nonideal' && (
+          <div className="space-y-4 py-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Ideal Solution Card */}
+              <div className="p-4 bg-[var(--bg-surface)] rounded-xl border-2 border-emerald-500/40 space-y-3">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    <span className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-wide">Ideal Solution</span>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30">Obeys Raoult</span>
+                </div>
+                <ul className="text-xs font-mono space-y-2 text-[var(--text-secondary)]">
+                  <li>• <strong>Raoult&apos;s Law:</strong> Obeys strictly across all T & C: <span className="text-[var(--text-primary)]">p_A = p°_A · x_A</span></li>
+                  <li>• <strong>Intermolecular Forces:</strong> Identical: <span className="text-emerald-400 font-bold">F_AB = F_AA = F_BB</span></li>
+                  <li>• <strong>Enthalpy of Mixing:</strong> <span className="text-emerald-400 font-bold">ΔH_mix = 0</span> (No heat evolved/absorbed)</li>
+                  <li>• <strong>Volume Change:</strong> <span className="text-emerald-400 font-bold">ΔV_mix = 0</span> (V_total = V_A + V_B)</li>
+                  <li>• <strong>Entropy & Free Energy:</strong> ΔS_mix &gt; 0, ΔG_mix &lt; 0 (Spontaneous)</li>
+                  <li>• <strong>Azeotropes:</strong> No azeotrope formed; separated completely by fractional distillation</li>
+                  <li className="pt-1 text-[11px] text-emerald-300/90 border-t border-[var(--border-subtle)]">
+                    <strong>Pairs:</strong> n-Hexane + n-Heptane, Benzene + Toluene, Bromoethane + Chloroethane
+                  </li>
+                </ul>
+              </div>
+
+              {/* Non-Ideal Solution Card */}
+              <div className="p-4 bg-[var(--bg-surface)] rounded-xl border-2 border-amber-500/40 space-y-3">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                    <span className="font-mono text-xs font-bold text-amber-400 uppercase tracking-wide">Non-Ideal Solution</span>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-bold border border-amber-500/30">Deviates from Raoult</span>
+                </div>
+                <ul className="text-xs font-mono space-y-2 text-[var(--text-secondary)]">
+                  <li>• <strong>Raoult&apos;s Law:</strong> Does NOT obey: <span className="text-[var(--text-primary)]">p_total ≠ p_A + p_B</span></li>
+                  <li>• <strong>Intermolecular Forces:</strong> Unequal: <span className="text-amber-400 font-bold">F_AB ≠ F_AA, F_BB</span></li>
+                  <li>• <strong>Enthalpy of Mixing:</strong> <span className="text-amber-400 font-bold">ΔH_mix ≠ 0</span> (Heat absorbed or evolved)</li>
+                  <li>• <strong>Volume Change:</strong> <span className="text-amber-400 font-bold">ΔV_mix ≠ 0</span> (Expansion or contraction)</li>
+                  <li>• <strong>Entropy & Free Energy:</strong> ΔS_mix &gt; 0, ΔG_mix &lt; 0 (Still spontaneous!)</li>
+                  <li>• <strong>Azeotropes:</strong> Forms azeotropic mixtures boiling at constant temperature</li>
+                  <li className="pt-1 text-[11px] text-amber-300/90 border-t border-[var(--border-subtle)]">
+                    <strong>Pairs:</strong> Ethanol + Acetone (+ve dev), Chloroform + Acetone (−ve dev), Phenol + Aniline (−ve dev)
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Quick-Glance Board Comparison Matrix */}
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono overflow-x-auto">
+              <div className="font-bold text-[var(--accent-primary)] mb-2 flex items-center gap-1.5">
+                <Scale size={14} />
+                <span>Quick-Glance CBSE Board Exam Distinction Matrix:</span>
+              </div>
+              <table className="w-full text-left border-collapse text-[11px]">
+                <thead>
+                  <tr className="border-b border-[var(--border-subtle)] text-[var(--text-muted)]">
+                    <th className="py-1 px-2 font-semibold">Parameter</th>
+                    <th className="py-1 px-2 font-semibold text-emerald-400">Ideal Solution</th>
+                    <th className="py-1 px-2 font-semibold text-blue-400">Non-Ideal (+ve Dev)</th>
+                    <th className="py-1 px-2 font-semibold text-rose-400">Non-Ideal (−ve Dev)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border-subtle)]/50 text-[var(--text-secondary)]">
+                  <tr>
+                    <td className="py-1 px-2 font-bold text-[var(--text-primary)]">Raoult&apos;s Law</td>
+                    <td className="py-1 px-2">p = p°·x</td>
+                    <td className="py-1 px-2">p &gt; p°·x (Higher VP)</td>
+                    <td className="py-1 px-2">p &lt; p°·x (Lower VP)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1 px-2 font-bold text-[var(--text-primary)]">A-B Interactions</td>
+                    <td className="py-1 px-2">Equal to A-A, B-B</td>
+                    <td className="py-1 px-2">Weaker than pure</td>
+                    <td className="py-1 px-2">Stronger (new H-bond)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1 px-2 font-bold text-[var(--text-primary)]">ΔH_mixing</td>
+                    <td className="py-1 px-2 text-emerald-400">= 0</td>
+                    <td className="py-1 px-2 text-blue-400">&gt; 0 (Endothermic)</td>
+                    <td className="py-1 px-2 text-rose-400">&lt; 0 (Exothermic)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1 px-2 font-bold text-[var(--text-primary)]">ΔV_mixing</td>
+                    <td className="py-1 px-2 text-emerald-400">= 0</td>
+                    <td className="py-1 px-2 text-blue-400">&gt; 0 (Expansion)</td>
+                    <td className="py-1 px-2 text-rose-400">&lt; 0 (Contraction)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1 px-2 font-bold text-[var(--text-primary)]">Azeotrope</td>
+                    <td className="py-1 px-2">None</td>
+                    <td className="py-1 px-2">Minimum Boiling</td>
+                    <td className="py-1 px-2">Maximum Boiling</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
         {/* Raoult's Law Deviations Diagram */}
         {rxn.diagramType === 'raoult-deviations' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-2">
@@ -1250,7 +1351,7 @@ export function SingleReactionDiagram({ rxn }) {
         )}
 
         {/* Generic or Table Style Representation for other diagram types */}
-        {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion', 'lead-storage', 'fuel-cell', 'kohlrausch-graph', 'reverse-osmosis', 'raoult-deviations', 'lanthanoid-contraction', 'sandmeyer', 'dows-process', 'phosgene', 'dehydrogenation', 'faraday-electrolysis', 'faraday-induction'].includes(rxn.diagramType) && (
+        {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion', 'lead-storage', 'fuel-cell', 'kohlrausch-graph', 'reverse-osmosis', 'ideal-vs-nonideal', 'raoult-deviations', 'lanthanoid-contraction', 'sandmeyer', 'dows-process', 'phosgene', 'dehydrogenation', 'faraday-electrolysis', 'faraday-induction'].includes(rxn.diagramType) && (
           <div className="space-y-2 p-2">
             {rxn.equation && (
               <div className="font-mono text-sm sm:text-base font-bold p-3 rounded-xl bg-[var(--bg-elevated)] text-[var(--accent-primary)] text-center overflow-x-auto">

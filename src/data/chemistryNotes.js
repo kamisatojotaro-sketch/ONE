@@ -69,27 +69,48 @@ export const CHEMISTRY_CHAPTERS = [
         sections: [
           {
             id: 'chem-sec-1-4',
-            title: 'Thermodynamics of Ideal Solutions',
-            explanation: "Ideal solutions obey Raoult's law across the entire concentration range, which happens when solute-solvent interactions are essentially identical in strength to solute-solute and solvent-solvent interactions, so ΔH_mixing = 0 and ΔV_mixing = 0. Non-ideal solutions deviate from Raoult's law because the various interactions differ in strength.",
-            questionFraming: "Distinction — 'Distinguish between ideal and non-ideal solutions with two examples of each.'",
-            textbookRef: "Ideal criteria: (i) Obeys Raoult's law at all T and C, (ii) ΔH_mix = 0, (iii) ΔV_mix = 0, (iv) A-B force = A-A force = B-B force. Examples: Benzene + Toluene, n-Hexane + n-Heptane, Bromoethane + Chloroethane.",
-            keyFormulas: ["Ideal: ΔH_mix = 0, ΔV_mix = 0, F_AB = F_AA = F_BB"]
+            title: 'Ideal Solutions: Criteria, Thermodynamics & Molecular Basis',
+            explanation: "An ideal solution is a binary liquid solution that strictly obeys Raoult's law over the entire range of concentration and at all temperatures. In an ideal solution, the solute-solvent attractive forces (A—B) are exactly identical in magnitude to the solute-solute (A—A) and solvent-solvent (B—B) interactions. Because intermolecular bonds formed equal bonds broken, no heat is evolved or absorbed during mixing: ΔH_mixing = 0. Likewise, because molecular packing remains unchanged, the total volume equals the sum of the pure components: ΔV_mixing = 0 (V_solution = V_A + V_B). Crucially, while ΔH_mix = 0, dissolution is thermodynamically spontaneous because entropy increases on mixing (ΔS_mixing > 0), ensuring Gibbs free energy change ΔG_mix = ΔH - TΔS < 0.",
+            questionFraming: "Board Question (2 Marks) — 'State any two essential conditions for a binary solution to be ideal.'\n'Name any two pairs of liquids that form nearly ideal solutions.'\n'Why is ΔS_mixing positive for ideal solutions even though ΔH_mixing = 0?'",
+            textbookRef: "Criteria for Ideality: (1) Obeys Raoult's law: p_A = p°_A · x_A and p_B = p°_B · x_B across all concentrations; (2) Enthalpy of mixing ΔH_mix = 0; (3) Volume change of mixing ΔV_mix = 0; (4) Intermolecular forces F_AB = F_AA = F_BB. Classic Ideal Pairs: (a) Benzene + Toluene, (b) n-Hexane + n-Heptane, (c) Bromoethane + Chloroethane, (d) Chlorobenzene + Bromobenzene.",
+            keyFormulas: [
+              "Raoult's Law: p_A = p°_A · x_A, p_B = p°_B · x_B",
+              "p_total = p_A + p_B = p°_A · x_A + p°_B · x_B",
+              "ΔH_mix = 0, ΔV_mix = 0, ΔS_mix > 0, ΔG_mix < 0",
+              "Intermolecular Forces: F_AB = F_AA = F_BB"
+            ]
+          },
+          {
+            id: 'chem-sec-1-4b',
+            title: 'Non-Ideal Solutions: Molecular Basis, Deviations & 5-Point Comparison',
+            explanation: "When a binary solution does NOT obey Raoult's law over the entire range of concentration, it is classified as a Non-Ideal Solution. In non-ideal solutions, the intermolecular attractive forces between solute and solvent (A—B) differ in strength from those in the pure components (A—A and B—B). As a result: (1) The vapour pressure of the solution is either higher or lower than that predicted by Raoult's law (p_total ≠ p_A + p_B); (2) Mixing is accompanied by heat change (ΔH_mixing ≠ 0, either heat is absorbed or evolved); (3) Total volume of solution is not equal to the sum of volumes of components (ΔV_mixing ≠ 0, volume either expands or contracts). Non-ideal solutions are divided into two fundamental types based on direction of deviation: Positive Deviation (A—B forces are weaker, causing higher vapour pressure, ΔH_mix > 0, ΔV_mix > 0) and Negative Deviation (A—B forces are stronger, causing lower vapour pressure, ΔH_mix < 0, ΔV_mix < 0).",
+            questionFraming: "Board Distinction (3-5 Marks) — 'Differentiate between ideal and non-ideal solutions on the basis of: (i) Raoult\'s law compliance, (ii) ΔH_mixing, (iii) ΔV_mixing, (iv) Intermolecular interactions.'\n'What is a non-ideal solution? Give one example.'",
+            textbookRef: "Non-Ideal Solution Criteria: (i) Does NOT obey Raoult's law over full concentration range (p_A ≠ p°_A · x_A); (ii) ΔH_mix ≠ 0 (heat is either evolved or absorbed); (iii) ΔV_mix ≠ 0 (volume either expands or contracts); (iv) F_AB ≠ F_AA and F_BB. Classic Non-Ideal Pairs: Ethanol + Acetone (Positive deviation), Chloroform + Acetone (Negative deviation), Phenol + Aniline (Negative deviation), Nitric acid + Water (Negative deviation).",
+            keyFormulas: [
+              "Non-Ideal: p_total ≠ p°_A · x_A + p°_B · x_B",
+              "ΔH_mix ≠ 0 (Heat absorbed [ΔH>0] or evolved [ΔH<0])",
+              "ΔV_mix ≠ 0 (Volume expands [ΔV>0] or contracts [ΔV<0])",
+              "Intermolecular Forces: F_AB ≠ F_AA and F_BB",
+              "Positive Deviation: F_AB < F_AA, F_BB ⟹ ΔH_mix > 0, ΔV_mix > 0, P_obs > P_calc",
+              "Negative Deviation: F_AB > F_AA, F_BB ⟹ ΔH_mix < 0, ΔV_mix < 0, P_obs < P_calc"
+            ]
           }
         ]
       },
       {
         id: 'chem-sub-1-5',
-        title: '1.5 Positive and Negative Deviations from Raoult’s Law',
+        title: '1.5 Positive and Negative Deviations from Raoult’s Law (Non-Ideal Solutions)',
         sections: [
           {
             id: 'chem-sec-1-5',
-            title: 'Molecular Basis of Deviations',
-            explanation: "Positive deviation occurs when solute-solvent interactions are weaker than the interactions in the pure components, so molecules escape into the vapour phase more easily than Raoult's law predicts (ΔV_mix = +ve, ΔH_mix = +ve); examples are acetone + water and alcohol + water. Negative deviation occurs when solute-solvent interactions are stronger, holding molecules back from the vapour phase (ΔV_mix = −ve, ΔH_mix = −ve); examples are acetone + chloroform and phenol + aniline.",
-            questionFraming: "Distinction — 'Distinguish between positive and negative deviation from Raoult\'s law with one example each.'",
-            textbookRef: "Positive: A-B < A-A and B-B, ΔH_mix > 0, ΔV_mix > 0, vapour pressure is higher (e.g., Ethanol + Acetone, CS₂ + Acetone). Negative: A-B > A-A and B-B (often due to H-bonding), ΔH_mix < 0, ΔV_mix < 0, vapour pressure is lower (e.g., Chloroform + Acetone, Phenol + Aniline).",
+            title: 'Non-Ideal Solutions: Molecular Basis of Positive & Negative Deviations',
+            explanation: "Non-ideal solutions deviate from Raoult's law in two distinct ways depending on the relative magnitude of solute-solvent interactions:\n\n1. Positive Deviation (A—B < A—A, B—B): The attractive forces between solute and solvent molecules are WEAKER than in pure components. As a result, molecules in solution have a greater escaping tendency into the vapour phase, causing the observed total vapour pressure to be HIGHER than predicted by Raoult's law. Dissolution is endothermic (ΔH_mix > 0, heat absorbed) and volume increases on mixing (ΔV_mix > 0). Classic example: Ethanol + Acetone. In pure ethanol, molecules are strongly hydrogen-bonded. Adding acetone causes acetone molecules to slip between ethanol molecules, breaking existing H-bonds and weakening overall attractions. Other examples: CS₂ + Acetone, Ethanol + Water, CCl₄ + Benzene.\n\n2. Negative Deviation (A—B > A—A, B—B): The attractive forces between solute and solvent molecules are STRONGER than in pure components, often due to the formation of new intermolecular hydrogen bonds or dipole-dipole attractions. Consequently, molecules are held more tightly in the liquid phase and have a reduced escaping tendency, so the observed total vapour pressure is LOWER than predicted by Raoult's law. Dissolution is exothermic (ΔH_mix < 0, heat evolved) and volume contracts on mixing (ΔV_mix < 0). Classic example: Chloroform (CHCl₃) + Acetone ((CH₃)₂CO). Pure chloroform and pure acetone lack intermolecular hydrogen bonds. When mixed, a strong new hydrogen bond forms between the acidic C—H of chloroform and the carbonyl oxygen of acetone: Cl₃C—H···O=C(CH₃)₂. Other examples: Phenol + Aniline, Nitric acid (HNO₃) + Water, HCl + Water.",
+            questionFraming: "Board Distinction (3 Marks) — 'Distinguish between non-ideal solutions showing positive deviation and negative deviation from Raoult\'s law with two examples each.'\n'Why does a mixture of chloroform and acetone show negative deviation from Raoult\'s law?' (CBSE 2023, 2022, 2019).\n'Explain why mixing ethanol and acetone is an endothermic process.'",
+            textbookRef: "Positive Deviation: F_AB < F_AA and F_BB; ΔH_mix > 0; ΔV_mix > 0; p_total > p_calc; Forms Minimum Boiling Azeotrope (e.g. 95.6% Ethanol + 4.4% Water, b.p. 351.15 K). Negative Deviation: F_AB > F_AA and F_BB (new H-bonding); ΔH_mix < 0; ΔV_mix < 0; p_total < p_calc; Forms Maximum Boiling Azeotrope (e.g. 68% HNO₃ + 32% Water, b.p. 393.5 K).",
             keyFormulas: [
-              "Positive: ΔH_mix > 0, ΔV_mix > 0, p_total > (p_A + p_B)_calc",
-              "Negative: ΔH_mix < 0, ΔV_mix < 0, p_total < (p_A + p_B)_calc"
+              "Positive: F_AB < F_AA, F_BB | ΔH_mix > 0 | ΔV_mix > 0 | p_total > p_calc",
+              "Negative: F_AB > F_AA, F_BB | ΔH_mix < 0 | ΔV_mix < 0 | p_total < p_calc",
+              "Azeotropes: Large +ve dev ⟶ Min-Boiling | Large -ve dev ⟶ Max-Boiling"
             ]
           }
         ]
