@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback } from 'react';
 import { useStudySession } from '../hooks/useStudySession';
 import SubjectGrid from '../components/study/SubjectGrid';
 import StudyHeader from '../components/study/StudyHeader';
@@ -8,9 +9,66 @@ import PortionsTabContent from '../components/study/PortionsTabContent';
 import PyqTabContent from '../components/study/PyqTabContent';
 import McqTabContent from '../components/study/McqTabContent';
 import TestMakerTabContent from '../components/study/TestMakerTabContent';
+import StudySearchModal from '../components/study/StudySearchModal';
 
 export default function Notes() {
   const session = useStudySession();
+
+  // Search Modal State
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchScope, setSearchScope] = useState('all');
+
+  const handleOpenUniversalSearch = useCallback(() => {
+    setSearchScope('all');
+    setIsSearchOpen(true);
+  }, []);
+
+  const handleOpenSubjectSearch = useCallback((subjKey) => {
+    setSearchScope(subjKey || session.selectedSubject || 'all');
+    setIsSearchOpen(true);
+  }, [session.selectedSubject]);
+
+  // Global Keyboard Shortcuts (Ctrl+K or ⌘K for Universal, Ctrl+Shift+F for Subject Search)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Avoid capturing when user is typing in form controls outside modal
+      const targetTag = e.target?.tagName?.toLowerCase();
+      const isInput = targetTag === 'input' || targetTag === 'textarea' || targetTag === 'select';
+
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        handleOpenUniversalSearch();
+      } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        handleOpenSubjectSearch(session.selectedSubject);
+      } else if (e.key === '/' && !isInput && !isSearchOpen) {
+        e.preventDefault();
+        handleOpenUniversalSearch();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleOpenUniversalSearch, handleOpenSubjectSearch, session.selectedSubject, isSearchOpen]);
+
+  const handleNavigateSearchResult = useCallback((item) => {
+    session.jumpToLocation({
+      subjectId: item.subjectId,
+      volumeId: item.volumeId,
+      chapterId: item.chapterId,
+      subchapterId: item.subchapterId,
+      tab: item.tab || 'NOTES'
+    });
+
+    if (item.sectionId) {
+      setTimeout(() => {
+        const el = document.getElementById(item.sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 350);
+    }
+  }, [session]);
 
   const handleJumpToChapter = (subjKey, volumeId, chapterId) => {
     session.setSelectedSubject(subjKey);
@@ -27,6 +85,8 @@ export default function Notes() {
           onSelectSubject={session.setSelectedSubject}
           completedSections={session.completedSections}
           completedPortionChapters={session.completedPortionChapters}
+          onOpenUniversalSearch={handleOpenUniversalSearch}
+          onOpenSubjectSearch={handleOpenSubjectSearch}
         />
       ) : (
         /* 2. Subject View Layout */
@@ -38,6 +98,8 @@ export default function Notes() {
             onSelectVolume={session.setSelectedVolume}
             onBackToSubjects={() => session.setSelectedSubject(null)}
             volumeProgress={session.volumeProgress}
+            onOpenUniversalSearch={handleOpenUniversalSearch}
+            onOpenSubjectSearch={handleOpenSubjectSearch}
           />
 
           {/* Body: Left Sidebar + Main Content Area */}
@@ -127,6 +189,15 @@ export default function Notes() {
           </div>
         </div>
       )}
+
+      {/* Universal & Subject Knowledge Search Modal */}
+      <StudySearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        initialScope={searchScope}
+        onNavigate={handleNavigateSearchResult}
+        currentSubject={session.selectedSubject}
+      />
     </div>
   );
 }

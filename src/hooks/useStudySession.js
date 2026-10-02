@@ -266,6 +266,48 @@ export function useStudySession() {
     };
   }, [sessionState.completedPortionChapters]);
 
+  const jumpToLocation = useCallback(({ subjectId, volumeId, chapterId, subchapterId, tab = 'NOTES' }) => {
+    setSessionState(prev => {
+      const subject = NCERT_SYLLABUS[subjectId];
+      if (!subject) return prev;
+
+      let resolvedVolume = volumeId;
+      let resolvedChapter = chapterId;
+      let resolvedSub = subchapterId;
+
+      if (resolvedChapter && !resolvedVolume) {
+        for (const vol of subject.volumes) {
+          if (vol.chapters.some(c => c.id === resolvedChapter)) {
+            resolvedVolume = vol.id;
+            break;
+          }
+        }
+      }
+      if (!resolvedVolume) {
+        resolvedVolume = subject.volumes[0]?.id;
+      }
+
+      if (resolvedChapter && !resolvedSub) {
+        for (const vol of subject.volumes) {
+          const ch = vol.chapters.find(c => c.id === resolvedChapter);
+          if (ch && ch.subchapters?.length) {
+            resolvedSub = ch.subchapters[0].id;
+            break;
+          }
+        }
+      }
+
+      return {
+        ...prev,
+        selectedSubject: subjectId,
+        selectedVolume: resolvedVolume,
+        selectedChapter: resolvedChapter || null,
+        selectedSubchapter: resolvedSub || null,
+        activeSidebarTab: tab || 'NOTES'
+      };
+    });
+  }, []);
+
   return {
     ...sessionState,
     setSelectedSubject,
@@ -278,6 +320,7 @@ export function useStudySession() {
     markSubchapterCompleted,
     togglePortionChapter,
     saveUserNote,
+    jumpToLocation,
     volumeProgress,
     activeSubchapterStats,
     portionsStats

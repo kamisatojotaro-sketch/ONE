@@ -1,7 +1,13 @@
-import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain } from 'lucide-react';
+import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 
-export default function SubjectGrid({ onSelectSubject, completedSections, completedPortionChapters }) {
+export default function SubjectGrid({ 
+  onSelectSubject, 
+  completedSections, 
+  completedPortionChapters,
+  onOpenUniversalSearch,
+  onOpenSubjectSearch
+}) {
   const subjects = Object.values(NCERT_SYLLABUS);
 
   const getSubjectIcon = (id) => {
@@ -64,6 +70,61 @@ export default function SubjectGrid({ onSelectSubject, completedSections, comple
         </p>
       </div>
 
+      {/* Universal Search & Quick Subject Finders */}
+      <div className="p-3.5 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3.5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          {/* Universal Search Button Trigger */}
+          <button
+            onClick={onOpenUniversalSearch}
+            className="flex-1 flex items-center justify-between gap-3 px-4 py-3 bg-[var(--bg-surface)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] rounded-xl text-left text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all hover:shadow-xs cursor-pointer group"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-[var(--accent-primary)]/15 flex items-center justify-center text-[var(--accent-primary)] shrink-0">
+                <Search size={16} />
+              </div>
+              <div className="min-w-0">
+                <div className="text-xs sm:text-sm font-medium text-[var(--text-primary)] truncate flex items-center gap-2">
+                  <span>Universal Knowledge & Topic Search</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">
+                    All Subjects
+                  </span>
+                </div>
+                <div className="text-[11px] text-[var(--text-muted)] truncate hidden sm:block">
+                  Search topics, definitions, formulas, reactions & specific words across Physics, Chemistry, Biology & Psychology
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <kbd className="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
+                Ctrl + K
+              </kbd>
+              <div className="p-1 rounded-lg text-[var(--accent-primary)] group-hover:translate-x-0.5 transition-transform">
+                <ArrowRight size={16} />
+              </div>
+            </div>
+          </button>
+        </div>
+
+        {/* Quick Subject Search Scope Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none text-xs">
+          <span className="text-[var(--text-muted)] text-[11px] font-medium shrink-0 flex items-center gap-1">
+            <Sparkles size={12} className="text-[var(--accent-primary)]" />
+            Subject Search:
+          </span>
+          {subjects.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(s.id)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer shrink-0 hover:-translate-y-0.5"
+            >
+              {getSubjectIcon(s.id, 13)}
+              <span>Search {s.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Subject Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {subjects.map((subj) => {
@@ -77,15 +138,28 @@ export default function SubjectGrid({ onSelectSubject, completedSections, comple
               onClick={() => onSelectSubject(subj.id)}
               className="group relative flex flex-col justify-between p-5 sm:p-7 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1.5 hover:border-[var(--accent-primary)] overflow-hidden"
             >
-              {/* Top Row: Icon & Code */}
+              {/* Top Row: Icon & Code & Search */}
               <div>
                 <div className="flex items-center justify-between mb-5">
                   <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] transition-colors group-hover:scale-105 duration-200">
                     {getSubjectIcon(subj.id)}
                   </div>
-                  <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-[var(--bg-base)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
-                    Code {subj.code}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenSubjectSearch && onOpenSubjectSearch(subj.id);
+                      }}
+                      className="p-1.5 rounded-lg border border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--accent-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
+                      title={`Search topics & words in ${subj.name}`}
+                    >
+                      <Search size={14} />
+                    </button>
+                    <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-[var(--bg-base)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
+                      Code {subj.code}
+                    </span>
+                  </div>
                 </div>
 
                 <h3 className="font-serif text-2xl font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors mb-2">

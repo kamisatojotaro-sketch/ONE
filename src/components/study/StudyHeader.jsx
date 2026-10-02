@@ -1,4 +1,4 @@
-import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, ChevronDown, Search, Globe } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { useStudyTimer } from '../../hooks/useStudyTimer';
 
@@ -7,7 +7,9 @@ export default function StudyHeader({
   selectedVolume,
   onSelectVolume,
   onBackToSubjects,
-  volumeProgress
+  volumeProgress,
+  onOpenUniversalSearch,
+  onOpenSubjectSearch
 }) {
   const subject = NCERT_SYLLABUS[selectedSubject];
   const timer = useStudyTimer(25);
@@ -43,6 +45,33 @@ export default function StudyHeader({
               />
             </div>
           </div>
+        </div>
+
+        {/* Center / Action: Subject Search & Universal Search Buttons */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Subject Search Button */}
+          <button
+            onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(selectedSubject)}
+            className="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-[var(--text-primary)] font-medium text-xs sm:text-sm transition-all hover:shadow-xs cursor-pointer group"
+            title={`Search specific topics, formulas, or words in ${subject.name}`}
+          >
+            <Search size={14} className="text-[var(--accent-primary)] transition-transform group-hover:scale-110" />
+            <span className="truncate">Search {subject.name}</span>
+          </button>
+
+          {/* Universal Search Button */}
+          <button
+            onClick={onOpenUniversalSearch}
+            className="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-medium text-xs sm:text-sm transition-all cursor-pointer group"
+            title="Search topics, definitions, formulas, or words across all Class 12 subjects (Ctrl+K)"
+          >
+            <Globe size={14} className="text-[var(--text-muted)] group-hover:text-[var(--accent-primary)] transition-colors" />
+            <span className="hidden sm:inline">Universal Search</span>
+            <span className="sm:hidden">All Subjects</span>
+            <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
+              Ctrl+K
+            </kbd>
+          </button>
         </div>
 
         {/* Right Section on mobile: Volume Dropdown + Timer */}
