@@ -3,262 +3,262 @@
 // Ratings are fully customizable by the user and persist in local storage.
 
 export const DEFAULT_CHAPTER_PRIORITIES = {
-  // Physics Volume 1 (Core Exam Portions 1-8)
-  'phy-ch-1': 9,  // Electric Charges & Fields (Gauss's Law, Dipoles, Coulomb)
-  'phy-ch-2': 9,  // Electrostatic Potential & Capacitance (Dielectrics, Capacitors)
-  'phy-ch-3': 9,  // Current Electricity (Drift Velocity, Kirchhoff's Rules, Cells)
-  'phy-ch-4': 8,  // Moving Charges & Magnetism (Biot-Savart, Ampere, Toroid, Galvanometer)
-  'phy-ch-5': 7,  // Magnetism & Matter (Magnetic Dipole, Earth's Magnetism)
-  'phy-ch-6': 10, // Electromagnetic Induction (Faraday's Laws, Lenz's Law, Motional EMF, Mutual/Self Inductance)
-  'phy-ch-7': 9,  // Alternating Current (LCR Circuit, Resonance, Power Factor, Transformers)
-  'phy-ch-8': 7,  // Electromagnetic Waves (Displacement Current, Spectrum Properties)
+  // Physics Volume 1 (Total: 35 Marks)
+  'phy-ch-1': 6,  // Electric Charges & Fields (~5-6 marks in board)
+  'phy-ch-2': 6,  // Electrostatic Potential & Capacitance (~5-6 marks in board)
+  'phy-ch-3': 7,  // Current Electricity (Kirchhoff's Rules, Drift Velocity, Cells ~7 marks)
+  'phy-ch-4': 7,  // Moving Charges & Magnetism (Biot-Savart, Ampere, Galvanometer ~6 marks)
+  'phy-ch-5': 3,  // Magnetism & Matter (Minor qualitative chapter, ~2-3 marks)
+  'phy-ch-6': 6,  // Electromagnetic Induction (Faraday's Laws, Lenz's Law, Motional EMF ~4-5 marks)
+  'phy-ch-7': 7,  // Alternating Current (LCR Circuit, Resonance, Transformers ~5 marks)
+  'phy-ch-8': 2,  // Electromagnetic Waves (Minor qualitative chapter, ~2-3 marks)
 
-  // Physics Volume 2
-  'phy-ch-9': 10, // Ray Optics & Optical Instruments (Lenses, Prism, Telescope, Microscope)
-  'phy-ch-10': 9, // Wave Optics (Huygens Principle, Young's Double Slit, Diffraction)
-  'phy-ch-11': 8, // Dual Nature of Radiation & Matter (Photoelectric Effect, Einstein's Equation)
-  'phy-ch-12': 7, // Atoms (Bohr Model, Hydrogen Spectrum)
-  'phy-ch-13': 7, // Nuclei (Binding Energy, Nuclear Fission/Fusion)
-  'phy-ch-14': 8, // Semiconductor Electronics (p-n Junction, Rectifiers)
+  // Physics Volume 2 (Total: 35 Marks)
+  'phy-ch-9': 10, // Ray Optics & Optical Instruments (Highest weightage in Physics: ~9-10 marks!)
+  'phy-ch-10': 8, // Wave Optics (Huygens Principle, YDSE Fringe Width, Diffraction ~7-8 marks)
+  'phy-ch-11': 5, // Dual Nature of Radiation & Matter (~5 marks)
+  'phy-ch-12': 4, // Atoms (Bohr Model, Spectral Lines ~3-4 marks)
+  'phy-ch-13': 3, // Nuclei (Binding Energy, Fission/Fusion ~3 marks)
+  'phy-ch-14': 7, // Semiconductor Electronics (p-n Junction, Rectifier ~7 marks)
 
-  // Chemistry Volume 1
-  'chem-ch-1': 10, // Solutions (Raoult's Law, Colligative Properties, Van 't Hoff Factor)
-  'chem-ch-2': 10, // Electrochemistry (Nernst Equation, Kohlrausch Law, Faraday's Laws, Batteries)
-  'chem-ch-3': 9,  // Chemical Kinetics (Rate Laws, Integrated Rate Equations, Arrhenius)
-  'chem-ch-4': 9,  // d- and f-Block Elements (Lanthanoid Contraction, Transition Metal Properties, KMnO4/K2Cr2O7)
-  'chem-ch-5': 9,  // Coordination Compounds (Werner, VBT, CFT, Isomerism, Nomenclature)
+  // Chemistry Volume 1 (Total: 35 Marks)
+  'chem-ch-1': 7, // Solutions (Colligative Properties, Van 't Hoff Factor ~7 marks)
+  'chem-ch-2': 9, // Electrochemistry (Highest Physical Chemistry Chapter: ~9 marks!)
+  'chem-ch-3': 7, // Chemical Kinetics (Rate Laws, Arrhenius Equation ~7 marks)
+  'chem-ch-4': 7, // d- and f-Block Elements (Lanthanoid Contraction, KMnO4/K2Cr2O7 ~7 marks)
+  'chem-ch-5': 7, // Coordination Compounds (IUPAC, VBT, CFT, Isomerism ~7 marks)
 
-  // Chemistry Volume 2
-  'chem-ch-6': 9,  // Haloalkanes & Haloarenes (SN1/SN2 Mechanisms, Named Reactions, Organometallics)
-  'chem-ch-7': 9,  // Alcohols, Phenols & Ethers (Dehydration, Reimer-Tiemann, Kolbe, Williamson Synthesis)
-  'chem-ch-8': 10, // Aldehydes, Ketones & Carboxylic Acids (Aldol, Cannizzaro, Nucleophilic Addition, Acidity)
-  'chem-ch-9': 8,  // Amines (Basicity, Diazonium Salts, Hoffmann Bromamide)
-  'chem-ch-10': 7, // Biomolecules (Carbohydrates, Proteins, Nucleic Acids)
+  // Chemistry Volume 2 (Total: 35 Marks)
+  'chem-ch-6': 6, // Haloalkanes & Haloarenes (SN1/SN2 Mechanisms, Grignard ~6 marks)
+  'chem-ch-7': 6, // Alcohols, Phenols & Ethers (Named Reactions, Williamson, Acidity ~6 marks)
+  'chem-ch-8': 10,// Aldehydes, Ketones & Carboxylic Acids (King of Organic: ~8-9 marks!)
+  'chem-ch-9': 6, // Amines (Basicity, Diazonium Salts, Hoffmann Bromamide ~6 marks)
+  'chem-ch-10': 5,// Biomolecules (Carbohydrates, Proteins, Nucleic Acids ~7 marks)
 
-  // Biology
-  'bio-ch-1': 9,  // Sexual Reproduction in Flowering Plants (Microsporogenesis, Megasporogenesis, Double Fertilization)
-  'bio-ch-2': 10, // Human Reproduction (Gametogenesis, Menstrual Cycle, Fertilization, Embryo Development)
-  'bio-ch-3': 7,  // Reproductive Health (Contraception, Assisted Reproductive Tech / ART)
-  'bio-ch-4': 10, // Principles of Inheritance & Variation (Mendelian Genetics, Linkage, Chromosomal Disorders)
-  'bio-ch-5': 10, // Molecular Basis of Inheritance (DNA Structure, Replication, Transcription, Translation, Lac Operon)
-  'bio-ch-6': 8,  // Evolution (Darwinian Evolution, Hardy-Weinberg Principle)
-  'bio-ch-7': 8,  // Human Health & Disease (Immunity, AIDS, Cancer, Drugs)
-  'bio-ch-8': 7,  // Microbes in Human Welfare (Sewage Treatment, Biogas, Biocontrol)
-  'bio-ch-9': 9,  // Biotechnology: Principles & Processes (rDNA Technology, Restriction Enzymes, PCR, Gel Electrophoresis)
-  'bio-ch-10': 8, // Biotechnology & its Applications (Bt Cotton, Insulin, Gene Therapy)
-  'bio-ch-11': 7, // Organisms & Populations (Population Attributes, Growth Models, Interactions)
-  'bio-ch-12': 7, // Ecosystem (Productivity, Energy Flow, Ecological Pyramids)
-  'bio-ch-13': 7, // Biodiversity & Conservation (Patterns, Loss, In-situ / Ex-situ Conservation)
+  // Biology (Total: 70 Marks)
+  'bio-ch-1': 6,  // Sexual Reproduction in Flowering Plants (~6 marks)
+  'bio-ch-2': 7,  // Human Reproduction (Gametogenesis, Menstrual Cycle ~7 marks)
+  'bio-ch-3': 3,  // Reproductive Health (Minor Chapter: ~3 marks)
+  'bio-ch-4': 9,  // Principles of Inheritance & Variation (Mendelian Genetics, Linkage ~9 marks)
+  'bio-ch-5': 10, // Molecular Basis of Inheritance (Highest weightage in Biology: ~10 marks!)
+  'bio-ch-6': 4,  // Evolution (Hardy-Weinberg, Darwinism ~3-4 marks)
+  'bio-ch-7': 7,  // Human Health & Disease (Immunity, AIDS, Cancer ~7-8 marks)
+  'bio-ch-8': 3,  // Microbes in Human Welfare (STP, Biogas ~3 marks)
+  'bio-ch-9': 8,  // Biotechnology: Principles & Processes (rDNA, PCR, Restriction Enzymes ~8 marks)
+  'bio-ch-10': 6, // Biotechnology & its Applications (Bt Cotton, Insulin, Gene Therapy ~5-6 marks)
+  'bio-ch-11': 4, // Organisms & Populations (Growth Models, Interactions ~3-4 marks)
+  'bio-ch-12': 3, // Ecosystem (Productivity, Pyramids, Energy Flow ~3 marks)
+  'bio-ch-13': 3, // Biodiversity & Conservation (Loss Patterns, In-situ/Ex-situ ~3 marks)
 
-  // Psychology
-  'psy-ch-1': 9,  // Variations in Psychological Attributes (Theories of Intelligence, Assessment, Creativity)
-  'psy-ch-2': 10, // Self & Personality (Freudian Psychodynamic Theory, Trait Theories, Self-Esteem, Assessment)
-  'psy-ch-3': 8,  // Meeting Life Challenges (Stress Appraisal, Sources of Stress, Coping Mechanisms)
-  'psy-ch-4': 9,  // Psychological Disorders (Anxiety, Mood Disorders, Schizophrenia, Diathesis-Stress)
-  'psy-ch-5': 8,  // Therapeutic Approaches (Psychodynamic, CBT, Humanistic-Existential)
-  'psy-ch-6': 7,  // Attitude & Social Cognition (Attitude Formation, Prejudice, Social Schemes)
-  'psy-ch-7': 7   // Social Influence & Group Processes (Conformity, Compliance, Group Polarization)
+  // Psychology (Total: 70 Marks)
+  'psy-ch-1': 9,  // Variations in Psychological Attributes (Theories of Intelligence ~13 marks!)
+  'psy-ch-2': 10, // Self & Personality (Freud, Trait Theories, Assessment ~13 marks!)
+  'psy-ch-3': 6,  // Meeting Life Challenges (Stress Appraisal, GAS Model ~9 marks)
+  'psy-ch-4': 9,  // Psychological Disorders (Schizophrenia, Anxiety, Mood ~12 marks!)
+  'psy-ch-5': 6,  // Therapeutic Approaches (CBT, Psychodynamic, Humanistic ~9 marks)
+  'psy-ch-6': 5,  // Attitude & Social Cognition (Attitude Change, Prejudice ~8 marks)
+  'psy-ch-7': 3   // Social Influence & Group Processes (Smallest Chapter: ~6 marks)
 };
 
-// Default Subtopic Priorities (0 to 10 scale)
+// Calibrated Granular Subtopic Priorities (0 to 10 scale)
 export const DEFAULT_SUBTOPIC_PRIORITIES = {
   // --- Physics Ch 1: Electric Charges & Fields ---
-  'phy-sub-1-1': 10, // 1.1 Coulomb's Law & Vector Law
-  'phy-sub-1-2': 8,  // 1.2 Electric Field & Superposition
-  'phy-sub-1-3': 8,  // 1.3 Continuous Charge Distribution
-  'phy-sub-1-4': 6,  // 1.4 Electric Field Lines Properties
-  'phy-sub-1-5': 8,  // 1.5 Electric Flux Concept & Formulation
-  'phy-sub-1-6': 9,  // 1.6 Electric Dipole & Field on Axial / Equatorial
-  'phy-sub-1-7': 9,  // 1.7 Torque on a Dipole in Uniform Field
-  'phy-sub-1-8': 8,  // 1.8 Potential Energy of Dipole in Field
-  'phy-sub-1-9': 10, // 1.9 Gauss's Law Statement & Proof
-  'phy-sub-1-10': 10,// 1.10 Application: Infinitely Long Straight Wire
-  'phy-sub-1-11': 10,// 1.11 Application: Uniformly Charged Infinite Plane Sheet
+  'phy-sub-1-1': 7, // 1.1 Coulomb's Law & Vector Form (Standard numericals)
+  'phy-sub-1-2': 5, // 1.2 Electric Field & Superposition (Point charge formula)
+  'phy-sub-1-3': 3, // 1.3 Continuous Charge Distribution (Linear, surface, volume definition)
+  'phy-sub-1-4': 4, // 1.4 Electric Field Lines Properties (Qualitative give-reason)
+  'phy-sub-1-5': 6, // 1.5 Electric Flux Concept & Formulation (Flux through closed surfaces)
+  'phy-sub-1-6': 8, // 1.6 Electric Dipole & Field on Axial / Equatorial (Standard derivations)
+  'phy-sub-1-7': 6, // 1.7 Torque on a Dipole in Uniform Field (Torque formula & equilibrium)
+  'phy-sub-1-8': 5, // 1.8 Potential Energy of Dipole in Field (Work done & potential energy)
+  'phy-sub-1-9': 9, // 1.9 Gauss's Law Statement & Proof (High-yield board proof)
+  'phy-sub-1-10': 8,// 1.10 Application: Infinitely Long Straight Wire (Cylindrical surface derivation)
+  'phy-sub-1-11': 8,// 1.11 Application: Uniformly Charged Infinite Plane Sheet (E = σ/2ε₀ derivation)
 
   // --- Physics Ch 2: Electrostatic Potential & Capacitance ---
-  'phy-sub-2-1': 8,  // 2.1 Electrostatic Potential & Potential Energy
-  'phy-sub-2-2': 9,  // 2.2 Potential Due to a Point Charge & System
-  'phy-sub-2-3': 9,  // 2.3 Potential Due to an Electric Dipole
-  'phy-sub-2-4': 8,  // 2.4 Equipotential Surfaces & Field Gradient
-  'phy-sub-2-5': 7,  // 2.5 Conductors in Electrostatic Fields & Shielding
-  'phy-sub-2-6': 9,  // 2.6 Dielectrics & Polarisation
-  'phy-sub-2-7': 10, // 2.7 Capacitors & Capacitance (Parallel Plate Formula)
-  'phy-sub-2-8': 10, // 2.8 Energy Stored in a Capacitor & Dielectric Insertion
+  'phy-sub-2-1': 4, // 2.1 Electrostatic Potential & Potential Energy (Basic definitions)
+  'phy-sub-2-2': 5, // 2.2 Potential Due to a Point Charge & System (V = kq/r formula)
+  'phy-sub-2-3': 6, // 2.3 Potential Due to an Electric Dipole (Axial/equatorial derivation)
+  'phy-sub-2-4': 5, // 2.4 Equipotential Surfaces & Field Gradient (E = -dV/dr relations)
+  'phy-sub-2-5': 4, // 2.5 Conductors in Electrostatic Fields & Shielding (Electrostatic shielding)
+  'phy-sub-2-6': 6, // 2.6 Dielectrics & Polarisation (Bound charge & dielectric constant)
+  'phy-sub-2-7': 9, // 2.7 Capacitors & Capacitance (Parallel plate with dielectric slab)
+  'phy-sub-2-8': 8, // 2.8 Energy Stored in Capacitor & Dielectric Insertion (U = 1/2 CV² & battery cases)
 
   // --- Physics Ch 3: Current Electricity ---
-  'phy-sub-3-1': 7,  // 3.1 Electric Current & Current Density
-  'phy-sub-3-2': 8,  // 3.2 Ohm's Law & Resistance Factors
-  'phy-sub-3-3': 7,  // 3.3 Electrical Resistivity and Conductivity
-  'phy-sub-3-4': 8,  // 3.4 Temperature Dependence of Resistivity
-  'phy-sub-3-5': 10, // 3.5 Drift Velocity, Relaxation Time & Mobility
-  'phy-sub-3-6': 8,  // 3.6 Electrical Energy and Power
-  'phy-sub-3-7': 9,  // 3.7 Cells, EMF, Internal Resistance
-  'phy-sub-3-8': 9,  // 3.8 Combination of Cells: Series & Parallel
-  'phy-sub-3-9': 10, // 3.9 Kirchhoff's Laws & Wheatstone Bridge
+  'phy-sub-3-1': 3, // 3.1 Electric Current & Current Density (Basic definitions)
+  'phy-sub-3-2': 4, // 3.2 Ohm's Law & Resistance Factors (V = IR & geometric factors)
+  'phy-sub-3-3': 4, // 3.3 Electrical Resistivity and Conductivity (Resistivity definitions)
+  'phy-sub-3-4': 5, // 3.4 Temperature Dependence of Resistivity (α formula & graphs)
+  'phy-sub-3-5': 9, // 3.5 Drift Velocity, Relaxation Time & Mobility (Deduction of Ohm's Law: I = neAv_d)
+  'phy-sub-3-6': 4, // 3.6 Electrical Energy and Power (P = VI & Joule heating)
+  'phy-sub-3-7': 6, // 3.7 Cells, EMF, Internal Resistance (V = E - Ir terminal voltage)
+  'phy-sub-3-8': 7, // 3.8 Combination of Cells: Series & Parallel (Equivalent EMF derivation)
+  'phy-sub-3-9': 9, // 3.9 Kirchhoff's Laws & Wheatstone Bridge (Guaranteed numerical & bridge balance)
 
   // --- Physics Ch 4: Moving Charges & Magnetism ---
-  'phy-sub-4-1': 8,  // 4.1 Magnetic Force on Moving Charge (Lorentz Force)
-  'phy-sub-4-2': 9,  // 4.2 Motion of Charged Particle in Magnetic Field
-  'phy-sub-4-3': 8,  // 4.3 Magnetic Force on Current-Carrying Conductor
-  'phy-sub-4-4': 10, // 4.4 Biot-Savart Law & Vector Formulation
-  'phy-sub-4-5': 10, // 4.5 Magnetic Field on Axis of Circular Current Loop
-  'phy-sub-4-6': 9,  // 4.6 Ampere's Circuital Law
-  'phy-sub-4-7': 8,  // 4.7 Solenoid and Toroid Field
-  'phy-sub-4-8': 9,  // 4.8 Force Between Two Parallel Current-Carrying Wires
-  'phy-sub-4-9': 9,  // 4.9 Torque on Current Loop (Magnetic Dipole Moment)
-  'phy-sub-4-10': 9, // 4.10 Moving Coil Galvanometer & Conversion
+  'phy-sub-4-1': 5, // 4.1 Magnetic Force on Moving Charge (Lorentz Force F = q(v×B))
+  'phy-sub-4-2': 6, // 4.2 Motion of Charged Particle in Magnetic Field (Radius & pitch of helix)
+  'phy-sub-4-3': 5, // 4.3 Magnetic Force on Current-Carrying Conductor (F = I(l×B))
+  'phy-sub-4-4': 8, // 4.4 Biot-Savart Law & Vector Formulation (Statement & vector formula)
+  'phy-sub-4-5': 9, // 4.5 Magnetic Field on Axis of Circular Current Loop (Major 5-mark derivation)
+  'phy-sub-4-6': 6, // 4.6 Ampere's Circuital Law (Line integral of magnetic field)
+  'phy-sub-4-7': 6, // 4.7 Solenoid and Toroid Field (B = μ₀nI derivation)
+  'phy-sub-4-8': 8, // 4.8 Force Between Two Parallel Current-Carrying Wires (Definition of 1 Ampere)
+  'phy-sub-4-9': 5, // 4.9 Torque on Current Loop (Magnetic Dipole Moment τ = M×B)
+  'phy-sub-4-10': 8,// 4.10 Moving Coil Galvanometer & Conversion (Conversion to Ammeter & Voltmeter)
 
   // --- Physics Ch 5: Magnetism & Matter ---
-  'phy-sub-5-1': 7,  // 5.1 The Bar Magnet as an Equivalent Solenoid
-  'phy-sub-5-2': 8,  // 5.2 Magnetism and Gauss's Law
-  'phy-sub-5-3': 7,  // 5.3 Magnetic Properties of Materials
+  'phy-sub-5-1': 4, // 5.1 The Bar Magnet as an Equivalent Solenoid (Magnetic moment)
+  'phy-sub-5-2': 3, // 5.2 Magnetism and Gauss's Law (Monopoles non-existence)
+  'phy-sub-5-3': 4, // 5.3 Magnetic Properties of Materials (Dia, Para, Ferro comparison table)
 
   // --- Physics Ch 6: Electromagnetic Induction ---
-  'phy-sub-6-1': 8,  // 6.1 Magnetic Flux (Definition & Units)
-  'phy-sub-6-2': 10, // 6.2 Faraday's Laws of Induction & Formulation
-  'phy-sub-6-3': 10, // 6.3 Lenz's Law & Conservation of Energy
-  'phy-sub-6-4': 7,  // 6.4 Eddy Currents & Applications
-  'phy-sub-6-5': 9,  // 6.5 Motional EMF in Straight Rod
-  'phy-sub-6-6': 8,  // 6.6 Motional EMF in Rotating Rod
-  'phy-sub-6-7': 9,  // 6.7 Self-Inductance & Inductors
-  'phy-sub-6-8': 9,  // 6.8 Mutual Inductance
-  'phy-sub-6-9': 8,  // 6.9 Energy Stored in an Inductor
-  'phy-sub-6-10': 10,// 6.10 AC Generator Principle & Working
+  'phy-sub-6-1': 3, // 6.1 Magnetic Flux (Definition & Units)
+  'phy-sub-6-2': 9, // 6.2 Faraday's Laws of Induction & Formulation (Induced EMF formula)
+  'phy-sub-6-3': 8, // 6.3 Lenz's Law & Conservation of Energy (Direction & energy justification)
+  'phy-sub-6-4': 3, // 6.4 Eddy Currents & Applications (Damping & induction furnace)
+  'phy-sub-6-5': 7, // 6.5 Motional EMF in Straight Rod (ε = Blv & power dissipated)
+  'phy-sub-6-6': 5, // 6.6 Motional EMF in Rotating Rod (ε = 1/2 Bωl²)
+  'phy-sub-6-7': 7, // 6.7 Self-Inductance & Inductors (Self-inductance of solenoid)
+  'phy-sub-6-8': 7, // 6.8 Mutual Inductance (Mutual inductance of coaxial solenoids)
+  'phy-sub-6-9': 4, // 6.9 Energy Stored in an Inductor (U = 1/2 LI²)
+  'phy-sub-6-10': 8,// 6.10 AC Generator Principle & Working (Working diagram & induced EMF)
 
   // --- Physics Ch 7: Alternating Current ---
-  'phy-sub-7-1': 7,  // 7.1 AC Voltage Applied to a Resistor
-  'phy-sub-7-2': 8,  // 7.2 Representation of AC by Phasors
-  'phy-sub-7-3': 8,  // 7.3 AC Voltage Applied to an Inductor
-  'phy-sub-7-4': 8,  // 7.4 AC Voltage Applied to a Capacitor
-  'phy-sub-7-5': 10, // 7.5 Series LCR Circuit & Impedance
-  'phy-sub-7-6': 10, // 7.6 Resonance in LCR Circuits (Q-Factor)
-  'phy-sub-7-7': 8,  // 7.7 Power in AC Circuit & Power Factor
-  'phy-sub-7-8': 10, // 7.8 Transformers Principle, Efficiency & Losses
+  'phy-sub-7-1': 3, // 7.1 AC Voltage Applied to a Resistor (RMS derivation)
+  'phy-sub-7-2': 4, // 7.2 Representation of AC by Phasors (Phasor diagram basics)
+  'phy-sub-7-3': 5, // 7.3 AC Voltage Applied to an Inductor (Inductive reactance X_L)
+  'phy-sub-7-4': 5, // 7.4 AC Voltage Applied to a Capacitor (Capacitive reactance X_C)
+  'phy-sub-7-5': 9, // 7.5 Series LCR Circuit & Impedance (Major 5-mark derivation & impedance triangle)
+  'phy-sub-7-6': 8, // 7.6 Resonance in LCR Circuits (Resonance frequency & Q-factor)
+  'phy-sub-7-7': 6, // 7.7 Power in AC Circuit & Power Factor (Wattless current & cos φ)
+  'phy-sub-7-8': 8, // 7.8 Transformers Principle, Efficiency & Losses (Working & 4 major losses)
 
   // --- Physics Ch 8: Electromagnetic Waves ---
-  'phy-sub-8-1': 8,  // 8.1 Displacement Current & Maxwell-Ampere Law
-  'phy-sub-8-2': 7,  // 8.2 Electromagnetic Waves Sources & Properties
-  'phy-sub-8-3': 8,  // 8.3 Electromagnetic Spectrum Breakdown
-  'phy-sub-8-4': 7,  // 8.4 Applications of EM Wave Bands
+  'phy-sub-8-1': 4, // 8.1 Displacement Current & Maxwell-Ampere Law (Inconsistency resolution)
+  'phy-sub-8-2': 3, // 8.2 Electromagnetic Waves Sources & Properties (Transverse nature & c = E/B)
+  'phy-sub-8-3': 5, // 8.3 Electromagnetic Spectrum Breakdown (Wavelength/frequency order)
+  'phy-sub-8-4': 4, // 8.4 Applications of EM Wave Bands (Microwaves, UV, X-ray uses)
 
   // --- Chemistry Ch 1: Solutions ---
-  'chem-sub-1-1': 8,  // 1.1 Types of Solutions & Concentration Units (Molarity vs Molality)
-  'chem-sub-1-2': 7,  // 1.2 Solubility of Solids in Liquids
-  'chem-sub-1-3': 9,  // 1.3 Solubility of Gases & Henry's Law
-  'chem-sub-1-4': 10, // 1.4 Vapour Pressure & Raoult's Law (Volatile Solutes)
-  'chem-sub-1-5': 10, // 1.5 Ideal and Non-Ideal Solutions (Deviations & Azeotropes)
-  'chem-sub-1-6': 9,  // 1.6 Relative Lowering of Vapour Pressure
-  'chem-sub-1-7': 10, // 1.7 Elevation of Boiling Point (Kb Formula)
-  'chem-sub-1-8': 10, // 1.8 Depression of Freezing Point (Kf Formula)
-  'chem-sub-1-9': 9,  // 1.9 Osmosis and Osmotic Pressure (Isotonic, Hypo, Hyper)
-  'chem-sub-1-10': 8, // 1.10 Reverse Osmosis & Water Purification
-  'chem-sub-1-11': 9, // 1.11 Abnormal Molar Masses & Van 't Hoff Factor
-  'chem-sub-1-12': 10,// 1.12 Degree of Association & Dissociation (α)
+  'chem-sub-1-1': 4,  // 1.1 Types of Solutions & Concentration Units (Molarity vs Molality)
+  'chem-sub-1-2': 3,  // 1.2 Solubility of Solids in Liquids (Temperature & Le Chatelier)
+  'chem-sub-1-3': 6,  // 1.3 Solubility of Gases & Henry's Law (K_H constant & applications)
+  'chem-sub-1-4': 8,  // 1.4 Ideal and Non-Ideal Solutions (5-point distinction table & criteria)
+  'chem-sub-1-5': 8,  // 1.5 Positive and Negative Deviations from Raoult's Law (Acetone+Chloroform)
+  'chem-sub-1-6': 5,  // 1.6 Azeotropes: Minimum & Maximum Boiling (Constant boiling mixtures)
+  'chem-sub-1-7': 6,  // 1.7 Relative Lowering of Vapour Pressure (Raoult's Law numericals)
+  'chem-sub-1-8': 7,  // 1.8 Elevation of Boiling Point (K_b molal elevation constant)
+  'chem-sub-1-9': 8,  // 1.9 Depression of Freezing Point (K_f formula & antifreeze numericals)
+  'chem-sub-1-10': 7, // 1.10 Osmosis and Osmotic Pressure (Isotonic solutions & polymer molar mass)
+  'chem-sub-1-11': 4, // 1.11 Reverse Osmosis & Water Purification (Desalination & cellulose acetate)
+  'chem-sub-1-12': 9, // 1.12 Van 't Hoff Factor & Abnormal Molar Masses (i factor & dissociation α)
 
   // --- Chemistry Ch 2: Electrochemistry ---
-  'chem-sub-2-1': 8,  // 2.1 Electrochemical Cells & Daniell Cell
-  'chem-sub-2-2': 9,  // 2.2 Galvanic Cells & Standard Electrode Potential
-  'chem-sub-2-3': 10, // 2.3 Nernst Equation & Cell EMF
-  'chem-sub-2-4': 9,  // 2.4 Equilibrium Constant & Gibbs Free Energy from Cell Potential
-  'chem-sub-2-5': 8,  // 2.5 Conductance of Electrolytic Solutions
-  'chem-sub-2-6': 10, // 2.6 Kohlrausch's Law of Independent Migration of Ions
-  'chem-sub-2-7': 10, // 2.7 Faraday's Laws of Electrolysis
-  'chem-sub-2-8': 8,  // 2.8 Commercial Batteries: Primary Cells
-  'chem-sub-2-9': 9,  // 2.9 Secondary Batteries (Lead Storage Cell)
-  'chem-sub-2-10': 9, // 2.10 Fuel Cells (H2-O2 Cell)
-  'chem-sub-2-11': 8, // 2.11 Corrosion & Prevention (Rusting of Iron)
+  'chem-sub-2-1': 5,  // 2.1 Electrochemical Cells & Daniell Cell (Salt bridge function)
+  'chem-sub-2-2': 6,  // 2.2 Galvanic Cells & Standard Electrode Potential (SHE & EMF of cell)
+  'chem-sub-2-3': 10, // 2.3 Nernst Equation & Cell EMF (Guaranteed high-weightage numerical)
+  'chem-sub-2-4': 7,  // 2.4 Equilibrium Constant & Gibbs Free Energy (ΔG° = -nFE° formula)
+  'chem-sub-2-5': 5,  // 2.5 Conductance of Electrolytic Solutions (Conductivity & molar conductivity)
+  'chem-sub-2-6': 9,  // 2.6 Kohlrausch's Law of Independent Migration (Weak electrolyte calculations)
+  'chem-sub-2-7': 7,  // 2.7 Faraday's Laws of Electrolysis (w = ZIt quantitative numericals)
+  'chem-sub-2-8': 4,  // 2.8 Commercial Batteries: Primary Cells (Dry cell & mercury cell)
+  'chem-sub-2-9': 7,  // 2.9 Secondary Batteries: Lead Storage Cell (Discharging/charging reactions)
+  'chem-sub-2-10': 6, // 2.10 Fuel Cells (H2-O2 cell reactions & advantages)
+  'chem-sub-2-11': 4, // 2.11 Corrosion & Prevention (Rusting electrochemical mechanism)
 
   // --- Chemistry Ch 4: The d- and f-Block Elements ---
-  'chem-sub-4-1': 8,  // 4.1 Position and Electronic Configuration of Transition Elements
-  'chem-sub-4-2': 9,  // 4.2 General Properties: Metallic Character & Enthalpy of Atomisation
-  'chem-sub-4-3': 9,  // 4.3 Atomic and Ionic Radii & Densities
-  'chem-sub-4-4': 9,  // 4.4 Ionisation Enthalpies and Variable Oxidation States
-  'chem-sub-4-5': 10, // 4.5 Lanthanoid Contraction (Causes & Consequences)
-  'chem-sub-4-6': 9,  // 4.6 Standard Electrode Potentials (E° Trends)
-  'chem-sub-4-7': 10, // 4.7 Important Compounds: Potassium Permanganate (KMnO4) & Dichromate (K2Cr2O7)
+  'chem-sub-4-1': 4,  // 4.1 Position and Electronic Configuration (Cr & Cu exceptions)
+  'chem-sub-4-2': 5,  // 4.2 General Properties: Metallic Character & Enthalpy of Atomisation
+  'chem-sub-4-3': 5,  // 4.3 Atomic and Ionic Radii & Densities (Trends across 3d series)
+  'chem-sub-4-4': 7,  // 4.4 Ionisation Enthalpies & Variable Oxidation States (Transition valency)
+  'chem-sub-4-5': 9,  // 4.5 Lanthanoid Contraction: Causes & Consequences (Crucial 3-marker)
+  'chem-sub-4-6': 6,  // 4.6 Standard Electrode Potentials (E° trends of Cu²⁺/Cu)
+  'chem-sub-4-7': 8,  // 4.7 Important Compounds: KMnO4 & K2Cr2O7 (Preparation & redox equations)
 
   // --- Chemistry Ch 6: Haloalkanes and Haloarenes ---
-  'chem-sub-6-1': 7,  // 6.1 Classification of Haloalkanes and Haloarenes
-  'chem-sub-6-2': 6,  // 6.2 IUPAC Nomenclature of Halogen Derivatives
-  'chem-sub-6-3': 7,  // 6.3 Nature of C—X Bond
-  'chem-sub-6-4': 8,  // 6.4 Methods of Preparation of Haloalkanes
-  'chem-sub-6-5': 10, // 6.5 Nucleophilic Substitution Mechanisms: SN1 vs SN2
-  'chem-sub-6-6': 9,  // 6.6 Elimination Reactions (Saytzeff's Rule)
-  'chem-sub-6-7': 9,  // 6.7 Reaction with Metals: Grignard Reagent & Wurtz Reaction
-  'chem-sub-6-8': 8,  // 6.8 Polyhalogen Compounds & Environmental Impacts
+  'chem-sub-6-1': 3,  // 6.1 Classification of Haloalkanes and Haloarenes (Allylic, benzylic, aryl)
+  'chem-sub-6-2': 3,  // 6.2 IUPAC Nomenclature of Halogen Derivatives (Naming rules)
+  'chem-sub-6-3': 4,  // 6.3 Nature of C—X Bond (Polarity & bond length trends)
+  'chem-sub-6-4': 6,  // 6.4 Methods of Preparation of Haloalkanes (From alcohols & Sandmeyer)
+  'chem-sub-6-5': 10, // 6.5 Nucleophilic Substitution Mechanisms: SN1 vs SN2 (King of organic chemistry!)
+  'chem-sub-6-6': 7,  // 6.6 Elimination Reactions (Saytzeff's Rule & β-elimination)
+  'chem-sub-6-7': 6,  // 6.7 Reaction with Metals: Grignard Reagent & Wurtz-Fittig
+  'chem-sub-6-8': 3,  // 6.8 Polyhalogen Compounds & Environmental Impacts (Freons, DDT)
 
   // --- Chemistry Ch 7: Alcohols, Phenols and Ethers ---
-  'chem-sub-7-1': 7,  // 7.1 Classification and Nomenclature
-  'chem-sub-7-2': 8,  // 7.2 Methods of Preparation of Alcohols
-  'chem-sub-7-3': 9,  // 7.3 Reactions of Alcohols: Lucas Test & Acidic Character
-  'chem-sub-7-4': 10, // 7.4 Preparation & Reactions of Phenols: Kolbe & Reimer-Tiemann
-  'chem-sub-7-5': 9,  // 7.5 Dehydration of Alcohols (Temperature Controlled Mechanism)
-  'chem-sub-7-6': 9,  // 7.6 Preparation of Ethers: Williamson Synthesis
-  'chem-sub-7-7': 8,  // 7.7 Cleavage of C—O Bond in Ethers with HI
+  'chem-sub-7-1': 3,  // 7.1 Classification and Nomenclature (Primary, secondary, tertiary)
+  'chem-sub-7-2': 5,  // 7.2 Methods of Preparation of Alcohols (Hydration, hydroboration)
+  'chem-sub-7-3': 7,  // 7.3 Reactions of Alcohols: Lucas Test & Acidic Character
+  'chem-sub-7-4': 9,  // 7.4 Preparation & Reactions of Phenols: Kolbe & Reimer-Tiemann (Named reactions)
+  'chem-sub-7-5': 8,  // 7.5 Dehydration of Alcohols Mechanism (Acid-catalysed dehydration at 443 K)
+  'chem-sub-7-6': 8,  // 7.6 Preparation of Ethers: Williamson Synthesis (Alkoxide + primary halide)
+  'chem-sub-7-7': 8,  // 7.7 Cleavage of C—O Bond in Ethers with HI (Mechanism with 3° alkyl groups)
 
   // --- Biology Ch 1: Sexual Reproduction in Flowering Plants ---
-  'bio-sub-1-1': 9,  // 1.1 Flower Structure & Pre-fertilization Events
-  'bio-sub-1-2': 10, // 1.2 Microsporogenesis & Pollen Grain Development
-  'bio-sub-1-3': 10, // 1.3 Megasporogenesis & Embryo Sac Structure
-  'bio-sub-1-4': 10, // 1.4 Double Fertilization, Endosperm & Seed Development
+  'bio-sub-1-1': 3,  // 1.1 Flower Structure & Pre-fertilization Events (Anatomy overview)
+  'bio-sub-1-2': 7,  // 1.2 Microsporogenesis & Pollen Grain Development (Tapetum & sporopollenin)
+  'bio-sub-1-3': 8,  // 1.3 Megasporogenesis & Embryo Sac Structure (7-celled 8-nucleate structure)
+  'bio-sub-1-4': 8,  // 1.4 Double Fertilization, Endosperm & Seed Development (Syngamy & triple fusion)
 
   // --- Biology Ch 2: Human Reproduction ---
-  'bio-sub-2-1': 9,  // 2.1 Male Reproductive System Anatomy
-  'bio-sub-2-2': 9,  // 2.2 Female Reproductive System Anatomy
-  'bio-sub-2-3': 10, // 2.3 Gametogenesis: Spermatogenesis vs Oogenesis
-  'bio-sub-2-4': 10, // 2.4 Menstrual Cycle, Hormonal Regulation & Pregnancy
+  'bio-sub-2-1': 4,  // 2.1 Male Reproductive System Anatomy (Seminiferous tubules & Leydig cells)
+  'bio-sub-2-2': 5,  // 2.2 Female Reproductive System Anatomy (Ovary & Fallopian tubes)
+  'bio-sub-2-3': 9,  // 2.3 Gametogenesis: Spermatogenesis vs Oogenesis (Hormonal control & stages)
+  'bio-sub-2-4': 9,  // 2.4 Menstrual Cycle, Hormonal Regulation & Pregnancy (LH surge & progesterone)
 
   // --- Biology Ch 3: Reproductive Health ---
-  'bio-sub-3-1': 7,  // 3.1 Population Explosion, Birth Control & Contraception
-  'bio-sub-3-2': 8,  // 3.2 Infertility & Assisted Reproductive Technologies (ART)
+  'bio-sub-3-1': 4,  // 3.1 Population Explosion, Birth Control & Contraception (Barrier, IUD, pills)
+  'bio-sub-3-2': 5,  // 3.2 Infertility & Assisted Reproductive Technologies (IVF, ZIFT, ICSI)
 
   // --- Biology Ch 4: Principles of Inheritance and Variation ---
-  'bio-sub-4-1': 10, // 4.1 Mendel's Laws of Inheritance (Monohybrid & Dihybrid)
-  'bio-sub-4-2': 9,  // 4.2 Incomplete Dominance, Codominance & Multiple Alleles
-  'bio-sub-4-3': 10, // 4.3 Sex Determination & Genetic Disorders (Pedigree Analysis)
+  'bio-sub-4-1': 9,  // 4.1 Mendel's Laws of Inheritance (Monohybrid & Dihybrid crosses)
+  'bio-sub-4-2': 7,  // 4.2 Incomplete Dominance, Codominance & Multiple Alleles (ABO blood groups)
+  'bio-sub-4-3': 8,  // 4.3 Sex Determination & Genetic Disorders (Pedigree analysis, Down, Turner)
 
   // --- Biology Ch 5: Molecular Basis of Inheritance ---
-  'bio-sub-5-1': 10, // 5.1 DNA Structure, Double Helix & Packaging of DNA
-  'bio-sub-5-2': 10, // 5.2 DNA Replication (Meselson-Stahl Experiment & Mechanism)
-  'bio-sub-5-3': 10, // 5.3 Transcription, Genetic Code & Translation
-  'bio-sub-5-4': 10, // 5.4 Regulation of Gene Expression (Lac Operon) & DNA Fingerprinting
+  'bio-sub-5-1': 7,  // 5.1 DNA Structure, Double Helix & Packaging of DNA (Histone octamer)
+  'bio-sub-5-2': 10, // 5.2 DNA Replication (Meselson-Stahl Experiment & Replication Fork mechanism)
+  'bio-sub-5-3': 10, // 5.3 Transcription, Genetic Code & Translation (RNA processing & protein synthesis)
+  'bio-sub-5-4': 9,  // 5.4 Regulation of Gene Expression (Lac Operon) & DNA Fingerprinting
 
   // --- Biology Ch 6: Evolution ---
-  'bio-sub-6-1': 7,  // 6.1 Origin of Life & Evidences of Evolution
-  'bio-sub-6-2': 8,  // 6.2 Adaptive Radiation & Darwinian Selection
-  'bio-sub-6-3': 9,  // 6.3 Hardy-Weinberg Principle & Speciation
+  'bio-sub-6-1': 4,  // 6.1 Origin of Life & Evidences of Evolution (Homologous vs Analogous)
+  'bio-sub-6-2': 5,  // 6.2 Adaptive Radiation & Darwinian Selection (Finches & industrial melanism)
+  'bio-sub-6-3': 6,  // 6.3 Hardy-Weinberg Principle & Speciation (p² + 2pq + q² = 1 calculations)
 
   // --- Psychology Ch 1: Variations in Psychological Attributes ---
-  'psy-sub-1-1': 8,  // 1.1 Individual Differences in Human Functioning
-  'psy-sub-1-2': 8,  // 1.2 Assessment of Psychological Attributes
-  'psy-sub-1-3': 10, // 1.3 Theories of Intelligence: Psychometric & Information Processing
-  'psy-sub-1-4': 9,  // 1.4 Theory of Multiple Intelligences (Howard Gardner)
-  'psy-sub-1-5': 9,  // 1.5 Triarchic Theory of Intelligence (Robert Sternberg)
-  'psy-sub-1-6': 9,  // 1.6 PASS Model of Intelligence
-  'psy-sub-1-7': 8,  // 1.7 Heredity and Environment in Intelligence
-  'psy-sub-1-8': 7,  // 1.8 Assessment of Intelligence & Psychological Tests
-  'psy-sub-1-9': 8,  // 1.9 Aptitude, Interest and Creativity
+  'psy-sub-1-1': 3,  // 1.1 Individual Differences in Human Functioning (Basic concepts)
+  'psy-sub-1-2': 4,  // 1.2 Assessment of Psychological Attributes (Methods of inquiry)
+  'psy-sub-1-3': 8,  // 1.3 Theories of Intelligence: Psychometric & Information Processing (Spearman, Thurstone)
+  'psy-sub-1-4': 9,  // 1.4 Theory of Multiple Intelligences (Howard Gardner's 8 types)
+  'psy-sub-1-5': 8,  // 1.5 Triarchic Theory of Intelligence (Robert Sternberg's Componential, Experiential, Contextual)
+  'psy-sub-1-6': 8,  // 1.6 PASS Model of Intelligence (Planning, Attention, Simultaneous, Successive)
+  'psy-sub-1-7': 4,  // 1.7 Heredity and Environment in Intelligence (Twin studies)
+  'psy-sub-1-8': 5,  // 1.8 Assessment of Intelligence & Psychological Tests (Culture-fair vs Culture-biased)
+  'psy-sub-1-9': 5,  // 1.9 Aptitude, Interest and Creativity (Creativity-intelligence relationship)
 
   // --- Psychology Ch 2: Self and Personality ---
-  'psy-sub-2-1': 9,  // 2.1 Concept of Self: Self-Esteem, Self-Efficacy & Self-Regulation
-  'psy-sub-2-2': 9,  // 2.2 Concept of Personality & Major Approaches
-  'psy-sub-2-3': 8,  // 2.3 Type Approaches to Personality (Hippocrates, Sheldon, Jung, Friedman)
-  'psy-sub-2-4': 9,  // 2.4 Trait Approaches (Allport, Cattell 16PF, Eysenck)
-  'psy-sub-2-5': 10, // 2.5 Psychodynamic Approach (Freud: Id, Ego, Superego & Defense Mechanisms)
-  'psy-sub-2-6': 9,  // 2.6 Post-Freudian Approaches (Adler, Jung, Horney, Erikson)
-  'psy-sub-2-7': 8,  // 2.7 Behavioural and Cultural Approaches to Personality
-  'psy-sub-2-8': 9,  // 2.8 Humanistic Approach (Carl Rogers & Abraham Maslow)
-  'psy-sub-2-9': 8,  // 2.9 Assessment of Personality: Self-Report Measures
-  'psy-sub-2-10': 9, // 2.10 Projective Techniques (Rorschach, TAT, Sentence Completion)
+  'psy-sub-2-1': 5,  // 2.1 Concept of Self: Self-Esteem, Self-Efficacy & Self-Regulation
+  'psy-sub-2-2': 4,  // 2.2 Concept of Personality & Major Approaches (Overview)
+  'psy-sub-2-3': 5,  // 2.3 Type Approaches to Personality (Hippocrates, Sheldon, Friedman Type A/B)
+  'psy-sub-2-4': 8,  // 2.4 Trait Approaches (Allport, Cattell 16PF, Eysenck H-I-N-E)
+  'psy-sub-2-5': 10, // 2.5 Psychodynamic Approach (Freud: Id, Ego, Superego & 8 Defense Mechanisms)
+  'psy-sub-2-6': 6,  // 2.6 Post-Freudian Approaches (Adler, Jung, Horney, Erikson)
+  'psy-sub-2-7': 4,  // 2.7 Behavioural and Cultural Approaches to Personality (Bandura, Social learning)
+  'psy-sub-2-8': 7,  // 2.8 Humanistic Approach (Carl Rogers Fully Functioning & Maslow Hierarchy)
+  'psy-sub-2-9': 6,  // 2.9 Assessment of Personality: Self-Report Measures (MMPI, 16PF)
+  'psy-sub-2-10': 8, // 2.10 Projective Techniques (Rorschach Inkblot, TAT, Sentence Completion)
 
   // --- Psychology Ch 3: Meeting Life Challenges ---
-  'psy-sub-3-1': 9,  // 3.1 Nature and Sources of Stress (Lazarus Cognitive Appraisal)
-  'psy-sub-3-2': 8,  // 3.2 Signs and Symptoms of Stress
-  'psy-sub-3-3': 8,  // 3.3 General Adaptation Syndrome (Hans Selye's GAS Model)
-  'psy-sub-3-4': 8,  // 3.4 Stress and the Immune System
-  'psy-sub-3-5': 10, // 3.5 Coping with Stress: Task-Oriented, Emotion-Focused, Avoidance
-  'psy-sub-3-6': 8,  // 3.6 Stress Management Techniques
-  'psy-sub-3-7': 8   // 3.7 Promoting Positive Health and Well-being
+  'psy-sub-3-1': 5,  // 3.1 Nature and Sources of Stress (Lazarus Primary & Secondary Appraisal)
+  'psy-sub-3-2': 3,  // 3.2 Signs and Symptoms of Stress (Physical, emotional, behavioural)
+  'psy-sub-3-3': 8,  // 3.3 General Adaptation Syndrome (Hans Selye's GAS: Alarm, Resistance, Exhaustion)
+  'psy-sub-3-4': 6,  // 3.4 Stress and the Immune System (Psychoneuroimmunology)
+  'psy-sub-3-5': 7,  // 3.5 Coping with Stress: Task-Oriented, Emotion-Focused, Avoidance
+  'psy-sub-3-6': 5,  // 3.6 Stress Management Techniques (Biofeedback, relaxation, exercise)
+  'psy-sub-3-7': 4   // 3.7 Promoting Positive Health and Well-being (Life skills)
 };
 
 /**
