@@ -427,6 +427,44 @@ export const CHEMISTRY_CHAPTERS = [
             ]
           }
         ]
+      },
+      {
+        id: 'chem-sub-2-12',
+        title: '2.12 Products of Electrolysis',
+        sections: [
+          {
+            id: 'chem-sec-2-12',
+            title: 'Products at Cathode & Anode: Molten & Aqueous Electrolytes',
+            explanation: "The products of electrolysis depend on the nature of the electrolyte (molten vs aqueous), the concentration of the solution, and the electrode material.\n\n" +
+              "GENERAL RULES:\n" +
+              "At CATHODE (reduction): The cation with HIGHER reduction potential is discharged first.\n" +
+              "At ANODE (oxidation): The anion with LOWER reduction potential is oxidised first. If the anode is ACTIVE (e.g., Cu), it dissolves preferentially.\n\n" +
+              "CASE 1 — Molten NaCl:\n" +
+              "Cathode: Na+ + e- → Na (sodium metal deposited)\n" +
+              "Anode: 2Cl- → Cl2 + 2e- (chlorine gas evolved)\n\n" +
+              "CASE 2 — Aqueous NaCl:\n" +
+              "Cathode: 2H2O + 2e- → H2 + 2OH- (H2 evolved; water is reduced more easily than Na+)\n" +
+              "Anode: 2Cl- → Cl2 + 2e- (Cl2 evolved at high concentration; O2 at very low [Cl-])\n\n" +
+              "CASE 3 — Aqueous CuSO4 with Pt (inert) electrodes:\n" +
+              "Cathode: Cu2+ + 2e- → Cu (Cu deposited; E(Cu2+/Cu) = +0.34V > E(H+/H2) = 0V)\n" +
+              "Anode: 2H2O → O2 + 4H+ + 4e- (O2 gas evolved)\n\n" +
+              "CASE 4 — Aqueous CuSO4 with Cu (active) electrodes (Electrorefining/Electroplating):\n" +
+              "Cathode: Cu2+ + 2e- → Cu (Cu DEPOSITED; cathode gains mass)\n" +
+              "Anode: Cu → Cu2+ + 2e- (Cu DISSOLVES; anode loses mass)\n" +
+              "Net: Cu transfers anode to cathode; [CuSO4] stays constant. This is the principle of electroplating and electrorefining of copper.",
+            questionFraming: "Application — 'Predict products of electrolysis of: (i) molten NaCl, (ii) aqueous NaCl, (iii) dilute CuSO4 with Pt electrodes, (iv) dilute CuSO4 with Cu electrodes.'\n" +
+              "Reasoning — 'Why is H2 liberated at the cathode during electrolysis of aqueous NaCl and not Na?' Answer: E(H2O/H2) = 0V >> E(Na+/Na) = -2.71V; water is reduced first.\n" +
+              "Practical — 'What happens at the Cu anode during electrolysis of CuSO4?' Answer: Cu dissolves (Cu → Cu2+ + 2e-).",
+            textbookRef: "Cathode: Cu2+ (E = +0.34V) discharged before H+ (E = 0V), before Na+ (E = -2.71V). Anode: Cl- oxidised over water only at high [Cl-]. At low [Cl-], O2 evolved (water oxidised). Active Cu anode dissolves preferentially before water oxidation. Used in electrorefining: impure Cu anode dissolves; pure Cu deposits at cathode.",
+            keyFormulas: [
+              "Molten NaCl: Cathode = Na | Anode = Cl2",
+              "Aqueous NaCl: Cathode = H2 | Anode = Cl2",
+              "CuSO4 (Pt): Cathode = Cu | Anode = O2",
+              "CuSO4 (Cu): Cathode = Cu deposited | Anode = Cu dissolves",
+              "Cathode rule: Higher E(reduction) discharged first"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -546,6 +584,167 @@ export const CHEMISTRY_CHAPTERS = [
               "Neutral: MnO₄⁻ ⟶ MnO₂ (n = 3)",
               "Alkaline: MnO₄⁻ ⟶ MnO₄²⁻ (n = 1)",
               "Dichromate acidic: Cr₂O₇²⁻ ⟶ 2Cr³⁺ (n = 6)"
+            ]
+          }
+        ]
+      },
+      {
+        id: 'chem-sub-4-8',
+        title: '4.8 Anomalous Configurations, Magnetic Moment & Max Oxidation States',
+        sections: [
+          {
+            id: 'chem-sec-4-8',
+            title: 'Cr & Cu Anomalous Configs, Spin-Only Formula (QP Q4, Q5, Q26)',
+            explanation: "ANOMALOUS ELECTRONIC CONFIGURATIONS:\n" +
+              "Cr (expected [Ar] 3d4 4s2) -> ACTUAL [Ar] 3d5 4s1: half-filled 3d5 is more stable (maximum exchange energy, spherically symmetric).\n" +
+              "Cu (expected [Ar] 3d9 4s2) -> ACTUAL [Ar] 3d10 4s1: fully filled 3d10 is more stable.\n" +
+              "Zn, Cd, Hg: d10 configuration in all compounds -> NOT transition elements (no variable oxidation states, no colour, no d-d transition).\n\n" +
+              "MAXIMUM OXIDATION STATES (QP Q4):\n" +
+              "Mn shows the MAXIMUM number of oxidation states (+2 to +7). Reason: 3d5 4s2 = 7 electrons available. Group 6 (Cr) shows prominent +3 and +6.\n\n" +
+              "SPIN-ONLY MAGNETIC MOMENT (QP Q5):\n" +
+              "Formula: mu = sqrt[n(n+2)] BM, n = unpaired electrons.\n" +
+              "n=1: 1.73 BM (Ti3+: 3d1) | n=2: 2.83 BM (V3+: 3d2)\n" +
+              "n=3: 3.87 BM (Cr3+: 3d3) | n=4: 4.90 BM (Cr2+, Mn3+: 3d4)\n" +
+              "n=5: 5.92 BM (Mn2+, Fe3+: 3d5) - MAXIMUM in 3d series.\n" +
+              "Fe3+ is 3d5 -> 5 unpaired electrons. No colour in d0 (Sc3+, Ti4+) or d10 (Cu+, Zn2+).\n\n" +
+              "QP Q26 ORDER OF UNPAIRED ELECTRONS:\n" +
+              "Mn3+ (d4, 4) > Cr3+ (d3, 3) > V3+ (d2, 2) > Ti3+ (d1, 1).\n" +
+              "MOST STABLE IN WATER: Cr3+ (t2g3 - maximum Crystal Field Stabilisation Energy).\n" +
+              "LEAST STABLE: Ti3+ (d1 loses its electron easily to reach stable d0).",
+            questionFraming: "QP Q4 - 'Which TM shows maximum oxidation states? Why?' -> Mn (+2 to +7, 3d5 4s2)\n" +
+              "QP Q5 - 'How many unpaired electrons in Fe3+?' -> 5 (3d5 configuration, mu = 5.92 BM)\n" +
+              "QP Q26 - 'Arrange Mn3+, Cr3+, V3+, Ti3+ by unpaired electrons. Which is most stable in water?'\n" +
+              "QP Q35 - 'Group 6 elements show +3 and +6 oxidation states.'",
+            textbookRef: "Cr3+ most stable: t2g3 configuration gives maximum CFSE. Ti3+ (d1) least stable: loses single d-electron to reach stable d0 = Ti4+. High melting points of TMs due to strong metallic bonding (many unpaired d electrons contribute to bonding). Anomalous configs arise from extra stability of half-filled (d5) and fully-filled (d10) d-orbitals.",
+            keyFormulas: [
+              "mu = sqrt[n(n+2)] BM: 1.73, 2.83, 3.87, 4.90, 5.92 (n=1 to 5)",
+              "Cr: [Ar] 3d5 4s1 (half-filled stability)",
+              "Cu: [Ar] 3d10 4s1 (fully filled stability)",
+              "Max oxidation states: Mn (+2 to +7)",
+              "Fe3+ = 3d5 = 5 unpaired electrons = 5.92 BM"
+            ]
+          }
+        ]
+      },
+      {
+        id: 'chem-sub-4-9',
+        title: '4.9 Stability of Oxidation States & Disproportionation',
+        sections: [
+          {
+            id: 'chem-sec-4-9',
+            title: 'Cr2+/Mn3+ Stability, Co(III) Complexes & Disproportionation (QP Q25, Q38b)',
+            explanation: "STABILITY OF OXIDATION STATES (QP Q25):\n\n" +
+              "PART (i): Cr2+ is REDUCING; Mn3+ is OXIDISING.\n" +
+              "Cr2+ (d4) -> Cr3+ (d3, stable t2g3): Cr2+ loses an electron easily -> REDUCING AGENT.\n" +
+              "Mn3+ (d4) -> Mn2+ (d5, half-filled, extra stable): Mn3+ gains electron easily -> OXIDISING AGENT.\n" +
+              "KEY RULE: Ion is reducing if oxidation gives a more stable config; oxidising if reduction gives a more stable config.\n\n" +
+              "PART (ii): Why does Co(II) oxidise easily with strong-field ligands?\n" +
+              "In water, Co(II) is stable. With CN-, NH3, en: Co(III) (d6, t2g6) gains enormous CFSE.\n" +
+              "Large CFSE stabilises Co(III) > Co(II) in these complexes, so Co(II) is easily oxidised.\n\n" +
+              "PART (iii): Why is d1 ion unstable?\n" +
+              "Ti3+ (d1) easily loses its one d-electron to reach stable d0 configuration.\n" +
+              "Therefore d1 ions are strong reducing agents and are unstable in solution.\n\n" +
+              "DISPROPORTIONATION REACTIONS (QP Q38b):\n" +
+              "Definition: A reaction where the SAME element is simultaneously oxidised AND reduced.\n\n" +
+              "Example 1 - MnO4(2-) disproportionation (used in KMnO4 preparation):\n" +
+              "3MnO4(2-) + 4H+ -> 2MnO4(-) + MnO2 + 2H2O\n" +
+              "[Mn +6 -> +7 (oxidised) AND Mn +6 -> +4 (reduced)]\n\n" +
+              "Example 2 - Cu+ disproportionation:\n" +
+              "2Cu+ -> Cu2+ + Cu0\n" +
+              "[Cu +1 -> +2 (oxidised) AND Cu +1 -> 0 (reduced)]\n" +
+              "Reason: Hydration enthalpy of Cu2+ >> Cu+, making disproportionation thermodynamically favoured. Cu+ is unstable in aqueous solution.",
+            questionFraming: "QP Q25(i) - 'Why is Cr2+ a reducing agent while Mn3+ is an oxidising agent?'\n" +
+              "QP Q25(ii) - 'Why is Co(II) easily oxidised to Co(III) in presence of CN-?'\n" +
+              "QP Q25(iii) - 'Why is d1 configuration unstable?'\n" +
+              "QP Q38(b) - 'Define disproportionation. Give 2 examples with balanced equations.'",
+            textbookRef: "Cu+ disproportionation is driven by the much larger hydration enthalpy of Cu2+ (smaller, 2+ charge) vs Cu+. MnO4(2-) (green manganate, Mn +6) is unstable in acid and disproportionates to MnO4(-) (purple permanganate, +7) and MnO2 (brown, +4). This is exactly the acidification step in KMnO4 manufacture.",
+            keyFormulas: [
+              "Cr2+ (d4) -> Cr3+ (d3, stable): REDUCING agent",
+              "Mn3+ (d4) -> Mn2+ (d5, stable): OXIDISING agent",
+              "3MnO4(2-) + 4H+ -> 2MnO4(-) + MnO2 + 2H2O (disproportionation)",
+              "2Cu+ -> Cu2+ + Cu0 (Cu+ unstable in aqueous solution)"
+            ]
+          }
+        ]
+      },
+      {
+        id: 'chem-sub-4-10',
+        title: '4.10 Catalysis, Cu E° Explanation, Interstitial Compounds & Alloys',
+        sections: [
+          {
+            id: 'chem-sec-4-10',
+            title: 'Catalytic Activity, Cu E°, Interstitial Compounds & Alloys (QP Q20)',
+            explanation: "CATALYTIC ACTIVITY:\n" +
+              "Transition metals are excellent catalysts because: (1) Variable oxidation states allow alternative reaction pathways via intermediate complexes that decompose to regenerate the catalyst. (2) Large surface area adsorbs reactants, concentrating them and weakening bonds.\n" +
+              "KEY EXAMPLES (memorise these):\n" +
+              "Fe (with Mo promoter) - Haber's Process: N2 + 3H2 <-> 2NH3\n" +
+              "V2O5 - Contact Process: 2SO2 + O2 <-> 2SO3\n" +
+              "Ni - Hydrogenation of edible oils (unsaturated -> saturated, vanaspati ghee)\n" +
+              "Pt - Ostwald's Process: 4NH3 + 5O2 -> 4NO + 6H2O\n" +
+              "MnO2 - Decomposition of KClO3\n\n" +
+              "WHY IS Cu STANDARD ELECTRODE POTENTIAL POSITIVE? (QP Q20)\n" +
+              "Cu has E(deg) = +0.34 V (positive), meaning it does NOT dissolve in dilute acids.\n" +
+              "Reason: (1) Atomisation enthalpy of Cu (converting solid Cu to gaseous atoms) is VERY HIGH. (2) Sum of 1st + 2nd ionisation enthalpies of Cu is HIGH. (3) The hydration enthalpy of Cu2+ ions, though large, is NOT sufficient to compensate for the large atomisation + ionisation energy inputs. Therefore, the net free energy change for Cu dissolution is positive (non-spontaneous) -> E(deg) is positive.\n\n" +
+              "INTERSTITIAL COMPOUNDS:\n" +
+              "Formed when small atoms (H, B, C, N) fit into the voids (interstices) in the metallic crystal lattice of TMs.\n" +
+              "Properties: (1) Harder than pure metal, (2) High melting points, (3) Chemically inert to acids/bases, (4) Retain metallic conductivity.\n" +
+              "Examples: TiC (extremely hard), Fe3C (cementite in steel), Mn2N, CrH0.5\n\n" +
+              "ALLOYS:\n" +
+              "TMs form alloys readily because they have similar atomic sizes and can substitute for each other in crystal lattices.\n" +
+              "Steel: Fe + C | Stainless Steel: Fe + Cr + Ni | Nichrome: Ni + Cr (heating elements)\n" +
+              "Bronze: Cu + Sn | Brass: Cu + Zn | Monel metal: Ni + Cu\n" +
+              "Alloys are: harder, higher mp, more corrosion-resistant than constituent metals.",
+            questionFraming: "QP Q20 - 'Explain why Cu has a positive standard electrode potential.'\n" +
+              "'What are interstitial compounds? Give 3 properties and 2 examples.'\n" +
+              "'Name catalysts for Haber's process, contact process, and hydrogenation.'\n" +
+              "'Why do TMs form alloys more readily than main group (s-block) metals?'",
+            textbookRef: "Cu: High atomisation enthalpy + high IE1 + IE2. Hydration enthalpy of Cu2+ ≈ -2100 kJ/mol, still insufficient for net negative delta-G for dissolution. Compare Fe (E = -0.44V): lower atomisation + IE, hydration enthalpy sufficient. Misch metal: 95% lanthanoid alloy + Fe, used in cigarette lighter flints.",
+            keyFormulas: [
+              "Haber's: N2 + 3H2 <-> 2NH3 (catalyst: Fe with Mo promoter)",
+              "Contact: 2SO2 + O2 <-> 2SO3 (catalyst: V2O5)",
+              "Cu E(deg) = +0.34 V (positive: high atomisation + IE > hydration enthalpy)",
+              "Interstitial: TiC, Fe3C - hard, high mp, chemically inert"
+            ]
+          }
+        ]
+      },
+      {
+        id: 'chem-sub-4-11',
+        title: '4.11 Lanthanoids vs Actinoids: 5-Point Board Comparison',
+        sections: [
+          {
+            id: 'chem-sec-4-11',
+            title: 'Lanthanoids vs Actinoids — Full 5-Mark CBSE Answer (QP Q38a, Q6)',
+            explanation: "LANTHANOIDS (4f series, Ce to Lu, elements 58-71):\n" +
+              "Electronic configuration: [Xe] 4f(1-14) 5d(0-1) 6s2 — 4f orbitals fill progressively (regular filling).\n" +
+              "Oxidation states: Predominantly +3. Some +2 (Eu2+, Sm2+, Yb2+) and some +4 (Ce4+, Tb4+).\n" +
+              "Lanthanoid contraction: Steady, REGULAR decrease in atomic/ionic radii from La to Lu.\n" +
+              "Reactivity: Less reactive than actinoids (still react with water and dilute acids).\n" +
+              "Radioactivity: Non-radioactive. EXCEPTION: Promethium (Pm) is radioactive.\n\n" +
+              "Ce4+ (QP Q6): Acts as a STRONG OXIDISING AGENT because it is easily reduced to the more stable Ce3+ configuration. Ce4+ + e- -> Ce3+.\n\n" +
+              "ACTINOIDS (5f series, Th to Lr, elements 90-103):\n" +
+              "Electronic configuration: [Rn] 5f(1-14) 6d(0-1) 7s2 — filling is IRREGULAR because 5f, 6d, 7s orbitals have very similar energies.\n" +
+              "Oxidation states: Predominantly +3, but WIDE RANGE: +3, +4, +5, +6, +7 (wider than lanthanoids). Reason: 5f, 6d, 7s electrons all participate in bonding.\n" +
+              "Actinoid contraction: GREATER in magnitude and more IRREGULAR than lanthanoid contraction (5f electrons shield more poorly than 4f).\n" +
+              "Reactivity: MORE REACTIVE than lanthanoids.\n" +
+              "Radioactivity: ALL actinoids are radioactive — this is the single most important distinguishing fact!\n" +
+              "Transuranic elements: Actinoids beyond Uranium (Z > 92: Np, Pu, Am, Cm...) are synthetic.",
+            questionFraming: "QP Q38(a) 5-Mark - 'Compare lanthanoids and actinoids on 5 points: (i) electronic configuration, (ii) oxidation states, (iii) atomic size variation/contraction, (iv) reactivity, (v) radioactivity.'\n" +
+              "QP Q6 - 'Ce4+ acts as an oxidising agent. Justify.' Answer: Ce4+ -> Ce3+ (more stable configuration).\n" +
+              "'What are transuranic elements?' -> Synthetic actinoids beyond Uranium (Z > 92).",
+            textbookRef: "5-POINT BOARD ANSWER (write as table in exam):\n" +
+              "1. Electronic config: Lanthanoids - 4f filling (regular); Actinoids - 5f filling (irregular, 5f/6d/7s close)\n" +
+              "2. Oxidation states: Lanthanoids - mainly +3; Actinoids - +3, also +4, +5, +6, +7\n" +
+              "3. Contraction: Lanthanoid (smaller, regular); Actinoid (greater, irregular)\n" +
+              "4. Reactivity: Lanthanoids - less reactive; Actinoids - more reactive\n" +
+              "5. Radioactivity: Lanthanoids - non-radioactive (except Pm); Actinoids - ALL radioactive\n" +
+              "Bonus: Lanthanoids found in nature; most actinoids beyond U are synthetic.",
+            keyFormulas: [
+              "Lanthanoids: 4f filling (regular) | Actinoids: 5f filling (irregular)",
+              "Lanthanoids: mainly +3 | Actinoids: +3, +4, +5, +6, +7",
+              "ALL actinoids are radioactive (most important distinguishing fact!)",
+              "Ce4+ (oxidising agent) -> Ce3+ (more stable, QP Q6)",
+              "Actinoid contraction > Lanthanoid contraction"
             ]
           }
         ]
