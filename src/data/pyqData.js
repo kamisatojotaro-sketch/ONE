@@ -184,6 +184,27 @@ export const PYQ_DATABASE = {
    • If induced current assisted the motion (attraction), the magnet would accelerate without any external work, creating energy out of nothing, violating energy conservation.`
     },
     {
+      id: 'phy-pyq-9b',
+      chapterId: 'phy-ch-6',
+      chapterName: 'Ch 6: Electromagnetic Induction',
+      subtopicId: 'phy-sub-6-2',
+      year: 'CBSE 2024, 2020 (3 Marks)',
+      question: 'State Faraday\'s laws of electromagnetic induction and write its mathematical formulation. A closed coil of resistance R is placed in a magnetic field. Show that the total charge induced in the coil when magnetic flux changes by ΔΦ is independent of the time taken for the change.',
+      solution: `1. Faraday's Laws of Electromagnetic Induction:
+   • First Law (Qualitative): Whenever the magnetic flux linked with a closed circuit changes with time, an electromotive force (EMF) is induced in the circuit, lasting as long as the flux change continues.
+   • Second Law (Quantitative): The magnitude of the induced EMF is directly proportional to the time rate of change of magnetic flux linked with the circuit:
+     |ε| = N |dΦ_B / dt|
+   • Incorporating Lenz's Law (direction): ε = −N (dΦ_B / dt)
+
+2. Derivation: Time-Independence of Induced Charge:
+   • Let R be the total resistance of the closed circuit.
+   • Instantaneous induced current I = |ε| / R = (N / R) · (dΦ / dt)
+   • Small charge dq passing in time dt is: dq = I · dt = [ (N / R) · (dΦ / dt) ] · dt = (N / R) · dΦ
+   • Integrating over total flux change from Φ₁ to Φ₂:
+     q = ∫ dq = (N / R) ∫ dΦ = (N / R) · ΔΦ_B
+   • Conclusion: The total induced charge q = (N · ΔΦ_B) / R contains NO time factor (t) and is therefore strictly independent of the time or velocity of the flux change.`
+    },
+    {
       id: 'phy-pyq-10',
       chapterId: 'phy-ch-7',
       chapterName: 'Ch 7: Alternating Current',
@@ -331,6 +352,31 @@ export const PYQ_DATABASE = {
    Λ°_m(CH₃COOH) = Λ°_m(CH₃COONa) + Λ°_m(HCl) − Λ°_m(NaCl)
    = [λ°(CH₃COO⁻) + λ°(Na⁺)] + [λ°(H⁺) + λ°(Cl⁻)] − [λ°(Na⁺) + λ°(Cl⁻)]
    = λ°(CH₃COO⁻) + λ°(H⁺)`
+    },
+    {
+      id: 'chem-pyq-5b',
+      chapterId: 'chem-ch-2',
+      chapterName: 'Ch 2: Electrochemistry',
+      subtopicId: 'chem-sub-2-7',
+      year: 'CBSE 2023, 2020 (3 Marks)',
+      question: 'State Faraday\'s first and second laws of electrolysis. A solution of CuSO₄ is electrolysed for 20 minutes with a current of 1.5 Amperes. Calculate the mass of copper deposited at the cathode. (Molar mass of Cu = 63.5 g/mol, 1 F = 96,500 C/mol).',
+      solution: `1. Faraday's First Law of Electrolysis:
+   The mass (w) of a substance deposited or liberated at any electrode is directly proportional to the quantity of electricity (charge Q) passed through the electrolyte:
+   w = z · Q = z · I · t
+
+2. Faraday's Second Law of Electrolysis:
+   When the same quantity of electricity is passed through different electrolytic solutions connected in series, the masses of different substances deposited at the electrodes are directly proportional to their chemical equivalent weights:
+   w₁ / w₂ = E₁ / E₂
+
+3. Stepwise Numerical Solution:
+   • Current I = 1.5 A
+   • Time t = 20 minutes = 20 × 60 = 1200 seconds (Crucial step: time must be in seconds!)
+   • Total Charge passed Q = I · t = 1.5 A × 1200 s = 1800 C
+   • Cathode Reaction: Cu²⁺(aq) + 2 e⁻ ⟶ Cu(s)
+   • Valency factor n = 2.
+   • Mass deposited w = (M · I · t) / (n · 96500)
+     w = (63.5 g/mol × 1800 C) / (2 × 96500 C/mol)
+     w = 114300 / 193000 ≈ 0.592 g of Copper (Cu).`
     },
     {
       id: 'chem-pyq-6',

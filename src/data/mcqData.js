@@ -132,6 +132,22 @@ export const MCQ_DATABASE = {
       explanation: 'By Lenz\'s law, the induced current in the ring produces an opposing magnetic North pole facing the falling magnet, exerting an upward repulsive force. Hence net downward acceleration a = g − (F_magnetic / m) < g.'
     },
     {
+      id: 'phy-mcq-8b',
+      chapterId: 'phy-ch-6',
+      chapterName: 'Ch 6: Electromagnetic Induction',
+      subtopicId: 'phy-sub-6-2',
+      difficulty: 'hard',
+      question: 'A bar magnet is moved towards a closed circular coil first rapidly in 0.1 s, and then slowly in 1.0 s. The ratio of the induced EMF and total charge flown through the coil in the two cases are respectively:',
+      options: [
+        'EMF ratio is 10 : 1, while Charge ratio is 1 : 1',
+        'EMF ratio is 1 : 1, while Charge ratio is 10 : 1',
+        'Both EMF and Charge ratios are 10 : 1',
+        'Both EMF and Charge ratios are 1 : 1'
+      ],
+      correct: 0,
+      explanation: 'Induced EMF |ε| = ΔΦ / Δt is inversely proportional to time, so rapid motion produces 10 times higher EMF (10 : 1). However, total induced charge q = ΔΦ / R depends only on net flux change and resistance, completely independent of time, so the charge ratio is strictly 1 : 1.'
+    },
+    {
       id: 'phy-mcq-9',
       chapterId: 'phy-ch-7',
       chapterName: 'Ch 7: Alternating Current',
@@ -229,6 +245,22 @@ export const MCQ_DATABASE = {
       ],
       correct: 1,
       explanation: 'By Kohlrausch\'s Law: Λ°_m(CH₃COOH) = Λ°_m(CH₃COONa) + Λ°_m(HCl) − Λ°_m(NaCl) = 91.0 + 425.9 − 126.4 = 516.9 − 126.4 = 390.5 S·cm²/mol.'
+    },
+    {
+      id: 'chem-mcq-4b',
+      chapterId: 'chem-ch-2',
+      chapterName: 'Ch 2: Electrochemistry',
+      subtopicId: 'chem-sub-2-7',
+      difficulty: 'medium',
+      question: 'How many Faradays of electric charge are required for the complete reduction of 1 mole of Al³⁺ ions to metallic aluminum (Al)?',
+      options: [
+        '1 F',
+        '2 F',
+        '3 F',
+        '96,500 F'
+      ],
+      correct: 2,
+      explanation: 'The cathodic reduction reaction is Al³⁺ + 3 e⁻ ⟶ Al(s). Deposition of 1 mole of Al requires 3 moles of electrons. Since 1 mole of electrons carries 1 Faraday (≈ 96,500 Coulombs) of charge, exactly 3 F (289,500 C) are required.'
     },
     {
       id: 'chem-mcq-5',
