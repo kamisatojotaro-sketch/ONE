@@ -1,11 +1,13 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { 
   CheckSquare, Award, Clock, ArrowRight, ArrowLeft, RotateCcw, RotateCw, 
   Sparkles, Filter, Check, Flag, AlertCircle, BarChart3, ChevronDown, 
-  BookOpen, Layers, CheckCircle2, XCircle, Sliders, Play, RotateCcw as ResetIcon
+  BookOpen, Layers, CheckCircle2, XCircle, Sliders, Play, RotateCcw as ResetIcon,
+  Zap, HelpCircle
 } from 'lucide-react';
 import { getTestMakerMCQs, getTestMakerPYQs } from '../../data/questionEngine';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import { formatMathString } from './FormulaCard';
 
 export default function TestMakerTabContent({
   selectedSubject: initialSubject = 'physics',
@@ -17,6 +19,7 @@ export default function TestMakerTabContent({
   const [selectedSubtopicIds, setSelectedSubtopicIds] = useState([]);
   const [testMode, setTestMode] = useState('MCQ'); // 'MCQ' | 'PYQ'
   const [difficultyFilter, setDifficultyFilter] = useState('ALL'); // 'ALL' | 'easy' | 'medium' | 'hard'
+  const [questionCount, setQuestionCount] = useState(30); // 10 | 15 | 20 | 30
   const [seed, setSeed] = useState(1);
 
   // Test Execution State
@@ -25,18 +28,10 @@ export default function TestMakerTabContent({
   const [currentQIndex, setCurrentQIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
-  const [timerSeconds, setTimerSeconds] = useState(45 * 60); // 45 minutes default
+  const [timerSeconds, setTimerSeconds] = useState(45 * 60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [instantFeedbackMode, setInstantFeedbackMode] = useState(false);
-
-  // Update current subject/chapter when initial props change
-  useEffect(() => {
-    if (initialSubject) setCurrentSubjectKey(initialSubject);
-  }, [initialSubject]);
-
-  useEffect(() => {
-    if (initialChapter) setCurrentChapterId(initialChapter);
-  }, [initialChapter]);
+  const [instantFeedbackMode, setInstantFeedbackMode] = useState(false); // Practice vs Exam mode
+  const [paletteFilter, setPaletteFilter] = useState('ALL'); // 'ALL' | 'FLAGGED' | 'UNANSWERED'
 
   // Subject syllabus & chapters
   const currentSubject = NCERT_SYLLABUS[currentSubjectKey];
@@ -54,12 +49,27 @@ export default function TestMakerTabContent({
     return list;
   }, [currentSubject]);
 
-  // Set default chapter if none selected
+  // Synchronize when initial props change
   useEffect(() => {
-    if (!currentChapterId && availableChapters.length > 0) {
-      setCurrentChapterId(availableChapters[0].id);
+    if (initialSubject && NCERT_SYLLABUS[initialSubject]) {
+      setCurrentSubjectKey(initialSubject);
     }
-  }, [availableChapters, currentChapterId]);
+  }, [initialSubject]);
+
+  // Synchronize chapter safely ensuring it belongs to current subject
+  useEffect(() => {
+    if (availableChapters.length > 0) {
+      const match = availableChapters.find(ch => ch.id === currentChapterId);
+      if (!match) {
+        // Fall back to initialChapter if valid in this subject, else first available
+        const fallback = availableChapters.find(ch => ch.id === initialChapter) || availableChapters[0];
+        setCurrentChapterId(fallback.id);
+        if (fallback.subchapters) {
+          setSelectedSubtopicIds(fallback.subchapters.map(s => s.id));
+        }
+      }
+    }
+  }, [currentSubjectKey, availableChapters, currentChapterId, initialChapter]);
 
   // Active chapter object
   const activeChapter = useMemo(() => {
@@ -72,15 +82,15 @@ export default function TestMakerTabContent({
     return activeChapter.subchapters;
   }, [activeChapter]);
 
-  // Auto-select all subchapters when switching chapter if none selected
+  // Auto-select all subchapters when switching chapter
   useEffect(() => {
-    if (subchapters.length > 0 && selectedSubtopicIds.length === 0) {
+    if (subchapters.length > 0) {
       setSelectedSubtopicIds(subchapters.map(s => s.id));
     }
-  }, [subchapters]);
+  }, [currentChapterId]);
 
-  // Toggle single subchapter tickbox
-  const toggleSubchapter = (id) => {
+  // Toggle single subchapter tickbox (rock-solid, single-event handler)
+  const toggleSubchapter = useCallback((id) => {
     setSelectedSubtopicIds(prev => {
       if (prev.includes(id)) {
         return prev.filter(item => item !== id);
@@ -88,7 +98,7 @@ export default function TestMakerTabContent({
         return [...prev, id];
       }
     });
-  };
+  }, []);
 
   // Select all subchapters of current chapter
   const handleSelectAll = () => {
@@ -101,17 +111,25 @@ export default function TestMakerTabContent({
     setSelectedSubtopicIds([]);
   };
 
-  // Generate 30 MCQs strictly from ONLY the selected subtopics
+  // Generate MCQs strictly from ONLY the selected subtopics
   const generatedMCQs = useMemo(() => {
     if (selectedSubtopicIds.length === 0) return [];
-    return getTestMakerMCQs(currentSubjectKey, selectedSubtopicIds, 30, seed, difficultyFilter);
-  }, [currentSubjectKey, selectedSubtopicIds, seed, difficultyFilter]);
+    return getTestMakerMCQs(currentSubjectKey, selectedSubtopicIds, questionCount, seed, difficultyFilter);
+  }, [currentSubjectKey, selectedSubtopicIds, questionCount, seed, difficultyFilter]);
 
   // Generate PYQs strictly from ONLY the selected subtopics
   const generatedPYQs = useMemo(() => {
     if (selectedSubtopicIds.length === 0) return [];
     return getTestMakerPYQs(currentSubjectKey, selectedSubtopicIds, 25, seed);
   }, [currentSubjectKey, selectedSubtopicIds, seed]);
+
+  // Calculate default timer duration based on question count
+  const defaultTimerForCount = useMemo(() => {
+    if (questionCount <= 10) return 15 * 60;
+    if (questionCount <= 15) return 20 * 60;
+    if (questionCount <= 20) return 30 * 60;
+    return 45 * 60; // 30 questions
+  }, [questionCount]);
 
   // Timer countdown
   useEffect(() => {
@@ -142,8 +160,9 @@ export default function TestMakerTabContent({
     setCurrentQIndex(0);
     setUserAnswers({});
     setFlaggedQuestions(new Set());
-    setTimerSeconds(45 * 60);
+    setTimerSeconds(defaultTimerForCount);
     setIsTimerRunning(true);
+    setPaletteFilter('ALL');
   };
 
   // Handle option selection
@@ -154,6 +173,7 @@ export default function TestMakerTabContent({
 
   // Toggle flag
   const toggleFlag = (qId) => {
+    if (!qId) return;
     setFlaggedQuestions(prev => {
       const next = new Set(prev);
       if (next.has(qId)) next.delete(qId);
@@ -176,6 +196,44 @@ export default function TestMakerTabContent({
     setFlaggedQuestions(new Set());
     setSeed(prev => prev + 1);
   };
+
+  // Keyboard navigation during active test
+  useEffect(() => {
+    if (!isTestStarted || isTestSubmitted) return;
+
+    const handleKeyDown = (e) => {
+      // Don't intercept if inside an input or textarea
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+
+      const activeQ = generatedMCQs[currentQIndex];
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setCurrentQIndex(prev => Math.min(generatedMCQs.length - 1, prev + 1));
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setCurrentQIndex(prev => Math.max(0, prev - 1));
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        if (activeQ) toggleFlag(activeQ.id);
+      } else if (['1', '2', '3', '4'].includes(e.key)) {
+        e.preventDefault();
+        const optIdx = parseInt(e.key, 10) - 1;
+        if (activeQ && activeQ.options && activeQ.options[optIdx]) {
+          handleSelectOption(activeQ.id, optIdx);
+        }
+      } else if (['a', 'b', 'c', 'd', 'A', 'B', 'C', 'D'].includes(e.key)) {
+        e.preventDefault();
+        const optIdx = e.key.toUpperCase().charCodeAt(0) - 65;
+        if (activeQ && activeQ.options && activeQ.options[optIdx]) {
+          handleSelectOption(activeQ.id, optIdx);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isTestStarted, isTestSubmitted, currentQIndex, generatedMCQs]);
 
   // Compute test scorecard stats
   const scoreStats = useMemo(() => {
@@ -223,10 +281,19 @@ export default function TestMakerTabContent({
     };
   }, [generatedMCQs, userAnswers]);
 
+  // Filtered palette indices for quick jump
+  const filteredPaletteIndices = useMemo(() => {
+    return generatedMCQs.map((q, idx) => ({ q, idx })).filter(({ q, idx }) => {
+      if (paletteFilter === 'FLAGGED') return flaggedQuestions.has(q.id);
+      if (paletteFilter === 'UNANSWERED') return userAnswers[q.id] === undefined;
+      return true;
+    });
+  }, [generatedMCQs, paletteFilter, flaggedQuestions, userAnswers]);
+
   return (
     <div className="space-y-5 sm:space-y-6 animate-in fade-in duration-300">
       {/* 1. Header Banner */}
-      <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] text-[11px] font-mono text-[var(--accent-primary)] font-semibold uppercase tracking-wider mb-1.5 border border-[var(--border-subtle)]">
             <Sliders size={12} />
@@ -236,9 +303,9 @@ export default function TestMakerTabContent({
             Custom Test Maker
           </h2>
           <p className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] mt-1 max-w-2xl">
-            Select specific subchapters using the tickboxes below. The test engine will compile a rigorous 
-            <span className="font-bold text-[var(--text-primary)]"> 30-Question MCQ Mock Exam </span> 
-            strictly from <span className="underline decoration-[var(--accent-primary)]">ONLY the subtopics you chose</span>.
+            Pick specific subchapters using the tickboxes below. The test engine compiles an authentic 
+            <span className="font-bold text-[var(--text-primary)]"> {questionCount}-Question Mock Exam </span> 
+            strictly from <span className="underline decoration-[var(--accent-primary)] font-semibold">ONLY the subtopics you chose</span>.
           </p>
         </div>
 
@@ -250,11 +317,12 @@ export default function TestMakerTabContent({
               <button
                 key={key}
                 onClick={() => {
-                  setCurrentSubjectKey(key);
-                  setCurrentChapterId(null);
-                  setSelectedSubtopicIds([]);
-                  setIsTestStarted(false);
-                  setIsTestSubmitted(false);
+                  if (currentSubjectKey !== key) {
+                    setCurrentSubjectKey(key);
+                    setCurrentChapterId(null);
+                    setIsTestStarted(false);
+                    setIsTestSubmitted(false);
+                  }
                 }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   isActive
@@ -273,7 +341,7 @@ export default function TestMakerTabContent({
       {!isTestStarted && (
         <div className="space-y-5">
           {/* Controls Bar: Chapter Dropdown + Mode Toggle + Select All */}
-          <div className="p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4">
+          <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               {/* Chapter Selector Dropdown */}
               <div className="flex items-center gap-2 flex-1 min-w-[240px]">
@@ -283,8 +351,14 @@ export default function TestMakerTabContent({
                   <select
                     value={currentChapterId || ''}
                     onChange={(e) => {
-                      setCurrentChapterId(e.target.value);
-                      setSelectedSubtopicIds([]);
+                      const newChId = e.target.value;
+                      setCurrentChapterId(newChId);
+                      const matchCh = availableChapters.find(c => c.id === newChId);
+                      if (matchCh && matchCh.subchapters) {
+                        setSelectedSubtopicIds(matchCh.subchapters.map(s => s.id));
+                      } else {
+                        setSelectedSubtopicIds([]);
+                      }
                     }}
                     className="w-full appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-2xs"
                   >
@@ -298,7 +372,7 @@ export default function TestMakerTabContent({
                 </div>
               </div>
 
-              {/* Mode Toggle: 30 MCQs vs PYQs */}
+              {/* Mode Toggle: MCQs Test vs Curated PYQs */}
               <div className="flex items-center gap-1.5 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0">
                 <button
                   onClick={() => setTestMode('MCQ')}
@@ -308,7 +382,7 @@ export default function TestMakerTabContent({
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
                 >
-                  30 MCQs Test
+                  Interactive MCQ Test
                 </button>
                 <button
                   onClick={() => setTestMode('PYQ')}
@@ -352,15 +426,23 @@ export default function TestMakerTabContent({
                 </div>
               </div>
 
-              {/* Checkboxes Grid */}
+              {/* Robust Checkbox Cards (Single-event, keyboard accessible, non-double-firing) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                 {subchapters.map((sub) => {
                   const isChecked = selectedSubtopicIds.includes(sub.id);
                   return (
-                    <label
+                    <div
                       key={sub.id}
+                      role="button"
+                      tabIndex={0}
                       onClick={() => toggleSubchapter(sub.id)}
-                      className={`flex items-start gap-3 p-3 rounded-xl border text-xs cursor-pointer transition-all ${
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          toggleSubchapter(sub.id);
+                        }
+                      }}
+                      className={`flex items-start gap-3 p-3 rounded-xl border text-xs cursor-pointer select-none transition-all ${
                         isChecked
                           ? 'bg-[var(--accent-primary)]/10 border-[var(--accent-primary)] shadow-xs font-medium text-[var(--text-primary)]'
                           : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)]/50'
@@ -369,10 +451,11 @@ export default function TestMakerTabContent({
                       <input
                         type="checkbox"
                         checked={isChecked}
-                        onChange={() => {}} // Handled by parent label click
-                        className="mt-0.5 w-4 h-4 rounded text-[var(--accent-primary)] focus:ring-[var(--accent-primary)] cursor-pointer"
+                        readOnly
+                        tabIndex={-1}
+                        className="pointer-events-none mt-0.5 w-4 h-4 rounded text-[var(--accent-primary)] focus:ring-[var(--accent-primary)] cursor-pointer"
                       />
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 pointer-events-none">
                         <span className="block font-medium text-[var(--text-primary)] leading-tight">
                           {sub.title}
                         </span>
@@ -380,44 +463,100 @@ export default function TestMakerTabContent({
                           ID: {sub.id}
                         </span>
                       </div>
-                    </label>
+                    </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Difficulty Filter Bar for MCQ Mode */}
+            {/* Test Customization Bar (Question Count + Difficulty + Feedback Mode) */}
             {testMode === 'MCQ' && (
-              <div className="pt-2 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="font-bold text-[var(--text-secondary)]">Difficulty Header:</span>
-                  <span className="text-[var(--text-muted)] text-[11px]">Filter cognitive depth</span>
-                </div>
+              <div className="pt-3 border-t border-[var(--border-subtle)] space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Option 1: Question Count */}
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-bold text-[var(--text-secondary)] block">
+                      Number of Questions:
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      {[10, 15, 20, 30].map(cnt => (
+                        <button
+                          key={cnt}
+                          onClick={() => setQuestionCount(cnt)}
+                          className={`flex-1 py-1 px-2 rounded-lg text-xs font-mono font-bold border transition-all cursor-pointer ${
+                            questionCount === cnt
+                              ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs'
+                              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/50'
+                          }`}
+                        >
+                          {cnt} Qs
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {[
-                    { id: 'ALL', label: 'All Difficulties' },
-                    { id: 'easy', label: 'Easy (NCERT Foundation)', color: 'text-emerald-600 dark:text-emerald-400' },
-                    { id: 'medium', label: 'Medium (Board Standard)', color: 'text-amber-600 dark:text-amber-400' },
-                    { id: 'hard', label: 'Hard (HOTS / Numerical)', color: 'text-rose-600 dark:text-rose-400' }
-                  ].map(lvl => (
-                    <button
-                      key={lvl.id}
-                      onClick={() => setDifficultyFilter(lvl.id)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
-                        difficultyFilter === lvl.id
-                          ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
-                          : `bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] ${lvl.color || ''}`
-                      }`}
-                    >
-                      {lvl.label}
-                    </button>
-                  ))}
+                  {/* Option 2: Difficulty Filter */}
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-bold text-[var(--text-secondary)] block">
+                      Difficulty Level:
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      {[
+                        { id: 'ALL', label: 'All' },
+                        { id: 'easy', label: 'Easy' },
+                        { id: 'medium', label: 'Med' },
+                        { id: 'hard', label: 'Hard' }
+                      ].map(lvl => (
+                        <button
+                          key={lvl.id}
+                          onClick={() => setDifficultyFilter(lvl.id)}
+                          className={`flex-1 py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+                            difficultyFilter === lvl.id
+                              ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
+                              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/50'
+                          }`}
+                        >
+                          {lvl.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Option 3: Instant Feedback vs Exam Mode */}
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-bold text-[var(--text-secondary)] block">
+                      Exam Environment:
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setInstantFeedbackMode(false)}
+                        className={`flex-1 py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+                          !instantFeedbackMode
+                            ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
+                            : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)]'
+                        }`}
+                        title="Real timed board exam simulation"
+                      >
+                        ⏱ Mock Exam
+                      </button>
+                      <button
+                        onClick={() => setInstantFeedbackMode(true)}
+                        className={`flex-1 py-1 px-2 rounded-lg text-xs font-medium border transition-all cursor-pointer ${
+                          instantFeedbackMode
+                            ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
+                            : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)]'
+                        }`}
+                        title="Instant feedback & explanations after each answer"
+                      >
+                        ⚡ Practice
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Action Button: Start Test / View PYQs */}
+            {/* Action Bar: Start Test Button */}
             <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="text-xs text-[var(--text-muted)]">
                 {selectedSubtopicIds.length === 0 ? (
@@ -426,7 +565,7 @@ export default function TestMakerTabContent({
                   </span>
                 ) : (
                   <span>
-                    Ready to generate strictly for <strong className="text-[var(--text-primary)]">{selectedSubtopicIds.length}</strong> selected subchapters.
+                    Ready to generate strictly for <strong className="text-[var(--text-primary)]">{selectedSubtopicIds.length}</strong> selected subchapters ({questionCount} questions • {Math.round(defaultTimerForCount / 60)} min limit).
                   </span>
                 )}
               </div>
@@ -438,11 +577,11 @@ export default function TestMakerTabContent({
                   className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs font-bold font-serif hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   <Play size={14} fill="currentColor" />
-                  <span>Start 30-Question Custom Test</span>
+                  <span>Start {questionCount}-Question Custom Test</span>
                 </button>
               ) : (
                 <div className="text-xs font-bold text-[var(--accent-primary)]">
-                  Scroll down to view Curated PYQs below
+                  Scroll down to view Curated Board PYQs ({generatedPYQs.length} questions)
                 </div>
               )}
             </div>
@@ -491,16 +630,18 @@ export default function TestMakerTabContent({
                           </span>
                         )}
                       </div>
-                      <p className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug">
-                        {pyq.question}
-                      </p>
+                      <p 
+                        className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(pyq.question) }}
+                      />
                       <div className="pt-3 border-t border-[var(--border-subtle)]">
                         <p className="text-xs font-bold text-[var(--accent-primary)] mb-1">
                           Official Marking Scheme Solution:
                         </p>
-                        <pre className="font-sans text-xs text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed bg-[var(--bg-elevated)] p-3 rounded-xl border border-[var(--border-subtle)]">
-                          {pyq.solution}
-                        </pre>
+                        <pre 
+                          className="font-sans text-xs text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed bg-[var(--bg-elevated)] p-3 rounded-xl border border-[var(--border-subtle)]"
+                          dangerouslySetInnerHTML={{ __html: formatMathString(pyq.solution) }}
+                        />
                       </div>
                     </div>
                   ))}
@@ -511,7 +652,7 @@ export default function TestMakerTabContent({
         </div>
       )}
 
-      {/* 3. Live 30-Question MCQ Exam Session */}
+      {/* 3. Live Question MCQ Exam Session */}
       {isTestStarted && !isTestSubmitted && (
         <div className="space-y-4 sm:space-y-6">
           {/* Top Exam Navigation Bar */}
@@ -521,12 +662,17 @@ export default function TestMakerTabContent({
                 Question {currentQIndex + 1} of {generatedMCQs.length}
               </span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[var(--text-muted)]">
-                {Object.keys(userAnswers).length} Answered
+                {Object.keys(userAnswers).length} / {generatedMCQs.length} Answered
               </span>
+              {instantFeedbackMode && (
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                  ⚡ Instant Practice Mode
+                </span>
+              )}
             </div>
 
-            {/* Timer & Controls */}
-            <div className="flex items-center gap-3">
+            {/* Timer, Mode Toggle & Controls */}
+            <div className="flex items-center gap-2.5">
               <div className="flex items-center gap-1.5 font-mono text-xs font-bold px-3 py-1.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--accent-primary)]">
                 <Clock size={14} />
                 <span>{formatTime(timerSeconds)}</span>
@@ -539,7 +685,7 @@ export default function TestMakerTabContent({
                     ? 'bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400'
                     : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)]'
                 }`}
-                title="Flag question for review"
+                title="Flag question for review (Key: F)"
               >
                 <Flag size={14} />
               </button>
@@ -553,19 +699,38 @@ export default function TestMakerTabContent({
             </div>
           </div>
 
-          {/* 1-30 Question Palette (Quick Jump Grid) */}
-          <div className="p-3 sm:p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xs">
-            <div className="flex items-center justify-between mb-2 text-[11px] text-[var(--text-muted)]">
-              <span className="font-bold text-[var(--text-secondary)]">Question Palette (1 - {generatedMCQs.length}):</span>
-              <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-emerald-500"></span> Answered</span>
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-amber-500"></span> Flagged</span>
-                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[var(--bg-elevated)] border border-[var(--border-subtle)]"></span> Unvisited</span>
+          {/* 1-30 Question Palette (Responsive Quick Jump Grid) */}
+          <div className="p-3 sm:p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xs space-y-2.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[var(--text-muted)]">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-[var(--text-secondary)]">Question Palette:</span>
+                {/* Filter Pills */}
+                <div className="flex items-center gap-1">
+                  {['ALL', 'FLAGGED', 'UNANSWERED'].map(f => (
+                    <button
+                      key={f}
+                      onClick={() => setPaletteFilter(f)}
+                      className={`px-2 py-0.5 rounded text-[10px] font-mono transition-colors cursor-pointer ${
+                        paletteFilter === f
+                          ? 'bg-[var(--accent-primary)] text-white font-bold'
+                          : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                      }`}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 text-[10px] font-mono">
+                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-emerald-500"></span> Answered ({Object.keys(userAnswers).length})</span>
+                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-amber-500"></span> Flagged ({flaggedQuestions.size})</span>
+                <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded bg-[var(--bg-elevated)] border border-[var(--border-subtle)]"></span> Unvisited ({generatedMCQs.length - Object.keys(userAnswers).length})</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-10 sm:grid-cols-15 md:grid-cols-30 gap-1 sm:gap-1.5">
-              {generatedMCQs.map((q, idx) => {
+            <div className="flex flex-wrap gap-1.5">
+              {filteredPaletteIndices.map(({ q, idx }) => {
                 const isCurrent = idx === currentQIndex;
                 const isAns = userAnswers[q.id] !== undefined;
                 const isFlag = flaggedQuestions.has(q.id);
@@ -573,13 +738,13 @@ export default function TestMakerTabContent({
                 let btnBg = 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)]';
                 if (isAns) btnBg = 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/60 font-bold';
                 if (isFlag) btnBg = 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/60 font-bold';
-                if (isCurrent) btnBg += ' ring-2 ring-[var(--accent-primary)]';
+                if (isCurrent) btnBg += ' ring-2 ring-[var(--accent-primary)] font-bold';
 
                 return (
                   <button
-                    key={idx}
+                    key={q.id || idx}
                     onClick={() => setCurrentQIndex(idx)}
-                    className={`h-7 rounded-lg border text-xs font-mono transition-all cursor-pointer flex items-center justify-center ${btnBg}`}
+                    className={`h-7 w-7 rounded-lg border text-xs font-mono transition-all cursor-pointer flex items-center justify-center shrink-0 ${btnBg}`}
                   >
                     {idx + 1}
                   </button>
@@ -617,24 +782,38 @@ export default function TestMakerTabContent({
                 </span>
               </div>
 
-              {/* Question Stem */}
-              <p className="font-serif text-base sm:text-xl font-bold text-[var(--text-primary)] leading-snug">
-                {generatedMCQs[currentQIndex].question}
-              </p>
+              {/* Question Stem with formatted typography */}
+              <div 
+                className="font-serif text-base sm:text-xl font-bold text-[var(--text-primary)] leading-snug"
+                dangerouslySetInnerHTML={{ __html: formatMathString(generatedMCQs[currentQIndex].question) }}
+              />
 
               {/* 4 Options */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
                 {generatedMCQs[currentQIndex].options.map((opt, i) => {
-                  const isChosen = userAnswers[generatedMCQs[currentQIndex].id] === i;
+                  const currentQ = generatedMCQs[currentQIndex];
+                  const isChosen = userAnswers[currentQ.id] === i;
+                  const isAnswered = userAnswers[currentQ.id] !== undefined;
+                  const isCorrect = i === currentQ.correct;
+
+                  // Dynamic styles for Practice Mode vs Exam Mode
+                  let cardStyle = 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)]/60';
+                  
+                  if (instantFeedbackMode && isAnswered) {
+                    if (isCorrect) {
+                      cardStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-700 dark:text-emerald-300 font-bold';
+                    } else if (isChosen && !isCorrect) {
+                      cardStyle = 'bg-rose-500/15 border-rose-500 text-rose-700 dark:text-rose-300 font-bold line-through';
+                    }
+                  } else if (isChosen) {
+                    cardStyle = 'bg-[var(--accent-primary)]/15 border-[var(--accent-primary)] font-bold text-[var(--text-primary)] shadow-xs';
+                  }
+
                   return (
                     <button
                       key={i}
-                      onClick={() => handleSelectOption(generatedMCQs[currentQIndex].id, i)}
-                      className={`p-3.5 sm:p-4 rounded-xl border text-left text-xs sm:text-sm transition-all flex items-center justify-between gap-2.5 cursor-pointer ${
-                        isChosen
-                          ? 'bg-[var(--accent-primary)]/15 border-[var(--accent-primary)] font-bold text-[var(--text-primary)] shadow-xs'
-                          : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)]/60'
-                      }`}
+                      onClick={() => handleSelectOption(currentQ.id, i)}
+                      className={`p-3.5 sm:p-4 rounded-xl border text-left text-xs sm:text-sm transition-all flex items-center justify-between gap-2.5 cursor-pointer ${cardStyle}`}
                     >
                       <div className="flex items-start gap-2.5">
                         <span className={`font-mono font-bold text-[11px] px-1.5 py-0.5 rounded border shrink-0 ${
@@ -644,7 +823,10 @@ export default function TestMakerTabContent({
                         }`}>
                           {String.fromCharCode(65 + i)}
                         </span>
-                        <span className="break-words">{opt}</span>
+                        <span 
+                          className="break-words leading-relaxed"
+                          dangerouslySetInnerHTML={{ __html: formatMathString(opt) }}
+                        />
                       </div>
                       {isChosen && (
                         <CheckCircle2 size={16} className="text-[var(--accent-primary)] shrink-0" />
@@ -653,6 +835,20 @@ export default function TestMakerTabContent({
                   );
                 })}
               </div>
+
+              {/* Instant Feedback Explanation (In Practice Mode) */}
+              {instantFeedbackMode && userAnswers[generatedMCQs[currentQIndex].id] !== undefined && (
+                <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] space-y-1 animate-in fade-in">
+                  <div className="flex items-center gap-1.5 font-bold text-[var(--accent-primary)]">
+                    <Zap size={14} className="text-amber-500" />
+                    <span>Instant Solution Insight:</span>
+                  </div>
+                  <div 
+                    className="leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: formatMathString(generatedMCQs[currentQIndex].explanation) }}
+                  />
+                </div>
+              )}
 
               {/* Navigation buttons */}
               <div className="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between gap-3">
@@ -817,9 +1013,10 @@ export default function TestMakerTabContent({
                     </span>
                   </div>
 
-                  <p className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
-                    {q.question}
-                  </p>
+                  <p 
+                    className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug"
+                    dangerouslySetInnerHTML={{ __html: formatMathString(q.question) }}
+                  />
 
                   {/* 4 Options with clear solution tags */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -838,7 +1035,10 @@ export default function TestMakerTabContent({
                         >
                           <div className="flex items-start gap-2">
                             <span className="font-mono font-bold">{String.fromCharCode(65 + i)}.</span>
-                            <span>{opt}</span>
+                            <span 
+                              className="break-words leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: formatMathString(opt) }}
+                            />
                           </div>
                           {i === q.correct && <Check size={14} className="text-emerald-600 shrink-0" />}
                         </div>
@@ -849,7 +1049,7 @@ export default function TestMakerTabContent({
                   {/* Official solution explanation */}
                   <div className="pt-2 border-t border-[var(--border-subtle)] text-xs text-[var(--text-secondary)]">
                     <strong className="text-[var(--accent-primary)] mr-1">Rationale:</strong>
-                    {q.explanation}
+                    <span dangerouslySetInnerHTML={{ __html: formatMathString(q.explanation) }} />
                   </div>
                 </div>
               );
