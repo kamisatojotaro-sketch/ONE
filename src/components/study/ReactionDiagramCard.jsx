@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, ArrowRight, BookOpen, Layers, CheckCircle2, AlertCircle, Info, ChevronDown, ChevronUp, Zap } from 'lucide-react';
+import { Sparkles, ArrowRight, BookOpen, Layers, CheckCircle2, AlertCircle, Info, ChevronDown, ChevronUp, Zap, Scale } from 'lucide-react';
 import { REACTION_DIAGRAMS } from '../../data/reactionDiagramsData';
 
 // Reusable SVG Chemical Structure Drawings
