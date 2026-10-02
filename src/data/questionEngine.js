@@ -2107,16 +2107,16 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
       chapterName: `Ch ${chapter.number}: ${chapter.title}`,
       subtopicId: subchapter.id,
       subtopicName: subchapter.title,
-      subjectId: 'chemistry',
+      subjectId: subjectId || 'chemistry',
       difficulty: q.difficulty || 'medium',
       question: q.question,
       options: q.options,
       correct: q.correct !== undefined ? q.correct : 0,
-      explanation: q.explanation || 'Refer to NCERT Class 12 Chemistry textbook standard theory.'
+      explanation: q.explanation || `Refer to NCERT Class 12 ${subjectId ? subjectId.charAt(0).toUpperCase() + subjectId.slice(1) : 'Chemistry'} textbook standard theory.`
     });
   };
 
-  const genericChemDistractors = SUBJECT_DISTRACTORS.chemistry;
+  const genericChemDistractors = SUBJECT_DISTRACTORS[subjectId] || SUBJECT_DISTRACTORS.chemistry;
   const cbseOptions = [
     'Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
     'Both Assertion and Reason are true, but Reason is NOT the correct explanation of Assertion.',
@@ -2223,12 +2223,15 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
       allDefs.forEach((d, idx) => {
         const otherTerms = allDefs.filter((_, i) => i !== idx).map(x => x.term);
         while (otherTerms.length < 3) {
-          otherTerms.push(['Molarity', 'Molality', 'Mole Fraction', 'Van\'t Hoff factor', 'Henry\'s Law Constant', 'Dipole Moment', 'Racemisation'][otherTerms.length]);
+          const fallbackTerms = subjectId === 'physics' 
+            ? ['Magnetic Flux', 'Induced EMF', 'Mutual Inductance', 'Self Inductance', 'Eddy Currents', 'Magnetic Permeability']
+            : ['Molarity', 'Molality', 'Mole Fraction', 'Van\'t Hoff factor', 'Henry\'s Law Constant', 'Dipole Moment', 'Racemisation'];
+          otherTerms.push(fallbackTerms[otherTerms.length % fallbackTerms.length]);
         }
 
         addQ({
           difficulty: 'easy',
-          question: `Which chemical term/concept is defined as: "${d.definition}"?`,
+          question: `Which scientific term/concept is defined as: "${d.definition}"?`,
           options: [d.term, otherTerms[0], otherTerms[1], otherTerms[2]],
           correct: 0,
           explanation: `Definition: ${d.term} — ${d.definition}`
