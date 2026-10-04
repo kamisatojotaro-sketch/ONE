@@ -1,3 +1,4 @@
+import { useState, useEffect, useMemo } from 'react';
 import { 
   CheckCircle2, Circle, Search, Filter, BookOpen, 
   ChevronDown, ChevronUp, Copy, Check, Sparkles, Award, 
