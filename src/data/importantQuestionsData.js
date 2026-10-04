@@ -15,7 +15,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
     "marksNum": 5,
     "category": "Derivation",
     "frequency": "99% Frequency (Asked in almost every CBSE Board Exam)",
-    "questionPrompt": "(a) State Gauss's law in electrostatics.\n(b) Using Gauss's law, derive an expression for the electric field due to:\n  (i) An infinitely long straight uniformly charged wire of linear charge density λ.\n  (ii) An infinite uniformly charged plane sheet of surface charge density σ.\n  (iii) A thin spherical shell of radius R and surface charge density σ, at points outside (r ≥ R) and inside (r < R) the shell.",
+    "questionPrompt": "(a) State Gauss's law in electrostatics.\n(b) Using Gauss's law, derive an expression for the electric field due to:\n  (i) An infinitely long straight uniformly charged wire of linear charge density λ.\n  (ii) An infinite uniformly charged plane sheet of surface charge density σ.\n  (iii) A thin spherical shell of radius R and surface charge density σ, at points outside (r > R), on the surface of the shell (r = R), and inside (r < R) the shell.",
     "ncertRef": {
       "textbook": "NCERT Physics Class 12, Part 1",
       "chapter": "Chapter 1: Electric Charges and Fields",
@@ -108,30 +108,38 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
         "setup": "Consider a thin spherical shell of radius $R$ carrying total charge $q = 4\\pi R^2 \\sigma$ uniformly distributed on its surface. By spherical symmetry, electric field $\\vec{E}$ is directed radially outward everywhere.",
         "steps": [
           {
-            "text": "Case (i) Outside the Shell ($r \\ge R$): Construct a concentric spherical Gaussian surface of radius $r > R$. Electric flux is:",
-            "equation": "\\oint \\vec{E} \\cdot d\\vec{A} = E(4\\pi r^2)"
+            "text": "Case (i) Outside the Shell ($r > R$): Construct a concentric spherical Gaussian surface of radius $r > R$. Electric flux is:",
+            "equation": "\\oint \\vec{E} \\cdot d\\vec{A} = E \\oint dA = E(4\\pi r^2)"
           },
           {
-            "text": "Since net enclosed charge is $q_{\\text{enclosed}} = q$, applying Gauss's Law gives:",
-            "equation": "E(4\\pi r^2) = \\frac{q}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{outside}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{r^2}"
+            "text": "Since net enclosed charge is $q_{\\text{enclosed}} = q = 4\\pi R^2 \\sigma$, applying Gauss's Law gives:",
+            "equation": "E(4\\pi r^2) = \\frac{q}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{outside}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{r^2} = \\frac{\\sigma R^2}{\\varepsilon_0 r^2}"
           },
           {
-            "text": "Case (ii) Inside the Shell ($r < R$): Construct a concentric spherical Gaussian surface of radius $r < R$. All charge resides on the outer surface, so enclosed charge is zero:",
+            "text": "Case (ii) On the Surface of the Shell ($r = R$): For a point directly on the surface of the shell, $r = R$. The Gaussian sphere has radius $R$, enclosing the entire charge $q = 4\\pi R^2 \\sigma$:",
+            "equation": "E_{\\text{surface}}(4\\pi R^2) = \\frac{q}{\\varepsilon_0} = \\frac{4\\pi R^2 \\sigma}{\\varepsilon_0}"
+          },
+          {
+            "text": "Solving for electric field on the shell surface gives the peak maximum field intensity:",
+            "equation": "E_{\\text{surface}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{R^2} = \\frac{\\sigma}{\\varepsilon_0}"
+          },
+          {
+            "text": "Case (iii) Inside the Shell ($r < R$): Construct a concentric spherical Gaussian surface of radius $r < R$. All free charges reside on the outer surface, so enclosed charge is identically zero:",
             "equation": "q_{\\text{enclosed}} = 0"
           },
           {
-            "text": "Applying Gauss's Law inside the shell:",
-            "equation": "E(4\\pi r^2) = \\frac{0}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{inside}} = 0"
+            "text": "Applying Gauss's Law inside the shell gives zero electric field (electrostatic shielding):",
+            "equation": "E_{\\text{inside}}(4\\pi r^2) = \\frac{0}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{inside}} = 0"
           }
         ],
         "specialCases": [
           {
-            "title": "At the Surface ($r = R$):",
-            "text": "The electric field exhibits a step discontinuity across the surface:",
-            "equation": "E_{\\text{surface}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{R^2} = \\frac{\\sigma}{\\varepsilon_0}"
+            "title": "Field Discontinuity & E vs r Variation:",
+            "text": "The electric field is zero inside (r < R), jumps discontinuously to maximum E_max = σ/ε₀ on the surface (r = R), and decays as 1/r² outside (r > R):",
+            "equation": "E = 0 \\; (r < R), \\quad E_{\\text{max}} = \\frac{\\sigma}{\\varepsilon_0} \\; (r = R), \\quad E \\propto \\frac{1}{r^2} \\; (r > R)"
           }
         ],
-        "finalFormula": "E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}, \\quad E_{\\text{in}} = 0"
+        "finalFormula": "E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}, \\quad E_{\\text{surface}} = \\frac{\\sigma}{\\varepsilon_0} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{R^2}, \\quad E_{\\text{in}} = 0"
       }
     ],
     "diagram": {
@@ -183,7 +191,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       "1 Mark: Statement of Gauss's Law with mathematical formula ∮ E · dA = q_enc/ε₀.",
       "1.5 Marks: Application 1 (Wire): Choice of Gaussian cylinder, flux evaluation showing zero end flux, and final formula E = λ/(2πε₀r).",
       "1.5 Marks: Application 2 (Sheet): Choice of pillbox, evaluation of 2EA = σA/ε₀, and final formula E = σ/(2ε₀).",
-      "1 Mark: Application 3 (Shell): Derivation for r ≥ R (E = kq/r²) and proof that E = 0 for r < R."
+      "1 Mark: Application 3 (Shell): Derivation for points outside r > R (E = kq/r²), on surface r = R (E_max = σ/ε₀ = kq/R²), and proof that E = 0 for r < R."
     ],
     "examinerTips": "Always draw the Gaussian surface and show the area normal vector n̂ and field vector E explicitly with their angle θ. Remember to emphasize that for an infinite plane sheet, the electric field is strictly independent of distance.",
     "modelAnswer": {
@@ -220,13 +228,14 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
           "name": "Application 3: Thin Uniformly Charged Spherical Shell",
           "steps": [
             "Consider a thin spherical shell of radius $R$ carrying total charge $q = 4\\pi R^2 \\sigma$ uniformly distributed on its surface. By spherical symmetry, electric field $\\vec{E}$ is directed radially outward everywhere.",
-            "Case (i) Outside the Shell ($r \\ge R$): Construct a concentric spherical Gaussian surface of radius $r > R$. Electric flux is: \\oint \\vec{E} \\cdot d\\vec{A} = E(4\\pi r^2)",
-            "Since net enclosed charge is $q_{\\text{enclosed}} = q$, applying Gauss's Law gives: E(4\\pi r^2) = \\frac{q}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{outside}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{r^2}",
-            "Case (ii) Inside the Shell ($r < R$): Construct a concentric spherical Gaussian surface of radius $r < R$. All charge resides on the outer surface, so enclosed charge is zero: q_{\\text{enclosed}} = 0",
-            "Applying Gauss's Law inside the shell: E(4\\pi r^2) = \\frac{0}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{inside}} = 0",
-            "At the Surface ($r = R$): The electric field exhibits a step discontinuity across the surface: E_{\\text{surface}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{R^2} = \\frac{\\sigma}{\\varepsilon_0}"
+            "Case (i) Outside the Shell ($r > R$): Construct a concentric spherical Gaussian surface of radius $r > R$. Electric flux is: \\oint \\vec{E} \\cdot d\\vec{A} = E(4\\pi r^2)",
+            "Since net enclosed charge is $q_{\\text{enclosed}} = q = 4\\pi R^2 \\sigma$, applying Gauss's Law gives: E(4\\pi r^2) = \\frac{q}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{outside}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{r^2} = \\frac{\\sigma R^2}{\\varepsilon_0 r^2}",
+            "Case (ii) On the Surface of the Shell ($r = R$): For a point directly on the surface of the shell, $r = R$. The Gaussian sphere has radius $R$, enclosing the entire charge $q = 4\\pi R^2 \\sigma$: E_{\\text{surface}}(4\\pi R^2) = \\frac{q}{\\varepsilon_0} = \\frac{4\\pi R^2 \\sigma}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{surface}} = \\frac{\\sigma}{\\varepsilon_0} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{R^2} \\; (\\text{Maximum field intensity})",
+            "Case (iii) Inside the Shell ($r < R$): Construct a concentric spherical Gaussian surface of radius $r < R$. All free charges reside on the outer surface, so enclosed charge is identically zero: q_{\\text{enclosed}} = 0",
+            "Applying Gauss's Law inside the shell gives zero electric field (electrostatic shielding): E(4\\pi r^2) = \\frac{0}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{inside}} = 0",
+            "Field Discontinuity & Graph: The electric field is strictly 0 inside (r < R), jumps discontinuously to maximum E_max = σ/ε₀ on the surface (r = R), and decays as 1/r² outside (r > R)."
           ],
-          "formula": "E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}, \\quad E_{\\text{in}} = 0"
+          "formula": "E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}, \\quad E_{\\text{surface}} = \\frac{\\sigma}{\\varepsilon_0} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{R^2}, \\quad E_{\\text{in}} = 0"
         }
       ],
       "diagramNotes": "1. Straight Wire: Draw central charged wire with positive signs; draw coaxial cylinder of radius r and length l; draw normal vectors on circular ends (at 90° to E) and curved mantle (parallel to E).\n2. Plane Sheet: Draw vertical plane sheet with uniform positive charges; draw cylindrical pillbox puncturing perpendicularly with circular end-caps on both sides; draw field vectors E pointing away on both sides.\n3. Spherical Shell: Draw shell of radius R; draw outer Gaussian sphere r > R and inner Gaussian sphere r < R; plot the classic E versus r curve showing E = 0 for r < R, jumping to maximum at r = R, and decaying as 1/r² for r > R.",
@@ -234,7 +243,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
         "1 Mark: Statement of Gauss's Law with mathematical formula ∮ E · dA = q_enc/ε₀.",
         "1.5 Marks: Application 1 (Wire): Choice of Gaussian cylinder, flux evaluation showing zero end flux, and final formula E = λ/(2πε₀r).",
         "1.5 Marks: Application 2 (Sheet): Choice of pillbox, evaluation of 2EA = σA/ε₀, and final formula E = σ/(2ε₀).",
-        "1 Mark: Application 3 (Shell): Derivation for r ≥ R (E = kq/r²) and proof that E = 0 for r < R."
+        "1 Mark: Application 3 (Shell): Derivation for outside r > R (E = kq/r²), on surface r = R (E_max = σ/ε₀), and proof that E = 0 for r < R."
       ],
       "examinerTips": "Always draw the Gaussian surface and show the area normal vector n̂ and field vector E explicitly with their angle θ. Remember to emphasize that for an infinite plane sheet, the electric field is strictly independent of distance."
     }

@@ -187,6 +187,31 @@ export default function Physics4PartSectionView({
                       ))}
                     </div>
                   )}
+                  {d.specialCases && d.specialCases.length > 0 && (
+                    <div className="space-y-2 pt-1">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)] block">
+                        Special Cases &amp; Graph Variation:
+                      </span>
+                      <div className="grid grid-cols-1 gap-2">
+                        {d.specialCases.map((sc, scIdx) => (
+                          <div key={scIdx} className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
+                            <span className="text-xs font-serif font-bold text-[var(--text-primary)] block">
+                              {sc.title}
+                            </span>
+                            <div 
+                              className="font-sans text-xs text-[var(--text-secondary)] leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: formatMathString(sc.text) }}
+                            />
+                            {sc.equation && (
+                              <div className="py-1 px-2.5 rounded-lg bg-[var(--bg-base)] border border-[var(--border-subtle)] overflow-x-auto text-center scrollbar-none">
+                                <FormattedLatex content={`$$${sc.equation}$$`} />
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   {d.finalFormula && (
                     <div className="p-3.5 rounded-xl bg-emerald-500/10 border-2 border-emerald-500/40 text-center space-y-1">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-700 dark:text-emerald-300 font-bold block">

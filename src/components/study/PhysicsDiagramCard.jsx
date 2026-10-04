@@ -189,31 +189,38 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
           </svg>
         </div>
 
-        <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+        <div className="w-full lg:w-1/2 space-y-2 text-xs">
           <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
-            <div className="font-bold text-rose-400 mb-1 flex items-center gap-1.5">
+            <div className="font-bold text-blue-400 mb-1 flex items-center gap-1.5">
               <CheckCircle2 size={13} />
-              <span>Case 1: Inside the Shell (r &lt; R)</span>
-            </div>
-            <p className="text-[var(--text-secondary)]">
-              All charge resides entirely on the outer shell: q_enclosed = 0.
-              <span className="block font-mono text-[11px] text-rose-400 font-bold mt-0.5">E_in · (4πr²) = 0 / ε₀ ⟹ E_in = 0</span>
-            </p>
-          </div>
-
-          <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
-            <div className="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
-              <CheckCircle2 size={13} />
-              <span>Case 2: Outside the Shell (r ≥ R)</span>
+              <span>Case 1: Outside the Shell (r &gt; R)</span>
             </div>
             <p className="text-[var(--text-secondary)]">
               Total charge q is enclosed within Gaussian sphere of radius r:
-              <span className="block font-mono text-[11px] text-emerald-400 font-bold mt-0.5">E_out = (1 / 4πε₀) · (q / r²)</span>
+              <span className="block font-mono text-[11px] text-blue-400 font-bold mt-0.5">E_out = (1 / 4πε₀) · (q / r²) = (σR²) / (ε₀r²)</span>
             </p>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-center font-bold">
-            Surface (r = R): E_max = q / (4πε₀R²) = σ / ε₀
+          <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30">
+            <div className="font-bold text-amber-500 dark:text-amber-400 mb-1 flex items-center gap-1.5">
+              <CheckCircle2 size={13} />
+              <span>Case 2: On the Surface of the Shell (r = R)</span>
+            </div>
+            <p className="text-[var(--text-secondary)]">
+              Field point lies directly on shell surface, enclosing full charge q = 4πR²σ:
+              <span className="block font-mono text-[11px] text-amber-500 dark:text-amber-400 font-bold mt-0.5">E_surface = q / (4πε₀R²) = σ / ε₀ (Maximum)</span>
+            </p>
+          </div>
+
+          <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+            <div className="font-bold text-rose-400 mb-1 flex items-center gap-1.5">
+              <CheckCircle2 size={13} />
+              <span>Case 3: Inside the Shell (r &lt; R)</span>
+            </div>
+            <p className="text-[var(--text-secondary)]">
+              All charge resides strictly on outer surface: q_enclosed = 0.
+              <span className="block font-mono text-[11px] text-rose-400 font-bold mt-0.5">E_in · (4πr²) = 0 / ε₀ ⟹ E_in = 0 (Shielding)</span>
+            </p>
           </div>
         </div>
       </div>
