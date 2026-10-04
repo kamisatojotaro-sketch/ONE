@@ -2,10 +2,12 @@ import { useState, useEffect, useMemo } from 'react';
 import { 
   CheckCircle2, Circle, Search, Filter, BookOpen, 
   ChevronDown, ChevronUp, Copy, Check, Sparkles, Award, 
-  ExternalLink, AlertTriangle, Layers, Zap, Bookmark, FileText
+  ExternalLink, AlertTriangle, Layers, Zap, Bookmark, FileText,
+  HelpCircle, AlignLeft
 } from 'lucide-react';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
+import { FormattedLatex, MathBlock } from './LatexView';
 
 const STORAGE_KEY_MASTERED = 'one_mastered_imp_physics_q';
 
@@ -120,13 +122,66 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
   };
 
   const handleCopyAnswer = (q) => {
-    const textToCopy = `Question ${q.number}: ${q.title} (${q.marks})\n\n` +
-      (q.ncertRef ? `NCERT REFERENCE: ${q.ncertRef.textbook} - ${q.ncertRef.section} (${q.ncertRef.equations || ''})\n\n` : '') +
-      `QUESTION:\n${q.questionPrompt}\n\n` +
-      `STATEMENT:\n${q.modelAnswer.statement}\n\n` +
-      `DERIVATION & KEY FORMULAS:\n` +
-      q.modelAnswer.derivations.map(d => `${d.name}\n${d.steps.join('\n')}\nFormula: ${d.formula}`).join('\n\n') +
-      `\n\nEXAMINER TIPS:\n${q.modelAnswer.examinerTips}`;
+    let textToCopy = `Question ${q.number}: ${q.title} (${q.marks})\n`;
+    textToCopy += `Unit: ${q.unit} | Chapter: ${q.chapterTitle}\n\n`;
+
+    if (q.ncertRef) {
+      textToCopy += `NCERT Reference: ${q.ncertRef.textbook} - ${q.ncertRef.section}\n\n`;
+    }
+
+    textToCopy += `EXAM QUESTION:\n${q.questionPrompt}\n\n`;
+
+    textToCopy += `PART 1: THEORY & PHYSICAL MECHANISM\n`;
+    if (q.theory && q.theory.length > 0) {
+      textToCopy += q.theory.map(t => `• ${t}`).join('\n') + '\n\n';
+    } else {
+      textToCopy += `${q.modelAnswer?.statement}\n\n`;
+    }
+
+    if (q.derivations && q.derivations.length > 0) {
+      textToCopy += `PART 2: STEP-BY-STEP MATHEMATICAL DERIVATIONS\n`;
+      textToCopy += q.derivations.map(d => {
+        let dText = `[${d.name}]\n`;
+        if (d.setup) dText += `Setup: ${d.setup}\n`;
+        if (d.steps) {
+          dText += d.steps.map(s => {
+            if (typeof s === 'object' && s !== null) {
+              return `${s.text || ''} ${s.equation ? '=> ' + s.equation : ''}`.trim();
+            }
+            return String(s);
+          }).join('\n') + '\n';
+        }
+        if (d.specialCases && d.specialCases.length > 0) {
+          dText += `Special Cases:\n` + d.specialCases.map(sc => `${sc.title}: ${sc.text} ${sc.equation || ''}`).join('\n') + '\n';
+        }
+        if (d.finalFormula) dText += `Final Formula: ${d.finalFormula}\n`;
+        return dText;
+      }).join('\n') + '\n';
+    }
+
+    if (q.diagram?.examDrawingGuide && q.diagram.examDrawingGuide.length > 0) {
+      textToCopy += `PART 3: DIAGRAM & EXAM DRAWING GUIDE\n`;
+      textToCopy += q.diagram.examDrawingGuide.map(g => `• ${g}`).join('\n') + '\n\n';
+    }
+
+    if (q.keyPointsAndKeywords && q.keyPointsAndKeywords.length > 0) {
+      textToCopy += `PART 4: HIGH-YIELD KEY POINTS & KEYWORDS\n`;
+      textToCopy += q.keyPointsAndKeywords.map(k => `• ${k}`).join('\n') + '\n\n';
+    }
+
+    if (q.termsGlossary && q.termsGlossary.length > 0) {
+      textToCopy += `GLOSSARY OF SYMBOLS & TERMS\n`;
+      textToCopy += q.termsGlossary.map(t => `${t.term} (${t.symbol}): ${t.definition}`).join('\n') + '\n\n';
+    }
+
+    if (q.modelAnswer?.markingScheme && q.modelAnswer.markingScheme.length > 0) {
+      textToCopy += `CBSE MARKING SCHEME BREAKDOWN:\n`;
+      textToCopy += q.modelAnswer.markingScheme.map(m => `• ${m}`).join('\n') + '\n\n';
+    }
+
+    if (q.modelAnswer?.examinerTips) {
+      textToCopy += `EXAMINER TIPS & COMMON PITFALLS:\n${q.modelAnswer.examinerTips}\n`;
+    }
 
     navigator.clipboard?.writeText(textToCopy);
     setCopiedId(q.id);
@@ -513,135 +568,272 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                       </div>
                     )}
 
-                    {/* 1. Principle / Definition */}
-                    <div className="space-y-1.5">
-                      <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent-primary)] flex items-center gap-1.5">
-                        <Sparkles size={13} />
-                        1. Definition / Principle Statement (Exam Answer Key)
-                      </h4>
-                      <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-line">
-                        {q.modelAnswer.statement}
+                    {/* PART 1: Theory */}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30">
+                          Part 1
+                        </span>
+                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent-primary)]">
+                          Theory &amp; Physical Mechanism
+                        </h4>
+                      </div>
+                      <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2.5">
+                        {q.theory && q.theory.length > 0 ? (
+                          q.theory.map((pt, ptIdx) => (
+                            <div key={ptIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] mt-2 shrink-0" />
+                              <FormattedLatex content={pt} />
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-line">
+                            {q.modelAnswer?.statement}
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Interactive Visual Physics Derivation Diagram (if available) */}
-                    {DIAGRAM_MAPPING[q.id] && (
-                      <div className="space-y-2">
-                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
-                          <Layers size={13} />
-                          Interactive Schematic &amp; Derivation Diagram
-                        </h4>
-                        <PhysicsDiagramCard diagramId={DIAGRAM_MAPPING[q.id]} />
+                    {/* PART 2: Step-by-Step Derivations */}
+                    {q.derivations && q.derivations.length > 0 && (
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                            Part 2
+                          </span>
+                          <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                            Step-by-Step Mathematical Derivations &amp; Proofs
+                          </h4>
+                        </div>
+
+                        <div className="space-y-4">
+                          {q.derivations.map((d, dIdx) => {
+                            const derivDiag = getDerivationDiagram(q.id, dIdx);
+                            const diagKey = `${q.id}-${dIdx}`;
+                            const isDiagOpen = derivationDiagramOpen[diagKey] !== false;
+
+                            return (
+                              <div key={dIdx} className="p-4 sm:p-5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-3.5">
+                                <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)]/60 pb-2.5">
+                                  <h5 className="text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400 tracking-wide">
+                                    • {d.name}
+                                  </h5>
+
+                                  {derivDiag && (
+                                    <button
+                                      onClick={() => setDerivationDiagramOpen(prev => ({
+                                        ...prev,
+                                        [diagKey]: prev[diagKey] === false ? true : false
+                                      }))}
+                                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30 transition-colors cursor-pointer touch-manipulation"
+                                      title={isDiagOpen ? "Hide visual diagram" : "Show visual diagram"}
+                                    >
+                                      <Layers size={12} />
+                                      <span>{isDiagOpen ? 'Hide Diagram' : 'View Diagram'}</span>
+                                    </button>
+                                  )}
+                                </div>
+
+                                {/* Narrative setup matching the textbook screenshot */}
+                                {d.setup && (
+                                  <div className="text-xs sm:text-sm text-[var(--text-secondary)] italic leading-relaxed pl-2 border-l-2 border-emerald-500/50">
+                                    <FormattedLatex content={d.setup} />
+                                  </div>
+                                )}
+
+                                {/* Steps formatted with KaTeX math blocks and connecting sentences */}
+                                <div className="space-y-3 pt-1">
+                                  {d.steps && d.steps.map((step, sIdx) => {
+                                    const isObj = typeof step === 'object' && step !== null;
+                                    const stepText = isObj ? step.text : step;
+                                    const stepEq = isObj ? step.equation : null;
+
+                                    return (
+                                      <div key={sIdx} className="space-y-1.5 text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">
+                                        {stepText && (
+                                          <div className="text-[var(--text-secondary)]">
+                                            <FormattedLatex content={stepText} />
+                                          </div>
+                                        )}
+                                        {stepEq && (
+                                          <div className="p-2 sm:p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] overflow-x-auto scrollbar-none my-1.5 shadow-2xs">
+                                            <MathBlock math={stepEq} display={true} className="text-[var(--text-primary)]" />
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+
+                                {/* Embedded Visual Diagram right inside this derivation */}
+                                {derivDiag && isDiagOpen && (
+                                  <div className="pt-2">
+                                    <div className="text-[11px] font-bold text-[var(--text-muted)] mb-1.5 flex items-center gap-1.5 uppercase tracking-wide">
+                                      <Layers size={12} className="text-purple-400" />
+                                      <span>Labelled Derivation Schematic ({derivDiag.title})</span>
+                                    </div>
+                                    <PhysicsDiagramCard 
+                                      diagramId={derivDiag.diagramId} 
+                                      subMode={derivDiag.subMode} 
+                                      inline={true} 
+                                    />
+                                  </div>
+                                )}
+
+                                {/* Special Cases & Critical Conditions */}
+                                {d.specialCases && d.specialCases.length > 0 && (
+                                  <div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-2 mt-2">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-amber-500 block">
+                                      Special Cases &amp; Critical Conditions:
+                                    </span>
+                                    {d.specialCases.map((sc, scIdx) => (
+                                      <div key={scIdx} className="space-y-1 text-xs text-[var(--text-secondary)]">
+                                        <div className="font-semibold text-[var(--text-primary)]">{sc.title}</div>
+                                        {sc.text && <FormattedLatex content={sc.text} />}
+                                        {sc.equation && (
+                                          <div className="py-1">
+                                            <MathBlock math={sc.equation} display={true} />
+                                          </div>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+
+                                {/* Final Boxed Result Formula */}
+                                {d.finalFormula && (
+                                  <div className="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-emerald-500/40 text-center space-y-1 shadow-xs">
+                                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 block">
+                                      Final Boxed Result
+                                    </span>
+                                    <MathBlock math={d.finalFormula} display={true} className="text-emerald-600 dark:text-emerald-400 font-bold" />
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
 
-                    {/* 2. Step-by-Step Derivation & Formulas */}
-                    <div className="space-y-3">
-                      <h4 className="text-xs font-extrabold uppercase tracking-wider text-blue-500 dark:text-blue-400 flex items-center gap-1.5">
-                        <Zap size={13} />
-                        2. Step-by-Step Mathematical Derivations & Proofs
-                      </h4>
-                      
-                      <div className="space-y-4">
-                        {q.modelAnswer.derivations.map((d, dIdx) => {
-                          const derivDiag = getDerivationDiagram(q.id, dIdx);
-                          const diagKey = `${q.id}-${dIdx}`;
-                          const isDiagOpen = derivationDiagramOpen[diagKey] !== false;
+                    {/* PART 3: Diagram & Exam Drawing Guide */}
+                    {(DIAGRAM_MAPPING[q.id] || q.diagram?.hasDiagram) && (
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-purple-500/15 text-purple-600 dark:text-purple-400 border border-purple-500/30">
+                            Part 3
+                          </span>
+                          <h4 className="text-xs font-extrabold uppercase tracking-wider text-purple-400">
+                            Diagram &amp; CBSE Exam Drawing Guide
+                          </h4>
+                        </div>
 
-                          return (
-                            <div key={dIdx} className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-3">
-                              <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)]/60 pb-2">
-                                <h5 className="text-xs sm:text-sm font-bold text-blue-400 tracking-wide">
-                                  • {d.name}
-                                </h5>
+                        {/* Interactive Visual Schematic Card */}
+                        {DIAGRAM_MAPPING[q.id] && (
+                          <PhysicsDiagramCard diagramId={DIAGRAM_MAPPING[q.id]} />
+                        )}
 
-                                {derivDiag && (
-                                  <button
-                                    onClick={() => setDerivationDiagramOpen(prev => ({
-                                      ...prev,
-                                      [diagKey]: prev[diagKey] === false ? true : false
-                                    }))}
-                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30 transition-colors cursor-pointer touch-manipulation"
-                                    title={isDiagOpen ? "Hide visual diagram" : "Show visual diagram"}
-                                  >
-                                    <Layers size={12} />
-                                    <span>{isDiagOpen ? 'Hide Diagram' : 'View Diagram'}</span>
-                                  </button>
-                                )}
+                        {/* Drawing Checklist */}
+                        {q.diagram?.examDrawingGuide && q.diagram.examDrawingGuide.length > 0 && (
+                          <div className="p-3.5 sm:p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-2">
+                            <span className="text-xs font-extrabold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
+                              <Layers size={13} />
+                              CBSE Board Exam Drawing &amp; Labeling Guidelines:
+                            </span>
+                            <ul className="space-y-1.5 text-xs text-[var(--text-secondary)] leading-relaxed pl-1">
+                              {q.diagram.examDrawingGuide.map((guide, gIdx) => (
+                                <li key={gIdx} className="flex items-start gap-2">
+                                  <span className="text-purple-400 font-bold">•</span>
+                                  <FormattedLatex content={guide} />
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* PART 4: Key Points & Keywords */}
+                    {q.keyPointsAndKeywords && q.keyPointsAndKeywords.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                            Part 4
+                          </span>
+                          <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-500 dark:text-amber-400">
+                            High-Yield Key Points &amp; Examiner Keywords
+                          </h4>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                          <div className="flex flex-wrap gap-2">
+                            {q.keyPointsAndKeywords.map((kw, kwIdx) => (
+                              <span
+                                key={kwIdx}
+                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-primary)] shadow-2xs"
+                              >
+                                {kw}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* GLOSSARY OF SYMBOLS & TERMS */}
+                    {q.termsGlossary && q.termsGlossary.length > 0 && (
+                      <div className="space-y-2">
+                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
+                          <Bookmark size={13} />
+                          Glossary of Symbols &amp; Physical Terms
+                        </h4>
+                        <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2.5">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {q.termsGlossary.map((term, tIdx) => (
+                              <div key={tIdx} className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1">
+                                <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)]/50 pb-1">
+                                  <span className="font-bold text-xs text-[var(--text-primary)]">
+                                    {term.term}
+                                  </span>
+                                  <span className="px-1.5 py-0.5 rounded bg-[var(--bg-elevated)] text-[11px] font-mono text-[var(--accent-primary)] font-semibold">
+                                    <MathBlock math={term.symbol} display={false} />
+                                  </span>
+                                </div>
+                                <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+                                  <FormattedLatex content={term.definition} />
+                                </p>
                               </div>
-                              
-                              <ul className="space-y-1.5 text-xs text-[var(--text-secondary)] leading-relaxed pl-1">
-                                {d.steps.map((step, sIdx) => (
-                                  <li key={sIdx} className="flex items-start gap-2">
-                                    <span className="text-[var(--text-muted)] font-mono shrink-0">[{sIdx + 1}]</span>
-                                    <span>{step}</span>
-                                  </li>
-                                ))}
-                              </ul>
-
-                              {/* Embedded Visual Physics Diagram right inside this derivation */}
-                              {derivDiag && isDiagOpen && (
-                                <div className="pt-2">
-                                  <div className="text-[11px] font-bold text-[var(--text-muted)] mb-1.5 flex items-center gap-1.5 uppercase tracking-wide">
-                                    <Layers size={12} className="text-purple-400" />
-                                    <span>Labelled Derivation Schematic ({derivDiag.title})</span>
-                                  </div>
-                                  <PhysicsDiagramCard 
-                                    diagramId={derivDiag.diagramId} 
-                                    subMode={derivDiag.subMode} 
-                                    inline={true} 
-                                  />
-                                </div>
-                              )}
-
-                              {d.formula && (
-                                <div className="mt-2 p-2.5 rounded-lg bg-[var(--bg-surface)] border border-blue-500/30 text-blue-500 dark:text-blue-400 font-mono text-xs font-bold text-center">
-                                  {d.formula}
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    )}
 
-                    {/* 3. Schematic Diagram & CBSE Marking Scheme */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Diagram Guidance */}
-                      <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
-                          <Layers size={13} />
-                          Schematic Diagram Guidance
-                        </h4>
-                        <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                          {q.modelAnswer.diagramNotes}
-                        </p>
+                    {/* Marking Scheme Breakdown */}
+                    {q.modelAnswer?.markingScheme && q.modelAnswer.markingScheme.length > 0 && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
+                          <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                            <Award size={13} />
+                            CBSE Marking Scheme Breakdown
+                          </h4>
+                          <ul className="space-y-1 text-xs text-[var(--text-secondary)] leading-snug">
+                            {q.modelAnswer.markingScheme.map((mark, mIdx) => (
+                              <li key={mIdx}>• {mark}</li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
+                          <h4 className="text-xs font-extrabold text-amber-500 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <AlertTriangle size={13} />
+                            Examiner's Warning &amp; Common Mistakes
+                          </h4>
+                          <p className="text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
+                            {q.modelAnswer.examinerTips}
+                          </p>
+                        </div>
                       </div>
-
-                      {/* Marking Scheme */}
-                      <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                          <Award size={13} />
-                          CBSE Marking Scheme Breakdown
-                        </h4>
-                        <ul className="space-y-1 text-xs text-[var(--text-secondary)] leading-snug">
-                          {q.modelAnswer.markingScheme.map((mark, mIdx) => (
-                            <li key={mIdx}>• {mark}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    {/* 4. Common Exam Pitfalls & Oswaal Tips */}
-                    <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
-                      <h4 className="text-xs font-extrabold text-amber-500 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <AlertTriangle size={13} />
-                        Examiner's Warning & Common Mistakes
-                      </h4>
-                      <p className="text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
-                        {q.modelAnswer.examinerTips}
-                      </p>
-                    </div>
+                    )}
 
                     {/* Toggle Mastered Button at bottom */}
                     <div className="pt-2 flex items-center justify-between border-t border-[var(--border-subtle)]">

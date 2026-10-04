@@ -1,4 +1,5 @@
 import { Sparkles, BookOpen } from 'lucide-react';
+import { FormattedLatex } from './LatexView';
 
 // Curated dictionary of specific formulas and their exact, relevant variables
 const FORMULA_METADATA = {
@@ -406,10 +407,16 @@ export default function FormulaCard({ formulaList, derivations }) {
             <BookOpen size={14} />
             <span>Derivation Steps & Mathematical Notes</span>
           </div>
-          <div
-            className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)] break-words"
-            dangerouslySetInnerHTML={{ __html: formatMathString(derivations) }}
-          />
+          {derivations.includes('$') || derivations.includes('\\') ? (
+            <div className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)] break-words">
+              <FormattedLatex content={derivations} />
+            </div>
+          ) : (
+            <div
+              className="font-sans text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)] break-words"
+              dangerouslySetInnerHTML={{ __html: formatMathString(derivations) }}
+            />
+          )}
         </div>
       )}
     </div>

@@ -1,1235 +1,3560 @@
 // Top 22 Guaranteed CBSE Class 12 Physics Board Exam Questions
-// Rigorous Step-by-Step Derivations with Exact NCERT Textbook References
+// Rigorous Step-by-Step Derivations with Exact NCERT and NODIA References
+// Formatted into 4 Distinct Parts: 1. Theory, 2. Derivations, 3. Diagram, 4. Key Points & Terms Glossary
 
 export const IMPORTANT_PHYSICS_QUESTIONS = [
   {
-    id: 'imp-phy-1',
-    number: 1,
-    title: "Gauss's Law & Applications: Plane Sheet, Straight Wire & Spherical Shell",
-    shortLabel: "Gauss's Law (Plane, Wire, Shell)",
-    chapterId: 'phy-ch-1',
-    chapterTitle: 'Electric Charges and Fields',
-    unit: 'Electrostatics',
-    marks: '5 Marks',
-    marksNum: 5,
-    category: 'Derivation',
-    frequency: '99% Frequency (Asked in almost every CBSE Board Exam)',
-    questionPrompt: "(a) State Gauss's law in electrostatics.\n(b) Using Gauss's law, derive an expression for the electric field due to:\n  (i) An infinitely long straight uniformly charged wire of linear charge density λ.\n  (ii) An infinite uniformly charged plane sheet of surface charge density σ.\n  (iii) A thin spherical shell of radius R and surface charge density σ, at points outside (r ≥ R) and inside (r < R) the shell.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 1: Electric Charges and Fields',
-      section: 'Sections 1.14 & 1.15 (pp. 33–40)',
-      equations: 'Eqs. (1.31), (1.32), (1.33), (1.35), (1.36)',
-      figures: 'Figs. 1.29, 1.30, 1.31',
-      summary: 'Gauss\'s flux theorem and rigorous field derivations for cylindrical symmetry (wire), planar symmetry (sheet), and spherical symmetry (shell).'
+    "id": "imp-phy-1",
+    "number": 1,
+    "title": "Gauss's Law & Applications: Plane Sheet, Straight Wire & Spherical Shell",
+    "shortLabel": "Gauss's Law (Plane, Wire, Shell)",
+    "chapterId": "phy-ch-1",
+    "chapterTitle": "Electric Charges and Fields",
+    "unit": "Electrostatics",
+    "marks": "5 Marks",
+    "marksNum": 5,
+    "category": "Derivation",
+    "frequency": "99% Frequency (Asked in almost every CBSE Board Exam)",
+    "questionPrompt": "(a) State Gauss's law in electrostatics.\n(b) Using Gauss's law, derive an expression for the electric field due to:\n  (i) An infinitely long straight uniformly charged wire of linear charge density λ.\n  (ii) An infinite uniformly charged plane sheet of surface charge density σ.\n  (iii) A thin spherical shell of radius R and surface charge density σ, at points outside (r ≥ R) and inside (r < R) the shell.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 1: Electric Charges and Fields",
+      "section": "Sections 1.14 & 1.15 (pp. 33–40)",
+      "equations": "Eqs. (1.31), (1.32), (1.33), (1.35), (1.36)",
+      "figures": "Figs. 1.29, 1.30, 1.31",
+      "summary": "Gauss flux theorem and field derivations for cylindrical symmetry (wire), planar symmetry (sheet), and spherical symmetry (shell)."
     },
-    modelAnswer: {
-      statement: "Gauss's Law: The total electric flux Φ_E through any closed Gaussian surface in free space is equal to 1/ε₀ times the net charge q_enclosed enclosed by that surface:\n∮ E⃗ · dA⃗ = q_enclosed / ε₀",
-      derivations: [
+    "theory": [
+      "Gauss's Law states that the total electric flux $\\Phi_E$ through any closed Gaussian surface in free space is equal to $\\frac{1}{\\varepsilon_0}$ times the net electric charge $q_{\\text{enclosed}}$ enclosed by that surface: $$\\oint \\vec{E} \\cdot d\\vec{A} = \\frac{q_{\\text{enclosed}}}{\\varepsilon_0}$$",
+      "Electric flux is independent of the size, radius, or geometric shape of the Gaussian surface chosen.",
+      "If a Gaussian surface encloses zero net charge ($q_{\\text{enclosed}} = 0$), the net outward electric flux through the surface is strictly zero.",
+      "Charges lying outside the closed Gaussian surface do not contribute to the net flux, because every field line entering the surface exits it."
+    ],
+    "derivations": [
+      {
+        "name": "Application 1: Infinitely Long Uniformly Charged Wire",
+        "setup": "Consider an infinitely long, thin straight wire carrying a uniform linear charge density $\\lambda$. By cylindrical symmetry, the electric field $\\vec{E}$ is directed radially outward everywhere perpendicular to the wire, and its magnitude depends only on radial distance $r$. Construct a closed coaxial cylindrical Gaussian surface of radius $r$ and length $l$ around the wire.",
+        "steps": [
+          {
+            "text": "Total electric flux through the Gaussian surface decomposes into three parts (two flat circular end-caps $S_1, S_2$ and one curved cylindrical mantle $S_3$):",
+            "equation": "\\oint \\vec{E} \\cdot d\\vec{A} = \\int_{S_1} \\vec{E} \\cdot d\\vec{A} + \\int_{S_2} \\vec{E} \\cdot d\\vec{A} + \\int_{S_3} \\vec{E} \\cdot d\\vec{A}"
+          },
+          {
+            "text": "On the two flat circular ends $S_1$ and $S_2$, field $\\vec{E}$ is perpendicular to area normal $d\\vec{A}$ ($\\theta = 90^\\circ$):",
+            "equation": "\\int_{S_1} E \\, dA \\cos 90^\\circ = 0, \\quad \\int_{S_2} E \\, dA \\cos 90^\\circ = 0"
+          },
+          {
+            "text": "On the curved cylindrical surface $S_3$, $\\vec{E}$ is parallel to outward area normal $d\\vec{A}$ ($\\theta = 0^\\circ$) at every point:",
+            "equation": "\\int_{S_3} \\vec{E} \\cdot d\\vec{A} = E \\int_{S_3} dA = E(2\\pi r l)"
+          },
+          {
+            "text": "The net charge enclosed within the Gaussian cylinder of length $l$ is:",
+            "equation": "q_{\\text{enclosed}} = \\lambda \\cdot l"
+          },
+          {
+            "text": "Applying Gauss's Law:",
+            "equation": "E(2\\pi r l) = \\frac{\\lambda l}{\\varepsilon_0}"
+          },
+          {
+            "text": "Hence, the electric field at distance $r$ from the wire is:",
+            "equation": "E = \\frac{\\lambda}{2\\pi \\varepsilon_0 r} \\quad \\implies \\quad \\vec{E} = \\frac{\\lambda}{2\\pi \\varepsilon_0 r}\\hat{r}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Variation with Distance:",
+            "text": "The electric field is inversely proportional to distance $r$:",
+            "equation": "E \\propto \\frac{1}{r}"
+          }
+        ],
+        "finalFormula": "E = \\frac{\\lambda}{2\\pi \\varepsilon_0 r}"
+      },
+      {
+        "name": "Application 2: Infinite Uniformly Charged Plane Sheet",
+        "setup": "Consider an infinite thin plane sheet carrying uniform surface charge density $\\sigma$. By planar symmetry, the electric field $\\vec{E}$ is directed perpendicular to the sheet on both sides, with magnitude independent of position along the sheet. Construct a cylindrical pillbox of cross-sectional area $A$ extending symmetrically distance $r$ on both sides of the sheet.",
+        "steps": [
+          {
+            "text": "On the curved cylindrical surface of the pillbox, $\\vec{E}$ is parallel to the sheet while $d\\vec{A}$ is perpendicular ($\\theta = 90^\\circ$), so flux through the curved surface is zero:",
+            "equation": "\\Phi_{\\text{curved}} = 0"
+          },
+          {
+            "text": "On both flat circular end-caps, $\\vec{E}$ is parallel to area vector $d\\vec{A}$ ($\\theta = 0^\\circ$). Flux through each end-cap is $E \\cdot A$:",
+            "equation": "\\Phi_{\\text{total}} = E A + E A = 2 E A"
+          },
+          {
+            "text": "Net charge enclosed inside cross-sectional area $A$ of the sheet:",
+            "equation": "q_{\\text{enclosed}} = \\sigma \\cdot A"
+          },
+          {
+            "text": "Applying Gauss's Law:",
+            "equation": "2 E A = \\frac{\\sigma A}{\\varepsilon_0}"
+          },
+          {
+            "text": "Hence, the electric field due to an infinite plane sheet is:",
+            "equation": "E = \\frac{\\sigma}{2\\varepsilon_0} \\quad \\implies \\quad \\vec{E} = \\frac{\\sigma}{2\\varepsilon_0}\\hat{n}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Distance Independence:",
+            "text": "The field is completely uniform and independent of distance $r$ from the sheet:",
+            "equation": "E = \\text{constant} \\quad (\\text{for all } r)"
+          }
+        ],
+        "finalFormula": "E = \\frac{\\sigma}{2\\varepsilon_0}"
+      },
+      {
+        "name": "Application 3: Thin Uniformly Charged Spherical Shell",
+        "setup": "Consider a thin spherical shell of radius $R$ carrying total charge $q = 4\\pi R^2 \\sigma$ uniformly distributed on its surface. By spherical symmetry, electric field $\\vec{E}$ is directed radially outward everywhere.",
+        "steps": [
+          {
+            "text": "Case (i) Outside the Shell ($r \\ge R$): Construct a concentric spherical Gaussian surface of radius $r > R$. Electric flux is:",
+            "equation": "\\oint \\vec{E} \\cdot d\\vec{A} = E(4\\pi r^2)"
+          },
+          {
+            "text": "Since net enclosed charge is $q_{\\text{enclosed}} = q$, applying Gauss's Law gives:",
+            "equation": "E(4\\pi r^2) = \\frac{q}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{outside}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{r^2}"
+          },
+          {
+            "text": "Case (ii) Inside the Shell ($r < R$): Construct a concentric spherical Gaussian surface of radius $r < R$. All charge resides on the outer surface, so enclosed charge is zero:",
+            "equation": "q_{\\text{enclosed}} = 0"
+          },
+          {
+            "text": "Applying Gauss's Law inside the shell:",
+            "equation": "E(4\\pi r^2) = \\frac{0}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{inside}} = 0"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "At the Surface ($r = R$):",
+            "text": "The electric field exhibits a step discontinuity across the surface:",
+            "equation": "E_{\\text{surface}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{R^2} = \\frac{\\sigma}{\\varepsilon_0}"
+          }
+        ],
+        "finalFormula": "E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}, \\quad E_{\\text{in}} = 0"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "gauss-applications",
+      "title": "Gauss's Law Application Geometries",
+      "examDrawingGuide": [
+        "1. Straight Wire: Draw central charged wire with positive signs; draw coaxial cylinder of radius r and length l; draw normal vectors on circular ends (at 90° to E) and curved mantle (parallel to E).",
+        "2. Plane Sheet: Draw vertical plane sheet with uniform positive charges; draw cylindrical pillbox puncturing perpendicularly with circular end-caps on both sides; draw field vectors E pointing away on both sides.",
+        "3. Spherical Shell: Draw shell of radius R; draw outer Gaussian sphere r > R and inner Gaussian sphere r < R; plot the classic E versus r curve showing E = 0 for r < R, jumping to maximum at r = R, and decaying as 1/r² for r > R."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Gaussian Surface Symmetry",
+      "Flux Decomposition (End Caps vs Curved Surface)",
+      "Linear Charge Density (λ = dq/dl)",
+      "Surface Charge Density (σ = dq/dA)",
+      "Distance Independence for Plane Sheet",
+      "Zero Electric Field Inside Hollow Conductor/Shell"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\Phi_E",
+        "term": "Electric Flux",
+        "definition": "Total number of electric field lines passing normally through a given area: Φ_E = ∮ E · dA. Measured in N·m²/C or V·m."
+      },
+      {
+        "symbol": "\\varepsilon_0",
+        "term": "Permittivity of Free Space",
+        "definition": "Physical constant representing the capability of vacuum to permit electric field lines. Value: ε₀ ≈ 8.854 × 10⁻¹² C²/(N·m²)."
+      },
+      {
+        "symbol": "\\lambda",
+        "term": "Linear Charge Density",
+        "definition": "Charge per unit length along a 1D conductor: λ = dq/dl, measured in Coulombs per metre (C/m)."
+      },
+      {
+        "symbol": "\\sigma",
+        "term": "Surface Charge Density",
+        "definition": "Charge per unit surface area: σ = dq/dA, measured in Coulombs per square metre (C/m²)."
+      },
+      {
+        "symbol": "d\\vec{A} = dA \\, \\hat{n}",
+        "term": "Area Vector",
+        "definition": "Vector of magnitude dA directed along the outward unit normal n̂ to the closed surface element."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Statement of Gauss's Law with mathematical formula ∮ E · dA = q_enc/ε₀.",
+      "1.5 Marks: Application 1 (Wire): Choice of Gaussian cylinder, flux evaluation showing zero end flux, and final formula E = λ/(2πε₀r).",
+      "1.5 Marks: Application 2 (Sheet): Choice of pillbox, evaluation of 2EA = σA/ε₀, and final formula E = σ/(2ε₀).",
+      "1 Mark: Application 3 (Shell): Derivation for r ≥ R (E = kq/r²) and proof that E = 0 for r < R."
+    ],
+    "examinerTips": "Always draw the Gaussian surface and show the area normal vector n̂ and field vector E explicitly with their angle θ. Remember to emphasize that for an infinite plane sheet, the electric field is strictly independent of distance.",
+    "modelAnswer": {
+      "statement": "Gauss's Law states that the total electric flux $\\Phi_E$ through any closed Gaussian surface in free space is equal to $\\frac{1}{\\varepsilon_0}$ times the net electric charge $q_{\\text{enclosed}}$ enclosed by that surface: $$\\oint \\vec{E} \\cdot d\\vec{A} = \\frac{q_{\\text{enclosed}}}{\\varepsilon_0}$$\nElectric flux is independent of the size, radius, or geometric shape of the Gaussian surface chosen.\nIf a Gaussian surface encloses zero net charge ($q_{\\text{enclosed}} = 0$), the net outward electric flux through the surface is strictly zero.\nCharges lying outside the closed Gaussian surface do not contribute to the net flux, because every field line entering the surface exits it.",
+      "derivations": [
         {
-          name: "Application 1: Infinitely Long Straight Wire (Linear Charge Density λ) [NCERT Section 1.15.1]",
-          steps: [
-            "Setup & Symmetry: Consider an infinitely long, thin straight wire carrying uniform linear charge density λ = dq/dL. By cylindrical symmetry, the electric field E⃗ is directed radially outward (if λ > 0) perpendicular to the wire, and its magnitude depends only on radial distance r.",
-            "Choice of Gaussian Surface: Construct a closed coaxial cylindrical Gaussian surface of radius r and length L centered on the wire.",
-            "Decomposition of Flux: The total surface consists of three parts: two flat circular end-caps (S₁ and S₂) and one curved cylindrical surface (S₃): ∮ E⃗ · dA⃗ = ∫_S₁ E⃗ · dA⃗ + ∫_S₂ E⃗ · dA⃗ + ∫_S₃ E⃗ · dA⃗.",
-            "Flux through Flat Circular Ends: At the flat end-caps, field E⃗ is radial while the area unit normal n̂ is parallel to the wire axis: E⃗ ⟂ n̂ (θ = 90°). Thus, cos(90°) = 0, giving ∫_S₁ E⃗ · dA⃗ = 0 and ∫_S₂ E⃗ · dA⃗ = 0.",
-            "Flux through Curved Surface: Everywhere on the curved mantle, E⃗ is parallel to the outward area normal n̂ (θ = 0°), and |E⃗| = E is constant at fixed distance r. Thus: ∫_S₃ E⃗ · dA⃗ = E ∫_S₃ dA = E · (2πrL).",
-            "Enclosed Charge: The length of wire enclosed inside the Gaussian cylinder is L, so q_enclosed = λ · L.",
-            "Applying Gauss's Law: ∮ E⃗ · dA⃗ = q_enclosed / ε₀ ⟹ E · (2πrL) = (λL) / ε₀.",
-            "Final Scalar & Vector Expression: Canceling L gives E = λ / (2πε₀r). In vector notation: E⃗ = [λ / (2πε₀r)] r̂ (where r̂ is the radial unit vector in the plane normal to the wire)."
+          "name": "Application 1: Infinitely Long Uniformly Charged Wire",
+          "steps": [
+            "Consider an infinitely long, thin straight wire carrying a uniform linear charge density $\\lambda$. By cylindrical symmetry, the electric field $\\vec{E}$ is directed radially outward everywhere perpendicular to the wire, and its magnitude depends only on radial distance $r$. Construct a closed coaxial cylindrical Gaussian surface of radius $r$ and length $l$ around the wire.",
+            "Total electric flux through the Gaussian surface decomposes into three parts (two flat circular end-caps $S_1, S_2$ and one curved cylindrical mantle $S_3$): \\oint \\vec{E} \\cdot d\\vec{A} = \\int_{S_1} \\vec{E} \\cdot d\\vec{A} + \\int_{S_2} \\vec{E} \\cdot d\\vec{A} + \\int_{S_3} \\vec{E} \\cdot d\\vec{A}",
+            "On the two flat circular ends $S_1$ and $S_2$, field $\\vec{E}$ is perpendicular to area normal $d\\vec{A}$ ($\\theta = 90^\\circ$): \\int_{S_1} E \\, dA \\cos 90^\\circ = 0, \\quad \\int_{S_2} E \\, dA \\cos 90^\\circ = 0",
+            "On the curved cylindrical surface $S_3$, $\\vec{E}$ is parallel to outward area normal $d\\vec{A}$ ($\\theta = 0^\\circ$) at every point: \\int_{S_3} \\vec{E} \\cdot d\\vec{A} = E \\int_{S_3} dA = E(2\\pi r l)",
+            "The net charge enclosed within the Gaussian cylinder of length $l$ is: q_{\\text{enclosed}} = \\lambda \\cdot l",
+            "Applying Gauss's Law: E(2\\pi r l) = \\frac{\\lambda l}{\\varepsilon_0}",
+            "Hence, the electric field at distance $r$ from the wire is: E = \\frac{\\lambda}{2\\pi \\varepsilon_0 r} \\quad \\implies \\quad \\vec{E} = \\frac{\\lambda}{2\\pi \\varepsilon_0 r}\\hat{r}",
+            "Variation with Distance: The electric field is inversely proportional to distance $r$: E \\propto \\frac{1}{r}"
           ],
-          formula: "E = λ / (2πε₀r) ⟹ E ∝ 1/r"
+          "formula": "E = \\frac{\\lambda}{2\\pi \\varepsilon_0 r}"
         },
         {
-          name: "Application 2: Infinite Uniformly Charged Plane Sheet (Surface Density σ) [NCERT Section 1.15.2]",
-          steps: [
-            "Setup & Symmetry: Consider an infinite, thin plane sheet with uniform surface charge density σ = dq/dA. By planar symmetry, electric field E⃗ is directed perpendicularly away from the sheet on both sides (if σ > 0), with magnitude independent of coordinates parallel to the sheet.",
-            "Choice of Gaussian Pillbox: Construct a cylindrical 'pillbox' of cross-sectional area A and length 2r passing symmetrically through the sheet, with its two flat faces parallel to the sheet at distance r on either side.",
-            "Flux through Curved Cylinder Wall: On the curved surface of the pillbox, E⃗ is parallel to the sheet while dA⃗ is perpendicular to the mantle: E⃗ ⟂ dA⃗ (θ = 90°), so the flux through the curved surface is zero.",
-            "Flux through Flat End-Caps: On both circular end-caps (left and right), E⃗ is parallel to dA⃗ (θ = 0°). Flux through each end-cap is E · A, so total flux through the pillbox is: Φ_total = E·A + E·A = 2EA.",
-            "Enclosed Charge: The cross-sectional area of the sheet enclosed within the pillbox is A, hence q_enclosed = σ · A.",
-            "Applying Gauss's Law: 2EA = q_enclosed / ε₀ = (σA) / ε₀.",
-            "Final Result: Canceling A gives E = σ / (2ε₀). Vector form: E⃗ = [σ / (2ε₀)] n̂, where n̂ is the outward unit normal from the sheet. Crucially, E is completely INDEPENDENT of distance r!"
+          "name": "Application 2: Infinite Uniformly Charged Plane Sheet",
+          "steps": [
+            "Consider an infinite thin plane sheet carrying uniform surface charge density $\\sigma$. By planar symmetry, the electric field $\\vec{E}$ is directed perpendicular to the sheet on both sides, with magnitude independent of position along the sheet. Construct a cylindrical pillbox of cross-sectional area $A$ extending symmetrically distance $r$ on both sides of the sheet.",
+            "On the curved cylindrical surface of the pillbox, $\\vec{E}$ is parallel to the sheet while $d\\vec{A}$ is perpendicular ($\\theta = 90^\\circ$), so flux through the curved surface is zero: \\Phi_{\\text{curved}} = 0",
+            "On both flat circular end-caps, $\\vec{E}$ is parallel to area vector $d\\vec{A}$ ($\\theta = 0^\\circ$). Flux through each end-cap is $E \\cdot A$: \\Phi_{\\text{total}} = E A + E A = 2 E A",
+            "Net charge enclosed inside cross-sectional area $A$ of the sheet: q_{\\text{enclosed}} = \\sigma \\cdot A",
+            "Applying Gauss's Law: 2 E A = \\frac{\\sigma A}{\\varepsilon_0}",
+            "Hence, the electric field due to an infinite plane sheet is: E = \\frac{\\sigma}{2\\varepsilon_0} \\quad \\implies \\quad \\vec{E} = \\frac{\\sigma}{2\\varepsilon_0}\\hat{n}",
+            "Distance Independence: The field is completely uniform and independent of distance $r$ from the sheet: E = \\text{constant} \\quad (\\text{for all } r)"
           ],
-          formula: "E = σ / (2ε₀)  [Uniform field; independent of distance r]"
+          "formula": "E = \\frac{\\sigma}{2\\varepsilon_0}"
         },
         {
-          name: "Application 3: Thin Uniformly Charged Spherical Shell (Radius R, Total Charge q) [NCERT Section 1.15.3]",
-          steps: [
-            "Setup & Symmetry: Consider a thin spherical shell of radius R carrying total charge q = 4πR²σ uniformly distributed on its surface. By spherical symmetry, electric field E⃗ is directed radially outward everywhere.",
-            "Case (i) Outside the Shell (r ≥ R): Choose a concentric spherical Gaussian surface of radius r > R. At every point on this sphere, E⃗ is radial and parallel to dA⃗ (θ = 0°), and |E⃗| = E is uniform. Flux Φ = ∮ E dA = E · (4πr²). The total charge enclosed is q_enclosed = q. By Gauss's law: E · (4πr²) = q / ε₀ ⟹ E_out = (1 / 4πε₀) · (q / r²).",
-            "Physical Meaning for r ≥ R: For points outside, the charged shell behaves exactly as if all its charge were concentrated at the center.",
-            "Case (ii) Inside the Shell (r < R): Choose a concentric spherical Gaussian surface of radius r < R inside the shell. Since all charge resides strictly on the outer surface of the shell, no charge is enclosed: q_enclosed = 0. By Gauss's law: E · (4πr²) = 0 / ε₀ ⟹ E_in = 0.",
-            "At the Surface (r = R): E_surface = q / (4πε₀R²) = σ / ε₀ (discontinuous jump from 0 to σ/ε₀ across the charged layer)."
+          "name": "Application 3: Thin Uniformly Charged Spherical Shell",
+          "steps": [
+            "Consider a thin spherical shell of radius $R$ carrying total charge $q = 4\\pi R^2 \\sigma$ uniformly distributed on its surface. By spherical symmetry, electric field $\\vec{E}$ is directed radially outward everywhere.",
+            "Case (i) Outside the Shell ($r \\ge R$): Construct a concentric spherical Gaussian surface of radius $r > R$. Electric flux is: \\oint \\vec{E} \\cdot d\\vec{A} = E(4\\pi r^2)",
+            "Since net enclosed charge is $q_{\\text{enclosed}} = q$, applying Gauss's Law gives: E(4\\pi r^2) = \\frac{q}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{outside}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{r^2}",
+            "Case (ii) Inside the Shell ($r < R$): Construct a concentric spherical Gaussian surface of radius $r < R$. All charge resides on the outer surface, so enclosed charge is zero: q_{\\text{enclosed}} = 0",
+            "Applying Gauss's Law inside the shell: E(4\\pi r^2) = \\frac{0}{\\varepsilon_0} \\quad \\implies \\quad E_{\\text{inside}} = 0",
+            "At the Surface ($r = R$): The electric field exhibits a step discontinuity across the surface: E_{\\text{surface}} = \\frac{1}{4\\pi \\varepsilon_0}\\frac{q}{R^2} = \\frac{\\sigma}{\\varepsilon_0}"
           ],
-          formula: "E_out = (1/4πε₀)(q/r²) for r ≥ R ; E_in = 0 for r < R ; E_surface = σ/ε₀"
+          "formula": "E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}, \\quad E_{\\text{in}} = 0"
         }
       ],
-      diagramNotes: "Draw 3 distinct diagrams: (1) Wire with coaxial Gaussian cylinder and radial field vectors; (2) Infinite plane with cylindrical pillbox cutting through it; (3) Spherical shell showing r > R and r < R Gaussian spheres and the E versus r discontinuity graph.",
-      markingScheme: [
-        "1 Mark: Statement of Gauss's Law with mathematical equation ∮ E⃗ · dA⃗ = q_enclosed / ε₀.",
-        "1.5 Marks: Application 1 (Straight wire): Choice of Gaussian cylinder, flux evaluation showing zero end flux, and final formula E = λ/(2πε₀r).",
-        "1.5 Marks: Application 2 (Plane sheet): Choice of pillbox, evaluation of 2EA = σA/ε₀, and final formula E = σ/(2ε₀).",
-        "1 Mark: Application 3 (Spherical shell): Derivation for r ≥ R (E = kq/r²) and proof that E = 0 for r < R."
+      "diagramNotes": "1. Straight Wire: Draw central charged wire with positive signs; draw coaxial cylinder of radius r and length l; draw normal vectors on circular ends (at 90° to E) and curved mantle (parallel to E).\n2. Plane Sheet: Draw vertical plane sheet with uniform positive charges; draw cylindrical pillbox puncturing perpendicularly with circular end-caps on both sides; draw field vectors E pointing away on both sides.\n3. Spherical Shell: Draw shell of radius R; draw outer Gaussian sphere r > R and inner Gaussian sphere r < R; plot the classic E versus r curve showing E = 0 for r < R, jumping to maximum at r = R, and decaying as 1/r² for r > R.",
+      "markingScheme": [
+        "1 Mark: Statement of Gauss's Law with mathematical formula ∮ E · dA = q_enc/ε₀.",
+        "1.5 Marks: Application 1 (Wire): Choice of Gaussian cylinder, flux evaluation showing zero end flux, and final formula E = λ/(2πε₀r).",
+        "1.5 Marks: Application 2 (Sheet): Choice of pillbox, evaluation of 2EA = σA/ε₀, and final formula E = σ/(2ε₀).",
+        "1 Mark: Application 3 (Shell): Derivation for r ≥ R (E = kq/r²) and proof that E = 0 for r < R."
       ],
-      examinerTips: "Always draw the Gaussian surface and show the area normal vector n̂ and field vector E⃗ explicitly with their angle θ. Remember to emphasize that for an infinite plane sheet, the electric field is strictly independent of distance."
+      "examinerTips": "Always draw the Gaussian surface and show the area normal vector n̂ and field vector E explicitly with their angle θ. Remember to emphasize that for an infinite plane sheet, the electric field is strictly independent of distance."
     }
   },
   {
-    id: 'imp-phy-2',
-    number: 2,
-    title: "Force on a Current-Carrying Conductor in a Magnetic Field",
-    shortLabel: "Force on Conductor (F = ILB sinθ)",
-    chapterId: 'phy-ch-4',
-    chapterTitle: 'Moving Charges and Magnetism',
-    unit: 'Magnetism',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation',
-    frequency: 'High Frequency (CBSE 2023, 2022, 2019, 2018)',
-    questionPrompt: "(a) Derive the expression for the magnetic force experienced by a straight conductor of length L carrying current I placed in a uniform magnetic field B.\n(b) State the rule used to determine the direction of this force.\n(c) What are the conditions for maximum and zero force?",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 4: Moving Charges and Magnetism',
-      section: 'Section 4.2.2: Magnetic Force on a Current-Carrying Conductor (pp. 135–136)',
-      equations: 'Eqs. (4.4), (4.5)',
-      figures: 'Fig. 4.4',
-      summary: 'Integration of microscopic Lorentz forces on mobile electrons with drift velocity v_d to yield the macroscopic force F⃗ = I(L⃗ × B⃗).'
+    "id": "imp-phy-2",
+    "number": 2,
+    "title": "Force on a Current-Carrying Conductor in a Magnetic Field",
+    "shortLabel": "Force on Conductor (F = ILB sinθ)",
+    "chapterId": "phy-ch-4",
+    "chapterTitle": "Moving Charges and Magnetism",
+    "unit": "Magnetism",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "High Frequency (CBSE 2023, 2022, 2019, 2018)",
+    "questionPrompt": "(a) Derive the expression for the magnetic force experienced by a straight conductor of length L carrying current I placed in a uniform magnetic field B.\n(b) State the rule used to determine the direction of this force.\n(c) What are the conditions for maximum and zero force?",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 4: Moving Charges and Magnetism",
+      "section": "Section 4.2.2: Magnetic Force on a Current-Carrying Conductor (pp. 135–136)",
+      "equations": "Eqs. (4.4), (4.5)",
+      "figures": "Fig. 4.4",
+      "summary": "Integration of microscopic Lorentz forces on mobile electrons with drift velocity to yield macroscopic mechanical force."
     },
-    modelAnswer: {
-      statement: "When a current-carrying conductor is placed in an external magnetic field, the mobile charge carriers (electrons) moving with drift velocity experience microscopic magnetic Lorentz forces. These individual forces are transmitted to the lattice ions, resulting in a net macroscopic mechanical force: F⃗ = I(L⃗ × B⃗).",
-      derivations: [
+    "theory": [
+      "When a current-carrying conductor is placed in an external magnetic field, the mobile charge carriers (electrons) moving with drift velocity experience microscopic magnetic Lorentz forces.",
+      "These individual microscopic forces are transmitted to the crystal lattice ions via collisions, resulting in a net macroscopic mechanical force: $$\\vec{F} = I(\\vec{L} \\times \\vec{B})$$",
+      "Direction of the magnetic force is determined by Fleming's Left-Hand Rule or the Right-Hand Palm Rule.",
+      "A conductor aligned parallel to the magnetic field ($\\theta = 0^\\circ$ or $180^\\circ$) experiences zero force.",
+      "A conductor oriented perpendicular to the magnetic field ($\\theta = 90^\\circ$) experiences the maximum possible force: $F_{\\text{max}} = I L B$."
+    ],
+    "derivations": [
+      {
+        "name": "Derivation from Microscopic Electron Drift Dynamics",
+        "setup": "Consider a straight conductor of length $l$ and uniform cross-sectional area $A$ carrying a steady current $I$. It is placed in a uniform external magnetic field $\\vec{B}$ making an angle $\\theta$ with the length of the conductor. Let $n$ be the number density of free conduction electrons in the material.",
+        "steps": [
+          {
+            "text": "Total number of mobile conduction electrons inside the volume $V = A l$ of the conductor is:",
+            "equation": "N = n A l"
+          },
+          {
+            "text": "When steady current $I$ flows, conduction electrons drift with average drift velocity $\\vec{v}_d$. The magnetic Lorentz force on a single electron of charge $-e$ is:",
+            "equation": "\\vec{f} = -e(\\vec{v}_d \\times \\vec{B})"
+          },
+          {
+            "text": "The total macroscopic magnetic force $\\vec{F}$ on the conductor is the vector sum of forces on all $N$ mobile electrons:",
+            "equation": "\\vec{F} = N \\vec{f} = (n A l)[-e(\\vec{v}_d \\times \\vec{B})] = -n e A l (\\vec{v}_d \\times \\vec{B})"
+          },
+          {
+            "text": "By definition of electric current, macroscopic current is $I = n e A v_d$. In vector form, current flowing along the length vector $\\vec{l}$ satisfies:",
+            "equation": "-n e A l \\vec{v}_d = I \\vec{l}"
+          },
+          {
+            "text": "Substituting this relation into the total force equation yields:",
+            "equation": "\\vec{F} = I(\\vec{l} \\times \\vec{B})"
+          },
+          {
+            "text": "The magnitude of the magnetic force is:",
+            "equation": "F = I l B \\sin\\theta"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Case 1: Maximum Force (θ = 90°)",
+            "text": "When the conductor is perpendicular to the magnetic field ($\\sin 90^\\circ = 1$):",
+            "equation": "F_{\\text{max}} = I l B"
+          },
+          {
+            "title": "Case 2: Zero Force (θ = 0° or 180°)",
+            "text": "When the conductor is parallel or antiparallel to the magnetic field ($\\sin 0^\\circ = 0$):",
+            "equation": "F = 0"
+          }
+        ],
+        "finalFormula": "\\vec{F} = I(\\vec{l} \\times \\vec{B}) \\quad \\implies \\quad F = I l B \\sin\\theta"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "force-conductor",
+      "title": "Current Conductor in External B-Field",
+      "examDrawingGuide": [
+        "1. Draw straight cylindrical conductor of length $l$ and cross-section $A$.",
+        "2. Draw parallel magnetic field lines $\\vec{B}$ making angle $\\theta$ with conductor axis.",
+        "3. Show current $I$ flowing along length vector $\\vec{l}$, with electron drift velocity $\\vec{v}_d$ pointing in the opposite direction.",
+        "4. Draw resulting mechanical force vector $\\vec{F}$ perpendicular to both $\\vec{l}$ and $\\vec{B}$ according to Fleming's Left-Hand Rule."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Magnetic Lorentz Force on Free Electrons",
+      "Drift Velocity (v_d) and Current Relation (I = n e A v_d)",
+      "Length Vector (l) along Current Direction",
+      "Fleming's Left-Hand Rule",
+      "Maximum Force at θ = 90°",
+      "Zero Force along Field Lines (θ = 0°)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "I",
+        "term": "Macroscopic Current",
+        "definition": "Net rate of charge transport through the conductor: $I = n e A v_d$, measured in Amperes (A)."
+      },
+      {
+        "symbol": "\\vec{B}",
+        "term": "Magnetic Field (Flux Density)",
+        "definition": "Uniform external magnetic field vector exerting magnetic Lorentz force on moving charges, measured in Tesla (T)."
+      },
+      {
+        "symbol": "n",
+        "term": "Electron Number Density",
+        "definition": "Number of mobile conduction electrons per unit volume of the conductor ($\\text{m}^{-3}$)."
+      },
+      {
+        "symbol": "\\vec{v}_d",
+        "term": "Drift Velocity",
+        "definition": "Average velocity acquired by conduction electrons opposite to the electric field inside the conductor."
+      },
+      {
+        "symbol": "\\vec{l}",
+        "term": "Length Vector",
+        "definition": "Vector of magnitude equal to length of the conductor directed along the direction of electric current."
+      },
+      {
+        "symbol": "\\theta",
+        "term": "Orientation Angle",
+        "definition": "Angle between length vector $\\vec{l}$ (current direction) and the external magnetic field $\\vec{B}$."
+      }
+    ],
+    "markingScheme": [
+      "1.5 Marks: Step-by-step mathematical transition from single electron Lorentz force $\\vec{f} = -e(\\vec{v}_d \\times \\vec{B})$ to macroscopic force $\\vec{F} = I(\\vec{l} \\times \\vec{B})$.",
+      "0.5 Mark: Statement of Fleming's Left-Hand Rule or Right-Hand Palm Rule for direction.",
+      "1 Mark: Correct identification of special cases (maximum at $\\theta = 90^\\circ$, zero at $\\theta = 0^\\circ$)."
+    ],
+    "examinerTips": "Direction Rule: Fleming's Left-Hand Rule — Forefinger points along Field B, Middle finger points along Current I, and Thumb points along Force F. Remember that a conductor aligned along the magnetic field experiences ZERO force.",
+    "modelAnswer": {
+      "statement": "When a current-carrying conductor is placed in an external magnetic field, the mobile charge carriers (electrons) moving with drift velocity experience microscopic magnetic Lorentz forces.\nThese individual microscopic forces are transmitted to the crystal lattice ions via collisions, resulting in a net macroscopic mechanical force: $$\\vec{F} = I(\\vec{L} \\times \\vec{B})$$\nDirection of the magnetic force is determined by Fleming's Left-Hand Rule or the Right-Hand Palm Rule.\nA conductor aligned parallel to the magnetic field ($\\theta = 0^\\circ$ or $180^\\circ$) experiences zero force.\nA conductor oriented perpendicular to the magnetic field ($\\theta = 90^\\circ$) experiences the maximum possible force: $F_{\\text{max}} = I L B$.",
+      "derivations": [
         {
-          name: "Derivation from Microscopic Electron Drift Dynamics [NCERT Section 4.2.2]",
-          steps: [
-            "Conductor Geometry: Consider a straight conductor of uniform cross-sectional area A and length L, placed in a uniform external magnetic field B⃗ at angle θ to its length vector L⃗.",
-            "Free Electron Density: Let n be the number density of conduction electrons (number of free electrons per unit volume).",
-            "Total Charge Carriers: The total volume of the conductor is V = A · L. Therefore, the total number of mobile electrons in the conductor is N = n · A · L.",
-            "Microscopic Lorentz Force: When steady current I flows, the conduction electrons drift with average drift velocity v⃗_d opposite to current direction. Each electron carries charge q = -e. The magnetic force on a single electron is: f⃗ = -e (v⃗_d × B⃗).",
-            "Summing Forces over All Carriers: The total magnetic force F⃗ experienced by the conductor is the vector sum over all N electrons: F⃗ = N · f⃗ = (nAL) · [-e (v⃗_d × B⃗)].",
-            "Rearranging in Terms of Current: Grouping the microscopic terms: F⃗ = [n · e · A · (-v⃗_d)] L × B⃗. By definition of electric current, current density is j⃗ = n e (-v⃗_d) and macroscopic current is I = n e A v_d. In vector form, current flowing along the length vector satisfies: I L⃗ = n A L (-e v⃗_d).",
-            "Macroscopic Vector Equation: Substituting I L⃗ gives: F⃗ = I (L⃗ × B⃗).",
-            "Scalar Magnitude & Special Cases: The magnitude of the force is F = I L B sinθ (where θ is the angle between the conductor's length vector along current and field B⃗).",
-            "Special Case 1 (Maximum Force): When conductor is perpendicular to the field (θ = 90°, sin 90° = 1): F_max = I L B.",
-            "Special Case 2 (Zero Force): When conductor is parallel or antiparallel to the field (θ = 0° or 180°, sinθ = 0): F = 0."
+          "name": "Derivation from Microscopic Electron Drift Dynamics",
+          "steps": [
+            "Consider a straight conductor of length $l$ and uniform cross-sectional area $A$ carrying a steady current $I$. It is placed in a uniform external magnetic field $\\vec{B}$ making an angle $\\theta$ with the length of the conductor. Let $n$ be the number density of free conduction electrons in the material.",
+            "Total number of mobile conduction electrons inside the volume $V = A l$ of the conductor is: N = n A l",
+            "When steady current $I$ flows, conduction electrons drift with average drift velocity $\\vec{v}_d$. The magnetic Lorentz force on a single electron of charge $-e$ is: \\vec{f} = -e(\\vec{v}_d \\times \\vec{B})",
+            "The total macroscopic magnetic force $\\vec{F}$ on the conductor is the vector sum of forces on all $N$ mobile electrons: \\vec{F} = N \\vec{f} = (n A l)[-e(\\vec{v}_d \\times \\vec{B})] = -n e A l (\\vec{v}_d \\times \\vec{B})",
+            "By definition of electric current, macroscopic current is $I = n e A v_d$. In vector form, current flowing along the length vector $\\vec{l}$ satisfies: -n e A l \\vec{v}_d = I \\vec{l}",
+            "Substituting this relation into the total force equation yields: \\vec{F} = I(\\vec{l} \\times \\vec{B})",
+            "The magnitude of the magnetic force is: F = I l B \\sin\\theta",
+            "Case 1: Maximum Force (θ = 90°) When the conductor is perpendicular to the magnetic field ($\\sin 90^\\circ = 1$): F_{\\text{max}} = I l B",
+            "Case 2: Zero Force (θ = 0° or 180°) When the conductor is parallel or antiparallel to the magnetic field ($\\sin 0^\\circ = 0$): F = 0"
           ],
-          formula: "F⃗ = I(L⃗ × B⃗)  ⟹  F = I L B sinθ  [F_max = ILB at θ = 90° ; F = 0 at θ = 0°]"
+          "formula": "\\vec{F} = I(\\vec{l} \\times \\vec{B}) \\quad \\implies \\quad F = I l B \\sin\\theta"
         }
       ],
-      diagramNotes: "Draw a straight wire segment of length L at angle θ to uniform B lines; show drift velocity v_d opposite to current I, and force vector F normal to both L and B.",
-      markingScheme: [
-        "1.5 Marks: Step-by-step mathematical transition from single electron Lorentz force f = -e(v_d × B) to macroscopic force F = I(L × B).",
+      "diagramNotes": "1. Draw straight cylindrical conductor of length $l$ and cross-section $A$.\n2. Draw parallel magnetic field lines $\\vec{B}$ making angle $\\theta$ with conductor axis.\n3. Show current $I$ flowing along length vector $\\vec{l}$, with electron drift velocity $\\vec{v}_d$ pointing in the opposite direction.\n4. Draw resulting mechanical force vector $\\vec{F}$ perpendicular to both $\\vec{l}$ and $\\vec{B}$ according to Fleming's Left-Hand Rule.",
+      "markingScheme": [
+        "1.5 Marks: Step-by-step mathematical transition from single electron Lorentz force $\\vec{f} = -e(\\vec{v}_d \\times \\vec{B})$ to macroscopic force $\\vec{F} = I(\\vec{l} \\times \\vec{B})$.",
         "0.5 Mark: Statement of Fleming's Left-Hand Rule or Right-Hand Palm Rule for direction.",
-        "1 Mark: Analysis of special cases: maximum force at θ = 90° and zero force at θ = 0°/180°."
+        "1 Mark: Correct identification of special cases (maximum at $\\theta = 90^\\circ$, zero at $\\theta = 0^\\circ$)."
       ],
-      examinerTips: "Direction Rule: Fleming's Left-Hand Rule — Forefinger points along Field B, Middle finger points along Current I, and Thumb points along Force F. Remember that a conductor aligned along the magnetic field experiences ZERO force."
+      "examinerTips": "Direction Rule: Fleming's Left-Hand Rule — Forefinger points along Field B, Middle finger points along Current I, and Thumb points along Force F. Remember that a conductor aligned along the magnetic field experiences ZERO force."
     }
   },
   {
-    id: 'imp-phy-3',
-    number: 3,
-    title: "Faraday's Laws of Induction & Lenz's Law (Energy Conservation)",
-    shortLabel: "Faraday's & Lenz's Laws",
-    chapterId: 'phy-ch-6',
-    chapterTitle: 'Electromagnetic Induction',
-    unit: 'Electromagnetic Induction',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Conceptual & Theory',
-    frequency: 'Guaranteed Core Question (Every Alternate Year)',
-    questionPrompt: "(a) State Faraday's laws of electromagnetic induction.\n(b) State Lenz's law. Explain how Lenz's law is a direct consequence of the principle of conservation of energy.\n(c) A bar magnet is pushed towards a closed conducting loop. Show that mechanical work is converted into electrical energy.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 6: Electromagnetic Induction',
-      section: 'Sections 6.4 & 6.5 (pp. 207–213)',
-      equations: 'Eqs. (6.1), (6.2), (6.3)',
-      figures: 'Figs. 6.6, 6.7',
-      summary: 'Quantitative formulation of induced emf ε = -dΦ_B/dt and Lenz\'s polarity law as an essential manifestation of energy conservation.'
+    "id": "imp-phy-3",
+    "number": 3,
+    "title": "Faraday's Laws of Induction & Lenz's Law (Energy Conservation)",
+    "shortLabel": "Faraday's & Lenz's Laws",
+    "chapterId": "phy-ch-6",
+    "chapterTitle": "Electromagnetic Induction",
+    "unit": "Electromagnetic Induction",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Conceptual & Theory",
+    "frequency": "Guaranteed Core Question (Every Alternate Year)",
+    "questionPrompt": "(a) State Faraday's laws of electromagnetic induction.\n(b) State Lenz's law. Explain how Lenz's law is a direct consequence of the principle of conservation of energy.\n(c) A bar magnet is pushed towards a closed conducting loop. Show that mechanical work is converted into electrical energy.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 6: Electromagnetic Induction",
+      "section": "Sections 6.4 & 6.5 (pp. 207–213)",
+      "equations": "Eqs. (6.1), (6.2), (6.3)",
+      "figures": "Figs. 6.6, 6.7",
+      "summary": "Quantitative formulation of induced emf and Lenz polarity law as an essential manifestation of energy conservation."
     },
-    modelAnswer: {
-      statement: "• Faraday's First Law: Whenever the magnetic flux linked with a closed conducting circuit changes with time, an electromotive force (emf) is induced in the circuit, lasting as long as the flux continues to change.\n• Faraday's Second Law: The magnitude of the induced emf is directly proportional to the time rate of change of magnetic flux linked with the circuit:\nε = -dΦ_B / dt  (for a coil of N tightly wound turns: ε = -N dΦ_B / dt)",
-      derivations: [
+    "theory": [
+      "Faraday's First Law: Whenever the magnetic flux linked with a closed conducting circuit changes with time, an electromotive force (emf) is induced in the circuit, which lasts as long as the flux continues to change.",
+      "Faraday's Second Law: The magnitude of the induced emf is directly proportional to the time rate of change of magnetic flux linked with the circuit: $$\\varepsilon = -\\frac{d\\Phi_B}{dt} \\quad \\left(\\text{for } N \\text{ turns: } \\varepsilon = -N\\frac{d\\Phi_B}{dt}\\right)$$",
+      "Lenz's Law: The direction of induced current is always such that it opposes the change in magnetic flux that produces it.",
+      "Lenz's law is a direct consequence of the Law of Conservation of Energy: when a magnet is pushed toward a loop, the loop develops an opposing magnetic pole. An external agent must do mechanical work against this magnetic repulsion, and this mechanical work is converted into electrical energy (and ultimately Joule heat)."
+    ],
+    "derivations": [
+      {
+        "name": "Energy Conservation Proof via Lenz's Law",
+        "setup": "Consider a closed conducting loop placed in front of the North pole of a bar magnet. An external agent moves the magnet toward the loop with constant velocity.",
+        "steps": [
+          {
+            "text": "By Faraday's law, the rate of change of magnetic flux induces an emf across the loop:",
+            "equation": "\\varepsilon = -\\frac{d\\Phi_B}{dt}"
+          },
+          {
+            "text": "By Lenz's law, the induced current flows counter-clockwise (viewed from the magnet side), establishing an induced North pole on the near face of the loop:",
+            "equation": "\\vec{B}_{\\text{induced}} \\text{ opposes the increase in } \\vec{B}_{\\text{external}}"
+          },
+          {
+            "text": "The induced North pole repels the incoming North pole of the magnet with magnetic force $F_{\\text{mag}}$. The mechanical work done by the external agent moving distance $dx$ against this force is:",
+            "equation": "dW_{\\text{mech}} = F_{\\text{ext}} \\, dx = F_{\\text{mag}} \\, dx"
+          },
+          {
+            "text": "If induced current is $I$ and loop resistance is $R$, electrical energy dissipated as Joule heat in time $dt$ is:",
+            "equation": "dH_{\\text{electrical}} = I^2 R \\, dt = \\varepsilon I \\, dt"
+          },
+          {
+            "text": "By energy balance, mechanical work input exactly equals electrical energy generated:",
+            "equation": "dW_{\\text{mech}} = dH_{\\text{electrical}}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Proof by Contradiction:",
+            "text": "If Lenz's law were opposite (induced South pole attracted the magnet), the magnet would accelerate spontaneously without external work, generating infinite energy from nothing and violating the First Law of Thermodynamics.",
+            "equation": "\\text{Lenz's opposition is mandatory for energy conservation}"
+          }
+        ],
+        "finalFormula": "\\varepsilon = -N\\frac{d\\Phi_B}{dt}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "faraday-lenz",
+      "title": "Lenz's Law & Magnet-Coil Induction",
+      "examDrawingGuide": [
+        "1. Draw circular loop with incoming North pole of bar magnet.",
+        "2. Draw counter-clockwise arrow on loop face showing induced current forming 'N' letter with arrowheads at tips.",
+        "3. Draw receding North pole with clockwise induced current forming 'S' letter showing attraction opposing motion."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Magnetic Flux Change Rate (dΦ/dt)",
+      "Opposition to Flux Change (Lenz's Law)",
+      "Mechanical Work Conversion to Electrical Energy",
+      "Joule Heat Dissipation (I²Rt)",
+      "Conservation of Energy Principle"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\varepsilon",
+        "term": "Induced Electromotive Force (EMF)",
+        "definition": "Potential difference generated around a closed circuit due to changing magnetic flux, measured in Volts (V)."
+      },
+      {
+        "symbol": "\\Phi_B",
+        "term": "Magnetic Flux",
+        "definition": "Surface integral of magnetic field passing normally through a loop: $\\Phi_B = \\int \\vec{B} \\cdot d\\vec{A}$, measured in Webers (Wb) or $\\text{T}\\cdot\\text{m}^2$."
+      },
+      {
+        "symbol": "N",
+        "term": "Number of Turns",
+        "definition": "Total number of tightly wound conducting loops in the coil."
+      },
+      {
+        "symbol": "R",
+        "term": "Circuit Resistance",
+        "definition": "Ohmic resistance of the conducting coil loop, measured in Ohms (Ω)."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Precise statement of Faraday's first and second laws with formula $\\varepsilon = -d\\Phi/dt$.",
+      "1 Mark: Precise statement of Lenz's law.",
+      "1 Mark: Complete justification of energy conservation (mechanical work against repulsion converting to electrical energy)."
+    ],
+    "examinerTips": "In the formula $\\varepsilon = -d\\Phi_B/dt$, state clearly that the negative sign is the mathematical representation of Lenz's law.",
+    "modelAnswer": {
+      "statement": "Faraday's First Law: Whenever the magnetic flux linked with a closed conducting circuit changes with time, an electromotive force (emf) is induced in the circuit, which lasts as long as the flux continues to change.\nFaraday's Second Law: The magnitude of the induced emf is directly proportional to the time rate of change of magnetic flux linked with the circuit: $$\\varepsilon = -\\frac{d\\Phi_B}{dt} \\quad \\left(\\text{for } N \\text{ turns: } \\varepsilon = -N\\frac{d\\Phi_B}{dt}\\right)$$\nLenz's Law: The direction of induced current is always such that it opposes the change in magnetic flux that produces it.\nLenz's law is a direct consequence of the Law of Conservation of Energy: when a magnet is pushed toward a loop, the loop develops an opposing magnetic pole. An external agent must do mechanical work against this magnetic repulsion, and this mechanical work is converted into electrical energy (and ultimately Joule heat).",
+      "derivations": [
         {
-          name: "Lenz's Law and Conservation of Energy Proof [NCERT Section 6.5]",
-          steps: [
-            "Statement of Lenz's Law: The polarity of the induced emf is such that it produces an induced current whose magnetic effect opposes the change in magnetic flux that produces it.",
-            "Significance of Negative Sign: In ε = -dΦ_B/dt, the negative sign mathematically encodes this opposition prescribed by Lenz's law.",
-            "Energy Conservation Case 1 (Approaching N-pole): When the North pole of a bar magnet is pushed toward a closed loop, the magnetic flux linked with the loop increases. By Lenz's law, the induced current flows anticlockwise (as seen from the magnet side), establishing an induced North magnetic pole on the near face of the loop. This induced North pole repels the incoming North pole of the magnet.",
-            "Mechanical Work Requirement: To maintain the forward motion of the magnet against this repulsive magnetic force, an external agent must do mechanical work.",
-            "Energy Transformation: This mechanical work done by the external agent is continuously converted into electrical energy in the coil, which eventually dissipates as Joule heat (H = I²Rt).",
-            "Proof by Contradiction: Suppose Lenz's law were opposite (induced current produced a South pole). The incoming North pole would experience an attractive force that accelerates it forward without any external push. The speed and kinetic energy of the magnet would increase continuously while generating electrical energy simultaneously — creating energy from nothing and violating the First Law of Thermodynamics!",
-            "Conclusion: Therefore, Lenz's law is a direct, necessary consequence of the Law of Conservation of Energy."
+          "name": "Energy Conservation Proof via Lenz's Law",
+          "steps": [
+            "Consider a closed conducting loop placed in front of the North pole of a bar magnet. An external agent moves the magnet toward the loop with constant velocity.",
+            "By Faraday's law, the rate of change of magnetic flux induces an emf across the loop: \\varepsilon = -\\frac{d\\Phi_B}{dt}",
+            "By Lenz's law, the induced current flows counter-clockwise (viewed from the magnet side), establishing an induced North pole on the near face of the loop: \\vec{B}_{\\text{induced}} \\text{ opposes the increase in } \\vec{B}_{\\text{external}}",
+            "The induced North pole repels the incoming North pole of the magnet with magnetic force $F_{\\text{mag}}$. The mechanical work done by the external agent moving distance $dx$ against this force is: dW_{\\text{mech}} = F_{\\text{ext}} \\, dx = F_{\\text{mag}} \\, dx",
+            "If induced current is $I$ and loop resistance is $R$, electrical energy dissipated as Joule heat in time $dt$ is: dH_{\\text{electrical}} = I^2 R \\, dt = \\varepsilon I \\, dt",
+            "By energy balance, mechanical work input exactly equals electrical energy generated: dW_{\\text{mech}} = dH_{\\text{electrical}}",
+            "Proof by Contradiction: If Lenz's law were opposite (induced South pole attracted the magnet), the magnet would accelerate spontaneously without external work, generating infinite energy from nothing and violating the First Law of Thermodynamics. \\text{Lenz's opposition is mandatory for energy conservation}"
           ],
-          formula: "ε = -dΦ_B / dt = -N (dΦ_B / dt)  [Negative sign represents Lenz's opposition]"
+          "formula": "\\varepsilon = -N\\frac{d\\Phi_B}{dt}"
         }
       ],
-      diagramNotes: "Draw a circular loop with approaching N-pole showing counter-clockwise induced current (N-pole face); draw receding N-pole showing clockwise current (S-pole face).",
-      markingScheme: [
-        "1 Mark: Precise statement of Faraday's first and second laws with formula ε = -dΦ/dt.",
+      "diagramNotes": "1. Draw circular loop with incoming North pole of bar magnet.\n2. Draw counter-clockwise arrow on loop face showing induced current forming 'N' letter with arrowheads at tips.\n3. Draw receding North pole with clockwise induced current forming 'S' letter showing attraction opposing motion.",
+      "markingScheme": [
+        "1 Mark: Precise statement of Faraday's first and second laws with formula $\\varepsilon = -d\\Phi/dt$.",
         "1 Mark: Precise statement of Lenz's law.",
-        "1 Mark: Complete justification of energy conservation (mechanical work against magnetic repulsion converting to electrical/Joule energy)."
+        "1 Mark: Complete justification of energy conservation (mechanical work against repulsion converting to electrical energy)."
       ],
-      examinerTips: "Precise phrasing is critical: write 'opposes the change in magnetic flux that produces it' — never write 'opposes the current'. Emphasize the work-energy conversion."
+      "examinerTips": "In the formula $\\varepsilon = -d\\Phi_B/dt$, state clearly that the negative sign is the mathematical representation of Lenz's law."
     }
   },
   {
-    id: 'imp-phy-4',
-    number: 4,
-    title: "Transformer: Principle, Construction, Working Derivation & Energy Losses",
-    shortLabel: "Transformer Construction & Derivation",
-    chapterId: 'phy-ch-7',
-    chapterTitle: 'Alternating Current',
-    unit: 'Alternating Current',
-    marks: '5 Marks',
-    marksNum: 5,
-    category: 'Derivation & 5-Marker',
-    frequency: 'Top 5-Marker Derivation (CBSE 2023, 2020, 2018, 2016)',
-    questionPrompt: "(a) State the principle of an AC transformer.\n(b) Describe its construction with a neat labelled diagram.\n(c) Derive the relation between input and output voltages and currents for an ideal transformer.\n(d) Mention 4 major energy losses in a practical transformer and how each is minimized.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 7: Alternating Current',
-      section: 'Section 7.9: Transformers (pp. 259–262)',
-      equations: 'Eqs. (7.54), (7.55), (7.57)',
-      figures: 'Fig. 7.20',
-      summary: 'Mutual flux linkage across primary and secondary windings on laminated iron core; derivation of voltage and current transformation ratios.'
+    "id": "imp-phy-4",
+    "number": 4,
+    "title": "Transformer: Principle, Construction, Working Derivation & Energy Losses",
+    "shortLabel": "Transformer (Working & Losses)",
+    "chapterId": "phy-ch-7",
+    "chapterTitle": "Alternating Current",
+    "unit": "Electromagnetic Induction & Alternating Current",
+    "marks": "5 Marks",
+    "marksNum": 5,
+    "category": "Derivation",
+    "frequency": "Very High Frequency (CBSE 2024, 2023, 2020, 2019)",
+    "questionPrompt": "(a) State the working principle of an AC transformer.\n(b) With the help of a labeled diagram, explain its construction and derive the relation between primary and secondary voltages and currents.\n(c) Name and explain four major sources of energy loss in a practical transformer, and state how each is minimized.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 7: Alternating Current",
+      "section": "Section 7.9: Transformers (pp. 259–262)",
+      "equations": "Eqs. (7.45), (7.46), (7.47), (7.48)",
+      "figures": "Fig. 7.20",
+      "summary": "Principle of mutual induction, voltage ratio derivation, ideal power conservation, and four major real energy dissipation mechanisms."
     },
-    modelAnswer: {
-      statement: "Principle: A transformer works on the principle of Mutual Induction — when an alternating current flows through the primary winding, a time-varying magnetic flux is set up in the laminated iron core which links the secondary winding, inducing an alternating emf of the same frequency across its terminals.",
-      derivations: [
+    "theory": [
+      "Principle: An AC transformer works on the principle of Mutual Induction — whenever alternating current in the primary coil changes, it creates a time-varying magnetic flux in the common soft iron core, which links with the secondary coil and induces an alternating emf across it.",
+      "A transformer cannot operate on Direct Current (DC) because steady direct current produces constant magnetic flux ($d\\Phi/dt = 0$), resulting in zero induced secondary voltage.",
+      "Step-up Transformer: Number of turns in secondary exceeds primary ($N_s > N_p$), stepping up voltage ($V_s > V_p$) while stepping down current ($I_s < I_p$).",
+      "Step-down Transformer: Number of turns in primary exceeds secondary ($N_p > N_s$), stepping down voltage ($V_s < V_p$) while stepping up current ($I_s > I_p$)."
+    ],
+    "derivations": [
+      {
+        "name": "Working Derivation: Voltage & Current Transformation Ratios",
+        "setup": "Consider an ideal transformer having primary coil of $N_p$ turns and secondary coil of $N_s$ turns wound on a laminated soft iron core. Assume zero flux leakage so that same flux $\\Phi$ links each turn of both primary and secondary coils.",
+        "steps": [
+          {
+            "text": "By Faraday's law of induction, alternating flux $\\Phi$ induces back emf in the primary coil:",
+            "equation": "\\varepsilon_p = -N_p \\frac{d\\Phi}{dt}"
+          },
+          {
+            "text": "Similarly, the induced emf in the secondary coil is:",
+            "equation": "\\varepsilon_s = -N_s \\frac{d\\Phi}{dt}"
+          },
+          {
+            "text": "For an ideal transformer with negligible winding resistance, primary terminal voltage $V_p \\approx \\varepsilon_p$ and open-circuit secondary voltage $V_s \\approx \\varepsilon_s$. Dividing equations gives:",
+            "equation": "\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = K \\quad (\\text{Transformation Ratio})"
+          },
+          {
+            "text": "For an ideal transformer with 100% efficiency, electrical power input equals electrical power output:",
+            "equation": "P_{\\text{in}} = P_{\\text{out}} \\quad \\implies \\quad V_p I_p = V_s I_s"
+          },
+          {
+            "text": "Hence, current ratio is inversely proportional to voltage ratio:",
+            "equation": "\\frac{I_p}{I_s} = \\frac{V_s}{V_p} = \\frac{N_s}{N_p}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Real Transformer Efficiency:",
+            "text": "In practical transformers, efficiency is less than 100% due to core and winding losses:",
+            "equation": "\\eta = \\frac{P_{\\text{out}}}{P_{\\text{in}}} \\times 100\\% = \\frac{V_s I_s}{V_p I_p} \\times 100\\%"
+          }
+        ],
+        "finalFormula": "\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = \\frac{I_p}{I_s} = K"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "transformer",
+      "title": "AC Transformer Construction & Flux Linkage",
+      "examDrawingGuide": [
+        "1. Draw rectangular laminated soft iron core with thin insulated sheets visible.",
+        "2. Draw Primary Coil on left limb with $N_p$ turns connected to AC source $V_p \\sim$.",
+        "3. Draw Secondary Coil on right limb with $N_s$ turns connected to load resistor $R_L$.",
+        "4. Show dashed magnetic flux loop $\\Phi(t)$ circulating through the iron core linking both coils."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Mutual Induction Principle",
+      "Laminated Soft Iron Core",
+      "Transformation Ratio (K = Ns/Np)",
+      "Eddy Current Losses & Lamination",
+      "Copper Loss (I²R)",
+      "Hysteresis Loss & Soft Iron Magnetic Retentivity",
+      "Flux Leakage"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "N_p, N_s",
+        "term": "Primary & Secondary Turns",
+        "definition": "Number of tightly wound copper turns in the primary and secondary coils respectively."
+      },
+      {
+        "symbol": "V_p, V_s",
+        "term": "Primary & Secondary Voltages",
+        "definition": "RMS potential difference across the input primary terminals and output secondary terminals."
+      },
+      {
+        "symbol": "I_p, I_s",
+        "term": "Primary & Secondary Currents",
+        "definition": "Alternating currents flowing through the primary and secondary circuits."
+      },
+      {
+        "symbol": "K = N_s/N_p",
+        "term": "Transformation Ratio",
+        "definition": "Ratio of secondary turns to primary turns; $K > 1$ for step-up, $K < 1$ for step-down."
+      },
+      {
+        "symbol": "\\text{Eddy Currents}",
+        "term": "Eddy Currents",
+        "definition": "Circulating closed loops of induced electric currents in bulk iron cores produced by time-varying magnetic flux, causing thermal energy loss."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Principle of mutual induction with explanation.",
+      "1.5 Marks: Labeled diagram showing primary, secondary, and laminated core.",
+      "1 Mark: Mathematical derivation of voltage and current transformation ratio $V_s/V_p = N_s/N_p = I_p/I_s$.",
+      "1.5 Marks: Description of 4 real energy losses (Copper loss, Eddy current loss, Hysteresis loss, Flux leakage) with mitigation methods."
+    ],
+    "examinerTips": "In explaining energy losses: (1) Copper loss is minimized by thick wires; (2) Eddy current loss is minimized by laminated core; (3) Hysteresis loss is minimized by soft iron (narrow hysteresis loop); (4) Flux leakage is minimized by winding primary and secondary over one another.",
+    "modelAnswer": {
+      "statement": "Principle: An AC transformer works on the principle of Mutual Induction — whenever alternating current in the primary coil changes, it creates a time-varying magnetic flux in the common soft iron core, which links with the secondary coil and induces an alternating emf across it.\nA transformer cannot operate on Direct Current (DC) because steady direct current produces constant magnetic flux ($d\\Phi/dt = 0$), resulting in zero induced secondary voltage.\nStep-up Transformer: Number of turns in secondary exceeds primary ($N_s > N_p$), stepping up voltage ($V_s > V_p$) while stepping down current ($I_s < I_p$).\nStep-down Transformer: Number of turns in primary exceeds secondary ($N_p > N_s$), stepping down voltage ($V_s < V_p$) while stepping up current ($I_s > I_p$).",
+      "derivations": [
         {
-          name: "Mathematical Derivation of Transformation Ratio [NCERT Section 7.9]",
-          steps: [
-            "Setup & Assumptions: Let primary winding have N_p turns and secondary have N_s turns, both wound on a soft-iron core of high magnetic permeability. Assume ideal conditions: (1) no magnetic flux leakage (same flux Φ links each turn of both coils); (2) zero resistance in windings; (3) negligible core losses.",
-            "Primary Back EMF: The alternating current in primary creates magnetic flux Φ in the core. The induced self-emf in primary is: ε_p = -N_p (dΦ/dt).",
-            "Secondary Induced EMF: Since the same magnetic flux links each turn of the secondary winding, the induced emf in secondary is: ε_s = -N_s (dΦ/dt).",
-            "Terminal Voltage Ratio: For ideal zero-resistance windings, terminal voltages equal induced emfs: V_p = ε_p and V_s = ε_s. Taking the ratio: V_s / V_p = [ -N_s (dΦ/dt) ] / [ -N_p (dΦ/dt) ] ⟹ V_s / V_p = N_s / N_p = k (transformation ratio).",
-            "Step-Up vs Step-Down Classification:",
-            "  • Step-Up Transformer: N_s > N_p ⟹ k > 1 ⟹ V_s > V_p (Output voltage exceeds input voltage).",
-            "  • Step-Down Transformer: N_s < N_p ⟹ k < 1 ⟹ V_s < V_p (Output voltage is less than input voltage).",
-            "Current Relation via Conservation of Energy: For an ideal transformer with 100% efficiency, input power equals output power: P_in = P_out ⟹ V_p · I_p = V_s · I_s.",
-            "Current Ratio: Rearranging gives: I_p / I_s = V_s / V_p = N_s / N_p = k.",
-            "Conclusion: In a step-up transformer, voltage is stepped up by factor k, but current is stepped down by the exact same factor k, strictly conserving electrical power!"
+          "name": "Working Derivation: Voltage & Current Transformation Ratios",
+          "steps": [
+            "Consider an ideal transformer having primary coil of $N_p$ turns and secondary coil of $N_s$ turns wound on a laminated soft iron core. Assume zero flux leakage so that same flux $\\Phi$ links each turn of both primary and secondary coils.",
+            "By Faraday's law of induction, alternating flux $\\Phi$ induces back emf in the primary coil: \\varepsilon_p = -N_p \\frac{d\\Phi}{dt}",
+            "Similarly, the induced emf in the secondary coil is: \\varepsilon_s = -N_s \\frac{d\\Phi}{dt}",
+            "For an ideal transformer with negligible winding resistance, primary terminal voltage $V_p \\approx \\varepsilon_p$ and open-circuit secondary voltage $V_s \\approx \\varepsilon_s$. Dividing equations gives: \\frac{V_s}{V_p} = \\frac{N_s}{N_p} = K \\quad (\\text{Transformation Ratio})",
+            "For an ideal transformer with 100% efficiency, electrical power input equals electrical power output: P_{\\text{in}} = P_{\\text{out}} \\quad \\implies \\quad V_p I_p = V_s I_s",
+            "Hence, current ratio is inversely proportional to voltage ratio: \\frac{I_p}{I_s} = \\frac{V_s}{V_p} = \\frac{N_s}{N_p}",
+            "Real Transformer Efficiency: In practical transformers, efficiency is less than 100% due to core and winding losses: \\eta = \\frac{P_{\\text{out}}}{P_{\\text{in}}} \\times 100\\% = \\frac{V_s I_s}{V_p I_p} \\times 100\\%"
           ],
-          formula: "V_s / V_p = I_p / I_s = N_s / N_p = k  [Step-up: k > 1 ; Step-down: k < 1]"
+          "formula": "\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = \\frac{I_p}{I_s} = K"
         }
       ],
-      diagramNotes: "Draw a closed rectangular soft-iron laminated core; show Primary winding (N_p, V_p, I_p) on one limb, Secondary winding (N_s, V_s, I_s) on other limb, with dashed lines indicating mutual flux Φ.",
-      markingScheme: [
-        "1 Mark: Principle of mutual induction and neat labelled diagram with core lamination.",
-        "2 Marks: Mathematical derivation of V_s/V_p = N_s/N_p and I_p/I_s = V_s/V_p using power conservation.",
-        "2 Marks: Explaining 4 energy losses with their specific engineering remedies (0.5 mark each)."
+      "diagramNotes": "1. Draw rectangular laminated soft iron core with thin insulated sheets visible.\n2. Draw Primary Coil on left limb with $N_p$ turns connected to AC source $V_p \\sim$.\n3. Draw Secondary Coil on right limb with $N_s$ turns connected to load resistor $R_L$.\n4. Show dashed magnetic flux loop $\\Phi(t)$ circulating through the iron core linking both coils.",
+      "markingScheme": [
+        "1 Mark: Principle of mutual induction with explanation.",
+        "1.5 Marks: Labeled diagram showing primary, secondary, and laminated core.",
+        "1 Mark: Mathematical derivation of voltage and current transformation ratio $V_s/V_p = N_s/N_p = I_p/I_s$.",
+        "1.5 Marks: Description of 4 real energy losses (Copper loss, Eddy current loss, Hysteresis loss, Flux leakage) with mitigation methods."
       ],
-      examinerTips: "The 4 Essential Transformer Losses & Remedies:\n1. Copper Loss (I²R heating in windings) ⟶ Minimized by using thick copper wires with low resistance.\n2. Eddy Current Loss (heating in iron core) ⟶ Minimized by using a laminated core of thin varnished steel sheets.\n3. Hysteresis Loss (continuous reversal of core magnetization) ⟶ Minimized by using soft iron / silicon steel with a narrow hysteresis loop.\n4. Flux Leakage (not all flux links both coils) ⟶ Minimized by winding primary and secondary coaxially one over the other."
+      "examinerTips": "In explaining energy losses: (1) Copper loss is minimized by thick wires; (2) Eddy current loss is minimized by laminated core; (3) Hysteresis loss is minimized by soft iron (narrow hysteresis loop); (4) Flux leakage is minimized by winding primary and secondary over one another."
     }
   },
   {
-    id: 'imp-phy-5',
-    number: 5,
-    title: "Moving Coil Galvanometer: Principle, Torque Derivation & Radial Field",
-    shortLabel: "Moving Coil Galvanometer & Torque",
-    chapterId: 'phy-ch-4',
-    chapterTitle: 'Moving Charges and Magnetism',
-    unit: 'Magnetism',
-    marks: '5 Marks',
-    marksNum: 5,
-    category: 'Derivation',
-    frequency: 'Guaranteed 5-Marker in Set 1/2/3',
-    questionPrompt: "(a) State the principle of a Moving Coil Galvanometer (MCG).\n(b) Derive the expression for the deflecting torque acting on the coil.\n(c) Explain the function of: (i) cylindrical concave magnetic poles, (ii) soft-iron cylindrical core.\n(d) Define current sensitivity and voltage sensitivity. Show that increasing current sensitivity may not necessarily increase voltage sensitivity.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 4: Moving Charges and Magnetism',
-      section: 'Section 4.10.3: The Moving Coil Galvanometer (pp. 163–165)',
-      equations: 'Eqs. (4.40), (4.41), (4.42)',
-      figures: 'Fig. 4.25',
-      summary: 'Torque on a rectangular current loop in a radial magnetic field balanced by the mechanical restoring torque of a phosphor-bronze suspension.'
+    "id": "imp-phy-5",
+    "number": 5,
+    "title": "Moving Coil Galvanometer: Principle, Torque Derivation & Radial Field",
+    "shortLabel": "Moving Coil Galvanometer (Torque & Radial Field)",
+    "chapterId": "phy-ch-4",
+    "chapterTitle": "Moving Charges and Magnetism",
+    "unit": "Magnetism",
+    "marks": "5 Marks",
+    "marksNum": 5,
+    "category": "Derivation",
+    "frequency": "Guaranteed Core 5-Mark Question (CBSE 2024 SQP, 2023, 2022, 2020)",
+    "questionPrompt": "(a) State the principle of a Moving Coil Galvanometer.\n(b) With the help of a neat diagram, derive the expression for deflecting torque on the coil.\n(c) Explain the function of: (i) Cylindrical soft iron core, and (ii) Radial magnetic field.\n(d) Define current sensitivity and voltage sensitivity.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 4: Moving Charges and Magnetism",
+      "section": "Section 4.10: The Moving Coil Galvanometer (pp. 163–165)",
+      "equations": "Eqs. (4.40), (4.41), (4.42)",
+      "figures": "Figs. 4.24, 4.25",
+      "summary": "Torque on rectangular loop in uniform field, role of concave pole pieces in generating radial magnetic field, and sensitivity formulas."
     },
-    modelAnswer: {
-      statement: "Principle: A current-carrying coil placed in a magnetic field experiences a deflecting mechanical torque which tends to rotate it. In a radial magnetic field, this deflection is directly proportional to the current passing through the coil.",
-      derivations: [
+    "theory": [
+      "Principle: When a current-carrying coil is placed in an external magnetic field, it experiences a deflecting magnetic torque: $$\\tau_{\\text{def}} = N I A B \\sin\\theta$$",
+      "Function of Radial Magnetic Field: Created by concave cylindrical pole pieces and a soft iron core. It ensures that the magnetic field lines are always parallel to the plane of the coil (perpendicular to coil's area vector, $\\theta = 90^\\circ$) at every rotational position, keeping torque maximum and deflection linear: $\\phi \\propto I$.",
+      "Function of Soft Iron Core: Being ferromagnetic with high relative permeability ($\\mu_r \\gg 1$), it concentrates and intensifies magnetic flux lines inside the air gap, increasing sensitivity.",
+      "Restoring Couple: Provided by the torsion of a phosphor-bronze suspension ribbon or hair-spring, resisting deflection with torque $\\tau_{\\text{rest}} = k \\phi$."
+    ],
+    "derivations": [
+      {
+        "name": "Derivation of Deflection & Sensitivity Equations",
+        "setup": "Consider a rectangular coil of $N$ turns, length $l$, and breadth $b$ (area $A = l \\cdot b$) carrying steady current $I$, suspended in a radial magnetic field of flux density $B$. Let $k$ be the restoring couple per unit twist of the phosphor-bronze suspension.",
+        "steps": [
+          {
+            "text": "In a radial magnetic field, the plane of the coil is always parallel to field lines $\\vec{B}$, meaning angle between area normal and field is always $\\theta = 90^\\circ$ ($\\sin 90^\\circ = 1$). Deflecting torque is:",
+            "equation": "\\tau_{\\text{def}} = N I A B"
+          },
+          {
+            "text": "As the coil rotates through angle $\\phi$, restoring torque developed in the phosphor-bronze spring is:",
+            "equation": "\\tau_{\\text{rest}} = k \\cdot \\phi"
+          },
+          {
+            "text": "At rotational mechanical equilibrium, deflecting torque equals restoring torque:",
+            "equation": "N I A B = k \\phi"
+          },
+          {
+            "text": "Hence, angular deflection $\\phi$ is directly proportional to current $I$ (linear scale):",
+            "equation": "\\phi = \\left(\\frac{N A B}{k}\\right) I \\quad \\implies \\quad \\phi \\propto I"
+          },
+          {
+            "text": "Current Sensitivity $I_s$ is deflection per unit current:",
+            "equation": "I_s = \\frac{\\phi}{I} = \\frac{N A B}{k}"
+          },
+          {
+            "text": "Voltage Sensitivity $V_s$ is deflection per unit voltage ($V = I R$):",
+            "equation": "V_s = \\frac{\\phi}{V} = \\frac{\\phi}{I R} = \\frac{N A B}{k R}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Sensitivity Condition:",
+            "text": "Increasing number of turns $N$ increases Current Sensitivity $I_s$, but does NOT necessarily increase Voltage Sensitivity $V_s$ because coil resistance $R$ increases proportionally ($R \\propto N$):",
+            "equation": "V_s = \\frac{I_s}{R} = \\text{constant}"
+          }
+        ],
+        "finalFormula": "\\phi = \\left(\\frac{N A B}{k}\\right) I, \\quad I_s = \\frac{N A B}{k}, \\quad V_s = \\frac{N A B}{k R}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "galvanometer-torque",
+      "title": "Moving Coil Galvanometer & Radial Field",
+      "examDrawingGuide": [
+        "1. Draw concave cylindrical North and South magnetic pole pieces.",
+        "2. Draw central soft iron cylinder core with radial field lines pointing radially toward center.",
+        "3. Draw rectangular copper coil suspended between poles by phosphor-bronze strip.",
+        "4. Show upper torsion head, lower hair-spring, and pointer moving over linear circular scale."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Radial Magnetic Field (sinθ = 1 at all angles)",
+      "Concave Cylindrical Pole Pieces",
+      "Cylindrical Soft Iron Core (High Permeability)",
+      "Phosphor-Bronze Suspension (Low Torsion Constant k)",
+      "Deflecting Torque τ = NIAB",
+      "Restoring Torque τ = kφ",
+      "Current Sensitivity (NAB/k)",
+      "Voltage Sensitivity (NAB/kR)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "k",
+        "term": "Torsional Constant (Restoring Couple)",
+        "definition": "Restoring torque produced per unit twist in the suspension spring/strip, measured in $\\text{N}\\cdot\\text{m/rad}$."
+      },
+      {
+        "symbol": "\\phi",
+        "term": "Angular Deflection",
+        "definition": "Angle through which the coil rotates, indicated by the pointer on the linear scale."
+      },
+      {
+        "symbol": "I_s",
+        "term": "Current Sensitivity",
+        "definition": "Deflection produced in the galvanometer when unit current passes through it: $I_s = \\phi/I = NAB/k$, measured in $\\text{rad/A}$ or $\\text{div/A}$."
+      },
+      {
+        "symbol": "V_s",
+        "term": "Voltage Sensitivity",
+        "definition": "Deflection produced in the galvanometer per unit potential difference applied across its terminals: $V_s = \\phi/V = NAB/(kR)$, measured in $\\text{rad/V}$ or $\\text{div/V}$."
+      },
+      {
+        "symbol": "B",
+        "term": "Radial Magnetic Field",
+        "definition": "Magnetic field whose lines of force are directed along the radii of cylindrical pole pieces, ensuring $\\vec{B}$ is always parallel to the plane of the coil."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Statement of principle (torque on current loop in magnetic field).",
+      "1.5 Marks: Labeled diagram showing concave poles, core, coil, and suspension.",
+      "1.5 Marks: Derivation of $NIAB = k\\phi \\implies \\phi \\propto I$.",
+      "1 Mark: Definitions of current and voltage sensitivity with explanations of soft iron core and radial field."
+    ],
+    "examinerTips": "Common mistake: forgetting to explain WHY the radial field is necessary. State explicitly: 'To ensure deflecting torque remains independent of the angle of rotation, producing a linear scale where deflection is directly proportional to current.'",
+    "modelAnswer": {
+      "statement": "Principle: When a current-carrying coil is placed in an external magnetic field, it experiences a deflecting magnetic torque: $$\\tau_{\\text{def}} = N I A B \\sin\\theta$$\nFunction of Radial Magnetic Field: Created by concave cylindrical pole pieces and a soft iron core. It ensures that the magnetic field lines are always parallel to the plane of the coil (perpendicular to coil's area vector, $\\theta = 90^\\circ$) at every rotational position, keeping torque maximum and deflection linear: $\\phi \\propto I$.\nFunction of Soft Iron Core: Being ferromagnetic with high relative permeability ($\\mu_r \\gg 1$), it concentrates and intensifies magnetic flux lines inside the air gap, increasing sensitivity.\nRestoring Couple: Provided by the torsion of a phosphor-bronze suspension ribbon or hair-spring, resisting deflection with torque $\\tau_{\\text{rest}} = k \\phi$.",
+      "derivations": [
         {
-          name: "Deflecting & Restoring Torque Equilibrium [NCERT Section 4.10.3]",
-          steps: [
-            "Coil Geometry: Consider a rectangular coil of N turns, length l, and breadth b (area A = l · b) carrying steady current I, suspended in a magnetic field B⃗.",
-            "General Deflecting Torque: The magnetic torque on a planar current loop of magnetic dipole moment m⃗ = N I A⃗ in field B⃗ is: τ⃗ = m⃗ × B⃗ ⟹ τ_def = N I A B sinθ, where θ is the angle between the magnetic field B⃗ and the normal to the coil plane.",
-            "Role of Radial Magnetic Field: Concave magnetic poles combined with a central soft-iron core create a RADIAL magnetic field. In a radial field, magnetic field lines are always directed along the radii of the cylindrical poles, meaning the plane of the coil is ALWAYS parallel to the field lines in every angular position (θ = 90°, sin 90° = 1).",
-            "Maximum Constant Deflecting Torque: Therefore, regardless of rotation: τ_def = N I A B.",
-            "Restoring Torque: As the coil deflects through angle θ, the suspension strip (phosphor-bronze) is twisted, exerting a restoring torque: τ_rest = C · θ (where C is the restoring torque per unit twist, also known as torsional constant).",
-            "Equilibrium Condition: At steady deflection: τ_def = τ_rest ⟹ N I A B = C · θ.",
-            "Current-Deflection Relation: I = (C / NAB) · θ ⟹ I = K · θ (where K = C/NAB is the galvanometer reduction factor).",
-            "Conclusion: Since C, N, A, B are constants: θ ∝ I. Deflection is strictly linear with current, giving a uniform scale!",
-            "Sensitivities Definition:",
-            "  • Current Sensitivity (S_i): Deflection per unit current: S_i = θ / I = (NAB) / C.",
-            "  • Voltage Sensitivity (S_v): Deflection per unit voltage: S_v = θ / V = θ / (IR) = (NAB) / (CR) = S_i / R.",
-            "Why Increasing S_i Does Not Always Increase S_v: If we double the number of turns N, the current sensitivity S_i doubles. However, doubling N doubles the total wire length, which doubles the coil resistance R. Hence: S_v' = (2 · S_i) / (2 · R) = S_i / R = S_v. The voltage sensitivity remains unchanged!"
+          "name": "Derivation of Deflection & Sensitivity Equations",
+          "steps": [
+            "Consider a rectangular coil of $N$ turns, length $l$, and breadth $b$ (area $A = l \\cdot b$) carrying steady current $I$, suspended in a radial magnetic field of flux density $B$. Let $k$ be the restoring couple per unit twist of the phosphor-bronze suspension.",
+            "In a radial magnetic field, the plane of the coil is always parallel to field lines $\\vec{B}$, meaning angle between area normal and field is always $\\theta = 90^\\circ$ ($\\sin 90^\\circ = 1$). Deflecting torque is: \\tau_{\\text{def}} = N I A B",
+            "As the coil rotates through angle $\\phi$, restoring torque developed in the phosphor-bronze spring is: \\tau_{\\text{rest}} = k \\cdot \\phi",
+            "At rotational mechanical equilibrium, deflecting torque equals restoring torque: N I A B = k \\phi",
+            "Hence, angular deflection $\\phi$ is directly proportional to current $I$ (linear scale): \\phi = \\left(\\frac{N A B}{k}\\right) I \\quad \\implies \\quad \\phi \\propto I",
+            "Current Sensitivity $I_s$ is deflection per unit current: I_s = \\frac{\\phi}{I} = \\frac{N A B}{k}",
+            "Voltage Sensitivity $V_s$ is deflection per unit voltage ($V = I R$): V_s = \\frac{\\phi}{V} = \\frac{\\phi}{I R} = \\frac{N A B}{k R}",
+            "Sensitivity Condition: Increasing number of turns $N$ increases Current Sensitivity $I_s$, but does NOT necessarily increase Voltage Sensitivity $V_s$ because coil resistance $R$ increases proportionally ($R \\propto N$): V_s = \\frac{I_s}{R} = \\text{constant}"
           ],
-          formula: "I = (C / NAB) θ ⟹ θ ∝ I ; S_i = NAB/C ; S_v = NAB/(CR) = S_i / R"
+          "formula": "\\phi = \\left(\\frac{N A B}{k}\\right) I, \\quad I_s = \\frac{N A B}{k}, \\quad V_s = \\frac{N A B}{k R}"
         }
       ],
-      diagramNotes: "Draw horseshoe magnet with cylindrical concave poles N and S, soft-iron core at center, rectangular coil, phosphor-bronze suspension with mirror, and lower hairspring.",
-      markingScheme: [
-        "1 Mark: Statement of principle and neat labelled diagram.",
-        "2 Marks: Derivation of deflecting torque, radial field condition (θ = 90°), and equilibrium N I A B = C θ.",
-        "1 Mark: Explicit explanation of functions of concave poles and soft-iron core (to produce radial field and amplify B).",
-        "1 Mark: Mathematical proof showing why doubling N doubles both S_i and R, leaving S_v constant."
+      "diagramNotes": "1. Draw concave cylindrical North and South magnetic pole pieces.\n2. Draw central soft iron cylinder core with radial field lines pointing radially toward center.\n3. Draw rectangular copper coil suspended between poles by phosphor-bronze strip.\n4. Show upper torsion head, lower hair-spring, and pointer moving over linear circular scale.",
+      "markingScheme": [
+        "1 Mark: Statement of principle (torque on current loop in magnetic field).",
+        "1.5 Marks: Labeled diagram showing concave poles, core, coil, and suspension.",
+        "1.5 Marks: Derivation of $NIAB = k\\phi \\implies \\phi \\propto I$.",
+        "1 Mark: Definitions of current and voltage sensitivity with explanations of soft iron core and radial field."
       ],
-      examinerTips: "Remember the two functions of the soft-iron core:\n1. It produces a radial magnetic field so the torque remains maximum (τ = NIAB) for all deflections.\n2. Due to high magnetic permeability (μ_r ≫ 1), it concentrates magnetic lines, significantly increasing field strength B."
+      "examinerTips": "Common mistake: forgetting to explain WHY the radial field is necessary. State explicitly: 'To ensure deflecting torque remains independent of the angle of rotation, producing a linear scale where deflection is directly proportional to current.'"
     }
   },
   {
-    id: 'imp-phy-6',
-    number: 6,
-    title: "Electric Flux, Electric Dipole & Electric Dipole Moment",
-    shortLabel: "Electric Flux & Dipole Moment",
-    chapterId: 'phy-ch-1',
-    chapterTitle: 'Electric Charges and Fields',
-    unit: 'Electrostatics',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Definitions & Conceptual',
-    frequency: 'Core Definitions & Formulas (CBSE 2023, 2021, 2019)',
-    questionPrompt: "(a) Define electric flux. Write its SI unit and dimensional formula. Is it scalar or vector?\n(b) Define an electric dipole and electric dipole moment. State its direction and SI unit.\n(c) Derive the torque acting on an electric dipole placed in a uniform electric field.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 1: Electric Charges and Fields',
-      section: 'Sections 1.10, 1.11, 1.13 (pp. 27–33)',
-      equations: 'Eqs. (1.8), (1.13), (1.27)',
-      figures: 'Figs. 1.22, 1.25',
-      summary: 'Mathematical formulation of electric flux Φ_E = ∫ E⃗ · dA⃗, dipole moment p⃗ = q(2a⃗), torque couple τ⃗ = p⃗ × E⃗, and electrostatic potential energy U = -p⃗ · E⃗.'
+    "id": "imp-phy-6",
+    "number": 6,
+    "title": "Electric Flux through Closed Surface Containing an Electric Dipole",
+    "shortLabel": "Electric Flux & Dipole (Gauss Law)",
+    "chapterId": "phy-ch-1",
+    "chapterTitle": "Electric Charges and Fields",
+    "unit": "Electrostatics",
+    "marks": "2 Marks",
+    "marksNum": 2,
+    "category": "Conceptual & Derivation",
+    "frequency": "High Frequency Core Conceptual (CBSE 2024 SQP Q1, 2023, 2020)",
+    "questionPrompt": "(a) Define electric flux. Write its SI unit.\n(b) An electric dipole of dipole moment p is enclosed by a closed Gaussian surface S. What is the total electric flux emerging through the surface? Does the electric field on the surface necessarily vanish?",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 1: Electric Charges and Fields",
+      "section": "Sections 1.10 & 1.14 (pp. 25–27, 33–35)",
+      "equations": "Eqs. (1.28), (1.31)",
+      "figures": "Fig. 1.25",
+      "summary": "Definition of electric flux, dipole charge balance (+q and -q summing to zero), and distinction between net flux and local field intensity."
     },
-    modelAnswer: {
-      statement: "• Electric Flux (Φ_E): The measure of the total number of electric field lines crossing a given surface area. Mathematically: Φ_E = ∫ E⃗ · dA⃗ = E A cosθ. SI Unit: N·m²/C or V·m. Dimensions: [M L³ T⁻³ A⁻¹]. It is a SCALAR quantity.\n• Electric Dipole: A pair of equal and opposite point charges (+q and -q) separated by a small vector distance 2a⃗.\n• Electric Dipole Moment (p⃗): A vector quantity defined as the product of the charge magnitude q and separation vector 2a⃗: p⃗ = q(2a⃗). Direction: Strictly from NEGATIVE charge (-q) to POSITIVE charge (+q). SI Unit: Coulomb-metre (C·m).",
-      derivations: [
+    "theory": [
+      "Electric Flux $\\Phi_E$ is defined as the total number of electric field lines crossing normally through a given surface area. Mathematically: $$\\Phi_E = \\int \\vec{E} \\cdot d\\vec{A}$$",
+      "SI unit of electric flux is $\\text{N}\\cdot\\text{m}^2\\text{C}^{-1}$ (or $\\text{V}\\cdot\\text{m}$). It is a scalar quantity.",
+      "An electric dipole consists of two equal and opposite point charges ($+q$ and $-q$). Hence, the net enclosed charge inside any closed surface containing the entire dipole is identically zero: $$q_{\\text{enclosed}} = +q + (-q) = 0$$",
+      "Crucial Exam Concept: Although the total electric flux through the enclosing surface is zero, the electric field $\\vec{E}$ at individual points on the surface is NOT zero. Field lines originate at $+q$, pass through the surface, and re-enter to terminate at $-q$."
+    ],
+    "derivations": [
+      {
+        "name": "Evaluation of Total Flux Using Gauss's Law",
+        "setup": "Consider a closed Gaussian surface $S$ of arbitrary shape enclosing an electric dipole consisting of point charges $+q$ and $-q$ separated by distance $2a$.",
+        "steps": [
+          {
+            "text": "By Gauss's Law, the total outward electric flux through any closed surface is proportional to the net charge enclosed:",
+            "equation": "\\Phi_E = \\oint_S \\vec{E} \\cdot d\\vec{A} = \\frac{q_{\\text{enclosed}}}{\\varepsilon_0}"
+          },
+          {
+            "text": "The algebraic sum of all charges enclosed by the Gaussian surface is:",
+            "equation": "q_{\\text{enclosed}} = (+q) + (-q) = 0"
+          },
+          {
+            "text": "Substituting the enclosed charge into Gauss's Law:",
+            "equation": "\\Phi_E = \\frac{0}{\\varepsilon_0} = 0"
+          },
+          {
+            "text": "Physical interpretation: The number of electric field lines leaving the surface from $+q$ equals the number of field lines entering the surface to terminate on $-q$. Hence, net flux vanishes:",
+            "equation": "\\Phi_{\\text{out}} - \\Phi_{\\text{in}} = 0"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Local Electric Field vs Net Flux:",
+            "text": "Net flux is zero, but electric field at any point on the surface is finite due to proximity to individual charges:",
+            "equation": "\\vec{E} \\neq 0 \\quad \\text{even though} \\quad \\oint \\vec{E} \\cdot d\\vec{A} = 0"
+          }
+        ],
+        "finalFormula": "\\Phi_E = \\oint_S \\vec{E} \\cdot d\\vec{A} = 0, \\quad \\vec{E}_{\\text{surface}} \\neq 0"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "electric-flux-dipole",
+      "title": "Closed Gaussian Surface Enclosing an Electric Dipole",
+      "examDrawingGuide": [
+        "1. Draw arbitrary closed boundary representing Gaussian surface $S$.",
+        "2. Place $+q$ and $-q$ inside separated by distance $2a$.",
+        "3. Draw curved electric field lines emerging outwards from $+q$ piercing through the surface.",
+        "4. Draw field lines looping back and entering through the surface to terminate on $-q$, clearly showing equal inward and outward flux."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Definition of Electric Flux (Φ = ∫ E · dA)",
+      "SI Unit (N·m²/C or V·m)",
+      "Net Enclosed Charge of Dipole = 0",
+      "Gauss's Law Application (Φ = 0)",
+      "Local Electric Field E ≠ 0 on Surface",
+      "Inward Flux Cancels Outward Flux"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\Phi_E",
+        "term": "Electric Flux",
+        "definition": "Surface integral of electric field over a closed surface, scalar quantity measured in $\\text{N}\\cdot\\text{m}^2/\\text{C}$."
+      },
+      {
+        "symbol": "\\vec{p}",
+        "term": "Electric Dipole Moment",
+        "definition": "Vector pointing from $-q$ to $+q$ of magnitude $p = q(2a)$, measured in Coulomb-metres ($\\text{C}\\cdot\\text{m}$)."
+      },
+      {
+        "symbol": "q_{\\text{enclosed}}",
+        "term": "Net Enclosed Charge",
+        "definition": "Algebraic sum of all discrete charges bounded inside the chosen Gaussian surface."
+      },
+      {
+        "symbol": "\\varepsilon_0",
+        "term": "Permittivity of Free Space",
+        "definition": "Constant of electrostatics ($8.854 \\times 10^{-12} \\text{ C}^2\\text{N}^{-1}\\text{m}^{-2}$)."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Definition of electric flux and correct SI unit ($\text{N}\\cdot\text{m}^2/\text{C}$ or $\text{V}\\cdot\text{m}$).",
+      "0.5 Mark: Proof that total flux $\\Phi_E = 0$ using Gauss's law since $q_{\text{net}} = 0$.",
+      "0.5 Mark: Explicit clarification that $\u000bec{E} \neq 0$ on the surface."
+    ],
+    "examinerTips": "Do NOT write that electric field is zero on the surface! Only the total integral (flux) is zero because lines entering equal lines leaving.",
+    "modelAnswer": {
+      "statement": "Electric Flux $\\Phi_E$ is defined as the total number of electric field lines crossing normally through a given surface area. Mathematically: $$\\Phi_E = \\int \\vec{E} \\cdot d\\vec{A}$$\nSI unit of electric flux is $\\text{N}\\cdot\\text{m}^2\\text{C}^{-1}$ (or $\\text{V}\\cdot\\text{m}$). It is a scalar quantity.\nAn electric dipole consists of two equal and opposite point charges ($+q$ and $-q$). Hence, the net enclosed charge inside any closed surface containing the entire dipole is identically zero: $$q_{\\text{enclosed}} = +q + (-q) = 0$$\nCrucial Exam Concept: Although the total electric flux through the enclosing surface is zero, the electric field $\\vec{E}$ at individual points on the surface is NOT zero. Field lines originate at $+q$, pass through the surface, and re-enter to terminate at $-q$.",
+      "derivations": [
         {
-          name: "Derivation of Torque Couple on Dipole [NCERT Section 1.11]",
-          steps: [
-            "Setup: Consider an electric dipole with charges -q and +q separated by distance 2a, placed in a uniform electric field E⃗ at angle θ to the dipole axis.",
-            "Translational Equilibrium: Force on +q is F₁ = +q E⃗ along the field; force on -q is F₂ = -q E⃗ opposite to the field. Net translational force is: F_net = +qE - qE = 0. The dipole experiences NO net translational motion.",
-            "Couple Formation: Since the two equal and opposite forces act along different, non-coincident lines of action, they constitute a torque couple.",
-            "Torque Magnitude: Torque magnitude τ is the product of either force magnitude and the perpendicular distance between their lines of action: τ = Force × (Perpendicular arm) = (q E) × (2a sinθ).",
-            "Grouping Dipole Moment: Using p = q · (2a): τ = (q · 2a) E sinθ = p E sinθ.",
-            "Vector Formulation: In vector notation: τ⃗ = p⃗ × E⃗.",
-            "Direction: By right-hand screw rule, τ⃗ acts perpendicular to the plane containing p⃗ and E⃗, tending to align p⃗ parallel to E⃗.",
-            "Equilibrium States:",
-            "  • Stable Equilibrium (θ = 0°): p⃗ is aligned parallel to E⃗. Torque τ = 0, and potential energy U = -pE (minimum).",
-            "  • Unstable Equilibrium (θ = 180°): p⃗ is antiparallel to E⃗. Torque τ = 0, but potential energy U = +pE (maximum)."
+          "name": "Evaluation of Total Flux Using Gauss's Law",
+          "steps": [
+            "Consider a closed Gaussian surface $S$ of arbitrary shape enclosing an electric dipole consisting of point charges $+q$ and $-q$ separated by distance $2a$.",
+            "By Gauss's Law, the total outward electric flux through any closed surface is proportional to the net charge enclosed: \\Phi_E = \\oint_S \\vec{E} \\cdot d\\vec{A} = \\frac{q_{\\text{enclosed}}}{\\varepsilon_0}",
+            "The algebraic sum of all charges enclosed by the Gaussian surface is: q_{\\text{enclosed}} = (+q) + (-q) = 0",
+            "Substituting the enclosed charge into Gauss's Law: \\Phi_E = \\frac{0}{\\varepsilon_0} = 0",
+            "Physical interpretation: The number of electric field lines leaving the surface from $+q$ equals the number of field lines entering the surface to terminate on $-q$. Hence, net flux vanishes: \\Phi_{\\text{out}} - \\Phi_{\\text{in}} = 0",
+            "Local Electric Field vs Net Flux: Net flux is zero, but electric field at any point on the surface is finite due to proximity to individual charges: \\vec{E} \\neq 0 \\quad \\text{even though} \\quad \\oint \\vec{E} \\cdot d\\vec{A} = 0"
           ],
-          formula: "τ⃗ = p⃗ × E⃗ ⟹ τ = p E sinθ ; Potential Energy U = -p⃗ · E⃗ = -p E cosθ"
+          "formula": "\\Phi_E = \\oint_S \\vec{E} \\cdot d\\vec{A} = 0, \\quad \\vec{E}_{\\text{surface}} \\neq 0"
         }
       ],
-      diagramNotes: "Draw dipole charges -q and +q separated by 2a at angle θ to horizontal E lines; show equal and opposite forces qE and perpendicular distance arm 2a sinθ.",
-      markingScheme: [
-        "1 Mark: Electric flux definition, formula Φ = ∫E·dA, SI unit N·m²/C (or V·m), and scalar nature.",
-        "1 Mark: Dipole moment definition p = q(2a), SI unit C·m, and precise direction (-q to +q).",
-        "1 Mark: Step-by-step derivation of torque couple τ = p E sinθ and vector form τ⃗ = p⃗ × E⃗."
+      "diagramNotes": "1. Draw arbitrary closed boundary representing Gaussian surface $S$.\n2. Place $+q$ and $-q$ inside separated by distance $2a$.\n3. Draw curved electric field lines emerging outwards from $+q$ piercing through the surface.\n4. Draw field lines looping back and entering through the surface to terminate on $-q$, clearly showing equal inward and outward flux.",
+      "markingScheme": [
+        "1 Mark: Definition of electric flux and correct SI unit ($\text{N}\\cdot\text{m}^2/\text{C}$ or $\text{V}\\cdot\text{m}$).",
+        "0.5 Mark: Proof that total flux $\\Phi_E = 0$ using Gauss's law since $q_{\text{net}} = 0$.",
+        "0.5 Mark: Explicit clarification that $\u000bec{E} \neq 0$ on the surface."
       ],
-      examinerTips: "Crucial Physics Convention: In physics, dipole moment p⃗ is strictly directed from -q to +q (chemistry uses the opposite convention). Never write +q to -q!"
+      "examinerTips": "Do NOT write that electric field is zero on the surface! Only the total integral (flux) is zero because lines entering equal lines leaving."
     }
   },
   {
-    id: 'imp-phy-7',
-    number: 7,
-    title: "Equipotential Surfaces: Definition, Properties & Shapes",
-    shortLabel: "Equipotential Surfaces & Properties",
-    chapterId: 'phy-ch-2',
-    chapterTitle: 'Electrostatic Potential and Capacitance',
-    unit: 'Electrostatics',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Theory & Properties',
-    frequency: 'Guaranteed 2-3 Mark Reasoning Question',
-    questionPrompt: "(a) What is an equipotential surface?\n(b) State four important properties of equipotential surfaces with reasons.\n(c) Sketch equipotential surfaces for: (i) an isolated positive point charge, (ii) a uniform electric field along the z-axis.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 2: Electrostatic Potential and Capacitance',
-      section: 'Section 2.4: Equipotential Surfaces (pp. 60–63)',
-      equations: 'Eq. (2.17)',
-      figures: 'Figs. 2.9, 2.10, 2.11',
-      summary: 'Properties of surfaces with constant electrostatic potential V, proof of zero work dW = 0, field perpendicularity E⃗ ⟂ surface, non-intersection, and geometric spacing dr = -dV/E.'
+    "id": "imp-phy-7",
+    "number": 7,
+    "title": "Equipotential Surfaces: Definition, Properties & Potential Gradient Relation",
+    "shortLabel": "Equipotential Surfaces & E = -dV/dr",
+    "chapterId": "phy-ch-2",
+    "chapterTitle": "Electrostatic Potential and Capacitance",
+    "unit": "Electrostatics",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation & Conceptual",
+    "frequency": "Guaranteed Core Question (CBSE 2024, 2023, 2022, 2020)",
+    "questionPrompt": "(a) What is an equipotential surface? State its two important properties.\n(b) Prove that electric field is always perpendicular to the equipotential surface at every point.\n(c) Derive the relation between electric field and electrostatic potential: E = -dV/dr.\n(d) Sketch equipotential surfaces for: (i) A single positive point charge, and (ii) A uniform electric field.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 2: Electrostatic Potential and Capacitance",
+      "section": "Sections 2.4 & 2.5 (pp. 60–63)",
+      "equations": "Eqs. (2.19), (2.20)",
+      "figures": "Figs. 2.9, 2.10, 2.11",
+      "summary": "Definition of equipotential surface, zero work theorem, normal field vector proof, and differential relation between field and potential."
     },
-    modelAnswer: {
-      statement: "An Equipotential Surface is any geometric surface over which the electrostatic potential has a constant value at every point (V(x,y,z) = constant). Consequently, the potential difference between any two points on such a surface is identically zero (ΔV = 0).",
-      derivations: [
-        {
-          name: "4 Essential Properties with Mathematical Proofs [NCERT Section 2.4]",
-          steps: [
-            "Property 1: No work is done in moving a test charge over an equipotential surface.",
-            "  Mathematical Proof: Work done in moving test charge q₀ from point A to B is W_AB = q₀ (V_B - V_A). Since points A and B lie on the same equipotential surface, V_A = V_B ⟹ W_AB = q₀(0) = 0.",
-            "Property 2: Electric field lines are always PERPENDICULAR to the equipotential surface at every point.",
-            "  Mathematical Proof: Work done in an infinitesimal displacement dr⃗ on the surface is dW = -E⃗ · dr⃗ = -E dr cosθ = 0. Since E ≠ 0 and dr ≠ 0, cosθ must be 0 ⟹ θ = 90°. Hence, E⃗ is strictly normal to the surface.",
-            "Property 3: Two equipotential surfaces can NEVER intersect each other.",
-            "  Reasoning: If two surfaces with different potentials V₁ and V₂ intersected, the line of intersection would possess two distinct values of potential at the same point, and two different electric field directions would exist at that point, which is physically impossible.",
-            "Property 4: Spacing between equipotential surfaces reflects electric field strength (closer together in strong fields, farther apart in weak fields).",
-            "  Mathematical Proof: From the potential gradient relation: E = -dV/dr ⟹ dr = |dV| / E. For a constant potential difference dV between successive surfaces, dr ∝ 1/E. Where field E is strong, spacing dr is small (surfaces are crowded); where E is weak, dr is large (surfaces are widely spaced)."
-          ],
-          formula: "W = q(V_B - V_A) = 0 ; E⃗ ⊥ Surface ; dr = |dV| / E ⟹ Crowded where E is strong"
-        }
-      ],
-      diagramNotes: "Point charge: concentric spheres with radial spacing increasing outward; Uniform field along z: equidistant parallel planes in the xy-plane.",
-      markingScheme: [
-        "1 Mark: Definition of equipotential surface and proof that work W = 0.",
-        "1 Mark: 2 properties with mathematical reasons (E is perpendicular to surface; surfaces never intersect).",
-        "1 Mark: Correct sketches for point charge (concentric spheres with increasing gap) and uniform field (parallel planes)."
-      ],
-      examinerTips: "When sketching equipotential surfaces for a point charge, the concentric circles must get progressively farther apart as distance increases because dr ∝ 1/E!"
-    }
-  },
-  {
-    id: 'imp-phy-8',
-    number: 8,
-    title: "Electric Field Due to a Point Charge (Derivation & Superposition)",
-    shortLabel: "Field Due to a Point Charge",
-    chapterId: 'phy-ch-1',
-    chapterTitle: 'Electric Charges and Fields',
-    unit: 'Electrostatics',
-    marks: '2 Marks',
-    marksNum: 2,
-    category: 'Derivation',
-    frequency: 'Fundamental 2-Marker',
-    questionPrompt: "(a) Define electric field intensity at a point.\n(b) Derive the expression for the electric field at a distance r from an isolated point charge q.\n(c) Plot a graph showing the variation of E with distance r.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 1: Electric Charges and Fields',
-      section: 'Section 1.8: Electric Field (pp. 18–21)',
-      equations: 'Eqs. (1.6), (1.7)',
-      figures: 'Fig. 1.12',
-      summary: 'Rigorous definition of electric field from test charge limit E⃗ = lim(q₀→0) F⃗/q₀ and derivation from Coulomb\'s law.'
+    "theory": [
+      "An Equipotential Surface is any geometric surface that has the same constant electrostatic potential at all points ($V = \\text{constant}$).",
+      "Property 1: No work is done in moving a test charge between any two points on an equipotential surface: $$W = q_0(V_B - V_A) = q_0(0) = 0$$",
+      "Property 2: Electric field lines are always mutually perpendicular (normal) to the equipotential surface at every point.",
+      "Property 3: Two equipotential surfaces can never intersect each other (otherwise two distinct potentials would exist at the line of intersection).",
+      "Property 4: Equipotential surfaces are crowded closer together in regions of strong electric field and spaced wider apart in regions of weak field."
+    ],
+    "derivations": [
+      {
+        "name": "Proof 1: Electric Field is Perpendicular to Equipotential Surface",
+        "setup": "Consider two infinitesimally close points $A$ and $B$ lying on the same equipotential surface, separated by displacement vector $d\\vec{r}$. Let electric field at this location be $\\vec{E}$.",
+        "steps": [
+          {
+            "text": "Work done by electrostatic force in displacing test charge $q_0$ from $A$ to $B$ is:",
+            "equation": "dW = \\vec{F} \\cdot d\\vec{r} = q_0 (\\vec{E} \\cdot d\\vec{r})"
+          },
+          {
+            "text": "By definition of electrostatic potential difference:",
+            "equation": "dW = -q_0 \\, dV"
+          },
+          {
+            "text": "Since points $A$ and $B$ lie on the same equipotential surface, potential difference vanishes ($dV = V_B - V_A = 0$):",
+            "equation": "q_0 (\\vec{E} \\cdot d\\vec{r}) = 0 \\quad \\implies \\quad \\vec{E} \\cdot d\\vec{r} = 0"
+          },
+          {
+            "text": "Expanding the scalar dot product:",
+            "equation": "E \\, dr \\cos\\theta = 0 \\quad (\\text{since } E \\neq 0 \\text{ and } dr \\neq 0 \\implies \\cos\\theta = 0)"
+          },
+          {
+            "text": "Hence, angle between electric field and displacement along the surface is $90^\\circ$:",
+            "equation": "\\theta = 90^\\circ \\quad \\implies \\quad \\vec{E} \\perp d\\vec{r}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Physical Conclusion:",
+            "text": "Electric field has zero tangential component along an equipotential surface; it is entirely directed along the surface normal:",
+            "equation": "E_{\\parallel} = 0, \\quad E_{\\perp} = |\\vec{E}|"
+          }
+        ],
+        "finalFormula": "\\vec{E} \\perp \\text{Equipotential Surface}"
+      },
+      {
+        "name": "Proof 2: Potential Gradient Relation (E = -dV/dr)",
+        "setup": "Consider two parallel equipotential surfaces $A$ and $B$ separated by small normal perpendicular distance $dr$, having potentials $V$ and $V - dV$ respectively.",
+        "steps": [
+          {
+            "text": "Work done in moving unit positive charge ($q_0 = +1$) from surface $B$ to surface $A$ against the electric field $\\vec{E}$ is:",
+            "equation": "dW = |\\vec{F}_{\\text{ext}}| \\, dr = E \\, dr"
+          },
+          {
+            "text": "By definition, work done per unit positive charge equals the potential difference between the surfaces:",
+            "equation": "dW = V_A - V_B = V - (V - dV) = dV"
+          },
+          {
+            "text": "Equating mechanical work to potential increase along the field direction (field points towards decreasing potential):",
+            "equation": "-E \\, dr = dV"
+          },
+          {
+            "text": "Hence, electric field magnitude equals the negative spatial derivative of potential:",
+            "equation": "E = -\\frac{dV}{dr}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Physical Meaning of Negative Sign:",
+            "text": "The negative sign indicates that electric field $\\vec{E}$ points in the direction of maximum rate of decrease of electrostatic potential:",
+            "equation": "\\vec{E} = -\\nabla V = -\\frac{\\partial V}{\\partial r}\\hat{r}"
+          }
+        ],
+        "finalFormula": "E = -\\frac{dV}{dr}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "equipotential-surfaces",
+      "title": "Equipotential Surfaces & Normal Field Lines",
+      "examDrawingGuide": [
+        "1. Positive Point Charge: Draw concentric spherical circles around charge $+q$; show spacing increasing with distance ($r$); draw radial outward field lines perpendicular to circles.",
+        "2. Uniform Electric Field: Draw parallel equidistant vertical lines for field $\\vec{E}$; draw parallel equidistant planar sheets perpendicular to field lines."
+      ]
     },
-    modelAnswer: {
-      statement: "Electric field intensity E⃗ at any point is defined as the electrostatic force experienced per unit positive test charge placed at that point, in the limit where the test charge is vanishingly small so as not to disturb the source charge configuration:\nE⃗ = lim(q₀ → 0) [ F⃗ / q₀ ]",
-      derivations: [
+    "keyPointsAndKeywords": [
+      "Constant Potential Surface (V = const)",
+      "Zero Work Done (W = 0)",
+      "Normal Orientation of Field (E ⟂ surface)",
+      "Non-Intersecting Nature",
+      "Potential Gradient (E = -dV/dr)",
+      "Negative Sign Significance (Direction of Decreasing Potential)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "V",
+        "term": "Electrostatic Potential",
+        "definition": "Work done in bringing unit positive test charge from infinity to that point, measured in Volts (V) or J/C."
+      },
+      {
+        "symbol": "\\frac{dV}{dr}",
+        "term": "Potential Gradient",
+        "definition": "Rate of change of potential with respect to spatial displacement, measured in $\\text{V/m}$."
+      },
+      {
+        "symbol": "d\\vec{r}",
+        "term": "Displacement Vector",
+        "definition": "Infinitesimal vector separating two adjacent points on or between equipotential surfaces."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Definition of equipotential surface and two properties.",
+      "1 Mark: Derivation showing $W = q_0(\u000bec{E}\\cdot d\u000bec{r}) = 0 \\implies \u000bec{E} \\perp d\u000bec{r}$.",
+      "1 Mark: Derivation of $E = -dV/dr$ and sketches for point charge and uniform field."
+    ],
+    "examinerTips": "In diagrams, ensure field lines are explicitly marked with perpendicular symbols ($90^\\circ$) at the intersection with equipotential surfaces.",
+    "modelAnswer": {
+      "statement": "An Equipotential Surface is any geometric surface that has the same constant electrostatic potential at all points ($V = \\text{constant}$).\nProperty 1: No work is done in moving a test charge between any two points on an equipotential surface: $$W = q_0(V_B - V_A) = q_0(0) = 0$$\nProperty 2: Electric field lines are always mutually perpendicular (normal) to the equipotential surface at every point.\nProperty 3: Two equipotential surfaces can never intersect each other (otherwise two distinct potentials would exist at the line of intersection).\nProperty 4: Equipotential surfaces are crowded closer together in regions of strong electric field and spaced wider apart in regions of weak field.",
+      "derivations": [
         {
-          name: "Derivation from Coulomb's Law [NCERT Section 1.8]",
-          steps: [
-            "Source Configuration: Place an isolated source point charge +q at the origin O.",
-            "Test Charge: To calculate electric field at field point P at distance r from O, place an infinitesimal positive test charge q₀ at P.",
-            "Coulomb Force on Test Charge: By Coulomb's Law, the electrostatic force on q₀ is: F⃗ = [1 / (4πε₀)] · [ (q · q₀) / r² ] r̂, where r̂ = r⃗/r is the unit vector pointing along the line from O to P.",
-            "Electric Field Definition: By definition: E⃗ = F⃗ / q₀.",
-            "Substituting Force: E⃗ = [ (1 / 4πε₀) · (q q₀ / r²) r̂ ] / q₀ = [1 / (4πε₀)] · (q / r²) r̂.",
-            "Magnitude: E = (1 / 4πε₀) · (q / r²).",
-            "Direction: Directed radially outward from charge q if q > 0; directed radially inward toward charge q if q < 0.",
-            "Graph Variation: As r increases, E decays inversely as r² (E ∝ 1/r²), yielding an asymptotic inverse-square hyperbola."
+          "name": "Proof 1: Electric Field is Perpendicular to Equipotential Surface",
+          "steps": [
+            "Consider two infinitesimally close points $A$ and $B$ lying on the same equipotential surface, separated by displacement vector $d\\vec{r}$. Let electric field at this location be $\\vec{E}$.",
+            "Work done by electrostatic force in displacing test charge $q_0$ from $A$ to $B$ is: dW = \\vec{F} \\cdot d\\vec{r} = q_0 (\\vec{E} \\cdot d\\vec{r})",
+            "By definition of electrostatic potential difference: dW = -q_0 \\, dV",
+            "Since points $A$ and $B$ lie on the same equipotential surface, potential difference vanishes ($dV = V_B - V_A = 0$): q_0 (\\vec{E} \\cdot d\\vec{r}) = 0 \\quad \\implies \\quad \\vec{E} \\cdot d\\vec{r} = 0",
+            "Expanding the scalar dot product: E \\, dr \\cos\\theta = 0 \\quad (\\text{since } E \\neq 0 \\text{ and } dr \\neq 0 \\implies \\cos\\theta = 0)",
+            "Hence, angle between electric field and displacement along the surface is $90^\\circ$: \\theta = 90^\\circ \\quad \\implies \\quad \\vec{E} \\perp d\\vec{r}",
+            "Physical Conclusion: Electric field has zero tangential component along an equipotential surface; it is entirely directed along the surface normal: E_{\\parallel} = 0, \\quad E_{\\perp} = |\\vec{E}|"
           ],
-          formula: "E = (1 / 4πε₀) · (q / r²)  [E ∝ 1/r² ; Inverse-square law]"
-        }
-      ],
-      diagramNotes: "Point charge +q at origin O, field point P at distance r along r̂ vector, and E vs r plot showing 1/r² decay curve.",
-      markingScheme: [
-        "0.5 Mark: Exact definition of electric field with limit q₀ → 0.",
-        "1 Mark: Mathematical derivation using Coulomb's law arriving at E = kq/r².",
-        "0.5 Mark: Correct graph of E versus r."
-      ],
-      examinerTips: "State why the test charge q₀ must be vanishingly small: so its own electric field does not shift or alter the distribution of the source charge."
-    }
-  },
-  {
-    id: 'imp-phy-9',
-    number: 9,
-    title: "Properties of Electric Field Lines & Why They Never Intersect",
-    shortLabel: "Properties of Electric Field Lines",
-    chapterId: 'phy-ch-1',
-    chapterTitle: 'Electric Charges and Fields',
-    unit: 'Electrostatics',
-    marks: '2 Marks',
-    marksNum: 2,
-    category: 'Conceptual & Theory',
-    frequency: 'Extremely Frequent 2-Marker',
-    questionPrompt: "(a) State 4 characteristic properties of electric lines of force.\n(b) Why do two electric field lines never intersect each other?\n(c) Why do electric field lines not form continuous closed loops?",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 1: Electric Charges and Fields',
-      section: 'Section 1.9: Electric Field Lines (pp. 23–26)',
-      equations: 'Section 1.9 key principles',
-      figures: 'Figs. 1.16, 1.17, 1.18',
-      summary: 'Faraday\'s line of force concept, tangent gives field direction, non-intersection proof, and proof why electrostatic fields forbid closed loops.'
-    },
-    modelAnswer: {
-      statement: "An electric field line is an imaginary smooth continuous curve drawn in an electrostatic field such that the tangent to it at any point gives the direction of the electric field intensity at that point.",
-      derivations: [
-        {
-          name: "Core Properties & Foundational Reasoning [NCERT Section 1.9]",
-          steps: [
-            "Property 1 (Start and End): Field lines originate at positive charges and terminate on negative charges. If there is an isolated single charge, they extend to or from infinity.",
-            "Property 2 (Tangent gives Direction): The tangent to a field line at any point indicates the direction of electric field E⃗ at that point.",
-            "Property 3 (Non-Intersection Theorem): Two electric field lines can NEVER intersect each other.",
-            "  Proof by Contradiction: If two field lines intersected at point P, two distinct tangents could be drawn at that single intersection point, which would imply two different directions of the net electric field at the same point. A single point in space cannot have two net field vectors, so lines can never cross!",
-            "Property 4 (No Closed Loops): Electric field lines do NOT form closed loops.",
-            "  Physical Reason: Electrostatic fields are conservative in nature (line integral ∮ E⃗ · dr⃗ = 0). Since lines start on +q and end on -q, forming closed loops would imply continuous circulation of electrostatic field, violating energy conservation.",
-            "Property 5 (Normal to Conductors): Field lines are always perpendicular to the surface of a charged conductor at static equilibrium.",
-            "Property 6 (Density reflects Magnitude): The number of lines crossing per unit area normal to the lines is proportional to the magnitude of E⃗ (crowded where field is strong)."
-          ],
-          formula: "Tangent = Direction of E⃗ ; ∮ E⃗ · dr⃗ = 0 (Conservative field ⟹ No closed loops)"
-        }
-      ],
-      diagramNotes: "Draw two hypothetical intersecting curves at point P showing two tangents T₁ and T₂ labeled 'Impossible!'.",
-      markingScheme: [
-        "1 Mark: Statement of 2 key properties.",
-        "0.5 Mark: Precise reasoning why two field lines never intersect (two tangents = two field directions).",
-        "0.5 Mark: Precise reasoning why electric lines cannot form closed loops (electrostatic field is conservative)."
-      ],
-      examinerTips: "Comparison with magnetic lines: Magnetic field lines DO form continuous closed loops because magnetic monopoles do not exist. Electric field lines DO NOT form closed loops because isolated positive and negative charges exist."
-    }
-  },
-  {
-    id: 'imp-phy-10',
-    number: 10,
-    title: "Capacitors in Series and Parallel Combinations (Derivation)",
-    shortLabel: "Capacitor Series & Parallel Combinations",
-    chapterId: 'phy-ch-2',
-    chapterTitle: 'Electrostatic Potential and Capacitance',
-    unit: 'Electrostatics',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation',
-    frequency: 'Very High Frequency (CBSE 2023, 2022, 2019)',
-    questionPrompt: "(a) Derive the expression for equivalent capacitance of three capacitors C₁, C₂, and C₃ connected in:\n  (i) Series combination\n  (ii) Parallel combination\n(b) In which combination is the equivalent capacitance: (i) minimum, (ii) maximum?",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 2: Electrostatic Potential and Capacitance',
-      section: 'Section 2.10: Combination of Capacitors (pp. 78–81)',
-      equations: 'Eqs. (2.41), (2.45)',
-      figures: 'Figs. 2.26, 2.27',
-      summary: 'Equivalent capacitance derivations based on charge conservation in series (1/C_s = Σ 1/C_i) and potential equality in parallel (C_p = Σ C_i).'
-    },
-    modelAnswer: {
-      statement: "Capacitor networks are configured to tailor effective capacitance in a circuit:\n• In Series: The charge Q on every capacitor is identical; the total potential difference V divides across them.\n• In Parallel: The potential difference V across each capacitor is identical; the total charge Q divides among them.",
-      derivations: [
-        {
-          name: "Derivation for Series Combination [NCERT Section 2.10.1]",
-          steps: [
-            "Circuit Setup: Connect three capacitors of capacitances C₁, C₂, C₃ in series across a battery of potential difference V.",
-            "Charge Equality: By electrostatic induction, the magnitude of charge on every capacitor plate is identical: Q₁ = Q₂ = Q₃ = Q.",
-            "Potential Division: The total potential difference V supplied by the source is the sum of potential differences across the individual capacitors: V = V₁ + V₂ + V₃.",
-            "Applying V = Q/C: Express individual voltages in terms of capacitance: V₁ = Q / C₁, V₂ = Q / C₂, V₃ = Q / C₃.",
-            "Substituting into Potential Sum: V = Q / C₁ + Q / C₂ + Q / C₃ = Q · (1/C₁ + 1/C₂ + 1/C₃).",
-            "Equivalent Series Capacitance C_s: If C_s is the equivalent capacitance of the combination, then V = Q / C_s.",
-            "Equating: Q / C_s = Q · (1/C₁ + 1/C₂ + 1/C₃).",
-            "Final Series Formula: Dividing by Q gives: 1 / C_s = 1/C₁ + 1/C₂ + 1/C₃.",
-            "Property: C_s is strictly smaller than the smallest individual capacitor in the combination."
-          ],
-          formula: "1/C_s = 1/C₁ + 1/C₂ + 1/C₃  [Equivalent capacitance is minimized]"
+          "formula": "\\vec{E} \\perp \\text{Equipotential Surface}"
         },
         {
-          name: "Derivation for Parallel Combination [NCERT Section 2.10.2]",
-          steps: [
-            "Circuit Setup: Connect three capacitors C₁, C₂, C₃ in parallel across a battery maintaining common potential difference V.",
-            "Potential Equality: The potential difference across each capacitor is identical: V₁ = V₂ = V₃ = V.",
-            "Charge Division: Total charge Q drawn from the battery divides among the three capacitors according to charge conservation: Q = Q₁ + Q₂ + Q₃.",
-            "Applying Q = CV: Charge on individual capacitors: Q₁ = C₁ V, Q₂ = C₂ V, Q₃ = C₃ V.",
-            "Substituting: Q = C₁ V + C₂ V + C₃ V = (C₁ + C₂ + C₃) · V.",
-            "Equivalent Parallel Capacitance C_p: If C_p is the equivalent capacitance, then Q = C_p · V.",
-            "Final Parallel Formula: C_p · V = (C₁ + C₂ + C₃) · V ⟹ C_p = C₁ + C₂ + C₃.",
-            "Property: C_p is strictly larger than the largest individual capacitor in the combination."
+          "name": "Proof 2: Potential Gradient Relation (E = -dV/dr)",
+          "steps": [
+            "Consider two parallel equipotential surfaces $A$ and $B$ separated by small normal perpendicular distance $dr$, having potentials $V$ and $V - dV$ respectively.",
+            "Work done in moving unit positive charge ($q_0 = +1$) from surface $B$ to surface $A$ against the electric field $\\vec{E}$ is: dW = |\\vec{F}_{\\text{ext}}| \\, dr = E \\, dr",
+            "By definition, work done per unit positive charge equals the potential difference between the surfaces: dW = V_A - V_B = V - (V - dV) = dV",
+            "Equating mechanical work to potential increase along the field direction (field points towards decreasing potential): -E \\, dr = dV",
+            "Hence, electric field magnitude equals the negative spatial derivative of potential: E = -\\frac{dV}{dr}",
+            "Physical Meaning of Negative Sign: The negative sign indicates that electric field $\\vec{E}$ points in the direction of maximum rate of decrease of electrostatic potential: \\vec{E} = -\\nabla V = -\\frac{\\partial V}{\\partial r}\\hat{r}"
           ],
-          formula: "C_p = C₁ + C₂ + C₃  [Equivalent capacitance is maximized]"
+          "formula": "E = -\\frac{dV}{dr}"
         }
       ],
-      diagramNotes: "Series diagram showing 3 capacitors in a line with charge +Q/-Q on each; Parallel diagram showing 3 capacitors connected across common busbars with potential V.",
-      markingScheme: [
-        "1.5 Marks: Series derivation: stating same charge Q, V = V₁ + V₂ + V₃, and arriving at 1/C_s = Σ(1/C_i).",
-        "1.5 Marks: Parallel derivation: stating common potential V, Q = Q₁ + Q₂ + Q₃, and arriving at C_p = ΣC_i."
+      "diagramNotes": "1. Positive Point Charge: Draw concentric spherical circles around charge $+q$; show spacing increasing with distance ($r$); draw radial outward field lines perpendicular to circles.\n2. Uniform Electric Field: Draw parallel equidistant vertical lines for field $\\vec{E}$; draw parallel equidistant planar sheets perpendicular to field lines.",
+      "markingScheme": [
+        "1 Mark: Definition of equipotential surface and two properties.",
+        "1 Mark: Derivation showing $W = q_0(\u000bec{E}\\cdot d\u000bec{r}) = 0 \\implies \u000bec{E} \\perp d\u000bec{r}$.",
+        "1 Mark: Derivation of $E = -dV/dr$ and sketches for point charge and uniform field."
       ],
-      examinerTips: "Do not confuse capacitor combinations with resistor combinations! Resistors add in series (R_s = R₁ + R₂), whereas capacitors add in parallel (C_p = C₁ + C₂)."
+      "examinerTips": "In diagrams, ensure field lines are explicitly marked with perpendicular symbols ($90^\\circ$) at the intersection with equipotential surfaces."
     }
   },
   {
-    id: 'imp-phy-11',
-    number: 11,
-    title: "Electric Current, Terminal Potential Difference, Internal Resistance & Power",
-    shortLabel: "Current, Terminal Voltage & Power",
-    chapterId: 'phy-ch-3',
-    chapterTitle: 'Current Electricity',
-    unit: 'Current Electricity',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation & Relations',
-    frequency: 'Core 3-Marker & Numerical Foundation',
-    questionPrompt: "(a) Distinguish between EMF of a cell and Terminal Potential Difference.\n(b) Derive the relationship between EMF (ε), terminal potential difference (V), internal resistance (r), and external resistance (R).\n(c) Under what condition is terminal voltage greater than EMF?\n(d) Derive the condition for maximum power delivered to external load (Maximum Power Transfer Theorem).",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 3: Current Electricity',
-      section: 'Sections 3.7 & 3.11 (pp. 105–107, 110–113)',
-      equations: 'Eqs. (3.23), (3.33), (3.34)',
-      figures: 'Fig. 3.18',
-      summary: 'Electromotive force vs terminal potential difference, discharging and charging cell relations V = ε ∓ Ir, internal resistance measurement, and maximum power transfer.'
+    "id": "imp-phy-8",
+    "number": 8,
+    "title": "Electric Field Due to a Point Charge (Derivation & Superposition)",
+    "shortLabel": "Point Charge Field & Superposition",
+    "chapterId": "phy-ch-1",
+    "chapterTitle": "Electric Charges and Fields",
+    "unit": "Electrostatics",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "High Frequency Foundation Question (CBSE 2024, 2023, 2021, 2019)",
+    "questionPrompt": "(a) Define electric field intensity at a point. Write its SI unit.\n(b) Derive the expression for electric field intensity at distance r from an isolated point charge q placed in vacuum.\n(c) State the principle of superposition of electric fields for a system of n discrete charges.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 1: Electric Charges and Fields",
+      "section": "Sections 1.8 & 1.9 (pp. 18–23)",
+      "equations": "Eqs. (1.6), (1.8), (1.9)",
+      "figures": "Figs. 1.13, 1.14",
+      "summary": "Coulomb interaction with test charge, definition of electric field as force per unit charge, and vector sum formulation."
     },
-    modelAnswer: {
-      statement: "• Electromotive Force (EMF, ε): The maximum potential difference between the electrodes of a cell when no current is drawn from it (open circuit).\n• Terminal Potential Difference (V): The potential difference between the electrodes of a cell in a closed circuit when current I is flowing. During discharging, V < ε due to the internal voltage drop Ir across the electrolyte.",
-      derivations: [
+    "theory": [
+      "Electric Field Intensity $\\vec{E}$ at a point in space is defined as the electrostatic force experienced per unit positive test charge placed at that point: $$\\vec{E} = \\lim_{q_0 \\to 0} \\frac{\\vec{F}}{q_0}$$",
+      "The test charge $q_0$ must be vanishingly small ($q_0 \\to 0$) so that its presence does not distort the source charge distribution.",
+      "SI unit of electric field intensity is $\\text{N/C}$ (Newtons per Coulomb) or $\\text{V/m}$ (Volts per metre). It is a vector quantity.",
+      "Direction: Radially outward away from positive source charge ($+q$), and radially inward towards negative source charge ($-q$)."
+    ],
+    "derivations": [
+      {
+        "name": "Derivation of Electric Field of an Isolated Point Charge",
+        "setup": "Consider an isolated point charge $+q$ situated at origin $O$ in vacuum. Let $P$ be an arbitrary field point at position vector $\\vec{r}$ ($|\\vec{r}| = r$). Place an infinitesimal positive test charge $q_0$ at $P$.",
+        "steps": [
+          {
+            "text": "By Coulomb's Law, the electrostatic force $\\vec{F}$ exerted by source charge $q$ on test charge $q_0$ is:",
+            "equation": "\\vec{F} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q \\, q_0}{r^2} \\hat{r}"
+          },
+          {
+            "text": "where $\\hat{r} = \\vec{r}/r$ is the unit vector directed radially outward from source charge $O$ toward field point $P$.",
+            "equation": "\\hat{r} = \\frac{\\vec{r}}{|\\vec{r}|}"
+          },
+          {
+            "text": "By definition, the electric field intensity $\\vec{E}$ at point $P$ is the force per unit test charge:",
+            "equation": "\\vec{E} = \\frac{\\vec{F}}{q_0} = \\frac{1}{q_0} \\left( \\frac{1}{4\\pi \\varepsilon_0} \\frac{q \\, q_0}{r^2} \\hat{r} \\right)"
+          },
+          {
+            "text": "Canceling the test charge $q_0$ yields the vector electric field expression:",
+            "equation": "\\vec{E} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2} \\hat{r}"
+          },
+          {
+            "text": "The scalar magnitude of the electric field depends strictly on radial distance $r$:",
+            "equation": "E = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2} \\quad \\implies \\quad E \\propto \\frac{1}{r^2}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Superposition Principle for n Charges:",
+            "text": "The resultant field due to a system of discrete charges $q_1, q_2, \\dots, q_n$ is the vector sum of individual fields:",
+            "equation": "\\vec{E}_{\\text{total}} = \\sum_{i=1}^n \\vec{E}_i = \\frac{1}{4\\pi\\varepsilon_0} \\sum_{i=1}^n \\frac{q_i}{r_i^2}\\hat{r}_i"
+          }
+        ],
+        "finalFormula": "\\vec{E} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}\\hat{r}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "point-charge-field",
+      "title": "Radial Field of a Point Charge",
+      "examDrawingGuide": [
+        "1. Draw source charge $+q$ at origin $O$.",
+        "2. Mark field point $P$ at distance $r$ along position vector $\\vec{r}$.",
+        "3. Draw test charge $q_0$ at $P$ and show force vector $\\vec{F}$ pointing along radial unit vector $\\hat{r}$.",
+        "4. Draw radially diverging field vectors $\\vec{E}$ around $+q$ with lengths diminishing as $1/r^2$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Force per Unit Test Charge (E = F/q₀)",
+      "Vanishing Test Charge Condition (q₀ → 0)",
+      "Inverse Square Law (E ∝ 1/r²)",
+      "Spherical Symmetry of Field",
+      "Vector Superposition Principle"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\vec{E}",
+        "term": "Electric Field Intensity",
+        "definition": "Electrostatic force per unit positive charge, measured in N/C or V/m."
+      },
+      {
+        "symbol": "q_0",
+        "term": "Test Charge",
+        "definition": "Vanishingly small positive charge used to probe the electrostatic field without perturbing it."
+      },
+      {
+        "symbol": "\\hat{r}",
+        "term": "Radial Unit Vector",
+        "definition": "Dimensionless unit vector pointing along the line joining source charge to field point."
+      },
+      {
+        "symbol": "\\varepsilon_0",
+        "term": "Permittivity of Free Space",
+        "definition": "Vacuum electrical permittivity constant ($8.854 \\times 10^{-12} \\text{ C}^2/\\text{N}\\cdot\\text{m}^2$)."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Definition of electric field intensity and limit form with SI units.",
+      "1.5 Marks: Derivation from Coulomb's law showing cancellation of test charge $q_0$.",
+      "0.5 Mark: Statement and mathematical formulation of the superposition principle."
+    ],
+    "examinerTips": "Remember to state why $q_0 \\to 0$: 'So that the test charge does not disturb the position of the source charge distribution.'",
+    "modelAnswer": {
+      "statement": "Electric Field Intensity $\\vec{E}$ at a point in space is defined as the electrostatic force experienced per unit positive test charge placed at that point: $$\\vec{E} = \\lim_{q_0 \\to 0} \\frac{\\vec{F}}{q_0}$$\nThe test charge $q_0$ must be vanishingly small ($q_0 \\to 0$) so that its presence does not distort the source charge distribution.\nSI unit of electric field intensity is $\\text{N/C}$ (Newtons per Coulomb) or $\\text{V/m}$ (Volts per metre). It is a vector quantity.\nDirection: Radially outward away from positive source charge ($+q$), and radially inward towards negative source charge ($-q$).",
+      "derivations": [
         {
-          name: "Derivation of V = ε - Ir and r = [(ε-V)/V]R [NCERT Section 3.11]",
-          steps: [
-            "Circuit Description: Consider a cell of EMF ε and internal resistance r connected across an external load resistance R.",
-            "Total Circuit Resistance: The internal resistance r and external load R are in series, so total resistance is R_total = R + r.",
-            "Circuit Current: By Ohm's law, steady current in the circuit is: I = ε / (R + r).",
-            "Energy Balance Equation: Rearranging gives: ε = I(R + r) = IR + Ir.",
-            "Terminal Potential Difference: By Ohm's law, the potential difference across the external load R is V = IR. Substituting V into the equation: ε = V + Ir ⟹ V = ε - Ir (Discharging formula).",
-            "Internal Resistance Expression: From Ir = ε - V, we get r = (ε - V) / I. Since I = V / R, substitute for I: r = [ (ε - V) / (V / R) ] = [ (ε - V) / V ] · R = (ε/V - 1) · R.",
-            "Special Case (Charging): When the cell is recharged by connecting to an external DC source, current enters the positive terminal: V = ε + Ir (Terminal voltage EXCEEDS EMF!).",
-            "Maximum Power Transfer Theorem: Power delivered to load is P = I²R = [ε / (R + r)]² · R = (ε² R) / (R + r)². To find maximum power, set dP/dR = 0: dP/dR = ε² · [ (R + r)² - 2R(R + r) ] / (R + r)⁴ = 0 ⟹ (R + r) - 2R = 0 ⟹ R = r.",
-            "Maximum Power Value: When load matches internal resistance (R = r), power is maximized: P_max = ε² · r / (2r)² = ε² / (4r)."
+          "name": "Derivation of Electric Field of an Isolated Point Charge",
+          "steps": [
+            "Consider an isolated point charge $+q$ situated at origin $O$ in vacuum. Let $P$ be an arbitrary field point at position vector $\\vec{r}$ ($|\\vec{r}| = r$). Place an infinitesimal positive test charge $q_0$ at $P$.",
+            "By Coulomb's Law, the electrostatic force $\\vec{F}$ exerted by source charge $q$ on test charge $q_0$ is: \\vec{F} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q \\, q_0}{r^2} \\hat{r}",
+            "where $\\hat{r} = \\vec{r}/r$ is the unit vector directed radially outward from source charge $O$ toward field point $P$. \\hat{r} = \\frac{\\vec{r}}{|\\vec{r}|}",
+            "By definition, the electric field intensity $\\vec{E}$ at point $P$ is the force per unit test charge: \\vec{E} = \\frac{\\vec{F}}{q_0} = \\frac{1}{q_0} \\left( \\frac{1}{4\\pi \\varepsilon_0} \\frac{q \\, q_0}{r^2} \\hat{r} \\right)",
+            "Canceling the test charge $q_0$ yields the vector electric field expression: \\vec{E} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2} \\hat{r}",
+            "The scalar magnitude of the electric field depends strictly on radial distance $r$: E = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2} \\quad \\implies \\quad E \\propto \\frac{1}{r^2}",
+            "Superposition Principle for n Charges: The resultant field due to a system of discrete charges $q_1, q_2, \\dots, q_n$ is the vector sum of individual fields: \\vec{E}_{\\text{total}} = \\sum_{i=1}^n \\vec{E}_i = \\frac{1}{4\\pi\\varepsilon_0} \\sum_{i=1}^n \\frac{q_i}{r_i^2}\\hat{r}_i"
           ],
-          formula: "V = ε - Ir ; r = [(ε - V) / V] R ; Charging: V = ε + Ir ; P_max = ε² / (4r) at R = r"
+          "formula": "\\vec{E} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}\\hat{r}"
         }
       ],
-      diagramNotes: "Circuit showing cell represented as ideal source ε in series with internal r inside dashed box, connected to external load R and voltmeter across terminals.",
-      markingScheme: [
-        "1 Mark: Distinction between EMF (open circuit) and terminal voltage (closed circuit).",
-        "1 Mark: Derivation of V = ε - Ir and internal resistance formula r = [(ε-V)/V]R.",
-        "0.5 Mark: Condition when V > ε (during charging of the cell).",
-        "0.5 Mark: Maximum power transfer condition R = r and expression P_max = ε²/(4r)."
+      "diagramNotes": "1. Draw source charge $+q$ at origin $O$.\n2. Mark field point $P$ at distance $r$ along position vector $\\vec{r}$.\n3. Draw test charge $q_0$ at $P$ and show force vector $\\vec{F}$ pointing along radial unit vector $\\hat{r}$.\n4. Draw radially diverging field vectors $\\vec{E}$ around $+q$ with lengths diminishing as $1/r^2$.",
+      "markingScheme": [
+        "1 Mark: Definition of electric field intensity and limit form with SI units.",
+        "1.5 Marks: Derivation from Coulomb's law showing cancellation of test charge $q_0$.",
+        "0.5 Mark: Statement and mathematical formulation of the superposition principle."
       ],
-      examinerTips: "Remember: (1) Open circuit (I = 0) ⟹ V = ε; (2) Short circuit (R = 0) ⟹ I_max = ε/r and V = 0; (3) Charging cell ⟹ V = ε + Ir."
+      "examinerTips": "Remember to state why $q_0 \\to 0$: 'So that the test charge does not disturb the position of the source charge distribution.'"
     }
   },
   {
-    id: 'imp-phy-12',
-    number: 12,
-    title: "Properties of Electromagnetic Waves & EM Spectrum Applications",
-    shortLabel: "Properties & Applications of EM Waves",
-    chapterId: 'phy-ch-8',
-    chapterTitle: 'Electromagnetic Waves',
-    unit: 'Electromagnetic Waves',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Theory & Applications',
-    frequency: 'Guaranteed 2-3 Mark Question from Ch 8',
-    questionPrompt: "(a) State 4 fundamental properties of electromagnetic waves.\n(b) Write the relation between speed of light, electric field amplitude E₀, and magnetic field amplitude B₀.\n(c) Name the EM waves used in: (i) Radar systems, (ii) Water purifiers to kill germs, (iii) Treating muscular strains, (iv) Cancer therapy, and (v) Remote controls.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 8: Electromagnetic Waves',
-      section: 'Sections 8.3 & 8.4 (pp. 274–284)',
-      equations: 'Eqs. (8.8), (8.9), (8.10)',
-      figures: 'Fig. 8.4; Table 8.1',
-      summary: 'Orthogonal transverse structure of E and B vectors, wave velocity c = 1/√(μ₀ε₀), amplitude ratio E₀/B₀ = c, energy density, and spectrum classification.'
+    "id": "imp-phy-9",
+    "number": 9,
+    "title": "Properties of Electric Field Lines & Why They Never Intersect",
+    "shortLabel": "Electric Field Lines & Non-Intersection",
+    "chapterId": "phy-ch-1",
+    "chapterTitle": "Electric Charges and Fields",
+    "unit": "Electrostatics",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Conceptual Proof",
+    "frequency": "Core CBSE Conceptual Question (CBSE 2024, 2023, 2020, 2018)",
+    "questionPrompt": "(a) What is an electric field line? State four characteristic properties of electric field lines.\n(b) Prove that two electric field lines can never intersect each other.\n(c) Why do electrostatic field lines never form closed loops?",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 1: Electric Charges and Fields",
+      "section": "Section 1.9: Electric Field Lines (pp. 23–26)",
+      "equations": "Conceptual geometry",
+      "figures": "Figs. 1.15, 1.16, 1.17",
+      "summary": "Visual geometric representation of electric fields, tangent rule for direction, non-intersection proof, and conservative nature."
     },
-    modelAnswer: {
-      statement: "Electromagnetic waves are self-propagating, coupled time-varying electric and magnetic fields traveling through space at the speed of light, oscillating sinusoidally in mutually perpendicular planes that are both orthogonal to the direction of wave propagation.",
-      derivations: [
+    "theory": [
+      "An Electric Field Line is a continuous curve drawn in an electric field such that the tangent to it at any point gives the direction of electric field intensity at that point.",
+      "Property 1: Field lines originate from positive charges ($+q$) and terminate at negative charges ($-q$). For an isolated single charge, they extend to or from infinity.",
+      "Property 2: The tangent drawn at any point on the field line gives the unambiguous direction of the electric field vector $\\vec{E}$ at that location.",
+      "Property 3: Two electric field lines can NEVER intersect each other.",
+      "Property 4: Electrostatic field lines never form closed continuous loops because electrostatic fields are conservative in nature ($$\\oint \\vec{E} \\cdot d\\vec{l} = 0$$).",
+      "Property 5: The relative density of field lines (number of lines per unit cross-sectional area) is proportional to the magnitude of the electric field."
+    ],
+    "derivations": [
+      {
+        "name": "Rigorous Proof: Non-Intersection of Electric Field Lines",
+        "setup": "We prove by contradiction (reductio ad absurdum). Suppose two electric field lines $L_1$ and $L_2$ intersect at a common spatial point $P$.",
+        "steps": [
+          {
+            "text": "By definition, the tangent to a field line represents the direction of the resultant electric field vector $\\vec{E}$ at that point.",
+            "equation": "\\vec{E} \\parallel \\text{Tangent to Field Line}"
+          },
+          {
+            "text": "Since curve $L_1$ passes through point $P$, we can draw tangent $T_1$ representing electric field direction $\\vec{E}_1$.",
+            "equation": "\\vec{E}_1 \\text{ along tangent } T_1"
+          },
+          {
+            "text": "Simultaneously, curve $L_2$ passes through the same point $P$, so we can draw a distinct tangent $T_2$ representing field direction $\\vec{E}_2$.",
+            "equation": "\\vec{E}_2 \\text{ along tangent } T_2"
+          },
+          {
+            "text": "This implies that at the single point $P$, the electric field has TWO different directions simultaneously:",
+            "equation": "\\vec{E}(P) = \\vec{E}_1 \\quad \\text{and} \\quad \\vec{E}(P) = \\vec{E}_2 \\quad (T_1 \\neq T_2)"
+          },
+          {
+            "text": "This is physically impossible because at any given point in space, there can only be ONE unique resultant electric field vector. Hence, two field lines can never cross:",
+            "equation": "\\text{Contradiction} \\implies \\text{Field lines cannot intersect}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Why No Closed Loops?",
+            "text": "If field lines formed closed loops, work done in moving a test charge around the closed loop would be non-zero, violating the conservative nature of electrostatic forces:",
+            "equation": "\\oint \\vec{E} \\cdot d\\vec{l} = 0 \\quad (\\text{Conservative Field})"
+          }
+        ],
+        "finalFormula": "\\text{Two field lines cannot intersect: Resultant } \\vec{E} \\text{ is uniquely defined}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "field-lines-properties",
+      "title": "Electric Field Lines: Properties & Contradiction Geometry",
+      "examDrawingGuide": [
+        "1. Draw hypothetical intersection of two curved field lines at point $P$.",
+        "2. Draw two divergent tangent vectors $T_1$ and $T_2$ at point $P$ and label with a prominent 'Contradiction: Two Directions' callout.",
+        "3. Draw correct field patterns for: (i) Isolated positive charge (radial spokes outward); (ii) Dipole (smooth curves from $+q$ to $-q$)."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Tangent Gives Direction of Field",
+      "Proof by Contradiction",
+      "Uniqueness of Resultant Field Vector",
+      "Conservative Electrostatic Field",
+      "No Closed Loops (∮ E · dl = 0)",
+      "Field Line Density Proportional to Magnitude"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\vec{E}",
+        "term": "Resultant Electric Field",
+        "definition": "Unique net electrostatic force per unit charge at a given spatial point."
+      },
+      {
+        "symbol": "T_1, T_2",
+        "term": "Tangent Vectors",
+        "definition": "Geometric tangents indicating instantaneous direction of the field curve."
+      },
+      {
+        "symbol": "\\oint \\vec{E}\\cdot d\\vec{l}",
+        "term": "Circulation Integral",
+        "definition": "Work done per unit charge around a closed contour, identically zero for static conservative fields."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Definition of electric field lines and two properties.",
+      "1 Mark: Complete contradiction proof explaining why two tangents cannot exist at one point.",
+      "1 Mark: Justification for why field lines cannot form closed loops (conservative nature)."
+    ],
+    "examinerTips": "In your answer, use the exact phrase: 'A point cannot have two directions of resultant electric field at the same time.'",
+    "modelAnswer": {
+      "statement": "An Electric Field Line is a continuous curve drawn in an electric field such that the tangent to it at any point gives the direction of electric field intensity at that point.\nProperty 1: Field lines originate from positive charges ($+q$) and terminate at negative charges ($-q$). For an isolated single charge, they extend to or from infinity.\nProperty 2: The tangent drawn at any point on the field line gives the unambiguous direction of the electric field vector $\\vec{E}$ at that location.\nProperty 3: Two electric field lines can NEVER intersect each other.\nProperty 4: Electrostatic field lines never form closed continuous loops because electrostatic fields are conservative in nature ($$\\oint \\vec{E} \\cdot d\\vec{l} = 0$$).\nProperty 5: The relative density of field lines (number of lines per unit cross-sectional area) is proportional to the magnitude of the electric field.",
+      "derivations": [
         {
-          name: "4 Fundamental Properties of EM Waves [NCERT Section 8.3]",
-          steps: [
-            "1. Transverse Nature: The electric field vector E⃗ and magnetic field vector B⃗ oscillate perpendicular to each other and perpendicular to the propagation vector k̂. The propagation direction is given by the Poynting vector: ĉ = E⃗ × B⃗.",
-            "2. Universal Speed in Vacuum: EM waves propagate in free space at universal speed c given by Maxwell's relation: c = 1 / √(μ₀ε₀) ≈ 3.0 × 10⁸ m/s, completely independent of frequency or frame velocity.",
-            "3. Amplitude Relationship: The ratio of peak electric field amplitude E₀ to peak magnetic field amplitude B₀ at every point in the wave is strictly equal to the speed of light: E₀ / B₀ = c (or E_rms / B_rms = c).",
-            "4. Energy Density & Momentum: EM waves carry energy shared equally between electric and magnetic fields: u_E = (1/2)ε₀E² and u_B = B²/(2μ₀). Total average energy density is u_avg = ε₀ E_rms² = B_rms²/μ₀. They carry linear momentum p = U/c and exert radiation pressure P = I/c.",
-            "5. Charge Neutrality: Being uncharged photon disturbances, EM waves are not deflected by static external electric or magnetic fields."
+          "name": "Rigorous Proof: Non-Intersection of Electric Field Lines",
+          "steps": [
+            "We prove by contradiction (reductio ad absurdum). Suppose two electric field lines $L_1$ and $L_2$ intersect at a common spatial point $P$.",
+            "By definition, the tangent to a field line represents the direction of the resultant electric field vector $\\vec{E}$ at that point. \\vec{E} \\parallel \\text{Tangent to Field Line}",
+            "Since curve $L_1$ passes through point $P$, we can draw tangent $T_1$ representing electric field direction $\\vec{E}_1$. \\vec{E}_1 \\text{ along tangent } T_1",
+            "Simultaneously, curve $L_2$ passes through the same point $P$, so we can draw a distinct tangent $T_2$ representing field direction $\\vec{E}_2$. \\vec{E}_2 \\text{ along tangent } T_2",
+            "This implies that at the single point $P$, the electric field has TWO different directions simultaneously: \\vec{E}(P) = \\vec{E}_1 \\quad \\text{and} \\quad \\vec{E}(P) = \\vec{E}_2 \\quad (T_1 \\neq T_2)",
+            "This is physically impossible because at any given point in space, there can only be ONE unique resultant electric field vector. Hence, two field lines can never cross: \\text{Contradiction} \\implies \\text{Field lines cannot intersect}",
+            "Why No Closed Loops? If field lines formed closed loops, work done in moving a test charge around the closed loop would be non-zero, violating the conservative nature of electrostatic forces: \\oint \\vec{E} \\cdot d\\vec{l} = 0 \\quad (\\text{Conservative Field})"
           ],
-          formula: "c = 1 / √(μ₀ε₀) ; E₀ / B₀ = c ; ĉ ∥ E⃗ × B⃗ ; Momentum p = U / c"
+          "formula": "\\text{Two field lines cannot intersect: Resultant } \\vec{E} \\text{ is uniquely defined}"
         }
       ],
-      diagramNotes: "Draw 3D sinusoidal wave: E-field oscillating along y-axis, B-field along z-axis, wave propagating along x-axis with c = E₀/B₀.",
-      markingScheme: [
-        "1 Mark: Stating 3 distinct physical properties of EM waves.",
-        "0.5 Mark: Mathematical relations c = 1/√(μ₀ε₀) and E₀/B₀ = c.",
-        "1.5 Marks: Correct identification of spectrum types for all 5 applications (0.3 mark each)."
+      "diagramNotes": "1. Draw hypothetical intersection of two curved field lines at point $P$.\n2. Draw two divergent tangent vectors $T_1$ and $T_2$ at point $P$ and label with a prominent 'Contradiction: Two Directions' callout.\n3. Draw correct field patterns for: (i) Isolated positive charge (radial spokes outward); (ii) Dipole (smooth curves from $+q$ to $-q$).",
+      "markingScheme": [
+        "1 Mark: Definition of electric field lines and two properties.",
+        "1 Mark: Complete contradiction proof explaining why two tangents cannot exist at one point.",
+        "1 Mark: Justification for why field lines cannot form closed loops (conservative nature)."
       ],
-      examinerTips: "Official CBSE Spectrum Applications Table:\n• Radar & Satellite Communication ⟶ Microwaves (short wavelength, penetrate atmosphere)\n• Water Purification & LASIK Surgery ⟶ Ultraviolet (UV) rays (germicidal sterilization)\n• Muscular Strain Therapy & Greenhouse Heating ⟶ Infrared (IR) rays (heat waves)\n• Cancer Radiotherapy & Sterilizing Surgical Tools ⟶ Gamma (γ) rays (high penetrating power)\n• TV Remote Controls ⟶ Infrared (IR) LEDs\n• Detecting Bone Fractures & Airport Baggage Scans ⟶ X-rays"
+      "examinerTips": "In your answer, use the exact phrase: 'A point cannot have two directions of resultant electric field at the same time.'"
     }
   },
   {
-    id: 'imp-phy-13',
-    number: 13,
-    title: "Root-Mean-Square (RMS) Values of AC: Derivation of I_rms and E_rms",
-    shortLabel: "RMS Value of AC Derivation (I_rms & E_rms)",
-    chapterId: 'phy-ch-7',
-    chapterTitle: 'Alternating Current',
-    unit: 'Alternating Current',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation',
-    frequency: 'Core Derivation (CBSE 2023, 2020, 2017)',
-    questionPrompt: "(a) Define root mean square (rms) or virtual value of alternating current.\n(b) Derive the relationship between rms value (I_rms) and peak value (I₀) of alternating current.\n(c) Why is 220 V AC more dangerous than 220 V DC?",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 7: Alternating Current',
-      section: 'Section 7.2: AC Voltage Applied to a Resistor (pp. 235–238)',
-      equations: 'Eqs. (7.4), (7.5), (7.6)',
-      figures: 'Fig. 7.3',
-      summary: 'Definition of root-mean-square current from Joule heating equivalence and first-principles cycle integration.'
+    "id": "imp-phy-10",
+    "number": 10,
+    "title": "Capacitance of Parallel Plate Capacitor: With & Without Dielectric Slab",
+    "shortLabel": "Capacitor with Dielectric Slab",
+    "chapterId": "phy-ch-2",
+    "chapterTitle": "Electrostatic Potential and Capacitance",
+    "unit": "Electrostatics",
+    "marks": "5 Marks",
+    "marksNum": 5,
+    "category": "Derivation",
+    "frequency": "Guaranteed 5-Mark Question (CBSE 2024 SQP Q31, 2023, 2020, 2019)",
+    "questionPrompt": "(a) Define capacitance of a conductor. Write its SI unit.\n(b) Derive an expression for the capacitance of a parallel plate capacitor having plate area A and plate separation d in vacuum.\n(c) A dielectric slab of thickness t (t < d) and dielectric constant K is inserted between the plates. Derive the new formula for capacitance.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 2: Electrostatic Potential and Capacitance",
+      "section": "Sections 2.8, 2.9, 2.10 (pp. 73–79)",
+      "equations": "Eqs. (2.35), (2.41), (2.46)",
+      "figures": "Figs. 2.25, 2.26, 2.27",
+      "summary": "Uniform electric field between plates, definition of capacitance, dielectric polarization, and modified potential difference."
     },
-    modelAnswer: {
-      statement: "The Root Mean Square (RMS) or virtual/effective value of an alternating current (I_rms) is defined as that steady direct current (DC) which, when flowing through a given resistor for a given time, produces the same amount of heat as is produced by the alternating current flowing through the same resistor for the same time.",
-      derivations: [
-        {
-          name: "Mathematical Derivation of I_rms = I₀ / √2 [NCERT Section 7.2]",
-          steps: [
-            "Instantaneous Current: Let alternating current be represented as I(t) = I₀ sin(ωt), where I₀ is peak current amplitude and ω = 2π/T is angular frequency.",
-            "Heat in Infinitesimal Time dt: By Joule's law, heat generated in resistor R during dt is: dH = I² R dt = [I₀ sin(ωt)]² R dt = I₀² R sin²(ωt) dt.",
-            "Total Heat Over Complete Cycle: Integrate dH over one full time period T = 2π/ω: H = ∫₀ᵀ I₀² R sin²(ωt) dt = I₀² R ∫₀ᵀ sin²(ωt) dt.",
-            "Trigonometric Identity: Using sin²(ωt) = [1 - cos(2ωt)] / 2: H = I₀² R ∫₀ᵀ [ (1 - cos 2ωt) / 2 ] dt = (I₀² R / 2) [ ∫₀ᵀ dt - ∫₀ᵀ cos(2ωt) dt ].",
-            "Vanishing of Second Integral: The integral of cos(2ωt) over a full period is zero: ∫₀ᵀ cos(2ωt) dt = [ sin(2ωt) / (2ω) ]₀ᵀ = [ sin(4π) - sin(0) ] / (2ω) = 0.",
-            "Resulting Heat: Therefore: H = (I₀² R / 2) · T.",
-            "Equating to Effective DC Heat: By definition of RMS current, an equivalent DC current I_rms produces heat H = I_rms² R T in time T.",
-            "Equating Expressions: I_rms² R T = (I₀² R T) / 2.",
-            "Taking Square Root: I_rms² = I₀² / 2 ⟹ I_rms = I₀ / √2 ≈ 0.707 I₀.",
-            "RMS Alternating Voltage: By identical mathematical integration for V(t) = V₀ sin(ωt): V_rms = E_rms = V₀ / √2 ≈ 0.707 V₀."
-          ],
-          formula: "I_rms = I₀ / √2 ≈ 0.707 I₀ ; V_rms = V₀ / √2 ≈ 0.707 V₀"
-        }
-      ],
-      diagramNotes: "Draw sinusoidal AC wave showing peak I₀, horizontal dashed line for RMS value at 0.707 I₀, and average value over half cycle at 0.637 I₀.",
-      markingScheme: [
-        "1 Mark: Definition of RMS current based on Joule heating equivalence.",
-        "1.5 Marks: Step-by-step mathematical derivation using sin²ωt = (1 - cos 2ωt)/2 to arrive at I_rms = I₀/√2.",
-        "0.5 Mark: Explanation why 220 V AC is more dangerous (peak value reaches 311 V)."
-      ],
-      examinerTips: "Exam Reasoning Trap: 'Why is 220 V AC more dangerous than 220 V DC?' ⟶ An AC rating of 220 V specifies the RMS value. Its peak instantaneous voltage is V₀ = V_rms · √2 = 220 × 1.414 = 311.1 V! While 220 V DC stays constant at 220 V, 220 V AC fluctuates between +311 V and -311 V (a 622 V peak-to-peak swing)."
-    }
-  },
-  {
-    id: 'imp-phy-14',
-    number: 14,
-    title: "Displacement Current: Need, Mathematical Derivative & Continuity Proof",
-    shortLabel: "Displacement Current & Derivative",
-    chapterId: 'phy-ch-8',
-    chapterTitle: 'Electromagnetic Waves',
-    unit: 'Electromagnetic Waves',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation & Theory',
-    frequency: 'High Yield Conceptual Derivation',
-    questionPrompt: "(a) What was the inconsistency pointed out by Maxwell in Ampère's circuital law?\n(b) Derive the expression for displacement current in terms of time rate of change of electric flux.\n(c) Prove that during charging of a capacitor, conduction current in the connecting wires is equal to displacement current between the plates.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 8: Electromagnetic Waves',
-      section: 'Section 8.2: Displacement Current (pp. 269–273)',
-      equations: 'Eqs. (8.1), (8.2), (8.4), (8.5)',
-      figures: 'Figs. 8.1, 8.2',
-      summary: 'Resolution of Ampère\'s circuital law inconsistency for charging capacitor, derivative I_d = ε₀(dΦ_E/dt), and proof of current continuity.'
+    "theory": [
+      "Capacitance $C$ of a capacitor is defined as the ratio of charge $Q$ on either conducting plate to the potential difference $V$ maintained between them: $$C = \\frac{Q}{V}$$",
+      "SI unit of capacitance is the Farad (F) ($1\\text{ F} = 1\\text{ C/V}$). Practical capacitors use microfarads ($\\mu\\text{F}$) or picofarads ($\\text{pF}$).",
+      "When a dielectric slab is introduced into an electric field, induced bound polarization charges appear on its faces, creating an internal opposing field $\\vec{E}_p$.",
+      "The net electric field inside the dielectric is reduced by factor $K$ (dielectric constant): $$E = \\frac{E_0}{K}$$",
+      "Because the electric field is reduced, the potential difference between plates decreases ($V < V_0$), causing capacitance to increase ($C > C_0$)."
+    ],
+    "derivations": [
+      {
+        "name": "Part 1: Capacitance in Vacuum (No Dielectric)",
+        "setup": "Consider two parallel planar conducting plates of area $A$ separated by small distance $d$ in vacuum ($d^2 \\ll A$). The plates carry equal and opposite charges $+Q$ and $-Q$, corresponding to uniform surface charge density $\\sigma = Q/A$.",
+        "steps": [
+          {
+            "text": "By Gauss's Law, the electric fields produced by the two plates add constructively in the region between them:",
+            "equation": "E_0 = \\frac{\\sigma}{2\\varepsilon_0} + \\frac{\\sigma}{2\\varepsilon_0} = \\frac{\\sigma}{\\varepsilon_0} = \\frac{Q}{\\varepsilon_0 A}"
+          },
+          {
+            "text": "Since the field is uniform, the electrostatic potential difference $V_0$ between the plates is:",
+            "equation": "V_0 = E_0 \\cdot d = \\frac{Q \\, d}{\\varepsilon_0 A}"
+          },
+          {
+            "text": "By definition of capacitance, $C_0 = Q / V_0$:",
+            "equation": "C_0 = \\frac{Q}{(Q d) / (\\varepsilon_0 A)} = \\frac{\\varepsilon_0 A}{d}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Dependence on Geometry:",
+            "text": "Capacitance depends only on geometric factors (area $A$ and separation $d$) and medium permittivity $\\varepsilon_0$, independent of charge $Q$:",
+            "equation": "C_0 \\propto A, \\quad C_0 \\propto \\frac{1}{d}"
+          }
+        ],
+        "finalFormula": "C_0 = \\frac{\\varepsilon_0 A}{d}"
+      },
+      {
+        "name": "Part 2: Capacitance with Dielectric Slab of Thickness t (t < d)",
+        "setup": "A dielectric slab of thickness $t < d$ and dielectric constant $K$ is introduced between the plates parallel to them. The region $(d - t)$ contains vacuum/air, and thickness $t$ contains dielectric.",
+        "steps": [
+          {
+            "text": "Electric field in the air/vacuum region of thickness $(d - t)$ remains unchanged:",
+            "equation": "E_0 = \\frac{\\sigma}{\\varepsilon_0} = \\frac{Q}{\\varepsilon_0 A}"
+          },
+          {
+            "text": "Electric field inside the dielectric slab of thickness $t$ is reduced by factor $K$ due to dielectric polarization:",
+            "equation": "E = \\frac{E_0}{K}"
+          },
+          {
+            "text": "Total potential difference $V$ across the plates is the sum of potentials across air and dielectric regions:",
+            "equation": "V = E_0(d - t) + E \\cdot t = E_0(d - t) + \\left(\\frac{E_0}{K}\\right)t"
+          },
+          {
+            "text": "Factoring out $E_0$:",
+            "equation": "V = E_0 \\left[ (d - t) + \\frac{t}{K} \\right] = E_0 \\left[ d - t\\left(1 - \\frac{1}{K}\\right) \\right]"
+          },
+          {
+            "text": "Substituting $E_0 = Q / (\\varepsilon_0 A)$:",
+            "equation": "V = \\frac{Q}{\\varepsilon_0 A} \\left[ d - t\\left(1 - \\frac{1}{K}\\right) \\right]"
+          },
+          {
+            "text": "Hence, the new capacitance $C = Q / V$ is:",
+            "equation": "C = \\frac{\\varepsilon_0 A}{d - t\\left(1 - \\frac{1}{K}\\right)}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Case (i) Completely Filled with Dielectric (t = d):",
+            "text": "When dielectric occupies the entire space between the plates:",
+            "equation": "C = \\frac{\\varepsilon_0 A}{d - d(1 - 1/K)} = K \\frac{\\varepsilon_0 A}{d} = K C_0"
+          },
+          {
+            "title": "Case (ii) Conducting Metal Slab (K → ∞, thickness t):",
+            "text": "For a conducting slab inserted between plates ($K = \\infty$):",
+            "equation": "C = \\frac{\\varepsilon_0 A}{d - t}"
+          }
+        ],
+        "finalFormula": "C = \\frac{\\varepsilon_0 A}{d - t(1 - 1/K)} \\quad \\xrightarrow{t=d} \\quad C = K C_0"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "capacitor-circuits",
+      "title": "Parallel Plate Capacitor with Dielectric Slab",
+      "examDrawingGuide": [
+        "1. Draw two parallel vertical rectangular plates separated by distance $d$.",
+        "2. Mark $+Q$ (surface charge $+\\sigma$) on left plate and $-Q$ (surface charge $-\\sigma$) on right plate.",
+        "3. Draw dielectric slab of thickness $t$ placed in the gap.",
+        "4. Show bound charges $-\\sigma_p$ on left slab face and $+\\sigma_p$ on right slab face.",
+        "5. Label field $E_0$ in air gaps of width $(d-t)$ and reduced field $E = E_0/K$ inside slab."
+      ]
     },
-    modelAnswer: {
-      statement: "Displacement Current (I_d): The current that arises in a region of space where the electric field (and therefore electric flux) changes with time, even in the complete absence of physical conduction of charge carriers. It acts as a source of magnetic field exactly like conduction current.",
-      derivations: [
+    "keyPointsAndKeywords": [
+      "Uniform Field E₀ = σ/ε₀ = Q/(ε₀A)",
+      "Vacuum Capacitance C₀ = ε₀A/d",
+      "Dielectric Polarization",
+      "Reduced Field Inside Slab (E = E₀/K)",
+      "Total Potential Split V = E₀(d - t) + E·t",
+      "Effective Separation Reduction d' = d - t(1 - 1/K)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "C_0, C",
+        "term": "Capacitance (Vacuum & Dielectric)",
+        "definition": "Ratio of charge to potential difference, measured in Farads (F)."
+      },
+      {
+        "symbol": "K",
+        "term": "Dielectric Constant (Relative Permittivity)",
+        "definition": "Ratio of capacitance with dielectric to capacitance in vacuum ($K = C/C_0 \\ge 1$)."
+      },
+      {
+        "symbol": "t",
+        "term": "Slab Thickness",
+        "definition": "Physical thickness of the dielectric slab inserted between the capacitor plates ($t \\le d$)."
+      },
+      {
+        "symbol": "E_p",
+        "term": "Polarization Electric Field",
+        "definition": "Opposing internal electric field generated by aligned molecular dipoles within the dielectric."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Definition of capacitance and vacuum field derivation $E_0 = Q/(\\varepsilon_0 A)$.",
+      "1 Mark: Derivation of vacuum capacitance $C_0 = \\varepsilon_0 A / d$.",
+      "2 Marks: Derivation of potential difference with slab $V = E_0[d - t(1 - 1/K)]$ and capacitance formula.",
+      "1 Mark: Special cases for $t = d$ ($C = KC_0$) and conducting slab ($K \\to \\infty$)."
+    ],
+    "examinerTips": "In writing potential $V$, clearly write $V = E_0(d-t) + E t$. Do not skip this step, as CBSE marking schemes assign 1 full mark to this decomposition.",
+    "modelAnswer": {
+      "statement": "Capacitance $C$ of a capacitor is defined as the ratio of charge $Q$ on either conducting plate to the potential difference $V$ maintained between them: $$C = \\frac{Q}{V}$$\nSI unit of capacitance is the Farad (F) ($1\\text{ F} = 1\\text{ C/V}$). Practical capacitors use microfarads ($\\mu\\text{F}$) or picofarads ($\\text{pF}$).\nWhen a dielectric slab is introduced into an electric field, induced bound polarization charges appear on its faces, creating an internal opposing field $\\vec{E}_p$.\nThe net electric field inside the dielectric is reduced by factor $K$ (dielectric constant): $$E = \\frac{E_0}{K}$$\nBecause the electric field is reduced, the potential difference between plates decreases ($V < V_0$), causing capacitance to increase ($C > C_0$).",
+      "derivations": [
         {
-          name: "Mathematical Derivation: I_d = ε₀ (dΦ_E / dt) [NCERT Section 8.2]",
-          steps: [
-            "Inconsistency in Ampère's Law: Consider a parallel-plate capacitor being charged by conduction current I_c. Apply Ampère's circuital law ∮ B⃗ · dl⃗ = μ₀ I_enclosed to a circular loop C around the wire.",
-            "Surface S₁ (Flat Disc): Disc S₁ spans loop C and cuts the wire carrying current I_c: ∮ B⃗ · dl⃗ = μ₀ I_c.",
-            "Surface S₂ (Pot-shaped Bag): Bag S₂ has the same boundary loop C but bulges out so its surface passes through the gap between capacitor plates where no conduction wire exists. Since no charge penetrates S₂: ∮ B⃗ · dl⃗ = 0. This creates an impossible mathematical contradiction (μ₀ I_c = 0)!",
-            "Maxwell's Resolution: During charging, charge Q accumulates on capacitor plates of area A. The electric field between plates is: E = σ / ε₀ = Q / (A ε₀).",
-            "Electric Flux Calculation: The electric flux Φ_E through the surface passing between plates is: Φ_E = E · A = [ Q / (A ε₀) ] · A = Q / ε₀.",
-            "Expressing Charge: Q = ε₀ · Φ_E.",
-            "Time Derivative: Differentiating both sides with respect to time t: dQ / dt = ε₀ · (dΦ_E / dt).",
-            "Conduction Current Equivalence: In the connecting wires, conduction current is the rate of charge flow: I_c = dQ/dt. Therefore: I_c = ε₀ (dΦ_E / dt).",
-            "Displacement Current Definition: Maxwell defined displacement current as: I_d = ε₀ (dΦ_E / dt).",
-            "Proof of Continuity: Hence, I_c = I_d. Inside the wires, current is pure conduction (I_c ≠ 0, I_d = 0); in the gap between plates, current is pure displacement (I_c = 0, I_d ≠ 0). Total current I_total = I_c + I_d is continuous across any cross-section of the circuit!",
-            "Ampère-Maxwell Law: ∮ B⃗ · dl⃗ = μ₀ (I_c + I_d) = μ₀ [ I_c + ε₀ (dΦ_E / dt) ]."
+          "name": "Part 1: Capacitance in Vacuum (No Dielectric)",
+          "steps": [
+            "Consider two parallel planar conducting plates of area $A$ separated by small distance $d$ in vacuum ($d^2 \\ll A$). The plates carry equal and opposite charges $+Q$ and $-Q$, corresponding to uniform surface charge density $\\sigma = Q/A$.",
+            "By Gauss's Law, the electric fields produced by the two plates add constructively in the region between them: E_0 = \\frac{\\sigma}{2\\varepsilon_0} + \\frac{\\sigma}{2\\varepsilon_0} = \\frac{\\sigma}{\\varepsilon_0} = \\frac{Q}{\\varepsilon_0 A}",
+            "Since the field is uniform, the electrostatic potential difference $V_0$ between the plates is: V_0 = E_0 \\cdot d = \\frac{Q \\, d}{\\varepsilon_0 A}",
+            "By definition of capacitance, $C_0 = Q / V_0$: C_0 = \\frac{Q}{(Q d) / (\\varepsilon_0 A)} = \\frac{\\varepsilon_0 A}{d}",
+            "Dependence on Geometry: Capacitance depends only on geometric factors (area $A$ and separation $d$) and medium permittivity $\\varepsilon_0$, independent of charge $Q$: C_0 \\propto A, \\quad C_0 \\propto \\frac{1}{d}"
           ],
-          formula: "I_d = ε₀ (dΦ_E / dt) ⟹ I_c = I_d ; ∮ B⃗ · dl⃗ = μ₀ [I_c + ε₀ (dΦ_E / dt)]"
-        }
-      ],
-      diagramNotes: "Draw charging capacitor circuit showing loop C, flat surface S₁ cutting wire, and bulging bag surface S₂ passing between plates with electric flux arrows.",
-      markingScheme: [
-        "1 Mark: Explaining Ampère's circuital law inconsistency using two different surfaces spanning the same loop.",
-        "1.5 Marks: Step-by-step mathematical derivation of Φ_E = Q/ε₀ to I_d = ε₀(dΦ_E/dt) = I_c.",
-        "0.5 Mark: Final unified Ampère-Maxwell Law equation."
-      ],
-      examinerTips: "Remember: Inside the copper wires, I_c ≠ 0 and I_d = 0. Between the insulating capacitor plates, I_c = 0 and I_d ≠ 0. The total generalized current I = I_c + I_d is strictly constant at all points."
-    }
-  },
-  {
-    id: 'imp-phy-15',
-    number: 15,
-    title: "Wheatstone Bridge: Principle, Balanced Condition Derivation & Metre Bridge",
-    shortLabel: "Wheatstone Bridge Balancing Conditions",
-    chapterId: 'phy-ch-3',
-    chapterTitle: 'Current Electricity',
-    unit: 'Current Electricity',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation',
-    frequency: 'Core Derivation & Metre Bridge Base',
-    questionPrompt: "(a) State the principle of a Wheatstone bridge.\n(b) Using Kirchhoff's rules, derive the balanced condition for a Wheatstone bridge (P/Q = R/S).\n(c) What is the condition for maximum sensitivity of a Wheatstone bridge?",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 3: Current Electricity',
-      section: 'Section 3.14: Wheatstone Bridge (pp. 118–120)',
-      equations: 'Eqs. (3.53), (3.54)',
-      figures: 'Fig. 3.25',
-      summary: 'Null-deflection condition for 4-resistor bridge network derived using Kirchhoff\'s Voltage and Current Laws.'
-    },
-    modelAnswer: {
-      statement: "A Wheatstone Bridge is an electrical network of four resistors P, Q, R, and S arranged in a closed diamond loop, used to measure an unknown electrical resistance with high accuracy using a null-deflection balance condition.",
-      derivations: [
-        {
-          name: "Derivation of P/Q = R/S Using Kirchhoff's Voltage Law (KVL) [NCERT Section 3.14]",
-          steps: [
-            "Bridge Network Description: Connect four resistors P, Q, R, S in four arms forming diamond loop ABCD. Connect galvanometer G of resistance R_g across diagonal BD. Connect battery of EMF ε across diagonal AC.",
-            "Current Distribution: Total current I enters junction A and splits into I₁ through arm AB (resistor P) and I₂ through arm AD (resistor R), such that I = I₁ + I₂.",
-            "Galvanometer Branch: At junction B, current I_g branches through galvanometer toward D. The current remaining in arm BC (resistor Q) is (I₁ - I_g).",
-            "Arm CD Current: At junction D, current I₂ combines with I_g to give (I₂ + I_g) flowing through arm DC (resistor S).",
-            "Applying KVL to Mesh 1 (Loop ABDA): Traversing loop ABDA clockwise: -I₁ P - I_g R_g + I₂ R = 0  ⟶ [Equation 1].",
-            "Applying KVL to Mesh 2 (Loop BCDB): Traversing loop BCDB clockwise: -(I₁ - I_g) Q + (I₂ + I_g) S + I_g R_g = 0  ⟶ [Equation 2].",
-            "Condition of Balance: The bridge is balanced when potentials at nodes B and D are equal (V_B = V_D). In this state, zero current flows through the galvanometer: I_g = 0 (null deflection).",
-            "Substituting I_g = 0 into Equation 1: -I₁ P - 0 + I₂ R = 0 ⟹ I₁ P = I₂ R  ⟶ [Equation 3].",
-            "Substituting I_g = 0 into Equation 2: -I₁ Q + I₂ S + 0 = 0 ⟹ I₁ Q = I₂ S  ⟶ [Equation 4].",
-            "Dividing Equation 3 by Equation 4: (I₁ P) / (I₁ Q) = (I₂ R) / (I₂ S).",
-            "Canceling Common Currents: P / Q = R / S.",
-            "Conclusion: This is the fundamental condition for a balanced Wheatstone bridge."
-          ],
-          formula: "P / Q = R / S  [Balanced bridge condition when I_g = 0]"
-        }
-      ],
-      diagramNotes: "Draw diamond ABCD with resistors P (AB), Q (BC), R (AD), S (DC); galvanometer across BD; battery and key across AC.",
-      markingScheme: [
-        "0.5 Mark: Principle of Wheatstone bridge and defining balanced null condition (I_g = 0).",
-        "2 Marks: Circuit diagram with currents and rigorous application of KVL to both loops to derive P/Q = R/S.",
-        "0.5 Mark: Stating condition for maximum bridge sensitivity (P ≈ Q ≈ R ≈ S)."
-      ],
-      examinerTips: "Invariance Property: If the battery and galvanometer are interchanged across diagonals AC and BD in a balanced Wheatstone bridge, the balance condition P/Q = R/S remains completely unchanged!"
-    }
-  },
-  {
-    id: 'imp-phy-16',
-    number: 16,
-    title: "Magnetic Materials: Properties of Diamagnetic, Paramagnetic & Ferromagnetic",
-    shortLabel: "Properties of Dia, Para & Ferro Materials",
-    chapterId: 'phy-ch-5',
-    chapterTitle: 'Magnetism and Matter',
-    unit: 'Magnetism',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Comparative Matrix & Properties',
-    frequency: 'Guaranteed 3-Mark Table Question',
-    questionPrompt: "(a) Compare Diamagnetic, Paramagnetic, and Ferromagnetic substances on the basis of:\n  (i) Magnetic susceptibility (χ)\n  (ii) Relative permeability (μ_r)\n  (iii) Behavior in a non-uniform magnetic field\n  (iv) Effect of temperature\n(b) Give two examples of each type.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 5: Magnetism and Matter',
-      section: 'Sections 5.5.1, 5.5.2, 5.5.3 (pp. 191–197)',
-      equations: 'Eq. (5.14)',
-      figures: 'Figs. 5.11, 5.12, 5.13',
-      summary: 'Classification of magnetic substances by atomic dipole origin, susceptibility χ_m, relative permeability μ_r, Curie\'s law, and field line behavior.'
-    },
-    modelAnswer: {
-      statement: "Materials are classified into diamagnetic, paramagnetic, and ferromagnetic based on the magnetic response of their atomic electrons and magnetic dipole moments when placed in an external magnetic field.",
-      derivations: [
-        {
-          name: "6-Point NCERT Comprehensive Comparison Matrix [NCERT Section 5.5]",
-          steps: [
-            "1. Atomic Dipole Origin:",
-            "   • Diamagnetic: All electron orbital pairs are filled; net permanent atomic dipole moment is zero. External B induces tiny opposing orbital dipoles.",
-            "   • Paramagnetic: Atoms have unpaired electrons possessing permanent magnetic dipole moments, but thermal agitation randomly disorients them (net M = 0 without field).",
-            "   • Ferromagnetic: Atoms have permanent dipole moments that spontaneously align in microscopic macroscopic domains due to strong quantum mechanical exchange coupling.",
-            "2. Magnetic Susceptibility (χ_m):",
-            "   • Diamagnetic: Small and NEGATIVE (-1 ≤ χ < 0), independent of temperature.",
-            "   • Paramagnetic: Small and POSITIVE (0 < χ < 10⁻³), inversely proportional to absolute temperature.",
-            "   • Ferromagnetic: Extremely LARGE and POSITIVE (χ ≫ 1000), non-linear function of field and temperature.",
-            "3. Relative Permeability (μ_r = 1 + χ_m):",
-            "   • Diamagnetic: Slightly LESS than 1 (0 ≤ μ_r < 1).",
-            "   • Paramagnetic: Slightly GREATER than 1 (μ_r > 1).",
-            "   • Ferromagnetic: Enormously GREATER than 1 (μ_r ≫ 1000).",
-            "4. Behavior in Non-Uniform Magnetic Field:",
-            "   • Diamagnetic: Feebly repelled; moves from regions of stronger field to weaker field.",
-            "   • Paramagnetic: Feebly attracted; moves from regions of weaker field to stronger field.",
-            "   • Ferromagnetic: Strongly attracted; rapidly rushes into regions of strongest magnetic field.",
-            "5. Temperature Dependence:",
-            "   • Diamagnetic: Strictly INDEPENDENT of temperature.",
-            "   • Paramagnetic: Obeys Curie's Law: χ = C / T (susceptibility decreases as temperature rises).",
-            "   • Ferromagnetic: Obeys Curie-Weiss Law above Curie temperature T_c: χ = C / (T - T_c). Above T_c, ferromagnetic substance transitions into a paramagnetic substance!",
-            "6. Standard NCERT Examples:",
-            "   • Diamagnetic: Bismuth (Bi), Copper (Cu), Lead (Pb), Silicon, Water (H₂O), Nitrogen at STP.",
-            "   • Paramagnetic: Aluminium (Al), Sodium (Na), Calcium, Platinum (Pt), Liquid Oxygen (O₂).",
-            "   • Ferromagnetic: Iron (Fe), Cobalt (Co), Nickel (Ni), Gadolinium (Gd), Alnico."
-          ],
-          formula: "Dia: -1 ≤ χ < 0, μ_r < 1 | Para: χ = C/T, μ_r > 1 | Ferro: χ ≫ 10³, μ_r ≫ 10³"
-        }
-      ],
-      diagramNotes: "Draw magnetic lines: expelled by diamagnetic rod (B_in < B_out); drawn slightly inward by paramagnetic rod; heavily concentrated by ferromagnetic rod.",
-      markingScheme: [
-        "1 Mark: Correct susceptibility values (with signs) and relative permeabilities for all 3 classes.",
-        "1 Mark: Behavior in non-uniform field and field line concentration/expulsion sketch.",
-        "1 Mark: Temperature laws (Curie law, Curie temperature transition) and authentic examples."
-      ],
-      examinerTips: "Meissner Effect in Superconductors: Superconductors are perfect diamagnets with susceptibility χ = -1 and relative permeability μ_r = 0. They completely expel all internal magnetic field lines (B_in = 0)."
-    }
-  },
-  {
-    id: 'imp-phy-17',
-    number: 17,
-    title: "AC Circuits: Pure Inductor, Pure Capacitor & Series LCR Resonance",
-    shortLabel: "AC Circuits: Inductor, Capacitor & Series LCR",
-    chapterId: 'phy-ch-7',
-    chapterTitle: 'Alternating Current',
-    unit: 'Alternating Current',
-    marks: '5 Marks',
-    marksNum: 5,
-    category: 'Derivation & 5-Marker',
-    frequency: 'Guaranteed 5-Marker Derivation in AC',
-    questionPrompt: "(a) Show that in an AC circuit containing:\n  (i) A pure inductor, current lags voltage by π/2 radians.\n  (ii) A pure capacitor, current leads voltage by π/2 radians.\n(b) For a series LCR circuit driven by V = V₀ sin ωt:\n  (i) Derive the expression for impedance Z using a phasor diagram.\n  (ii) Derive the resonance frequency condition (ω₀) and state the characteristics of electrical resonance.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 7: Alternating Current',
-      section: 'Sections 7.3, 7.4, 7.5, 7.6 (pp. 238–251)',
-      equations: 'Eqs. (7.11), (7.19), (7.25), (7.27)',
-      figures: 'Figs. 7.5, 7.9, 7.13, 7.14',
-      summary: 'Inductive and capacitive phase shifts (±π/2), phasor derivation of impedance Z = √[R² + (X_L - X_C)²], and resonance ω₀ = 1/√(LC).'
-    },
-    modelAnswer: {
-      statement: "In AC circuits, pure inductive reactance X_L = ωL causes current to lag voltage by 90°, while capacitive reactance X_C = 1/(ωC) causes current to lead voltage by 90°. In a series LCR circuit, total opposition is represented by impedance Z = √[R² + (X_L - X_C)²].",
-      derivations: [
-        {
-          name: "Derivation 1: Pure Inductor (Current Lags by π/2) [NCERT Section 7.3]",
-          steps: [
-            "Circuit: Connect pure inductor L across AC voltage V = V₀ sin(ωt).",
-            "Self-Induced EMF: By Faraday-Lenz law, back emf across inductor is ε = -L (dI/dt).",
-            "Loop Rule: By Kirchhoff's loop law: V - L(dI/dt) = 0 ⟹ dI = (V / L) dt = (V₀ / L) sin(ωt) dt.",
-            "Integrating for Current: I(t) = ∫ (V₀ / L) sin(ωt) dt = - (V₀ / ωL) cos(ωt).",
-            "Trigonometric Conversion: Using -cos(ωt) = sin(ωt - π/2): I(t) = (V₀ / ωL) sin(ωt - π/2).",
-            "Inductive Reactance: Define X_L = ωL = 2πfL. Peak current is I₀ = V₀ / X_L.",
-            "Phase Conclusion: The current equation I = I₀ sin(ωt - π/2) proves that current LAGS voltage by π/2 radians (90°)."
-          ],
-          formula: "I = I₀ sin(ωt - π/2) ; X_L = ωL = 2πfL  [Current lags by π/2]"
+          "formula": "C_0 = \\frac{\\varepsilon_0 A}{d}"
         },
         {
-          name: "Derivation 2: Pure Capacitor (Current Leads by π/2) [NCERT Section 7.4]",
-          steps: [
-            "Circuit: Connect pure capacitor C across AC voltage V = V₀ sin(ωt).",
-            "Instantaneous Charge: At any instant: q(t) = C · V = C · V₀ sin(ωt).",
-            "Differentiating for Current: I(t) = dq/dt = d/dt [C V₀ sin(ωt)] = C V₀ ω cos(ωt).",
-            "Trigonometric Conversion: Using cos(ωt) = sin(ωt + π/2): I(t) = [ V₀ / (1 / ωC) ] sin(ωt + π/2).",
-            "Capacitive Reactance: Define X_C = 1 / (ωC) = 1 / (2πfC). Peak current is I₀ = V₀ / X_C.",
-            "Phase Conclusion: The current equation I = I₀ sin(ωt + π/2) proves that current LEADS voltage by π/2 radians (90°)."
+          "name": "Part 2: Capacitance with Dielectric Slab of Thickness t (t < d)",
+          "steps": [
+            "A dielectric slab of thickness $t < d$ and dielectric constant $K$ is introduced between the plates parallel to them. The region $(d - t)$ contains vacuum/air, and thickness $t$ contains dielectric.",
+            "Electric field in the air/vacuum region of thickness $(d - t)$ remains unchanged: E_0 = \\frac{\\sigma}{\\varepsilon_0} = \\frac{Q}{\\varepsilon_0 A}",
+            "Electric field inside the dielectric slab of thickness $t$ is reduced by factor $K$ due to dielectric polarization: E = \\frac{E_0}{K}",
+            "Total potential difference $V$ across the plates is the sum of potentials across air and dielectric regions: V = E_0(d - t) + E \\cdot t = E_0(d - t) + \\left(\\frac{E_0}{K}\\right)t",
+            "Factoring out $E_0$: V = E_0 \\left[ (d - t) + \\frac{t}{K} \\right] = E_0 \\left[ d - t\\left(1 - \\frac{1}{K}\\right) \\right]",
+            "Substituting $E_0 = Q / (\\varepsilon_0 A)$: V = \\frac{Q}{\\varepsilon_0 A} \\left[ d - t\\left(1 - \\frac{1}{K}\\right) \\right]",
+            "Hence, the new capacitance $C = Q / V$ is: C = \\frac{\\varepsilon_0 A}{d - t\\left(1 - \\frac{1}{K}\\right)}",
+            "Case (i) Completely Filled with Dielectric (t = d): When dielectric occupies the entire space between the plates: C = \\frac{\\varepsilon_0 A}{d - d(1 - 1/K)} = K \\frac{\\varepsilon_0 A}{d} = K C_0",
+            "Case (ii) Conducting Metal Slab (K → ∞, thickness t): For a conducting slab inserted between plates ($K = \\infty$): C = \\frac{\\varepsilon_0 A}{d - t}"
           ],
-          formula: "I = I₀ sin(ωt + π/2) ; X_C = 1 / (ωC) = 1 / (2πfC)  [Current leads by π/2]"
-        },
-        {
-          name: "Derivation 3: Series LCR Circuit Phasor Derivation & Resonance [NCERT Section 7.5 & 7.6]",
-          steps: [
-            "Circuit: Resistor R, Inductor L, and Capacitor C are connected in series across V = V₀ sin(ωt). Common current is I = I₀ sin(ωt - φ).",
-            "Phasor Voltages: Voltage across R is V_R = I₀ R (in phase with I). Voltage across L is V_L = I₀ X_L (leads I by 90°). Voltage across C is V_C = I₀ X_C (lags I by 90°).",
-            "Resultant Reactive Voltage: Since V_L and V_C are along the same straight line in opposite directions, their resultant is (V_L - V_C) perpendicular to V_R.",
-            "Phasor Triangle (Pythagorean Theorem): V₀² = V_R² + (V_L - V_C)² = (I₀ R)² + [ I₀ (X_L - X_C) ]².",
-            "Factoring I₀: V₀² = I₀² · [ R² + (X_L - X_C)² ] ⟹ V₀ = I₀ √[ R² + (X_L - X_C)² ].",
-            "Impedance Expression: Impedance Z = V₀ / I₀ = √[ R² + (X_L - X_C)² ].",
-            "Phase Angle: tanφ = (V_L - V_C) / V_R = (X_L - X_C) / R.",
-            "RESONANCE CONDITION: Electrical resonance occurs when inductive reactance equals capacitive reactance: X_L = X_C ⟹ ω₀ L = 1 / (ω₀ C).",
-            "Resonant Frequency: ω₀² = 1 / (LC) ⟹ ω₀ = 1 / √(LC) ⟹ f₀ = 1 / [ 2π √(LC) ].",
-            "Characteristics of Electrical Resonance:",
-            "  1. Impedance is at its absolute MINIMUM: Z_min = R (purely resistive circuit).",
-            "  2. Current amplitude is at its absolute MAXIMUM: I₀_max = V₀ / R.",
-            "  3. Current and voltage are exactly in phase (φ = 0, power factor cosφ = 1).",
-            "  4. Sharpness of resonance is governed by Quality Factor: Q = (ω₀ L) / R = (1 / R) √(L / C)."
-          ],
-          formula: "Z = √[R² + (X_L - X_C)²] ; ω₀ = 1 / √(LC) ; Z_res = R ; I_max = V₀ / R"
+          "formula": "C = \\frac{\\varepsilon_0 A}{d - t(1 - 1/K)} \\quad \\xrightarrow{t=d} \\quad C = K C_0"
         }
       ],
-      diagramNotes: "Phasor diagram with V_R along x-axis, (V_L - V_C) along y-axis, resultant V₀ at angle φ; Resonance curve of current I versus frequency ω showing peak at ω₀.",
-      markingScheme: [
-        "1 Mark: Mathematical proof that current lags voltage by π/2 in pure inductor.",
-        "1 Mark: Mathematical proof that current leads voltage by π/2 in pure capacitor.",
-        "2 Marks: Phasor diagram and derivation of impedance Z = √[R² + (X_L - X_C)²].",
-        "1 Mark: Derivation of resonance frequency ω₀ = 1/√(LC) and stating resonance properties."
+      "diagramNotes": "1. Draw two parallel vertical rectangular plates separated by distance $d$.\n2. Mark $+Q$ (surface charge $+\\sigma$) on left plate and $-Q$ (surface charge $-\\sigma$) on right plate.\n3. Draw dielectric slab of thickness $t$ placed in the gap.\n4. Show bound charges $-\\sigma_p$ on left slab face and $+\\sigma_p$ on right slab face.\n5. Label field $E_0$ in air gaps of width $(d-t)$ and reduced field $E = E_0/K$ inside slab.",
+      "markingScheme": [
+        "1 Mark: Definition of capacitance and vacuum field derivation $E_0 = Q/(\\varepsilon_0 A)$.",
+        "1 Mark: Derivation of vacuum capacitance $C_0 = \\varepsilon_0 A / d$.",
+        "2 Marks: Derivation of potential difference with slab $V = E_0[d - t(1 - 1/K)]$ and capacitance formula.",
+        "1 Mark: Special cases for $t = d$ ($C = KC_0$) and conducting slab ($K \\to \\infty$)."
       ],
-      examinerTips: "Behavior at DC (frequency f = 0): Inductor offers zero opposition (X_L = 0, acts as short circuit); Capacitor offers infinite opposition (X_C = 1/0 = ∞, blocks DC completely)!"
+      "examinerTips": "In writing potential $V$, clearly write $V = E_0(d-t) + E t$. Do not skip this step, as CBSE marking schemes assign 1 full mark to this decomposition."
     }
   },
   {
-    id: 'imp-phy-18',
-    number: 18,
-    title: "Electric Field of a Dipole: Axial and Equatorial Positions",
-    shortLabel: "Dipole Field: Axial & Equatorial Derivations",
-    chapterId: 'phy-ch-1',
-    chapterTitle: 'Electric Charges and Fields',
-    unit: 'Electrostatics',
-    marks: '5 Marks',
-    marksNum: 5,
-    category: 'Derivation',
-    frequency: 'Classic 5-Marker Derivation (CBSE 2023, 2020, 2017)',
-    questionPrompt: "(a) Derive an expression for the electric field at a point on the AXIAL LINE of an electric dipole of dipole moment p⃗.\n(b) Derive an expression for the electric field at a point on the EQUATORIAL LINE of the dipole.\n(c) What is the ratio of axial to equatorial field for a short dipole at the same distance r?",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 1: Electric Charges and Fields',
-      section: 'Section 1.10.1: The Field of an Electric Dipole (pp. 27–30)',
-      equations: 'Eqs. (1.9), (1.11)',
-      figures: 'Figs. 1.20(a), 1.20(b)',
-      summary: 'End-on (axial) and broadside-on (equatorial) electric field derivations from Coulomb\'s law and short dipole inverse-cube ratio E_axial = 2 E_eq.'
+    "id": "imp-phy-11",
+    "number": 11,
+    "title": "Electric Current, Terminal Potential Difference, Internal Resistance & Power",
+    "shortLabel": "Cell EMF, Internal Resistance & Max Power",
+    "chapterId": "phy-ch-3",
+    "chapterTitle": "Current Electricity",
+    "unit": "Current Electricity",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "High Frequency (CBSE 2024 SQP Q2, 2023, 2020, 2018)",
+    "questionPrompt": "(a) Distinguish between EMF of a cell and its terminal potential difference.\n(b) Derive the relation between EMF (ε), terminal voltage (V), internal resistance (r), and external load resistance (R).\n(c) State and prove the Maximum Power Transfer Theorem for an electric cell delivering power to a variable load resistor.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 3: Current Electricity",
+      "section": "Sections 3.10 & 3.11 (pp. 110–114)",
+      "equations": "Eqs. (3.33), (3.34), (3.35)",
+      "figures": "Figs. 3.18, 3.19",
+      "summary": "Chemical EMF origin, electrolyte internal resistance, closed circuit terminal voltage drops, and load power optimization."
     },
-    modelAnswer: {
-      statement: "An electric dipole consists of charges -q and +q separated by vector distance 2a⃗, with dipole moment p⃗ = q(2a⃗) directed from -q to +q. Its electric field decays with distance as 1/r³ for a short dipole.",
-      derivations: [
+    "theory": [
+      "Electromotive Force (EMF, $\\varepsilon$) is the potential difference between the two electrodes of a cell in an open circuit (when no current is drawn: $I = 0$).",
+      "Terminal Potential Difference ($V$) is the potential difference between the terminals of a cell in a closed circuit (when current $I$ is being drawn through an external circuit).",
+      "Internal Resistance ($r$) is the opposition offered by the electrolyte and electrodes of the cell to the flow of electric current through it.",
+      "When a cell discharges through a load: $$V = \\varepsilon - I r \\quad (V < \\varepsilon)$$",
+      "When a cell is being recharged by an external charger: $$V = \\varepsilon + I r \\quad (V > \\varepsilon)$$"
+    ],
+    "derivations": [
+      {
+        "name": "Part 1: Derivation of Relation between ε, V, r, and R",
+        "setup": "Consider a cell of EMF $\\varepsilon$ and internal resistance $r$ connected across an external load resistor of resistance $R$. A steady current $I$ circulates through the complete circuit.",
+        "steps": [
+          {
+            "text": "Total resistance of the closed series circuit is the sum of external and internal resistances:",
+            "equation": "R_{\\text{total}} = R + r"
+          },
+          {
+            "text": "By Ohm's Law, current delivered by the cell is:",
+            "equation": "I = \\frac{\\varepsilon}{R + r}"
+          },
+          {
+            "text": "The terminal potential difference $V$ across the external resistor $R$ is:",
+            "equation": "V = I R = \\left(\\frac{\\varepsilon}{R + r}\\right) R"
+          },
+          {
+            "text": "Rearranging the current equation: $\\varepsilon = I(R + r) = IR + Ir = V + Ir$:",
+            "equation": "V = \\varepsilon - I r"
+          },
+          {
+            "text": "Expressing internal resistance $r$ in terms of terminal voltage and EMF:",
+            "equation": "I r = \\varepsilon - V \\implies r = \\frac{\\varepsilon - V}{I} = \\frac{\\varepsilon - V}{V / R} = \\left( \\frac{\\varepsilon}{V} - 1 \\right) R"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Open Circuit Condition:",
+            "text": "When external switch is open ($R \\to \\infty$, $I = 0$):",
+            "equation": "V = \\varepsilon"
+          },
+          {
+            "title": "Short Circuit Condition:",
+            "text": "When terminals are shorted ($R = 0$):",
+            "equation": "I_{\\text{max}} = \\frac{\\varepsilon}{r}, \\quad V = 0"
+          }
+        ],
+        "finalFormula": "V = \\varepsilon - I r, \\quad r = \\left(\\frac{\\varepsilon}{V} - 1\\right)R"
+      },
+      {
+        "name": "Part 2: Maximum Power Transfer Theorem",
+        "setup": "Determine the value of variable load resistance $R$ for which power delivered to the load by the cell is maximum.",
+        "steps": [
+          {
+            "text": "Electric power dissipated across the load resistor $R$ is:",
+            "equation": "P = I^2 R = \\left( \\frac{\\varepsilon}{R + r} \\right)^2 R = \\frac{\\varepsilon^2 R}{(R + r)^2}"
+          },
+          {
+            "text": "To find the maximum power, differentiate $P$ with respect to load resistance $R$ and set to zero ($dP/dR = 0$):",
+            "equation": "\\frac{dP}{dR} = \\varepsilon^2 \\left[ \\frac{(R + r)^2 (1) - R \\cdot 2(R + r)}{(R + r)^4} \\right] = 0"
+          },
+          {
+            "text": "Simplifying the numerator:",
+            "equation": "(R + r) - 2R = 0 \\quad \\implies \\quad r - R = 0 \\quad \\implies \\quad R = r"
+          },
+          {
+            "text": "Substituting $R = r$ into the power equation yields the maximum power:",
+            "equation": "P_{\\text{max}} = \\frac{\\varepsilon^2 (r)}{(r + r)^2} = \\frac{\\varepsilon^2 r}{(2r)^2} = \\frac{\\varepsilon^2}{4r}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Efficiency at Maximum Power:",
+            "text": "At maximum power transfer, internal drop equals external voltage ($V = \\varepsilon/2$), so efficiency is exactly 50%:",
+            "equation": "\\eta = \\frac{P_{\\text{out}}}{P_{\\text{total}}} = \\frac{I^2 r}{I^2(2r)} = 50\\%"
+          }
+        ],
+        "finalFormula": "R = r \\implies P_{\\text{max}} = \\frac{\\varepsilon^2}{4r}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "cell-circuit",
+      "title": "Cell Circuit with Internal Resistance & Load",
+      "examDrawingGuide": [
+        "1. Draw battery symbol with long positive and short negative plates labeled EMF $\\varepsilon$.",
+        "2. Place internal resistor $r$ in series enclosed in a dashed box representing cell enclosure.",
+        "3. Draw external circuit loop with switch and load resistor $R$.",
+        "4. Draw voltmeter across cell terminals showing reading $V = \\varepsilon - Ir$.",
+        "5. Plot $P$ versus $R$ curve peaking sharply at $R = r$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Open Circuit EMF (I = 0, V = ε)",
+      "Closed Circuit Terminal Voltage (V = ε - Ir)",
+      "Internal Resistance Formula r = (ε/V - 1)R",
+      "Charging Condition (V = ε + Ir)",
+      "Maximum Power Transfer Condition (R = r)",
+      "Maximum Power Value (P_max = ε² / 4r)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\varepsilon",
+        "term": "Electromotive Force (EMF)",
+        "definition": "Maximum potential difference between cell terminals on open circuit, measured in Volts (V)."
+      },
+      {
+        "symbol": "V",
+        "term": "Terminal Potential Difference",
+        "definition": "Potential difference between terminals when active current flows through load, measured in Volts (V)."
+      },
+      {
+        "symbol": "r",
+        "term": "Internal Resistance",
+        "definition": "Inherent resistance offered by cell electrolyte to ionic charge carrier movement ($\\Omega$)."
+      },
+      {
+        "symbol": "P_{\\text{max}}",
+        "term": "Maximum Power",
+        "definition": "Peak electrical power transferred to load when load matches internal resistance ($R = r$)."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Distinction between EMF and Terminal Potential Difference with units.",
+      "1 Mark: Algebraic derivation of $V = \\varepsilon - Ir$ and $r = (\\varepsilon/V - 1)R$.",
+      "1 Mark: Mathematical proof of Maximum Power Transfer condition $R = r$ and $P_{\\text{max}} = \\varepsilon^2/(4r)$."
+    ],
+    "examinerTips": "Remember to note that during charging of a battery, current enters the positive terminal, making $V = \\varepsilon + Ir$, so terminal voltage exceeds EMF.",
+    "modelAnswer": {
+      "statement": "Electromotive Force (EMF, $\\varepsilon$) is the potential difference between the two electrodes of a cell in an open circuit (when no current is drawn: $I = 0$).\nTerminal Potential Difference ($V$) is the potential difference between the terminals of a cell in a closed circuit (when current $I$ is being drawn through an external circuit).\nInternal Resistance ($r$) is the opposition offered by the electrolyte and electrodes of the cell to the flow of electric current through it.\nWhen a cell discharges through a load: $$V = \\varepsilon - I r \\quad (V < \\varepsilon)$$\nWhen a cell is being recharged by an external charger: $$V = \\varepsilon + I r \\quad (V > \\varepsilon)$$",
+      "derivations": [
         {
-          name: "Derivation 1: Axial Line (End-On Position) [NCERT Section 1.10.1]",
-          steps: [
-            "Setup: Let point P lie on the axial line of the dipole at distance r from the dipole center O.",
-            "Distance to Charges: The distance of point P from +q is (r - a); distance from -q is (r + a).",
-            "Field due to +q: E₊ = [1 / (4πε₀)] · [ q / (r - a)² ], directed away from +q (along p⃗).",
-            "Field due to -q: E₋ = [1 / (4πε₀)] · [ q / (r + a)² ], directed toward -q (opposite to p⃗).",
-            "Net Axial Field: Since E₊ and E₋ are collinear and opposite with E₊ > E₋: E_axial = E₊ - E₋ = [q / (4πε₀)] · [ 1 / (r - a)² - 1 / (r + a)² ].",
-            "Algebraic Simplification: E_axial = [q / (4πε₀)] · [ (r + a)² - (r - a)² ] / [ (r² - a²)² ].",
-            "Expanding Numerator: (r + a)² - (r - a)² = (r² + 2ar + a²) - (r² - 2ar + a²) = 4ar.",
-            "Substituting: E_axial = [q / (4πε₀)] · [ 4ar ] / (r² - a²)² = [1 / (4πε₀)] · [ 2(q · 2a)r ] / (r² - a²)².",
-            "Using p = q · 2a: E_axial = [1 / (4πε₀)] · [ 2pr ] / (r² - a²)².",
-            "Short Dipole Approximation (r ≫ a): Neglect a² compared to r² (r² - a² ≈ r²): E_axial = [1 / (4πε₀)] · (2pr / r⁴) = [1 / (4πε₀)] · (2p / r³).",
-            "Vector Form: E⃗_axial = [1 / (4πε₀)] · (2p⃗ / r³) (directed PARALLEL to p⃗)."
+          "name": "Part 1: Derivation of Relation between ε, V, r, and R",
+          "steps": [
+            "Consider a cell of EMF $\\varepsilon$ and internal resistance $r$ connected across an external load resistor of resistance $R$. A steady current $I$ circulates through the complete circuit.",
+            "Total resistance of the closed series circuit is the sum of external and internal resistances: R_{\\text{total}} = R + r",
+            "By Ohm's Law, current delivered by the cell is: I = \\frac{\\varepsilon}{R + r}",
+            "The terminal potential difference $V$ across the external resistor $R$ is: V = I R = \\left(\\frac{\\varepsilon}{R + r}\\right) R",
+            "Rearranging the current equation: $\\varepsilon = I(R + r) = IR + Ir = V + Ir$: V = \\varepsilon - I r",
+            "Expressing internal resistance $r$ in terms of terminal voltage and EMF: I r = \\varepsilon - V \\implies r = \\frac{\\varepsilon - V}{I} = \\frac{\\varepsilon - V}{V / R} = \\left( \\frac{\\varepsilon}{V} - 1 \\right) R",
+            "Open Circuit Condition: When external switch is open ($R \\to \\infty$, $I = 0$): V = \\varepsilon",
+            "Short Circuit Condition: When terminals are shorted ($R = 0$): I_{\\text{max}} = \\frac{\\varepsilon}{r}, \\quad V = 0"
           ],
-          formula: "E_axial = [1 / (4πε₀)] · (2p / r³)  [Parallel to dipole moment p⃗]"
+          "formula": "V = \\varepsilon - I r, \\quad r = \\left(\\frac{\\varepsilon}{V} - 1\\right)R"
         },
         {
-          name: "Derivation 2: Equatorial Line (Broadside-On Position) [NCERT Section 1.10.1]",
-          steps: [
-            "Setup: Let point P lie on the perpendicular bisector of the dipole at distance r from dipole center O.",
-            "Distance to Charges: By Pythagoras theorem, the distance of P from both +q and -q is identical: d = √(r² + a²).",
-            "Field Magnitudes: Magnitude of field due to each charge is equal: E₊ = E₋ = [1 / (4πε₀)] · [ q / (r² + a²) ].",
-            "Resolving Components: Let angle between dipole axis and line joining charges to P be θ. Resolve E₊ and E₋ into rectangular components:",
-            "  • Vertical Components: E₊ sinθ (upward) and E₋ sinθ (downward) are equal in magnitude and opposite in direction. They cancel out completely!",
-            "  • Horizontal Components: E₊ cosθ and E₋ cosθ are both directed parallel to the dipole axis, opposite to p⃗. They add up constructively.",
-            "Net Equatorial Field: E_eq = E₊ cosθ + E₋ cosθ = 2 E₊ cosθ = 2 · [1 / (4πε₀)] · [ q / (r² + a²) ] · cosθ.",
-            "Evaluating cosθ: From geometry of the right triangle: cosθ = Base / Hypotenuse = a / √(r² + a²).",
-            "Substituting cosθ: E_eq = [1 / (4πε₀)] · [ 2qa ] / [ (r² + a²)(r² + a²)^(1/2) ] = [1 / (4πε₀)] · [ p ] / (r² + a²)^(3/2).",
-            "Short Dipole Approximation (r ≫ a): Neglect a² compared to r²: E_eq = [1 / (4πε₀)] · (p / r³).",
-            "Vector Form: E⃗_eq = - [1 / (4πε₀)] · (p⃗ / r³) (directed strictly OPPOSITE to p⃗).",
-            "Ratio Comparison: E_axial / E_eq = [ 2p / (4πε₀ r³) ] / [ p / (4πε₀ r³) ] = 2. In vector form: E⃗_axial = -2 E⃗_eq."
+          "name": "Part 2: Maximum Power Transfer Theorem",
+          "steps": [
+            "Determine the value of variable load resistance $R$ for which power delivered to the load by the cell is maximum.",
+            "Electric power dissipated across the load resistor $R$ is: P = I^2 R = \\left( \\frac{\\varepsilon}{R + r} \\right)^2 R = \\frac{\\varepsilon^2 R}{(R + r)^2}",
+            "To find the maximum power, differentiate $P$ with respect to load resistance $R$ and set to zero ($dP/dR = 0$): \\frac{dP}{dR} = \\varepsilon^2 \\left[ \\frac{(R + r)^2 (1) - R \\cdot 2(R + r)}{(R + r)^4} \\right] = 0",
+            "Simplifying the numerator: (R + r) - 2R = 0 \\quad \\implies \\quad r - R = 0 \\quad \\implies \\quad R = r",
+            "Substituting $R = r$ into the power equation yields the maximum power: P_{\\text{max}} = \\frac{\\varepsilon^2 (r)}{(r + r)^2} = \\frac{\\varepsilon^2 r}{(2r)^2} = \\frac{\\varepsilon^2}{4r}",
+            "Efficiency at Maximum Power: At maximum power transfer, internal drop equals external voltage ($V = \\varepsilon/2$), so efficiency is exactly 50%: \\eta = \\frac{P_{\\text{out}}}{P_{\\text{total}}} = \\frac{I^2 r}{I^2(2r)} = 50\\%"
           ],
-          formula: "E_eq = [1 / (4πε₀)] · (p / r³)  [Opposite to p⃗ ; E_axial / E_eq = 2]"
+          "formula": "R = r \\implies P_{\\text{max}} = \\frac{\\varepsilon^2}{4r}"
         }
       ],
-      diagramNotes: "Axial diagram showing charges -q, +q and point P with E₊ away and E₋ toward; Equatorial diagram showing isosceles triangle, canceling vertical sinθ components, and adding horizontal cosθ components.",
-      markingScheme: [
-        "2 Marks: Complete axial derivation with clear algebraic steps and formula E_axial = 2p/(4πε₀r³).",
-        "2 Marks: Complete equatorial derivation showing component resolution and formula E_eq = p/(4πε₀r³).",
-        "1 Mark: Ratio relationship E_axial / E_eq = 2 and vector direction comparison."
+      "diagramNotes": "1. Draw battery symbol with long positive and short negative plates labeled EMF $\\varepsilon$.\n2. Place internal resistor $r$ in series enclosed in a dashed box representing cell enclosure.\n3. Draw external circuit loop with switch and load resistor $R$.\n4. Draw voltmeter across cell terminals showing reading $V = \\varepsilon - Ir$.\n5. Plot $P$ versus $R$ curve peaking sharply at $R = r$.",
+      "markingScheme": [
+        "1 Mark: Distinction between EMF and Terminal Potential Difference with units.",
+        "1 Mark: Algebraic derivation of $V = \\varepsilon - Ir$ and $r = (\\varepsilon/V - 1)R$.",
+        "1 Mark: Mathematical proof of Maximum Power Transfer condition $R = r$ and $P_{\\text{max}} = \\varepsilon^2/(4r)$."
       ],
-      examinerTips: "Vector Signs: E⃗_axial points in the SAME direction as p⃗, while E⃗_eq points in the OPPOSITE direction to p⃗. Hence in vector form: E⃗_axial = -2 E⃗_eq. Never forget the negative sign when writing the vector relation!"
+      "examinerTips": "Remember to note that during charging of a battery, current enters the positive terminal, making $V = \\varepsilon + Ir$, so terminal voltage exceeds EMF."
     }
   },
   {
-    id: 'imp-phy-19',
-    number: 19,
-    title: "Energy Stored in a Capacitor and Energy Stored in an Inductor",
-    shortLabel: "Energy Stored in Capacitor & Inductor",
-    chapterId: 'phy-ch-2',
-    chapterTitle: 'Electrostatic Potential and Capacitance',
-    unit: 'Electrostatics & EMI',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation',
-    frequency: 'Frequent 3-Marker Derivation',
-    questionPrompt: "(a) Derive an expression for the electrostatic energy stored in a charged capacitor of capacitance C with potential difference V.\n(b) Express this energy in terms of energy density (u_E) of the electric field.\n(c) Derive an expression for the magnetic energy stored in an inductor of self-inductance L carrying steady current I₀.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 2 (Capacitor) & Chapter 6 (Inductor)',
-      section: 'Sections 2.11 (pp. 81–83) & 6.7.2 (pp. 222–224)',
-      equations: 'Eqs. (2.49), (2.50), (6.19)',
-      figures: 'Figs. 2.29, 6.13',
-      summary: 'Integration of infinitesimal work dW = V dq to obtain U = (1/2)CV² and dW = L I dI to obtain U = (1/2)LI², with energy densities u_E = (1/2)ε₀E² and u_B = B²/(2μ₀).'
+    "id": "imp-phy-12",
+    "number": 12,
+    "title": "Properties of Electromagnetic Waves & EM Spectrum Applications",
+    "shortLabel": "EM Waves Properties & Spectrum",
+    "chapterId": "phy-ch-8",
+    "chapterTitle": "Electromagnetic Waves",
+    "unit": "Electromagnetic Waves",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Theory & Conceptual",
+    "frequency": "High Frequency Core Question (CBSE 2024 SQP Q8, 2023, 2022)",
+    "questionPrompt": "(a) State four important characteristic properties of electromagnetic waves.\n(b) Prove that the speed of electromagnetic waves in vacuum is given by c = 1 / √(μ₀ε₀).\n(c) Name the electromagnetic radiations used for: (i) Radar systems, (ii) Water purification, (iii) Treating muscular strains, and (iv) Diagnostic medical imaging.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 8: Electromagnetic Waves",
+      "section": "Sections 8.3 & 8.4 (pp. 274–284)",
+      "equations": "Eqs. (8.9), (8.10), (8.13)",
+      "figures": "Figs. 8.4, 8.5",
+      "summary": "Transverse nature of electric and magnetic fields, Maxwell speed relation, energy transport, and complete electromagnetic spectrum breakdown."
     },
-    modelAnswer: {
-      statement: "Energy is stored in reactive circuit components by performing work against opposing electrostatic or magnetic fields:\n• In a Capacitor: Work done charging the plates is stored as electrostatic potential energy in the ELECTRIC FIELD between the plates.\n• In an Inductor: Work done against the self-induced back emf is stored as magnetic potential energy in the MAGNETIC FIELD inside its core.",
-      derivations: [
+    "theory": [
+      "An Electromagnetic Wave is a self-sustaining wave propagating through space composed of sinusoidally oscillating electric ($\\vec{E}$) and magnetic ($\\vec{B}$) fields oriented mutually perpendicular to each other and perpendicular to the direction of propagation.",
+      "Property 1 (Transverse Nature): Both $\\vec{E}$ and $\\vec{B}$ vectors oscillate perpendicular to the wave propagation vector $\\vec{k}$ ($$\\vec{E} \\perp \\vec{B} \\perp \\vec{k}$$).",
+      "Property 2 (Speed in Vacuum): All EM waves travel in free space with the invariant speed of light: $$c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\approx 3 \\times 10^8 \\text{ m/s}$$",
+      "Property 3 (Electric to Magnetic Amplitude Ratio): At every point and instant, the ratio of electric field amplitude to magnetic field amplitude equals the speed of light: $$\\frac{E_0}{B_0} = c$$",
+      "Property 4 (Equal Energy Sharing): Total energy density $u$ is partitioned equally between electric and magnetic fields: $$u_E = \\frac{1}{2}\\varepsilon_0 E^2 = \\frac{B^2}{2\\mu_0} = u_B \\quad \\implies \\quad u = \\varepsilon_0 E^2 = \\frac{B^2}{\\mu_0}$$",
+      "Property 5 (Radiation Pressure): EM waves carry linear momentum $p = U / c$. When absorbed by a surface, they exert mechanical radiation pressure."
+    ],
+    "derivations": [
+      {
+        "name": "Derivation of Wave Speed Relation from Maxwell's Equations",
+        "setup": "Consider a plane electromagnetic wave propagating along the positive x-axis in vacuum, with electric field oscillating along the y-axis and magnetic field oscillating along the z-axis.",
+        "steps": [
+          {
+            "text": "The harmonic wave equations for electric and magnetic field components are:",
+            "equation": "E_y(x, t) = E_0 \\sin(kx - \\omega t), \\quad B_z(x, t) = B_0 \\sin(kx - \\omega t)"
+          },
+          {
+            "text": "Applying Faraday's Law in differential form ($\\frac{\\partial E_y}{\\partial x} = -\\frac{\\partial B_z}{\\partial t}$):",
+            "equation": "k E_0 \\cos(kx - \\omega t) = \\omega B_0 \\cos(kx - \\omega t) \\quad \\implies \\quad \\frac{E_0}{B_0} = \\frac{\\omega}{k} = c"
+          },
+          {
+            "text": "Applying Ampere-Maxwell's Law in vacuum ($\\frac{\\partial B_z}{\\partial x} = -\\mu_0 \\varepsilon_0 \\frac{\\partial E_y}{\\partial t}$):",
+            "equation": "k B_0 = \\mu_0 \\varepsilon_0 \\omega E_0 \\quad \\implies \\quad \\frac{B_0}{E_0} = \\mu_0 \\varepsilon_0 \\left(\\frac{\\omega}{k}\\right) = \\mu_0 \\varepsilon_0 c"
+          },
+          {
+            "text": "Multiplying the two amplitude ratio equations:",
+            "equation": "\\left(\\frac{E_0}{B_0}\\right) \\cdot \\left(\\frac{B_0}{E_0}\\right) = c \\cdot (\\mu_0 \\varepsilon_0 c) \\quad \\implies \\quad 1 = \\mu_0 \\varepsilon_0 c^2"
+          },
+          {
+            "text": "Solving for wave speed $c$:",
+            "equation": "c^2 = \\frac{1}{\\mu_0 \\varepsilon_0} \\quad \\implies \\quad c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Speed in Material Medium:",
+            "text": "In a dielectric medium with permittivity $\\varepsilon$ and permeability $\\mu$, refractive index $n$ is:",
+            "equation": "v = \\frac{1}{\\sqrt{\\mu \\varepsilon}} = \\frac{c}{\\sqrt{\\mu_r \\varepsilon_r}} = \\frac{c}{n}"
+          }
+        ],
+        "finalFormula": "c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} = 3 \\times 10^8 \\text{ m/s}, \\quad \\frac{E_0}{B_0} = c"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "em-wave-structure",
+      "title": "Transverse Electromagnetic Wave Propagation",
+      "examDrawingGuide": [
+        "1. Draw 3D orthogonal coordinate axes: X (propagation direction), Y (electric field), Z (magnetic field).",
+        "2. Draw transverse sine wave in XY plane representing oscillating electric field $\\vec{E}$.",
+        "3. Draw transverse sine wave in XZ plane representing oscillating magnetic field $\\vec{B}$ in phase with $\\vec{E}$.",
+        "4. Draw arrows showing $\\vec{E} \\times \\vec{B}$ pointing along the positive X direction."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Transverse Wave Character (E ⟂ B ⟂ v)",
+      "Vacuum Speed c = 1/√(μ₀ε₀)",
+      "Amplitude Ratio E₀/B₀ = c",
+      "Equal Energy Density Division (u_E = u_B)",
+      "Momentum and Radiation Pressure (p = U/c)",
+      "Spectrum Applications (Microwaves for radar, UV for germicidal purification, IR for muscular therapy, X-rays for bone radiography)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "c",
+        "term": "Speed of Light in Vacuum",
+        "definition": "Universal speed constant of electromagnetic waves ($2.9979 \\times 10^8 \\text{ m/s}$)."
+      },
+      {
+        "symbol": "\\mu_0",
+        "term": "Permeability of Free Space",
+        "definition": "Magnetic constant ($4\\pi \\times 10^{-7} \\text{ T}\\cdot\\text{m/A}$)."
+      },
+      {
+        "symbol": "\\varepsilon_0",
+        "term": "Permittivity of Free Space",
+        "definition": "Electric constant ($8.854 \\times 10^{-12} \\text{ C}^2/\\text{N}\\cdot\\text{m}^2$)."
+      },
+      {
+        "symbol": "u",
+        "term": "Total Energy Density",
+        "definition": "Total electromagnetic energy stored per unit volume of space ($\\text{J/m}^3$)."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Statement of four characteristic properties of EM waves.",
+      "1 Mark: Mathematical derivation of $c = 1/\\sqrt{\\mu_0\\varepsilon_0}$ from Maxwell equations.",
+      "1 Mark: Identification of all four spectrum applications (0.25 Mark each)."
+    ],
+    "examinerTips": "In spectrum applications: Radar uses Microwaves; Water purification uses Ultraviolet (germicidal); Muscular pain uses Infrared (heat lamps); Bone diagnostics uses X-rays.",
+    "modelAnswer": {
+      "statement": "An Electromagnetic Wave is a self-sustaining wave propagating through space composed of sinusoidally oscillating electric ($\\vec{E}$) and magnetic ($\\vec{B}$) fields oriented mutually perpendicular to each other and perpendicular to the direction of propagation.\nProperty 1 (Transverse Nature): Both $\\vec{E}$ and $\\vec{B}$ vectors oscillate perpendicular to the wave propagation vector $\\vec{k}$ ($$\\vec{E} \\perp \\vec{B} \\perp \\vec{k}$$).\nProperty 2 (Speed in Vacuum): All EM waves travel in free space with the invariant speed of light: $$c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\approx 3 \\times 10^8 \\text{ m/s}$$\nProperty 3 (Electric to Magnetic Amplitude Ratio): At every point and instant, the ratio of electric field amplitude to magnetic field amplitude equals the speed of light: $$\\frac{E_0}{B_0} = c$$\nProperty 4 (Equal Energy Sharing): Total energy density $u$ is partitioned equally between electric and magnetic fields: $$u_E = \\frac{1}{2}\\varepsilon_0 E^2 = \\frac{B^2}{2\\mu_0} = u_B \\quad \\implies \\quad u = \\varepsilon_0 E^2 = \\frac{B^2}{\\mu_0}$$\nProperty 5 (Radiation Pressure): EM waves carry linear momentum $p = U / c$. When absorbed by a surface, they exert mechanical radiation pressure.",
+      "derivations": [
         {
-          name: "Derivation 1: Electrostatic Energy in Capacitor [NCERT Section 2.11]",
-          steps: [
-            "Charging Process: Suppose a capacitor of capacitance C is charged by gradually transferring infinitesimal charge elements dq from plate 2 to plate 1.",
-            "Intermediate Potential: At any intermediate stage when charge on the plates is q', the potential difference between them is V' = q' / C.",
-            "Small Work Done: The work done in transferring additional charge dq' across this potential difference is: dW = V' dq' = (q' / C) dq'.",
-            "Total Work Integration: Total work done in charging the capacitor from initial charge 0 to final charge Q is: W = ∫₀^Q (q' / C) dq' = (1 / C) [ q'² / 2 ]₀^Q = Q² / (2C).",
-            "Potential Energy Forms: This work is stored as electrostatic potential energy U. Using Q = C · V: U = Q² / (2C) = (1/2) C V² = (1/2) Q V.",
-            "Energy Density Derivation: For a parallel-plate capacitor with plate area A and separation d: C = ε₀ A / d and V = E · d. Substitute C and V into U = (1/2) C V²: U = (1/2) · [ (ε₀ A) / d ] · (E d)² = (1/2) ε₀ E² · (A · d).",
-            "Volume of Field Region: The volume between the capacitor plates is Volume = A · d. Energy density u_E is energy per unit volume: u_E = U / (A d) = (1/2) ε₀ E²."
+          "name": "Derivation of Wave Speed Relation from Maxwell's Equations",
+          "steps": [
+            "Consider a plane electromagnetic wave propagating along the positive x-axis in vacuum, with electric field oscillating along the y-axis and magnetic field oscillating along the z-axis.",
+            "The harmonic wave equations for electric and magnetic field components are: E_y(x, t) = E_0 \\sin(kx - \\omega t), \\quad B_z(x, t) = B_0 \\sin(kx - \\omega t)",
+            "Applying Faraday's Law in differential form ($\\frac{\\partial E_y}{\\partial x} = -\\frac{\\partial B_z}{\\partial t}$): k E_0 \\cos(kx - \\omega t) = \\omega B_0 \\cos(kx - \\omega t) \\quad \\implies \\quad \\frac{E_0}{B_0} = \\frac{\\omega}{k} = c",
+            "Applying Ampere-Maxwell's Law in vacuum ($\\frac{\\partial B_z}{\\partial x} = -\\mu_0 \\varepsilon_0 \\frac{\\partial E_y}{\\partial t}$): k B_0 = \\mu_0 \\varepsilon_0 \\omega E_0 \\quad \\implies \\quad \\frac{B_0}{E_0} = \\mu_0 \\varepsilon_0 \\left(\\frac{\\omega}{k}\\right) = \\mu_0 \\varepsilon_0 c",
+            "Multiplying the two amplitude ratio equations: \\left(\\frac{E_0}{B_0}\\right) \\cdot \\left(\\frac{B_0}{E_0}\\right) = c \\cdot (\\mu_0 \\varepsilon_0 c) \\quad \\implies \\quad 1 = \\mu_0 \\varepsilon_0 c^2",
+            "Solving for wave speed $c$: c^2 = \\frac{1}{\\mu_0 \\varepsilon_0} \\quad \\implies \\quad c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}}",
+            "Speed in Material Medium: In a dielectric medium with permittivity $\\varepsilon$ and permeability $\\mu$, refractive index $n$ is: v = \\frac{1}{\\sqrt{\\mu \\varepsilon}} = \\frac{c}{\\sqrt{\\mu_r \\varepsilon_r}} = \\frac{c}{n}"
           ],
-          formula: "U = (1/2) C V² = Q² / (2C) = (1/2) Q V ; u_E = (1/2) ε₀ E²"
-        },
-        {
-          name: "Derivation 2: Magnetic Energy in Inductor [NCERT Section 6.7.2]",
-          steps: [
-            "Current Growth: When current increases from 0 to I in an inductor of self-inductance L, a self-induced back emf opposes current growth: |ε| = L (dI / dt).",
-            "Rate of Work Done (Power): To maintain current growth, the external source must perform work against this back emf. The instantaneous power is: P = dW / dt = |ε| · I = [ L (dI / dt) ] · I.",
-            "Infinitesimal Work: The work done in time dt is: dW = P dt = L · I · dI.",
-            "Total Work Integration: Total work done in building up the current from 0 to steady maximum value I₀: W = ∫₀^(I₀) L I dI = L [ I² / 2 ]₀^(I₀) = (1/2) L I₀².",
-            "Magnetic Potential Energy: This work is stored as magnetic potential energy U_B in the magnetic field: U_B = (1/2) L I₀².",
-            "Magnetic Energy Density: For a long solenoid of cross-sectional area A and length l (Volume = Al): B = μ₀ n I and L = μ₀ n² Al. Substituting gives magnetic energy density: u_B = U_B / (A l) = B² / (2μ₀)."
-          ],
-          formula: "U_B = (1/2) L I₀² ; u_B = B² / (2μ₀)  [Symmetric to u_E = (1/2)ε₀E²]"
+          "formula": "c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} = 3 \\times 10^8 \\text{ m/s}, \\quad \\frac{E_0}{B_0} = c"
         }
       ],
-      diagramNotes: "Capacitor showing charging curve and electric field E between plates; Inductor coil showing back EMF opposing current growth.",
-      markingScheme: [
-        "1.5 Marks: Capacitor energy derivation dW = (q/C)dq to U = (1/2)CV² and energy density formula u_E = (1/2)ε₀E².",
-        "1.5 Marks: Inductor energy derivation dW = L I dI to U = (1/2)LI₀² and magnetic energy density formula."
+      "diagramNotes": "1. Draw 3D orthogonal coordinate axes: X (propagation direction), Y (electric field), Z (magnetic field).\n2. Draw transverse sine wave in XY plane representing oscillating electric field $\\vec{E}$.\n3. Draw transverse sine wave in XZ plane representing oscillating magnetic field $\\vec{B}$ in phase with $\\vec{E}$.\n4. Draw arrows showing $\\vec{E} \\times \\vec{B}$ pointing along the positive X direction.",
+      "markingScheme": [
+        "1 Mark: Statement of four characteristic properties of EM waves.",
+        "1 Mark: Mathematical derivation of $c = 1/\\sqrt{\\mu_0\\varepsilon_0}$ from Maxwell equations.",
+        "1 Mark: Identification of all four spectrum applications (0.25 Mark each)."
       ],
-      examinerTips: "Symmetry of Field Energy Densities:\n• Electric Field: u_E = (1/2) ε₀ E²\n• Magnetic Field: u_B = (1/2μ₀) B² = B² / (2μ₀)\nBoth expressions follow the exact same mathematical structure!"
+      "examinerTips": "In spectrum applications: Radar uses Microwaves; Water purification uses Ultraviolet (germicidal); Muscular pain uses Infrared (heat lamps); Bone diagnostics uses X-rays."
     }
   },
   {
-    id: 'imp-phy-20',
-    number: 20,
-    title: "Force Between Two Parallel Current-Carrying Conductors & Definition of 1 Ampere",
-    shortLabel: "Force Between Parallel Conductors (1 Ampere)",
-    chapterId: 'phy-ch-4',
-    chapterTitle: 'Moving Charges and Magnetism',
-    unit: 'Magnetism',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation & Definition',
-    frequency: 'Extremely High Frequency (CBSE 2023, 2022, 2020)',
-    questionPrompt: "(a) Derive the expression for the force per unit length between two infinitely long straight parallel conductors carrying currents I₁ and I₂ separated by distance d in vacuum.\n(b) Hence define one ampere of electric current.\n(c) State whether the force is attractive or repulsive when currents flow in: (i) same direction, (ii) opposite directions.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 4: Moving Charges and Magnetism',
-      section: 'Section 4.7: Force Between Two Parallel Currents (pp. 154–156)',
-      equations: 'Eqs. (4.29), (4.30)',
-      figures: 'Fig. 4.19',
-      summary: 'Field of wire 1 B₁ = μ₀I₁/(2πd) exerting Lorentz force on wire 2, force per unit length f = μ₀I₁I₂/(2πd), and the official SI Ampere definition.'
+    "id": "imp-phy-13",
+    "number": 13,
+    "title": "Root-Mean-Square (RMS) Values of AC: Derivation of I_rms and E_rms",
+    "shortLabel": "RMS Value of AC (I_rms = I₀/√2)",
+    "chapterId": "phy-ch-7",
+    "chapterTitle": "Alternating Current",
+    "unit": "Electromagnetic Induction & Alternating Current",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "High Frequency Core Derivation (CBSE 2024, 2023, 2020, 2018)",
+    "questionPrompt": "(a) Define the root-mean-square (RMS) or effective value of alternating current.\n(b) Derive the mathematical relation between RMS value (I_rms) and peak value (I₀) of sinusoidal alternating current over a complete cycle.\n(c) The household AC mains voltage in India is 220 V at 50 Hz. Calculate its peak voltage and explain why a 220 V AC shock is more severe than a 220 V DC shock.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 7: Alternating Current",
+      "section": "Sections 7.2 & 7.3 (pp. 235–239)",
+      "equations": "Eqs. (7.7), (7.8), (7.9)",
+      "figures": "Fig. 7.3",
+      "summary": "Joule heating equivalence, integration of squared sinusoidal waveform over full period, and comparison between peak and RMS values."
     },
-    modelAnswer: {
-      statement: "Two parallel current-carrying conductors exert magnetic forces on each other because current in conductor 1 produces a magnetic field that exerts a Lorentz force on moving charges in conductor 2, and vice versa.",
-      derivations: [
+    "theory": [
+      "The Root-Mean-Square (RMS) or virtual/effective value of alternating current is defined as that value of steady direct current (DC) which would generate the same amount of heat in a given resistor in a given time as is produced by the AC passing through the same resistor for the same time (one complete cycle).",
+      "The average value of AC over a complete cycle is identically zero ($\\langle I \\rangle_{\\text{cycle}} = 0$) because positive and negative half-cycles cancel out. Hence, AC cannot be rated by its simple arithmetic average.",
+      "Heating effect depends on $I^2 R$, and since $I^2$ is always positive, thermal dissipation provides an unambiguous physical measure of AC magnitude.",
+      "Domestic AC rating of $220\\text{ V}$ is the RMS voltage ($V_{\\text{rms}}$). The corresponding peak voltage is: $$V_0 = \\sqrt{2} \\times 220\\text{ V} \\approx 311.13\\text{ V}$$",
+      "A $220\\text{ V}$ AC shock is more fatal and dangerous than a $220\\text{ V}$ DC shock because the AC voltage fluctuates up to a peak value of $\\pm 311\\text{ V}$ twice every cycle, whereas DC remains steady at $220\\text{ V}$."
+    ],
+    "derivations": [
+      {
+        "name": "Mathematical Derivation of I_rms = I₀ / √2",
+        "setup": "Consider a sinusoidal alternating current flowing through a resistor of resistance $R$: $$I = I_0 \\sin(\\omega t)$$ where $I_0$ is the peak amplitude, $\\omega = 2\\pi/T$ is the angular frequency, and $T$ is the time period of one complete cycle.",
+        "steps": [
+          {
+            "text": "By Joule's law of heating, the thermal energy $dH$ generated in the resistor during an infinitesimal time interval $dt$ is:",
+            "equation": "dH = I^2 R \\, dt = [I_0 \\sin(\\omega t)]^2 R \\, dt = I_0^2 R \\sin^2(\\omega t) \\, dt"
+          },
+          {
+            "text": "Total heat $H$ produced in the resistor over one complete cycle period ($t = 0$ to $t = T$) is obtained by integration:",
+            "equation": "H = \\int_0^T I_0^2 R \\sin^2(\\omega t) \\, dt = I_0^2 R \\int_0^T \\sin^2(\\omega t) \\, dt"
+          },
+          {
+            "text": "Using trigonometric identity $\\sin^2(\\omega t) = \\frac{1 - \\cos(2\\omega t)}{2}$:",
+            "equation": "H = I_0^2 R \\int_0^T \\frac{1 - \\cos(2\\omega t)}{2} \\, dt = \\frac{I_0^2 R}{2} \\left[ \\int_0^T dt - \\int_0^T \\cos(2\\omega t) \\, dt \\right]"
+          },
+          {
+            "text": "Evaluating the definite integrals over one complete period $T = 2\\pi/\\omega$:",
+            "equation": "\\int_0^T dt = T, \\quad \\int_0^T \\cos(2\\omega t) \\, dt = \\left[ \\frac{\\sin(2\\omega t)}{2\\omega} \\right]_0^T = \\frac{\\sin(4\\pi) - \\sin(0)}{2\\omega} = 0"
+          },
+          {
+            "text": "Therefore, total heat produced by alternating current in one cycle is:",
+            "equation": "H = \\frac{I_0^2 R T}{2}"
+          },
+          {
+            "text": "If steady current $I_{\\text{rms}}$ produces the exact same amount of heat in the same resistance $R$ over the same time $T$:",
+            "equation": "H = I_{\\text{rms}}^2 R T"
+          },
+          {
+            "text": "Equating the two heat expressions:",
+            "equation": "I_{\\text{rms}}^2 R T = \\frac{I_0^2 R T}{2} \\quad \\implies \\quad I_{\\text{rms}}^2 = \\frac{I_0^2}{2}"
+          },
+          {
+            "text": "Taking the square root on both sides:",
+            "equation": "I_{\\text{rms}} = \\frac{I_0}{\\sqrt{2}} \\approx 0.707 \\, I_0"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "RMS Voltage Relation:",
+            "text": "By Ohm's law, the effective RMS voltage relates identically to peak voltage:",
+            "equation": "V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} \\approx 0.707 \\, V_0 \\quad \\implies \\quad V_0 = \\sqrt{2} \\, V_{\\text{rms}}"
+          }
+        ],
+        "finalFormula": "I_{\\text{rms}} = \\frac{I_0}{\\sqrt{2}} = 0.707 I_0, \\quad V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} = 0.707 V_0"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "ac-rms-waveform",
+      "title": "Sinusoidal AC Waveform & RMS Value",
+      "examDrawingGuide": [
+        "1. Draw coordinate axes: horizontal time axis $t$, vertical current axis $I(t)$.",
+        "2. Draw one full cycle of sine wave reaching positive peak $+I_0$ at $T/4$ and negative peak $-I_0$ at $3T/4$.",
+        "3. Draw squared current curve $I^2(t)$ which is entirely positive and oscillates between $0$ and $I_0^2$.",
+        "4. Draw dashed horizontal line at $I_0^2/2$ representing the mean squared current, and mark $I_{\\text{rms}} = I_0/\\sqrt{2} \\approx 0.707 I_0$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Joule Heating Equivalence Definition",
+      "Zero Average Current Over Full Cycle (⟨I⟩ = 0)",
+      "Integration of sin²(ωt) over Period T = T/2",
+      "Heat Balance Equation (I_rms²RT = I₀²RT / 2)",
+      "RMS Formula (I_rms = I₀ / √2)",
+      "Domestic Peak Voltage (V₀ = 220 × √2 = 311 V)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "I_{\\text{rms}}",
+        "term": "Root-Mean-Square Current",
+        "definition": "Effective thermal value of alternating current ($I_{\\text{rms}} = I_0 / \\sqrt{2}$), measured in Amperes (A)."
+      },
+      {
+        "symbol": "I_0",
+        "term": "Peak Current (Amplitude)",
+        "definition": "Maximum instantaneous value attained by alternating current in either half-cycle (A)."
+      },
+      {
+        "symbol": "T",
+        "term": "Time Period",
+        "definition": "Time required to execute one full electrical cycle: $T = 1/f = 2\\pi/\\omega$, measured in seconds (s)."
+      },
+      {
+        "symbol": "\\omega",
+        "term": "Angular Frequency",
+        "definition": "Rate of change of phase angle: $\\omega = 2\\pi f$, measured in radians per second (rad/s)."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Definition of RMS current in terms of Joule heating equivalence.",
+      "1.5 Marks: Step-by-step calculus integration of heat $H = \\int I^2 R dt$ using identity $\\sin^2\\omega t = (1 - \\cos 2\\omega t)/2$.",
+      "0.5 Mark: Numerical calculation of peak voltage ($311\\text{ V}$) and explanation of why AC shock is more hazardous."
+    ],
+    "examinerTips": "In evaluating $\\int_0^T \\cos(2\\omega t) dt$, show explicitly that it integrates to zero. Skipping this step often costs 0.5 marks in CBSE evaluation.",
+    "modelAnswer": {
+      "statement": "The Root-Mean-Square (RMS) or virtual/effective value of alternating current is defined as that value of steady direct current (DC) which would generate the same amount of heat in a given resistor in a given time as is produced by the AC passing through the same resistor for the same time (one complete cycle).\nThe average value of AC over a complete cycle is identically zero ($\\langle I \\rangle_{\\text{cycle}} = 0$) because positive and negative half-cycles cancel out. Hence, AC cannot be rated by its simple arithmetic average.\nHeating effect depends on $I^2 R$, and since $I^2$ is always positive, thermal dissipation provides an unambiguous physical measure of AC magnitude.\nDomestic AC rating of $220\\text{ V}$ is the RMS voltage ($V_{\\text{rms}}$). The corresponding peak voltage is: $$V_0 = \\sqrt{2} \\times 220\\text{ V} \\approx 311.13\\text{ V}$$\nA $220\\text{ V}$ AC shock is more fatal and dangerous than a $220\\text{ V}$ DC shock because the AC voltage fluctuates up to a peak value of $\\pm 311\\text{ V}$ twice every cycle, whereas DC remains steady at $220\\text{ V}$.",
+      "derivations": [
         {
-          name: "Derivation of Force Per Unit Length [NCERT Section 4.7]",
-          steps: [
-            "Conductor Arrangement: Consider two long, straight parallel conductors 1 and 2 placed in vacuum separated by distance d, carrying steady currents I₁ and I₂.",
-            "Magnetic Field Produced by Conductor 1: By Ampère's Law / Biot-Savart Law, current I₁ produces magnetic field B₁ at all points on conductor 2: B₁ = (μ₀ I₁) / (2π d).",
-            "Field Direction: By the Right-Hand Thumb Rule, field B₁ at conductor 2 is directed perpendicular to the plane containing both wires, into the page.",
-            "Lorentz Force on Conductor 2: Segment of conductor 2 of length L carrying current I₂ in field B₁ experiences magnetic force: F₂ = I₂ L B₁ sin(90°) = I₂ L · [ (μ₀ I₁) / (2π d) ].",
-            "Total Force on Length L: F = (μ₀ I₁ I₂ L) / (2π d).",
-            "Force Per Unit Length: Dividing by length L gives force per unit length (f = F/L): f = F / L = (μ₀ I₁ I₂) / (2π d).",
-            "Equal and Opposite Reaction: By Newton's third law, conductor 2 exerts an equal and opposite force on conductor 1: F⃗₁₂ = -F⃗₂₁.",
-            "Direction of Force (Fleming's Left-Hand Rule):",
-            "  • Parallel Currents (Same Direction): Force is ATTRACTIVE (conductors pull toward each other).",
-            "  • Antiparallel Currents (Opposite Directions): Force is REPULSIVE (conductors push away from each other)."
+          "name": "Mathematical Derivation of I_rms = I₀ / √2",
+          "steps": [
+            "Consider a sinusoidal alternating current flowing through a resistor of resistance $R$: $$I = I_0 \\sin(\\omega t)$$ where $I_0$ is the peak amplitude, $\\omega = 2\\pi/T$ is the angular frequency, and $T$ is the time period of one complete cycle.",
+            "By Joule's law of heating, the thermal energy $dH$ generated in the resistor during an infinitesimal time interval $dt$ is: dH = I^2 R \\, dt = [I_0 \\sin(\\omega t)]^2 R \\, dt = I_0^2 R \\sin^2(\\omega t) \\, dt",
+            "Total heat $H$ produced in the resistor over one complete cycle period ($t = 0$ to $t = T$) is obtained by integration: H = \\int_0^T I_0^2 R \\sin^2(\\omega t) \\, dt = I_0^2 R \\int_0^T \\sin^2(\\omega t) \\, dt",
+            "Using trigonometric identity $\\sin^2(\\omega t) = \\frac{1 - \\cos(2\\omega t)}{2}$: H = I_0^2 R \\int_0^T \\frac{1 - \\cos(2\\omega t)}{2} \\, dt = \\frac{I_0^2 R}{2} \\left[ \\int_0^T dt - \\int_0^T \\cos(2\\omega t) \\, dt \\right]",
+            "Evaluating the definite integrals over one complete period $T = 2\\pi/\\omega$: \\int_0^T dt = T, \\quad \\int_0^T \\cos(2\\omega t) \\, dt = \\left[ \\frac{\\sin(2\\omega t)}{2\\omega} \\right]_0^T = \\frac{\\sin(4\\pi) - \\sin(0)}{2\\omega} = 0",
+            "Therefore, total heat produced by alternating current in one cycle is: H = \\frac{I_0^2 R T}{2}",
+            "If steady current $I_{\\text{rms}}$ produces the exact same amount of heat in the same resistance $R$ over the same time $T$: H = I_{\\text{rms}}^2 R T",
+            "Equating the two heat expressions: I_{\\text{rms}}^2 R T = \\frac{I_0^2 R T}{2} \\quad \\implies \\quad I_{\\text{rms}}^2 = \\frac{I_0^2}{2}",
+            "Taking the square root on both sides: I_{\\text{rms}} = \\frac{I_0}{\\sqrt{2}} \\approx 0.707 \\, I_0",
+            "RMS Voltage Relation: By Ohm's law, the effective RMS voltage relates identically to peak voltage: V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} \\approx 0.707 \\, V_0 \\quad \\implies \\quad V_0 = \\sqrt{2} \\, V_{\\text{rms}}"
           ],
-          formula: "F / L = (μ₀ I₁ I₂) / (2π d)  [Parallel currents attract ; Antiparallel currents repel]"
-        },
-        {
-          name: "Official SI Definition of One Ampere [NCERT Section 4.7]",
-          steps: [
-            "Setting Parameters: In the force formula f = (μ₀ I₁ I₂) / (2π d), set: I₁ = I₂ = 1 A, d = 1 m, and μ₀ = 4π × 10⁻⁷ T·m/A.",
-            "Evaluating Force: f = (4π × 10⁻⁷ × 1 × 1) / (2π × 1) = 2 × 10⁻⁷ N/m.",
-            "Standard SI Definition: 'One Ampere is that constant current which, if maintained in two straight parallel conductors of infinite length and negligible circular cross-section, placed one metre apart in vacuum, produces between these conductors a force equal to 2 × 10⁻⁷ newton per metre of length.'"
-          ],
-          formula: "1 Ampere ⟹ F / L = 2 × 10⁻⁷ N/m at separation d = 1 m in vacuum"
+          "formula": "I_{\\text{rms}} = \\frac{I_0}{\\sqrt{2}} = 0.707 I_0, \\quad V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} = 0.707 V_0"
         }
       ],
-      diagramNotes: "Draw two parallel wires with currents I₁ and I₂ at separation d; show B₁ into the page and attractive force vectors F₁₂ and F₂₁.",
-      markingScheme: [
-        "1.5 Marks: Derivation of field B₁ = μ₀I₁/(2πd) and force per unit length f = μ₀I₁I₂/(2πd).",
-        "0.5 Mark: Identification of attractive force for parallel currents and repulsive for antiparallel currents.",
-        "1 Mark: Exact standard definition of one ampere (specifying parallel conductors, 1 metre separation, vacuum, and 2 × 10⁻⁷ N/m)."
+      "diagramNotes": "1. Draw coordinate axes: horizontal time axis $t$, vertical current axis $I(t)$.\n2. Draw one full cycle of sine wave reaching positive peak $+I_0$ at $T/4$ and negative peak $-I_0$ at $3T/4$.\n3. Draw squared current curve $I^2(t)$ which is entirely positive and oscillates between $0$ and $I_0^2$.\n4. Draw dashed horizontal line at $I_0^2/2$ representing the mean squared current, and mark $I_{\\text{rms}} = I_0/\\sqrt{2} \\approx 0.707 I_0$.",
+      "markingScheme": [
+        "1 Mark: Definition of RMS current in terms of Joule heating equivalence.",
+        "1.5 Marks: Step-by-step calculus integration of heat $H = \\int I^2 R dt$ using identity $\\sin^2\\omega t = (1 - \\cos 2\\omega t)/2$.",
+        "0.5 Mark: Numerical calculation of peak voltage ($311\\text{ V}$) and explanation of why AC shock is more hazardous."
       ],
-      examinerTips: "Remember: Electric charges vs Currents: Like electric charges REPEL, but like electric currents ATTRACT each other! Antiparallel currents repel."
+      "examinerTips": "In evaluating $\\int_0^T \\cos(2\\omega t) dt$, show explicitly that it integrates to zero. Skipping this step often costs 0.5 marks in CBSE evaluation."
     }
   },
   {
-    id: 'imp-phy-21',
-    number: 21,
-    title: "Maxwell's Equations & Physical Significance of Displacement Current",
-    shortLabel: "Maxwell's Equations & Displacement Current",
-    chapterId: 'phy-ch-8',
-    chapterTitle: 'Electromagnetic Waves',
-    unit: 'Electromagnetic Waves',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Theoretical & Unification',
-    frequency: 'Core Foundation of Ch 8 (CBSE 2023, 2022, 2019)',
-    questionPrompt: "(a) What was the missing term identified by James Clerk Maxwell in electromagnetism?\n(b) Write Maxwell's four fundamental equations in integral form and state the physical significance of each.\n(c) Explain how Maxwell's prediction established that light is an electromagnetic wave.",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 8: Electromagnetic Waves',
-      section: 'Sections 8.2 & 8.3 (pp. 270–274)',
-      equations: 'Table 8.2: Maxwell\'s Equations',
-      figures: 'Figs. 8.2, 8.3',
-      summary: 'Electromagnetic unification, 4 fundamental integral equations, physical significance of each law, and velocity of light c = 1/√(μ₀ε₀).'
+    "id": "imp-phy-14",
+    "number": 14,
+    "title": "Displacement Current: Need, Mathematical Derivation & Continuity Proof",
+    "shortLabel": "Displacement Current & Ampere-Maxwell Law",
+    "chapterId": "phy-ch-8",
+    "chapterTitle": "Electromagnetic Waves",
+    "unit": "Electromagnetic Waves",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation & Conceptual",
+    "frequency": "High Frequency (CBSE 2024 SQP Q8, 2023, 2020, 2019)",
+    "questionPrompt": "(a) State Ampere's circuital law and explain why Maxwell found it logically inconsistent during the charging of a capacitor.\n(b) Define displacement current and derive its mathematical expression in terms of time rate of change of electric flux.\n(c) Show that conduction current in the connecting wires is equal to displacement current inside the dielectric gap during capacitor charging.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 8: Electromagnetic Waves",
+      "section": "Sections 8.2 & 8.3 (pp. 269–274)",
+      "equations": "Eqs. (8.1), (8.4), (8.5)",
+      "figures": "Figs. 8.1, 8.2",
+      "summary": "Inconsistency of Ampere's circuital law across capacitor plates, displacement current definition, and modified Maxwell-Ampere circuital law."
     },
-    modelAnswer: {
-      statement: "James Clerk Maxwell recognized that the fundamental laws of electricity and magnetism lacked symmetry: Faraday had established that a time-varying magnetic field produces an electric field, but Ampère's circuital law lacked the symmetric term showing that a time-varying electric field produces a magnetic field. Adding displacement current I_d = ε₀(dΦ_E/dt) completed the unification.",
-      derivations: [
+    "theory": [
+      "Ampere's Circuital Law states that the line integral of magnetic field $\\vec{B}$ around any closed loop equals $\\mu_0$ times the total current threading the loop: $$\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c$$",
+      "Maxwell pointed out that this law is mathematically inconsistent for time-dependent electromagnetic situations (such as charging a capacitor).",
+      "Contradiction: If we construct a flat disc surface $S_1$ capped by a circular loop enclosing the wire, current pierces the surface ($I_{\\text{enc}} = I_c$). But if we construct a pot-shaped surface $S_2$ bulging between the capacitor plates sharing the exact same perimeter loop, no wire passes through it, so $I_{\\text{enc}} = 0$. This leads to the contradiction $\\mu_0 I_c = 0$.",
+      "Maxwell's Resolution: A changing electric field in the space between capacitor plates induces a fictitious current termed Displacement Current ($I_d$).",
+      "Displacement Current is that current which arises due to the time rate of change of electric flux, producing the same magnetic effects as a conduction current."
+    ],
+    "derivations": [
+      {
+        "name": "Mathematical Derivation of Displacement Current (Id = ε₀ dΦ/dt)",
+        "setup": "Consider a parallel plate capacitor with plates of area $A$ being charged by a conduction current $I_c(t)$. At any instant $t$, let charge on the plates be $q(t)$.",
+        "steps": [
+          {
+            "text": "The uniform electric field between the capacitor plates at instant $t$ is:",
+            "equation": "E(t) = \\frac{\\sigma(t)}{\\varepsilon_0} = \\frac{q(t)}{\\varepsilon_0 A}"
+          },
+          {
+            "text": "The total electric flux $\\Phi_E$ crossing between the plates of area $A$ is:",
+            "equation": "\\Phi_E = E(t) \\cdot A = \\left( \\frac{q(t)}{\\varepsilon_0 A} \\right) A = \\frac{q(t)}{\\varepsilon_0}"
+          },
+          {
+            "text": "Rearranging to express the instantaneous plate charge $q(t)$ in terms of electric flux:",
+            "equation": "q(t) = \\varepsilon_0 \\Phi_E"
+          },
+          {
+            "text": "Differentiating both sides with respect to time $t$:",
+            "equation": "\\frac{dq}{dt} = \\varepsilon_0 \\frac{d\\Phi_E}{dt}"
+          },
+          {
+            "text": "Since the rate of charge accumulation $dq/dt$ is the conduction current $I_c$ flowing into the plates:",
+            "equation": "I_c = \\varepsilon_0 \\frac{d\\Phi_E}{dt}"
+          },
+          {
+            "text": "Maxwell identified this time-derivative of electric flux as the Displacement Current $I_d$:",
+            "equation": "I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}"
+          },
+          {
+            "text": "Hence, the conduction current in the leads equals the displacement current in the gap at every instant:",
+            "equation": "I_c = I_d \\quad (\\text{Continuity of Current})"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Generalized Ampere-Maxwell Circuital Law:",
+            "text": "Total current is the sum of conduction current and displacement current, restoring universal consistency:",
+            "equation": "\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 (I_c + I_d) = \\mu_0 I_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}"
+          }
+        ],
+        "finalFormula": "I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}, \\quad \\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0\\left(I_c + \\varepsilon_0\\frac{d\\Phi_E}{dt}\\right)"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "displacement-current",
+      "title": "Charging Capacitor & Displacement Current",
+      "examDrawingGuide": [
+        "1. Draw parallel plate capacitor connected to an AC or charging DC battery circuit with conduction current $I_c$.",
+        "2. Draw circular Ampere loop $C$ around the wire outside the capacitor.",
+        "3. Draw flat disc surface $S_1$ pierced by wire ($I_{\\text{enc}} = I_c$).",
+        "4. Draw pot-shaped balloon surface $S_2$ passing through the plates with rim $C$, showing changing electric field $\\vec{E}(t)$ generating displacement current $I_d$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Inconsistency of Ampere's Law for Time-Varying Fields",
+      "Pot-shaped Gaussian Surface Contradiction",
+      "Electric Flux Relation (Φ_E = q / ε₀)",
+      "Displacement Current Formula (I_d = ε₀ dΦ_E / dt)",
+      "Continuity Principle (I_c = I_d)",
+      "Generalized Ampere-Maxwell Law (∮ B · dl = μ₀(I_c + I_d))"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "I_d",
+        "term": "Displacement Current",
+        "definition": "Current produced by a time-varying electric field ($I_d = \\varepsilon_0 d\\Phi_E / dt$), having units of Amperes (A)."
+      },
+      {
+        "symbol": "I_c",
+        "term": "Conduction Current",
+        "definition": "Rate of physical transfer of charge carriers through conducting wires ($I_c = dq/dt$)."
+      },
+      {
+        "symbol": "\\Phi_E",
+        "term": "Electric Flux",
+        "definition": "Total electric field lines crossing through the capacitor cross-sectional area ($\text{V}\\cdot\text{m}$)."
+      },
+      {
+        "symbol": "\\mu_0 \\varepsilon_0",
+        "term": "Electromagnetic Vacuum Product",
+        "definition": "Product of magnetic and electric vacuum constants relating wave propagation to the speed of light ($1/c^2$)."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Clear explanation of Ampere's circuital law contradiction using two surfaces $S_1$ and $S_2$.",
+      "1 Mark: Mathematical derivation connecting charge $q = \\varepsilon_0 \\Phi_E$ to $I_d = \\varepsilon_0 d\\Phi_E/dt$.",
+      "1 Mark: Proof that $I_c = I_d$ and statement of the generalized Ampere-Maxwell equation."
+    ],
+    "examinerTips": "Do NOT write that displacement current involves physical moving electrons! It is purely due to the rate of change of electric flux, yet produces identical magnetic fields.",
+    "modelAnswer": {
+      "statement": "Ampere's Circuital Law states that the line integral of magnetic field $\\vec{B}$ around any closed loop equals $\\mu_0$ times the total current threading the loop: $$\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c$$\nMaxwell pointed out that this law is mathematically inconsistent for time-dependent electromagnetic situations (such as charging a capacitor).\nContradiction: If we construct a flat disc surface $S_1$ capped by a circular loop enclosing the wire, current pierces the surface ($I_{\\text{enc}} = I_c$). But if we construct a pot-shaped surface $S_2$ bulging between the capacitor plates sharing the exact same perimeter loop, no wire passes through it, so $I_{\\text{enc}} = 0$. This leads to the contradiction $\\mu_0 I_c = 0$.\nMaxwell's Resolution: A changing electric field in the space between capacitor plates induces a fictitious current termed Displacement Current ($I_d$).\nDisplacement Current is that current which arises due to the time rate of change of electric flux, producing the same magnetic effects as a conduction current.",
+      "derivations": [
         {
-          name: "Maxwell's Four Fundamental Equations in Integral Form [NCERT Table 8.2]",
-          steps: [
-            "1. Gauss's Law for Electrostatics: ∮ E⃗ · dA⃗ = q_enclosed / ε₀",
-            "   Physical Significance: The electric flux through any closed surface is proportional to the net enclosed charge. Electric charges act as sources or sinks of electric fields. Isolated electric charges (monopoles) exist.",
-            "2. Gauss's Law for Magnetism: ∮ B⃗ · dA⃗ = 0",
-            "   Physical Significance: The net magnetic flux through any closed surface is always zero. Magnetic monopoles DO NOT exist; magnetic field lines are continuous closed loops with no beginning or end.",
-            "3. Faraday's Law of Electromagnetic Induction: ∮ E⃗ · dl⃗ = -dΦ_B / dt",
-            "   Physical Significance: The line integral of electric field around any closed loop equals the negative time rate of change of magnetic flux through that loop. A changing magnetic field generates an induced electric field.",
-            "4. Ampère-Maxwell Law: ∮ B⃗ · dl⃗ = μ₀ (I_c + I_d) = μ₀ [ I_c + ε₀ (dΦ_E / dt) ]",
-            "   Physical Significance: Magnetic fields are generated both by conduction currents (moving electric charges) AND by displacement currents (time-varying electric fields)."
+          "name": "Mathematical Derivation of Displacement Current (Id = ε₀ dΦ/dt)",
+          "steps": [
+            "Consider a parallel plate capacitor with plates of area $A$ being charged by a conduction current $I_c(t)$. At any instant $t$, let charge on the plates be $q(t)$.",
+            "The uniform electric field between the capacitor plates at instant $t$ is: E(t) = \\frac{\\sigma(t)}{\\varepsilon_0} = \\frac{q(t)}{\\varepsilon_0 A}",
+            "The total electric flux $\\Phi_E$ crossing between the plates of area $A$ is: \\Phi_E = E(t) \\cdot A = \\left( \\frac{q(t)}{\\varepsilon_0 A} \\right) A = \\frac{q(t)}{\\varepsilon_0}",
+            "Rearranging to express the instantaneous plate charge $q(t)$ in terms of electric flux: q(t) = \\varepsilon_0 \\Phi_E",
+            "Differentiating both sides with respect to time $t$: \\frac{dq}{dt} = \\varepsilon_0 \\frac{d\\Phi_E}{dt}",
+            "Since the rate of charge accumulation $dq/dt$ is the conduction current $I_c$ flowing into the plates: I_c = \\varepsilon_0 \\frac{d\\Phi_E}{dt}",
+            "Maxwell identified this time-derivative of electric flux as the Displacement Current $I_d$: I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}",
+            "Hence, the conduction current in the leads equals the displacement current in the gap at every instant: I_c = I_d \\quad (\\text{Continuity of Current})",
+            "Generalized Ampere-Maxwell Circuital Law: Total current is the sum of conduction current and displacement current, restoring universal consistency: \\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 (I_c + I_d) = \\mu_0 I_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}"
           ],
-          formula: "∮ B⃗ · dl⃗ = μ₀ [I_c + ε₀ (dΦ_E / dt)] ; c = 1 / √(μ₀ε₀)"
-        },
-        {
-          name: "Unification of Optics and Electromagnetism [NCERT Section 8.3]",
-          steps: [
-            "Free Space Equations: In vacuum with no charges (q = 0) and no conduction currents (I_c = 0), Maxwell's equations couple changing E⃗ and changing B⃗ symmetrically.",
-            "Wave Equation: Taking the curl of Faraday's law and substituting the Ampère-Maxwell law leads to the classical wave equation for both E⃗ and B⃗ with wave velocity: v = 1 / √(μ₀ε₀).",
-            "Evaluation of Constants: Substituting experimental values of vacuum permittivity and permeability:",
-            "  μ₀ = 4π × 10⁻⁷ T·m/A = 1.2566 × 10⁻⁶ H/m",
-            "  ε₀ = 8.8542 × 10⁻¹² C²/(N·m²)",
-            "Velocity Value: c = 1 / √[ (4π × 10⁻⁷) × (8.8542 × 10⁻¹²) ] = 2.9979 × 10⁸ m/s.",
-            "Historical Conclusion: Since this calculated velocity precisely matched the experimentally measured velocity of light, Maxwell deduced that light is an electromagnetic wave!"
-          ],
-          formula: "c = 1 / √(μ₀ε₀) = 3 × 10⁸ m/s  [Light is an electromagnetic wave]"
+          "formula": "I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}, \\quad \\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0\\left(I_c + \\varepsilon_0\\frac{d\\Phi_E}{dt}\\right)"
         }
       ],
-      diagramNotes: "Self-propagating wave: changing E creates B, changing B creates E, propagating through vacuum at speed c.",
-      markingScheme: [
-        "1.5 Marks: Writing all four Maxwell equations in correct mathematical integral notation.",
-        "1 Mark: Stating the physical significance corresponding to each of the four equations.",
-        "0.5 Mark: Explanation of how wave speed c = 1/√(μ₀ε₀) established the electromagnetic nature of light."
+      "diagramNotes": "1. Draw parallel plate capacitor connected to an AC or charging DC battery circuit with conduction current $I_c$.\n2. Draw circular Ampere loop $C$ around the wire outside the capacitor.\n3. Draw flat disc surface $S_1$ pierced by wire ($I_{\\text{enc}} = I_c$).\n4. Draw pot-shaped balloon surface $S_2$ passing through the plates with rim $C$, showing changing electric field $\\vec{E}(t)$ generating displacement current $I_d$.",
+      "markingScheme": [
+        "1 Mark: Clear explanation of Ampere's circuital law contradiction using two surfaces $S_1$ and $S_2$.",
+        "1 Mark: Mathematical derivation connecting charge $q = \\varepsilon_0 \\Phi_E$ to $I_d = \\varepsilon_0 d\\Phi_E/dt$.",
+        "1 Mark: Proof that $I_c = I_d$ and statement of the generalized Ampere-Maxwell equation."
       ],
-      examinerTips: "Remember: ∮ B⃗ · dA⃗ = 0 proves that magnetic monopoles do not exist in nature. If a magnetic monopole were ever discovered, the right-hand side would become μ₀ · q_m!"
+      "examinerTips": "Do NOT write that displacement current involves physical moving electrons! It is purely due to the rate of change of electric flux, yet produces identical magnetic fields."
     }
   },
   {
-    id: 'imp-phy-22',
-    number: 22,
-    title: "Conversion of Galvanometer into Ammeter and Voltmeter (Formulas & Circuit)",
-    shortLabel: "Conversion: Galvanometer to Ammeter & Voltmeter",
-    chapterId: 'phy-ch-4',
-    chapterTitle: 'Moving Charges and Magnetism',
-    unit: 'Magnetism',
-    marks: '3 Marks',
-    marksNum: 3,
-    category: 'Derivation & Circuit Design',
-    frequency: 'Extremely Frequent 3-Marker & Practical Numerical',
-    questionPrompt: "(a) How is a moving coil galvanometer converted into an AMMETER to measure up to current I? Derive the expression for the required shunt resistance S.\n(b) How is a galvanometer converted into a VOLTMETER to measure up to voltage V? Derive the expression for the required series resistance R.\n(c) What is the resistance of: (i) an ideal ammeter, (ii) an ideal voltmeter?",
-    ncertRef: {
-      textbook: 'NCERT Physics Class 12, Part 1',
-      chapter: 'Chapter 4: Moving Charges and Magnetism',
-      section: 'Section 4.10.3: Conversion to Ammeter and Voltmeter (pp. 165–166)',
-      equations: 'Eqs. (4.42), (4.43)',
-      figures: 'Figs. 4.26, 4.27',
-      summary: 'Derivation of low shunt resistance in parallel (S = I_g G / (I - I_g)) for ammeters and high multiplier resistance in series (R = V/I_g - G) for voltmeters.'
+    "id": "imp-phy-15",
+    "number": 15,
+    "title": "Wheatstone Bridge: Principle, Balanced Condition Derivation & Metre Bridge",
+    "shortLabel": "Wheatstone Bridge (Balanced Condition P/Q = R/S)",
+    "chapterId": "phy-ch-3",
+    "chapterTitle": "Current Electricity",
+    "unit": "Current Electricity",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "High Frequency Core Derivation (CBSE 2024 SQP Q9, 2023, 2022, 2019)",
+    "questionPrompt": "(a) State the working principle of a Wheatstone bridge.\n(b) Using Kirchhoff's circuit rules, derive the balanced condition for a Wheatstone bridge network: P / Q = R / S.\n(c) Why is the Wheatstone bridge null deflection method considered superior to an ordinary ohmmeter for measuring resistance?",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 3: Current Electricity",
+      "section": "Sections 3.13 & 3.14 (pp. 118–121)",
+      "equations": "Eqs. (3.44), (3.45), (3.46)",
+      "figures": "Figs. 3.25, 3.26",
+      "summary": "Bridge loop network, application of Kirchhoff's Junction and Loop rules, and null balance condition."
     },
-    modelAnswer: {
-      statement: "A moving coil galvanometer has internal resistance G and gives full-scale deflection for a very small current I_g (typically 1–10 mA). It cannot be inserted directly into power circuits without modification:\n• To measure larger current I: Connect a small SHUNT resistance S in PARALLEL.\n• To measure larger voltage V: Connect a high resistance R in SERIES.",
-      derivations: [
+    "theory": [
+      "A Wheatstone Bridge is an electrical circuit arrangement consisting of four resistors $P, Q, R, S$ interconnected in a diamond loop, used to measure an unknown electrical resistance with high precision.",
+      "Working Principle (Null Deflection Method): When the bridge is balanced, the electric potential at junction $B$ equals the electric potential at junction $D$ ($V_B = V_D$). Consequently, zero current flows through the central galvanometer branch ($I_g = 0$), producing null deflection.",
+      "Superiority over ordinary meters: Because it operates on a null deflection principle, no current is drawn from the circuit at balance. The measurement is completely independent of the internal resistance of the cell and galvanometer resistance.",
+      "Maximum Sensitivity: The Wheatstone bridge achieves maximum measurement sensitivity when all four arm resistances $P, Q, R, S$ are of approximately the same order of magnitude."
+    ],
+    "derivations": [
+      {
+        "name": "Derivation of Balanced Condition Using Kirchhoff's Rules",
+        "setup": "Consider four resistors $P, Q, R, S$ arranged along arms $AB, BC, AD, DC$ of diamond network $ABCD$. A galvanometer of resistance $G$ connects between junctions $B$ and $D$. A battery of EMF $\\varepsilon$ is connected between junctions $A$ and $C$.",
+        "steps": [
+          {
+            "text": "Let current entering junction $A$ split into $I_1$ along arm $AB$ (resistor $P$) and $I_2$ along arm $AD$ (resistor $R$). At junction $B$, current $I_g$ enters the galvanometer.",
+            "equation": "I = I_1 + I_2"
+          },
+          {
+            "text": "Applying Kirchhoff's Current Law (Junction Rule) at junction $B$ and junction $D$:",
+            "equation": "I_{BC} = I_1 - I_g, \\quad I_{DC} = I_2 + I_g"
+          },
+          {
+            "text": "Applying Kirchhoff's Voltage Law (Loop Rule) to closed mesh $ABDA$ (traversing clockwise):",
+            "equation": "-I_1 P - I_g G + I_2 R = 0 \\quad \\implies \\quad I_1 P + I_g G = I_2 R"
+          },
+          {
+            "text": "Applying Kirchhoff's Voltage Law (Loop Rule) to closed mesh $BCDB$ (traversing clockwise):",
+            "equation": "-(I_1 - I_g)Q + (I_2 + I_g)S + I_g G = 0"
+          },
+          {
+            "text": "Under the balanced condition, the galvanometer shows null deflection, meaning $I_g = 0$:",
+            "equation": "I_g = 0"
+          },
+          {
+            "text": "Substituting $I_g = 0$ into the loop equation for $ABDA$:",
+            "equation": "I_1 P = I_2 R \\quad \\text{--- (Equation 1)}"
+          },
+          {
+            "text": "Substituting $I_g = 0$ into the loop equation for $BCDB$:",
+            "equation": "I_1 Q = I_2 S \\quad \\text{--- (Equation 2)}"
+          },
+          {
+            "text": "Dividing Equation 1 by Equation 2:",
+            "equation": "\\frac{I_1 P}{I_1 Q} = \\frac{I_2 R}{I_2 S} \\quad \\implies \\quad \\frac{P}{Q} = \\frac{R}{S}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Metre Bridge Application:",
+            "text": "If arms $P$ and $Q$ are replaced by a uniform slide-wire of length $100\\text{ cm}$ with balance point at length $l$:",
+            "equation": "\\frac{R}{S} = \\frac{l}{100 - l} \\quad \\implies \\quad S = R \\left(\\frac{100 - l}{l}\\right)"
+          }
+        ],
+        "finalFormula": "\\frac{P}{Q} = \\frac{R}{S} \\quad (\\text{when } I_g = 0)"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "wheatstone-bridge",
+      "title": "Wheatstone Bridge Network & Balanced Deflection",
+      "examDrawingGuide": [
+        "1. Draw diamond shaped quadrilateral labeled junctions $A, B, C, D$.",
+        "2. Place resistor $P$ along $AB$, resistor $Q$ along $BC$, resistor $R$ along $AD$, resistor $S$ along $DC$.",
+        "3. Draw galvanometer $G$ with key $K_2$ bridging opposite junctions $B$ and $D$.",
+        "4. Draw external battery $\\varepsilon$ with key $K_1$ connected across opposite junctions $A$ and $C$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Null Deflection Principle (Ig = 0)",
+      "Equal Potentials at Junctions (VB = VD)",
+      "Kirchhoff's Junction Rule Application",
+      "Kirchhoff's Loop Rule Application",
+      "Balanced Ratio Formula (P/Q = R/S)",
+      "Independent of Galvanometer & Cell Resistance"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "P, Q",
+        "term": "Ratio Arms",
+        "definition": "Known standard resistance arms whose ratio determines the measurement scale."
+      },
+      {
+        "symbol": "R",
+        "term": "Known Standard Resistance",
+        "definition": "Variable precision resistance box adjusted to achieve exact null balance."
+      },
+      {
+        "symbol": "S",
+        "term": "Unknown Resistance",
+        "definition": "Resistance of the test conductor to be measured ($S = R \\cdot Q/P$)."
+      },
+      {
+        "symbol": "I_g",
+        "term": "Galvanometer Current",
+        "definition": "Current flowing through the detector bridge branch ($I_g = 0$ at balance)."
+      }
+    ],
+    "markingScheme": [
+      "0.5 Mark: Principle of Wheatstone bridge (null deflection, $V_B = V_D$).",
+      "2 Marks: Rigorous derivation applying Kirchhoff's loop equations to loops ABDA and BCDB and dividing.",
+      "0.5 Mark: Explanation of superiority (draws zero current from circuit at balance)."
+    ],
+    "examinerTips": "Clearly show the sign conventions when traversing loops clockwise. If an arrow is drawn against current traversal, the IR term must be written with a positive sign.",
+    "modelAnswer": {
+      "statement": "A Wheatstone Bridge is an electrical circuit arrangement consisting of four resistors $P, Q, R, S$ interconnected in a diamond loop, used to measure an unknown electrical resistance with high precision.\nWorking Principle (Null Deflection Method): When the bridge is balanced, the electric potential at junction $B$ equals the electric potential at junction $D$ ($V_B = V_D$). Consequently, zero current flows through the central galvanometer branch ($I_g = 0$), producing null deflection.\nSuperiority over ordinary meters: Because it operates on a null deflection principle, no current is drawn from the circuit at balance. The measurement is completely independent of the internal resistance of the cell and galvanometer resistance.\nMaximum Sensitivity: The Wheatstone bridge achieves maximum measurement sensitivity when all four arm resistances $P, Q, R, S$ are of approximately the same order of magnitude.",
+      "derivations": [
         {
-          name: "Conversion into Ammeter (Parallel Shunt S) [NCERT Section 4.10.3]",
-          steps: [
-            "Circuit Design: To measure currents up to I > I_g, connect a very small resistance called a SHUNT (S) in parallel with the galvanometer coil of resistance G.",
-            "Current Division: At the input node, total current I divides: a small safe current I_g passes through the galvanometer coil, while the bulk of the current (I - I_g) bypasses through the shunt.",
-            "Parallel Voltage Equality: Since the galvanometer and shunt are connected in parallel, potential difference across both branches is identical: V_g = V_s ⟹ I_g · G = (I - I_g) · S.",
-            "Shunt Formula: Solving for S: S = (I_g · G) / (I - I_g).",
-            "Effective Ammeter Resistance R_A: 1/R_A = 1/G + 1/S ⟹ R_A = (G · S) / (G + S). Since S ≪ G: R_A ≈ S (extremely small).",
-            "Ideal Ammeter Resistance: R_ideal = 0 (an ideal ammeter has zero internal resistance so that inserting it in series in a circuit does not reduce the circuit current)."
+          "name": "Derivation of Balanced Condition Using Kirchhoff's Rules",
+          "steps": [
+            "Consider four resistors $P, Q, R, S$ arranged along arms $AB, BC, AD, DC$ of diamond network $ABCD$. A galvanometer of resistance $G$ connects between junctions $B$ and $D$. A battery of EMF $\\varepsilon$ is connected between junctions $A$ and $C$.",
+            "Let current entering junction $A$ split into $I_1$ along arm $AB$ (resistor $P$) and $I_2$ along arm $AD$ (resistor $R$). At junction $B$, current $I_g$ enters the galvanometer. I = I_1 + I_2",
+            "Applying Kirchhoff's Current Law (Junction Rule) at junction $B$ and junction $D$: I_{BC} = I_1 - I_g, \\quad I_{DC} = I_2 + I_g",
+            "Applying Kirchhoff's Voltage Law (Loop Rule) to closed mesh $ABDA$ (traversing clockwise): -I_1 P - I_g G + I_2 R = 0 \\quad \\implies \\quad I_1 P + I_g G = I_2 R",
+            "Applying Kirchhoff's Voltage Law (Loop Rule) to closed mesh $BCDB$ (traversing clockwise): -(I_1 - I_g)Q + (I_2 + I_g)S + I_g G = 0",
+            "Under the balanced condition, the galvanometer shows null deflection, meaning $I_g = 0$: I_g = 0",
+            "Substituting $I_g = 0$ into the loop equation for $ABDA$: I_1 P = I_2 R \\quad \\text{--- (Equation 1)}",
+            "Substituting $I_g = 0$ into the loop equation for $BCDB$: I_1 Q = I_2 S \\quad \\text{--- (Equation 2)}",
+            "Dividing Equation 1 by Equation 2: \\frac{I_1 P}{I_1 Q} = \\frac{I_2 R}{I_2 S} \\quad \\implies \\quad \\frac{P}{Q} = \\frac{R}{S}",
+            "Metre Bridge Application: If arms $P$ and $Q$ are replaced by a uniform slide-wire of length $100\\text{ cm}$ with balance point at length $l$: \\frac{R}{S} = \\frac{l}{100 - l} \\quad \\implies \\quad S = R \\left(\\frac{100 - l}{l}\\right)"
           ],
-          formula: "S = (I_g · G) / (I - I_g) ; R_A = (G · S) / (G + S) ; Ideal R_A = 0"
-        },
-        {
-          name: "Conversion into Voltmeter (Series Multiplier R) [NCERT Section 4.10.3]",
-          steps: [
-            "Circuit Design: To measure potential differences up to V, connect a very large resistance R (multiplier) in series with the galvanometer coil.",
-            "Total Series Resistance: The total resistance of the combination is R_total = G + R.",
-            "Ohm's Law for Full Scale Deflection: For maximum voltage V, current through the series branch must equal full-scale deflection current I_g: V = I_g · (G + R).",
-            "Solving for Series Resistance: V / I_g = G + R ⟹ R = (V / I_g) - G.",
-            "Effective Voltmeter Resistance R_V: R_V = G + R (very large).",
-            "Ideal Voltmeter Resistance: R_ideal = ∞ (an ideal voltmeter has infinite resistance so that connecting it in parallel across a component draws zero current from the main circuit)."
-          ],
-          formula: "R = (V / I_g) - G ; R_V = G + R ; Ideal R_V = ∞"
+          "formula": "\\frac{P}{Q} = \\frac{R}{S} \\quad (\\text{when } I_g = 0)"
         }
       ],
-      diagramNotes: "Ammeter circuit: Galvanometer G in parallel with small shunt S, input I dividing into I_g and (I-I_g); Voltmeter circuit: Galvanometer G in series with high resistor R, total voltage V.",
-      markingScheme: [
-        "1.5 Marks: Ammeter derivation: parallel shunt arrangement, formula S = I_g G / (I - I_g), circuit diagram, ideal R_A = 0.",
-        "1.5 Marks: Voltmeter derivation: series multiplier arrangement, formula R = V/I_g - G, circuit diagram, ideal R_V = ∞."
+      "diagramNotes": "1. Draw diamond shaped quadrilateral labeled junctions $A, B, C, D$.\n2. Place resistor $P$ along $AB$, resistor $Q$ along $BC$, resistor $R$ along $AD$, resistor $S$ along $DC$.\n3. Draw galvanometer $G$ with key $K_2$ bridging opposite junctions $B$ and $D$.\n4. Draw external battery $\\varepsilon$ with key $K_1$ connected across opposite junctions $A$ and $C$.",
+      "markingScheme": [
+        "0.5 Mark: Principle of Wheatstone bridge (null deflection, $V_B = V_D$).",
+        "2 Marks: Rigorous derivation applying Kirchhoff's loop equations to loops ABDA and BCDB and dividing.",
+        "0.5 Mark: Explanation of superiority (draws zero current from circuit at balance)."
       ],
-      examinerTips: "Essential Mnemonic: 'Ammeters are Small (parallel Shunt); Voltmeters are Vast (series High resistance)'. In numericals, always convert I_g from mA to A (1 mA = 10⁻³ A) before computing!"
+      "examinerTips": "Clearly show the sign conventions when traversing loops clockwise. If an arrow is drawn against current traversal, the IR term must be written with a positive sign."
+    }
+  },
+  {
+    "id": "imp-phy-16",
+    "number": 16,
+    "title": "Magnetic Materials: Properties of Diamagnetic, Paramagnetic & Ferromagnetic",
+    "shortLabel": "Magnetic Materials (Dia, Para, Ferro)",
+    "chapterId": "phy-ch-5",
+    "chapterTitle": "Magnetism and Matter",
+    "unit": "Magnetism",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Comparative Theory",
+    "frequency": "High Frequency Comparative Question (CBSE 2024 SQP Q20, 2023, 2020)",
+    "questionPrompt": "(a) Classify magnetic materials into diamagnetic, paramagnetic, and ferromagnetic substances on the basis of their magnetic susceptibility (χ) and relative permeability (μ_r).\n(b) Explain how the magnetic susceptibility of each type varies with absolute temperature T (State Curie's Law and Curie-Weiss Law).\n(c) How does a specimen of each material behave when suspended freely in a non-uniform external magnetic field?",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 5: Magnetism and Matter",
+      "section": "Sections 5.6 & 5.7 (pp. 191–197)",
+      "equations": "Eqs. (5.14), (5.15), (5.16), (5.17)",
+      "figures": "Figs. 5.11, 5.12, 5.13",
+      "summary": "Atomic origin of magnetism, comparative table of dia, para, and ferro substances, Curie's temperature dependence, and domain theory."
+    },
+    "theory": [
+      "Diamagnetic Substances: Substances that develop weak magnetization in a direction opposite to the applied external magnetic field. They are feebly repelled by magnets. Origin: Induced paired electron orbital magnetic moments opposing external flux (Lenz's law). Examples: Bismuth, Copper, Water, Lead, Nitrogen.",
+      "Paramagnetic Substances: Substances that develop weak magnetization in the same direction as the applied external magnetic field. They are feebly attracted by magnets. Origin: Permanent atomic dipole moments aligning partially along the field against thermal agitation. Examples: Aluminium, Sodium, Calcium, Oxygen (gas), Platinum.",
+      "Ferromagnetic Substances: Substances that develop strong magnetization in the same direction as the applied external magnetic field, retaining magnetism even after field removal. Origin: Spontaneous quantum exchange interaction causing macroscopic magnetic domains ($\\sim 10^{11}$ atoms) to align collectively. Examples: Iron, Cobalt, Nickel, Alnico, Gadolinium.",
+      "Behavior in Non-Uniform Magnetic Field: Diamagnetic moves from stronger to weaker field regions; Paramagnetic moves from weaker to stronger field regions feebly; Ferromagnetic moves rapidly from weaker to stronger regions."
+    ],
+    "derivations": [
+      {
+        "name": "Mathematical Comparison & Temperature Dependence Laws",
+        "setup": "Magnetic susceptibility $\\chi_m$ relates induced magnetization $\\vec{M}$ to magnetic intensity $\\vec{H}$: $$\\vec{M} = \\chi_m \\vec{H}$$. Relative permeability is related by: $$\\mu_r = 1 + \\chi_m$$.",
+        "steps": [
+          {
+            "text": "1. Diamagnetic Materials: Susceptibility is small, negative, and independent of temperature:",
+            "equation": "-1 \\le \\chi_m < 0, \\quad 0 \\le \\mu_r < 1, \\quad \\frac{d\\chi_m}{dT} = 0 \\quad (\\text{Independent of } T)"
+          },
+          {
+            "text": "For a perfect diamagnet / superconductor (Meissner effect):",
+            "equation": "\\chi_m = -1 \\quad \\implies \\quad \\mu_r = 0 \\quad (\\text{Total flux expulsion})"
+          },
+          {
+            "text": "2. Paramagnetic Materials: Susceptibility is small, positive, and inversely proportional to absolute temperature (Curie's Law):",
+            "equation": "0 < \\chi_m \\ll 1, \\quad \\mu_r > 1, \\quad \\chi_m = \\frac{C}{T} \\quad (C = \\text{Curie's constant})"
+          },
+          {
+            "text": "3. Ferromagnetic Materials: Susceptibility is very large, positive ($\\chi_m \\gg 1000$), and drops above the Curie temperature $T_c$ according to the Curie-Weiss Law:",
+            "equation": "\\chi_m = \\frac{C'}{T - T_c} \\quad (\\text{for } T > T_c)"
+          },
+          {
+            "text": "Above the critical Curie Temperature $T_c$, thermal agitation disrupts domain alignment, and a ferromagnetic substance transitions into a simple paramagnetic substance:",
+            "equation": "\\text{Ferromagnetic} \\xrightarrow{T > T_c} \\text{Paramagnetic}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Magnetic Field Line Behavior inside Material:",
+            "text": "Diamagnetic expels field lines (lines avoid material); Paramagnetic concentrates field lines slightly; Ferromagnetic pulls field lines strongly inward:",
+            "equation": "B_{\\text{dia}} < B_0, \\quad B_{\\text{para}} > B_0, \\quad B_{\\text{ferro}} \\gg B_0"
+          }
+        ],
+        "finalFormula": "\\text{Dia: } \\chi < 0 (T\\text{-indep}); \\quad \\text{Para: } \\chi = \\frac{C}{T}; \\quad \\text{Ferro: } \\chi = \\frac{C'}{T - T_c} (T > T_c)"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "magnetic-materials",
+      "title": "Behavior of Magnetic Field Lines in Dia, Para, and Ferro Substances",
+      "examDrawingGuide": [
+        "1. Draw three rectangular blocks representing specimens in uniform external field lines.",
+        "2. Diamagnetic: Show field lines bending outward and avoiding the specimen ($B < B_0$).",
+        "3. Paramagnetic: Show field lines bending slightly inward and passing through the specimen ($B > B_0$).",
+        "4. Ferromagnetic: Show field lines crowding strongly and densely into the specimen ($B \\gg B_0$)."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Magnetic Susceptibility (χ = M/H)",
+      "Relative Permeability (μ_r = 1 + χ)",
+      "Diamagnetic Negative Susceptibility (Independent of T)",
+      "Paramagnetic Curie's Law (χ ∝ 1/T)",
+      "Ferromagnetic Domain Theory",
+      "Curie-Weiss Law (χ = C'/(T - Tc))",
+      "Meissner Effect in Superconductors (χ = -1, μ_r = 0)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\chi_m",
+        "term": "Magnetic Susceptibility",
+        "definition": "Dimensionless ratio of intensity of magnetization $M$ to applied magnetic intensity $H$."
+      },
+      {
+        "symbol": "\\mu_r",
+        "term": "Relative Magnetic Permeability",
+        "definition": "Ratio of magnetic permeability of material to vacuum permeability ($\\mu_r = \\mu / \\mu_0 = 1 + \\chi_m$)."
+      },
+      {
+        "symbol": "T_c",
+        "term": "Curie Temperature",
+        "definition": "Critical threshold temperature above which a ferromagnetic material loses its spontaneous magnetization and turns paramagnetic (e.g. Iron $T_c = 1043\\text{ K}$)."
+      },
+      {
+        "symbol": "C",
+        "term": "Curie Constant",
+        "definition": "Material-specific constant in Curie's law governing temperature decay of magnetic alignment."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Complete comparative table of $\\chi_m$ and $\\mu_r$ ranges for dia, para, and ferro.",
+      "1 Mark: Statement and mathematical forms of Curie's Law and Curie-Weiss Law with temperature dependence.",
+      "1 Mark: Behavior in non-uniform field and field line sketches showing expulsion vs crowding."
+    ],
+    "examinerTips": "Remember that diamagnetism is universal (present in all substances), but masked whenever paramagnetic or ferromagnetic dipole moments exist.",
+    "modelAnswer": {
+      "statement": "Diamagnetic Substances: Substances that develop weak magnetization in a direction opposite to the applied external magnetic field. They are feebly repelled by magnets. Origin: Induced paired electron orbital magnetic moments opposing external flux (Lenz's law). Examples: Bismuth, Copper, Water, Lead, Nitrogen.\nParamagnetic Substances: Substances that develop weak magnetization in the same direction as the applied external magnetic field. They are feebly attracted by magnets. Origin: Permanent atomic dipole moments aligning partially along the field against thermal agitation. Examples: Aluminium, Sodium, Calcium, Oxygen (gas), Platinum.\nFerromagnetic Substances: Substances that develop strong magnetization in the same direction as the applied external magnetic field, retaining magnetism even after field removal. Origin: Spontaneous quantum exchange interaction causing macroscopic magnetic domains ($\\sim 10^{11}$ atoms) to align collectively. Examples: Iron, Cobalt, Nickel, Alnico, Gadolinium.\nBehavior in Non-Uniform Magnetic Field: Diamagnetic moves from stronger to weaker field regions; Paramagnetic moves from weaker to stronger field regions feebly; Ferromagnetic moves rapidly from weaker to stronger regions.",
+      "derivations": [
+        {
+          "name": "Mathematical Comparison & Temperature Dependence Laws",
+          "steps": [
+            "Magnetic susceptibility $\\chi_m$ relates induced magnetization $\\vec{M}$ to magnetic intensity $\\vec{H}$: $$\\vec{M} = \\chi_m \\vec{H}$$. Relative permeability is related by: $$\\mu_r = 1 + \\chi_m$$.",
+            "1. Diamagnetic Materials: Susceptibility is small, negative, and independent of temperature: -1 \\le \\chi_m < 0, \\quad 0 \\le \\mu_r < 1, \\quad \\frac{d\\chi_m}{dT} = 0 \\quad (\\text{Independent of } T)",
+            "For a perfect diamagnet / superconductor (Meissner effect): \\chi_m = -1 \\quad \\implies \\quad \\mu_r = 0 \\quad (\\text{Total flux expulsion})",
+            "2. Paramagnetic Materials: Susceptibility is small, positive, and inversely proportional to absolute temperature (Curie's Law): 0 < \\chi_m \\ll 1, \\quad \\mu_r > 1, \\quad \\chi_m = \\frac{C}{T} \\quad (C = \\text{Curie's constant})",
+            "3. Ferromagnetic Materials: Susceptibility is very large, positive ($\\chi_m \\gg 1000$), and drops above the Curie temperature $T_c$ according to the Curie-Weiss Law: \\chi_m = \\frac{C'}{T - T_c} \\quad (\\text{for } T > T_c)",
+            "Above the critical Curie Temperature $T_c$, thermal agitation disrupts domain alignment, and a ferromagnetic substance transitions into a simple paramagnetic substance: \\text{Ferromagnetic} \\xrightarrow{T > T_c} \\text{Paramagnetic}",
+            "Magnetic Field Line Behavior inside Material: Diamagnetic expels field lines (lines avoid material); Paramagnetic concentrates field lines slightly; Ferromagnetic pulls field lines strongly inward: B_{\\text{dia}} < B_0, \\quad B_{\\text{para}} > B_0, \\quad B_{\\text{ferro}} \\gg B_0"
+          ],
+          "formula": "\\text{Dia: } \\chi < 0 (T\\text{-indep}); \\quad \\text{Para: } \\chi = \\frac{C}{T}; \\quad \\text{Ferro: } \\chi = \\frac{C'}{T - T_c} (T > T_c)"
+        }
+      ],
+      "diagramNotes": "1. Draw three rectangular blocks representing specimens in uniform external field lines.\n2. Diamagnetic: Show field lines bending outward and avoiding the specimen ($B < B_0$).\n3. Paramagnetic: Show field lines bending slightly inward and passing through the specimen ($B > B_0$).\n4. Ferromagnetic: Show field lines crowding strongly and densely into the specimen ($B \\gg B_0$).",
+      "markingScheme": [
+        "1 Mark: Complete comparative table of $\\chi_m$ and $\\mu_r$ ranges for dia, para, and ferro.",
+        "1 Mark: Statement and mathematical forms of Curie's Law and Curie-Weiss Law with temperature dependence.",
+        "1 Mark: Behavior in non-uniform field and field line sketches showing expulsion vs crowding."
+      ],
+      "examinerTips": "Remember that diamagnetism is universal (present in all substances), but masked whenever paramagnetic or ferromagnetic dipole moments exist."
+    }
+  },
+  {
+    "id": "imp-phy-17",
+    "number": 17,
+    "title": "AC Circuits: Pure Inductor, Pure Capacitor & Series LCR Resonance",
+    "shortLabel": "Series LCR Resonance & Impedance",
+    "chapterId": "phy-ch-7",
+    "chapterTitle": "Alternating Current",
+    "unit": "Electromagnetic Induction & Alternating Current",
+    "marks": "5 Marks",
+    "marksNum": 5,
+    "category": "Derivation",
+    "frequency": "Guaranteed 5-Mark Question (CBSE 2024 SQP Q33, 2023, 2022, 2020)",
+    "questionPrompt": "(a) A series combination of an inductor L, capacitor C, and resistor R is connected across an AC source V = V₀ sin(ωt). Using phasor diagram technique, derive expressions for:\n  (i) Impedance (Z) of the circuit.\n  (ii) Phase angle (ϕ) between alternating voltage and current.\n(b) Define electrical resonance. Derive the formula for resonant frequency (ωᵣ) and define Quality Factor (Q-factor).",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 7: Alternating Current",
+      "section": "Sections 7.4, 7.5, 7.6 (pp. 240–252)",
+      "equations": "Eqs. (7.25), (7.26), (7.27), (7.36), (7.40)",
+      "figures": "Figs. 7.12, 7.13, 7.14",
+      "summary": "Phasor analysis of series LCR circuit, impedance triangle, resonance frequency condition, and sharpness of resonance (Q-factor)."
+    },
+    "theory": [
+      "In a Series LCR Circuit, the same alternating current $I = I_0 \\sin(\\omega t)$ flows through the resistor $R$, inductor $L$, and capacitor $C$ in series.",
+      "Voltage across Resistor: $V_R = I R$ is completely in phase with current $I$ (phase difference $\\phi = 0$).",
+      "Voltage across Inductor: $V_L = I X_L = I(\\omega L)$ leads current $I$ by a phase angle of $\\pi/2$ ($90^\\circ$).",
+      "Voltage across Capacitor: $V_C = I X_C = I(1/\\omega C)$ lags current $I$ by a phase angle of $\\pi/2$ ($90^\\circ$).",
+      "Electrical Resonance occurs when inductive reactance equals capacitive reactance ($X_L = X_C$). Under this condition, the net reactive voltage is zero ($V_L - V_C = 0$), impedance is strictly minimum ($Z = R$), current amplitude is maximum ($I_0 = V_0/R$), and voltage and current are in phase (power factor $\\cos\\phi = 1$)."
+    ],
+    "derivations": [
+      {
+        "name": "Part 1: Derivation of Impedance Z & Phase Angle ϕ using Phasors",
+        "setup": "Let alternating current in the circuit be $I = I_0 \\sin(\\omega t)$. Let peak voltages across components be represented by rotating phasors $\\vec{V}_R$, $\\vec{V}_L$, and $\\vec{V}_C$. Assume $V_L > V_C$ (predominantly inductive circuit).",
+        "steps": [
+          {
+            "text": "Peak voltage across resistor $R$ along the current phasor direction is:",
+            "equation": "V_R = I_0 R"
+          },
+          {
+            "text": "Peak voltage across inductor $L$ leading current by $+90^\\circ$ is:",
+            "equation": "V_L = I_0 X_L = I_0 (\\omega L)"
+          },
+          {
+            "text": "Peak voltage across capacitor $C$ lagging current by $-90^\\circ$ is:",
+            "equation": "V_C = I_0 X_C = I_0 \\left(\\frac{1}{\\omega C}\\right)"
+          },
+          {
+            "text": "Since phasors $\\vec{V}_L$ and $\\vec{V}_C$ are collinear and point in opposite directions ($180^\\circ$ apart), their resultant reactive phasor is:",
+            "equation": "V_L - V_C = I_0(X_L - X_C) = I_0\\left(\\omega L - \\frac{1}{\\omega C}\\right)"
+          },
+          {
+            "text": "By the Pythagorean theorem in the phasor voltage right-triangle:",
+            "equation": "V_0^2 = V_R^2 + (V_L - V_C)^2 = (I_0 R)^2 + [I_0(X_L - X_C)]^2"
+          },
+          {
+            "text": "Factoring out $I_0^2$:",
+            "equation": "V_0^2 = I_0^2 \\left[ R^2 + (X_L - X_C)^2 \\right] \\quad \\implies \\quad V_0 = I_0 \\sqrt{R^2 + (X_L - X_C)^2}"
+          },
+          {
+            "text": "The total effective opposition offered by the circuit to AC is called Impedance ($Z = V_0 / I_0$):",
+            "equation": "Z = \\sqrt{R^2 + (X_L - X_C)^2} = \\sqrt{R^2 + \\left(\\omega L - \\frac{1}{\\omega C}\\right)^2}"
+          },
+          {
+            "text": "From the phasor triangle, the phase angle $\\phi$ between source voltage and current satisfies:",
+            "equation": "\\tan\\phi = \\frac{V_L - V_C}{V_R} = \\frac{I_0(X_L - X_C)}{I_0 R} = \\frac{X_L - X_C}{R} = \\frac{\\omega L - \\frac{1}{\\omega C}}{R}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Power Factor:",
+            "text": "The power factor of the circuit is given by the cosine of the phase angle:",
+            "equation": "\\cos\\phi = \\frac{R}{Z} = \\frac{R}{\\sqrt{R^2 + (X_L - X_C)^2}}"
+          }
+        ],
+        "finalFormula": "Z = \\sqrt{R^2 + \\left(\\omega L - \\frac{1}{\\omega C}\\right)^2}, \\quad \\tan\\phi = \\frac{\\omega L - 1/(\\omega C)}{R}"
+      },
+      {
+        "name": "Part 2: Resonance Condition & Quality Factor (Q-factor)",
+        "setup": "Electrical resonance occurs at that angular frequency $\\omega_r$ where inductive reactance exactly equals capacitive reactance.",
+        "steps": [
+          {
+            "text": "Condition for resonance:",
+            "equation": "X_L = X_C \\quad \\implies \\quad \\omega_r L = \\frac{1}{\\omega_r C}"
+          },
+          {
+            "text": "Solving for resonant angular frequency $\\omega_r$:",
+            "equation": "\\omega_r^2 = \\frac{1}{L C} \\quad \\implies \\quad \\omega_r = \\frac{1}{\\sqrt{L C}}"
+          },
+          {
+            "text": "Resonant linear frequency in Hertz ($f_r = \\omega_r / 2\\pi$):",
+            "equation": "f_r = \\frac{1}{2\\pi \\sqrt{L C}}"
+          },
+          {
+            "text": "At resonance, impedance is purely resistive and minimum:",
+            "equation": "Z_{\\text{min}} = \\sqrt{R^2 + 0} = R"
+          },
+          {
+            "text": "Current amplitude attains its maximum possible value:",
+            "equation": "I_{0,\\text{max}} = \\frac{V_0}{R}"
+          },
+          {
+            "text": "Quality Factor ($Q$-factor) is defined as the voltage magnification across inductor or capacitor at resonance compared to source voltage:",
+            "equation": "Q = \\frac{V_L}{V} = \\frac{I_0 X_L}{I_0 R} = \\frac{\\omega_r L}{R} = \\frac{1}{\\sqrt{LC}} \\frac{L}{R} = \\frac{1}{R} \\sqrt{\\frac{L}{C}}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Sharpness of Tuning:",
+            "text": "A higher $Q$-factor indicates a sharper, narrower resonance curve, giving better channel selectivity in radio receivers:",
+            "equation": "Q = \\frac{\\omega_r}{2\\Delta\\omega} = \\frac{\\text{Resonant Frequency}}{\\text{Bandwidth}}"
+          }
+        ],
+        "finalFormula": "\\omega_r = \\frac{1}{\\sqrt{LC}}, \\quad Z_{\\text{min}} = R, \\quad Q = \\frac{1}{R}\\sqrt{\\frac{L}{C}}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "lcr-circuit",
+      "title": "Series LCR Phasor Diagram & Resonance Curve",
+      "examDrawingGuide": [
+        "1. Draw series circuit loop containing AC generator $V$, inductor $L$, capacitor $C$, and resistor $R$.",
+        "2. Draw Phasor Diagram: horizontal current axis with phasor $V_R$; vertical phasor $V_L$ pointing up ($+90^\\circ$); vertical phasor $V_C$ pointing down ($-90^\\circ$).",
+        "3. Draw net reactive vector $V_L - V_C$ pointing upwards; complete the rectangle to draw diagonal resultant source voltage $V_0$ at angle $\\phi$.",
+        "4. Draw resonance response curve: current $I$ versus angular frequency $\\omega$ peaking sharply at $\\omega = \\omega_r$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Series Current Common to all Components",
+      "Phasor Leads and Lags (VL leads by π/2, VC lags by π/2)",
+      "Impedance Formula Z = √(R² + (XL - XC)²)",
+      "Resonance Condition (XL = XC)",
+      "Resonant Frequency (ω = 1/√(LC))",
+      "Minimum Impedance (Z = R) & Maximum Current",
+      "Quality Factor (Q = (1/R)√(L/C))"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "Z",
+        "term": "Impedance",
+        "definition": "Total effective opposition offered by an AC circuit to current flow, measured in Ohms ($\\Omega$)."
+      },
+      {
+        "symbol": "X_L = \\omega L",
+        "term": "Inductive Reactance",
+        "definition": "Opposition offered by inductor to alternating current, proportional to frequency ($\\Omega$)."
+      },
+      {
+        "symbol": "X_C = \\frac{1}{\\omega C}",
+        "term": "Capacitive Reactance",
+        "definition": "Opposition offered by capacitor to alternating current, inversely proportional to frequency ($\\Omega$)."
+      },
+      {
+        "symbol": "\\phi",
+        "term": "Phase Angle",
+        "definition": "Angle by which applied voltage leads or lags resultant current in the circuit."
+      },
+      {
+        "symbol": "Q",
+        "term": "Quality Factor (Q-factor)",
+        "definition": "Dimensionless figure of merit measuring sharpness of resonance and voltage magnification: $Q = \\frac{1}{R}\\sqrt{\\frac{L}{C}}$."
+      }
+    ],
+    "markingScheme": [
+      "1.5 Marks: Clear phasor diagram and geometric derivation of impedance $Z = \\sqrt{R^2 + (X_L - X_C)^2}$.",
+      "1 Mark: Derivation of phase angle $\\tan\\phi = (X_L - X_C)/R$.",
+      "1.5 Marks: Derivation of resonant frequency $\\omega_r = 1/\\sqrt{LC}$ from condition $X_L = X_C$.",
+      "1 Mark: Definition and mathematical formula of Quality Factor $Q = (1/R)\\sqrt{L/C}$."
+    ],
+    "examinerTips": "In the phasor diagram, clearly mark the right triangle and show the direction of angle $\\phi$. State explicitly that at resonance, current and voltage are in the same phase ($\\\\phi = 0$).",
+    "modelAnswer": {
+      "statement": "In a Series LCR Circuit, the same alternating current $I = I_0 \\sin(\\omega t)$ flows through the resistor $R$, inductor $L$, and capacitor $C$ in series.\nVoltage across Resistor: $V_R = I R$ is completely in phase with current $I$ (phase difference $\\phi = 0$).\nVoltage across Inductor: $V_L = I X_L = I(\\omega L)$ leads current $I$ by a phase angle of $\\pi/2$ ($90^\\circ$).\nVoltage across Capacitor: $V_C = I X_C = I(1/\\omega C)$ lags current $I$ by a phase angle of $\\pi/2$ ($90^\\circ$).\nElectrical Resonance occurs when inductive reactance equals capacitive reactance ($X_L = X_C$). Under this condition, the net reactive voltage is zero ($V_L - V_C = 0$), impedance is strictly minimum ($Z = R$), current amplitude is maximum ($I_0 = V_0/R$), and voltage and current are in phase (power factor $\\cos\\phi = 1$).",
+      "derivations": [
+        {
+          "name": "Part 1: Derivation of Impedance Z & Phase Angle ϕ using Phasors",
+          "steps": [
+            "Let alternating current in the circuit be $I = I_0 \\sin(\\omega t)$. Let peak voltages across components be represented by rotating phasors $\\vec{V}_R$, $\\vec{V}_L$, and $\\vec{V}_C$. Assume $V_L > V_C$ (predominantly inductive circuit).",
+            "Peak voltage across resistor $R$ along the current phasor direction is: V_R = I_0 R",
+            "Peak voltage across inductor $L$ leading current by $+90^\\circ$ is: V_L = I_0 X_L = I_0 (\\omega L)",
+            "Peak voltage across capacitor $C$ lagging current by $-90^\\circ$ is: V_C = I_0 X_C = I_0 \\left(\\frac{1}{\\omega C}\\right)",
+            "Since phasors $\\vec{V}_L$ and $\\vec{V}_C$ are collinear and point in opposite directions ($180^\\circ$ apart), their resultant reactive phasor is: V_L - V_C = I_0(X_L - X_C) = I_0\\left(\\omega L - \\frac{1}{\\omega C}\\right)",
+            "By the Pythagorean theorem in the phasor voltage right-triangle: V_0^2 = V_R^2 + (V_L - V_C)^2 = (I_0 R)^2 + [I_0(X_L - X_C)]^2",
+            "Factoring out $I_0^2$: V_0^2 = I_0^2 \\left[ R^2 + (X_L - X_C)^2 \\right] \\quad \\implies \\quad V_0 = I_0 \\sqrt{R^2 + (X_L - X_C)^2}",
+            "The total effective opposition offered by the circuit to AC is called Impedance ($Z = V_0 / I_0$): Z = \\sqrt{R^2 + (X_L - X_C)^2} = \\sqrt{R^2 + \\left(\\omega L - \\frac{1}{\\omega C}\\right)^2}",
+            "From the phasor triangle, the phase angle $\\phi$ between source voltage and current satisfies: \\tan\\phi = \\frac{V_L - V_C}{V_R} = \\frac{I_0(X_L - X_C)}{I_0 R} = \\frac{X_L - X_C}{R} = \\frac{\\omega L - \\frac{1}{\\omega C}}{R}",
+            "Power Factor: The power factor of the circuit is given by the cosine of the phase angle: \\cos\\phi = \\frac{R}{Z} = \\frac{R}{\\sqrt{R^2 + (X_L - X_C)^2}}"
+          ],
+          "formula": "Z = \\sqrt{R^2 + \\left(\\omega L - \\frac{1}{\\omega C}\\right)^2}, \\quad \\tan\\phi = \\frac{\\omega L - 1/(\\omega C)}{R}"
+        },
+        {
+          "name": "Part 2: Resonance Condition & Quality Factor (Q-factor)",
+          "steps": [
+            "Electrical resonance occurs at that angular frequency $\\omega_r$ where inductive reactance exactly equals capacitive reactance.",
+            "Condition for resonance: X_L = X_C \\quad \\implies \\quad \\omega_r L = \\frac{1}{\\omega_r C}",
+            "Solving for resonant angular frequency $\\omega_r$: \\omega_r^2 = \\frac{1}{L C} \\quad \\implies \\quad \\omega_r = \\frac{1}{\\sqrt{L C}}",
+            "Resonant linear frequency in Hertz ($f_r = \\omega_r / 2\\pi$): f_r = \\frac{1}{2\\pi \\sqrt{L C}}",
+            "At resonance, impedance is purely resistive and minimum: Z_{\\text{min}} = \\sqrt{R^2 + 0} = R",
+            "Current amplitude attains its maximum possible value: I_{0,\\text{max}} = \\frac{V_0}{R}",
+            "Quality Factor ($Q$-factor) is defined as the voltage magnification across inductor or capacitor at resonance compared to source voltage: Q = \\frac{V_L}{V} = \\frac{I_0 X_L}{I_0 R} = \\frac{\\omega_r L}{R} = \\frac{1}{\\sqrt{LC}} \\frac{L}{R} = \\frac{1}{R} \\sqrt{\\frac{L}{C}}",
+            "Sharpness of Tuning: A higher $Q$-factor indicates a sharper, narrower resonance curve, giving better channel selectivity in radio receivers: Q = \\frac{\\omega_r}{2\\Delta\\omega} = \\frac{\\text{Resonant Frequency}}{\\text{Bandwidth}}"
+          ],
+          "formula": "\\omega_r = \\frac{1}{\\sqrt{LC}}, \\quad Z_{\\text{min}} = R, \\quad Q = \\frac{1}{R}\\sqrt{\\frac{L}{C}}"
+        }
+      ],
+      "diagramNotes": "1. Draw series circuit loop containing AC generator $V$, inductor $L$, capacitor $C$, and resistor $R$.\n2. Draw Phasor Diagram: horizontal current axis with phasor $V_R$; vertical phasor $V_L$ pointing up ($+90^\\circ$); vertical phasor $V_C$ pointing down ($-90^\\circ$).\n3. Draw net reactive vector $V_L - V_C$ pointing upwards; complete the rectangle to draw diagonal resultant source voltage $V_0$ at angle $\\phi$.\n4. Draw resonance response curve: current $I$ versus angular frequency $\\omega$ peaking sharply at $\\omega = \\omega_r$.",
+      "markingScheme": [
+        "1.5 Marks: Clear phasor diagram and geometric derivation of impedance $Z = \\sqrt{R^2 + (X_L - X_C)^2}$.",
+        "1 Mark: Derivation of phase angle $\\tan\\phi = (X_L - X_C)/R$.",
+        "1.5 Marks: Derivation of resonant frequency $\\omega_r = 1/\\sqrt{LC}$ from condition $X_L = X_C$.",
+        "1 Mark: Definition and mathematical formula of Quality Factor $Q = (1/R)\\sqrt{L/C}$."
+      ],
+      "examinerTips": "In the phasor diagram, clearly mark the right triangle and show the direction of angle $\\phi$. State explicitly that at resonance, current and voltage are in the same phase ($\\\\phi = 0$)."
+    }
+  },
+  {
+    "id": "imp-phy-18",
+    "number": 18,
+    "title": "Electric Field of a Dipole: Axial and Equatorial Positions",
+    "shortLabel": "Dipole Field (Axial & Equatorial)",
+    "chapterId": "phy-ch-1",
+    "chapterTitle": "Electric Charges and Fields",
+    "unit": "Electrostatics",
+    "marks": "5 Marks",
+    "marksNum": 5,
+    "category": "Derivation",
+    "frequency": "Guaranteed 5-Mark Question (CBSE 2024 SQP Q1, 2023, 2022, 2019)",
+    "questionPrompt": "(a) Define an electric dipole and electric dipole moment. Write its SI unit and direction.\n(b) Derive an expression for the electric field intensity at a point on:\n  (i) The axial line of an electric dipole.\n  (ii) The equatorial line of an electric dipole.\n(c) For a short dipole, show that the electric field at an axial point is twice the electric field at an equatorial point at the same distance.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 1: Electric Charges and Fields",
+      "section": "Section 1.11: Field of an Electric Dipole (pp. 27–31)",
+      "equations": "Eqs. (1.15), (1.16), (1.20), (1.21)",
+      "figures": "Figs. 1.20, 1.21",
+      "summary": "Exact step-by-step vector derivations on dipole axis and equatorial bisector, matching NODIA Chapterwise Question Bank page 83."
+    },
+    "theory": [
+      "An Electric Dipole is a system of two equal and opposite point charges $+q$ and $-q$ separated by a small finite distance $2a$.",
+      "Electric Dipole Moment $\\vec{p}$ is a vector quantity defined as the product of the magnitude of either charge $q$ and the displacement vector $2\\vec{a}$ separating them: $$\\vec{p} = q(2\\vec{a})$$",
+      "SI unit of dipole moment is Coulomb-metre ($\\text{C}\\cdot\\text{m}$). Direction: By universal convention, directed along the dipole axis from the negative charge ($-q$) to the positive charge ($+q$).",
+      "Axial Field Direction: At any point on the axial line, the resultant electric field is parallel to the dipole moment vector $\\vec{p}$.",
+      "Equatorial Field Direction: At any point on the equatorial line (perpendicular bisector), the resultant electric field is antiparallel (opposite) to the dipole moment vector $\\vec{p}$."
+    ],
+    "derivations": [
+      {
+        "name": "Part 1: Electric Field at a Point on the Axial Line (End-on Position)",
+        "setup": "Consider an electric dipole consisting of two point charges $-q$ and $+q$ separated by distance $2a$ and placed in vacuum. Let $P$ be a point on the axial line at distance $r$ from the centre $O$ of the dipole on the side of charge $+q$.",
+        "steps": [
+          {
+            "text": "Electric field at point $P$ due to charge $-q$ located at distance $(r + a)$ is directed towards the left (along $-\\hat{p}$):",
+            "equation": "\\vec{E}_{-q} = -\\frac{q}{4\\pi \\varepsilon_0 (r + a)^2} \\hat{p}"
+          },
+          {
+            "text": "where $\\hat{p}$ is a unit vector along the dipole axis from $-q$ to $+q$. Electric field due to charge $+q$ located at distance $(r - a)$ is directed towards the right (along $+\\hat{p}$):",
+            "equation": "\\vec{E}_{+q} = \\frac{q}{4\\pi \\varepsilon_0 (r - a)^2} \\hat{p}"
+          },
+          {
+            "text": "Hence, the resultant electric field at point $P$ is the vector sum of both fields:",
+            "equation": "\\vec{E}_{\\text{axial}} = \\vec{E}_{+q} + \\vec{E}_{-q} = \\frac{q}{4\\pi \\varepsilon_0} \\left[ \\frac{1}{(r - a)^2} - \\frac{1}{(r + a)^2} \\right] \\hat{p}"
+          },
+          {
+            "text": "Taking the common denominator and expanding the terms in the numerator:",
+            "equation": "\\vec{E}_{\\text{axial}} = \\frac{q}{4\\pi \\varepsilon_0} \\left[ \\frac{(r + a)^2 - (r - a)^2}{(r^2 - a^2)^2} \\right] \\hat{p} = \\frac{q}{4\\pi \\varepsilon_0} \\left[ \\frac{(r^2 + 2ar + a^2) - (r^2 - 2ar + a^2)}{(r^2 - a^2)^2} \\right] \\hat{p}"
+          },
+          {
+            "text": "Simplifying the numerator:",
+            "equation": "\\vec{E}_{\\text{axial}} = \\frac{q}{4\\pi \\varepsilon_0} \\frac{4ar}{(r^2 - a^2)^2} \\hat{p} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2(q \\cdot 2a)r}{(r^2 - a^2)^2} \\hat{p}"
+          },
+          {
+            "text": "Substituting the dipole moment magnitude $p = q(2a)$:",
+            "equation": "\\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2pr}{(r^2 - a^2)^2} \\hat{p}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Short Dipole Approximation (r ≫ a):",
+            "text": "For distances much larger than the dipole separation ($r \\gg a$), $a^2$ can be neglected compared to $r^2$:",
+            "equation": "\\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2pr}{r^4} \\hat{p} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2\\vec{p}}{r^3}"
+          }
+        ],
+        "finalFormula": "\\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{2\\vec{p}}{r^3} \\quad (\\text{parallel to } \\vec{p})"
+      },
+      {
+        "name": "Part 2: Electric Field at a Point on the Equatorial Line (Broadside-on Position)",
+        "setup": "Consider point $Q$ located on the equatorial line (perpendicular bisector) at distance $r$ from the centre $O$ of the dipole. The distance of point $Q$ from each charge is $\\sqrt{r^2 + a^2}$.",
+        "steps": [
+          {
+            "text": "The magnitudes of the electric fields produced by $+q$ and $-q$ at point $Q$ are equal by symmetry:",
+            "equation": "E_{+q} = E_{-q} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2 + a^2}"
+          },
+          {
+            "text": "Resolving both field vectors into components: The components perpendicular to the dipole axis ($E_{+q}\\sin\\theta$ and $E_{-q}\\sin\\theta$) are equal in magnitude and opposite in direction, so they cancel out completely:",
+            "equation": "E_{\\perp} = E_{+q}\\sin\\theta - E_{-q}\\sin\\theta = 0"
+          },
+          {
+            "text": "The components parallel to the dipole axis ($E_{+q}\\cos\\theta$ and $E_{-q}\\cos\\theta$) add up constructively in the direction opposite to $\\vec{p}$ (towards $-\\hat{p}$):",
+            "equation": "\\vec{E}_{\\text{eq}} = -\\left( E_{+q}\\cos\\theta + E_{-q}\\cos\\theta \\right) \\hat{p} = -2 E_{+q}\\cos\\theta \\, \\hat{p}"
+          },
+          {
+            "text": "From the right-angled triangle, $\\cos\\theta = \\frac{a}{\\sqrt{r^2 + a^2}}$. Substituting $E_{+q}$ and $\\cos\\theta$:",
+            "equation": "\\vec{E}_{\\text{eq}} = -2 \\left( \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2 + a^2} \\right) \\left( \\frac{a}{\\sqrt{r^2 + a^2}} \\right) \\hat{p} = -\\frac{1}{4\\pi \\varepsilon_0} \\frac{q(2a)}{(r^2 + a^2)^{3/2}} \\hat{p}"
+          },
+          {
+            "text": "Substituting dipole moment $p = q(2a)$:",
+            "equation": "\\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi \\varepsilon_0} \\frac{\\vec{p}}{(r^2 + a^2)^{3/2}}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Short Dipole Approximation (r ≫ a):",
+            "text": "Neglecting $a^2$ in comparison to $r^2$:",
+            "equation": "\\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi \\varepsilon_0} \\frac{\\vec{p}}{r^3}"
+          },
+          {
+            "title": "Comparison between Axial and Equatorial Fields:",
+            "text": "For a short dipole at the same distance $r$, the magnitude of the axial field is exactly twice the equatorial field:",
+            "equation": "E_{\\text{axial}} = 2 \\, E_{\\text{eq}}"
+          }
+        ],
+        "finalFormula": "\\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi\\varepsilon_0} \\frac{\\vec{p}}{r^3}, \\quad E_{\\text{axial}} = 2 E_{\\text{eq}}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "dipole-fields",
+      "title": "Electric Dipole: Axial and Equatorial Geometry",
+      "examDrawingGuide": [
+        "1. Axial Line: Draw horizontal axis with charges $-q$ and $+q$ separated by $2a$; mark midpoint $O$; mark point $P$ at distance $r$ from $O$ along axis; draw longer arrow $\\vec{E}_{+q}$ to the right, shorter arrow $\\vec{E}_{-q}$ to the left, and net arrow $\\vec{E}_{\\text{axial}}$ to the right.",
+        "2. Equatorial Line: Draw horizontal dipole $-q$ and $+q$; draw vertical perpendicular bisector from $O$; mark point $Q$ at height $r$; draw $\\vec{E}_{+q}$ pointing diagonally away and $\\vec{E}_{-q}$ pointing diagonally toward $-q$; show vertical components cancelling and horizontal components adding opposite to dipole moment."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Dipole Moment Vector (p = q(2a), directed -q to +q)",
+      "Axial Vector Addition (E_+q to right, E_-q to left)",
+      "Equatorial Component Resolution (sinθ cancels, cosθ adds)",
+      "Inverse Cube Distance Dependence (E ∝ 1/r³)",
+      "Axial Field Parallel to p̂",
+      "Equatorial Field Antiparallel to p̂",
+      "Ratio Formula: E_axial = 2 × E_eq"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\vec{p}",
+        "term": "Electric Dipole Moment",
+        "definition": "Vector parameter of dipole: $\\vec{p} = q(2\\vec{a})$, measured in $\\text{C}\\cdot\\text{m}$, directed from $-q$ to $+q$."
+      },
+      {
+        "symbol": "2a",
+        "term": "Dipole Separation (Length)",
+        "definition": "Finite vector distance between the centers of the two constituent point charges."
+      },
+      {
+        "symbol": "r",
+        "term": "Observation Distance",
+        "definition": "Distance of field point from the geometric center $O$ of the dipole."
+      },
+      {
+        "symbol": "\\hat{p}",
+        "term": "Dipole Unit Vector",
+        "definition": "Unit vector pointing along the dipole axis in the direction from negative to positive charge."
+      }
+    ],
+    "markingScheme": [
+      "1 Mark: Definition of electric dipole moment with formula, SI unit, and direction.",
+      "2 Marks: Rigorous step-by-step derivation of axial field $E_{\\text{axial}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{2p}{r^3}$.",
+      "2 Marks: Step-by-step component derivation of equatorial field $E_{\\text{eq}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{p}{r^3}$ and proof of ratio $E_{\\text{axial}} = 2E_{\\text{eq}}$."
+    ],
+    "examinerTips": "Common mistake: forgetting vector signs! Write $\\vec{E}_{\\text{axial}}$ with $+\\hat{p}$ and $\\vec{E}_{\\text{eq}}$ with $-\\hat{p}$. In the short dipole step, explicitly state 'neglecting $a^2$ in comparison with $r^2$'.",
+    "modelAnswer": {
+      "statement": "An Electric Dipole is a system of two equal and opposite point charges $+q$ and $-q$ separated by a small finite distance $2a$.\nElectric Dipole Moment $\\vec{p}$ is a vector quantity defined as the product of the magnitude of either charge $q$ and the displacement vector $2\\vec{a}$ separating them: $$\\vec{p} = q(2\\vec{a})$$\nSI unit of dipole moment is Coulomb-metre ($\\text{C}\\cdot\\text{m}$). Direction: By universal convention, directed along the dipole axis from the negative charge ($-q$) to the positive charge ($+q$).\nAxial Field Direction: At any point on the axial line, the resultant electric field is parallel to the dipole moment vector $\\vec{p}$.\nEquatorial Field Direction: At any point on the equatorial line (perpendicular bisector), the resultant electric field is antiparallel (opposite) to the dipole moment vector $\\vec{p}$.",
+      "derivations": [
+        {
+          "name": "Part 1: Electric Field at a Point on the Axial Line (End-on Position)",
+          "steps": [
+            "Consider an electric dipole consisting of two point charges $-q$ and $+q$ separated by distance $2a$ and placed in vacuum. Let $P$ be a point on the axial line at distance $r$ from the centre $O$ of the dipole on the side of charge $+q$.",
+            "Electric field at point $P$ due to charge $-q$ located at distance $(r + a)$ is directed towards the left (along $-\\hat{p}$): \\vec{E}_{-q} = -\\frac{q}{4\\pi \\varepsilon_0 (r + a)^2} \\hat{p}",
+            "where $\\hat{p}$ is a unit vector along the dipole axis from $-q$ to $+q$. Electric field due to charge $+q$ located at distance $(r - a)$ is directed towards the right (along $+\\hat{p}$): \\vec{E}_{+q} = \\frac{q}{4\\pi \\varepsilon_0 (r - a)^2} \\hat{p}",
+            "Hence, the resultant electric field at point $P$ is the vector sum of both fields: \\vec{E}_{\\text{axial}} = \\vec{E}_{+q} + \\vec{E}_{-q} = \\frac{q}{4\\pi \\varepsilon_0} \\left[ \\frac{1}{(r - a)^2} - \\frac{1}{(r + a)^2} \\right] \\hat{p}",
+            "Taking the common denominator and expanding the terms in the numerator: \\vec{E}_{\\text{axial}} = \\frac{q}{4\\pi \\varepsilon_0} \\left[ \\frac{(r + a)^2 - (r - a)^2}{(r^2 - a^2)^2} \\right] \\hat{p} = \\frac{q}{4\\pi \\varepsilon_0} \\left[ \\frac{(r^2 + 2ar + a^2) - (r^2 - 2ar + a^2)}{(r^2 - a^2)^2} \\right] \\hat{p}",
+            "Simplifying the numerator: \\vec{E}_{\\text{axial}} = \\frac{q}{4\\pi \\varepsilon_0} \\frac{4ar}{(r^2 - a^2)^2} \\hat{p} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2(q \\cdot 2a)r}{(r^2 - a^2)^2} \\hat{p}",
+            "Substituting the dipole moment magnitude $p = q(2a)$: \\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2pr}{(r^2 - a^2)^2} \\hat{p}",
+            "Short Dipole Approximation (r ≫ a): For distances much larger than the dipole separation ($r \\gg a$), $a^2$ can be neglected compared to $r^2$: \\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2pr}{r^4} \\hat{p} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{2\\vec{p}}{r^3}"
+          ],
+          "formula": "\\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{2\\vec{p}}{r^3} \\quad (\\text{parallel to } \\vec{p})"
+        },
+        {
+          "name": "Part 2: Electric Field at a Point on the Equatorial Line (Broadside-on Position)",
+          "steps": [
+            "Consider point $Q$ located on the equatorial line (perpendicular bisector) at distance $r$ from the centre $O$ of the dipole. The distance of point $Q$ from each charge is $\\sqrt{r^2 + a^2}$.",
+            "The magnitudes of the electric fields produced by $+q$ and $-q$ at point $Q$ are equal by symmetry: E_{+q} = E_{-q} = \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2 + a^2}",
+            "Resolving both field vectors into components: The components perpendicular to the dipole axis ($E_{+q}\\sin\\theta$ and $E_{-q}\\sin\\theta$) are equal in magnitude and opposite in direction, so they cancel out completely: E_{\\perp} = E_{+q}\\sin\\theta - E_{-q}\\sin\\theta = 0",
+            "The components parallel to the dipole axis ($E_{+q}\\cos\\theta$ and $E_{-q}\\cos\\theta$) add up constructively in the direction opposite to $\\vec{p}$ (towards $-\\hat{p}$): \\vec{E}_{\\text{eq}} = -\\left( E_{+q}\\cos\\theta + E_{-q}\\cos\\theta \\right) \\hat{p} = -2 E_{+q}\\cos\\theta \\, \\hat{p}",
+            "From the right-angled triangle, $\\cos\\theta = \\frac{a}{\\sqrt{r^2 + a^2}}$. Substituting $E_{+q}$ and $\\cos\\theta$: \\vec{E}_{\\text{eq}} = -2 \\left( \\frac{1}{4\\pi \\varepsilon_0} \\frac{q}{r^2 + a^2} \\right) \\left( \\frac{a}{\\sqrt{r^2 + a^2}} \\right) \\hat{p} = -\\frac{1}{4\\pi \\varepsilon_0} \\frac{q(2a)}{(r^2 + a^2)^{3/2}} \\hat{p}",
+            "Substituting dipole moment $p = q(2a)$: \\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi \\varepsilon_0} \\frac{\\vec{p}}{(r^2 + a^2)^{3/2}}",
+            "Short Dipole Approximation (r ≫ a): Neglecting $a^2$ in comparison to $r^2$: \\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi \\varepsilon_0} \\frac{\\vec{p}}{r^3}",
+            "Comparison between Axial and Equatorial Fields: For a short dipole at the same distance $r$, the magnitude of the axial field is exactly twice the equatorial field: E_{\\text{axial}} = 2 \\, E_{\\text{eq}}"
+          ],
+          "formula": "\\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi\\varepsilon_0} \\frac{\\vec{p}}{r^3}, \\quad E_{\\text{axial}} = 2 E_{\\text{eq}}"
+        }
+      ],
+      "diagramNotes": "1. Axial Line: Draw horizontal axis with charges $-q$ and $+q$ separated by $2a$; mark midpoint $O$; mark point $P$ at distance $r$ from $O$ along axis; draw longer arrow $\\vec{E}_{+q}$ to the right, shorter arrow $\\vec{E}_{-q}$ to the left, and net arrow $\\vec{E}_{\\text{axial}}$ to the right.\n2. Equatorial Line: Draw horizontal dipole $-q$ and $+q$; draw vertical perpendicular bisector from $O$; mark point $Q$ at height $r$; draw $\\vec{E}_{+q}$ pointing diagonally away and $\\vec{E}_{-q}$ pointing diagonally toward $-q$; show vertical components cancelling and horizontal components adding opposite to dipole moment.",
+      "markingScheme": [
+        "1 Mark: Definition of electric dipole moment with formula, SI unit, and direction.",
+        "2 Marks: Rigorous step-by-step derivation of axial field $E_{\\text{axial}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{2p}{r^3}$.",
+        "2 Marks: Step-by-step component derivation of equatorial field $E_{\\text{eq}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{p}{r^3}$ and proof of ratio $E_{\\text{axial}} = 2E_{\\text{eq}}$."
+      ],
+      "examinerTips": "Common mistake: forgetting vector signs! Write $\\vec{E}_{\\text{axial}}$ with $+\\hat{p}$ and $\\vec{E}_{\\text{eq}}$ with $-\\hat{p}$. In the short dipole step, explicitly state 'neglecting $a^2$ in comparison with $r^2$'."
+    }
+  },
+  {
+    "id": "imp-phy-19",
+    "number": 19,
+    "title": "Torque and Potential Energy of an Electric Dipole in Uniform Electric Field",
+    "shortLabel": "Dipole Torque (τ = p × E) & Potential Energy",
+    "chapterId": "phy-ch-1",
+    "chapterTitle": "Electric Charges and Fields",
+    "unit": "Electrostatics",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "High Frequency Core Derivation (CBSE 2024, 2023, 2021, 2019)",
+    "questionPrompt": "(a) An electric dipole of dipole moment p is placed in a uniform electric field E making an angle θ with the field. Derive the expression for the torque acting on it.\n(b) Derive the expression for the potential energy stored in the dipole.\n(c) Identify the conditions of: (i) Stable equilibrium, (ii) Unstable equilibrium, and (iii) Maximum torque.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 1: Electric Charges and Fields",
+      "section": "Section 1.12 & Chapter 2 Section 2.5 (pp. 31–32, 66–68)",
+      "equations": "Eqs. (1.22), (1.23), (2.23)",
+      "figures": "Fig. 1.22",
+      "summary": "Force couple on dipole in uniform field, vector cross product torque derivation, and rotational work integral for potential energy."
+    },
+    "theory": [
+      "When an electric dipole is placed in a uniform electric field $\\vec{E}$, the charge $+q$ experiences force $\\vec{F}_+ = +q\\vec{E}$ and charge $-q$ experiences force $\\vec{F}_- = -q\\vec{E}$.",
+      "Net Translational Force: The two forces are equal in magnitude and opposite in direction. Hence, the net translational mechanical force is zero: $$\\vec{F}_{\\text{net}} = +q\\vec{E} + (-q\\vec{E}) = 0$$ The dipole has zero translational acceleration in a uniform field.",
+      "Torque Couple: Because the lines of action of the two equal and opposite forces do not coincide, they constitute a couple that tends to rotate the dipole to align its dipole moment $\\vec{p}$ parallel to the external field $\\vec{E}$.",
+      "Work done in rotating the dipole against this restoring torque is stored in the system as Electrostatic Potential Energy ($U$)."
+    ],
+    "derivations": [
+      {
+        "name": "Part 1: Derivation of Torque (τ = p × E)",
+        "setup": "Consider an electric dipole consisting of charges $\\pm q$ separated by length $2a$, placed in a uniform electric field $\\vec{E}$ at an angle $\\theta$ with the field direction.",
+        "steps": [
+          {
+            "text": "Magnitude of force on each individual charge is:",
+            "equation": "F = q E"
+          },
+          {
+            "text": "The perpendicular distance between the lines of action of the two forces (perpendicular lever arm) is:",
+            "equation": "d_{\\perp} = 2a \\sin\\theta"
+          },
+          {
+            "text": "The magnitude of the torque $\\tau$ exerted by the couple is given by force multiplied by perpendicular lever arm:",
+            "equation": "\\tau = F \\cdot d_{\\perp} = (q E)(2a \\sin\\theta) = (q \\cdot 2a) E \\sin\\theta"
+          },
+          {
+            "text": "Substituting dipole moment magnitude $p = q(2a)$:",
+            "equation": "\\tau = p E \\sin\\theta"
+          },
+          {
+            "text": "In vector notation, this is the vector cross product of dipole moment $\\vec{p}$ and electric field $\\vec{E}$:",
+            "equation": "\\vec{\\tau} = \\vec{p} \\times \\vec{E}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Maximum Torque (θ = 90°):",
+            "text": "When the dipole is perpendicular to the electric field ($\\sin 90^\\circ = 1$):",
+            "equation": "\\tau_{\\text{max}} = p E"
+          },
+          {
+            "title": "Zero Torque (θ = 0° or 180°):",
+            "text": "When the dipole is aligned along or opposite to the electric field ($\\sin 0^\\circ = \\sin 180^\\circ = 0$):",
+            "equation": "\\tau = 0"
+          }
+        ],
+        "finalFormula": "\\vec{\\tau} = \\vec{p} \\times \\vec{E} \\quad \\implies \\quad \\tau = p E \\sin\\theta"
+      },
+      {
+        "name": "Part 2: Derivation of Potential Energy (U = -p · E)",
+        "setup": "Let external torque rotate the dipole slowly without angular acceleration from orientation $\\theta_1$ to orientation $\\theta_2$ against the electrostatic torque.",
+        "steps": [
+          {
+            "text": "Work done by external agent in rotating dipole through an infinitesimal angular displacement $d\\theta$ is:",
+            "equation": "dW = \\tau_{\\text{ext}} \\, d\\theta = p E \\sin\\theta \\, d\\theta"
+          },
+          {
+            "text": "Total work done in rotating dipole from angle $\\theta_1$ to angle $\\theta_2$ is obtained by integration:",
+            "equation": "W = \\int_{\\theta_1}^{\\theta_2} p E \\sin\\theta \\, d\\theta = p E [-\\cos\\theta]_{\\theta_1}^{\\theta_2} = -p E (\\cos\\theta_2 - \\cos\\theta_1)"
+          },
+          {
+            "text": "Taking the zero-energy reference standard at $\\theta_1 = 90^\\circ$ (where $\\cos 90^\\circ = 0$):",
+            "equation": "U(\\theta) = -p E (\\cos\\theta - \\cos 90^\\circ) = -p E \\cos\\theta"
+          },
+          {
+            "text": "In vector dot product notation:",
+            "equation": "U = -\\vec{p} \\cdot \\vec{E}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Case 1: Stable Equilibrium (θ = 0°):",
+            "text": "Dipole aligned parallel to field: $\\tau = 0$ and potential energy is minimum:",
+            "equation": "U_{\\text{min}} = -pE \\cos 0^\\circ = -pE"
+          },
+          {
+            "title": "Case 2: Unstable Equilibrium (θ = 180°):",
+            "text": "Dipole aligned antiparallel to field: $\\tau = 0$ and potential energy is maximum:",
+            "equation": "U_{\\text{max}} = -pE \\cos 180^\\circ = +pE"
+          }
+        ],
+        "finalFormula": "U = -\\vec{p} \\cdot \\vec{E} = -p E \\cos\\theta"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "dipole-torque",
+      "title": "Electric Dipole in Uniform Electric Field: Couple & Torque",
+      "examDrawingGuide": [
+        "1. Draw parallel horizontal field lines representing uniform field $\\vec{E}$.",
+        "2. Draw dipole axis inclined at angle $\\theta$ with charges $-q$ and $+q$ separated by $2a$.",
+        "3. Draw force vector $+q\\vec{E}$ to the right at $+q$, and force $-q\\vec{E}$ to the left at $-q$.",
+        "4. Draw dashed perpendicular line from $-q$ to the line of action of $+q\\vec{E}$ and label perpendicular lever arm $2a\\sin\\theta$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Zero Net Force (F_net = 0 in uniform field)",
+      "Restoring Couple and Perpendicular Lever Arm (2a sinθ)",
+      "Torque Cross Product (τ = p × E)",
+      "Rotational Work Integral (W = ∫ τ dθ)",
+      "Potential Energy Dot Product (U = -p · E)",
+      "Stable Equilibrium (θ = 0°, U = -pE)",
+      "Unstable Equilibrium (θ = 180°, U = +pE)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\vec{\\tau}",
+        "term": "Deflecting Torque",
+        "definition": "Rotational couple vector tending to align dipole with external field, measured in $\\text{N}\\cdot\\text{m}$."
+      },
+      {
+        "symbol": "U",
+        "term": "Electrostatic Potential Energy",
+        "definition": "Energy stored in the dipole-field configuration relative to standard $90^\\circ$ perpendicular state, measured in Joules (J)."
+      },
+      {
+        "symbol": "\\theta",
+        "term": "Dipole Alignment Angle",
+        "definition": "Angle between dipole moment vector $\\vec{p}$ and external electric field $\\vec{E}$."
+      }
+    ],
+    "markingScheme": [
+      "1.5 Marks: Derivation of torque $\\tau = pE\\sin\\theta \\implies \\vec{\\tau} = \\vec{p}\\times\\vec{E}$ with labeled diagram.",
+      "1 Mark: Derivation of potential energy $U = -pE\\cos\\theta = -\\vec{p}\\cdot\\vec{E}$.",
+      "0.5 Mark: Distinction between stable equilibrium ($\\theta = 0^\\circ$) and unstable equilibrium ($\\theta = 180^\\circ$)."
+    ],
+    "examinerTips": "Remember that if the electric field is NON-uniform, the dipole experiences BOTH a net translational force AND a torque!",
+    "modelAnswer": {
+      "statement": "When an electric dipole is placed in a uniform electric field $\\vec{E}$, the charge $+q$ experiences force $\\vec{F}_+ = +q\\vec{E}$ and charge $-q$ experiences force $\\vec{F}_- = -q\\vec{E}$.\nNet Translational Force: The two forces are equal in magnitude and opposite in direction. Hence, the net translational mechanical force is zero: $$\\vec{F}_{\\text{net}} = +q\\vec{E} + (-q\\vec{E}) = 0$$ The dipole has zero translational acceleration in a uniform field.\nTorque Couple: Because the lines of action of the two equal and opposite forces do not coincide, they constitute a couple that tends to rotate the dipole to align its dipole moment $\\vec{p}$ parallel to the external field $\\vec{E}$.\nWork done in rotating the dipole against this restoring torque is stored in the system as Electrostatic Potential Energy ($U$).",
+      "derivations": [
+        {
+          "name": "Part 1: Derivation of Torque (τ = p × E)",
+          "steps": [
+            "Consider an electric dipole consisting of charges $\\pm q$ separated by length $2a$, placed in a uniform electric field $\\vec{E}$ at an angle $\\theta$ with the field direction.",
+            "Magnitude of force on each individual charge is: F = q E",
+            "The perpendicular distance between the lines of action of the two forces (perpendicular lever arm) is: d_{\\perp} = 2a \\sin\\theta",
+            "The magnitude of the torque $\\tau$ exerted by the couple is given by force multiplied by perpendicular lever arm: \\tau = F \\cdot d_{\\perp} = (q E)(2a \\sin\\theta) = (q \\cdot 2a) E \\sin\\theta",
+            "Substituting dipole moment magnitude $p = q(2a)$: \\tau = p E \\sin\\theta",
+            "In vector notation, this is the vector cross product of dipole moment $\\vec{p}$ and electric field $\\vec{E}$: \\vec{\\tau} = \\vec{p} \\times \\vec{E}",
+            "Maximum Torque (θ = 90°): When the dipole is perpendicular to the electric field ($\\sin 90^\\circ = 1$): \\tau_{\\text{max}} = p E",
+            "Zero Torque (θ = 0° or 180°): When the dipole is aligned along or opposite to the electric field ($\\sin 0^\\circ = \\sin 180^\\circ = 0$): \\tau = 0"
+          ],
+          "formula": "\\vec{\\tau} = \\vec{p} \\times \\vec{E} \\quad \\implies \\quad \\tau = p E \\sin\\theta"
+        },
+        {
+          "name": "Part 2: Derivation of Potential Energy (U = -p · E)",
+          "steps": [
+            "Let external torque rotate the dipole slowly without angular acceleration from orientation $\\theta_1$ to orientation $\\theta_2$ against the electrostatic torque.",
+            "Work done by external agent in rotating dipole through an infinitesimal angular displacement $d\\theta$ is: dW = \\tau_{\\text{ext}} \\, d\\theta = p E \\sin\\theta \\, d\\theta",
+            "Total work done in rotating dipole from angle $\\theta_1$ to angle $\\theta_2$ is obtained by integration: W = \\int_{\\theta_1}^{\\theta_2} p E \\sin\\theta \\, d\\theta = p E [-\\cos\\theta]_{\\theta_1}^{\\theta_2} = -p E (\\cos\\theta_2 - \\cos\\theta_1)",
+            "Taking the zero-energy reference standard at $\\theta_1 = 90^\\circ$ (where $\\cos 90^\\circ = 0$): U(\\theta) = -p E (\\cos\\theta - \\cos 90^\\circ) = -p E \\cos\\theta",
+            "In vector dot product notation: U = -\\vec{p} \\cdot \\vec{E}",
+            "Case 1: Stable Equilibrium (θ = 0°): Dipole aligned parallel to field: $\\tau = 0$ and potential energy is minimum: U_{\\text{min}} = -pE \\cos 0^\\circ = -pE",
+            "Case 2: Unstable Equilibrium (θ = 180°): Dipole aligned antiparallel to field: $\\tau = 0$ and potential energy is maximum: U_{\\text{max}} = -pE \\cos 180^\\circ = +pE"
+          ],
+          "formula": "U = -\\vec{p} \\cdot \\vec{E} = -p E \\cos\\theta"
+        }
+      ],
+      "diagramNotes": "1. Draw parallel horizontal field lines representing uniform field $\\vec{E}$.\n2. Draw dipole axis inclined at angle $\\theta$ with charges $-q$ and $+q$ separated by $2a$.\n3. Draw force vector $+q\\vec{E}$ to the right at $+q$, and force $-q\\vec{E}$ to the left at $-q$.\n4. Draw dashed perpendicular line from $-q$ to the line of action of $+q\\vec{E}$ and label perpendicular lever arm $2a\\sin\\theta$.",
+      "markingScheme": [
+        "1.5 Marks: Derivation of torque $\\tau = pE\\sin\\theta \\implies \\vec{\\tau} = \\vec{p}\\times\\vec{E}$ with labeled diagram.",
+        "1 Mark: Derivation of potential energy $U = -pE\\cos\\theta = -\\vec{p}\\cdot\\vec{E}$.",
+        "0.5 Mark: Distinction between stable equilibrium ($\\theta = 0^\\circ$) and unstable equilibrium ($\\theta = 180^\\circ$)."
+      ],
+      "examinerTips": "Remember that if the electric field is NON-uniform, the dipole experiences BOTH a net translational force AND a torque!"
+    }
+  },
+  {
+    "id": "imp-phy-20",
+    "number": 20,
+    "title": "Force Between Two Parallel Current-Carrying Conductors & Definition of 1 Ampere",
+    "shortLabel": "Force Between Parallel Wires & 1 Ampere",
+    "chapterId": "phy-ch-4",
+    "chapterTitle": "Moving Charges and Magnetism",
+    "unit": "Magnetism",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "High Frequency Core Derivation (CBSE 2024 SQP Q16, 2023, 2020, 2018)",
+    "questionPrompt": "(a) Derive the expression for the magnetic force per unit length acting between two long, straight parallel conductors carrying steady currents I₁ and I₂ separated by distance d in vacuum.\n(b) State whether parallel currents attract or repel, and justify with diagram.\n(c) Use this formula to state the official definition of the SI unit of electric current (the Ampere).",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 4: Moving Charges and Magnetism",
+      "section": "Section 4.7: Force between Two Parallel Currents (pp. 154–157)",
+      "equations": "Eqs. (4.26), (4.27), (4.28)",
+      "figures": "Figs. 4.19, 4.20",
+      "summary": "Biot-Savart field generation by wire 1, Lorentz force on wire 2, mutual attraction/repulsion, and historical definition of the ampere."
+    },
+    "theory": [
+      "Two infinitely long, straight parallel conductors carrying steady currents exert mutual magnetic forces on each other.",
+      "Nature of Force: Parallel currents flowing in the SAME direction ATTRACT each other. Antiparallel currents flowing in OPPOSITE directions REPEL each other.",
+      "Physical Mechanism: Wire 1 produces a circular magnetic field $\\vec{B}_1$ around it according to the Right-Hand Thumb Rule. Wire 2 carrying current $I_2$ sits inside field $\\vec{B}_1$ and experiences a mechanical magnetic Lorentz force $\\vec{F}_{21} = I_2(\\vec{L} \\times \\vec{B}_1)$ according to Fleming's Left-Hand Rule.",
+      "By Newton's Third Law, the force exerted by wire 2 on wire 1 is equal in magnitude and opposite in direction: $$\\vec{F}_{12} = -\\vec{F}_{21}$$"
+    ],
+    "derivations": [
+      {
+        "name": "Mathematical Derivation of Force per Unit Length",
+        "setup": "Consider two infinitely long, thin straight parallel conductors $X$ and $Y$ separated by distance $d$ in vacuum, carrying steady currents $I_1$ and $I_2$ in the same direction (upwards).",
+        "steps": [
+          {
+            "text": "By Ampere's circuital law / Biot-Savart law, the magnitude of the magnetic field produced by conductor $X$ carrying current $I_1$ at all points on conductor $Y$ at distance $d$ is:",
+            "equation": "B_1 = \\frac{\\mu_0 I_1}{2\\pi d}"
+          },
+          {
+            "text": "By the Right-Hand Thumb Rule, the direction of magnetic field $\\vec{B}_1$ at conductor $Y$ is perpendicular to the plane of the wires, directed perpendicularly INTO the paper ($\\otimes$).",
+            "equation": "\\vec{B}_1 \\perp \\text{Plane of Wires (Inwards)}"
+          },
+          {
+            "text": "Conductor $Y$ carries current $I_2$ in field $\\vec{B}_1$. The magnetic force experienced by a section of length $L$ of conductor $Y$ is:",
+            "equation": "F_{21} = I_2 L B_1 \\sin 90^\\circ = I_2 L \\left( \\frac{\\mu_0 I_1}{2\\pi d} \\right) = \\frac{\\mu_0 I_1 I_2 L}{2\\pi d}"
+          },
+          {
+            "text": "By Fleming's Left-Hand Rule, the direction of force $\\vec{F}_{21}$ is towards conductor $X$ (attractive force).",
+            "equation": "\\vec{F}_{21} \\text{ directed toward wire } X"
+          },
+          {
+            "text": "The magnetic force per unit length ($f = F/L$) acting on either conductor is:",
+            "equation": "f = \\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Standard Definition of One Ampere:",
+            "text": "If $I_1 = I_2 = 1\\text{ A}$ and $d = 1\\text{ m}$ in vacuum, the force per unit length is:",
+            "equation": "f = \\frac{(4\\pi \\times 10^{-7})(1)(1)}{2\\pi(1)} = 2 \\times 10^{-7} \\text{ N/m}"
+          }
+        ],
+        "finalFormula": "\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d} = 2 \\times 10^{-7} \\text{ N/m} \\quad (\\text{for } 1\\text{ A at } 1\\text{ m})"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "parallel-wires",
+      "title": "Force Between Parallel Current-Carrying Conductors",
+      "examDrawingGuide": [
+        "1. Draw two vertical parallel straight wires labeled 1 and 2 separated by distance $d$.",
+        "2. Draw current arrows $I_1$ and $I_2$ pointing upward.",
+        "3. Draw circular magnetic field lines around wire 1, showing field vector $\\vec{B}_1$ entering perpendicularly into page at wire 2 (marked with $\\otimes$).",
+        "4. Draw horizontal attractive force arrows $\\vec{F}_{21}$ pointing left toward wire 1, and $\\vec{F}_{12}$ pointing right toward wire 2."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Biot-Savart Field (B₁ = μ₀I₁ / 2πd)",
+      "Lorentz Force on Current (F = I₂LB₁)",
+      "Parallel Currents Attract / Antiparallel Repel",
+      "Force per Unit Length Formula (F/L = μ₀I₁I₂ / 2πd)",
+      "Standard Definition of 1 Ampere (2 × 10⁻⁷ N/m force in vacuum at 1 m separation)"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\mu_0",
+        "term": "Permeability of Free Space",
+        "definition": "Universal magnetic constant: $\\mu_0 = 4\\pi \\times 10^{-7} \\text{ T}\\cdot\\text{m/A}$ (or $\\text{N/A}^2$)."
+      },
+      {
+        "symbol": "I_1, I_2",
+        "term": "Conductor Currents",
+        "definition": "Steady electric currents circulating through the two parallel conducting wires (Amperes)."
+      },
+      {
+        "symbol": "d",
+        "term": "Separation Distance",
+        "definition": "Perpendicular distance separating the axes of the two parallel wires in metres (m)."
+      },
+      {
+        "symbol": "f = F/L",
+        "term": "Force per Unit Length",
+        "definition": "Mechanical interaction force per metre length of conductor, measured in Newtons per metre (N/m)."
+      }
+    ],
+    "markingScheme": [
+      "1.5 Marks: Mathematical derivation of field $B_1 = \\mu_0 I_1 / (2\\pi d)$ and force $F/L = \\mu_0 I_1 I_2 / (2\\pi d)$.",
+      "0.5 Mark: Justification of attractive nature with Fleming's Left-Hand Rule.",
+      "1 Mark: Exact standard definition of 1 Ampere using $2 \\times 10^{-7}\\text{ N/m}$."
+    ],
+    "examinerTips": "In defining 1 Ampere, state all three conditions: (1) Straight parallel conductors of infinite length and negligible cross-section, (2) Placed in vacuum 1 metre apart, (3) Producing force of exactly $2 \\times 10^{-7}\\text{ N/m}$.",
+    "modelAnswer": {
+      "statement": "Two infinitely long, straight parallel conductors carrying steady currents exert mutual magnetic forces on each other.\nNature of Force: Parallel currents flowing in the SAME direction ATTRACT each other. Antiparallel currents flowing in OPPOSITE directions REPEL each other.\nPhysical Mechanism: Wire 1 produces a circular magnetic field $\\vec{B}_1$ around it according to the Right-Hand Thumb Rule. Wire 2 carrying current $I_2$ sits inside field $\\vec{B}_1$ and experiences a mechanical magnetic Lorentz force $\\vec{F}_{21} = I_2(\\vec{L} \\times \\vec{B}_1)$ according to Fleming's Left-Hand Rule.\nBy Newton's Third Law, the force exerted by wire 2 on wire 1 is equal in magnitude and opposite in direction: $$\\vec{F}_{12} = -\\vec{F}_{21}$$",
+      "derivations": [
+        {
+          "name": "Mathematical Derivation of Force per Unit Length",
+          "steps": [
+            "Consider two infinitely long, thin straight parallel conductors $X$ and $Y$ separated by distance $d$ in vacuum, carrying steady currents $I_1$ and $I_2$ in the same direction (upwards).",
+            "By Ampere's circuital law / Biot-Savart law, the magnitude of the magnetic field produced by conductor $X$ carrying current $I_1$ at all points on conductor $Y$ at distance $d$ is: B_1 = \\frac{\\mu_0 I_1}{2\\pi d}",
+            "By the Right-Hand Thumb Rule, the direction of magnetic field $\\vec{B}_1$ at conductor $Y$ is perpendicular to the plane of the wires, directed perpendicularly INTO the paper ($\\otimes$). \\vec{B}_1 \\perp \\text{Plane of Wires (Inwards)}",
+            "Conductor $Y$ carries current $I_2$ in field $\\vec{B}_1$. The magnetic force experienced by a section of length $L$ of conductor $Y$ is: F_{21} = I_2 L B_1 \\sin 90^\\circ = I_2 L \\left( \\frac{\\mu_0 I_1}{2\\pi d} \\right) = \\frac{\\mu_0 I_1 I_2 L}{2\\pi d}",
+            "By Fleming's Left-Hand Rule, the direction of force $\\vec{F}_{21}$ is towards conductor $X$ (attractive force). \\vec{F}_{21} \\text{ directed toward wire } X",
+            "The magnetic force per unit length ($f = F/L$) acting on either conductor is: f = \\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}",
+            "Standard Definition of One Ampere: If $I_1 = I_2 = 1\\text{ A}$ and $d = 1\\text{ m}$ in vacuum, the force per unit length is: f = \\frac{(4\\pi \\times 10^{-7})(1)(1)}{2\\pi(1)} = 2 \\times 10^{-7} \\text{ N/m}"
+          ],
+          "formula": "\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d} = 2 \\times 10^{-7} \\text{ N/m} \\quad (\\text{for } 1\\text{ A at } 1\\text{ m})"
+        }
+      ],
+      "diagramNotes": "1. Draw two vertical parallel straight wires labeled 1 and 2 separated by distance $d$.\n2. Draw current arrows $I_1$ and $I_2$ pointing upward.\n3. Draw circular magnetic field lines around wire 1, showing field vector $\\vec{B}_1$ entering perpendicularly into page at wire 2 (marked with $\\otimes$).\n4. Draw horizontal attractive force arrows $\\vec{F}_{21}$ pointing left toward wire 1, and $\\vec{F}_{12}$ pointing right toward wire 2.",
+      "markingScheme": [
+        "1.5 Marks: Mathematical derivation of field $B_1 = \\mu_0 I_1 / (2\\pi d)$ and force $F/L = \\mu_0 I_1 I_2 / (2\\pi d)$.",
+        "0.5 Mark: Justification of attractive nature with Fleming's Left-Hand Rule.",
+        "1 Mark: Exact standard definition of 1 Ampere using $2 \\times 10^{-7}\\text{ N/m}$."
+      ],
+      "examinerTips": "In defining 1 Ampere, state all three conditions: (1) Straight parallel conductors of infinite length and negligible cross-section, (2) Placed in vacuum 1 metre apart, (3) Producing force of exactly $2 \\times 10^{-7}\\text{ N/m}$."
+    }
+  },
+  {
+    "id": "imp-phy-21",
+    "number": 21,
+    "title": "Maxwell's Equations & Generalized Ampere's Law in Charging Capacitor",
+    "shortLabel": "Maxwell Equations & Ampere-Maxwell Law",
+    "chapterId": "phy-ch-8",
+    "chapterTitle": "Electromagnetic Waves",
+    "unit": "Electromagnetic Waves",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Theory & Derivation",
+    "frequency": "High Frequency Core Question (CBSE 2024 SQP Q8, 2023, 2021, 2019)",
+    "questionPrompt": "(a) Write the four fundamental Maxwell's equations in integral form and state the physical law underlying each equation.\n(b) Using the example of a parallel plate capacitor during charging, explain the apparent paradox in Ampere's circuital law and show how Maxwell's displacement current resolves it.",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 8: Electromagnetic Waves",
+      "section": "Sections 8.2 & 8.3 (pp. 270–274)",
+      "equations": "Eqs. (8.4), (8.5), Table 8.1",
+      "figures": "Fig. 8.1",
+      "summary": "Unified formulation of classical electromagnetism: Gauss electrostatics, Gauss magnetism, Faraday induction, and Ampere-Maxwell law."
+    },
+    "theory": [
+      "Maxwell unified electricity and magnetism into four fundamental equations that govern all classical electromagnetic phenomena:",
+      "1. Gauss's Law for Electrostatics: Total electric flux through any closed surface is proportional to net enclosed charge: $$\\oint \\vec{E} \\cdot d\\vec{A} = \\frac{q_{\\text{enclosed}}}{\\varepsilon_0}$$ (Electric charges are sources and sinks of electric field; isolated charges exist).",
+      "2. Gauss's Law for Magnetism: Total magnetic flux through any closed surface is always zero: $$\\oint \\vec{B} \\cdot d\\vec{A} = 0$$ (Magnetic monopoles do not exist; magnetic field lines are continuous closed loops).",
+      "3. Faraday's Law of Electromagnetic Induction: Line integral of electric field around a closed loop equals negative time rate of change of magnetic flux: $$\\oint \\vec{E} \\cdot d\\vec{l} = -\\frac{d\\Phi_B}{dt}$$ (A time-varying magnetic field induces an electric field).",
+      "4. Ampere-Maxwell Circuital Law: Line integral of magnetic field around a closed loop is determined by conduction current and displacement current: $$\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}$$ (Both conduction currents and time-varying electric fields produce magnetic fields)."
+    ],
+    "derivations": [
+      {
+        "name": "Resolution of the Charging Capacitor Paradox",
+        "setup": "Consider a parallel plate capacitor of area $A$ being charged by conduction current $I_c$. Choose a closed circular path $C$ around the wire outside the capacitor.",
+        "steps": [
+          {
+            "text": "For a flat circular surface $S_1$ spanning loop $C$, the wire pierces the surface carrying conduction current $I_c$:",
+            "equation": "\\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c"
+          },
+          {
+            "text": "For a pot-shaped surface $S_2$ with the same perimeter $C$ bulging between the plates, no conduction current pierces it ($I_c = 0$):",
+            "equation": "\\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 (0) = 0"
+          },
+          {
+            "text": "This leads to an impossible physical paradox: the same line integral along the identical boundary loop $C$ cannot be simultaneously $\\mu_0 I_c$ and $0$!",
+            "equation": "\\mu_0 I_c \\neq 0 \\quad (\\text{Paradox})"
+          },
+          {
+            "text": "Maxwell resolved this by recognizing that between the capacitor plates, electric flux $\\Phi_E$ increases at rate:",
+            "equation": "\\frac{d\\Phi_E}{dt} = \\frac{d}{dt}\\left(E A\\right) = \\frac{d}{dt}\\left(\\frac{q}{\\varepsilon_0}\\right) = \\frac{1}{\\varepsilon_0}\\frac{dq}{dt} = \\frac{I_c}{\\varepsilon_0}"
+          },
+          {
+            "text": "Multiplying by $\\varepsilon_0$ gives the displacement current $I_d$ threading surface $S_2$:",
+            "equation": "I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt} = I_c"
+          },
+          {
+            "text": "Evaluating the generalized Ampere-Maxwell law for surface $S_2$:",
+            "equation": "\\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 (0 + I_d) = \\mu_0 I_c"
+          },
+          {
+            "text": "The line integral is now uniquely $\\mu_0 I_c$ regardless of the surface chosen. The paradox is resolved!",
+            "equation": "\\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c \\quad \\text{for both } S_1 \\text{ and } S_2"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Total Current Continuity:",
+            "text": "Total current $I = I_c + I_d$ is continuous throughout the entire circuit:",
+            "equation": "I_{\\text{total}} = \\text{constant across all sections}"
+          }
+        ],
+        "finalFormula": "\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 \\left( I_c + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right)"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "displacement-current",
+      "title": "Maxwell-Ampere Circuit Loop & Surfaces S1 and S2",
+      "examDrawingGuide": [
+        "1. Draw charging capacitor with connecting wire carrying current $I_c$.",
+        "2. Draw circular perimeter curve $C$ around the wire.",
+        "3. Draw flat circular surface $S_1$ spanning $C$ pierced by wire.",
+        "4. Draw pot-shaped balloon surface $S_2$ sharing rim $C$ passing between plates with no wire.",
+        "5. Show electric field vectors $\\vec{E}(t)$ passing through surface $S_2$ between capacitor plates."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Four Maxwell Equations (Integral Formulation)",
+      "Ampere Inconsistency between Capacitor Plates",
+      "Surfaces S1 vs S2 Bounding Same Perimeter",
+      "Rate of Electric Flux Change (dΦ_E / dt)",
+      "Displacement Current Formula (I_d = ε₀ dΦ_E / dt)",
+      "Restoration of Current Continuity"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\Phi_E",
+        "term": "Electric Flux",
+        "definition": "Surface integral of electric field over an open or closed surface ($\text{V}\\cdot\text{m}$)."
+      },
+      {
+        "symbol": "\\Phi_B",
+        "term": "Magnetic Flux",
+        "definition": "Surface integral of magnetic field over a surface (Webers, Wb)."
+      },
+      {
+        "symbol": "I_d",
+        "term": "Displacement Current",
+        "definition": "Maxwell's correction term representing the magnetic effect of a time-varying electric field."
+      },
+      {
+        "symbol": "\\oint \\vec{E}\\cdot d\\vec{l}",
+        "term": "Induced Electromotive Force",
+        "definition": "Work done per unit charge around a closed loop by non-electrostatic induced electric field."
+      }
+    ],
+    "markingScheme": [
+      "1.5 Marks: Correct statement of all 4 Maxwell's equations with associated physical principles.",
+      "1 Mark: Demonstration of the charging capacitor paradox using surfaces $S_1$ and $S_2$.",
+      "0.5 Mark: Derivation proving $I_d = I_c$ and complete resolution of paradox."
+    ],
+    "examinerTips": "In Gauss's Law for Magnetism, always state explicitly: 'Physical significance: Isolated magnetic monopoles do not exist in nature.'",
+    "modelAnswer": {
+      "statement": "Maxwell unified electricity and magnetism into four fundamental equations that govern all classical electromagnetic phenomena:\n1. Gauss's Law for Electrostatics: Total electric flux through any closed surface is proportional to net enclosed charge: $$\\oint \\vec{E} \\cdot d\\vec{A} = \\frac{q_{\\text{enclosed}}}{\\varepsilon_0}$$ (Electric charges are sources and sinks of electric field; isolated charges exist).\n2. Gauss's Law for Magnetism: Total magnetic flux through any closed surface is always zero: $$\\oint \\vec{B} \\cdot d\\vec{A} = 0$$ (Magnetic monopoles do not exist; magnetic field lines are continuous closed loops).\n3. Faraday's Law of Electromagnetic Induction: Line integral of electric field around a closed loop equals negative time rate of change of magnetic flux: $$\\oint \\vec{E} \\cdot d\\vec{l} = -\\frac{d\\Phi_B}{dt}$$ (A time-varying magnetic field induces an electric field).\n4. Ampere-Maxwell Circuital Law: Line integral of magnetic field around a closed loop is determined by conduction current and displacement current: $$\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}$$ (Both conduction currents and time-varying electric fields produce magnetic fields).",
+      "derivations": [
+        {
+          "name": "Resolution of the Charging Capacitor Paradox",
+          "steps": [
+            "Consider a parallel plate capacitor of area $A$ being charged by conduction current $I_c$. Choose a closed circular path $C$ around the wire outside the capacitor.",
+            "For a flat circular surface $S_1$ spanning loop $C$, the wire pierces the surface carrying conduction current $I_c$: \\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c",
+            "For a pot-shaped surface $S_2$ with the same perimeter $C$ bulging between the plates, no conduction current pierces it ($I_c = 0$): \\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 (0) = 0",
+            "This leads to an impossible physical paradox: the same line integral along the identical boundary loop $C$ cannot be simultaneously $\\mu_0 I_c$ and $0$! \\mu_0 I_c \\neq 0 \\quad (\\text{Paradox})",
+            "Maxwell resolved this by recognizing that between the capacitor plates, electric flux $\\Phi_E$ increases at rate: \\frac{d\\Phi_E}{dt} = \\frac{d}{dt}\\left(E A\\right) = \\frac{d}{dt}\\left(\\frac{q}{\\varepsilon_0}\\right) = \\frac{1}{\\varepsilon_0}\\frac{dq}{dt} = \\frac{I_c}{\\varepsilon_0}",
+            "Multiplying by $\\varepsilon_0$ gives the displacement current $I_d$ threading surface $S_2$: I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt} = I_c",
+            "Evaluating the generalized Ampere-Maxwell law for surface $S_2$: \\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 (0 + I_d) = \\mu_0 I_c",
+            "The line integral is now uniquely $\\mu_0 I_c$ regardless of the surface chosen. The paradox is resolved! \\oint_C \\vec{B} \\cdot d\\vec{l} = \\mu_0 I_c \\quad \\text{for both } S_1 \\text{ and } S_2",
+            "Total Current Continuity: Total current $I = I_c + I_d$ is continuous throughout the entire circuit: I_{\\text{total}} = \\text{constant across all sections}"
+          ],
+          "formula": "\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 \\left( I_c + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right)"
+        }
+      ],
+      "diagramNotes": "1. Draw charging capacitor with connecting wire carrying current $I_c$.\n2. Draw circular perimeter curve $C$ around the wire.\n3. Draw flat circular surface $S_1$ spanning $C$ pierced by wire.\n4. Draw pot-shaped balloon surface $S_2$ sharing rim $C$ passing between plates with no wire.\n5. Show electric field vectors $\\vec{E}(t)$ passing through surface $S_2$ between capacitor plates.",
+      "markingScheme": [
+        "1.5 Marks: Correct statement of all 4 Maxwell's equations with associated physical principles.",
+        "1 Mark: Demonstration of the charging capacitor paradox using surfaces $S_1$ and $S_2$.",
+        "0.5 Mark: Derivation proving $I_d = I_c$ and complete resolution of paradox."
+      ],
+      "examinerTips": "In Gauss's Law for Magnetism, always state explicitly: 'Physical significance: Isolated magnetic monopoles do not exist in nature.'"
+    }
+  },
+  {
+    "id": "imp-phy-22",
+    "number": 22,
+    "title": "Conversion of Galvanometer into Ammeter and Voltmeter (Formulas & Circuit)",
+    "shortLabel": "Galvanometer to Ammeter & Voltmeter",
+    "chapterId": "phy-ch-4",
+    "chapterTitle": "Moving Charges and Magnetism",
+    "unit": "Magnetism",
+    "marks": "3 Marks",
+    "marksNum": 3,
+    "category": "Derivation",
+    "frequency": "Guaranteed Core Question (CBSE 2024 SQP Q27, 2023, 2022, 2020)",
+    "questionPrompt": "(a) How can a moving coil galvanometer of resistance G and full scale deflection current I_g be converted into:\n  (i) An ammeter of range 0 to I (I > I_g)?\n  (ii) A voltmeter of range 0 to V?\n(b) Derive the mathematical formula for the required shunt resistance (S) and series resistance (R).\n(c) What are the ideal resistances of an ammeter and a voltmeter?",
+    "ncertRef": {
+      "textbook": "NCERT Physics Class 12, Part 1",
+      "chapter": "Chapter 4: Moving Charges and Magnetism",
+      "section": "Section 4.10.1: Conversion of Galvanometer (pp. 165–167)",
+      "equations": "Eqs. (4.43), (4.44)",
+      "figures": "Figs. 4.26, 4.27",
+      "summary": "Parallel shunt resistor calculation for ammeter, series multiplier resistor calculation for voltmeter, and ideal resistance limits."
+    },
+    "theory": [
+      "A Moving Coil Galvanometer is a very sensitive current detector that produces full scale deflection with very small currents ($I_g \\sim \\mu\\text{A}$ or $\\text{mA}$) and has finite internal resistance $G$.",
+      "Conversion into Ammeter: An ammeter must be connected in series with the load. To avoid decreasing the circuit current, its effective resistance must be extremely low. This is achieved by connecting a low resistance wire called a Shunt Resistance ($S$) in parallel across the galvanometer coil.",
+      "Conversion into Voltmeter: A voltmeter must be connected in parallel across the component. To avoid drawing significant current from the circuit, its effective resistance must be extremely high. This is achieved by connecting a high resistance ($R$) in series with the galvanometer coil.",
+      "Ideal Limits: An Ideal Ammeter has ZERO internal resistance ($R_A = 0$). An Ideal Voltmeter has INFINITE internal resistance ($R_V = \\infty$)."
+    ],
+    "derivations": [
+      {
+        "name": "Part 1: Conversion into Ammeter (Shunt Resistance Formula)",
+        "setup": "Let $G$ be the resistance of the galvanometer and $I_g$ be the current producing full scale deflection. We wish to convert it into an ammeter of range 0 to $I$ ($I > I_g$) by connecting a low shunt resistance $S$ in parallel.",
+        "steps": [
+          {
+            "text": "When total current $I$ enters the instrument, current $I_g$ flows through the galvanometer, and the remaining current passes through the shunt resistor:",
+            "equation": "I_s = I - I_g"
+          },
+          {
+            "text": "Since the galvanometer and shunt resistor are connected in parallel, the potential difference across them is equal:",
+            "equation": "V_g = V_s \\quad \\implies \\quad I_g \\cdot G = I_s \\cdot S"
+          },
+          {
+            "text": "Substituting $I_s = I - I_g$ into the equation:",
+            "equation": "I_g G = (I - I_g) S"
+          },
+          {
+            "text": "Solving for required shunt resistance $S$:",
+            "equation": "S = \\frac{I_g G}{I - I_g}"
+          },
+          {
+            "text": "Effective total resistance $R_A$ of the resulting ammeter (parallel combination):",
+            "equation": "\\frac{1}{R_A} = \\frac{1}{G} + \\frac{1}{S} \\quad \\implies \\quad R_A = \\frac{G S}{G + S} < S \\ll G"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Scale Multiplying Factor (n = I / Ig):",
+            "text": "If range is to be extended by factor $n = I / I_g$:",
+            "equation": "S = \\frac{G}{n - 1}"
+          }
+        ],
+        "finalFormula": "S = \\frac{I_g G}{I - I_g}, \\quad R_A = \\frac{GS}{G+S} \\approx 0"
+      },
+      {
+        "name": "Part 2: Conversion into Voltmeter (Series Resistance Formula)",
+        "setup": "Let $G$ be the resistance of the galvanometer and $I_g$ be its full scale deflection current. We wish to convert it into a voltmeter of range 0 to $V$ by connecting a high resistance $R$ in series.",
+        "steps": [
+          {
+            "text": "Total resistance of the series combination of galvanometer and multiplier resistor is:",
+            "equation": "R_V = G + R"
+          },
+          {
+            "text": "When maximum potential difference $V$ is applied across the combination, the current through both components is restricted to $I_g$:",
+            "equation": "V = I_g (G + R)"
+          },
+          {
+            "text": "Dividing by $I_g$:",
+            "equation": "G + R = \\frac{V}{I_g}"
+          },
+          {
+            "text": "Solving for the required series resistance $R$:",
+            "equation": "R = \\frac{V}{I_g} - G"
+          },
+          {
+            "text": "Effective total resistance $R_V$ of the resulting voltmeter is very large:",
+            "equation": "R_V = G + R \\gg G"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Ideal Voltmeter:",
+            "text": "For an ideal voltmeter that draws zero current from the circuit:",
+            "equation": "R_V = \\infty \\quad (R \\to \\infty)"
+          }
+        ],
+        "finalFormula": "R = \\frac{V}{I_g} - G, \\quad R_V = G + R \\to \\infty"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "galvanometer-conversion",
+      "title": "Galvanometer Conversion Circuits: Ammeter & Voltmeter",
+      "examDrawingGuide": [
+        "1. Ammeter Circuit: Draw galvanometer coil $G$ with branch carrying $I_g$; draw parallel shunt resistor $S$ below it carrying $I - I_g$; enclose both in dashed box labeled 'Ammeter' with terminals connecting to line current $I$.",
+        "2. Voltmeter Circuit: Draw galvanometer coil $G$ in series with high resistor $R$; show common current $I_g$ flowing through both; enclose in dashed box labeled 'Voltmeter' across terminals measuring potential $V$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Ammeter: Low Shunt Resistance S in Parallel",
+      "Voltmeter: High Resistance R in Series",
+      "Equal Parallel Potentials (Ig·G = (I - Ig)·S)",
+      "Series Ohm's Law (V = Ig·(G + R))",
+      "Shunt Formula S = Ig G / (I - Ig)",
+      "Series Resistor Formula R = V / Ig - G",
+      "Ideal Ammeter Resistance = 0",
+      "Ideal Voltmeter Resistance = ∞"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "G",
+        "term": "Galvanometer Resistance",
+        "definition": "Internal resistance of the moving copper coil of the galvanometer, measured in Ohms ($\\Omega$)."
+      },
+      {
+        "symbol": "I_g",
+        "term": "Full Scale Deflection Current",
+        "definition": "Minimum current needed to produce complete full scale angular deflection of the galvanometer pointer."
+      },
+      {
+        "symbol": "S",
+        "term": "Shunt Resistance",
+        "definition": "Very low resistance connected in parallel to bypass the bulk of current around the galvanometer coil."
+      },
+      {
+        "symbol": "R",
+        "term": "Series Multiplier Resistance",
+        "definition": "Very high resistance connected in series to limit current and drop the bulk of the measured voltage."
+      },
+      {
+        "symbol": "R_A, R_V",
+        "term": "Instrument Resistances",
+        "definition": "Total effective resistance of converted ammeter ($R_A = GS/(G+S)$) and voltmeter ($R_V = G+R$)."
+      }
+    ],
+    "markingScheme": [
+      "1.5 Marks: Circuit diagram and derivation of shunt resistance $S = \\frac{I_g G}{I - I_g}$ for ammeter conversion.",
+      "1 Mark: Circuit diagram and derivation of series resistance $R = \\frac{V}{I_g} - G$ for voltmeter conversion.",
+      "0.5 Mark: Correct values for ideal ammeter ($0$) and ideal voltmeter ($\\infty$)."
+    ],
+    "examinerTips": "Remember: Ammeter is connected in SERIES with the circuit, but its internal shunt is connected in PARALLEL. Voltmeter is connected in PARALLEL with the circuit, but its internal resistor is connected in SERIES.",
+    "modelAnswer": {
+      "statement": "A Moving Coil Galvanometer is a very sensitive current detector that produces full scale deflection with very small currents ($I_g \\sim \\mu\\text{A}$ or $\\text{mA}$) and has finite internal resistance $G$.\nConversion into Ammeter: An ammeter must be connected in series with the load. To avoid decreasing the circuit current, its effective resistance must be extremely low. This is achieved by connecting a low resistance wire called a Shunt Resistance ($S$) in parallel across the galvanometer coil.\nConversion into Voltmeter: A voltmeter must be connected in parallel across the component. To avoid drawing significant current from the circuit, its effective resistance must be extremely high. This is achieved by connecting a high resistance ($R$) in series with the galvanometer coil.\nIdeal Limits: An Ideal Ammeter has ZERO internal resistance ($R_A = 0$). An Ideal Voltmeter has INFINITE internal resistance ($R_V = \\infty$).",
+      "derivations": [
+        {
+          "name": "Part 1: Conversion into Ammeter (Shunt Resistance Formula)",
+          "steps": [
+            "Let $G$ be the resistance of the galvanometer and $I_g$ be the current producing full scale deflection. We wish to convert it into an ammeter of range 0 to $I$ ($I > I_g$) by connecting a low shunt resistance $S$ in parallel.",
+            "When total current $I$ enters the instrument, current $I_g$ flows through the galvanometer, and the remaining current passes through the shunt resistor: I_s = I - I_g",
+            "Since the galvanometer and shunt resistor are connected in parallel, the potential difference across them is equal: V_g = V_s \\quad \\implies \\quad I_g \\cdot G = I_s \\cdot S",
+            "Substituting $I_s = I - I_g$ into the equation: I_g G = (I - I_g) S",
+            "Solving for required shunt resistance $S$: S = \\frac{I_g G}{I - I_g}",
+            "Effective total resistance $R_A$ of the resulting ammeter (parallel combination): \\frac{1}{R_A} = \\frac{1}{G} + \\frac{1}{S} \\quad \\implies \\quad R_A = \\frac{G S}{G + S} < S \\ll G",
+            "Scale Multiplying Factor (n = I / Ig): If range is to be extended by factor $n = I / I_g$: S = \\frac{G}{n - 1}"
+          ],
+          "formula": "S = \\frac{I_g G}{I - I_g}, \\quad R_A = \\frac{GS}{G+S} \\approx 0"
+        },
+        {
+          "name": "Part 2: Conversion into Voltmeter (Series Resistance Formula)",
+          "steps": [
+            "Let $G$ be the resistance of the galvanometer and $I_g$ be its full scale deflection current. We wish to convert it into a voltmeter of range 0 to $V$ by connecting a high resistance $R$ in series.",
+            "Total resistance of the series combination of galvanometer and multiplier resistor is: R_V = G + R",
+            "When maximum potential difference $V$ is applied across the combination, the current through both components is restricted to $I_g$: V = I_g (G + R)",
+            "Dividing by $I_g$: G + R = \\frac{V}{I_g}",
+            "Solving for the required series resistance $R$: R = \\frac{V}{I_g} - G",
+            "Effective total resistance $R_V$ of the resulting voltmeter is very large: R_V = G + R \\gg G",
+            "Ideal Voltmeter: For an ideal voltmeter that draws zero current from the circuit: R_V = \\infty \\quad (R \\to \\infty)"
+          ],
+          "formula": "R = \\frac{V}{I_g} - G, \\quad R_V = G + R \\to \\infty"
+        }
+      ],
+      "diagramNotes": "1. Ammeter Circuit: Draw galvanometer coil $G$ with branch carrying $I_g$; draw parallel shunt resistor $S$ below it carrying $I - I_g$; enclose both in dashed box labeled 'Ammeter' with terminals connecting to line current $I$.\n2. Voltmeter Circuit: Draw galvanometer coil $G$ in series with high resistor $R$; show common current $I_g$ flowing through both; enclose in dashed box labeled 'Voltmeter' across terminals measuring potential $V$.",
+      "markingScheme": [
+        "1.5 Marks: Circuit diagram and derivation of shunt resistance $S = \\frac{I_g G}{I - I_g}$ for ammeter conversion.",
+        "1 Mark: Circuit diagram and derivation of series resistance $R = \\frac{V}{I_g} - G$ for voltmeter conversion.",
+        "0.5 Mark: Correct values for ideal ammeter ($0$) and ideal voltmeter ($\\infty$)."
+      ],
+      "examinerTips": "Remember: Ammeter is connected in SERIES with the circuit, but its internal shunt is connected in PARALLEL. Voltmeter is connected in PARALLEL with the circuit, but its internal resistor is connected in SERIES."
     }
   }
 ];
-
-// Quick index & helper
-export const IMPORTANT_QUESTIONS_BY_ID = Object.fromEntries(
-  IMPORTANT_PHYSICS_QUESTIONS.map(q => [q.id, q])
-);
