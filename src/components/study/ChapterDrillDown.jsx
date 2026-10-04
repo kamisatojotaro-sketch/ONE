@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote, Target } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote, Target, Calculator } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
@@ -9,17 +9,62 @@ import StructuredSectionView from './StructuredSectionView';
 import PriorityBadge from './PriorityBadge';
 
 const PHYSICS_SUBTOPIC_DIAGRAMS = {
-  'phy-sub-1-11': 'gauss-applications',
-  'phy-sub-1-9': 'gauss-applications',
-  'phy-sub-1-4': 'dipole-fields',
+  // Chapter 1: Electric Charges and Fields
+  'phy-sub-1-3': 'point-charge-field',
+  'phy-sub-1-4': 'point-charge-field',
   'phy-sub-1-5': 'dipole-fields',
+  'phy-sub-1-6': 'dipole-fields',
+  'phy-sub-1-7': 'dipole-fields',
+  'phy-sub-1-8': 'electric-flux-dipole',
+  'phy-sub-1-9': 'gauss-applications',
+  'phy-sub-1-10': 'gauss-applications',
+  'phy-sub-1-11': 'gauss-applications',
+
+  // Chapter 2: Electrostatic Potential and Capacitance
+  'phy-sub-2-2': 'point-charge-field',
+  'phy-sub-2-3': 'equipotential-surfaces',
+  'phy-sub-2-4': 'dipole-fields',
+  'phy-sub-2-7': 'capacitor-circuits',
+  'phy-sub-2-8': 'energy-storage',
+
+  // Chapter 3: Current Electricity
   'phy-sub-3-6': 'wheatstone-bridge',
-  'phy-sub-4-7': 'galvanometer-torque',
-  'phy-sub-4-8': 'galvanometer-conversion',
-  'phy-sub-4-9': 'parallel-wires',
+  'phy-sub-3-7': 'cell-circuit',
+  'phy-sub-3-8': 'cell-circuit',
+  'phy-sub-3-9': 'wheatstone-bridge',
+
+  // Chapter 4: Moving Charges and Magnetism
+  'phy-sub-4-3': 'force-conductor',
+  'phy-sub-4-7': 'force-conductor',
+  'phy-sub-4-8': 'parallel-wires',
+  'phy-sub-4-9': 'galvanometer-torque',
+  'phy-sub-4-10': 'galvanometer-conversion',
+
+  // Chapter 5: Magnetism and Matter
+  'phy-sub-5-1': 'magnetic-materials',
+  'phy-sub-5-2': 'magnetic-materials',
+  'phy-sub-5-3': 'magnetic-materials',
+
+  // Chapter 6: Electromagnetic Induction
+  'phy-sub-6-1': 'faraday-lenz',
+  'phy-sub-6-2': 'faraday-lenz',
+  'phy-sub-6-3': 'faraday-lenz',
+  'phy-sub-6-9': 'energy-storage',
+
+  // Chapter 7: Alternating Current
+  'phy-sub-7-2': 'ac-rms-waveform',
+  'phy-sub-7-3': 'ac-rms-waveform',
+  'phy-sub-7-4': 'lcr-circuit',
+  'phy-sub-7-5': 'transformer',
+  'phy-sub-7-6': 'lcr-circuit',
   'phy-sub-7-7': 'transformer',
-  'phy-sub-7-5': 'lcr-circuit',
-  'phy-sub-7-6': 'lcr-circuit'
+  'phy-sub-7-8': 'ac-rms-waveform',
+
+  // Chapter 8: Electromagnetic Waves
+  'phy-sub-8-1': 'em-wave-structure',
+  'phy-sub-8-2': 'em-wave-structure',
+  'phy-sub-8-3': 'displacement-current',
+  'phy-sub-8-4': 'em-wave-structure'
 };
 
 export default function ChapterDrillDown({
@@ -40,7 +85,8 @@ export default function ChapterDrillDown({
   activeSubchapterStats,
   getPriority,
   onSetPriority,
-  onResetPriority
+  onResetPriority,
+  onOpenWolframEngine
 }) {
   const subject = NCERT_SYLLABUS[selectedSubject];
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
@@ -219,9 +265,21 @@ export default function ChapterDrillDown({
             </h3>
           </div>
         </div>
-        <span className="text-xs font-mono font-medium px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-secondary)] self-start sm:self-auto shadow-xs shrink-0">
-          {activeSubchapterStats.completed} / {activeSubchapterStats.total} Complete
-        </span>
+        <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+          {onOpenWolframEngine && (
+            <button
+              onClick={onOpenWolframEngine}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border border-indigo-500/25 text-xs font-semibold cursor-pointer transition-all shadow-xs"
+              title="Open Wolfram Engine & Science Calculator"
+            >
+              <Calculator size={13} />
+              <span>Wolfram Solver</span>
+            </button>
+          )}
+          <span className="text-xs font-mono font-medium px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-secondary)] shadow-xs shrink-0">
+            {activeSubchapterStats.completed} / {activeSubchapterStats.total} Complete
+          </span>
+        </div>
       </div>
 
       {/* Mode Switcher Banner: General Study vs Important Questions */}
@@ -452,6 +510,19 @@ export default function ChapterDrillDown({
                       formulaList={section.keyFormulas}
                       derivations={section.derivations}
                     />
+                  )}
+
+                  {/* Visual Chemical Reaction & Mechanism Diagrams */}
+                  <ReactionDiagramCard
+                    subtopicId={currentSubchapter.id}
+                    chapterId={selectedChapter}
+                  />
+
+                  {/* Visual Physics Concept & Derivation Diagrams */}
+                  {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
+                    <div className="py-2">
+                      <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
+                    </div>
                   )}
 
                   {/* 3. How questions could be framed / asked */}

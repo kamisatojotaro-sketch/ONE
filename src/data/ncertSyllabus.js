@@ -2,12 +2,16 @@ import { PHYSICS_CHAPTERS } from './physicsNotes.js';
 import { CHEMISTRY_CHAPTERS } from './chemistryNotes.js';
 import { BIOLOGY_CHAPTERS } from './biologyNotes.js';
 import { PSYCHOLOGY_CHAPTERS } from './psychologyNotes.js';
+import { MATHS_CHAPTERS_VOL1, MATHS_CHAPTERS_VOL2 } from './mathsNotes.js';
+import { APPLIED_MATHS_CHAPTERS_VOL1, APPLIED_MATHS_CHAPTERS_VOL2 } from './appliedMathsNotes.js';
 
 export const EXAM_PORTIONS = {
   physics: ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-4', 'phy-ch-5', 'phy-ch-6', 'phy-ch-7', 'phy-ch-8'],
   biology: ['bio-ch-1', 'bio-ch-2', 'bio-ch-3', 'bio-ch-4', 'bio-ch-5', 'bio-ch-6'],
   chemistry: ['chem-ch-1', 'chem-ch-2', 'chem-ch-4', 'chem-ch-6', 'chem-ch-7'],
-  psychology: ['psy-ch-1', 'psy-ch-2', 'psy-ch-3']
+  psychology: ['psy-ch-1', 'psy-ch-2', 'psy-ch-3'],
+  standard_maths: ['math-ch-3', 'math-ch-4', 'math-ch-5', 'math-ch-6', 'math-ch-7', 'math-ch-10', 'math-ch-11', 'math-ch-13'],
+  applied_maths: ['app-ch-1', 'app-ch-3', 'app-ch-4', 'app-ch-5', 'app-ch-7', 'app-ch-8']
 };
 
 export const NCERT_SYLLABUS = {
@@ -113,6 +117,48 @@ export const NCERT_SYLLABUS = {
         title: 'NCERT Psychology Volume 1',
         subtitle: 'Intelligence, Self & Personality, Stress & Life Challenges (Exam Portions 1-3)',
         chapters: PSYCHOLOGY_CHAPTERS
+      }
+    ]
+  },
+  standard_maths: {
+    id: 'standard_maths',
+    name: 'Standard Mathematics',
+    code: '041',
+    accentColor: '#2563EB',
+    description: 'Relations, Matrices, Determinants, Calculus, Vectors, 3D Geometry & Probability',
+    volumes: [
+      {
+        id: 'math-vol-1',
+        title: 'NCERT Mathematics Volume 1',
+        subtitle: 'Relations, Inverse Trig, Matrices, Determinants, Continuity & Applications (Exam Portions 3-6)',
+        chapters: MATHS_CHAPTERS_VOL1
+      },
+      {
+        id: 'math-vol-2',
+        title: 'NCERT Mathematics Volume 2',
+        subtitle: 'Integrals, Differential Equations, Vectors, 3D Geometry & Probability (Exam Portions 7, 10, 11, 13)',
+        chapters: MATHS_CHAPTERS_VOL2
+      }
+    ]
+  },
+  applied_maths: {
+    id: 'applied_maths',
+    name: 'Applied Mathematics',
+    code: '241',
+    accentColor: '#059669',
+    description: 'Numbers & Modulo, Economics Algebra, Business Calculus, Probability & Financial Math',
+    volumes: [
+      {
+        id: 'app-vol-1',
+        title: 'CBSE Applied Mathematics Volume 1',
+        subtitle: 'Modulo Numbers, Inequalities, Economic Matrices & Business Calculus (Exam Portions 1, 3, 4)',
+        chapters: APPLIED_MATHS_CHAPTERS_VOL1
+      },
+      {
+        id: 'app-vol-2',
+        title: 'CBSE Applied Mathematics Volume 2',
+        subtitle: 'Probability Distributions, Inferential Stats, Financial Mathematics & LPP (Exam Portions 5, 7, 8)',
+        chapters: APPLIED_MATHS_CHAPTERS_VOL2
       }
     ]
   }

@@ -48,6 +48,26 @@ export const SUBJECT_DISTRACTORS = {
     'Identical twins reared apart show lower IQ correlation than unrelated individuals living together.',
     'William Sheldon matched the rounded Endomorphic physique with introverted Cerebrotonia.',
     'Aptitude tests measure past acquired knowledge rather than predictive capacity to learn.'
+  ],
+  standard_maths: [
+    'Matrix multiplication is strictly commutative for all square matrices of the same order.',
+    'A square matrix is singular if its determinant is strictly positive.',
+    'The derivative of an odd function is always an odd function.',
+    'The definite integral of any continuous odd function over [-a, a] is strictly non-zero.',
+    'The dot product of two mutually orthogonal non-zero vectors is equal to their scalar product magnitude.',
+    'The shortest distance between two parallel lines is zero.',
+    'Bayes theorem applies only to mutually non-exclusive and non-exhaustive events.',
+    'If a function is continuous at a point, it is unconditionally differentiable at that point.'
+  ],
+  applied_maths: [
+    'Congruence modulo arithmetic is only valid for prime moduli.',
+    'The Reducing Balance EMI amount decreases exponentially every month during the loan tenure.',
+    'The Leontief input-output matrix is viable when the determinant of (I - A) is strictly negative.',
+    'Marginal Cost equals Average Cost at the maximum point of the Average Cost curve.',
+    'The area under the standard normal curve between -∞ and +∞ is greater than 1.',
+    'In a Poisson distribution, the mean is strictly greater than the variance.',
+    'Consumer surplus is calculated by subtracting the demand curve integral from total revenue.',
+    'Perpetuity present value decreases when the prevailing interest rate decreases.'
   ]
 };
 

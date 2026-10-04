@@ -1,4 +1,4 @@
-import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, Award } from 'lucide-react';
+import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, Award, FileText, Calculator, TrendingUp } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 
 export default function SubjectGrid({ 
@@ -11,18 +11,22 @@ export default function SubjectGrid({
 }) {
   const subjects = Object.values(NCERT_SYLLABUS);
 
-  const getSubjectIcon = (id) => {
+  const getSubjectIcon = (id, size = 24) => {
     switch (id) {
       case 'physics':
-        return <Zap size={24} className="text-[#5B7B9A]" />;
+        return <Zap size={size} className="text-[#5B7B9A]" />;
       case 'chemistry':
-        return <FlaskConical size={24} className="text-[#C75B3B]" />;
+        return <FlaskConical size={size} className="text-[#C75B3B]" />;
       case 'biology':
-        return <Dna size={24} className="text-[#6B7F5E]" />;
+        return <Dna size={size} className="text-[#6B7F5E]" />;
       case 'psychology':
-        return <Brain size={24} className="text-[#8E44AD]" />;
+        return <Brain size={size} className="text-[#8E44AD]" />;
+      case 'standard_maths':
+        return <Calculator size={size} className="text-[#2563EB]" />;
+      case 'applied_maths':
+        return <TrendingUp size={size} className="text-[#059669]" />;
       default:
-        return <Bookmark size={24} className="text-[var(--accent-primary)]" />;
+        return <Bookmark size={size} className="text-[var(--accent-primary)]" />;
     }
   };
 
@@ -133,11 +137,27 @@ export default function SubjectGrid({
             <Award size={13} className="text-amber-500" />
             <span>Top 22 Guaranteed Physics Questions</span>
           </button>
+
+          <button
+            onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('physics', 'SAMPLE_PAPER') : onSelectSubject('physics')}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/15 border border-blue-500/35 text-xs font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
+          >
+            <FileText size={13} className="text-blue-500" />
+            <span>2026–27 Physics Sample Paper (70M)</span>
+          </button>
+
+          <button
+            onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('standard_maths', 'WOLFRAM_ENGINE') : onSelectSubject('standard_maths')}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 border border-indigo-500/35 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
+          >
+            <Calculator size={13} className="text-indigo-500" />
+            <span>Wolfram Engine & Science Calculator</span>
+          </button>
         </div>
       </div>
 
       {/* Subject Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {subjects.map((subj) => {
           const progress = calculateSubjectProgress(subj);
           const portionChapters = EXAM_PORTIONS[subj.id] || [];

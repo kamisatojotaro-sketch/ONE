@@ -4,6 +4,7 @@ import { REACTION_DIAGRAMS } from '../data/reactionDiagramsData.js';
 import { MCQ_DATABASE } from '../data/mcqData.js';
 import { PYQ_DATABASE } from '../data/pyqData.js';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../data/importantQuestionsData.js';
+import { PHYSICS_SAMPLE_PAPER_2026_27 } from '../data/physicsSamplePaper2026_27.js';
 
 // Cache for the compiled in-memory index
 let cachedSearchIndex = null;
@@ -479,11 +480,36 @@ export function buildStudySearchIndex() {
         subchapterId: null,
         subchapterTitle: null,
         type: 'question',
-        typeLabel: `Guaranteed Board Q (${iq.marks})`,
+        typeLabel: `Top 22 Question (${iq.marks})`,
         title: `Q${iq.number}: ${iq.title} (${iq.marks})`,
-        content: `${iq.questionPrompt} ${iq.modelAnswer.statement} ${iq.modelAnswer.derivations.map(d => `${d.name} ${d.formula}`).join(' ')} ${iq.modelAnswer.examinerTips}`,
+        content: `${iq.questionPrompt} ${iq.modelAnswer.statement} ${iq.ncertRef ? `${iq.ncertRef.section} ${iq.ncertRef.equations} ${iq.ncertRef.figures}` : ''} ${iq.modelAnswer.derivations.map(d => `${d.name} ${d.formula}`).join(' ')} ${iq.modelAnswer.examinerTips}`,
         tab: 'IMPORTANT',
         rawItem: iq
+      });
+    });
+  }
+
+  // 7. Official 2026-27 Physics Sample Question Paper (SQP)
+  if (PHYSICS_SAMPLE_PAPER_2026_27?.questions) {
+    PHYSICS_SAMPLE_PAPER_2026_27.questions.forEach((sqp) => {
+      items.push({
+        id: `sqp-${sqp.id}`,
+        subjectId: 'physics',
+        subjectName: 'Physics',
+        volumeId: 'phy-vol-1',
+        volumeTitle: 'Physics Part I',
+        chapterId: null,
+        chapterTitle: sqp.chapter,
+        chapterNumber: null,
+        subchapterId: null,
+        subchapterTitle: null,
+        sectionId: sqp.id,
+        type: 'question',
+        typeLabel: `SQP 2026-27 (Sec ${sqp.section} • ${sqp.marks}M)`,
+        title: `SQP Q${sqp.number} (${sqp.chapter || 'Physics'}): ${stripHtml(sqp.questionText || '').slice(0, 75)}...`,
+        content: `${sqp.questionText || ''} ${sqp.orQuestionText || ''} ${sqp.markingScheme || ''} ${sqp.explanation || ''} ${sqp.casePassage || ''}`,
+        tab: 'SAMPLE_PAPER',
+        rawItem: sqp
       });
     });
   }

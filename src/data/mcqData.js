@@ -647,5 +647,105 @@ export const MCQ_DATABASE = {
       correct: 0,
       explanation: 'When external stressors cannot be changed (uncontrollable events like bereavement), emotion-focused coping helps regulate internal emotional turmoil and distress effectively.'
     }
+  ],
+  standard_maths: [
+    {
+      id: 'math-mcq-1',
+      chapterId: 'math-ch-3',
+      chapterName: 'Ch 3: Matrices',
+      subtopicId: 'math-sub-3-2',
+      difficulty: 'easy',
+      question: 'If A is a square matrix of order 3 such that |A| = 4, then the value of |adj(A)| is:',
+      options: [
+        '4',
+        '16',
+        '64',
+        '12'
+      ],
+      correct: 1,
+      explanation: 'For any square matrix of order n, |adj(A)| = |A|^{n-1}. Here n = 3, so |adj(A)| = 4^{3-1} = 4² = 16.'
+    },
+    {
+      id: 'math-mcq-2',
+      chapterId: 'math-ch-5',
+      chapterName: 'Ch 5: Continuity & Differentiability',
+      subtopicId: 'math-sub-5-1',
+      difficulty: 'medium',
+      question: 'The function f(x) = |x| is:',
+      options: [
+        'Continuous everywhere and differentiable everywhere',
+        'Continuous everywhere but NOT differentiable at x = 0',
+        'Neither continuous nor differentiable at x = 0',
+        'Differentiable at x = 0 with f\'(0) = 0'
+      ],
+      correct: 1,
+      explanation: 'At x = 0, LHL = RHL = f(0) = 0, so f(x) is continuous. However, Left Hand Derivative = -1 and Right Hand Derivative = +1. Since LHD ≠ RHD, f is not differentiable at x = 0.'
+    },
+    {
+      id: 'math-mcq-3',
+      chapterId: 'math-ch-10',
+      chapterName: 'Ch 10: Vector Algebra',
+      subtopicId: 'math-sub-10-1',
+      difficulty: 'easy',
+      question: 'If a⃗ and b⃗ are two non-zero vectors such that |a⃗ · b⃗| = |a⃗ × b⃗|, then the angle between them is:',
+      options: [
+        '0',
+        'π / 4',
+        'π / 2',
+        'π'
+      ],
+      correct: 1,
+      explanation: '|a⃗ · b⃗| = |a⃗||b⃗| |cos θ| and |a⃗ × b⃗| = |a⃗||b⃗| sin θ. Equating gives |cos θ| = sin θ ⟹ tan θ = 1 ⟹ θ = π/4 (or 45°).'
+    }
+  ],
+  applied_maths: [
+    {
+      id: 'app-mcq-1',
+      chapterId: 'app-ch-1',
+      chapterName: 'Ch 1: Numbers & Modulo Arithmetic',
+      subtopicId: 'app-sub-1-1',
+      difficulty: 'easy',
+      question: 'If a ≡ b (mod m), which of the following is strictly true by definition?',
+      options: [
+        'm divides (a - b)',
+        'a divides (m - b)',
+        '(a - b) divides m',
+        'a + b is a multiple of m'
+      ],
+      correct: 0,
+      explanation: 'By the mathematical definition of congruence modulo m, a ≡ b (mod m) if and only if (a - b) is divisible by m, i.e., m | (a - b).'
+    },
+    {
+      id: 'app-mcq-2',
+      chapterId: 'app-ch-7',
+      chapterName: 'Ch 7: Financial Mathematics',
+      subtopicId: 'app-sub-7-1',
+      difficulty: 'medium',
+      question: 'The present value of a perpetuity paying ₹6,000 at the end of each year at an annual interest rate of 8% compounded annually is:',
+      options: [
+        '₹48,000',
+        '₹75,000',
+        '₹60,000',
+        '₹80,000'
+      ],
+      correct: 1,
+      explanation: 'Present Value of a perpetuity is given by PV = R / i = 6000 / 0.08 = ₹75,000.'
+    },
+    {
+      id: 'app-mcq-3',
+      chapterId: 'app-ch-4',
+      chapterName: 'Ch 4: Calculus in Economics',
+      subtopicId: 'app-sub-4-1',
+      difficulty: 'easy',
+      question: 'A firm maximizes profit at an output level where:',
+      options: [
+        'Marginal Revenue (MR) = Marginal Cost (MC)',
+        'Total Revenue = Total Cost',
+        'Average Revenue = Average Cost',
+        'Marginal Cost is at its absolute maximum'
+      ],
+      correct: 0,
+      explanation: 'Profit Π = R(x) - C(x). First order condition for maximum profit is dΠ/dx = 0 ⟹ dR/dx - dC/dx = 0 ⟹ MR = MC.'
+    }
   ]
 };

@@ -1,9 +1,10 @@
-import { BookOpen, FileQuestion, CheckSquare, Target, Sliders, Award, FileText } from 'lucide-react';
+import { BookOpen, FileQuestion, CheckSquare, Target, Sliders, Award, FileText, Calculator } from 'lucide-react';
 
 export default function StudySidebar({ activeTab, onTabChange }) {
   const tabs = [
     { id: 'NOTES', label: 'NOTES', icon: BookOpen, desc: 'Theory & High-Yield' },
-    { id: 'IMPORTANT', label: 'IMPORTANT Qs', icon: Award, desc: 'Top 22 Board Hitlist' },
+    { id: 'WOLFRAM_ENGINE', label: 'WOLFRAM ENGINE', icon: Calculator, desc: 'Maths & Science Solver' },
+    { id: 'IMPORTANT', label: 'TOP 22 QUESTIONS', icon: Award, desc: 'For the Exam' },
     { id: 'SAMPLE_PAPER', label: 'SAMPLE PAPER', icon: FileText, desc: '2026-27 Official SQP' },
     { id: 'PYQ', label: 'PYQ', icon: FileQuestion, desc: 'Previous Year Qs' },
     { id: 'MCQ', label: 'MCQ', icon: CheckSquare, desc: 'Board Practice' },
@@ -38,7 +39,9 @@ export default function StudySidebar({ activeTab, onTabChange }) {
                 {tab.desc}
               </span>
             </div>
-            <span className="sm:hidden text-[11px] font-bold tracking-tight whitespace-nowrap">{tab.label}</span>
+            <span className="sm:hidden text-[11px] font-bold tracking-tight whitespace-nowrap">
+              {tab.id === 'IMPORTANT' ? 'TOP 22 Qs' : tab.id === 'WOLFRAM_ENGINE' ? 'WOLFRAM' : tab.label}
+            </span>
           </button>
         );
       })}

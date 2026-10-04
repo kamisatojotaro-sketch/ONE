@@ -957,5 +957,181 @@ Social support refers to the perceived comfort, caring, esteem, and help availab
 • Emotional Support: Unconditional empathy, listening, affection, and reassurance that restores self-esteem.
 • Protective Buffer: High social support acts as a psychological buffer against toxic stress hormones, enhancing immune resilience and overall longevity.`
     }
+  ],
+  standard_maths: [
+    {
+      id: 'math-pyq-1',
+      chapterId: 'math-ch-4',
+      chapterName: 'Ch 4: Determinants',
+      subtopicId: 'math-sub-4-2',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Solve the following system of linear equations using matrix method:\n2x + 3y + 3z = 5\nx - 2y + z = -4\n3x - y - 2z = 3',
+      solution: `1. Matrix Formulation AX = B:
+   A = [[2, 3, 3], [1, -2, 1], [3, -1, -2]],  X = [[x], [y], [z]],  B = [[5], [-4], [3]]
+
+2. Evaluate Determinant |A|:
+   |A| = 2(4 + 1) - 3(-2 - 3) + 3(-1 + 6)
+   |A| = 2(5) - 3(-5) + 3(5) = 10 + 15 + 15 = 40 ≠ 0.
+   Since |A| ≠ 0, A is non-singular and has a unique solution X = A⁻¹B.
+
+3. Cofactors of Elements of A:
+   A₁₁ = +5, A₁₂ = -(-5) = 5, A₁₃ = +5
+   A₂₁ = -(-3) = 3, A₂₂ = -13, A₂₃ = -(-11) = 11
+   A₃₁ = +(9), A₃₂ = -(2 - 3) = 1, A₃₃ = +(-7) = -7
+
+4. Adjoint Matrix adj(A):
+   adj(A) = [[5, 3, 9], [5, -13, 1], [5, 11, -7]]
+
+5. Compute Solution X = (1/|A|) adj(A) · B:
+   X = (1/40) · [[5, 3, 9], [5, -13, 1], [5, 11, -7]] · [[5], [-4], [3]]
+   x = (1/40)(25 - 12 + 27) = 40 / 40 = 1
+   y = (1/40)(25 + 52 + 3) = 80 / 40 = 2
+   z = (1/40)(25 - 44 - 21) = -40 / 40 = -1
+   ⟹ Solution: x = 1, y = 2, z = -1.`
+    },
+    {
+      id: 'math-pyq-2',
+      chapterId: 'math-ch-7',
+      chapterName: 'Ch 7: Integrals',
+      subtopicId: 'math-sub-7-2',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Evaluate: I = ∫₀^(π/2) [√sin x / (√sin x + √cos x)] dx using properties of definite integrals.',
+      solution: `1. Define Equation (1):
+   I = ∫₀^(π/2) [√sin x / (√sin x + √cos x)] dx  ---- (1)
+
+2. Apply King's Property ∫₀^a f(x) dx = ∫₀^a f(a - x) dx:
+   Replace x with (π/2 - x):
+   sin(π/2 - x) = cos x,  cos(π/2 - x) = sin x.
+   I = ∫₀^(π/2) [√cos x / (√cos x + √sin x)] dx  ---- (2)
+
+3. Add Equations (1) and (2):
+   2I = ∫₀^(π/2) [(√sin x + √cos x) / (√sin x + √cos x)] dx
+   2I = ∫₀^(π/2) 1 dx = [x]₀^(π/2) = π/2 - 0 = π/2
+
+4. Final Result:
+   I = π / 4.`
+    },
+    {
+      id: 'math-pyq-3',
+      chapterId: 'math-ch-11',
+      chapterName: 'Ch 11: Three-Dimensional Geometry',
+      subtopicId: 'math-sub-11-1',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Find the shortest distance between the skew lines:\nr⃗ = (î + 2ĵ + k̂) + λ(î - ĵ + k̂) and r⃗ = (2î - ĵ - k̂) + μ(2î + ĵ + 2k̂).',
+      solution: `1. Identify Vectors:
+   a⃗₁ = î + 2ĵ + k̂,   b⃗₁ = î - ĵ + k̂
+   a⃗₂ = 2î - ĵ - k̂,  b⃗₂ = 2î + ĵ + 2k̂
+
+2. Calculate (a⃗₂ - a⃗₁):
+   a⃗₂ - a⃗₁ = (2 - 1)î + (-1 - 2)ĵ + (-1 - 1)k̂ = î - 3ĵ - 2k̂
+
+3. Calculate (b⃗₁ × b⃗₂):
+   b⃗₁ × b⃗₂ = |[î, ĵ, k̂], [1, -1, 1], [2, 1, 2]|
+   = î(-2 - 1) - ĵ(2 - 2) + k̂(1 - (-2))
+   = -3î - 0ĵ + 3k̂ = -3î + 3k̂
+
+4. Magnitude |b⃗₁ × b⃗₂|:
+   |b⃗₁ × b⃗₂| = √((-3)² + 0² + 3²) = √(9 + 9) = √18 = 3√2
+
+5. Compute Scalar Product (b⃗₁ × b⃗₂) · (a⃗₂ - a⃗₁):
+   (-3î + 3k̂) · (î - 3ĵ - 2k̂) = (-3)(1) + (0)(-3) + (3)(-2) = -3 - 6 = -9
+
+6. Shortest Distance Formula:
+   d = |(b⃗₁ × b⃗₂) · (a⃗₂ - a⃗₁)| / |b⃗₁ × b⃗₂| = |-9| / (3√2) = 9 / (3√2) = 3 / √2 = (3√2) / 2 units.`
+    },
+    {
+      id: 'math-pyq-4',
+      chapterId: 'math-ch-13',
+      chapterName: 'Ch 13: Probability',
+      subtopicId: 'math-sub-13-1',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'A bag contains 4 red and 4 black balls, another bag contains 2 red and 6 black balls. One bag is selected at random and a ball is drawn and found to be red. Find the probability that the ball was drawn from the first bag using Bayes theorem.',
+      solution: `1. Define Events:
+   E₁ = Bag 1 is chosen ⟹ P(E₁) = 1/2
+   E₂ = Bag 2 is chosen ⟹ P(E₂) = 1/2
+   A = Drawn ball is Red
+
+2. Conditional Probabilities:
+   P(A|E₁) = 4 / (4 + 4) = 4/8 = 1/2
+   P(A|E₂) = 2 / (2 + 6) = 2/8 = 1/4
+
+3. Apply Bayes Theorem:
+   P(E₁|A) = [P(E₁) · P(A|E₁)] / [P(E₁) · P(A|E₁) + P(E₂) · P(A|E₂)]
+   P(E₁|A) = [(1/2) · (1/2)] / [(1/2) · (1/2) + (1/2) · (1/4)]
+   P(E₁|A) = (1/4) / (1/4 + 1/8) = (1/4) / (3/8) = (1/4) × (8/3) = 2/3.
+   ⟹ The required probability is 2/3.`
+    }
+  ],
+  applied_maths: [
+    {
+      id: 'app-pyq-1',
+      chapterId: 'app-ch-3',
+      chapterName: 'Ch 3: Matrices & Determinants in Economics',
+      subtopicId: 'app-sub-3-2',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'For a two-sector economy, the input-coefficient matrix is A = [[0.2, 0.3], [0.4, 0.1]] and the final demand vector is D = [[100], [200]]. Verify the Hawkins-Simon conditions and determine the gross output vector X.',
+      solution: `1. Compute Matrix (I - A):
+   I - A = [[1, 0], [0, 1]] - [[0.2, 0.3], [0.4, 0.1]] = [[0.8, -0.3], [-0.4, 0.9]]
+
+2. Verify Hawkins-Simon Conditions:
+   (i) Determinant |I - A| = (0.8)(0.9) - (-0.3)(-0.4) = 0.72 - 0.12 = 0.60 > 0. (Satisfied)
+   (ii) Diagonal elements: (1 - a₁₁) = 0.8 > 0, and (1 - a₂₂) = 0.9 > 0. (Satisfied)
+   ⟹ System is viable and capable of meeting external consumer demands.
+
+3. Find Inverse (I - A)⁻¹:
+   adj(I - A) = [[0.9, 0.3], [0.4, 0.8]]
+   (I - A)⁻¹ = (1 / 0.60) · [[0.9, 0.3], [0.4, 0.8]] = (10/6) · [[0.9, 0.3], [0.4, 0.8]]
+
+4. Calculate Gross Output X = (I - A)⁻¹ · D:
+   X = (10/6) · [[0.9, 0.3], [0.4, 0.8]] · [[100], [200]]
+   x₁ = (10/6)[(0.9)(100) + (0.3)(200)] = (10/6)[90 + 60] = (10/6)(150) = 250 units
+   x₂ = (10/6)[(0.4)(100) + (0.8)(200)] = (10/6)[40 + 160] = (10/6)(200) = 2000 / 6 = 333.33 units
+   ⟹ Gross Output: Sector 1 = 250 units, Sector 2 = 333.33 units.`
+    },
+    {
+      id: 'app-pyq-2',
+      chapterId: 'app-ch-7',
+      chapterName: 'Ch 7: Financial Mathematics',
+      subtopicId: 'app-sub-7-2',
+      year: 'CBSE 2023 (4 Marks)',
+      question: 'A loan of ₹3,00,000 is to be repaid in 36 equal monthly installments under reducing balance method at 12% per annum. Find the monthly EMI and total interest paid.',
+      solution: `1. Identify Parameters:
+   Principal P = ₹3,00,000
+   Annual Rate R = 12% p.a. ⟹ Monthly rate r = 12 / (12 × 100) = 0.01
+   Tenure n = 36 months
+
+2. Compound Growth Factor:
+   (1 + r)ⁿ = (1 + 0.01)³⁶ = (1.01)³⁶ ≈ 1.43077
+
+3. EMI Formula:
+   E = P · r · [(1 + r)ⁿ] / [(1 + r)ⁿ - 1]
+   E = 3,00,000 × 0.01 × (1.43077) / (1.43077 - 1)
+   E = 3,000 × 1.43077 / 0.43077 = 4292.31 / 0.43077 ≈ ₹9,964.29 per month.
+
+4. Total Payment & Total Interest:
+   Total Repayment = 36 × ₹9,964.29 = ₹3,58,714.44
+   Total Interest Paid = Total Repayment - P = ₹3,58,714.44 - ₹3,00,000 = ₹58,714.44.`
+    },
+    {
+      id: 'app-pyq-3',
+      chapterId: 'app-ch-1',
+      chapterName: 'Ch 1: Numbers & Numerical Applications',
+      subtopicId: 'app-sub-1-1',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Find the remainder when 7¹⁰⁰ is divided by 6 using congruence modulo arithmetic.',
+      solution: `1. State Base Congruence:
+   7 ≡ 1 (mod 6)
+
+2. Apply Power Property of Congruence:
+   If a ≡ b (mod m), then aⁿ ≡ bⁿ (mod m) for any positive integer n.
+   7¹⁰⁰ ≡ 1¹⁰⁰ (mod 6)
+
+3. Simplify:
+   1¹⁰⁰ = 1
+   ⟹ 7¹⁰⁰ ≡ 1 (mod 6)
+
+4. Conclusion:
+   The remainder when 7¹⁰⁰ is divided by 6 is 1.`
+    }
   ]
 };

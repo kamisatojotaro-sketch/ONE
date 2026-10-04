@@ -12,6 +12,7 @@ import TestMakerTabContent from '../components/study/TestMakerTabContent';
 import ImportantQuestionsTabContent from '../components/study/ImportantQuestionsTabContent';
 import SamplePaperTabContent from '../components/study/SamplePaperTabContent';
 import StudySearchModal from '../components/study/StudySearchModal';
+import WolframEngine from '../components/calculator/WolframEngine';
 
 export default function Notes() {
   const session = useStudySession();
@@ -130,10 +131,18 @@ export default function Notes() {
                 />
               )}
 
-              {/* Tab 2: IMPORTANT Qs (Top 22 Guaranteed Board Questions) */}
+              {/* Tab 2: Wolfram Engine & Science Calculator */}
+              {session.activeSidebarTab === 'WOLFRAM_ENGINE' && (
+                <WolframEngine
+                  initialSubject={session.selectedSubject || 'standard_maths'}
+                />
+              )}
+
+              {/* Tab 3: Top 22 Questions for the Exam */}
               {session.activeSidebarTab === 'IMPORTANT' && (
                 <ImportantQuestionsTabContent
                   onJumpToChapter={handleJumpToChapter}
+                  onSelectTab={session.setActiveSidebarTab}
                 />
               )}
 
@@ -211,6 +220,7 @@ export default function Notes() {
                       getPriority={session.getPriority}
                       onSetPriority={session.setItemPriority}
                       onResetPriority={session.resetItemPriority}
+                      onOpenWolframEngine={() => session.setActiveSidebarTab('WOLFRAM_ENGINE')}
                     />
                   )}
                 </>

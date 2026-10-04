@@ -6,8 +6,25 @@ import {
   Sliders, Eye, EyeOff, Sparkles, HelpCircle
 } from 'lucide-react';
 import { PHYSICS_SAMPLE_PAPER_2026_27 } from '../../data/physicsSamplePaper2026_27';
+import PhysicsDiagramCard from './PhysicsDiagramCard';
 
 const STORAGE_KEY_SQP_MASTERED = 'one_mastered_physics_sqp_2026_27';
+
+const getSqpDiagram = (qNum, isOrActive) => {
+  if (qNum === 1) return { diagramId: 'gauss-applications', subMode: 'shell', title: 'Gaussian Sphere & Radial Flux' };
+  if (qNum === 8) return { diagramId: 'em-wave-structure', title: 'Transverse EM Wave: E and B Orthogonal Vectors' };
+  if (qNum === 9) return { diagramId: 'wheatstone-bridge', title: 'Wheatstone Bridge Circuit' };
+  if (qNum === 16) return { diagramId: 'parallel-wires', subMode: 'attractive', title: 'Parallel Currents Force' };
+  if (qNum === 18) return { diagramId: 'point-charge-field', title: 'Radial Electric Field Lines of Point Charge' };
+  if (qNum === 20) return { diagramId: 'magnetic-materials', title: 'Magnetic Materials in Field' };
+  if (qNum === 27) return { diagramId: 'galvanometer-conversion', subMode: 'ammeter', title: 'Galvanometer to Ammeter Conversion' };
+  if (qNum === 31) return { diagramId: 'capacitor-circuits', title: 'Capacitors Combinations' };
+  if (qNum === 33) {
+    if (isOrActive) return { diagramId: 'lcr-circuit', subMode: 'resonance', title: 'Series LCR Resonance Circuit' };
+    return { diagramId: 'transformer', title: 'Transformer Core & Mutual Induction' };
+  }
+  return null;
+};
 
 export default function SamplePaperTabContent({ onJumpToChapter }) {
   const paper = PHYSICS_SAMPLE_PAPER_2026_27;
@@ -456,6 +473,7 @@ export default function SamplePaperTabContent({ onJumpToChapter }) {
             const isSolved = masteredIds.includes(q.id);
             const isExpanded = viewMode === 'marking_scheme' ? true : !!expandedSolutions[q.id];
             const isOrActive = orChoiceSelections[q.id] === 'OR';
+            const sqpDiag = getSqpDiagram(q.number, isOrActive);
 
             return (
               <div
@@ -683,6 +701,21 @@ export default function SamplePaperTabContent({ onJumpToChapter }) {
                         {q.markingScheme}
                       </div>
                     </div>
+
+                    {/* Relevant Labelled Physics Diagram (if applicable) */}
+                    {sqpDiag && (
+                      <div className="p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] space-y-2">
+                        <div className="text-[11px] font-bold text-purple-400 flex items-center gap-1.5 uppercase tracking-wide">
+                          <Layers size={13} />
+                          <span>Board Examination Labelled Schematic: {sqpDiag.title}</span>
+                        </div>
+                        <PhysicsDiagramCard 
+                          diagramId={sqpDiag.diagramId} 
+                          subMode={sqpDiag.subMode} 
+                          inline={true} 
+                        />
+                      </div>
+                    )}
 
                     {/* Teacher Explanation / Examiner Tips */}
                     {q.explanation && (

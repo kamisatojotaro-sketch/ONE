@@ -1,8 +1,7 @@
-import { useState, useMemo, useEffect } from 'react';
 import { 
   CheckCircle2, Circle, Search, Filter, BookOpen, 
   ChevronDown, ChevronUp, Copy, Check, Sparkles, Award, 
-  ExternalLink, RotateCcw, AlertTriangle, Layers, Zap, Bookmark
+  ExternalLink, AlertTriangle, Layers, Zap, Bookmark, FileText
 } from 'lucide-react';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
@@ -20,13 +19,71 @@ const DIAGRAM_MAPPING = {
   'imp-phy-22': 'galvanometer-conversion'
 };
 
-export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
+const SQP_CORRELATIONS = {
+  'imp-phy-1': { sqpId: 'sqp-2027-q1', label: '2026-27 SQP: Q1 & Q20' },
+  'imp-phy-4': { sqpId: 'sqp-2027-q33', label: '2026-27 SQP: Q33 (5M Transformer)' },
+  'imp-phy-5': { sqpId: 'sqp-2027-q27', label: '2026-27 SQP: Q27 (3M Galvanometer)' },
+  'imp-phy-6': { sqpId: 'sqp-2027-q1', label: '2026-27 SQP: Q1 (Electric Flux)' },
+  'imp-phy-7': { sqpId: 'sqp-2027-q31', label: '2026-27 SQP: Q31 (Potential Gradient)' },
+  'imp-phy-8': { sqpId: 'sqp-2027-q18', label: '2026-27 SQP: Q18 (Field due to Charge)' },
+  'imp-phy-10': { sqpId: 'sqp-2027-q31', label: '2026-27 SQP: Q31 (5M Capacitance)' },
+  'imp-phy-11': { sqpId: 'sqp-2027-q2', label: '2026-27 SQP: Q2 (Power & Potential)' },
+  'imp-phy-12': { sqpId: 'sqp-2027-q8', label: '2026-27 SQP: Q8 (EM Waves Properties)' },
+  'imp-phy-15': { sqpId: 'sqp-2027-q9', label: '2026-27 SQP: Q9 (Wheatstone Bridge)' },
+  'imp-phy-16': { sqpId: 'sqp-2027-q20', label: '2026-27 SQP: Q20 (Magnetic Materials)' },
+  'imp-phy-17': { sqpId: 'sqp-2027-q33', label: '2026-27 SQP: Q33 (5M Series LCR)' },
+  'imp-phy-18': { sqpId: 'sqp-2027-q1', label: '2026-27 SQP: Q1 (Dipole & Field)' },
+  'imp-phy-20': { sqpId: 'sqp-2027-q16', label: '2026-27 SQP: Q16 (Parallel Currents)' },
+  'imp-phy-21': { sqpId: 'sqp-2027-q8', label: '2026-27 SQP: Q8 (Displacement Current)' },
+  'imp-phy-22': { sqpId: 'sqp-2027-q27', label: '2026-27 SQP: Q27 (3M Ammeter Conversion)' }
+};
+
+const getDerivationDiagram = (qId, dIdx) => {
+  if (qId === 'imp-phy-1') {
+    if (dIdx === 0) return { diagramId: 'gauss-applications', subMode: 'wire', title: 'Gaussian Cylinder & Radial Field' };
+    if (dIdx === 1) return { diagramId: 'gauss-applications', subMode: 'sheet', title: 'Gaussian Pillbox Piercing Sheet' };
+    if (dIdx === 2) return { diagramId: 'gauss-applications', subMode: 'shell', title: 'Concentric Spherical Surfaces & Graph' };
+  }
+  if (qId === 'imp-phy-2') return { diagramId: 'force-conductor', title: 'Conductor in Uniform B-Field (F = ILB sinθ)' };
+  if (qId === 'imp-phy-3') return { diagramId: 'faraday-lenz', title: "Lenz's Law & Induced Current Direction" };
+  if (qId === 'imp-phy-4') return { diagramId: 'transformer', title: 'Transformer Core & Mutual Flux Linkage' };
+  if (qId === 'imp-phy-5') return { diagramId: 'galvanometer-torque', title: 'Radial Magnetic Field & Deflection Torque' };
+  if (qId === 'imp-phy-6') return { diagramId: 'electric-flux-dipole', title: 'Electric Flux & Dipole Field Lines' };
+  if (qId === 'imp-phy-7') return { diagramId: 'equipotential-surfaces', title: 'Equipotential Surfaces & Normal Field Lines' };
+  if (qId === 'imp-phy-8') return { diagramId: 'point-charge-field', title: 'Radial Field Lines of Point Charge' };
+  if (qId === 'imp-phy-9') return { diagramId: 'field-lines-properties', title: 'Electric Field Lines Geometry & Properties' };
+  if (qId === 'imp-phy-10') return { diagramId: 'capacitor-circuits', title: 'Series & Parallel Capacitor Networks' };
+  if (qId === 'imp-phy-11') return { diagramId: 'cell-circuit', title: 'Cell with Internal Resistance & Load Circuit' };
+  if (qId === 'imp-phy-12') return { diagramId: 'em-wave-structure', title: 'Transverse EM Wave: E and B Orthogonal Vectors' };
+  if (qId === 'imp-phy-13') return { diagramId: 'ac-rms-waveform', title: 'Sinusoidal AC Waveform & RMS Value' };
+  if (qId === 'imp-phy-14' || qId === 'imp-phy-21') return { diagramId: 'displacement-current', title: 'Charging Capacitor & Displacement Current' };
+  if (qId === 'imp-phy-15') return { diagramId: 'wheatstone-bridge', title: 'Wheatstone Bridge Null-Deflection Circuit' };
+  if (qId === 'imp-phy-16') return { diagramId: 'magnetic-materials', title: 'Magnetic Field Penetration (Dia, Para, Ferro)' };
+  if (qId === 'imp-phy-17') {
+    if (dIdx === 0) return { diagramId: 'lcr-circuit', subMode: 'phasor', title: 'Series LCR Phasor Diagram' };
+    return { diagramId: 'lcr-circuit', subMode: 'resonance', title: 'Series LCR Resonance Curve' };
+  }
+  if (qId === 'imp-phy-18') {
+    if (dIdx === 0) return { diagramId: 'dipole-fields', subMode: 'axial', title: 'Axial Field Vector Alignment' };
+    return { diagramId: 'dipole-fields', subMode: 'equatorial', title: 'Equatorial Field Component Cancellation' };
+  }
+  if (qId === 'imp-phy-19') return { diagramId: 'energy-storage', title: 'Energy Storage in Electric & Magnetic Fields' };
+  if (qId === 'imp-phy-20') return { diagramId: 'parallel-wires', subMode: 'attractive', title: 'Magnetic Forces on Parallel Currents' };
+  if (qId === 'imp-phy-22') {
+    if (dIdx === 0) return { diagramId: 'galvanometer-conversion', subMode: 'ammeter', title: 'Conversion to Ammeter (Parallel Shunt S)' };
+    return { diagramId: 'galvanometer-conversion', subMode: 'voltmeter', title: 'Conversion to Voltmeter (Series High R)' };
+  }
+  return null;
+};
+
+export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelectTab }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUnit, setSelectedUnit] = useState('ALL');
   const [selectedMarks, setSelectedMarks] = useState('ALL');
   const [selectedStatus, setSelectedStatus] = useState('ALL'); // 'ALL' | 'MASTERED' | 'PENDING'
   const [onlyDiagrams, setOnlyDiagrams] = useState(false);
   const [expandedQuestions, setExpandedQuestions] = useState({});
+  const [derivationDiagramOpen, setDerivationDiagramOpen] = useState({});
   const [isCompactMode, setIsCompactMode] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
 
@@ -61,18 +118,9 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
     }));
   };
 
-  const expandAll = () => {
-    const all = {};
-    IMPORTANT_PHYSICS_QUESTIONS.forEach(q => { all[q.id] = true; });
-    setExpandedQuestions(all);
-  };
-
-  const collapseAll = () => {
-    setExpandedQuestions({});
-  };
-
   const handleCopyAnswer = (q) => {
     const textToCopy = `Question ${q.number}: ${q.title} (${q.marks})\n\n` +
+      (q.ncertRef ? `NCERT REFERENCE: ${q.ncertRef.textbook} - ${q.ncertRef.section} (${q.ncertRef.equations || ''})\n\n` : '') +
       `QUESTION:\n${q.questionPrompt}\n\n` +
       `STATEMENT:\n${q.modelAnswer.statement}\n\n` +
       `DERIVATION & KEY FORMULAS:\n` +
@@ -129,84 +177,24 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
     });
   }, [searchQuery, selectedUnit, selectedMarks, selectedStatus, onlyDiagrams, masteredIds]);
 
-  const masteredCount = masteredIds.length;
-  const totalCount = IMPORTANT_PHYSICS_QUESTIONS.length;
-  const progressPercent = Math.round((masteredCount / totalCount) * 100);
-
   return (
     <div className="space-y-6 pb-12 animate-in fade-in duration-300">
       {/* 1. Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500/10 via-[var(--bg-surface)] to-[var(--accent-primary)]/10 border border-amber-500/30 p-5 sm:p-7 shadow-sm">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold tracking-wide uppercase">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500/10 via-[var(--bg-surface)] to-[var(--accent-primary)]/10 border border-amber-500/30 p-5 sm:p-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold tracking-wide uppercase">
               <Award size={14} className="text-amber-500" />
-              <span>Official CBSE Board Hitlist • All 22 Questions</span>
+              <span>Official CBSE Board • 22 Core Questions</span>
             </div>
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
-              Top 22 Guaranteed Physics Questions
+              Top 22 Questions for the Exam
             </h1>
-            <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl leading-relaxed">
-              These exact 22 derivations and conceptual questions form the backbone of the CBSE Class 12 Physics theory paper (accounting for ~50+ out of 70 marks). Master each model answer, diagram, and step to guarantee full marks.
-            </p>
-          </div>
-
-          {/* Mastery Progress Card */}
-          <div className="shrink-0 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-4 rounded-2xl min-w-[240px] shadow-xs">
-            <div className="flex items-center justify-between text-xs font-semibold mb-2">
-              <span className="text-[var(--text-secondary)] flex items-center gap-1.5">
-                <Award size={14} className="text-amber-500" />
-                Exam Readiness
-              </span>
-              <span className="font-mono text-amber-500 dark:text-amber-400 font-bold">
-                {masteredCount} / {totalCount} ({progressPercent}%)
-              </span>
-            </div>
-            
-            {/* Progress Bar */}
-            <div className="w-full h-2.5 bg-[var(--bg-surface)] rounded-full overflow-hidden border border-[var(--border-subtle)]">
-              <div 
-                className="h-full bg-gradient-to-r from-amber-500 to-emerald-500 transition-all duration-500 rounded-full"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-
-            <div className="flex items-center justify-between mt-3 text-[11px] text-[var(--text-muted)]">
-              <span>{progressPercent === 100 ? 'All 22 Questions Mastered' : `${totalCount - masteredCount} questions remaining`}</span>
-              {masteredCount > 0 && (
-                <button
-                  onClick={() => setMasteredIds([])}
-                  className="hover:text-rose-400 transition-colors cursor-pointer inline-flex items-center gap-1"
-                  title="Reset all checkboxes"
-                >
-                  <RotateCcw size={10} />
-                  Reset
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Action Bar (Expand all, compact mode toggle) */}
-        <div className="mt-5 pt-4 border-t border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={expandAll}
-              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer touch-manipulation"
-            >
-              Expand All Answers
-            </button>
-            <button
-              onClick={collapseAll}
-              className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer touch-manipulation"
-            >
-              Collapse All
-            </button>
           </div>
 
           <button
             onClick={() => setIsCompactMode(prev => !prev)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 ${
+            className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 shrink-0 self-start sm:self-auto ${
               isCompactMode 
                 ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs' 
                 : 'bg-[var(--bg-surface)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -399,6 +387,13 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                           {q.unit} • {q.chapterTitle}
                         </span>
 
+                        {q.ncertRef && (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-500 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/25">
+                            <BookOpen size={11} />
+                            <span>{q.ncertRef.section.split(':')[0]}</span>
+                          </span>
+                        )}
+
                         {DIAGRAM_MAPPING[q.id] && (
                           <span className="inline-flex items-center gap-1 text-[11px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/30">
                             <Layers size={11} /> Interactive Diagram
@@ -409,6 +404,26 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                           <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-md">
                             <Check size={11} /> Mastered
                           </span>
+                        )}
+
+                        {SQP_CORRELATIONS[q.id] && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (onSelectTab) {
+                                onSelectTab('SAMPLE_PAPER');
+                                setTimeout(() => {
+                                  const el = document.getElementById(SQP_CORRELATIONS[q.id].sqpId);
+                                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }, 250);
+                              }
+                            }}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 px-2 py-0.5 rounded-md border border-blue-500/30 transition-colors cursor-pointer"
+                            title="Jump to this question in the official 2026-27 Sample Question Paper"
+                          >
+                            <FileText size={11} />
+                            <span>{SQP_CORRELATIONS[q.id].label}</span>
+                          </button>
                         )}
                       </div>
 
@@ -469,6 +484,34 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                 {/* Expandable Model Answer Body */}
                 {isExpanded && (
                   <div className="p-4 sm:p-6 space-y-6 bg-[var(--bg-surface)]">
+                    {/* NCERT Official Textbook Reference Banner */}
+                    {q.ncertRef && (
+                      <div className="p-3.5 sm:p-4 rounded-xl bg-blue-500/10 border border-blue-500/25 space-y-1.5 shadow-2xs">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-bold text-[11px] font-mono uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                            <BookOpen size={13} />
+                            NCERT Standard Textbook Reference:
+                          </span>
+                          <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-600 dark:text-blue-300 font-mono text-[11px] font-bold">
+                            {q.ncertRef.section}
+                          </span>
+                          {q.ncertRef.equations && (
+                            <span className="text-[11px] font-mono text-[var(--text-muted)] font-medium">
+                              • {q.ncertRef.equations}
+                            </span>
+                          )}
+                          {q.ncertRef.figures && (
+                            <span className="text-[11px] font-mono text-[var(--text-muted)] font-medium">
+                              • {q.ncertRef.figures}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                          <strong>{q.ncertRef.textbook}</strong> ({q.ncertRef.chapter}) &mdash; {q.ncertRef.summary}
+                        </p>
+                      </div>
+                    )}
+
                     {/* 1. Principle / Definition */}
                     <div className="space-y-1.5">
                       <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent-primary)] flex items-center gap-1.5">
@@ -498,29 +541,66 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                         2. Step-by-Step Mathematical Derivations & Proofs
                       </h4>
                       
-                      <div className="space-y-3">
-                        {q.modelAnswer.derivations.map((d, dIdx) => (
-                          <div key={dIdx} className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2.5">
-                            <h5 className="text-xs font-bold text-blue-400 tracking-wide">
-                              • {d.name}
-                            </h5>
-                            
-                            <ul className="space-y-1.5 text-xs text-[var(--text-secondary)] leading-relaxed pl-1">
-                              {d.steps.map((step, sIdx) => (
-                                <li key={sIdx} className="flex items-start gap-2">
-                                  <span className="text-[var(--text-muted)] font-mono shrink-0">[{sIdx + 1}]</span>
-                                  <span>{step}</span>
-                                </li>
-                              ))}
-                            </ul>
+                      <div className="space-y-4">
+                        {q.modelAnswer.derivations.map((d, dIdx) => {
+                          const derivDiag = getDerivationDiagram(q.id, dIdx);
+                          const diagKey = `${q.id}-${dIdx}`;
+                          const isDiagOpen = derivationDiagramOpen[diagKey] !== false;
 
-                            {d.formula && (
-                              <div className="mt-2 p-2.5 rounded-lg bg-[var(--bg-surface)] border border-blue-500/30 text-blue-500 dark:text-blue-400 font-mono text-xs font-bold text-center">
-                                {d.formula}
+                          return (
+                            <div key={dIdx} className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-3">
+                              <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)]/60 pb-2">
+                                <h5 className="text-xs sm:text-sm font-bold text-blue-400 tracking-wide">
+                                  • {d.name}
+                                </h5>
+
+                                {derivDiag && (
+                                  <button
+                                    onClick={() => setDerivationDiagramOpen(prev => ({
+                                      ...prev,
+                                      [diagKey]: prev[diagKey] === false ? true : false
+                                    }))}
+                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30 transition-colors cursor-pointer touch-manipulation"
+                                    title={isDiagOpen ? "Hide visual diagram" : "Show visual diagram"}
+                                  >
+                                    <Layers size={12} />
+                                    <span>{isDiagOpen ? 'Hide Diagram' : 'View Diagram'}</span>
+                                  </button>
+                                )}
                               </div>
-                            )}
-                          </div>
-                        ))}
+                              
+                              <ul className="space-y-1.5 text-xs text-[var(--text-secondary)] leading-relaxed pl-1">
+                                {d.steps.map((step, sIdx) => (
+                                  <li key={sIdx} className="flex items-start gap-2">
+                                    <span className="text-[var(--text-muted)] font-mono shrink-0">[{sIdx + 1}]</span>
+                                    <span>{step}</span>
+                                  </li>
+                                ))}
+                              </ul>
+
+                              {/* Embedded Visual Physics Diagram right inside this derivation */}
+                              {derivDiag && isDiagOpen && (
+                                <div className="pt-2">
+                                  <div className="text-[11px] font-bold text-[var(--text-muted)] mb-1.5 flex items-center gap-1.5 uppercase tracking-wide">
+                                    <Layers size={12} className="text-purple-400" />
+                                    <span>Labelled Derivation Schematic ({derivDiag.title})</span>
+                                  </div>
+                                  <PhysicsDiagramCard 
+                                    diagramId={derivDiag.diagramId} 
+                                    subMode={derivDiag.subMode} 
+                                    inline={true} 
+                                  />
+                                </div>
+                              )}
+
+                              {d.formula && (
+                                <div className="mt-2 p-2.5 rounded-lg bg-[var(--bg-surface)] border border-blue-500/30 text-blue-500 dark:text-blue-400 font-mono text-xs font-bold text-center">
+                                  {d.formula}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
