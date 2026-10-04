@@ -1,9 +1,10 @@
-import { BookOpen, FileQuestion, CheckSquare, Target, Sliders, Award } from 'lucide-react';
+import { BookOpen, FileQuestion, CheckSquare, Target, Sliders, Award, FileText } from 'lucide-react';
 
 export default function StudySidebar({ activeTab, onTabChange }) {
   const tabs = [
     { id: 'NOTES', label: 'NOTES', icon: BookOpen, desc: 'Theory & High-Yield' },
     { id: 'IMPORTANT', label: 'IMPORTANT Qs', icon: Award, desc: 'Top 22 Board Hitlist' },
+    { id: 'SAMPLE_PAPER', label: 'SAMPLE PAPER', icon: FileText, desc: '2026-27 Official SQP' },
     { id: 'PYQ', label: 'PYQ', icon: FileQuestion, desc: 'Previous Year Qs' },
     { id: 'MCQ', label: 'MCQ', icon: CheckSquare, desc: 'Board Practice' },
     { id: 'TEST_MAKER', label: 'TEST MAKER', icon: Sliders, desc: 'Custom 30-Q Mock' },

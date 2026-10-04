@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { 
-  Flame, CheckCircle2, Circle, Search, Filter, BookOpen, 
+  CheckCircle2, Circle, Search, Filter, BookOpen, 
   ChevronDown, ChevronUp, Copy, Check, Sparkles, Award, 
   ExternalLink, RotateCcw, AlertTriangle, Layers, Zap, Bookmark
 } from 'lucide-react';
@@ -140,7 +140,7 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold tracking-wide uppercase">
-              <Flame size={14} className="animate-pulse" />
+              <Award size={14} className="text-amber-500" />
               <span>Official CBSE Board Hitlist • All 22 Questions</span>
             </div>
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
@@ -172,7 +172,7 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
             </div>
 
             <div className="flex items-center justify-between mt-3 text-[11px] text-[var(--text-muted)]">
-              <span>{progressPercent === 100 ? '🎉 All Mastered!' : `${totalCount - masteredCount} questions remaining`}</span>
+              <span>{progressPercent === 100 ? 'All 22 Questions Mastered' : `${totalCount - masteredCount} questions remaining`}</span>
               {masteredCount > 0 && (
                 <button
                   onClick={() => setMasteredIds([])}
@@ -295,7 +295,7 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
             {[
               { id: 'ALL', label: 'All' },
               { id: 'PENDING', label: 'To Learn' },
-              { id: 'MASTERED', label: 'Mastered ✓' }
+              { id: 'MASTERED', label: 'Mastered' }
             ].map(s => (
               <button
                 key={s.id}
@@ -573,14 +573,14 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                         }`}
                       >
                         {isMastered ? <CheckCircle2 size={16} /> : <Circle size={16} />}
-                        <span>{isMastered ? 'Marked as Mastered ✓' : 'Mark as Mastered'}</span>
+                        <span>{isMastered ? 'Marked as Mastered' : 'Mark as Mastered'}</span>
                       </button>
 
                       <button
                         onClick={() => toggleExpand(q.id)}
                         className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
                       >
-                        Collapse Question ▲
+                        Collapse Question
                       </button>
                     </div>
                   </div>

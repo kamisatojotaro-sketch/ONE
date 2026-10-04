@@ -10,6 +10,7 @@ import PyqTabContent from '../components/study/PyqTabContent';
 import McqTabContent from '../components/study/McqTabContent';
 import TestMakerTabContent from '../components/study/TestMakerTabContent';
 import ImportantQuestionsTabContent from '../components/study/ImportantQuestionsTabContent';
+import SamplePaperTabContent from '../components/study/SamplePaperTabContent';
 import StudySearchModal from '../components/study/StudySearchModal';
 
 export default function Notes() {
@@ -136,7 +137,14 @@ export default function Notes() {
                 />
               )}
 
-              {/* Tab 3: Previous Year Questions */}
+              {/* Tab 3: Official 2026-27 Sample Question Paper & Marking Scheme */}
+              {session.activeSidebarTab === 'SAMPLE_PAPER' && (
+                <SamplePaperTabContent
+                  onJumpToChapter={handleJumpToChapter}
+                />
+              )}
+
+              {/* Tab 4: Previous Year Questions */}
               {session.activeSidebarTab === 'PYQ' && (
                 <PyqTabContent
                   selectedSubject={session.selectedSubject}
