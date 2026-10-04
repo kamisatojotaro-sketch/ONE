@@ -5,14 +5,27 @@ import {
   ExternalLink, RotateCcw, AlertTriangle, Layers, Zap, Bookmark
 } from 'lucide-react';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
+import PhysicsDiagramCard from './PhysicsDiagramCard';
 
 const STORAGE_KEY_MASTERED = 'one_mastered_imp_physics_q';
+
+const DIAGRAM_MAPPING = {
+  'imp-phy-1': 'gauss-applications',
+  'imp-phy-4': 'transformer',
+  'imp-phy-5': 'galvanometer-torque',
+  'imp-phy-15': 'wheatstone-bridge',
+  'imp-phy-17': 'lcr-circuit',
+  'imp-phy-18': 'dipole-fields',
+  'imp-phy-20': 'parallel-wires',
+  'imp-phy-22': 'galvanometer-conversion'
+};
 
 export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUnit, setSelectedUnit] = useState('ALL');
   const [selectedMarks, setSelectedMarks] = useState('ALL');
   const [selectedStatus, setSelectedStatus] = useState('ALL'); // 'ALL' | 'MASTERED' | 'PENDING'
+  const [onlyDiagrams, setOnlyDiagrams] = useState(false);
   const [expandedQuestions, setExpandedQuestions] = useState({});
   const [isCompactMode, setIsCompactMode] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
@@ -109,9 +122,12 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
       if (selectedStatus === 'MASTERED' && !isMastered) return false;
       if (selectedStatus === 'PENDING' && isMastered) return false;
 
+      // Diagrams only filter
+      if (onlyDiagrams && !DIAGRAM_MAPPING[q.id]) return false;
+
       return true;
     });
-  }, [searchQuery, selectedUnit, selectedMarks, selectedStatus, masteredIds]);
+  }, [searchQuery, selectedUnit, selectedMarks, selectedStatus, onlyDiagrams, masteredIds]);
 
   const masteredCount = masteredIds.length;
   const totalCount = IMPORTANT_PHYSICS_QUESTIONS.length;
@@ -290,11 +306,25 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                     : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
                 }`}
               >
-                {m => s.label}
                 {s.label}
               </button>
             ))}
           </div>
+
+          <div className="h-4 w-[1px] bg-[var(--border-subtle)] hidden sm:block" />
+
+          {/* Interactive Diagrams Filter */}
+          <button
+            onClick={() => setOnlyDiagrams(prev => !prev)}
+            className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 ${
+              onlyDiagrams
+                ? 'bg-purple-600 text-white shadow-xs'
+                : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            <Layers size={12} className={onlyDiagrams ? 'text-white' : 'text-purple-400'} />
+            <span>Interactive Diagrams ({Object.keys(DIAGRAM_MAPPING).length})</span>
+          </button>
         </div>
       </div>
 
@@ -368,6 +398,12 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                         <span className="text-[11px] text-[var(--text-muted)] font-medium">
                           {q.unit} • {q.chapterTitle}
                         </span>
+
+                        {DIAGRAM_MAPPING[q.id] && (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/30">
+                            <Layers size={11} /> Interactive Diagram
+                          </span>
+                        )}
 
                         {isMastered && (
                           <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-md">
@@ -443,6 +479,17 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter }) {
                         {q.modelAnswer.statement}
                       </div>
                     </div>
+
+                    {/* Interactive Visual Physics Derivation Diagram (if available) */}
+                    {DIAGRAM_MAPPING[q.id] && (
+                      <div className="space-y-2">
+                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
+                          <Layers size={13} />
+                          Interactive Schematic &amp; Derivation Diagram
+                        </h4>
+                        <PhysicsDiagramCard diagramId={DIAGRAM_MAPPING[q.id]} />
+                      </div>
+                    )}
 
                     {/* 2. Step-by-Step Derivation & Formulas */}
                     <div className="space-y-3">

@@ -4,8 +4,23 @@ import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
 import ReactionDiagramCard from './ReactionDiagramCard';
+import PhysicsDiagramCard from './PhysicsDiagramCard';
 import StructuredSectionView from './StructuredSectionView';
 import PriorityBadge from './PriorityBadge';
+
+const PHYSICS_SUBTOPIC_DIAGRAMS = {
+  'phy-sub-1-11': 'gauss-applications',
+  'phy-sub-1-9': 'gauss-applications',
+  'phy-sub-1-4': 'dipole-fields',
+  'phy-sub-1-5': 'dipole-fields',
+  'phy-sub-3-6': 'wheatstone-bridge',
+  'phy-sub-4-7': 'galvanometer-torque',
+  'phy-sub-4-8': 'galvanometer-conversion',
+  'phy-sub-4-9': 'parallel-wires',
+  'phy-sub-7-7': 'transformer',
+  'phy-sub-7-5': 'lcr-circuit',
+  'phy-sub-7-6': 'lcr-circuit'
+};
 
 export default function ChapterDrillDown({
   selectedSubject,
@@ -347,6 +362,13 @@ export default function ChapterDrillDown({
                     subtopicId={currentSubchapter.id}
                     chapterId={selectedChapter}
                   />
+
+                  {/* Visual Physics Concept & Derivation Diagrams */}
+                  {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
+                    <div className="py-2">
+                      <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
+                    </div>
+                  )}
 
                   {/* Instant Practice Panel (MCQs & Board PYQs) */}
                   <div className="pt-1">

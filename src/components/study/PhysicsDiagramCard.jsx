@@ -1,0 +1,1076 @@
+import { useState } from 'react';
+import { 
+  Zap, ArrowRight, Layers, CheckCircle2, AlertCircle, Info, 
+  ChevronDown, ChevronUp, Scale, Compass, Sparkles, Activity
+} from 'lucide-react';
+
+export default function PhysicsDiagramCard({ diagramId }) {
+  // Tab states for diagrams that have multiple sub-modes
+  const [gaussMode, setGaussMode] = useState('wire'); // 'wire' | 'sheet' | 'shell'
+  const [dipoleMode, setDipoleMode] = useState('axial'); // 'axial' | 'equatorial'
+  const [galvMode, setGalvMode] = useState('ammeter'); // 'ammeter' | 'voltmeter'
+  const [lcrMode, setLcrMode] = useState('phasor'); // 'phasor' | 'resonance'
+  const [parallelMode, setParallelMode] = useState('attractive'); // 'attractive' | 'repulsive'
+
+  // Render SVG Marker definition helper
+  const svgDefs = (
+    <defs>
+      <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6" />
+      </marker>
+      <marker id="arrow-emerald" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+      </marker>
+      <marker id="arrow-rose" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#f43f5e" />
+      </marker>
+      <marker id="arrow-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b" />
+      </marker>
+      <marker id="arrow-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#a855f7" />
+      </marker>
+    </defs>
+  );
+
+  /* -------------------------------------------------------------
+   * 1. GAUSS'S LAW APPLICATIONS (Wire, Plane Sheet, Spherical Shell)
+   * ------------------------------------------------------------- */
+  if (diagramId === 'gauss-applications') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        {/* Header & Sub-Application Selector */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-amber-500/15 text-amber-500">
+              <Zap size={16} />
+            </span>
+            <div>
+              <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                Gauss&apos;s Law Application Visualizer
+              </h4>
+              <p className="text-[11px] text-[var(--text-muted)]">
+                Select an application to view its Gaussian surface, field lines &amp; derivation
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-subtle)]">
+            <button
+              onClick={() => setGaussMode('wire')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                gaussMode === 'wire' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              1. Straight Wire
+            </button>
+            <button
+              onClick={() => setGaussMode('sheet')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                gaussMode === 'sheet' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              2. Plane Sheet
+            </button>
+            <button
+              onClick={() => setGaussMode('shell')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                gaussMode === 'shell' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              3. Spherical Shell
+            </button>
+          </div>
+        </div>
+
+        {/* Mode 1: Infinitely Long Straight Wire */}
+        {gaussMode === 'wire' && (
+          <div className="space-y-4">
+            <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+              {/* SVG Illustration */}
+              <div className="w-full lg:w-1/2 flex justify-center">
+                <svg width="280" height="200" viewBox="0 0 280 200" className="overflow-visible select-none">
+                  {svgDefs}
+                  {/* Wire (vertical line with + signs) */}
+                  <line x1="140" y1="10" x2="140" y2="190" stroke="#f59e0b" strokeWidth="4" />
+                  <text x="148" y="25" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="148" y="55" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="148" y="85" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="148" y="115" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="148" y="145" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="148" y="175" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  
+                  {/* Top Circular Cap (Flat Face 1) */}
+                  <ellipse cx="140" cy="40" rx="70" ry="16" fill="rgba(59, 130, 246, 0.08)" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+                  {/* Normal vector n1 on top cap (pointing up) */}
+                  <line x1="140" y1="40" x2="140" y2="15" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-emerald)" />
+                  <text x="146" y="20" fill="#10b981" fontSize="10" fontWeight="bold">n̂₁ (Φ₁=0)</text>
+
+                  {/* Cylindrical Gaussian Surface Walls */}
+                  <line x1="70" y1="40" x2="70" y2="160" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="210" y1="40" x2="210" y2="160" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+
+                  {/* Bottom Circular Cap (Flat Face 2) */}
+                  <ellipse cx="140" cy="160" rx="70" ry="16" fill="rgba(59, 130, 246, 0.08)" stroke="#3b82f6" strokeWidth="1.5" />
+                  {/* Normal vector n2 on bottom cap (pointing down) */}
+                  <line x1="140" y1="160" x2="140" y2="185" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-emerald)" />
+                  <text x="146" y="192" fill="#10b981" fontSize="10" fontWeight="bold">n̂₂ (Φ₂=0)</text>
+
+                  {/* Electric field E and area vector dA on Curved Surface */}
+                  <line x1="140" y1="100" x2="210" y2="100" stroke="#a855f7" strokeWidth="1.5" strokeDasharray="2 2" />
+                  <text x="175" y="93" fill="var(--text-muted)" fontSize="10" fontWeight="bold">r</text>
+
+                  {/* Radial E vectors */}
+                  <line x1="210" y1="100" x2="255" y2="100" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+                  <text x="258" y="104" fill="#3b82f6" fontSize="11" fontWeight="bold">E⃗</text>
+
+                  <line x1="70" y1="100" x2="25" y2="100" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+                  <text x="8" y="104" fill="#3b82f6" fontSize="11" fontWeight="bold">E⃗</text>
+
+                  {/* Length L indicator */}
+                  <line x1="55" y1="40" x2="55" y2="160" stroke="var(--text-muted)" strokeWidth="1" />
+                  <text x="42" y="105" fill="var(--text-muted)" fontSize="11" fontWeight="bold">L</text>
+                </svg>
+              </div>
+
+              {/* Step-by-Step Derivation Breakdown */}
+              <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+                <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                  <div className="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
+                    <CheckCircle2 size={13} />
+                    <span>Flat Circular Ends (θ = 90°):</span>
+                  </div>
+                  <p className="text-[var(--text-secondary)]">
+                    E⃗ is radial, but normal n̂ is axial: E⃗ ⟂ n̂ ⟹ cos 90° = 0.
+                    <span className="block font-mono text-[11px] text-emerald-300 mt-0.5">Φ_top = 0 and Φ_bottom = 0</span>
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                  <div className="font-bold text-blue-400 mb-1 flex items-center gap-1.5">
+                    <CheckCircle2 size={13} />
+                    <span>Curved Cylindrical Surface (θ = 0°):</span>
+                  </div>
+                  <p className="text-[var(--text-secondary)]">
+                    E⃗ and dA⃗ are in the same outward radial direction:
+                    <span className="block font-mono text-[11px] text-blue-300 mt-0.5">Φ_curved = E · (2πrL)</span>
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-center font-bold">
+                  E · (2πrL) = (λL) / ε₀ ⟹ E = λ / (2πε₀r)
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Mode 2: Uniformly Charged Infinite Plane Sheet */}
+        {gaussMode === 'sheet' && (
+          <div className="space-y-4">
+            <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+              {/* SVG Illustration */}
+              <div className="w-full lg:w-1/2 flex justify-center">
+                <svg width="280" height="200" viewBox="0 0 280 200" className="overflow-visible select-none">
+                  {svgDefs}
+                  {/* Plane Sheet (Tilted Rhombus) */}
+                  <polygon points="120,20 160,20 160,180 120,180" fill="rgba(245, 158, 11, 0.12)" stroke="#f59e0b" strokeWidth="2" />
+                  <text x="135" y="45" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="135" y="75" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="135" y="105" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="135" y="135" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="135" y="165" fill="#f59e0b" fontSize="12" fontWeight="bold" fontFamily="monospace">+</text>
+                  <text x="142" y="195" fill="#f59e0b" fontSize="11" fontWeight="bold">σ = dq/dA</text>
+
+                  {/* Gaussian Cylinder Piercing the Sheet */}
+                  {/* Left Cylinder Body */}
+                  <line x1="50" y1="85" x2="120" y2="85" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="50" y1="125" x2="120" y2="125" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+                  {/* Left Circular End Cap */}
+                  <ellipse cx="50" cy="105" rx="14" ry="20" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="1.5" />
+                  <line x1="50" y1="105" x2="10" y2="105" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+                  <text x="0" y="100" fill="#3b82f6" fontSize="11" fontWeight="bold">E⃗ (A)</text>
+
+                  {/* Right Cylinder Body */}
+                  <line x1="160" y1="85" x2="230" y2="85" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="160" y1="125" x2="230" y2="125" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+                  {/* Right Circular End Cap */}
+                  <ellipse cx="230" cy="105" rx="14" ry="20" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="1.5" />
+                  <line x1="230" y1="105" x2="270" y2="105" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+                  <text x="255" y="100" fill="#3b82f6" fontSize="11" fontWeight="bold">E⃗ (A)</text>
+
+                  {/* Cross section area in sheet */}
+                  <ellipse cx="140" cy="105" rx="12" ry="18" fill="rgba(245, 158, 11, 0.3)" stroke="#f59e0b" strokeWidth="1.5" />
+                  <text x="135" y="110" fill="#f59e0b" fontSize="10" fontWeight="bold">q=σA</text>
+                </svg>
+              </div>
+
+              {/* Step-by-Step Derivation Breakdown */}
+              <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+                <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                  <div className="font-bold text-purple-400 mb-1 flex items-center gap-1.5">
+                    <CheckCircle2 size={13} />
+                    <span>Curved Surface (No Flux):</span>
+                  </div>
+                  <p className="text-[var(--text-secondary)]">
+                    E⃗ lines are parallel to the sheet and perpendicular to curved surface normal:
+                    <span className="block font-mono text-[11px] text-purple-300 mt-0.5">E⃗ ⟂ dA⃗ ⟹ Φ_curved = 0</span>
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                  <div className="font-bold text-blue-400 mb-1 flex items-center gap-1.5">
+                    <CheckCircle2 size={13} />
+                    <span>Two Flat End Caps (Area A each):</span>
+                  </div>
+                  <p className="text-[var(--text-secondary)]">
+                    Field lines pass normally through both left and right flat caps:
+                    <span className="block font-mono text-[11px] text-blue-300 mt-0.5">Total Φ = EA + EA = 2EA</span>
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-center font-bold">
+                  2EA = (σA) / ε₀ ⟹ E = σ / (2ε₀)  [Independent of r!]
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Mode 3: Thin Spherical Shell & Piecewise Graph */}
+        {gaussMode === 'shell' && (
+          <div className="space-y-4">
+            <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+              {/* SVG Illustration: Shell + Graph */}
+              <div className="w-full lg:w-1/2 flex justify-center">
+                <svg width="280" height="200" viewBox="0 0 280 200" className="overflow-visible select-none">
+                  {svgDefs}
+                  {/* Conducting Shell (Radius R) */}
+                  <circle cx="100" cy="100" r="50" fill="none" stroke="#f59e0b" strokeWidth="2.5" />
+                  <text x="95" y="58" fill="#f59e0b" fontSize="11" fontWeight="bold">+</text>
+                  <text x="142" y="104" fill="#f59e0b" fontSize="11" fontWeight="bold">+</text>
+                  <text x="95" y="150" fill="#f59e0b" fontSize="11" fontWeight="bold">+</text>
+                  <text x="48" y="104" fill="#f59e0b" fontSize="11" fontWeight="bold">+</text>
+                  
+                  {/* Inside Gaussian surface (r < R) */}
+                  <circle cx="100" cy="100" r="28" fill="rgba(244, 63, 94, 0.08)" stroke="#f43f5e" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <text x="80" y="104" fill="#f43f5e" fontSize="10" fontWeight="bold">E_in = 0</text>
+
+                  {/* Outside Gaussian surface (r > R) */}
+                  <circle cx="100" cy="100" r="75" fill="rgba(59, 130, 246, 0.05)" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="4 3" />
+                  <line x1="100" y1="100" x2="165" y2="55" stroke="#3b82f6" strokeWidth="1.5" />
+                  <text x="135" y="70" fill="#3b82f6" fontSize="10" fontWeight="bold">r &gt; R</text>
+
+                  {/* CBSE Board Graph: E vs r */}
+                  <g transform="translate(190, 40)">
+                    {/* Axes */}
+                    <line x1="0" y1="130" x2="85" y2="130" stroke="var(--text-muted)" strokeWidth="1.5" />
+                    <line x1="0" y1="130" x2="0" y2="10" stroke="var(--text-muted)" strokeWidth="1.5" />
+                    <text x="75" y="145" fill="var(--text-muted)" fontSize="10">r</text>
+                    <text x="-12" y="15" fill="var(--text-muted)" fontSize="10">E</text>
+
+                    {/* r = R point */}
+                    <line x1="30" y1="130" x2="30" y2="30" stroke="var(--border-subtle)" strokeWidth="1" strokeDasharray="2 2" />
+                    <text x="24" y="145" fill="var(--text-primary)" fontSize="10" fontWeight="bold">R</text>
+
+                    {/* E = 0 line for r < R */}
+                    <line x1="0" y1="130" x2="30" y2="130" stroke="#f43f5e" strokeWidth="3" />
+                    <circle cx="30" cy="130" r="2" fill="none" stroke="#f43f5e" strokeWidth="1.5" />
+
+                    {/* Jump to max at r = R and 1/r² decay */}
+                    <circle cx="30" cy="30" r="2.5" fill="#10b981" />
+                    <path d="M 30 30 Q 45 75 80 110" fill="none" stroke="#10b981" strokeWidth="2.5" />
+                    <text x="35" y="25" fill="#10b981" fontSize="9" fontWeight="bold">σ/ε₀</text>
+                    <text x="48" y="70" fill="#10b981" fontSize="9">E ∝ 1/r²</text>
+                  </g>
+                </svg>
+              </div>
+
+              {/* Step-by-Step Derivation Breakdown */}
+              <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+                <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                  <div className="font-bold text-rose-400 mb-1 flex items-center gap-1.5">
+                    <AlertCircle size={13} />
+                    <span>Case 1: Inside the Shell (r &lt; R)</span>
+                  </div>
+                  <p className="text-[var(--text-secondary)]">
+                    All charge resides entirely on the outer shell: q_enclosed = 0.
+                    <span className="block font-mono text-[11px] text-rose-400 font-bold mt-0.5">E_in · (4πr²) = 0 / ε₀ ⟹ E_in = 0</span>
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                  <div className="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
+                    <CheckCircle2 size={13} />
+                    <span>Case 2: Outside the Shell (r ≥ R)</span>
+                  </div>
+                  <p className="text-[var(--text-secondary)]">
+                    Total charge q is enclosed within Gaussian sphere of radius r:
+                    <span className="block font-mono text-[11px] text-emerald-400 font-bold mt-0.5">E_out = (1 / 4πε₀) · (q / r²)</span>
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-center font-bold">
+                  Surface (r = R): E_max = q / (4πε₀R²) = σ / ε₀
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 2. TRANSFORMER CONSTRUCTION & FLUX DERIVATION
+   * ------------------------------------------------------------- */
+  if (diagramId === 'transformer') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-amber-500/15 text-amber-500">
+            <Zap size={16} />
+          </span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+              Transformer Core, Mutual Induction &amp; Flux Loop Diagram
+            </h4>
+            <p className="text-[11px] text-[var(--text-muted)]">
+              Laminated soft-iron core with Primary (N_p) &amp; Secondary (N_s) windings
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+          {/* SVG Diagram */}
+          <div className="w-full lg:w-1/2 flex justify-center">
+            <svg width="280" height="210" viewBox="0 0 280 210" className="overflow-visible select-none">
+              {svgDefs}
+              {/* Outer Laminated Core Frame */}
+              <rect x="40" y="25" width="200" height="150" rx="10" fill="none" stroke="var(--text-muted)" strokeWidth="18" />
+              {/* Inner Core Hole */}
+              <rect x="90" y="65" width="100" height="70" rx="4" fill="var(--bg-surface)" stroke="var(--border-default)" strokeWidth="1.5" />
+
+              {/* Lamination Slices Indicator */}
+              <line x1="50" y1="40" x2="230" y2="40" stroke="var(--border-subtle)" strokeWidth="1" strokeDasharray="3 3" />
+              <line x1="50" y1="160" x2="230" y2="160" stroke="var(--border-subtle)" strokeWidth="1" strokeDasharray="3 3" />
+              <text x="140" y="195" textAnchor="middle" fill="var(--text-muted)" fontSize="10">Laminated Soft-Iron Core (Stops Eddy Currents)</text>
+
+              {/* Magnetic Flux Loop in Core (dashed green circle) */}
+              <rect x="65" y="45" width="150" height="110" rx="8" fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="5 4" />
+              <text x="140" y="58" textAnchor="middle" fill="#10b981" fontSize="10" fontWeight="bold">Mutual Flux Φ(t)</text>
+
+              {/* Primary Windings on Left Limb */}
+              <g stroke="#3b82f6" strokeWidth="3.5" fill="none">
+                <path d="M 25,65 Q 40,55 50,65" />
+                <path d="M 25,85 Q 40,75 50,85" />
+                <path d="M 25,105 Q 40,95 50,105" />
+                <path d="M 25,125 Q 40,115 50,125" />
+              </g>
+              <text x="10" y="100" fill="#3b82f6" fontSize="11" fontWeight="bold">N_p</text>
+              <text x="10" y="115" fill="var(--text-muted)" fontSize="9">V_p, I_p</text>
+
+              {/* Secondary Windings on Right Limb */}
+              <g stroke="#f43f5e" strokeWidth="3.5" fill="none">
+                <path d="M 230,55 Q 240,45 255,55" />
+                <path d="M 230,70 Q 240,60 255,70" />
+                <path d="M 230,85 Q 240,75 255,85" />
+                <path d="M 230,100 Q 240,90 255,100" />
+                <path d="M 230,115 Q 240,105 255,115" />
+                <path d="M 230,130 Q 240,120 255,130" />
+              </g>
+              <text x="260" y="90" fill="#f43f5e" fontSize="11" fontWeight="bold">N_s</text>
+              <text x="260" y="105" fill="var(--text-muted)" fontSize="9">V_s, I_s</text>
+            </svg>
+          </div>
+
+          {/* Derivation Matrix */}
+          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+              <span className="font-bold text-amber-500 uppercase tracking-wide text-[10px]">Transformation Ratio (k):</span>
+              <div className="font-mono text-xs text-[var(--text-primary)] font-bold">
+                V_s / V_p = N_s / N_p = I_p / I_s = k
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
+              <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                <span className="font-bold block text-xs">Step-Up (k &gt; 1):</span>
+                N_s &gt; N_p<br />
+                V_s &gt; V_p<br />
+                I_s &lt; I_p
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400">
+                <span className="font-bold block text-xs">Step-Down (k &lt; 1):</span>
+                N_s &lt; N_p<br />
+                V_s &lt; V_p<br />
+                I_s &gt; I_p
+              </div>
+            </div>
+
+            <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+              • <strong>Energy Conservation:</strong> Input Power = Output Power (V_p · I_p = V_s · I_s) in an ideal transformer with zero losses.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 3. MOVING COIL GALVANOMETER & RADIAL MAGNETIC FIELD
+   * ------------------------------------------------------------- */
+  if (diagramId === 'galvanometer-torque') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-amber-500/15 text-amber-500">
+            <Compass size={16} />
+          </span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+              Moving Coil Galvanometer: Radial Field &amp; Torque Mechanics
+            </h4>
+            <p className="text-[11px] text-[var(--text-muted)]">
+              Why concave magnetic pole pieces ensure θ = 90° for linear current scale (I ∝ θ)
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+          {/* SVG Diagram: Top-view of MCG */}
+          <div className="w-full lg:w-1/2 flex justify-center">
+            <svg width="280" height="200" viewBox="0 0 280 200" className="overflow-visible select-none">
+              {svgDefs}
+              {/* Left Concave North Pole */}
+              <path d="M 20,40 L 70,40 A 65 65 0 0 0 70,160 L 20,160 Z" fill="rgba(244, 63, 94, 0.15)" stroke="#f43f5e" strokeWidth="2" />
+              <text x="35" y="105" fill="#f43f5e" fontSize="16" fontWeight="bold">N</text>
+
+              {/* Right Concave South Pole */}
+              <path d="M 260,40 L 210,40 A 65 65 0 0 1 210,160 L 260,160 Z" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="2" />
+              <text x="235" y="105" fill="#3b82f6" fontSize="16" fontWeight="bold">S</text>
+
+              {/* Soft Iron Cylindrical Core in Center */}
+              <circle cx="140" cy="100" r="32" fill="var(--bg-elevated)" stroke="var(--text-muted)" strokeWidth="2" />
+              <text x="140" y="97" textAnchor="middle" fill="var(--text-muted)" fontSize="9" fontWeight="bold">Soft-Iron</text>
+              <text x="140" y="108" textAnchor="middle" fill="var(--text-muted)" fontSize="9">Core</text>
+
+              {/* Radial Field Lines converging to center */}
+              <line x1="72" y1="70" x2="112" y2="85" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-emerald)" />
+              <line x1="70" y1="100" x2="108" y2="100" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-emerald)" />
+              <line x1="72" y1="130" x2="112" y2="115" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-emerald)" />
+
+              <line x1="168" y1="85" x2="208" y2="70" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-emerald)" />
+              <line x1="172" y1="100" x2="210" y2="100" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-emerald)" />
+              <line x1="168" y1="115" x2="208" y2="130" stroke="#10b981" strokeWidth="1.5" markerEnd="url(#arrow-emerald)" />
+
+              {/* Rectangular Coil (tilted loop) */}
+              <rect x="98" y="95" width="84" height="10" rx="3" fill="rgba(245, 158, 11, 0.4)" stroke="#f59e0b" strokeWidth="2" transform="rotate(-25 140 100)" />
+              <text x="140" y="180" textAnchor="middle" fill="#10b981" fontSize="10" fontWeight="bold">Radial Field: θ = 90° Everywhere</text>
+            </svg>
+          </div>
+
+          {/* Derivation Breakdown */}
+          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+              <span className="font-bold text-amber-500 uppercase tracking-wide text-[10px]">Equilibrium of Torques:</span>
+              <p className="text-[var(--text-secondary)] font-mono text-xs">
+                Deflecting Torque = Restoring Torque<br />
+                <span className="text-amber-400 font-bold">N I A B = C · θ</span>
+              </p>
+            </div>
+
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+              <span className="font-bold text-blue-400 uppercase tracking-wide text-[10px]">Why Radial Field is Crucial:</span>
+              <p className="text-[var(--text-secondary)] leading-relaxed">
+                In a parallel field, torque is τ = NIAB sinθ (non-linear). Concave poles + soft iron core ensure the plane of the coil is <strong>always parallel to magnetic lines</strong> (θ = 90°), making τ maximum and constant!
+              </p>
+            </div>
+
+            <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-center font-bold">
+              I = (C / NAB) · θ ⟹ I ∝ θ (Linear Scale)
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 4. ELECTRIC DIPOLE AXIAL & EQUATORIAL FIELDS
+   * ------------------------------------------------------------- */
+  if (diagramId === 'dipole-fields') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-blue-500/15 text-blue-500">
+              <Zap size={16} />
+            </span>
+            <div>
+              <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                Electric Dipole Field Geometry (Axial vs Equatorial)
+              </h4>
+              <p className="text-[11px] text-[var(--text-muted)]">
+                Vector resolution &amp; inverse-cube distance relationship (E ∝ 1/r³)
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-subtle)]">
+            <button
+              onClick={() => setDipoleMode('axial')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                dipoleMode === 'axial' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Axial Position
+            </button>
+            <button
+              onClick={() => setDipoleMode('equatorial')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                dipoleMode === 'equatorial' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Equatorial Position
+            </button>
+          </div>
+        </div>
+
+        {dipoleMode === 'axial' ? (
+          <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+            {/* SVG Axial Vector Alignment */}
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <svg width="280" height="150" viewBox="0 0 280 150" className="overflow-visible select-none">
+                {svgDefs}
+                {/* Axis line */}
+                <line x1="10" y1="80" x2="270" y2="80" stroke="var(--border-subtle)" strokeWidth="1.5" strokeDasharray="3 3" />
+
+                {/* -q Charge */}
+                <circle cx="50" cy="80" r="14" fill="#3b82f6" />
+                <text x="50" y="85" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">-q</text>
+
+                {/* +q Charge */}
+                <circle cx="110" cy="80" r="14" fill="#f43f5e" />
+                <text x="110" y="85" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">+q</text>
+
+                {/* Separation 2a */}
+                <line x1="50" y1="110" x2="110" y2="110" stroke="var(--text-muted)" strokeWidth="1.5" />
+                <text x="80" y="125" textAnchor="middle" fill="var(--text-muted)" fontSize="10">2a</text>
+
+                {/* Point P on Axis */}
+                <circle cx="210" cy="80" r="4" fill="var(--text-primary)" />
+                <text x="210" y="70" textAnchor="middle" fill="var(--text-primary)" fontSize="11" fontWeight="bold">P</text>
+
+                {/* Vectors at P */}
+                <line x1="210" y1="80" x2="265" y2="80" stroke="#f43f5e" strokeWidth="2.5" markerEnd="url(#arrow-rose)" />
+                <text x="245" y="65" fill="#f43f5e" fontSize="10" fontWeight="bold">E₊</text>
+
+                <line x1="210" y1="80" x2="175" y2="80" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+                <text x="175" y="65" fill="#3b82f6" fontSize="10" fontWeight="bold">E₋</text>
+                
+                {/* Net E_axial vector */}
+                <text x="210" y="115" textAnchor="middle" fill="#10b981" fontSize="11" fontWeight="bold">E_net = E₊ - E₋ (Along p⃗)</text>
+              </svg>
+            </div>
+
+            {/* Derivation Formula Card */}
+            <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] font-mono space-y-1">
+                <span className="text-[10px] font-bold text-amber-500 uppercase">Short Dipole Result (r ≫ a):</span>
+                <div className="text-xs font-bold text-emerald-400">
+                  E_axial = (1 / 4πε₀) · (2p / r³)
+                </div>
+                <div className="text-[11px] text-[var(--text-secondary)]">
+                  Direction is PARALLEL to dipole moment p⃗.
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+            {/* SVG Equatorial Component Cancellation */}
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <svg width="280" height="180" viewBox="0 0 280 180" className="overflow-visible select-none">
+                {svgDefs}
+                {/* Dipole axis */}
+                <line x1="60" y1="140" x2="200" y2="140" stroke="var(--border-subtle)" strokeWidth="1.5" />
+                
+                {/* -q Charge */}
+                <circle cx="80" cy="140" r="12" fill="#3b82f6" />
+                <text x="80" y="144" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">-q</text>
+
+                {/* +q Charge */}
+                <circle cx="180" cy="140" r="12" fill="#f43f5e" />
+                <text x="180" y="144" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">+q</text>
+
+                {/* Equatorial point P */}
+                <circle cx="130" cy="40" r="4" fill="var(--text-primary)" />
+                <text x="130" y="30" textAnchor="middle" fill="var(--text-primary)" fontSize="11" fontWeight="bold">P (r)</text>
+
+                {/* Hypotenuse lines */}
+                <line x1="80" y1="140" x2="130" y2="40" stroke="var(--border-subtle)" strokeWidth="1" strokeDasharray="3 3" />
+                <line x1="180" y1="140" x2="130" y2="40" stroke="var(--border-subtle)" strokeWidth="1" strokeDasharray="3 3" />
+
+                {/* Vectors at P */}
+                <line x1="130" y1="40" x2="165" y2="15" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-rose)" />
+                <text x="170" y="20" fill="#f43f5e" fontSize="9" fontWeight="bold">E₊</text>
+
+                <line x1="130" y1="40" x2="95" y2="65" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+                <text x="85" y="70" fill="#3b82f6" fontSize="9" fontWeight="bold">E₋</text>
+
+                {/* Net E_eq pointing left (opposite to p⃗) */}
+                <line x1="130" y1="40" x2="70" y2="40" stroke="#10b981" strokeWidth="2.5" markerEnd="url(#arrow-emerald)" />
+                <text x="50" y="35" fill="#10b981" fontSize="10" fontWeight="bold">E_net (Opposite p⃗)</text>
+              </svg>
+            </div>
+
+            {/* Derivation Formula Card */}
+            <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] font-mono space-y-1">
+                <span className="text-[10px] font-bold text-amber-500 uppercase">Short Dipole Result (r ≫ a):</span>
+                <div className="text-xs font-bold text-emerald-400">
+                  E_eq = (1 / 4πε₀) · (p / r³)
+                </div>
+                <div className="text-[11px] text-amber-400 font-bold mt-1">
+                  E_axial = 2 · E_eq  (Twice the equatorial strength!)
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 5. WHEATSTONE BRIDGE BALANCED CIRCUIT
+   * ------------------------------------------------------------- */
+  if (diagramId === 'wheatstone-bridge') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-500">
+            <Activity size={16} />
+          </span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+              Wheatstone Bridge Null-Deflection Circuit
+            </h4>
+            <p className="text-[11px] text-[var(--text-muted)]">
+              Loop rule KVL derivations leading to P/Q = R/S balance condition
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+          {/* SVG Diamond Circuit */}
+          <div className="w-full lg:w-1/2 flex justify-center">
+            <svg width="260" height="190" viewBox="0 0 260 190" className="overflow-visible select-none">
+              {svgDefs}
+              {/* Diamond Outline */}
+              <line x1="40" y1="95" x2="130" y2="25" stroke="#3b82f6" strokeWidth="2.5" />
+              <text x="75" y="50" fill="#3b82f6" fontSize="12" fontWeight="bold">P</text>
+
+              <line x1="130" y1="25" x2="220" y2="95" stroke="#10b981" strokeWidth="2.5" />
+              <text x="180" y="50" fill="#10b981" fontSize="12" fontWeight="bold">Q</text>
+
+              <line x1="40" y1="95" x2="130" y2="165" stroke="#f59e0b" strokeWidth="2.5" />
+              <text x="75" y="145" fill="#f59e0b" fontSize="12" fontWeight="bold">R</text>
+
+              <line x1="130" y1="165" x2="220" y2="95" stroke="#a855f7" strokeWidth="2.5" />
+              <text x="180" y="145" fill="#a855f7" fontSize="12" fontWeight="bold">S</text>
+
+              {/* Central Galvanometer Branch BD */}
+              <line x1="130" y1="25" x2="130" y2="165" stroke="var(--text-muted)" strokeWidth="1.5" strokeDasharray="3 3" />
+              <circle cx="130" cy="95" r="16" fill="var(--bg-elevated)" stroke="#f43f5e" strokeWidth="2" />
+              <text x="130" y="100" textAnchor="middle" fill="#f43f5e" fontSize="12" fontWeight="bold">G</text>
+
+              {/* Node labels */}
+              <text x="25" y="98" fill="var(--text-primary)" fontSize="11" fontWeight="bold">A</text>
+              <text x="130" y="15" textAnchor="middle" fill="var(--text-primary)" fontSize="11" fontWeight="bold">B</text>
+              <text x="230" y="98" fill="var(--text-primary)" fontSize="11" fontWeight="bold">C</text>
+              <text x="130" y="180" textAnchor="middle" fill="var(--text-primary)" fontSize="11" fontWeight="bold">D</text>
+
+              <text x="130" y="125" textAnchor="middle" fill="#f43f5e" fontSize="9" fontWeight="bold">I_g = 0</text>
+            </svg>
+          </div>
+
+          {/* Derivation Steps */}
+          <div className="w-full lg:w-1/2 space-y-2 text-xs">
+            <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono">
+              <span className="text-[10px] text-amber-500 font-bold block">Balance Condition: V_B = V_D</span>
+              <p className="text-[var(--text-secondary)] text-[11px] mt-0.5">
+                Loop ABDA: -I₁P + I₂R = 0 ⟹ I₁P = I₂R<br />
+                Loop BCDB: -I₁Q + I₂S = 0 ⟹ I₁Q = I₂S
+              </p>
+            </div>
+
+            <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-center font-bold">
+              Dividing loops: P / Q = R / S
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 6. LCR PHASOR DIAGRAM & RESONANCE CURVE
+   * ------------------------------------------------------------- */
+  if (diagramId === 'lcr-circuit') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-purple-500/15 text-purple-500">
+              <Activity size={16} />
+            </span>
+            <div>
+              <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                Series LCR AC Circuit: Phasor Diagram &amp; Electrical Resonance
+              </h4>
+              <p className="text-[11px] text-[var(--text-muted)]">
+                Phase relationships between R, L, C and resonance frequency formula
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-subtle)]">
+            <button
+              onClick={() => setLcrMode('phasor')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                lcrMode === 'phasor' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Phasor Diagram
+            </button>
+            <button
+              onClick={() => setLcrMode('resonance')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                lcrMode === 'resonance' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Resonance Curve
+            </button>
+          </div>
+        </div>
+
+        {lcrMode === 'phasor' ? (
+          <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <svg width="260" height="190" viewBox="0 0 260 190" className="overflow-visible select-none">
+                {svgDefs}
+                {/* Horizontal reference current I and V_R */}
+                <line x1="50" y1="130" x2="190" y2="130" stroke="#3b82f6" strokeWidth="2.5" markerEnd="url(#arrow-blue)" />
+                <text x="195" y="134" fill="#3b82f6" fontSize="11" fontWeight="bold">V_R (I₀R)</text>
+
+                {/* Vertical reactive net voltage (V_L - V_C) */}
+                <line x1="50" y1="130" x2="50" y2="30" stroke="#a855f7" strokeWidth="2.5" markerEnd="url(#arrow-purple)" />
+                <text x="25" y="25" fill="#a855f7" fontSize="10" fontWeight="bold">V_L - V_C</text>
+
+                {/* Resultant Hypotenuse V_0 */}
+                <line x1="50" y1="130" x2="190" y2="30" stroke="#10b981" strokeWidth="3" markerEnd="url(#arrow-emerald)" />
+                <text x="140" y="65" fill="#10b981" fontSize="12" fontWeight="bold">V₀ = I₀Z</text>
+
+                {/* Phase Angle φ */}
+                <path d="M 90,130 A 40 40 0 0 0 85,105" fill="none" stroke="#f59e0b" strokeWidth="1.5" />
+                <text x="95" y="118" fill="#f59e0b" fontSize="11" fontWeight="bold">φ</text>
+              </svg>
+            </div>
+
+            <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+              <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-secondary)]">
+                <span className="font-bold text-amber-500 block mb-1">Pythagorean Impedance:</span>
+                Z = √[R² + (X_L - X_C)²]<br />
+                tan φ = (X_L - X_C) / R
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <svg width="260" height="170" viewBox="0 0 260 170" className="overflow-visible select-none">
+                {svgDefs}
+                {/* Axes */}
+                <line x1="30" y1="140" x2="240" y2="140" stroke="var(--text-muted)" strokeWidth="1.5" />
+                <line x1="30" y1="140" x2="30" y2="20" stroke="var(--text-muted)" strokeWidth="1.5" />
+                <text x="245" y="145" fill="var(--text-muted)" fontSize="10">ω</text>
+                <text x="20" y="20" fill="var(--text-muted)" fontSize="10">I₀</text>
+
+                {/* Sharp Resonance Bell Curve */}
+                <path d="M 40,135 Q 110,130 130,35 Q 150,130 220,135" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" strokeWidth="2.5" />
+                
+                {/* Resonant peak ω₀ */}
+                <line x1="130" y1="140" x2="130" y2="35" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3 3" />
+                <text x="130" y="155" textAnchor="middle" fill="#f59e0b" fontSize="11" fontWeight="bold">ω₀ = 1/√(LC)</text>
+                <text x="130" y="25" textAnchor="middle" fill="#10b981" fontSize="10" fontWeight="bold">I_max = V₀/R</text>
+              </svg>
+            </div>
+
+            <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+              <div className="p-2.5 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-secondary)]">
+                <span className="font-bold text-emerald-400 block mb-1">At Resonance:</span>
+                • X_L = X_C ⟹ Z_min = R<br />
+                • Current I_max = V₀ / R<br />
+                • Power factor cos φ = 1 (purely resistive)
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 7. GALVANOMETER CONVERSION TO AMMETER & VOLTMETER
+   * ------------------------------------------------------------- */
+  if (diagramId === 'galvanometer-conversion') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-500">
+              <Scale size={16} />
+            </span>
+            <div>
+              <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                Galvanometer Modification Circuit Visualizer
+              </h4>
+              <p className="text-[11px] text-[var(--text-muted)]">
+                Parallel Shunt (Ammeter) vs Series Multiplier (Voltmeter)
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-subtle)]">
+            <button
+              onClick={() => setGalvMode('ammeter')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                galvMode === 'ammeter' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Ammeter (Parallel Shunt)
+            </button>
+            <button
+              onClick={() => setGalvMode('voltmeter')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                galvMode === 'voltmeter' 
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Voltmeter (Series High R)
+            </button>
+          </div>
+        </div>
+
+        {galvMode === 'ammeter' ? (
+          <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+            {/* SVG Ammeter */}
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <svg width="270" height="150" viewBox="0 0 270 150" className="overflow-visible select-none">
+                {svgDefs}
+                {/* Input wire */}
+                <line x1="20" y1="75" x2="60" y2="75" stroke="#3b82f6" strokeWidth="2.5" markerEnd="url(#arrow-blue)" />
+                <text x="35" y="65" fill="#3b82f6" fontSize="12" fontWeight="bold">I</text>
+
+                {/* Top Branch with Galvanometer G */}
+                <path d="M 60,75 L 80,35 L 190,35 L 210,75" fill="none" stroke="#f43f5e" strokeWidth="2" />
+                <circle cx="135" cy="35" r="16" fill="var(--bg-elevated)" stroke="#f43f5e" strokeWidth="2" />
+                <text x="135" y="40" textAnchor="middle" fill="#f43f5e" fontSize="12" fontWeight="bold">G</text>
+                <text x="135" y="15" textAnchor="middle" fill="#f43f5e" fontSize="10">I_g</text>
+
+                {/* Bottom Branch with Low Resistance Shunt S */}
+                <path d="M 60,75 L 80,115 L 190,115 L 210,75" fill="none" stroke="#10b981" strokeWidth="2" />
+                <rect x="110" y="105" width="50" height="20" rx="3" fill="var(--bg-elevated)" stroke="#10b981" strokeWidth="2" />
+                <text x="135" y="119" textAnchor="middle" fill="#10b981" fontSize="11" fontWeight="bold">Shunt S</text>
+                <text x="135" y="142" textAnchor="middle" fill="#10b981" fontSize="10">I - I_g (Majority)</text>
+
+                {/* Output wire */}
+                <line x1="210" y1="75" x2="250" y2="75" stroke="#3b82f6" strokeWidth="2.5" markerEnd="url(#arrow-blue)" />
+                <text x="230" y="65" fill="#3b82f6" fontSize="12" fontWeight="bold">I</text>
+              </svg>
+            </div>
+
+            <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+                <span className="text-[10px] text-emerald-400 font-bold block">Shunt Formula:</span>
+                <div className="text-xs text-[var(--text-primary)] font-bold">
+                  S = (I_g · G) / (I - I_g)
+                </div>
+                <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+                  Ideal Ammeter Resistance = <strong>0</strong> (connected in series with circuit).
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+            {/* SVG Voltmeter */}
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <svg width="270" height="130" viewBox="0 0 270 130" className="overflow-visible select-none">
+                {svgDefs}
+                {/* Wire connecting G in series with High Resistor R */}
+                <line x1="20" y1="65" x2="70" y2="65" stroke="#3b82f6" strokeWidth="2" />
+                <circle cx="90" cy="65" r="18" fill="var(--bg-elevated)" stroke="#f43f5e" strokeWidth="2" />
+                <text x="90" y="70" textAnchor="middle" fill="#f43f5e" fontSize="13" fontWeight="bold">G</text>
+
+                <line x1="108" y1="65" x2="145" y2="65" stroke="#3b82f6" strokeWidth="2" />
+
+                <rect x="145" y="52" width="65" height="26" rx="4" fill="var(--bg-elevated)" stroke="#a855f7" strokeWidth="2" />
+                <text x="177" y="69" textAnchor="middle" fill="#a855f7" fontSize="12" fontWeight="bold">High R</text>
+
+                <line x1="210" y1="65" x2="250" y2="65" stroke="#3b82f6" strokeWidth="2" />
+
+                <text x="135" y="110" textAnchor="middle" fill="#f59e0b" fontSize="11" fontWeight="bold">Total Voltage V across (G + R)</text>
+              </svg>
+            </div>
+
+            <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+              <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+                <span className="text-[10px] text-purple-400 font-bold block">Series Resistor Formula:</span>
+                <div className="text-xs text-[var(--text-primary)] font-bold">
+                  R = (V / I_g) - G
+                </div>
+                <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+                  Ideal Voltmeter Resistance = <strong>∞</strong> (connected in parallel with component).
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 8. FORCE BETWEEN PARALLEL CURRENT-CARRYING CONDUCTORS
+   * ------------------------------------------------------------- */
+  if (diagramId === 'parallel-wires') {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-blue-500/15 text-blue-500">
+              <Compass size={16} />
+            </span>
+            <div>
+              <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                Parallel Conductors: Magnetic Interaction &amp; 1 Ampere Force
+              </h4>
+              <p className="text-[11px] text-[var(--text-muted)]">
+                Parallel currents attract (Fleming&apos;s Left-Hand Rule) vs Antiparallel repel
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-subtle)]">
+            <button
+              onClick={() => setParallelMode('attractive')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                parallelMode === 'attractive' 
+                  ? 'bg-emerald-600 text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Parallel (Attractive)
+            </button>
+            <button
+              onClick={() => setParallelMode('repulsive')}
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                parallelMode === 'repulsive' 
+                  ? 'bg-rose-600 text-white shadow-xs' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Antiparallel (Repulsive)
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+          {/* SVG Diagram */}
+          <div className="w-full lg:w-1/2 flex justify-center">
+            <svg width="270" height="180" viewBox="0 0 270 180" className="overflow-visible select-none">
+              {svgDefs}
+              {/* Wire 1 */}
+              <line x1="80" y1="20" x2="80" y2="160" stroke="#3b82f6" strokeWidth="4" />
+              <line x1="80" y1="60" x2="80" y2="40" stroke="#ffffff" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+              <text x="50" y="30" fill="#3b82f6" fontSize="12" fontWeight="bold">I₁</text>
+
+              {/* Wire 2 */}
+              <line x1="190" y1="20" x2="190" y2="160" stroke="#10b981" strokeWidth="4" />
+              {parallelMode === 'attractive' ? (
+                <line x1="190" y1="60" x2="190" y2="40" stroke="#ffffff" strokeWidth="2" markerEnd="url(#arrow-emerald)" />
+              ) : (
+                <line x1="190" y1="120" x2="190" y2="140" stroke="#ffffff" strokeWidth="2" markerEnd="url(#arrow-emerald)" />
+              )}
+              <text x="205" y={parallelMode === 'attractive' ? 30 : 155} fill="#10b981" fontSize="12" fontWeight="bold">I₂</text>
+
+              {/* Separation d */}
+              <line x1="80" y1="90" x2="190" y2="90" stroke="var(--text-muted)" strokeWidth="1" strokeDasharray="3 3" />
+              <text x="135" y="82" textAnchor="middle" fill="var(--text-muted)" fontSize="11" fontWeight="bold">d</text>
+
+              {/* Forces */}
+              {parallelMode === 'attractive' ? (
+                <>
+                  {/* F12 on Wire 1 pointing right toward wire 2 */}
+                  <line x1="80" y1="90" x2="120" y2="90" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#arrow-amber)" />
+                  <text x="100" y="108" fill="#f59e0b" fontSize="10" fontWeight="bold">F₁₂</text>
+
+                  {/* F21 on Wire 2 pointing left toward wire 1 */}
+                  <line x1="190" y1="90" x2="150" y2="90" stroke="#f59e0b" strokeWidth="3" markerEnd="url(#arrow-amber)" />
+                  <text x="160" y="108" fill="#f59e0b" fontSize="10" fontWeight="bold">F₂₁</text>
+                  <text x="135" y="145" textAnchor="middle" fill="#10b981" fontSize="11" fontWeight="bold">Attractive Force</text>
+                </>
+              ) : (
+                <>
+                  {/* F12 on Wire 1 pointing left away from wire 2 */}
+                  <line x1="80" y1="90" x2="40" y2="90" stroke="#f43f5e" strokeWidth="3" markerEnd="url(#arrow-rose)" />
+                  <text x="50" y="108" fill="#f43f5e" fontSize="10" fontWeight="bold">F₁₂</text>
+
+                  {/* F21 on Wire 2 pointing right away from wire 1 */}
+                  <line x1="190" y1="90" x2="230" y2="90" stroke="#f43f5e" strokeWidth="3" markerEnd="url(#arrow-rose)" />
+                  <text x="200" y="108" fill="#f43f5e" fontSize="10" fontWeight="bold">F₂₁</text>
+                  <text x="135" y="145" textAnchor="middle" fill="#f43f5e" fontSize="11" fontWeight="bold">Repulsive Force</text>
+                </>
+              )}
+            </svg>
+          </div>
+
+          <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+            <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+              <span className="text-[10px] text-amber-500 font-bold block">Force per unit length:</span>
+              <div className="text-xs text-[var(--text-primary)] font-bold">
+                F / L = (μ₀ · I₁ · I₂) / (2π · d)
+              </div>
+              <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+                <strong>Standard 1 Ampere:</strong> Produces F/L = 2 × 10⁻⁷ N/m when d = 1 m in vacuum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}

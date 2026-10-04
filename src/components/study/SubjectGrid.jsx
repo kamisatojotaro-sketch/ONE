@@ -1,4 +1,4 @@
-import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, Flame } from 'lucide-react';
+import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, Award } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 
 export default function SubjectGrid({ 
@@ -130,8 +130,8 @@ export default function SubjectGrid({
             onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('physics', 'IMPORTANT') : onSelectSubject('physics')}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/35 text-xs font-bold text-amber-500 dark:text-amber-400 hover:bg-amber-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
           >
-            <Flame size={13} className="text-amber-500 animate-pulse" />
-            <span>🔥 Top 22 Guaranteed Physics Qs</span>
+            <Award size={13} className="text-amber-500" />
+            <span>Top 22 Guaranteed Physics Questions</span>
           </button>
         </div>
       </div>

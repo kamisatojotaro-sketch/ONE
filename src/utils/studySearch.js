@@ -479,7 +479,7 @@ export function buildStudySearchIndex() {
         subchapterId: null,
         subchapterTitle: null,
         type: 'question',
-        typeLabel: `🔥 Guaranteed Board Q (${iq.marks})`,
+        typeLabel: `Guaranteed Board Q (${iq.marks})`,
         title: `Q${iq.number}: ${iq.title} (${iq.marks})`,
         content: `${iq.questionPrompt} ${iq.modelAnswer.statement} ${iq.modelAnswer.derivations.map(d => `${d.name} ${d.formula}`).join(' ')} ${iq.modelAnswer.examinerTips}`,
         tab: 'IMPORTANT',
