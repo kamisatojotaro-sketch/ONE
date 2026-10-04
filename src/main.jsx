@@ -5,6 +5,7 @@ import './index.css'
 import 'katex/dist/katex.min.css'
 import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
+import { TimerProvider } from './context/TimerContext.jsx'
 import ErrorBoundary from './components/shared/ErrorBoundary.jsx'
 
 // Global window error listener for unhandled script errors
@@ -37,7 +38,9 @@ createRoot(document.getElementById('root')).render(
     <ErrorBoundary>
       <BrowserRouter>
         <ThemeProvider>
-          <App />
+          <TimerProvider>
+            <App />
+          </TimerProvider>
         </ThemeProvider>
       </BrowserRouter>
     </ErrorBoundary>

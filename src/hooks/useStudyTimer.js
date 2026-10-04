@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { playBellSound } from '../context/TimerContext';
 
 export function useStudyTimer(defaultMinutes = 25) {
   const [minutes, setMinutes] = useState(defaultMinutes);
@@ -43,6 +44,7 @@ export function useStudyTimer(defaultMinutes = 25) {
             clearInterval(intervalRef.current);
             setIsRunning(false);
             setIsCompleted(true);
+            playBellSound();
             return 0;
           }
           return prev - 1;

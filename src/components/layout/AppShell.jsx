@@ -3,6 +3,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { 
   Home, Gamepad2, Film, Music, Tv, BookOpen, Settings, Sun, Moon 
 } from 'lucide-react';
+import TimerAlarmOverlay from '../timer/TimerAlarmOverlay';
 
 export default function AppShell({ children }) {
   const { isDark, toggleTheme } = useTheme();
@@ -110,6 +111,9 @@ export default function AppShell({ children }) {
           ))}
         </div>
       </nav>
+
+      {/* Global Full-Screen Alarm Overlay */}
+      <TimerAlarmOverlay />
     </div>
   );
 }

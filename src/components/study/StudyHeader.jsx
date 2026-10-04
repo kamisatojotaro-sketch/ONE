@@ -1,6 +1,6 @@
 import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, ChevronDown, Search, Globe } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
-import { useStudyTimer } from '../../hooks/useStudyTimer';
+import { useTimer } from '../../context/TimerContext';
 
 export default function StudyHeader({
   selectedSubject,
@@ -12,7 +12,7 @@ export default function StudyHeader({
   onOpenSubjectSearch
 }) {
   const subject = NCERT_SYLLABUS[selectedSubject];
-  const timer = useStudyTimer(25);
+  const timer = useTimer();
 
   if (!subject) return null;
 
