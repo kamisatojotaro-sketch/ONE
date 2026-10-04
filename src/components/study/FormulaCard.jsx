@@ -1,4 +1,5 @@
 import { Sparkles, BookOpen } from 'lucide-react';
+import katex from 'katex';
 import { FormattedLatex } from './LatexView';
 
 // Curated dictionary of specific formulas and their exact, relevant variables
@@ -278,29 +279,57 @@ const FORMULA_METADATA = {
   }
 };
 
-// Universal formatter that converts raw programmer underscores to proper typographic subscripts
+// Universal formatter that converts LaTeX expressions, removes markdown asterisks, and renders typographic math
 export function formatMathString(str) {
   if (!str) return '';
 
-  return str
-    // Convert any word_sub pattern to word<sub>sub</sub>
-    .replace(/([A-Za-z0-9α-ωΑ-Ω°]+)_([A-Za-z0-9°+−]+)/g, '$1<sub>$2</sub>')
-    // Superscripts
-    .replace(/\br\^2\b|\br²\b/g, 'r<sup>2</sup>')
-    .replace(/\br\^3\b|\br³\b/g, 'r<sup>3</sup>')
-    .replace(/\bx\^2\b|\bx²\b/g, 'x<sup>2</sup>')
-    .replace(/\bx\^3\b|\bx³\b/g, 'x<sup>3</sup>')
-    .replace(/\bV\^2\b|\bV²\b/g, 'V<sup>2</sup>')
-    .replace(/\bI\^2\b|\bI²\b/g, 'I<sup>2</sup>')
-    .replace(/\b10\^9\b|\b10⁹\b/g, '10<sup>9</sup>')
-    .replace(/\b10\^-7\b|\b10⁻⁷\b/g, '10<sup>−7</sup>')
-    .replace(/\b10\^-12\b|\b10⁻¹²\b/g, '10<sup>−12</sup>')
-    .replace(/\b3 × 10\^8\b|\b3 × 10⁸\b/g, '3 × 10<sup>8</sup>')
-    // Chemical Reaction Arrows & Indicators
+  let out = str;
+
+  // 1. Remove markdown bold asterisks and render clean bold text
+  out = out.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-[var(--text-primary)]">$1</strong>');
+
+  // 2. Render KaTeX block math $$...$$
+  out = out.replace(/\$\$([\s\S]+?)\$\$/g, (_, math) => {
+    try {
+      return `<span class="katex-render block my-2 text-center overflow-x-auto py-1 scrollbar-none">${katex.renderToString(math.trim(), { displayMode: true, throwOnError: false, output: 'htmlAndMathml' })}</span>`;
+    } catch {
+      return math;
+    }
+  });
+
+  // 3. Render KaTeX inline math $...$
+  out = out.replace(/\$([^\$\n]+?)\$/g, (_, math) => {
+    try {
+      return `<span class="katex-render inline-block align-middle px-0.5">${katex.renderToString(math.trim(), { displayMode: false, throwOnError: false, output: 'htmlAndMathml' })}</span>`;
+    } catch {
+      return math;
+    }
+  });
+
+  // 4. Chemical Reaction Arrows & Indicators
+  out = out
     .replace(/⟶|-->/g, ' <span class="font-bold text-[var(--accent-primary)] px-1">⟶</span> ')
     .replace(/⇌|<=>/g, ' <span class="font-bold text-amber-500 px-1">⇌</span> ')
     .replace(/↑/g, '<sup>↑</sup>')
     .replace(/↓/g, '<sub>↓</sub>');
+
+  // 5. Convert any word_sub pattern to word<sub>sub</sub> (outside of tags)
+  if (!out.includes('class="katex')) {
+    out = out
+      .replace(/([A-Za-z0-9α-ωΑ-Ω°]+)_([A-Za-z0-9°+−]+)/g, '$1<sub>$2</sub>')
+      .replace(/\br\^2\b|\br²\b/g, 'r<sup>2</sup>')
+      .replace(/\br\^3\b|\br³\b/g, 'r<sup>3</sup>')
+      .replace(/\bx\^2\b|\bx²\b/g, 'x<sup>2</sup>')
+      .replace(/\bx\^3\b|\bx³\b/g, 'x<sup>3</sup>')
+      .replace(/\bV\^2\b|\bV²\b/g, 'V<sup>2</sup>')
+      .replace(/\bI\^2\b|\bI²\b/g, 'I<sup>2</sup>')
+      .replace(/\b10\^9\b|\b10⁹\b/g, '10<sup>9</sup>')
+      .replace(/\b10\^-7\b|\b10⁻⁷\b/g, '10<sup>−7</sup>')
+      .replace(/\b10\^-12\b|\b10⁻¹²\b/g, '10<sup>−12</sup>')
+      .replace(/\b3 × 10\^8\b|\b3 × 10⁸\b/g, '3 × 10<sup>8</sup>');
+  }
+
+  return out;
 }
 
 // Find curated metadata for a formula or create clean default

@@ -1,5 +1,5 @@
 // Full Granular NCERT Class 12 Physics High-Yield Notes
-// Enriched with Step-by-Step Textbook Derivations (NODIA & NCERT Standards)
+// Enriched with Step-by-Step Textbook Derivations & Handwritten Exam Priority Markers
 
 export const PHYSICS_CHAPTERS = [
   {
@@ -25,7 +25,7 @@ export const PHYSICS_CHAPTERS = [
               "F₁₂ = (kq₁q₂ / r³) · r₁₂ = −F₂₁",
               "k = 1 / (4πε₀) ≈ 9 × 10⁹ N·m²/C²"
             ],
-            "derivations": "**1. Scalar Formulation:**\nBy Coulomb's law, the electrostatic force between two stationary point charges $q_1$ and $q_2$ separated by distance $r$ in vacuum is:\n$$F = \\frac{1}{4\\pi\\varepsilon_0} \\frac{|q_1 q_2|}{r^2}$$\n\n**2. Vector Formulation:**\nLet $\\vec{r}_1$ and $\\vec{r}_2$ be position vectors of charges $q_1$ and $q_2$. Displacement vector from $q_2$ to $q_1$ is $\\vec{r}_{12} = \\vec{r}_1 - \\vec{r}_2$, with magnitude $r_{12} = |\\vec{r}_{12}|$ and unit vector $\\hat{r}_{12} = \\frac{\\vec{r}_{12}}{r_{12}}$.\nThe force $\\vec{F}_{12}$ exerted on charge $q_1$ by charge $q_2$ is:\n$$\\vec{F}_{12} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r_{12}^2} \\hat{r}_{12} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r_{12}^3} \\vec{r}_{12}$$\n\n**3. Newton's Third Law Verification:**\nSimilarly, the force on charge $q_2$ due to charge $q_1$ is:\n$$\\vec{F}_{21} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r_{21}^2} \\hat{r}_{21} = -\\vec{F}_{12}$$\nHence, Coulomb forces form an action-reaction pair obeying Newton's Third Law of Motion."
+            "derivations": "1. Scalar Formulation:\nBy Coulomb's law, the electrostatic force between two stationary point charges $q_1$ and $q_2$ separated by distance $r$ in vacuum is:\n$$F = \\frac{1}{4\\pi\\varepsilon_0} \\frac{|q_1 q_2|}{r^2}$$\n\n2. Vector Formulation:\nLet $\\vec{r}_1$ and $\\vec{r}_2$ be position vectors of charges $q_1$ and $q_2$. Displacement vector from $q_2$ to $q_1$ is $\\vec{r}_{12} = \\vec{r}_1 - \\vec{r}_2$, with magnitude $r_{12} = |\\vec{r}_{12}|$ and unit vector $\\hat{r}_{12} = \\frac{\\vec{r}_{12}}{r_{12}}$.\nThe force $\\vec{F}_{12}$ exerted on charge $q_1$ by charge $q_2$ is:\n$$\\vec{F}_{12} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r_{12}^2} \\hat{r}_{12} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r_{12}^3} \\vec{r}_{12}$$\n\n3. Newton's Third Law Verification:\nSimilarly, the force on charge $q_2$ due to charge $q_1$ is:\n$$\\vec{F}_{21} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r_{21}^2} \\hat{r}_{21} = -\\vec{F}_{12}$$\nHence, Coulomb forces form an action-reaction pair obeying Newton's Third Law of Motion."
           }
         ]
       },
@@ -60,7 +60,7 @@ export const PHYSICS_CHAPTERS = [
               "E = (1 / 4πε₀) · (q / r²)",
               "E ∝ 1 / r²"
             ],
-            "derivations": "**1. Setup:** Consider an isolated point charge $+q$ at origin $O$. Let $P$ be a point at radial distance $r$. Place a vanishing test charge $q_0$ at $P$.\n\n**2. Force on Test Charge:** By Coulomb's law:\n$$\\vec{F} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q q_0}{r^2} \\hat{r}$$\n\n**3. Electric Field Intensity:** By definition, field is force per unit test charge:\n$$\\vec{E} = \\lim_{q_0 \\to 0} \\frac{\\vec{F}}{q_0} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q}{r^2} \\hat{r}$$\nMagnitude decays with the inverse square of distance: $E \\propto 1/r^2$."
+            "derivations": "1. Setup: Consider an isolated point charge $+q$ at origin $O$. Let $P$ be a point at radial distance $r$. Place a vanishing test charge $q_0$ at $P$.\n\n2. Force on Test Charge: By Coulomb's law:\n$$\\vec{F} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q q_0}{r^2} \\hat{r}$$\n\n3. Electric Field Intensity: By definition, field is force per unit test charge:\n$$\\vec{E} = \\lim_{q_0 \\to 0} \\frac{\\vec{F}}{q_0} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q}{r^2} \\hat{r}$$\nMagnitude decays with the inverse square of distance: $E \\propto 1/r^2$."
           }
         ]
       },
@@ -77,9 +77,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "Field line tangent = direction of E",
               "Line density ∝ |E|"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Question"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Question",
+        "importantReason": "Properties of electric field lines (Starred in revision notes)"
       },
       {
         "id": "phy-sub-1-5",
@@ -113,9 +118,14 @@ export const PHYSICS_CHAPTERS = [
               "E_equatorial ≈ kp / r³",
               "E_axial = 2 · E_equatorial  (for r >> a)"
             ],
-            "derivations": "**Part 1: Field on the Axial Line (NODIA QB Page 83 Reference)**\nConsider an electric dipole consisting of charges $-q$ and $+q$ separated by distance $2a$ and placed in vacuum. Let $P$ be a point on the axial line at distance $r$ from the centre $O$ of the dipole on the side of $+q$.\n\nElectric field at point $P$ due to charge $-q$ (at distance $r + a$):\n$$\\vec{E}_{-q} = -\\frac{q}{4\\pi\\varepsilon_0(r+a)^2}\\hat{p} \\quad (\\text{towards left})$$\nwhere $\\hat{p}$ is a unit vector along the dipole axis from $-q$ to $+q$.\n\nElectric field due to charge $+q$ (at distance $r - a$):\n$$\\vec{E}_{+q} = \\frac{q}{4\\pi\\varepsilon_0(r-a)^2}\\hat{p} \\quad (\\text{towards right})$$\n\nHence, the resultant electric field at point $P$ is:\n$$\\vec{E}_{\\text{axial}} = \\vec{E}_{+q} + \\vec{E}_{-q} = \\frac{q}{4\\pi\\varepsilon_0}\\left[\\frac{1}{(r-a)^2} - \\frac{1}{(r+a)^2}\\right]\\hat{p}$$\n$$= \\frac{q}{4\\pi\\varepsilon_0} \\frac{4ar}{(r^2 - a^2)^2}\\hat{p} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{2(q \\cdot 2a)r}{(r^2 - a^2)^2}\\hat{p}$$\n\nHere, $p = q(2a) = \\text{dipole moment}$. For short dipole ($r \\gg a$), $a^2$ can be neglected compared to $r^2$:\n$$\\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{2\\vec{p}}{r^3}$$\n\n**Part 2: Field on the Equatorial Line**\nConsider point $Q$ on the equatorial line at distance $r$ from center $O$. Distance to each charge is $\\sqrt{r^2 + a^2}$. Normal components $E\\sin\\theta$ cancel out, and parallel components $E\\cos\\theta$ add opposite to $\\hat{p}$:\n$$\\vec{E}_{\\text{eq}} = -2 E_{+q} \\cos\\theta \\, \\hat{p} = -2 \\left(\\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2+a^2}\\right)\\left(\\frac{a}{\\sqrt{r^2+a^2}}\\right)\\hat{p} = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{\\vec{p}}{(r^2+a^2)^{3/2}}$$\nFor short dipole ($r \\gg a$):\n$$\\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{\\vec{p}}{r^3} \\quad \\implies \\quad E_{\\text{axial}} = 2 E_{\\text{eq}}$$"
+            "derivations": "Part 1: Field on the Axial Line (NODIA QB Page 83 Reference)\nConsider an electric dipole consisting of charges $-q$ and $+q$ separated by distance $2a$ and placed in vacuum. Let $P$ be a point on the axial line at distance $r$ from the centre $O$ of the dipole on the side of $+q$.\n\nElectric field at point $P$ due to charge $-q$ (at distance $r + a$):\n$$\\vec{E}_{-q} = -\\frac{q}{4\\pi\\varepsilon_0(r+a)^2}\\hat{p} \\quad (\\text{towards left})$$\nwhere $\\hat{p}$ is a unit vector along the dipole axis from $-q$ to $+q$.\n\nElectric field due to charge $+q$ (at distance $r - a$):\n$$\\vec{E}_{+q} = \\frac{q}{4\\pi\\varepsilon_0(r-a)^2}\\hat{p} \\quad (\\text{towards right})$$\n\nHence, the resultant electric field at point $P$ is:\n$$\\vec{E}_{\\text{axial}} = \\vec{E}_{+q} + \\vec{E}_{-q} = \\frac{q}{4\\pi\\varepsilon_0}\\left[\\frac{1}{(r-a)^2} - \\frac{1}{(r+a)^2}\\right]\\hat{p}$$\n$$= \\frac{q}{4\\pi\\varepsilon_0} \\frac{4ar}{(r^2 - a^2)^2}\\hat{p} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{2(q \\cdot 2a)r}{(r^2 - a^2)^2}\\hat{p}$$\n\nHere, $p = q(2a) = \\text{dipole moment}$. For short dipole ($r \\gg a$), $a^2$ can be neglected compared to $r^2$:\n$$\\vec{E}_{\\text{axial}} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{2\\vec{p}}{r^3}$$\n\nPart 2: Field on the Equatorial Line\nConsider point $Q$ on the equatorial line at distance $r$ from center $O$. Distance to each charge is $\\sqrt{r^2 + a^2}$. Normal components $E\\sin\\theta$ cancel out, and parallel components $E\\cos\\theta$ add opposite to $\\hat{p}$:\n$$\\vec{E}_{\\text{eq}} = -2 E_{+q} \\cos\\theta \\, \\hat{p} = -2 \\left(\\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2+a^2}\\right)\\left(\\frac{a}{\\sqrt{r^2+a^2}}\\right)\\hat{p} = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{\\vec{p}}{(r^2+a^2)^{3/2}}$$\nFor short dipole ($r \\gg a$):\n$$\\vec{E}_{\\text{eq}} = -\\frac{1}{4\\pi\\varepsilon_0}\\frac{\\vec{p}}{r^3} \\quad \\implies \\quad E_{\\text{axial}} = 2 E_{\\text{eq}}$$",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Electric field on axial & equatorial line of dipole (Starred in revision notes)"
       },
       {
         "id": "phy-sub-1-7",
@@ -132,9 +142,14 @@ export const PHYSICS_CHAPTERS = [
               "U = −p · E = −pE cosθ",
               "Stable equilibrium: θ = 0°, Unstable: θ = 180°"
             ],
-            "derivations": "**1. Torque on Dipole in Uniform Field:**\nForces $+q\\vec{E}$ and $-q\\vec{E}$ on charges form a couple with perpendicular lever arm $d_\\perp = 2a\\sin\\theta$.\n$$\\tau = (qE)(2a\\sin\\theta) = (q \\cdot 2a)E\\sin\\theta = pE\\sin\\theta \\implies \\vec{\\tau} = \\vec{p} \\times \\vec{E}$$\n\n**2. Potential Energy Derivation:**\nWork done in rotating dipole from $\\theta_1$ to $\\theta_2$:\n$$W = \\int_{\\theta_1}^{\\theta_2} pE\\sin\\theta \\, d\\theta = -pE[\\cos\\theta_2 - \\cos\\theta_1]$$\nTaking reference $\\theta_1 = 90^\\circ$ where $U(90^\\circ) = 0$:\n$$U(\\theta) = -pE\\cos\\theta = -\\vec{p} \\cdot \\vec{E}$$\nStable equilibrium at $\\theta = 0^\\circ$ ($U_{\\text{min}} = -pE$); Unstable equilibrium at $\\theta = 180^\\circ$ ($U_{\\text{max}} = +pE$)."
+            "derivations": "1. Torque on Dipole in Uniform Field:\nForces $+q\\vec{E}$ and $-q\\vec{E}$ on charges form a couple with perpendicular lever arm $d_\\perp = 2a\\sin\\theta$.\n$$\\tau = (qE)(2a\\sin\\theta) = (q \\cdot 2a)E\\sin\\theta = pE\\sin\\theta \\implies \\vec{\\tau} = \\vec{p} \\times \\vec{E}$$\n\n2. Potential Energy Derivation:\nWork done in rotating dipole from $\\theta_1$ to $\\theta_2$:\n$$W = \\int_{\\theta_1}^{\\theta_2} pE\\sin\\theta \\, d\\theta = -pE[\\cos\\theta_2 - \\cos\\theta_1]$$\nTaking reference $\\theta_1 = 90^\\circ$ where $U(90^\\circ) = 0$:\n$$U(\\theta) = -pE\\cos\\theta = -\\vec{p} \\cdot \\vec{E}$$\nStable equilibrium at $\\theta = 0^\\circ$ ($U_{\\text{min}} = -pE$); Unstable equilibrium at $\\theta = 180^\\circ$ ($U_{\\text{max}} = +pE$).",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Torque on electric dipole in uniform field (Starred in revision notes)"
       },
       {
         "id": "phy-sub-1-8",
@@ -202,9 +217,14 @@ export const PHYSICS_CHAPTERS = [
               "Spherical shell (r > R): E = kq / r²",
               "Spherical shell (r < R): E = 0"
             ],
-            "derivations": "**Application 1: Infinitely Long Charged Straight Wire**\nEnclose wire of linear charge density $\\lambda$ by a coaxial cylindrical Gaussian surface of radius $r$ and length $l$. End flat caps have zero flux ($\\vec{E} \\perp d\\vec{A}$). On curved mantle, $\\vec{E} \\parallel d\\vec{A}$:\n$$\\oint \\vec{E} \\cdot d\\vec{A} = E(2\\pi r l) = \\frac{\\lambda l}{\\varepsilon_0} \\implies E = \\frac{\\lambda}{2\\pi\\varepsilon_0 r}$$\n\n**Application 2: Infinite Uniformly Charged Plane Sheet**\nConstruct cylindrical pillbox of cross-sectional area $A$ piercing sheet of surface density $\\sigma$. Curved wall has zero flux. Both end-caps contribute $EA + EA = 2EA$:\n$$2EA = \\frac{\\sigma A}{\\varepsilon_0} \\implies E = \\frac{\\sigma}{2\\varepsilon_0} \\quad (\\text{independent of } r)$$\n\n**Application 3: Thin Spherical Shell of Radius R**\nOutside ($r \\ge R$): Enclosed charge is $q$. Flux $E(4\\pi r^2) = q/\\varepsilon_0 \\implies E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}$.\nInside ($r < R$): No charge is enclosed inside shell ($q_{\\text{enc}} = 0$). Flux $E(4\\pi r^2) = 0 \\implies E_{\\text{in}} = 0$."
+            "derivations": "Application 1: Infinitely Long Charged Straight Wire\nEnclose wire of linear charge density $\\lambda$ by a coaxial cylindrical Gaussian surface of radius $r$ and length $l$. End flat caps have zero flux ($\\vec{E} \\perp d\\vec{A}$). On curved mantle, $\\vec{E} \\parallel d\\vec{A}$:\n$$\\oint \\vec{E} \\cdot d\\vec{A} = E(2\\pi r l) = \\frac{\\lambda l}{\\varepsilon_0} \\implies E = \\frac{\\lambda}{2\\pi\\varepsilon_0 r}$$\n\nApplication 2: Infinite Uniformly Charged Plane Sheet\nConstruct cylindrical pillbox of cross-sectional area $A$ piercing sheet of surface density $\\sigma$. Curved wall has zero flux. Both end-caps contribute $EA + EA = 2EA$:\n$$2EA = \\frac{\\sigma A}{\\varepsilon_0} \\implies E = \\frac{\\sigma}{2\\varepsilon_0} \\quad (\\text{independent of } r)$$\n\nApplication 3: Thin Spherical Shell of Radius R\nOutside ($r \\ge R$): Enclosed charge is $q$. Flux $E(4\\pi r^2) = q/\\varepsilon_0 \\implies E_{\\text{out}} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}$.\nInside ($r < R$): No charge is enclosed inside shell ($q_{\\text{enc}} = 0$). Flux $E(4\\pi r^2) = 0 \\implies E_{\\text{in}} = 0$.",
+            "isImportant": true,
+            "examTag": "Important 5M Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 5M Derivation",
+        "importantReason": "Applications of Gauss's Law: Wire, Plane Sheet, Shell (Starred in revision notes)"
       }
     ]
   },
@@ -247,9 +267,14 @@ export const PHYSICS_CHAPTERS = [
               "V_point = kq / r",
               "V_axial = kp / r²",
               "V_equatorial = 0"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Potential due to an electric dipole (Starred in revision notes)"
       },
       {
         "id": "phy-sub-2-3",
@@ -265,9 +290,14 @@ export const PHYSICS_CHAPTERS = [
               "W_AB = q(V_B − V_A) = 0",
               "E = −dV / dr"
             ],
-            "derivations": "**1. Equipotential Normal Field Proof:**\nWork in displacing test charge $q_0$ by displacement $d\\vec{r}$ along equipotential surface ($dV = 0$) is:\n$$dW = -q_0 dV = q_0 (\\vec{E} \\cdot d\\vec{r}) = 0 \\implies E \\, dr \\cos\\theta = 0$$\nSince $E \\neq 0$ and $dr \\neq 0$, $\\cos\\theta = 0 \\implies \\theta = 90^\\circ$, proving $\\vec{E} \\perp \\text{Equipotential Surface}$.\n\n**2. Potential Gradient Derivation:**\nWork in moving unit positive charge distance $dr$ against field $\\vec{E}$ between surfaces of potential $V$ and $V - dV$:\n$$dW = -E \\, dr = dV \\implies E = -\\frac{dV}{dr}$$\nElectric field equals the negative gradient of potential, pointing toward decreasing potential."
+            "derivations": "1. Equipotential Normal Field Proof:\nWork in displacing test charge $q_0$ by displacement $d\\vec{r}$ along equipotential surface ($dV = 0$) is:\n$$dW = -q_0 dV = q_0 (\\vec{E} \\cdot d\\vec{r}) = 0 \\implies E \\, dr \\cos\\theta = 0$$\nSince $E \\neq 0$ and $dr \\neq 0$, $\\cos\\theta = 0 \\implies \\theta = 90^\\circ$, proving $\\vec{E} \\perp \\text{Equipotential Surface}$.\n\n2. Potential Gradient Derivation:\nWork in moving unit positive charge distance $dr$ against field $\\vec{E}$ between surfaces of potential $V$ and $V - dV$:\n$$dW = -E \\, dr = dV \\implies E = -\\frac{dV}{dr}$$\nElectric field equals the negative gradient of potential, pointing toward decreasing potential.",
+            "isImportant": true,
+            "examTag": "Important Concept"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Concept",
+        "importantReason": "Equipotential surfaces & potential gradient (Starred in revision notes)"
       },
       {
         "id": "phy-sub-2-4",
@@ -336,9 +366,14 @@ export const PHYSICS_CHAPTERS = [
               "Series: 1/C_eq = 1/C₁ + 1/C₂ + ...",
               "Parallel: C_eq = C₁ + C₂ + ..."
             ],
-            "derivations": "**1. Parallel Plate Capacitor in Vacuum:**\nPlates of area $A$ and separation $d$ carry charge $\\pm Q$. Electric field between plates: $E_0 = \\frac{\\sigma}{\\varepsilon_0} = \\frac{Q}{\\varepsilon_0 A}$. Potential difference: $V_0 = E_0 d = \\frac{Qd}{\\varepsilon_0 A}$. Capacitance:\n$$C_0 = \\frac{Q}{V_0} = \\frac{\\varepsilon_0 A}{d}$$\n\n**2. Capacitor with Dielectric Slab of Thickness t (t < d):**\nIn air gaps $(d-t)$, field is $E_0$. Inside dielectric of thickness $t$, field is reduced to $E = E_0 / K$. Total potential difference across plates:\n$$V = E_0(d-t) + E \\cdot t = E_0\\left[d - t\\left(1 - \\frac{1}{K}\\right)\\right] = \\frac{Q}{\\varepsilon_0 A}\\left[d - t\\left(1 - \\frac{1}{K}\\right)\\right]$$\n$$C = \\frac{Q}{V} = \\frac{\\varepsilon_0 A}{d - t\\left(1 - \\frac{1}{K}\\right)}$$\nWhen completely filled ($t = d$): $C = K C_0$."
+            "derivations": "1. Parallel Plate Capacitor in Vacuum:\nPlates of area $A$ and separation $d$ carry charge $\\pm Q$. Electric field between plates: $E_0 = \\frac{\\sigma}{\\varepsilon_0} = \\frac{Q}{\\varepsilon_0 A}$. Potential difference: $V_0 = E_0 d = \\frac{Qd}{\\varepsilon_0 A}$. Capacitance:\n$$C_0 = \\frac{Q}{V_0} = \\frac{\\varepsilon_0 A}{d}$$\n\n2. Capacitor with Dielectric Slab of Thickness t (t < d):\nIn air gaps $(d-t)$, field is $E_0$. Inside dielectric of thickness $t$, field is reduced to $E = E_0 / K$. Total potential difference across plates:\n$$V = E_0(d-t) + E \\cdot t = E_0\\left[d - t\\left(1 - \\frac{1}{K}\\right)\\right] = \\frac{Q}{\\varepsilon_0 A}\\left[d - t\\left(1 - \\frac{1}{K}\\right)\\right]$$\n$$C = \\frac{Q}{V} = \\frac{\\varepsilon_0 A}{d - t\\left(1 - \\frac{1}{K}\\right)}$$\nWhen completely filled ($t = d$): $C = K C_0$.",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Capacitor & capacitance in series/parallel (Starred in revision notes)"
       },
       {
         "id": "phy-sub-2-8",
@@ -353,9 +388,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "U = ½ CV² = Q² / (2C) = ½ QV",
               "Energy density: u = ½ ε₀E²"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Energy stored in a capacitor (Starred in revision notes)"
       }
     ]
   },
@@ -450,9 +490,14 @@ export const PHYSICS_CHAPTERS = [
               "J = nev_d",
               "μ = v_d / E = eτ / m"
             ],
-            "derivations": "**1. Drift Velocity Expression:**\nUnder electric field $\\vec{E} = V/l$, each electron experiences acceleration $\\vec{a} = -e\\vec{E}/m$. In relaxation time $\\tau$, average drift velocity acquired is:\n$$v_d = \\frac{eE}{m}\\tau = \\frac{e V}{m l}\\tau$$\n\n**2. Current Relation:**\nTotal mobile electrons in volume $Al$ is $N = nAl$. Total charge passing cross-section in time $\\Delta t = l/v_d$ is $\\Delta q = neAl$. Steady current is:\n$$I = \\frac{\\Delta q}{\\Delta t} = n e A v_d$$\n\n**3. Deduce Ohm's Law:**\nSubstituting $v_d$ into current:\n$$I = n e A \\left(\\frac{e V \\tau}{m l}\\right) = \\left(\\frac{n e^2 A \\tau}{m l}\\right) V \\implies V = \\left(\\frac{m}{n e^2 \\tau}\\frac{l}{A}\\right) I = R I$$\nwhere resistance $R = \\rho \\frac{l}{A}$ and resistivity is $\\rho = \\frac{m}{n e^2 \\tau}$."
+            "derivations": "1. Drift Velocity Expression:\nUnder electric field $\\vec{E} = V/l$, each electron experiences acceleration $\\vec{a} = -e\\vec{E}/m$. In relaxation time $\\tau$, average drift velocity acquired is:\n$$v_d = \\frac{eE}{m}\\tau = \\frac{e V}{m l}\\tau$$\n\n2. Current Relation:\nTotal mobile electrons in volume $Al$ is $N = nAl$. Total charge passing cross-section in time $\\Delta t = l/v_d$ is $\\Delta q = neAl$. Steady current is:\n$$I = \\frac{\\Delta q}{\\Delta t} = n e A v_d$$\n\n3. Deduce Ohm's Law:\nSubstituting $v_d$ into current:\n$$I = n e A \\left(\\frac{e V \\tau}{m l}\\right) = \\left(\\frac{n e^2 A \\tau}{m l}\\right) V \\implies V = \\left(\\frac{m}{n e^2 \\tau}\\frac{l}{A}\\right) I = R I$$\nwhere resistance $R = \\rho \\frac{l}{A}$ and resistivity is $\\rho = \\frac{m}{n e^2 \\tau}$.",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Drift velocity (1M), relation with current (I = neAv_d), mobility (Starred in revision notes)"
       },
       {
         "id": "phy-sub-3-6",
@@ -505,7 +550,7 @@ export const PHYSICS_CHAPTERS = [
               "Series: ε_eq = nε, r_eq = nr",
               "Parallel: ε_eq = ε, r_eq = r/n"
             ],
-            "derivations": "**1. Internal Resistance Relation:**\nIn a closed circuit with load $R$, current is $I = \\frac{\\varepsilon}{R+r}$. Terminal voltage across load is $V = IR = \\varepsilon - Ir$:\n$$Ir = \\varepsilon - V \\implies r = \\frac{\\varepsilon - V}{I} = \\frac{\\varepsilon - V}{V/R} = \\left(\\frac{\\varepsilon}{V} - 1\\right)R$$\n\n**2. Maximum Power Transfer Proof:**\nPower delivered to load is $P = I^2 R = \\frac{\\varepsilon^2 R}{(R+r)^2}$. Differentiating with respect to $R$:\n$$\\frac{dP}{dR} = \\varepsilon^2 \\frac{(R+r)^2 - 2R(R+r)}{(R+r)^4} = 0 \\implies (R+r) - 2R = 0 \\implies R = r$$\nMaximum power transfer occurs when $R = r$, with peak power $P_{\\text{max}} = \\frac{\\varepsilon^2}{4r}$."
+            "derivations": "1. Internal Resistance Relation:\nIn a closed circuit with load $R$, current is $I = \\frac{\\varepsilon}{R+r}$. Terminal voltage across load is $V = IR = \\varepsilon - Ir$:\n$$Ir = \\varepsilon - V \\implies r = \\frac{\\varepsilon - V}{I} = \\frac{\\varepsilon - V}{V/R} = \\left(\\frac{\\varepsilon}{V} - 1\\right)R$$\n\n2. Maximum Power Transfer Proof:\nPower delivered to load is $P = I^2 R = \\frac{\\varepsilon^2 R}{(R+r)^2}$. Differentiating with respect to $R$:\n$$\\frac{dP}{dR} = \\varepsilon^2 \\frac{(R+r)^2 - 2R(R+r)}{(R+r)^4} = 0 \\implies (R+r) - 2R = 0 \\implies R = r$$\nMaximum power transfer occurs when $R = r$, with peak power $P_{\\text{max}} = \\frac{\\varepsilon^2}{4r}$."
           }
         ]
       },
@@ -524,9 +569,14 @@ export const PHYSICS_CHAPTERS = [
               "Σ ΔV = 0  (Energy Conservation)",
               "P / Q = R / S  (Wheatstone balance condition)"
             ],
-            "derivations": "**Derivation of Wheatstone Bridge Balanced Condition:**\nApplying Kirchhoff's loop rule to mesh $ABDA$ (clockwise):\n$$-I_1 P - I_g G + I_2 R = 0 \\implies I_1 P + I_g G = I_2 R$$\nApplying Kirchhoff's loop rule to mesh $BCDB$ (clockwise):\n$$-(I_1 - I_g)Q + (I_2 + I_g)S + I_g G = 0$$\nUnder balanced condition, galvanometer deflection is zero ($I_g = 0$):\n$$I_1 P = I_2 R \\quad \\text{--- (1)}$$\n$$I_1 Q = I_2 S \\quad \\text{--- (2)}$$\nDividing (1) by (2):\n$$\\frac{I_1 P}{I_1 Q} = \\frac{I_2 R}{I_2 S} \\implies \\frac{P}{Q} = \\frac{R}{S}$$"
+            "derivations": "Derivation of Wheatstone Bridge Balanced Condition:\nApplying Kirchhoff's loop rule to mesh $ABDA$ (clockwise):\n$$-I_1 P - I_g G + I_2 R = 0 \\implies I_1 P + I_g G = I_2 R$$\nApplying Kirchhoff's loop rule to mesh $BCDB$ (clockwise):\n$$-(I_1 - I_g)Q + (I_2 + I_g)S + I_g G = 0$$\nUnder balanced condition, galvanometer deflection is zero ($I_g = 0$):\n$$I_1 P = I_2 R \\quad \\text{--- (1)}$$\n$$I_1 Q = I_2 S \\quad \\text{--- (2)}$$\nDividing (1) by (2):\n$$\\frac{I_1 P}{I_1 Q} = \\frac{I_2 R}{I_2 S} \\implies \\frac{P}{Q} = \\frac{R}{S}$$",
+            "isImportant": true,
+            "examTag": "Important 5M Question"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 5M Question",
+        "importantReason": "Kirchhoff's laws & Wheatstone bridge (Starred in revision notes)"
       }
     ]
   },
@@ -569,9 +619,14 @@ export const PHYSICS_CHAPTERS = [
               "B_centre = μ₀I / (2R)",
               "B_axis = μ₀IR² / [2(R² + x²)^(3/2)]"
             ],
-            "derivations": "**Magnetic Field on Axis of Circular Current Loop:**\nConsider a circular loop of radius $R$ carrying current $I$. Take an element $d\\vec{l}$ on the loop. Distance to axial point $P$ at distance $x$ from center is $r = \\sqrt{R^2 + x^2}$.\nBy Biot-Savart law, magnitude of $d\\vec{B}$ is:\n$$dB = \\frac{\\mu_0}{4\\pi}\\frac{I dl \\sin 90^\\circ}{r^2} = \\frac{\\mu_0}{4\\pi}\\frac{I dl}{R^2 + x^2}$$\nResolving $d\\vec{B}$: Perpendicular components $dB\\cos\\phi$ cancel out pairwise by diametric symmetry. Axial components $dB\\sin\\phi$ add up:\n$$B = \\oint dB \\sin\\phi = \\oint dB \\left(\\frac{R}{\\sqrt{R^2 + x^2}}\\right) = \\frac{\\mu_0 I R}{4\\pi (R^2 + x^2)^{3/2}} \\oint dl$$\nSince $\\oint dl = 2\\pi R$, for $N$ turns:\n$$B_{\\text{axis}} = \\frac{\\mu_0 N I R^2}{2(R^2 + x^2)^{3/2}}$$\nAt the center ($x = 0$): $B_{\\text{center}} = \\frac{\\mu_0 N I}{2R}$."
+            "derivations": "Magnetic Field on Axis of Circular Current Loop:\nConsider a circular loop of radius $R$ carrying current $I$. Take an element $d\\vec{l}$ on the loop. Distance to axial point $P$ at distance $x$ from center is $r = \\sqrt{R^2 + x^2}$.\nBy Biot-Savart law, magnitude of $d\\vec{B}$ is:\n$$dB = \\frac{\\mu_0}{4\\pi}\\frac{I dl \\sin 90^\\circ}{r^2} = \\frac{\\mu_0}{4\\pi}\\frac{I dl}{R^2 + x^2}$$\nResolving $d\\vec{B}$: Perpendicular components $dB\\cos\\phi$ cancel out pairwise by diametric symmetry. Axial components $dB\\sin\\phi$ add up:\n$$B = \\oint dB \\sin\\phi = \\oint dB \\left(\\frac{R}{\\sqrt{R^2 + x^2}}\\right) = \\frac{\\mu_0 I R}{4\\pi (R^2 + x^2)^{3/2}} \\oint dl$$\nSince $\\oint dl = 2\\pi R$, for $N$ turns:\n$$B_{\\text{axis}} = \\frac{\\mu_0 N I R^2}{2(R^2 + x^2)^{3/2}}$$\nAt the center ($x = 0$): $B_{\\text{center}} = \\frac{\\mu_0 N I}{2R}$.",
+            "isImportant": true,
+            "examTag": "Important 5M Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 5M Derivation",
+        "importantReason": "Magnetic field due to circular loop (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-3",
@@ -586,9 +641,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "∮ B · dl = μ₀ I_enc",
               "Straight wire: B = μ₀I / (2πr)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Law & Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Law & Derivation",
+        "importantReason": "Ampere circuital law: statement & applications (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-4",
@@ -603,9 +663,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "Solenoid: B = μ₀nI",
               "Toroid: B = μ₀nI (confined within ring)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Question"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Question",
+        "importantReason": "The Solenoid: definition & field expression (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-5",
@@ -620,9 +685,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "F = q(v × B) = qvB sinθ",
               "dW = F · ds = 0  (No work done)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Concept"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Concept",
+        "importantReason": "Force on charged particle in uniform magnetic field (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-6",
@@ -638,9 +708,14 @@ export const PHYSICS_CHAPTERS = [
               "r = mv / (qB)",
               "T = 2πm / (qB)",
               "Frequency: ν = qB / (2πm)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Motion of charged particle in magnetic field (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-7",
@@ -656,9 +731,14 @@ export const PHYSICS_CHAPTERS = [
               "F = I(L × B) = BIL sinθ",
               "Maximum at θ = 90°"
             ],
-            "derivations": "**Derivation of Force on Current Conductor (F = ILB sinθ):**\nConsider a conductor of length $l$ and cross-section $A$ in uniform field $\\vec{B}$. Number of conduction electrons is $N = nAl$.\nLorentz force on a single drifting electron is $\\vec{f} = -e(\\vec{v}_d \\times \\vec{B})$. Total macroscopic force on the conductor:\n$$\\vec{F} = N\\vec{f} = (nAl)[-e(\\vec{v}_d \\times \\vec{B})] = -neAl(\\vec{v}_d \\times \\vec{B})$$\nBy current definition, macroscopic current vector along length is $I\\vec{l} = -neA\\vec{v}_d l$. Substituting gives:\n$$\\vec{F} = I(\\vec{l} \\times \\vec{B}) \\implies F = I l B \\sin\\theta$$\nMaximum at $\\theta = 90^\\circ$ ($F_{\\text{max}} = IlB$); Zero along field at $\\theta = 0^\\circ$ ($F = 0$)."
+            "derivations": "Derivation of Force on Current Conductor (F = ILB sinθ):\nConsider a conductor of length $l$ and cross-section $A$ in uniform field $\\vec{B}$. Number of conduction electrons is $N = nAl$.\nLorentz force on a single drifting electron is $\\vec{f} = -e(\\vec{v}_d \\times \\vec{B})$. Total macroscopic force on the conductor:\n$$\\vec{F} = N\\vec{f} = (nAl)[-e(\\vec{v}_d \\times \\vec{B})] = -neAl(\\vec{v}_d \\times \\vec{B})$$\nBy current definition, macroscopic current vector along length is $I\\vec{l} = -neA\\vec{v}_d l$. Substituting gives:\n$$\\vec{F} = I(\\vec{l} \\times \\vec{B}) \\implies F = I l B \\sin\\theta$$\nMaximum at $\\theta = 90^\\circ$ ($F_{\\text{max}} = IlB$); Zero along field at $\\theta = 0^\\circ$ ($F = 0$).",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Force on current-carrying conductor in magnetic field (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-8",
@@ -675,9 +755,14 @@ export const PHYSICS_CHAPTERS = [
               "Like currents attract; unlike currents repel",
               "Definition of 1 Ampere: F/L = 2 × 10⁻⁷ N/m at d = 1 m"
             ],
-            "derivations": "**Derivation of Force Between Parallel Currents:**\nTwo parallel infinite wires separated by distance $d$ carry currents $I_1$ and $I_2$. Field produced by wire 1 at wire 2 is:\n$$B_1 = \\frac{\\mu_0 I_1}{2\\pi d} \\quad (\\text{perpendicular to plane of wires by Right-Hand Thumb Rule})$$\nForce on section of length $L$ of wire 2 carrying current $I_2$ in field $B_1$ is:\n$$F = I_2 L B_1 \\sin 90^\\circ = I_2 L \\left(\\frac{\\mu_0 I_1}{2\\pi d}\\right) = \\frac{\\mu_0 I_1 I_2 L}{2\\pi d}$$\nForce per unit length:\n$$\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}$$\nFor $I_1 = I_2 = 1\\text{ A}$ and $d = 1\\text{ m}$ in vacuum: $F/L = \\frac{4\\pi \\times 10^{-7} \\times 1 \\times 1}{2\\pi \\times 1} = 2 \\times 10^{-7}\\text{ N/m}$ (SI definition of 1 Ampere)."
+            "derivations": "Derivation of Force Between Parallel Currents:\nTwo parallel infinite wires separated by distance $d$ carry currents $I_1$ and $I_2$. Field produced by wire 1 at wire 2 is:\n$$B_1 = \\frac{\\mu_0 I_1}{2\\pi d} \\quad (\\text{perpendicular to plane of wires by Right-Hand Thumb Rule})$$\nForce on section of length $L$ of wire 2 carrying current $I_2$ in field $B_1$ is:\n$$F = I_2 L B_1 \\sin 90^\\circ = I_2 L \\left(\\frac{\\mu_0 I_1}{2\\pi d}\\right) = \\frac{\\mu_0 I_1 I_2 L}{2\\pi d}$$\nForce per unit length:\n$$\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}$$\nFor $I_1 = I_2 = 1\\text{ A}$ and $d = 1\\text{ m}$ in vacuum: $F/L = \\frac{4\\pi \\times 10^{-7} \\times 1 \\times 1}{2\\pi \\times 1} = 2 \\times 10^{-7}\\text{ N/m}$ (SI definition of 1 Ampere).",
+            "isImportant": true,
+            "examTag": "Important 3M Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 3M Derivation",
+        "importantReason": "Force between 2 long parallel current-carrying conductors & 1 Ampere definition (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-9",
@@ -692,9 +777,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "τ = m × B = NIAB sinθ",
               "m = NIA"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Torque on current loop in magnetic field (Starred in revision notes)"
       },
       {
         "id": "phy-sub-4-10",
@@ -710,9 +800,14 @@ export const PHYSICS_CHAPTERS = [
               "Ammeter Shunt: S = (I_g · G) / (I − I_g)",
               "Voltmeter Multiplier: R = (V / I_g) − G"
             ],
-            "derivations": "**1. Conversion of Galvanometer to Ammeter:**\nA low shunt resistance $S$ is connected in parallel with galvanometer of resistance $G$ and full scale current $I_g$. Potential equality across parallel branches:\n$$I_g G = (I - I_g)S \\implies S = \\frac{I_g G}{I - I_g}$$\nEffective ammeter resistance: $R_A = \\frac{GS}{G+S} \\ll G$ (Ideal ammeter $R_A = 0$).\n\n**2. Conversion of Galvanometer to Voltmeter:**\nA high multiplier resistance $R$ is connected in series with galvanometer. By Ohm's law:\n$$V = I_g(G + R) \\implies G + R = \\frac{V}{I_g} \\implies R = \\frac{V}{I_g} - G$$\nEffective voltmeter resistance: $R_V = G + R \\gg G$ (Ideal voltmeter $R_V = \\infty$)."
+            "derivations": "1. Conversion of Galvanometer to Ammeter:\nA low shunt resistance $S$ is connected in parallel with galvanometer of resistance $G$ and full scale current $I_g$. Potential equality across parallel branches:\n$$I_g G = (I - I_g)S \\implies S = \\frac{I_g G}{I - I_g}$$\nEffective ammeter resistance: $R_A = \\frac{GS}{G+S} \\ll G$ (Ideal ammeter $R_A = 0$).\n\n2. Conversion of Galvanometer to Voltmeter:\nA high multiplier resistance $R$ is connected in series with galvanometer. By Ohm's law:\n$$V = I_g(G + R) \\implies G + R = \\frac{V}{I_g} \\implies R = \\frac{V}{I_g} - G$$\nEffective voltmeter resistance: $R_V = G + R \\gg G$ (Ideal voltmeter $R_V = \\infty$).",
+            "isImportant": true,
+            "examTag": "Important 5M Question"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 5M Question",
+        "importantReason": "Moving coil galvanometer: conversion to ammeter & voltmeter (Starred in revision notes)"
       }
     ]
   },
@@ -738,9 +833,14 @@ export const PHYSICS_CHAPTERS = [
               "χ is small and negative (−1 ≤ χ < 0)",
               "0 ≤ μ_r < 1",
               "Examples: Bi, Cu, H₂O, Pb"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Comparison"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Comparison",
+        "importantReason": "Dia, Para, Ferro comparison (Starred in revision notes)"
       },
       {
         "id": "phy-sub-5-2",
@@ -756,9 +856,14 @@ export const PHYSICS_CHAPTERS = [
               "χ is small and positive (0 < χ < ε)",
               "μ_r > 1",
               "Curie's Law: χ = C / T"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Comparison"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Comparison",
+        "importantReason": "Dia, Para, Ferro comparison (Starred in revision notes)"
       },
       {
         "id": "phy-sub-5-3",
@@ -774,9 +879,14 @@ export const PHYSICS_CHAPTERS = [
               "χ >> 1 (very large and positive)",
               "μ_r >> 1",
               "Curie-Weiss Law above T_c: χ = C / (T − T_c)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Comparison"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Comparison",
+        "importantReason": "Dia, Para, Ferro comparison (Starred in revision notes)"
       }
     ]
   },
@@ -821,9 +931,14 @@ export const PHYSICS_CHAPTERS = [
               "Magnetic Flux: Φ = B · A · cos θ",
               "Induced Current: I = ε / R = −(N / R) (dΦ / dt)",
               "Induced Charge: q = ΔΦ / R (Independent of Time!)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Law"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Law",
+        "importantReason": "Faraday's laws of electromagnetic induction (Starred in revision notes)"
       },
       {
         "id": "phy-sub-6-3",
@@ -838,9 +953,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "Induced current opposes cause producing it",
               "Direct manifestation of Conservation of Energy"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Principle"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Principle",
+        "importantReason": "Lenz's law statement & energy conservation (Starred in revision notes)"
       },
       {
         "id": "phy-sub-6-4",
@@ -855,9 +975,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "Right Hand: Generator (Motion, Field, Induced Current)",
               "Left Hand: Motor (Force, Field, Current)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Rule"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Rule",
+        "importantReason": "Fleming's right-hand and left-hand rules (Starred in revision notes)"
       },
       {
         "id": "phy-sub-6-5",
@@ -873,9 +998,14 @@ export const PHYSICS_CHAPTERS = [
               "e = Blv",
               "Induced current: I = Blv / R",
               "Power: P = B²l²v² / R"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Motional EMF final expression (Starred in revision notes)"
       },
       {
         "id": "phy-sub-6-6",
@@ -909,9 +1039,14 @@ export const PHYSICS_CHAPTERS = [
               "ε_self = −L (dI / dt)",
               "ε_mutual = −M (dI₁ / dt)",
               "1 H = 1 V·s / A = 1 Wb / A"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Definition"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Definition",
+        "importantReason": "Self and mutual induction coefficients (Starred in revision notes)"
       },
       {
         "id": "phy-sub-6-8",
@@ -926,9 +1061,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "L = μ₀n²Al",
               "M = μ₀n₁n₂Al"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Self-inductance of solenoid & mutual inductance of coaxial coils (Starred in revision notes)"
       },
       {
         "id": "phy-sub-6-9",
@@ -943,9 +1083,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "U = ½ LI²",
               "Magnetic energy density: u_B = B² / (2μ₀)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Energy stored in an inductor (Starred in revision notes)"
       },
       {
         "id": "phy-sub-6-10",
@@ -961,9 +1106,14 @@ export const PHYSICS_CHAPTERS = [
               "e = e₀ sinωt",
               "e₀ = NBAω",
               "Frequency: ν = ω / 2π"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important 5M Question"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 5M Question",
+        "importantReason": "AC generator: principle, working & EMF expression (Starred in revision notes)"
       }
     ]
   },
@@ -1043,9 +1193,14 @@ export const PHYSICS_CHAPTERS = [
               "Z = √[R² + (X_L − X_C)²]",
               "tanφ = (X_L − X_C) / R"
             ],
-            "derivations": "**Phasor Derivation of Series LCR Circuit Impedance & Phase:**\nLet current be $I = I_0\\sin(\\omega t)$. Resistor voltage $V_R = I_0 R$ is in phase with $I$. Inductor voltage $V_L = I_0 X_L = I_0(\\omega L)$ leads by $90^\\circ$. Capacitor voltage $V_C = I_0 X_C = I_0(1/\\omega C)$ lags by $90^\\circ$.\nNet reactive voltage is $V_L - V_C = I_0(X_L - X_C)$. In the phasor right triangle, resultant source voltage is:\n$$V_0 = \\sqrt{V_R^2 + (V_L - V_C)^2} = \\sqrt{(I_0 R)^2 + [I_0(X_L - X_C)]^2} = I_0 \\sqrt{R^2 + (X_L - X_C)^2}$$\nImpedance:\n$$Z = \\frac{V_0}{I_0} = \\sqrt{R^2 + (X_L - X_C)^2} = \\sqrt{R^2 + \\left(\\omega L - \\frac{1}{\\omega C}\\right)^2}$$\nPhase angle between source voltage and current:\n$$\\tan\\phi = \\frac{V_L - V_C}{V_R} = \\frac{X_L - X_C}{R} = \\frac{\\omega L - 1/(\\omega C)}{R}$$"
+            "derivations": "Phasor Derivation of Series LCR Circuit Impedance & Phase:\nLet current be $I = I_0\\sin(\\omega t)$. Resistor voltage $V_R = I_0 R$ is in phase with $I$. Inductor voltage $V_L = I_0 X_L = I_0(\\omega L)$ leads by $90^\\circ$. Capacitor voltage $V_C = I_0 X_C = I_0(1/\\omega C)$ lags by $90^\\circ$.\nNet reactive voltage is $V_L - V_C = I_0(X_L - X_C)$. In the phasor right triangle, resultant source voltage is:\n$$V_0 = \\sqrt{V_R^2 + (V_L - V_C)^2} = \\sqrt{(I_0 R)^2 + [I_0(X_L - X_C)]^2} = I_0 \\sqrt{R^2 + (X_L - X_C)^2}$$\nImpedance:\n$$Z = \\frac{V_0}{I_0} = \\sqrt{R^2 + (X_L - X_C)^2} = \\sqrt{R^2 + \\left(\\omega L - \\frac{1}{\\omega C}\\right)^2}$$\nPhase angle between source voltage and current:\n$$\\tan\\phi = \\frac{V_L - V_C}{V_R} = \\frac{X_L - X_C}{R} = \\frac{\\omega L - 1/(\\omega C)}{R}$$",
+            "isImportant": true,
+            "examTag": "Important 5M Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 5M Derivation",
+        "importantReason": "Series RLC / LCR circuit & phasor impedance (Starred in revision notes)"
       },
       {
         "id": "phy-sub-7-5",
@@ -1060,9 +1215,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "V_s / V_p = N_s / N_p = I_p / I_s = k",
               "Efficiency: η = (P_out / P_in) × 100%"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important 5M Question"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 5M Question",
+        "importantReason": "Transformer: working, step-up/down & 4 losses (Starred in revision notes)"
       },
       {
         "id": "phy-sub-7-6",
@@ -1079,9 +1239,14 @@ export const PHYSICS_CHAPTERS = [
               "f₀ = 1 / (2π√(LC))",
               "Z_min = R  (Current I is maximum)"
             ],
-            "derivations": "**Resonance Condition & Quality Factor:**\nResonance occurs when $X_L = X_C \\implies \\omega_r L = \\frac{1}{\\omega_r C}$:\n$$\\omega_r = \\frac{1}{\\sqrt{LC}} \\quad \\implies \\quad f_r = \\frac{1}{2\\pi\\sqrt{LC}}$$\nAt resonance: $Z_{\\text{min}} = R$, current amplitude is maximum $I_0 = V_0 / R$, and power factor is unity ($\\cos\\phi = 1$).\n\n**Quality Factor (Q-factor):**\nVoltage magnification across inductor/capacitor at resonance relative to source voltage:\n$$Q = \\frac{V_L}{V} = \\frac{\\omega_r L}{R} = \\frac{1}{\\sqrt{LC}}\\frac{L}{R} = \\frac{1}{R}\\sqrt{\\frac{L}{C}}$$"
+            "derivations": "Resonance Condition & Quality Factor:\nResonance occurs when $X_L = X_C \\implies \\omega_r L = \\frac{1}{\\omega_r C}$:\n$$\\omega_r = \\frac{1}{\\sqrt{LC}} \\quad \\implies \\quad f_r = \\frac{1}{2\\pi\\sqrt{LC}}$$\nAt resonance: $Z_{\\text{min}} = R$, current amplitude is maximum $I_0 = V_0 / R$, and power factor is unity ($\\cos\\phi = 1$).\n\nQuality Factor (Q-factor):\nVoltage magnification across inductor/capacitor at resonance relative to source voltage:\n$$Q = \\frac{V_L}{V} = \\frac{\\omega_r L}{R} = \\frac{1}{\\sqrt{LC}}\\frac{L}{R} = \\frac{1}{R}\\sqrt{\\frac{L}{C}}$$",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Electrical resonance in RLC circuit (Starred in revision notes)"
       },
       {
         "id": "phy-sub-7-7",
@@ -1103,11 +1268,11 @@ export const PHYSICS_CHAPTERS = [
       },
       {
         "id": "phy-sub-7-8",
-        "title": "7.8 Average and RMS Values of Alternating Current",
+        "title": "7.8 Root-Mean-Square (RMS) Values of AC: Derivation of I_rms and E_rms",
         "sections": [
           {
             "id": "phy-sec-7-8",
-            "title": "Average vs RMS Value Derivations",
+            "title": "Root-Mean-Square (RMS) Values of AC: Derivation of I_rms and E_rms",
             "explanation": "Since AC is symmetric about the time axis, its average value over a full cycle is zero (equal positive and negative charge flows). Over half a cycle, the mean value is I_mean = 2I₀/π ≈ 0.637I₀. The RMS value, I_rms = I₀/√2 ≈ 0.707I₀, is defined as the equivalent steady (DC) current that would produce the same heating effect in a resistor — this is the practically meaningful 'effective value' of AC, and is what household AC voltage/current ratings actually refer to.",
             "questionFraming": "Derivation — 'Derive the RMS value of alternating current starting from the definition in terms of heat produced.'\nConceptual — 'Why is the average value of AC over a full cycle zero, but not over a half cycle?'",
             "textbookRef": "Over full cycle: Average = 0.\nOver half cycle: I_mean = 2I₀/π ≈ 0.637 I₀.\nRMS Value: Steady direct current producing same heat in a given resistor in time T: dH = I²R dt. Using sin²(ωt) = (1 − cos 2ωt)/2, the cosine term vanishes over full cycle, giving I_rms = I₀/√2 ≈ 0.707 I₀ and V_rms = V₀/√2.",
@@ -1116,9 +1281,14 @@ export const PHYSICS_CHAPTERS = [
               "I_rms = I₀ / √2 ≈ 0.707 I₀",
               "V_rms = V₀ / √2 ≈ 0.707 V₀"
             ],
-            "derivations": "**Mathematical Derivation of I_rms = I₀ / √2:**\nLet alternating current be $I = I_0\\sin(\\omega t)$. Heat in small time $dt$ is $dH = I^2 R dt = I_0^2 R \\sin^2(\\omega t) dt$.\nTotal heat in one complete period $T = 2\\pi/\\omega$:\n$$H = \\int_0^T I_0^2 R \\sin^2(\\omega t) \\, dt = I_0^2 R \\int_0^T \\frac{1 - \\cos(2\\omega t)}{2} \\, dt = \\frac{I_0^2 R}{2}\\left[T - 0\\right] = \\frac{I_0^2 R T}{2}$$\nIf equivalent steady DC current $I_{\\text{rms}}$ produces same heat $H = I_{\\text{rms}}^2 R T$:\n$$I_{\\text{rms}}^2 R T = \\frac{I_0^2 R T}{2} \\implies I_{\\text{rms}} = \\frac{I_0}{\\sqrt{2}} \\approx 0.707 I_0$$\nSimilarly, $V_{\\text{rms}} = \\frac{V_0}{\\sqrt{2}} \\approx 0.707 V_0$."
+            "derivations": "Part 1: Physical Definition & Joule Heating Equivalence\nThe Root-Mean-Square (RMS) or virtual/effective value of alternating current is defined as that value of steady direct current (DC) which would generate the same amount of heat in a given resistor in a given time as is produced by the AC passing through the same resistor for the same time (one complete cycle period $T$).\n\nAverage value over full cycle: $\\langle I \\rangle_{\\text{cycle}} = \\frac{1}{T}\\int_0^T I_0\\sin(\\omega t) dt = 0$. Hence arithmetic average cannot rate AC power.\nJoule heating depends on $I^2 R$, which is strictly non-negative at all times.\n\nPart 2: Step-by-Step Derivation of I_rms = I₀ / √2\nStep 1 (Instantaneous Heat): Let alternating current be $I(t) = I_0 \\sin(\\omega t)$. In an infinitesimal time interval $dt$, the heat produced in resistor $R$ is:\n$$dH = I^2 R \\, dt = I_0^2 R \\sin^2(\\omega t) \\, dt$$\n\nStep 2 (Integration over One Full Cycle): Total heat produced over period $T = 2\\pi/\\omega$:\n$$H = \\int_0^T I_0^2 R \\sin^2(\\omega t) \\, dt = I_0^2 R \\int_0^T \\frac{1 - \\cos(2\\omega t)}{2} \\, dt$$\n$$H = \\frac{I_0^2 R}{2} \\left[ \\int_0^T dt - \\int_0^T \\cos(2\\omega t) \\, dt \\right]$$\n\nStep 3 (Evaluating Integrals): The first integral gives $\\int_0^T dt = T$. The second integral vanishes identically:\n$$\\int_0^T \\cos(2\\omega t) \\, dt = \\left[ \\frac{\\sin(2\\omega t)}{2\\omega} \\right]_0^T = \\frac{\\sin(4\\pi) - \\sin(0)}{2\\omega} = 0$$\nTherefore, total heat produced is:\n$$H = \\frac{I_0^2 R T}{2}$$\n\nStep 4 (Equating to DC Thermal Equivalent): If steady DC current $I_{\\text{rms}}$ produces the exact same heat $H$ in resistance $R$ in time $T$:\n$$H = I_{\\text{rms}}^2 R T$$\n$$I_{\\text{rms}}^2 R T = \\frac{I_0^2 R T}{2} \\implies I_{\\text{rms}}^2 = \\frac{I_0^2}{2}$$\n\nStep 5 (Final Formula): Taking square root on both sides:\n$$I_{\\text{rms}} = \\frac{I_0}{\\sqrt{2}} \\approx 0.707 \\, I_0$$\n\nPart 3: Derivation of Alternating EMF (E_rms = E₀ / √2)\nLet alternating EMF be $E(t) = E_0 \\sin(\\omega t)$. Power dissipated across resistance $R$ is $P(t) = \\frac{E^2(t)}{R}$.\nTotal heat produced in one complete period $T$ is:\n$$H = \\int_0^T \\frac{E^2(t)}{R} \\, dt = \\frac{E_0^2}{R} \\int_0^T \\sin^2(\\omega t) \\, dt = \\frac{E_0^2}{R} \\left(\\frac{T}{2}\\right) = \\frac{E_0^2 T}{2R}$$\nEquating to equivalent steady DC voltage $E_{\\text{rms}}$:\n$$H = \\frac{E_{\\text{rms}}^2 T}{R} \\implies \\frac{E_{\\text{rms}}^2 T}{R} = \\frac{E_0^2 T}{2R} \\implies E_{\\text{rms}} = \\frac{E_0}{\\sqrt{2}} \\approx 0.707 \\, E_0$$\nDomestic Supply Note: Standard $220\\text{ V}$ household supply is $V_{\\text{rms}} = 220\\text{ V}$. Peak amplitude is:\n$$V_0 = \\sqrt{2} \\times 220\\text{ V} \\approx 311.13\\text{ V}$$\n\nPart 4: Mean / Average Value of AC over Half-Cycle\nOver positive half-cycle ($t = 0$ to $t = T/2$):\n$$I_{\\text{mean}} = \\frac{1}{T/2} \\int_0^{T/2} I_0 \\sin(\\omega t) \\, dt = \\frac{2 I_0}{T} \\left[ -\\frac{\\cos(\\omega t)}{\\omega} \\right]_0^{T/2} = \\frac{2 I_0}{\\omega T} [-\\cos(\\pi) + \\cos(0)] = \\frac{2 I_0}{2\\pi} [1 + 1] = \\frac{2 I_0}{\\pi} \\approx 0.637 \\, I_0$$",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Root-Mean-Square (RMS) Values of AC: Derivation of I_rms and E_rms (Starred in revision notes)"
       }
     ]
   },
@@ -1143,9 +1313,14 @@ export const PHYSICS_CHAPTERS = [
             "keyFormulas": [
               "c = ν · λ",
               "E = hν = hc / λ"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important Question"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Question",
+        "importantReason": "Electromagnetic spectrum (Starred in revision notes)"
       },
       {
         "id": "phy-sub-8-2",
@@ -1162,9 +1337,14 @@ export const PHYSICS_CHAPTERS = [
               "∮ B·dA = 0",
               "∮ E·dl = −dΦ_B / dt",
               "∮ B·dl = μ₀(I_c + I_d)"
-            ]
+            ],
+            "isImportant": true,
+            "examTag": "Important 4 Equations"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important 4 Equations",
+        "importantReason": "Maxwell's 4 equations (Starred in revision notes)"
       },
       {
         "id": "phy-sub-8-3",
@@ -1180,9 +1360,14 @@ export const PHYSICS_CHAPTERS = [
               "I_d = ε₀ (dΦ_E / dt)",
               "Total current: I = I_c + I_d"
             ],
-            "derivations": "**Displacement Current Derivation & Ampere-Maxwell Law:**\nFor a charging capacitor of plate area $A$, electric field is $E = \\frac{\\sigma}{\\varepsilon_0} = \\frac{q}{\\varepsilon_0 A}$. Total electric flux between plates:\n$$\\Phi_E = E A = \\frac{q}{\\varepsilon_0} \\implies q = \\varepsilon_0 \\Phi_E$$\nDifferentiating with respect to time:\n$$I_c = \\frac{dq}{dt} = \\varepsilon_0 \\frac{d\\Phi_E}{dt} = I_d$$\nHence, displacement current $I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}$ equals conduction current $I_c$ inside the gap.\nGeneralized Ampere-Maxwell Law:\n$$\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 (I_c + I_d) = \\mu_0 I_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}$$"
+            "derivations": "Displacement Current Derivation & Ampere-Maxwell Law:\nFor a charging capacitor of plate area $A$, electric field is $E = \\frac{\\sigma}{\\varepsilon_0} = \\frac{q}{\\varepsilon_0 A}$. Total electric flux between plates:\n$$\\Phi_E = E A = \\frac{q}{\\varepsilon_0} \\implies q = \\varepsilon_0 \\Phi_E$$\nDifferentiating with respect to time:\n$$I_c = \\frac{dq}{dt} = \\varepsilon_0 \\frac{d\\Phi_E}{dt} = I_d$$\nHence, displacement current $I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}$ equals conduction current $I_c$ inside the gap.\nGeneralized Ampere-Maxwell Law:\n$$\\oint \\vec{B} \\cdot d\\vec{l} = \\mu_0 (I_c + I_d) = \\mu_0 I_c + \\mu_0 \\varepsilon_0 \\frac{d\\Phi_E}{dt}$$",
+            "isImportant": true,
+            "examTag": "Important Derivation"
           }
-        ]
+        ],
+        "isImportant": true,
+        "examTag": "Important Derivation",
+        "importantReason": "Displacement current & Maxwell-Ampere law (Starred in revision notes)"
       },
       {
         "id": "phy-sub-8-4",

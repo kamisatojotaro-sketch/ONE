@@ -146,9 +146,10 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
             {definitions.map((def, idx) => (
               <div key={idx} className="pt-2 first:pt-0 space-y-1">
                 <div className="flex items-start gap-2">
-                  <span className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
-                    {def.term}
-                  </span>
+                  <span 
+                    className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]"
+                    dangerouslySetInnerHTML={{ __html: formatMathString(def.term) }}
+                  />
                 </div>
                 <p 
                   className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed pl-3 border-l-2 border-[var(--accent-primary)]/40"

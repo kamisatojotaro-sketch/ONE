@@ -7,6 +7,8 @@ import ReactionDiagramCard from './ReactionDiagramCard';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import StructuredSectionView from './StructuredSectionView';
 import PriorityBadge from './PriorityBadge';
+import Physics4PartSectionView from './Physics4PartSectionView';
+import { isSubtopicImportant, getImportantSubtopicInfo } from '../../data/importantSubtopicsMapping';
 
 const PHYSICS_SUBTOPIC_DIAGRAMS = {
   // Chapter 1: Electric Charges and Fields
@@ -229,9 +231,10 @@ export default function ChapterDrillDown({
               const subCompleted = completedSubchapters.includes(sub.id);
               const pRating = getPriority ? getPriority(sub.id) : undefined;
               const pTag = pRating !== undefined ? `[P: ${pRating}/10] ` : '';
+              const impTag = isSubtopicImportant(sub.id) || sub.isImportant ? '★ [IMP] ' : '';
               return (
                 <option key={sub.id} value={sub.id} className="bg-[var(--bg-surface)] text-[var(--text-primary)]">
-                  {subCompleted ? '✓ ' : ''}{pTag}{sub.title}
+                  {subCompleted ? '✓ ' : ''}{impTag}{pTag}{sub.title}
                 </option>
               );
             })}
@@ -247,10 +250,15 @@ export default function ChapterDrillDown({
             <BookOpen size={16} />
           </div>
           <div className="min-w-0">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
                 Active NCERT Subtopic
               </span>
+              {(isSubtopicImportant(currentSubchapter.id) || currentSubchapter.isImportant) && (
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                  ★ IMPORTANT EXAM TOPIC
+                </span>
+              )}
               <PriorityBadge
                 id={currentSubchapter.id}
                 rating={getPriority ? getPriority(currentSubchapter.id) : undefined}
@@ -388,44 +396,55 @@ export default function ChapterDrillDown({
               {/* CONDITIONAL LAYOUT: IMPORTANT QUESTIONS MODE VS GENERAL STUDY */}
               {chapterStudyMode === 'QUESTIONS' ? (
                 <>
-                  {/* In Important Questions Mode: Exam Question Blueprint is FIRST and Highlighted */}
-                  {section.questionFraming && (
-                    <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
-                          <Target size={14} />
-                          High-Yield Board Exam Question Blueprint
-                        </span>
-                        <span className="text-[11px] font-cursive text-[var(--text-muted)]">
-                          frequently tested patterns
-                        </span>
-                      </div>
-                      <div
-                        className="font-sans text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words font-medium"
-                        dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
-                      />
-                    </div>
-                  )}
-
-                  {/* Key Formulas for Solving the Exam Questions */}
-                  {section.keyFormulas && section.keyFormulas.length > 0 && (
-                    <FormulaCard
-                      formulaList={section.keyFormulas}
-                      derivations={section.derivations}
+                  {selectedSubject === 'physics' ? (
+                    <Physics4PartSectionView
+                      section={section}
+                      subtopicId={currentSubchapter.id}
+                      chapterId={selectedChapter}
+                      diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
                     />
-                  )}
+                  ) : (
+                    <>
+                      {/* In Important Questions Mode: Exam Question Blueprint is FIRST and Highlighted */}
+                      {section.questionFraming && (
+                        <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
+                              <Target size={14} />
+                              High-Yield Board Exam Question Blueprint
+                            </span>
+                            <span className="text-[11px] font-cursive text-[var(--text-muted)]">
+                              frequently tested patterns
+                            </span>
+                          </div>
+                          <div
+                            className="font-sans text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words font-medium"
+                            dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
+                          />
+                        </div>
+                      )}
 
-                  {/* Visual Chemical Reaction & Mechanism Diagrams */}
-                  <ReactionDiagramCard
-                    subtopicId={currentSubchapter.id}
-                    chapterId={selectedChapter}
-                  />
+                      {/* Key Formulas for Solving the Exam Questions */}
+                      {section.keyFormulas && section.keyFormulas.length > 0 && (
+                        <FormulaCard
+                          formulaList={section.keyFormulas}
+                          derivations={section.derivations}
+                        />
+                      )}
 
-                  {/* Visual Physics Concept & Derivation Diagrams */}
-                  {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
-                    <div className="py-2">
-                      <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
-                    </div>
+                      {/* Visual Chemical Reaction & Mechanism Diagrams */}
+                      <ReactionDiagramCard
+                        subtopicId={currentSubchapter.id}
+                        chapterId={selectedChapter}
+                      />
+
+                      {/* Visual Physics Concept & Derivation Diagrams */}
+                      {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
+                        <div className="py-2">
+                          <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {/* Instant Practice Panel (MCQs & Board PYQs) */}
@@ -495,53 +514,64 @@ export default function ChapterDrillDown({
                 </>
               ) : (
                 <>
-                  {/* General Study Mode: Structured Editorial Notes */}
-                  {/* Definitions, Bulleted Key Points, Extra Points & Reactions with Diagrams */}
-                  <StructuredSectionView
-                    section={section}
-                    subtopicId={currentSubchapter.id}
-                    chapterId={selectedChapter}
-                    subjectId={selectedSubject}
-                  />
-
-                  {/* 2. Key Formulas with Variable Breakdown Card */}
-                  {section.keyFormulas && section.keyFormulas.length > 0 && (
-                    <FormulaCard
-                      formulaList={section.keyFormulas}
-                      derivations={section.derivations}
+                  {selectedSubject === 'physics' ? (
+                    <Physics4PartSectionView
+                      section={section}
+                      subtopicId={currentSubchapter.id}
+                      chapterId={selectedChapter}
+                      diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
                     />
-                  )}
-
-                  {/* Visual Chemical Reaction & Mechanism Diagrams */}
-                  <ReactionDiagramCard
-                    subtopicId={currentSubchapter.id}
-                    chapterId={selectedChapter}
-                  />
-
-                  {/* Visual Physics Concept & Derivation Diagrams */}
-                  {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
-                    <div className="py-2">
-                      <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
-                    </div>
-                  )}
-
-                  {/* 3. How questions could be framed / asked */}
-                  {section.questionFraming && (
-                    <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
-                          <HelpCircle size={14} />
-                          Exam Question Blueprint
-                        </span>
-                        <span className="text-[11px] font-cursive text-[var(--text-muted)]">
-                          frequently tested patterns
-                        </span>
-                      </div>
-                      <div
-                        className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words"
-                        dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
+                  ) : (
+                    <>
+                      {/* General Study Mode: Structured Editorial Notes */}
+                      {/* Definitions, Bulleted Key Points, Extra Points & Reactions with Diagrams */}
+                      <StructuredSectionView
+                        section={section}
+                        subtopicId={currentSubchapter.id}
+                        chapterId={selectedChapter}
+                        subjectId={selectedSubject}
                       />
-                    </div>
+
+                      {/* 2. Key Formulas with Variable Breakdown Card */}
+                      {section.keyFormulas && section.keyFormulas.length > 0 && (
+                        <FormulaCard
+                          formulaList={section.keyFormulas}
+                          derivations={section.derivations}
+                        />
+                      )}
+
+                      {/* Visual Chemical Reaction & Mechanism Diagrams */}
+                      <ReactionDiagramCard
+                        subtopicId={currentSubchapter.id}
+                        chapterId={selectedChapter}
+                      />
+
+                      {/* Visual Physics Concept & Derivation Diagrams */}
+                      {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
+                        <div className="py-2">
+                          <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
+                        </div>
+                      )}
+
+                      {/* 3. How questions could be framed / asked */}
+                      {section.questionFraming && (
+                        <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
+                              <HelpCircle size={14} />
+                              Exam Question Blueprint
+                            </span>
+                            <span className="text-[11px] font-cursive text-[var(--text-muted)]">
+                              frequently tested patterns
+                            </span>
+                          </div>
+                          <div
+                            className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words"
+                            dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
+                          />
+                        </div>
+                      )}
+                    </>
                   )}
 
                   {/* 4. Detailed Textbook Reference (Editorial Collapsible Box) */}

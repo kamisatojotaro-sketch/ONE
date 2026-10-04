@@ -3,6 +3,7 @@ import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target, Ar
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 import { getDefaultPriority } from '../../data/priorityData';
+import { isSubtopicImportant } from '../../data/importantSubtopicsMapping';
 
 export default function ChapterList({
   selectedSubject,
@@ -216,7 +217,13 @@ export default function ChapterList({
                     />
                   </div>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {selectedSubject === 'physics' && ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-7'].includes(ch.id) && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30">
+                        ★ High-Yield Numericals
+                      </span>
+                    )}
+
                     {isPortion && (
                       <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-full bg-[var(--badge-recommended-bg)]/15 text-[var(--text-accent)] border border-[var(--badge-recommended-bg)]/30">
                         <Sparkles size={11} />
@@ -241,8 +248,13 @@ export default function ChapterList({
               {ch.available ? (
                 <div className="pt-4 mt-4 border-t border-[var(--border-subtle)] space-y-3">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-[var(--text-muted)]">
-                      {ch.subchapters?.length || 0} Topics • {stats.total} Sections
+                    <span className="text-[var(--text-muted)] flex items-center gap-1.5 flex-wrap">
+                      <span>{ch.subchapters?.length || 0} Topics • {stats.total} Sections</span>
+                      {selectedSubject === 'physics' && ch.subchapters?.filter(s => isSubtopicImportant(s.id)).length > 0 && (
+                        <span className="text-amber-600 dark:text-amber-400 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                          ★ {ch.subchapters.filter(s => isSubtopicImportant(s.id)).length} Important
+                        </span>
+                      )}
                     </span>
                     <span className="font-mono font-medium text-[var(--accent-primary)]">
                       {stats.percentage}%

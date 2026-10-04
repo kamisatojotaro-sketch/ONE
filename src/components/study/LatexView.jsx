@@ -30,11 +30,28 @@ export function MathBlock({ math, display = false, className = '' }) {
   );
 }
 
+function renderTextWithBold(text) {
+  if (!text) return null;
+  if (!text.includes('**')) return text;
+
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, idx) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={idx} className="font-bold text-[var(--text-primary)]">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
 /**
  * Formats a block of text containing embedded LaTeX syntax:
  * - $$math$$ for block display math
  * - $math$ for inline math
- * - Standard markdown bold (**text**)
+ * - Standard markdown bold (**text**) - strips asterisks and renders clean bold
  */
 export function FormattedLatex({ content, className = '' }) {
   if (!content || typeof content !== 'string') return null;
@@ -78,7 +95,7 @@ export function FormattedLatex({ content, className = '' }) {
         if (seg.type === 'inline-math') {
           return <MathBlock key={i} math={seg.val} display={false} />;
         }
-        return <span key={i}>{seg.val}</span>;
+        return <span key={i}>{renderTextWithBold(seg.val)}</span>;
       })}
     </span>
   );

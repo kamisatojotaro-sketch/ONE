@@ -202,11 +202,15 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
         const query = searchQuery.toLowerCase();
         const matchTitle = q.title.toLowerCase().includes(query);
         const matchPrompt = q.questionPrompt.toLowerCase().includes(query);
-        const matchFormulas = q.modelAnswer.derivations.some(d => 
-          d.name.toLowerCase().includes(query) || d.formula.toLowerCase().includes(query)
+        const matchKeywords = q.keyPointsAndKeywords?.some(k => k.toLowerCase().includes(query));
+        const matchDerivations = (q.derivations || []).some(d => 
+          d.name?.toLowerCase().includes(query) || d.finalFormula?.toLowerCase().includes(query)
+        );
+        const matchModel = (q.modelAnswer?.derivations || []).some(d => 
+          d.name?.toLowerCase().includes(query) || d.formula?.toLowerCase().includes(query)
         );
         const matchNumber = q.number.toString() === query || `q${q.number}` === query;
-        if (!matchTitle && !matchPrompt && !matchFormulas && !matchNumber) {
+        if (!matchTitle && !matchPrompt && !matchKeywords && !matchDerivations && !matchModel && !matchNumber) {
           return false;
         }
       }
