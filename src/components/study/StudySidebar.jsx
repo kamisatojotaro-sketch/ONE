@@ -1,8 +1,9 @@
-import { BookOpen, FileQuestion, CheckSquare, Target, Sliders } from 'lucide-react';
+import { BookOpen, FileQuestion, CheckSquare, Target, Sliders, Flame } from 'lucide-react';
 
 export default function StudySidebar({ activeTab, onTabChange }) {
   const tabs = [
     { id: 'NOTES', label: 'NOTES', icon: BookOpen, desc: 'Theory & High-Yield' },
+    { id: 'IMPORTANT', label: 'IMPORTANT Qs', icon: Flame, desc: 'Top 22 Board Hitlist' },
     { id: 'PYQ', label: 'PYQ', icon: FileQuestion, desc: 'Previous Year Qs' },
     { id: 'MCQ', label: 'MCQ', icon: CheckSquare, desc: 'Board Practice' },
     { id: 'TEST_MAKER', label: 'TEST MAKER', icon: Sliders, desc: 'Custom 30-Q Mock' },

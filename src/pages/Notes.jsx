@@ -9,6 +9,7 @@ import PortionsTabContent from '../components/study/PortionsTabContent';
 import PyqTabContent from '../components/study/PyqTabContent';
 import McqTabContent from '../components/study/McqTabContent';
 import TestMakerTabContent from '../components/study/TestMakerTabContent';
+import ImportantQuestionsTabContent from '../components/study/ImportantQuestionsTabContent';
 import StudySearchModal from '../components/study/StudySearchModal';
 
 export default function Notes() {
@@ -60,9 +61,10 @@ export default function Notes() {
       tab: item.tab || 'NOTES'
     });
 
-    if (item.sectionId) {
+    const targetId = item.sectionId || item.rawItem?.id;
+    if (targetId) {
       setTimeout(() => {
-        const el = document.getElementById(item.sectionId);
+        const el = document.getElementById(targetId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -83,6 +85,10 @@ export default function Notes() {
       {!session.selectedSubject ? (
         <SubjectGrid
           onSelectSubject={session.setSelectedSubject}
+          onSelectSubjectAndTab={(subjKey, tab) => {
+            session.setSelectedSubject(subjKey);
+            session.setActiveSidebarTab(tab);
+          }}
           completedSections={session.completedSections}
           completedPortionChapters={session.completedPortionChapters}
           onOpenUniversalSearch={handleOpenUniversalSearch}
@@ -123,7 +129,14 @@ export default function Notes() {
                 />
               )}
 
-              {/* Tab 2: Previous Year Questions */}
+              {/* Tab 2: IMPORTANT Qs (Top 22 Guaranteed Board Questions) */}
+              {session.activeSidebarTab === 'IMPORTANT' && (
+                <ImportantQuestionsTabContent
+                  onJumpToChapter={handleJumpToChapter}
+                />
+              )}
+
+              {/* Tab 3: Previous Year Questions */}
               {session.activeSidebarTab === 'PYQ' && (
                 <PyqTabContent
                   selectedSubject={session.selectedSubject}
