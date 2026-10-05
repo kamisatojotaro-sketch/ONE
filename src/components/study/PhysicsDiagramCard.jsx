@@ -11,6 +11,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
   const [galvMode, setGalvMode] = useState('ammeter'); // 'ammeter' | 'voltmeter'
   const [lcrMode, setLcrMode] = useState('phasor'); // 'phasor' | 'resonance'
   const [parallelMode, setParallelMode] = useState('attractive'); // 'attractive' | 'repulsive'
+  const [equiMode, setEquiMode] = useState('two-surfaces'); // 'two-surfaces' | 'normal-proof' | 'geometry'
 
   // Render SVG Marker definition helper
   const svgDefs = (
@@ -1199,7 +1200,146 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
    * 12. EQUIPOTENTIAL SURFACES
    * ------------------------------------------------------------- */
   if (diagramId === 'equipotential-surfaces') {
-    const content = (
+    const activeEqui = subMode || equiMode;
+
+    // 1. Two Equipotential Surfaces & Potential Gradient (NCERT Fig 2.10: Test charge moving between two surfaces)
+    const twoSurfacesContent = (
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <svg width="290" height="200" viewBox="0 0 290 200" className="overflow-visible select-none">
+            {svgDefs}
+            {/* Surface B (Lower Plane: Potential V - dV or V + δV) */}
+            <polygon points="35,165 210,165 260,125 85,125" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" strokeWidth="1.8" strokeDasharray="4 3" />
+            <text x="45" y="156" fill="#10b981" fontSize="10" fontWeight="bold">Surface B (Potential V - dV)</text>
+
+            {/* Surface A (Upper Plane: Potential V) */}
+            <polygon points="35,90 210,90 260,50 85,50" fill="rgba(16, 185, 129, 0.16)" stroke="#10b981" strokeWidth="2" />
+            <text x="45" y="82" fill="#10b981" fontSize="10" fontWeight="bold">Surface A (Potential V)</text>
+
+            {/* Normal line & distance dr connecting Surface B to Surface A */}
+            <line x1="145" y1="140" x2="145" y2="70" stroke="#f59e0b" strokeWidth="2" strokeDasharray="3 3" />
+            {/* Right angle symbol on Surface A */}
+            <path d="M 145,80 L 153,80 L 153,70" fill="none" stroke="#f59e0b" strokeWidth="1.2" />
+            <text x="156" y="110" fill="#f59e0b" fontSize="11" fontWeight="bold">dr (or δl)</text>
+
+            {/* Electric Field Vector E pointing downward (steepest decrease of potential) */}
+            <line x1="100" y1="45" x2="100" y2="155" stroke="#3b82f6" strokeWidth="2.5" markerEnd="url(#arrow-blue)" />
+            <text x="70" y="105" fill="#3b82f6" fontSize="11" fontWeight="bold">E⃗ ⟂ V</text>
+            <text x="50" y="118" fill="var(--text-muted)" fontSize="8">(Downward)</text>
+
+            {/* Unit normal vector n̂ */}
+            <line x1="145" y1="70" x2="145" y2="40" stroke="#a855f7" strokeWidth="1.8" markerEnd="url(#arrow-purple)" />
+            <text x="152" y="42" fill="#a855f7" fontSize="10" fontWeight="bold">n̂ (Normal)</text>
+
+            {/* Test Charge +q₀ at Surface B */}
+            <circle cx="145" cy="140" r="7" fill="#f43f5e" />
+            <text x="145" y="143" textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight="bold">+q₀</text>
+
+            {/* External Force moving +q₀ upward from B to A */}
+            <line x1="145" y1="130" x2="145" y2="78" stroke="#f43f5e" strokeWidth="1.8" markerEnd="url(#arrow-rose)" />
+            <text x="195" y="125" fill="#f43f5e" fontSize="9" fontWeight="bold">F⃗_ext = -q₀E⃗</text>
+            <text x="195" y="137" fill="var(--text-muted)" fontSize="8">Displacement against E⃗</text>
+          </svg>
+        </div>
+
+        <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1.5">
+            <span className="text-[10px] text-emerald-400 font-bold block uppercase font-mono">
+              NCERT Fig. 2.10: Test Charge Between Surfaces
+            </span>
+            <div className="text-xs text-[var(--text-primary)] font-bold">
+              dW = |F⃗_ext| · dr = q₀ E dr
+            </div>
+            <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+              Work done per unit charge in displacing +q₀ from surface B to surface A against electric field E⃗ equals the potential difference:
+            </p>
+            <div className="font-mono text-[11px] text-amber-400">
+              dW = q₀ (V_A - V_B) = q₀ [V - (V - dV)] = q₀ dV
+            </div>
+            <div className="font-mono text-[11px] text-emerald-400 font-bold bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/30 text-center">
+              -q₀ dV = q₀ E dr ⟹ E = -dV / dr
+            </div>
+          </div>
+
+          <div className="text-[11px] text-[var(--text-secondary)] space-y-1">
+            <p>• <strong>Negative Sign:</strong> E⃗ points in the direction of steepest rate of decrease of potential.</p>
+            <p>• <strong>Magnitude:</strong> |E| equals potential change per unit normal distance perpendicular to surfaces.</p>
+          </div>
+        </div>
+      </div>
+    );
+
+    // 2. Proof that Electric Field is Perpendicular to Equipotential Surface
+    const normalProofContent = (
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <svg width="290" height="200" viewBox="0 0 290 200" className="overflow-visible select-none">
+            {svgDefs}
+            {/* Equipotential Surface S (V = const) */}
+            <polygon points="35,160 215,160 265,95 85,95" fill="rgba(16, 185, 129, 0.12)" stroke="#10b981" strokeWidth="2" />
+            <text x="45" y="178" fill="#10b981" fontSize="10" fontWeight="bold">Equipotential Surface S (V = constant)</text>
+
+            {/* Displacement along the surface between Points A and B */}
+            <circle cx="95" cy="128" r="5" fill="#f43f5e" />
+            <text x="86" y="125" fill="var(--text-primary)" fontSize="10" fontWeight="bold">A</text>
+
+            <circle cx="190" cy="128" r="4" fill="#10b981" />
+            <text x="198" y="125" fill="var(--text-primary)" fontSize="10" fontWeight="bold">B</text>
+
+            {/* Displacement vector dr along surface */}
+            <line x1="95" y1="128" x2="182" y2="128" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-emerald)" />
+            <text x="140" y="142" textAnchor="middle" fill="#10b981" fontSize="10" fontWeight="bold">dr⃗ (along surface)</text>
+
+            {/* Test Charge +q₀ at point A */}
+            <text x="75" y="145" fill="#f43f5e" fontSize="9" fontWeight="bold">+q₀</text>
+
+            {/* Hypothetical Electric Field Vector E at angle θ */}
+            <line x1="95" y1="128" x2="165" y2="45" stroke="#3b82f6" strokeWidth="2.5" markerEnd="url(#arrow-blue)" />
+            <text x="172" y="45" fill="#3b82f6" fontSize="11" fontWeight="bold">E⃗</text>
+
+            {/* Tangential component along surface */}
+            <line x1="95" y1="128" x2="150" y2="128" stroke="#3b82f6" strokeWidth="2" strokeDasharray="3 2" />
+            <text x="145" y="116" fill="#3b82f6" fontSize="9" fontWeight="bold">E_∥ = E cos θ</text>
+
+            {/* Surface Normal n̂ */}
+            <line x1="95" y1="128" x2="95" y2="35" stroke="#a855f7" strokeWidth="1.8" strokeDasharray="3 3" markerEnd="url(#arrow-purple)" />
+            <text x="98" y="32" fill="#a855f7" fontSize="10" fontWeight="bold">n̂ (Surface Normal)</text>
+
+            {/* Angle arc for θ between dr and E */}
+            <path d="M 125,128 A 30 30 0 0 0 118,102" fill="none" stroke="#f59e0b" strokeWidth="1.5" />
+            <text x="130" y="108" fill="#f59e0b" fontSize="10" fontWeight="bold">θ = 90°</text>
+          </svg>
+        </div>
+
+        <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1.5">
+            <span className="text-[10px] text-emerald-400 font-bold block uppercase font-mono">
+              Proof: Electric Field is Perpendicular
+            </span>
+            <div className="text-xs text-[var(--text-primary)] font-bold">
+              W_AB = q₀ (V_B - V_A) = 0
+            </div>
+            <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
+              Because electrostatic potential is uniform on the surface (V_A = V_B), moving test charge +q₀ between any two points requires strictly zero work:
+            </p>
+            <div className="font-mono text-[11px] text-amber-400">
+              W = ∫ F⃗ · dr⃗ = q₀ (E⃗ · dr⃗) = q₀ E dr cos θ = 0
+            </div>
+            <div className="font-mono text-[11px] text-emerald-400 font-bold bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/30 text-center">
+              Since E ≠ 0 and dr ≠ 0 ⟹ cos θ = 0 ⟹ θ = 90°
+            </div>
+          </div>
+
+          <div className="text-[11px] text-[var(--text-secondary)] space-y-1">
+            <p>• <strong>Zero Tangential Component:</strong> E_∥ = E cos 90° = 0 everywhere on the surface.</p>
+            <p>• <strong>Normal Vector:</strong> E⃗ must be strictly oriented along normal unit vector n̂.</p>
+          </div>
+        </div>
+      </div>
+    );
+
+    // 3. Shapes & Geometries (Point charge spheres & uniform field planes)
+    const geometryContent = (
       <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
         <div className="w-full lg:w-1/2 flex justify-center">
           <svg width="270" height="170" viewBox="0 0 270 170" className="overflow-visible select-none">
@@ -1224,30 +1364,73 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
 
         <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
           <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
-            <span className="text-[10px] text-emerald-400 font-bold block uppercase font-sans">Core Properties:</span>
+            <span className="text-[10px] text-emerald-400 font-bold block uppercase font-sans">Core Shapes & Properties:</span>
             <div className="text-xs text-[var(--text-primary)] font-bold">
-              W = q · ΔV = 0  (Zero work done)
+              V(r) = q / (4πε₀r) = const ⟹ Spheres
             </div>
             <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
-              • Electric field E⃗ is <strong>always perpendicular</strong> to equipotential surfaces.<br />
-              • Two equipotential surfaces <strong>never intersect</strong>.
+              • <strong>Point charge:</strong> Concentric spherical surfaces with radial outward field.<br />
+              • <strong>Uniform field:</strong> Parallel equidistant planes normal to E⃗.<br />
+              • <strong>Spacing:</strong> Surfaces are closer together in stronger fields (dr = -dV/E).
             </p>
           </div>
         </div>
       </div>
     );
 
-    if (inline) return content;
+    const currentContent = 
+      activeEqui === 'normal-proof' ? normalProofContent :
+      activeEqui === 'geometry' ? geometryContent :
+      twoSurfacesContent;
+
+    if (inline) return currentContent;
+
     return (
       <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
-        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <span className="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-500"><Layers size={16} /></span>
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Equipotential Surfaces &amp; Geometry</h4>
-            <p className="text-[11px] text-[var(--text-muted)]">Spherical shells for point charges and parallel planes for uniform fields</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-500"><Layers size={16} /></span>
+            <div>
+              <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Equipotential Surfaces &amp; Potential Gradient</h4>
+              <p className="text-[11px] text-[var(--text-muted)]">Proof diagrams for E⃗ ⟂ Surface, E = -dV/dr, and geometric sketches</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-subtle)] self-start sm:self-auto overflow-x-auto scrollbar-none">
+            <button
+              onClick={() => setEquiMode('two-surfaces')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                activeEqui === 'two-surfaces'
+                  ? 'bg-emerald-500 text-white shadow-xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Two Surfaces (E = -dV/dr)
+            </button>
+            <button
+              onClick={() => setEquiMode('normal-proof')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                activeEqui === 'normal-proof'
+                  ? 'bg-emerald-500 text-white shadow-xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Proof: E⃗ ⟂ Surface
+            </button>
+            <button
+              onClick={() => setEquiMode('geometry')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                activeEqui === 'geometry'
+                  ? 'bg-emerald-500 text-white shadow-xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Shapes &amp; Geometry
+            </button>
           </div>
         </div>
-        {content}
+
+        {currentContent}
       </div>
     );
   }

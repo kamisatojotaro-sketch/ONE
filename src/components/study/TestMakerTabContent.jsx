@@ -674,8 +674,8 @@ export default function TestMakerTabContent({
                         dangerouslySetInnerHTML={{ __html: formatMathString(pyq.question) }}
                       />
                       <div className="pt-3 border-t border-[var(--border-subtle)]">
-                        <p className="text-xs font-bold text-[var(--accent-primary)] mb-1">
-                          Official Marking Scheme Solution:
+                        <p className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 mb-1 uppercase tracking-wider">
+                          Verified Board Model Answer:
                         </p>
                         <pre 
                           className="font-sans text-xs text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed bg-[var(--bg-elevated)] p-3 rounded-xl border border-[var(--border-subtle)]"

@@ -1,6 +1,16 @@
 import React, { useMemo } from 'react';
 import katex from 'katex';
 
+// Helper to clean malformed LaTeX escapes (e.g., literal tabs from \text, \u000bec from \vec)
+function cleanLatexMath(math) {
+  if (!math) return '';
+  return math
+    .replace(/\u000bec/g, '\\vec')
+    .replace(/[\t\s]ext\{/g, '\\text{')
+    .replace(/(^|[^\\])text\{/g, '$1\\text{')
+    .replace(/(^|[^\\a-zA-Z])ext\{/g, '$1\\text{');
+}
+
 /**
  * Safely renders a LaTeX mathematical expression using KaTeX.
  * Supports both display (block, centered) and inline math modes.
@@ -9,7 +19,8 @@ export function MathBlock({ math, display = false, className = '' }) {
   const rendered = useMemo(() => {
     if (!math || typeof math !== 'string') return '';
     try {
-      return katex.renderToString(math.trim(), {
+      const cleaned = cleanLatexMath(math.trim());
+      return katex.renderToString(cleaned, {
         displayMode: display,
         throwOnError: false,
         output: 'htmlAndMathml'

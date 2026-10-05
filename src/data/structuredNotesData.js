@@ -1,6 +1,7 @@
 // NCERT Class 12 Structured Notes Database
 // Enhanced with Oswaal-grade study aids: Mnemonics, Commonly Made Errors, CBSE Assertion-Reason, and Exam Trends
-// Covers all active subtopics across Physics & Chemistry Chapters
+// Covers all active subtopics across Physics, Chemistry & Biology Chapters
+import { BIOLOGY_STRUCTURED_NOTES } from './biologyStructuredNotes';
 
 export const STRUCTURED_NOTES_DATA = {
   "chem-sub-1-1": {
@@ -2868,7 +2869,7 @@ export const STRUCTURED_NOTES_DATA = {
       },
       {
         "term": "Relaxation Time (τ)",
-        "definition": "The average time interval elapsed between two successive collisions of a conduction electron with fixed lattice ions. Decreases as temperature increases ($\u000b_d$ drops, resistance increases)."
+        "definition": "The average time interval elapsed between two successive collisions of a conduction electron with fixed lattice ions. Decreases as temperature increases ($v_d$ drops, resistance increases)."
       },
       {
         "term": "Mobility (μ)",
@@ -3648,5 +3649,6 @@ export const STRUCTURED_NOTES_DATA = {
       "questionTypes": "Why Ampere law was incomplete, derive I_d = ε₀ dΦ/dt, EM wave speed relation c = 1/√(μ₀ε₀)",
       "hotTopic": "Displacement current derivation and charging capacitor paradox"
     }
-  }
+  },
+  ...BIOLOGY_STRUCTURED_NOTES
 };

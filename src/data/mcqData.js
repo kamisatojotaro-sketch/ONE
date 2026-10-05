@@ -472,6 +472,38 @@ export const MCQ_DATABASE = {
       ],
       correct: 1,
       explanation: 'Homologous organs share a common anatomical origin, basic structural plan, and embryonic development, but have adapted to perform different functions in response to different ecological niches, illustrating divergent evolution.'
+    },
+    {
+      id: 'bio-mcq-7',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-3',
+      difficulty: 'medium',
+      question: 'Which of the following immunoglobulins is primarily present in colostrum, conferring passive natural immunity to the newborn infant against infections?',
+      options: [
+        'IgG',
+        'IgM',
+        'IgA',
+        'IgE'
+      ],
+      correct: 2,
+      explanation: 'Colostrum, the yellowish initial milk produced during the first few days postpartum, is rich in Secretory IgA antibodies. IgA lines the mucosal surfaces of the infant digestive and respiratory tracts, conferring crucial passive natural immunity.'
+    },
+    {
+      id: 'bio-mcq-8',
+      chapterId: 'bio-ch-8',
+      chapterName: 'Ch 8: Microbes in Human Welfare',
+      subtopicId: 'bio-sub-8-2',
+      difficulty: 'medium',
+      question: 'The bioactive molecule Cyclosporin A, widely used as an immunosuppressive agent in organ transplant patients, is produced by the fungus:',
+      options: [
+        'Monascus purpureus',
+        'Trichoderma polysporum',
+        'Aspergillus niger',
+        'Penicillium notatum'
+      ],
+      correct: 1,
+      explanation: 'Cyclosporin A is produced by the fungus Trichoderma polysporum and is used as an immunosuppressive drug in organ transplantation. Statins are produced by Monascus purpureus, Citric acid by Aspergillus niger, and Penicillin by Penicillium notatum.'
     }
   ],
 

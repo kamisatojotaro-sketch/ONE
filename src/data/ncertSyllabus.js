@@ -7,7 +7,7 @@ import { APPLIED_MATHS_CHAPTERS_VOL1, APPLIED_MATHS_CHAPTERS_VOL2 } from './appl
 
 export const EXAM_PORTIONS = {
   physics: ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-4', 'phy-ch-5', 'phy-ch-6', 'phy-ch-7', 'phy-ch-8'],
-  biology: ['bio-ch-1', 'bio-ch-2', 'bio-ch-3', 'bio-ch-4', 'bio-ch-5', 'bio-ch-6'],
+  biology: ['bio-ch-1', 'bio-ch-2', 'bio-ch-3', 'bio-ch-4', 'bio-ch-5', 'bio-ch-6', 'bio-ch-7', 'bio-ch-8'],
   chemistry: ['chem-ch-1', 'chem-ch-2', 'chem-ch-4', 'chem-ch-6', 'chem-ch-7'],
   psychology: ['psy-ch-1', 'psy-ch-2', 'psy-ch-3'],
   standard_maths: ['math-ch-3', 'math-ch-4', 'math-ch-5', 'math-ch-6', 'math-ch-7', 'math-ch-10', 'math-ch-11', 'math-ch-13'],
@@ -86,16 +86,14 @@ export const NCERT_SYLLABUS = {
       {
         id: 'bio-vol-1',
         title: 'NCERT Biology Volume 1',
-        subtitle: 'Reproduction, Genetics & Evolution (Exam Portions 1-6)',
+        subtitle: 'Reproduction, Genetics, Evolution, Health & Microbes (Exam Portions 1-8)',
         chapters: BIOLOGY_CHAPTERS
       },
       {
         id: 'bio-vol-2',
         title: 'NCERT Biology Volume 2',
-        subtitle: 'Health, Microbes, Biotechnology & Ecology',
+        subtitle: 'Biotechnology & Ecology (Chapters 9-13)',
         chapters: [
-          { id: 'bio-ch-7', number: 7, title: 'Human Health and Disease', tag: 'Health', available: false, isExamPortion: false },
-          { id: 'bio-ch-8', number: 8, title: 'Microbes in Human Welfare', tag: 'Microbiology', available: false, isExamPortion: false },
           { id: 'bio-ch-9', number: 9, title: 'Biotechnology: Principles and Processes', tag: 'Biotechnology', available: false, isExamPortion: false },
           { id: 'bio-ch-10', number: 10, title: 'Biotechnology and its Applications', tag: 'Biotechnology', available: false, isExamPortion: false },
           { id: 'bio-ch-11', number: 11, title: 'Organisms and Populations', tag: 'Ecology', available: false, isExamPortion: false },

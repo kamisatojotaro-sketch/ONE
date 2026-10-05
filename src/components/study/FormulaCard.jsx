@@ -279,6 +279,16 @@ const FORMULA_METADATA = {
   }
 };
 
+// Helper to clean malformed LaTeX escapes (e.g., literal tabs from \text, \u000bec from \vec)
+function cleanLatexMath(math) {
+  if (!math) return '';
+  return math
+    .replace(/\u000bec/g, '\\vec')
+    .replace(/[\t\s]ext\{/g, '\\text{')
+    .replace(/(^|[^\\])text\{/g, '$1\\text{')
+    .replace(/(^|[^\\a-zA-Z])ext\{/g, '$1\\text{');
+}
+
 // Universal formatter that converts LaTeX expressions, removes markdown asterisks, and renders typographic math
 export function formatMathString(str) {
   if (!str) return '';
@@ -291,7 +301,8 @@ export function formatMathString(str) {
   // 2. Render KaTeX block math $$...$$
   out = out.replace(/\$\$([\s\S]+?)\$\$/g, (_, math) => {
     try {
-      return `<span class="katex-render block my-2 text-center overflow-x-auto py-1 scrollbar-none">${katex.renderToString(math.trim(), { displayMode: true, throwOnError: false, output: 'htmlAndMathml' })}</span>`;
+      const cleaned = cleanLatexMath(math.trim());
+      return `<span class="katex-render block my-2 text-center overflow-x-auto py-1 scrollbar-none">${katex.renderToString(cleaned, { displayMode: true, throwOnError: false, output: 'htmlAndMathml' })}</span>`;
     } catch {
       return math;
     }
@@ -300,7 +311,8 @@ export function formatMathString(str) {
   // 3. Render KaTeX inline math $...$
   out = out.replace(/\$([^\$\n]+?)\$/g, (_, math) => {
     try {
-      return `<span class="katex-render inline-block align-middle px-0.5">${katex.renderToString(math.trim(), { displayMode: false, throwOnError: false, output: 'htmlAndMathml' })}</span>`;
+      const cleaned = cleanLatexMath(math.trim());
+      return `<span class="katex-render inline-block align-middle px-0.5">${katex.renderToString(cleaned, { displayMode: false, throwOnError: false, output: 'htmlAndMathml' })}</span>`;
     } catch {
       return math;
     }

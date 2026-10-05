@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
-import { ChevronDown, ChevronUp, Award, Filter, Sparkles, RotateCw, BookOpen } from 'lucide-react';
+import { ChevronDown, ChevronUp, Award, Filter, Sparkles, RotateCw, BookOpen, CheckCircle2, Copy, Check } from 'lucide-react';
 import { getGeneratedPYQs } from '../../data/questionEngine';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import { formatMathString } from './FormulaCard';
 
 export default function PyqTabContent({
   selectedSubject,
@@ -54,6 +55,17 @@ export default function PyqTabContent({
     const subId = subchapterFilter === 'ALL' ? null : subchapterFilter;
     return getGeneratedPYQs(selectedSubject, chId, subId, 25, seed);
   }, [selectedSubject, chapterFilter, subchapterFilter, seed]);
+
+  const [copiedId, setCopiedId] = useState(null);
+
+  const handleCopyAnswer = (text, id) => {
+    if (!text) return;
+    const plain = text.replace(/<[^>]+>/g, '').replace(/\*\*/g, '');
+    navigator.clipboard.writeText(plain).then(() => {
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    }).catch(() => {});
+  };
 
   const handleRefresh = () => {
     setSeed(prev => prev + 1);
@@ -148,7 +160,7 @@ export default function PyqTabContent({
       {/* Scope Status Bar */}
       <div className="flex items-center justify-between px-1 text-xs text-[var(--text-muted)] font-mono">
         <span>Showing {pyqs.length} Board Questions ({chapterFilter === 'ALL' ? 'All Chapters' : 'Active Chapter'})</span>
-        <span>Click chevron to expand marking scheme</span>
+        <span>Click chevron to view verified model answer</span>
       </div>
 
       {/* Question Cards List */}
@@ -173,33 +185,50 @@ export default function PyqTabContent({
                       </span>
                     )}
                   </div>
-                  <p className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-relaxed">
-                    {item.question}
-                  </p>
+                  <p 
+                    className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: formatMathString(item.question) }}
+                  />
                 </div>
 
                 <button
                   onClick={() => setExpandedId(isExpanded ? 'NONE' : item.id)}
                   className="p-1.5 sm:p-2 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shrink-0 cursor-pointer shadow-xs"
-                  title={isExpanded ? "Hide solution" : "View marking scheme solution"}
+                  title={isExpanded ? "Hide answer" : "View verified model answer"}
                 >
                   {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                 </button>
               </div>
 
               {isExpanded && (
-                <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-[var(--border-subtle)] space-y-2 animate-in fade-in duration-200">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] sm:text-xs font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
-                      Official Stepwise Marking Scheme:
+                <div className="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-[var(--border-subtle)] space-y-2.5 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                      <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                      Verified Board Model Answer:
                     </span>
-                    <span className="text-[10px] font-cursive text-[var(--text-muted)]">
-                      board examiner answer key
-                    </span>
+                    <button
+                      onClick={() => handleCopyAnswer(item.solution, item.id)}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-[var(--border-default)] text-[11px] font-mono text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
+                      title="Copy model answer"
+                    >
+                      {copiedId === item.id ? (
+                        <>
+                          <Check size={12} className="text-emerald-500 shrink-0" />
+                          <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={12} className="shrink-0" />
+                          <span>Copy Answer</span>
+                        </>
+                      )}
+                    </button>
                   </div>
-                  <div className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-elevated)] p-3.5 sm:p-4 rounded-xl border border-[var(--border-subtle)] break-words">
-                    {item.solution}
-                  </div>
+                  <div 
+                    className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-elevated)] p-3.5 sm:p-4 rounded-xl border border-[var(--border-subtle)] break-words"
+                    dangerouslySetInnerHTML={{ __html: formatMathString(item.solution) }}
+                  />
                 </div>
               )}
             </div>

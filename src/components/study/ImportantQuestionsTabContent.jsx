@@ -51,9 +51,10 @@ const getDerivationDiagram = (qId, dIdx) => {
   if (qId === 'imp-phy-3') return { diagramId: 'faraday-lenz', title: "Lenz's Law & Induced Current Direction" };
   if (qId === 'imp-phy-4') return { diagramId: 'transformer', title: 'Transformer Core & Mutual Flux Linkage' };
   if (qId === 'imp-phy-5') return { diagramId: 'galvanometer-torque', title: 'Radial Magnetic Field & Deflection Torque' };
-  if (qId === 'imp-phy-6') return { diagramId: 'electric-flux-dipole', title: 'Electric Flux & Dipole Field Lines' };
-  if (qId === 'imp-phy-7') return { diagramId: 'equipotential-surfaces', title: 'Equipotential Surfaces & Normal Field Lines' };
-  if (qId === 'imp-phy-8') return { diagramId: 'point-charge-field', title: 'Radial Field Lines of Point Charge' };
+  if (qId === 'imp-phy-7') {
+    if (dIdx === 0) return { diagramId: 'equipotential-surfaces', subMode: 'normal-proof', title: 'Proof: Electric Field is Perpendicular to Equipotential Surface' };
+    return { diagramId: 'equipotential-surfaces', subMode: 'two-surfaces', title: 'Test Charge Travelling Between Two Equipotential Surfaces (E = -dV/dr)' };
+  }
   if (qId === 'imp-phy-9') return { diagramId: 'field-lines-properties', title: 'Electric Field Lines Geometry & Properties' };
   if (qId === 'imp-phy-10') return { diagramId: 'capacitor-circuits', title: 'Series & Parallel Capacitor Networks' };
   if (qId === 'imp-phy-11') return { diagramId: 'cell-circuit', title: 'Cell with Internal Resistance & Load Circuit' };

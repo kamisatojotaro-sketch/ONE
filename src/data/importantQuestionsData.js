@@ -565,7 +565,9 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       "Principle: An AC transformer works on the principle of Mutual Induction — whenever alternating current in the primary coil changes, it creates a time-varying magnetic flux in the common soft iron core, which links with the secondary coil and induces an alternating emf across it.",
       "A transformer cannot operate on Direct Current (DC) because steady direct current produces constant magnetic flux ($d\\Phi/dt = 0$), resulting in zero induced secondary voltage.",
       "Step-up Transformer: Number of turns in secondary exceeds primary ($N_s > N_p$), stepping up voltage ($V_s > V_p$) while stepping down current ($I_s < I_p$).",
-      "Step-down Transformer: Number of turns in primary exceeds secondary ($N_p > N_s$), stepping down voltage ($V_s < V_p$) while stepping up current ($I_s > I_p$)."
+      "Step-down Transformer: Number of turns in primary exceeds secondary ($N_p > N_s$), stepping down voltage ($V_s < V_p$) while stepping up current ($I_s > I_p$).",
+      "Four Major Real Energy Losses: In actual transformers, efficiency $\\eta < 100\\%$ because electrical and magnetic energy is converted into heat via four distinct mechanisms: (1) Copper ($I^2R$) Loss in coil windings, (2) Eddy Current Loss in the bulk iron core, (3) Hysteresis Loss in cyclic core magnetization, and (4) Magnetic Flux Leakage.",
+      "Minimization Strategies: (1) Copper loss is minimized by using thick copper wires with low resistance; (2) Eddy current loss is minimized by constructing a laminated core with thin, varnish-insulated sheets; (3) Hysteresis loss is minimized by selecting soft iron with a narrow $B\\text{-}H$ loop; (4) Flux leakage is minimized by winding primary and secondary coils coaxially over each other."
     ],
     "derivations": [
       {
@@ -601,6 +603,35 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
           }
         ],
         "finalFormula": "\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = \\frac{I_p}{I_s} = K"
+      },
+      {
+        "name": "Four Major Energy Losses in Practical Transformers & Mitigation Methods",
+        "setup": "In an actual transformer, electrical output power is strictly less than input power ($P_{\\text{out}} < P_{\\text{in}}$) because electrical and magnetic energy is dissipated as heat. The four major sources of energy loss and their precise engineering mitigation methods as required in CBSE board exams are:",
+        "steps": [
+          {
+            "text": "1. Copper Loss (Joule Heating / $I^2R$ Loss):\n• Cause: The primary and secondary coils have finite electrical resistance ($R_p$ and $R_s$). When alternating currents $I_p$ and $I_s$ flow through them, electrical power is dissipated as Joule heat ($H = I^2 R t$).\n• Minimization: Use thick copper wires having large cross-sectional area (low resistance) for the winding carrying large current (i.e., the low-voltage winding in step-up or step-down transformers).",
+            "equation": "P_{\\text{copper}} = I_p^2 R_p + I_s^2 R_s"
+          },
+          {
+            "text": "2. Eddy Current Loss (Core Iron Heating):\n• Cause: The continuous alternating magnetic flux passing through the bulk metallic iron core induces closed circulating loops of electrical current called eddy currents, producing intense heat according to Joule's law.\n• Minimization: The magnetic core is fabricated from thin laminations (strips) of soft iron insulated from one another by an insulating layer of varnish or lacquer, stacked parallel to the magnetic field. This breaks large eddy current loops into tiny, high-resistance localized paths, drastically reducing current and heat.",
+            "equation": "P_{\\text{eddy}} \\propto \\frac{f^2 B_{\\max}^2 t^2}{\\rho} \\quad (\\text{where } t = \\text{lamination thickness, } \\rho = \\text{resistivity})"
+          },
+          {
+            "text": "3. Hysteresis Loss (Magnetic Reversal Loss):\n• Cause: The ferromagnetic core is subjected to rapid cyclic magnetization and demagnetization at the AC mains frequency (50 Hz). In every cycle, work must be done against internal magnetic friction to reorient magnetic domains, dissipating energy proportional to the area of the material's $B\\text{-}H$ hysteresis loop.\n• Minimization: Construct the core using high-permeability ferromagnetic materials that have a narrow hysteresis loop and low coercivity, such as soft iron or silicon alloy steel.",
+            "equation": "P_{\\text{hysteresis}} = \\eta_{\\text{Steinmetz}} \\cdot V \\cdot f \\cdot B_{\\max}^{1.6} = \\oint B \\, dH \\quad (\\text{Area of } B\\text{-}H \\text{ loop})"
+          },
+          {
+            "text": "4. Magnetic Flux Leakage:\n• Cause: Not all magnetic flux produced by current in the primary coil passes entirely through the core to link with the secondary coil; a fraction of the flux lines leaks into the surrounding air.\n• Minimization: Wind the primary and secondary coils coaxially one over the other (e.g., secondary winding directly on top of the primary with insulation in between) on the same limb of a closed shell-type core.",
+            "equation": "\\Phi_{\\text{leakage}} = \\Phi_p - \\Phi_s \\to 0"
+          }
+        ],
+        "specialCases": [
+          {
+            "title": "Humming / Magnetostriction Noise Loss:",
+            "text": "The mechanical expansion and contraction of the ferromagnetic core under alternating magnetic flux causes audible humming vibrations (magnetostriction). Minimized by tightly clamping core laminations together with epoxy resin."
+          }
+        ],
+        "finalFormula": "\\text{Efficiency: } \\eta = \\frac{P_{\\text{out}}}{P_{\\text{in}}} \\times 100\\% = \\frac{V_s I_s}{V_p I_p} \\times 100\\% < 100\\%"
       }
     ],
     "diagram": {
@@ -647,7 +678,22 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       {
         "symbol": "\\text{Eddy Currents}",
         "term": "Eddy Currents",
-        "definition": "Circulating closed loops of induced electric currents in bulk iron cores produced by time-varying magnetic flux, causing thermal energy loss."
+        "definition": "Circulating closed loops of induced electric currents in bulk iron cores produced by time-varying magnetic flux, causing thermal energy loss. Minimized by core lamination."
+      },
+      {
+        "symbol": "I^2 R \\text{ Loss}",
+        "term": "Copper Loss",
+        "definition": "Heat dissipation in transformer windings due to electrical resistance of copper wire ($P = I^2 R$). Minimized using thick copper wires."
+      },
+      {
+        "symbol": "\\text{Hysteresis}",
+        "term": "Hysteresis Loss",
+        "definition": "Energy dissipated as heat during repeated cyclic magnetization and demagnetization of the ferromagnetic core. Minimized using soft iron."
+      },
+      {
+        "symbol": "\\Phi_{\\text{leakage}}",
+        "term": "Magnetic Flux Leakage",
+        "definition": "Fraction of primary magnetic flux that escapes through air without linking the secondary turns. Minimized by coaxial winding."
       }
     ],
     "markingScheme": [
@@ -658,7 +704,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
     ],
     "examinerTips": "In explaining energy losses: (1) Copper loss is minimized by thick wires; (2) Eddy current loss is minimized by laminated core; (3) Hysteresis loss is minimized by soft iron (narrow hysteresis loop); (4) Flux leakage is minimized by winding primary and secondary over one another.",
     "modelAnswer": {
-      "statement": "Principle: An AC transformer works on the principle of Mutual Induction — whenever alternating current in the primary coil changes, it creates a time-varying magnetic flux in the common soft iron core, which links with the secondary coil and induces an alternating emf across it.\nA transformer cannot operate on Direct Current (DC) because steady direct current produces constant magnetic flux ($d\\Phi/dt = 0$), resulting in zero induced secondary voltage.\nStep-up Transformer: Number of turns in secondary exceeds primary ($N_s > N_p$), stepping up voltage ($V_s > V_p$) while stepping down current ($I_s < I_p$).\nStep-down Transformer: Number of turns in primary exceeds secondary ($N_p > N_s$), stepping down voltage ($V_s < V_p$) while stepping up current ($I_s > I_p$).",
+      "statement": "Principle: An AC transformer works on the principle of Mutual Induction — whenever alternating current in the primary coil changes, it creates a time-varying magnetic flux in the common soft iron core, which links with the secondary coil and induces an alternating emf across it.\nA transformer cannot operate on Direct Current (DC) because steady direct current produces constant magnetic flux ($d\\Phi/dt = 0$), resulting in zero induced secondary voltage.\nStep-up Transformer: Number of turns in secondary exceeds primary ($N_s > N_p$), stepping up voltage ($V_s > V_p$) while stepping down current ($I_s < I_p$).\nStep-down Transformer: Number of turns in primary exceeds secondary ($N_p > N_s$), stepping down voltage ($V_s < V_p$) while stepping up current ($I_s > I_p$).\n\nFour Major Real Energy Losses & Methods of Minimization:\n1. Copper Loss (I²R heating): Heat generated in primary and secondary copper windings due to finite electrical resistance. Minimized by using thick copper wires (low resistance) for the high-current winding.\n2. Eddy Current Loss: Circulating currents induced in the continuous bulk of the iron core by alternating flux. Minimized by using a laminated soft iron core made of thin, varnish-insulated sheets.\n3. Hysteresis Loss: Energy lost in continuously reversing magnetic dipoles of the core during each AC cycle. Minimized by using soft iron or silicon alloy steel having a narrow B-H hysteresis loop.\n4. Flux Leakage: Primary magnetic flux lines escaping into air without linking secondary turns. Minimized by winding primary and secondary coils coaxially over each other on the same core limb.",
       "derivations": [
         {
           "name": "Working Derivation: Voltage & Current Transformation Ratios",
@@ -672,6 +718,16 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
             "Real Transformer Efficiency: In practical transformers, efficiency is less than 100% due to core and winding losses: \\eta = \\frac{P_{\\text{out}}}{P_{\\text{in}}} \\times 100\\% = \\frac{V_s I_s}{V_p I_p} \\times 100\\%"
           ],
           "formula": "\\frac{V_s}{V_p} = \\frac{N_s}{N_p} = \\frac{I_p}{I_s} = K"
+        },
+        {
+          "name": "Four Major Energy Losses & Mitigation Methods",
+          "steps": [
+            "1. Copper Loss (I²R Heating): Caused by electrical resistance of primary and secondary copper windings. Minimized by using thick copper wires of large cross-section (low resistance) for the high-current winding.",
+            "2. Eddy Current Loss: Caused by alternating magnetic flux inducing circulating loops of electric current in the bulk iron core. Minimized by using a laminated soft iron core made of thin insulated sheets stacked parallel to the flux.",
+            "3. Hysteresis Loss: Caused by energy dissipated during cyclic magnetization and demagnetization of the core in each AC cycle. Minimized by using soft iron or silicon steel having a narrow B-H hysteresis loop.",
+            "4. Flux Leakage: Caused by primary magnetic flux lines leaking into surrounding air without linking secondary turns. Minimized by winding primary and secondary coils coaxially one over the other on the same core limb."
+          ],
+          "formula": "\\text{Efficiency: } \\eta = \\frac{P_{\\text{out}}}{P_{\\text{in}}} \\times 100\\% < 100\\%"
         }
       ],
       "diagramNotes": "1. Draw rectangular laminated soft iron core with thin insulated sheets visible.\n2. Draw Primary Coil on left limb with $N_p$ turns connected to AC source $V_p \\sim$.\n3. Draw Secondary Coil on right limb with $N_s$ turns connected to load resistor $R_L$.\n4. Show dashed magnetic flux loop $\\Phi(t)$ circulating through the iron core linking both coils.",
@@ -935,9 +991,9 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       }
     ],
     "markingScheme": [
-      "1 Mark: Definition of electric flux and correct SI unit ($\text{N}\\cdot\text{m}^2/\text{C}$ or $\text{V}\\cdot\text{m}$).",
-      "0.5 Mark: Proof that total flux $\\Phi_E = 0$ using Gauss's law since $q_{\text{net}} = 0$.",
-      "0.5 Mark: Explicit clarification that $\u000bec{E} \neq 0$ on the surface."
+      "1 Mark: Definition of electric flux and correct SI unit ($\\text{N}\\cdot\\text{m}^2/\\text{C}$ or $\\text{V}\\cdot\\text{m}$).",
+      "0.5 Mark: Proof that total flux $\\Phi_E = 0$ using Gauss's law since $q_{\\text{net}} = 0$.",
+      "0.5 Mark: Explicit clarification that $\\vec{E} \\neq 0$ on the surface."
     ],
     "examinerTips": "Do NOT write that electric field is zero on the surface! Only the total integral (flux) is zero because lines entering equal lines leaving.",
     "modelAnswer": {
@@ -958,9 +1014,9 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       ],
       "diagramNotes": "1. Draw arbitrary closed boundary representing Gaussian surface $S$.\n2. Place $+q$ and $-q$ inside separated by distance $2a$.\n3. Draw curved electric field lines emerging outwards from $+q$ piercing through the surface.\n4. Draw field lines looping back and entering through the surface to terminate on $-q$, clearly showing equal inward and outward flux.",
       "markingScheme": [
-        "1 Mark: Definition of electric flux and correct SI unit ($\text{N}\\cdot\text{m}^2/\text{C}$ or $\text{V}\\cdot\text{m}$).",
-        "0.5 Mark: Proof that total flux $\\Phi_E = 0$ using Gauss's law since $q_{\text{net}} = 0$.",
-        "0.5 Mark: Explicit clarification that $\u000bec{E} \neq 0$ on the surface."
+        "1 Mark: Definition of electric flux and correct SI unit ($\\text{N}\\cdot\\text{m}^2/\\text{C}$ or $\\text{V}\\cdot\\text{m}$).",
+        "0.5 Mark: Proof that total flux $\\Phi_E = 0$ using Gauss's law since $q_{\\text{net}} = 0$.",
+        "0.5 Mark: Explicit clarification that $\\vec{E} \\neq 0$ on the surface."
       ],
       "examinerTips": "Do NOT write that electric field is zero on the surface! Only the total integral (flux) is zero because lines entering equal lines leaving."
     }
@@ -1064,8 +1120,10 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       "diagramId": "equipotential-surfaces",
       "title": "Equipotential Surfaces & Normal Field Lines",
       "examDrawingGuide": [
-        "1. Positive Point Charge: Draw concentric spherical circles around charge $+q$; show spacing increasing with distance ($r$); draw radial outward field lines perpendicular to circles.",
-        "2. Uniform Electric Field: Draw parallel equidistant vertical lines for field $\\vec{E}$; draw parallel equidistant planar sheets perpendicular to field lines."
+        "1. Test Charge Travelling Between Two Surfaces (NCERT Fig. 2.10): Draw two parallel planes A (potential V) and B (potential V - dV) separated by normal distance dr; show downward field E⃗ perpendicular to surfaces, and test charge +q₀ displaced against E⃗.",
+        "2. Proof that E⃗ ⟂ Surface: Draw single equipotential surface S with displacement dr⃗ connecting points A and B, electric field E⃗ at angle θ, and prove θ = 90° so tangential component E_∥ = 0.",
+        "3. Positive Point Charge: Draw concentric spherical circles around charge +q with increasing radial spacing and outward field arrows.",
+        "4. Uniform Electric Field: Draw equidistant parallel planar sheets perpendicular to horizontal field lines."
       ]
     },
     "keyPointsAndKeywords": [
@@ -1095,7 +1153,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
     ],
     "markingScheme": [
       "1 Mark: Definition of equipotential surface and two properties.",
-      "1 Mark: Derivation showing $W = q_0(\u000bec{E}\\cdot d\u000bec{r}) = 0 \\implies \u000bec{E} \\perp d\u000bec{r}$.",
+      "1 Mark: Derivation showing $W = q_0(\\vec{E}\\cdot d\\vec{r}) = 0 \\implies \\vec{E} \\perp d\\vec{r}$.",
       "1 Mark: Derivation of $E = -dV/dr$ and sketches for point charge and uniform field."
     ],
     "examinerTips": "In diagrams, ensure field lines are explicitly marked with perpendicular symbols ($90^\\circ$) at the intersection with equipotential surfaces.",
@@ -1131,7 +1189,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       "diagramNotes": "1. Positive Point Charge: Draw concentric spherical circles around charge $+q$; show spacing increasing with distance ($r$); draw radial outward field lines perpendicular to circles.\n2. Uniform Electric Field: Draw parallel equidistant vertical lines for field $\\vec{E}$; draw parallel equidistant planar sheets perpendicular to field lines.",
       "markingScheme": [
         "1 Mark: Definition of equipotential surface and two properties.",
-        "1 Mark: Derivation showing $W = q_0(\u000bec{E}\\cdot d\u000bec{r}) = 0 \\implies \u000bec{E} \\perp d\u000bec{r}$.",
+        "1 Mark: Derivation showing $W = q_0(\\vec{E}\\cdot d\\vec{r}) = 0 \\implies \\vec{E} \\perp d\\vec{r}$.",
         "1 Mark: Derivation of $E = -dV/dr$ and sketches for point charge and uniform field."
       ],
       "examinerTips": "In diagrams, ensure field lines are explicitly marked with perpendicular symbols ($90^\\circ$) at the intersection with equipotential surfaces."
@@ -2173,7 +2231,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       {
         "symbol": "\\Phi_E",
         "term": "Electric Flux",
-        "definition": "Total electric field lines crossing through the capacitor cross-sectional area ($\text{V}\\cdot\text{m}$)."
+        "definition": "Total electric field lines crossing through the capacitor cross-sectional area ($\\text{V}\\cdot\\text{m}$)."
       },
       {
         "symbol": "\\mu_0 \\varepsilon_0",
@@ -3326,7 +3384,7 @@ export const IMPORTANT_PHYSICS_QUESTIONS = [
       {
         "symbol": "\\Phi_E",
         "term": "Electric Flux",
-        "definition": "Surface integral of electric field over an open or closed surface ($\text{V}\\cdot\text{m}$)."
+        "definition": "Surface integral of electric field over an open or closed surface ($\\text{V}\\cdot\\text{m}$)."
       },
       {
         "symbol": "\\Phi_B",

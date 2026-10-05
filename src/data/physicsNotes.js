@@ -1219,6 +1219,22 @@ export const PHYSICS_CHAPTERS = [
             ],
             "isImportant": true,
             "examTag": "Important 5M Question"
+          },
+          {
+            "id": "phy-sec-7-5b",
+            "title": "Energy Losses in Real Transformers & Minimization",
+            "explanation": "In practical transformers, efficiency is less than 100% due to four major sources of energy loss: (1) Copper loss (I²R heating in windings), (2) Eddy current loss in the iron core, (3) Hysteresis loss due to cyclic magnetization, and (4) Magnetic flux leakage.",
+            "questionFraming": "Conceptual — 'Name and explain four major sources of energy loss in a practical transformer, and state how each is minimized.'",
+            "textbookRef": "Four Major Energy Losses in Real Transformers:\n1. Copper Loss: Heating (I²R) in primary and secondary copper windings due to finite resistance. Minimized by using thick copper wires of low resistance for the high-current winding.\n2. Eddy Current Loss: Circulating currents induced in the continuous bulk of the iron core causing heating. Minimized by using a laminated soft iron core made of thin insulated sheets/strips.\n3. Hysteresis Loss: Energy lost in magnetizing and demagnetizing the core in every AC cycle. Minimized by using soft iron or silicon alloy steel with a narrow B-H hysteresis loop.\n4. Flux Leakage: Primary magnetic flux lines escaping into air without linking secondary turns. Minimized by winding primary and secondary coils coaxially over each other on the same limb of a shell-type core.",
+            "keyFormulas": [
+              "Copper Loss: P_loss = I_p² R_p + I_s² R_s  (Minimized: Thick copper wire)",
+              "Eddy Current Loss: P_eddy ∝ f² B_max² t² / ρ  (Minimized: Laminated core)",
+              "Hysteresis Loss: P_hyst ∝ Area of B-H loop  (Minimized: Soft iron)",
+              "Flux Leakage: Φ_leakage = Φ_p - Φ_s  (Minimized: Coaxial winding)"
+            ],
+            "derivations": "Analysis of Transformer Energy Losses & Mitigation:\n1. Copper (Joule) Loss ($I^2R$):\n$$P_{\\text{copper}} = I_p^2 R_p + I_s^2 R_s$$\nMitigation: Use thick, heavy gauge copper wire (low $R$) for the winding carrying large current.\n\n2. Eddy Current Loss:\n$$P_{\\text{eddy}} \\propto \\frac{f^2 B_{\\max}^2 t^2}{\\rho}$$\nMitigation: Laminated core constructed from thin, varnish-insulated soft iron sheets stacked parallel to the flux.\n\n3. Hysteresis Loss:\n$$\\text{Energy lost per cycle} = \\oint B \\, dH = \\text{Area of } B\\text{-}H \\text{ loop}$$\nMitigation: Soft iron core material having low coercivity and narrow hysteresis loop area.\n\n4. Magnetic Flux Leakage:\nMitigation: Primary and secondary coils wound coaxially one over the other on the same central core limb.",
+            "isImportant": true,
+            "examTag": "Important 5M Question"
           }
         ],
         "isImportant": true,

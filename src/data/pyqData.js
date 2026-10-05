@@ -454,106 +454,775 @@ Sodium phenoxide (C₆H₅O⁻Na⁺) + Methyl iodide (CH₃-I) ⟶ Anisole (C₆
   ],
 
   biology: [
+    // --- CHAPTER 1: SEXUAL REPRODUCTION IN FLOWERING PLANTS ---
     {
       id: 'bio-pyq-1',
       chapterId: 'bio-ch-1',
       chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
-      subtopicId: 'bio-sub-1-4',
-      year: 'CBSE 2023 (5 Marks)',
-      question: 'What is double fertilization? Describe the process in angiosperms with the ploidy levels of the resulting structures.',
-      solution: `1. Definition:
-Double fertilization is a unique flowering plant event where two separate nuclear fusions occur within the embryo sac by two male gametes brought by a single pollen tube.
+      subtopicId: 'bio-sub-1-1',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Draw a labelled diagram of the transverse section of a mature microsporangium (anther). Name the four wall layers from outside to inside and state two crucial functions of the tapetum.',
+      solution: `1. Four Wall Layers (Outside to Inside):
+   • Epidermis: Outermost protective single cell layer.
+   • Endothecium: Second layer with hygroscopic fibrous alpha-cellulosic thickenings that facilitate anther dehiscence.
+   • Middle Layers: 1 to 3 short-lived parenchymatous layers that crush during development.
+   • Tapetum: Innermost nutritive layer surrounding the sporogenous tissue.
 
-2. Detailed Events:
-a) Syngamy (Generative Fertilization):
-   • One haploid male gamete (n) fuses with the haploid egg cell (n) at the micropylar end.
-   • Result: Diploid Zygote (2n), which later develops into the embryo.
-
-b) Triple Fusion (Vegetative Fertilization):
-   • The second haploid male gamete (n) migrates to the central cell and fuses with the two haploid polar nuclei (n + n).
-   • Result: Triploid Primary Endosperm Nucleus (PEN, 3n), which develops into nutritive endosperm.
-
-3. Significance:
-Prevents wasteful endosperm development unless fertilization of the ovum is confirmed.`
+2. Two Crucial Functions of Tapetum:
+   (i) Nourishes Developing Pollen: Cells possess dense cytoplasm and are multinucleate, providing essential nutritional enzymes and hormones to developing microspores.
+   (ii) Secretes Pollen Components: Secretes sporopollenin precursors for exine formation and produces the sticky pollenkit coating around pollen grains in insect-pollinated flowers.`
     },
     {
       id: 'bio-pyq-2',
-      chapterId: 'bio-ch-2',
-      chapterName: 'Ch 2: Human Reproduction',
-      subtopicId: 'bio-sub-2-3',
+      chapterId: 'bio-ch-1',
+      chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
+      subtopicId: 'bio-sub-1-2',
       year: 'CBSE 2023 (5 Marks)',
-      question: 'Explain the hormonal regulation of the human female menstrual cycle during: (i) Follicular phase, (ii) Ovulatory phase, (iii) Luteal phase.',
-      solution: `(i) Follicular Phase (Days 6–13):
-• Pituitary gonadotropins (FSH and LH) increase gradually.
-• FSH stimulates growth of primary follicles into mature Graafian follicles.
-• Growing follicles secrete Estrogen, which stimulates proliferation of uterine endometrium.
+      question: 'Describe the development of a 7-celled, 8-nucleate female gametophyte from a functional megaspore in angiosperms. Mention the cellular components of the egg apparatus and state the function of the filiform apparatus.',
+      solution: `1. Monosporic Embryo Sac Development:
+   • The single functional megaspore (n) at the chalazal end undergoes three successive free-nuclear mitotic divisions.
+   • First division produces 2 nuclei, which migrate to opposite poles (micropylar and chalazal).
+   • Second division produces 4 nuclei (2 at each pole).
+   • Third division produces 8 nuclei (4 at each pole).
 
-(ii) Ovulatory Phase (Day 14):
-• Rapid secretion of LH induces LH Surge (peak level in mid-cycle).
-• LH surge triggers rupture of the mature Graafian follicle and release of secondary oocyte (Ovulation).
+2. Cellular Organization (7-Celled, 8-Nucleate Stage):
+   • Micropylar End (Egg Apparatus): Cytokinesis organizes 3 cells: 1 central Egg Cell (female gamete) flanked by 2 Synergids.
+   • Chalazal End: 3 Antipodal cells organize and later degenerate.
+   • Central Region: The remaining 2 nuclei (Polar Nuclei) move to the center and reside inside 1 large Central Cell.
+   • Total: 7 cells and 8 nuclei.
 
-(iii) Luteal / Secretory Phase (Days 15–28):
-• Ruptured follicle transforms into the Corpus Luteum under LH influence.
-• Corpus luteum secretes large amounts of Progesterone, which maintains endometrium for blastocyst implantation.
-• In absence of pregnancy, corpus luteum degenerates into Corpus Albicans, progesterone levels plunge, causing endometrial shedding (Menstruation).`
+3. Components of Egg Apparatus:
+   • 1 haploid Egg cell + 2 haploid Synergids.
+
+4. Function of Filiform Apparatus:
+   • Finger-like cellular wall thickenings at the micropylar tip of synergids that chemically guide the pollen tube to enter the embryo sac.`
     },
     {
       id: 'bio-pyq-3',
-      chapterId: 'bio-ch-4',
-      chapterName: 'Ch 4: Principles of Inheritance and Variation',
-      subtopicId: 'bio-sub-4-3',
-      year: 'CBSE 2022 (3 Marks)',
-      question: 'Why did T.H. Morgan choose Drosophila melanogaster for his genetical studies? State four reasons.',
-      solution: `T.H. Morgan chose Drosophila melanogaster (fruit fly) because:
-1. Short Life Cycle: Complete life cycle completes in just about 2 weeks.
-2. High Progeny Yield: A single mating produces hundreds of offspring flies.
-3. Laboratory Culture: Grown easily on simple synthetic medium (ripe banana/cornmeal) in bottles.
-4. Clear Sexual Dimorphism: Males and females are easily distinguished (female is noticeably larger and lacks sex combs).
-5. Microscopic Variation: Many distinct hereditary variations can be observed under low-power compound microscope.`
+      chapterId: 'bio-ch-1',
+      chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
+      subtopicId: 'bio-sub-1-3',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Differentiate between autogamy, geitonogamy, and xenogamy. Why is geitonogamy considered functionally cross-pollination but genetically autogamy?',
+      solution: `1. Distinction:
+   • Autogamy: Transfer of pollen grains from anther to stigma of the same flower on the same plant.
+   • Geitonogamy: Transfer of pollen grains from anther of one flower to stigma of another flower on the same plant.
+   • Xenogamy: Transfer of pollen grains from anther of one flower to stigma of a flower on a genetically distinct plant.
+
+2. Functional vs Genetic Nature of Geitonogamy:
+   • Functionally Cross-Pollination: Pollen requires an external pollinating agent (wind, insect) to travel from one flower to another.
+   • Genetically Autogamy: Both flowers belong to the same parent plant and possess identical genotypes; hence the resulting zygotes receive no new genetic variation.`
     },
     {
       id: 'bio-pyq-4',
-      chapterId: 'bio-ch-5',
-      chapterName: 'Ch 5: Molecular Basis of Inheritance',
-      subtopicId: 'bio-sub-5-2',
-      year: 'CBSE 2023 (5 Marks)',
-      question: 'Describe the Hershey-Chase blender experiment that proved DNA is the genetic material and not protein.',
-      solution: `1. Experimental System:
-Alfred Hershey and Martha Chase (1952) used Bacteriophage T2 virus and Escherichia coli bacterium.
+      chapterId: 'bio-ch-1',
+      chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
+      subtopicId: 'bio-sub-1-3',
+      year: 'CBSE 2022 (3 Marks)',
+      question: 'What are outbreeding devices? Mention any four contrivances developed by flowering plants to discourage self-pollination and promote cross-pollination.',
+      solution: `1. Definition:
+   Outbreeding devices are structural, temporal, or genetic adaptations developed by flowering plants to prevent self-pollination and avoid inbreeding depression.
 
-2. Radio-labeling:
-• Batch 1: Phages grown on medium containing radioactive sulfur ³⁵S (labels proteins only, as methionine/cysteine have sulfur; DNA has none).
-• Batch 2: Phages grown on medium containing radioactive phosphorus ³²P (labels DNA only; proteins contain no phosphorus).
-
-3. Three Steps:
-a. Infection: Labeled phages allowed to attach to unlabelled E. coli.
-b. Blending: Agitated in a high-speed kitchen blender to strip off viral coats from bacterial surfaces.
-c. Centrifugation: Spun at high speed to separate heavy bacterial cells (pellet) from lighter viral coats (supernatant).
-
-4. Observation & Conclusion:
-• Bacteria infected with ³²P were radioactive in the pellet, showing viral DNA entered cells.
-• Bacteria infected with ³⁵S showed radioactivity in the supernatant (empty coats), not inside cells.
-• Proved conclusively that DNA, not protein, is the genetic material.`
+2. Four Contrivances:
+   (i) Dichogamy (Temporal Non-synchrony): Pollen release and stigma receptivity are not synchronized; either anthers dehisce before stigma becomes receptive (protandry) or stigma matures before anther dehisces (protogyny).
+   (ii) Heterostyly (Spatial Separation): Anthers and stigma are placed at different heights and spatial orientations, preventing falling of self-pollen onto stigma.
+   (iii) Self-Incompatibility: A genetically determined mechanism that inhibits self-pollen germination or pollen tube growth in the pistil.
+   (iv) Dicliny (Unisexual Flowers): Production of unisexual flowers. Monoecious plants (castor, maize) prevent autogamy; dioecious plants (papaya) prevent both autogamy and geitonogamy.`
     },
     {
       id: 'bio-pyq-5',
+      chapterId: 'bio-ch-1',
+      chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
+      subtopicId: 'bio-sub-1-5',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'What is double fertilization? Describe the process in angiosperms with the ploidy levels of the resulting structures and explain its biological significance.',
+      solution: `1. Definition:
+   Double fertilization is a unique flowering plant event where two separate nuclear fusions occur within the embryo sac by two male gametes brought by a single pollen tube.
+
+2. Detailed Events:
+   a) Syngamy (Generative Fertilization):
+      • One haploid male gamete (n) fuses with the haploid egg cell (n) at the micropylar end.
+      • Result: Diploid Zygote (2n), which develops into the embryo.
+   b) Triple Fusion (Vegetative Fertilization):
+      • The second haploid male gamete (n) migrates to the central cell and fuses with the two haploid polar nuclei (2n).
+      • Result: Triploid Primary Endosperm Nucleus (PEN, 3n), which divides to form nutritive endosperm.
+
+3. Biological Significance:
+   • Guarantees that nutrient-storing endosperm tissue develops only when an ovum is successfully fertilised, preventing wastage of maternal energy on unfertilised seeds.`
+    },
+    {
+      id: 'bio-pyq-6',
+      chapterId: 'bio-ch-1',
+      chapterName: 'Ch 1: Sexual Reproduction in Flowering Plants',
+      subtopicId: 'bio-sub-1-7',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Define apomixis. Explain how apomictic seeds can be commercially beneficial to the hybrid seed agricultural industry.',
+      solution: `1. Definition of Apomixis:
+   Apomixis is a form of asexual reproduction that mimics sexual reproduction, wherein viable seeds are produced without fertilisation and without meiosis (e.g., in Asteraceae and grasses).
+
+2. Commercial Benefit in Hybrid Agriculture:
+   • Problem with Hybrids: Cultivating high-yielding hybrid crops requires farmers to purchase expensive hybrid seeds every year because the desirable hybrid vigour segregates in progeny during sexual reproduction.
+   • Apomictic Solution: If hybrid plants are genetically engineered to produce seeds apomictically, maternal hybrid traits do not segregate in successive generations.
+   • Economic Impact: Farmers can keep and sow seeds from their own harvest year after year without purchasing new hybrid stock, saving significant production costs.`
+    },
+
+    // --- CHAPTER 2: HUMAN REPRODUCTION ---
+    {
+      id: 'bio-pyq-7',
+      chapterId: 'bio-ch-2',
+      chapterName: 'Ch 2: Human Reproduction',
+      subtopicId: 'bio-sub-2-3',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Tabulate any five fundamental differences between Spermatogenesis and Oogenesis in human beings.',
+      solution: `1. Comparison Table:
+   • Site & Timing:
+     – Spermatogenesis: Initiated only at puberty in seminiferous tubules; continues throughout adult life.
+     – Oogenesis: Initiated during embryonic fetal development in ovaries; ceases around age 50 (menopause).
+   • Gamete Yield:
+     – Spermatogenesis: One primary spermatocyte undergoes meiosis to yield four functional haploid spermatozoa.
+     – Oogenesis: One primary oocyte undergoes meiosis to yield only one functional haploid ovum and two/three degenerate polar bodies.
+   • Division Symmetry:
+     – Spermatogenesis: Cytokinesis is completely equal, producing cells of identical volume.
+     – Oogenesis: Cytokinesis is highly unequal, retaining almost all nutrient cytoplasm in the secondary oocyte and ovum.
+   • Meiotic Arrest:
+     – Spermatogenesis: Meiosis proceeds continuously without developmental interruption.
+     – Oogenesis: Meiosis experiences two prolonged arrests: arrested at Prophase I till puberty, and arrested at Metaphase II until sperm penetration.
+   • Motility & Morphology:
+     – Spermatogenesis: Produces small, highly motile flagellated gametes with an acrosome.
+     – Oogenesis: Produces a large, non-motile spherical gamete surrounded by zona pellucida and corona radiata.`
+    },
+    {
+      id: 'bio-pyq-8',
+      chapterId: 'bio-ch-2',
+      chapterName: 'Ch 2: Human Reproduction',
+      subtopicId: 'bio-sub-2-3',
+      year: 'CBSE 2022 (3 Marks)',
+      question: 'Draw a labelled schematic diagram of a human sperm. State the functional significance of the acrosome and the middle piece.',
+      solution: `1. Diagrammatic Regions of Human Sperm:
+   • Head: Contains an anterior cap-like Acrosome and an elongated haploid nucleus.
+   • Neck: Houses proximal centriole (initiates zygotic cleavage) and distal centriole.
+   • Middle Piece: Packed with spirally arranged mitochondria (nebunkern).
+   • Tail: Long flagellum containing the axial filament (axoneme).
+
+2. Functional Significance:
+   (i) Acrosome: Filled with hydrolytic proteolytic enzymes (hyaluronidase and corona penetrating enzyme) that dissolve corona radiata and digest the zona pellucida to allow sperm penetration into the ovum.
+   (ii) Middle Piece: Contains numerous mitochondria that generate ATP energy needed for vigorous flagellar tail motility, enabling sperm ascent through cervix and uterus into the ampulla.`
+    },
+    {
+      id: 'bio-pyq-9',
+      chapterId: 'bio-ch-2',
+      chapterName: 'Ch 2: Human Reproduction',
+      subtopicId: 'bio-sub-2-4',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Explain the hormonal regulation of the human female menstrual cycle during: (i) Follicular phase, (ii) Ovulatory phase, (iii) Luteal phase.',
+      solution: `(i) Follicular / Proliferative Phase (Days 6–13):
+• Pituitary gonadotropins (FSH and LH) increase gradually under hypothalamic GnRH stimulation.
+• FSH stimulates growth and maturation of primary follicles into a mature Graafian follicle.
+• The follicular granulosa cells secrete Estrogen, which stimulates cellular proliferation and repair of the shredded uterine endometrium.
+
+(ii) Ovulatory Phase (Day 14):
+• High estrogen exerts positive feedback, causing a sharp mid-cycle LH peak termed the LH Surge.
+• The LH surge triggers enzymatic rupture of the mature Graafian follicle and release of the secondary oocyte (Ovulation).
+
+(iii) Luteal / Secretory Phase (Days 15–28):
+• Under LH influence, the remaining ruptured follicular cells transform into the endocrine Corpus Luteum.
+• Corpus luteum secretes large amounts of Progesterone, converting endometrium into a glandular, vascular secretory lining ready for blastocyst implantation.
+• If fertilisation fails, corpus luteum degenerates into Corpus Albicans; progesterone levels plunge, initiating endometrial breakdown and menstrual bleeding.`
+    },
+    {
+      id: 'bio-pyq-10',
+      chapterId: 'bio-ch-2',
+      chapterName: 'Ch 2: Human Reproduction',
+      subtopicId: 'bio-sub-2-5',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'How is polyspermy prevented during human fertilisation? Describe the structure of a blastocyst and state which part undergoes implantation.',
+      solution: `1. Prevention of Polyspermy:
+   • Monospermy is strictly maintained by the Cortical Reaction / Zona Reaction:
+   • When the sperm head contacts and binds to receptor proteins on the Zona Pellucida, it triggers depolarisation of the ovum membrane (fast block).
+   • This induces exocytosis of cortical granules into the perivitelline space, chemically altering and hardening the zona pellucida (slow permanent block), permanently preventing additional sperms from entering.
+
+2. Structure of Blastocyst:
+   • A spherical hollow embryonic stage with a fluid-filled cavity (Blastocoel).
+   • Outer Layer: Single cellular epithelium termed the Trophoblast.
+   • Inner Cluster: An attached clump of pluripotent cells termed the Inner Cell Mass (embryoblast).
+
+3. Implantation:
+   • The outer Trophoblast cells adhere to and enzymatically digest the uterine endometrium, allowing the blastocyst to embed completely by day 7.`
+    },
+    {
+      id: 'bio-pyq-11',
+      chapterId: 'bio-ch-2',
+      chapterName: 'Ch 2: Human Reproduction',
+      subtopicId: 'bio-sub-2-7',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Describe the neuroendocrine mechanism of parturition. Why is colostrum considered indispensable for a newborn baby?',
+      solution: `1. Neuroendocrine Mechanism of Parturition:
+   • Origin of Signal: Fully developed fetus and mature placenta trigger mild uterine contractions termed the Foetal Ejection Reflex.
+   • Endocrine Relay: This reflex stimulates the maternal posterior pituitary gland to secrete Oxytocin.
+   • Positive Feedback: Oxytocin stimulates vigorous contractions of the uterine smooth muscle (myometrium), which signals further oxytocin release.
+   • Expulsion: This escalating cycle produces increasingly powerful labor contractions, expelling the baby through the cervix and vagina (birth canal).
+
+2. Importance of Colostrum:
+   • Indispensable Immunity: Colostrum is the initial thick yellowish milk secreted during the first 2–3 days postpartum.
+   • Rich in Antibodies: Contains high concentrations of Secretory Immunoglobulin A (IgA) that coat mucosal linings, providing passive natural immunity to protect the infant against gastrointestinal and respiratory infections.`
+    },
+
+    // --- CHAPTER 3: REPRODUCTIVE HEALTH ---
+    {
+      id: 'bio-pyq-12',
+      chapterId: 'bio-ch-3',
+      chapterName: 'Ch 3: Reproductive Health',
+      subtopicId: 'bio-sub-3-2',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Classify Intrauterine Devices (IUDs) into three categories with suitable examples and explain their respective mechanisms of preventing conception.',
+      solution: `1. Classification & Mechanisms of IUDs:
+   (i) Non-Medicated IUDs:
+       • Example: Lippes loop.
+       • Mechanism: Acts as a foreign body to induce a sterile local inflammatory reaction, promoting phagocytosis of sperms within the uterine cavity.
+   (ii) Copper-Releasing IUDs:
+       • Examples: CuT, Cu7, Multiload 375.
+       • Mechanism: Continuously release copper ions (Cu²⁺) that suppress sperm motility and inhibit sperm fertilising capacity in the female reproductive tract.
+   (iii) Hormone-Releasing IUDs:
+       • Examples: Progestasert, LNG-20.
+       • Mechanism: Release synthetic progestogens that make the uterine endometrium hostile to blastocyst implantation and thicken cervical mucus to prevent sperm entry.`
+    },
+    {
+      id: 'bio-pyq-13',
+      chapterId: 'bio-ch-3',
+      chapterName: 'Ch 3: Reproductive Health',
+      subtopicId: 'bio-sub-3-5',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Explain the following Assisted Reproductive Technologies (ART) and mention the specific clinical condition under which each is recommended: (a) ZIFT, (b) GIFT, (c) ICSI.',
+      solution: `(a) ZIFT (Zygote Intra-Fallopian Transfer):
+   • Procedure: In vitro fertilisation followed by transfer of the zygote or early embryo (up to 8 blastomeres) into the fallopian tube.
+   • Clinical Condition: Recommended when fallopian tubes are patent and undamaged, but natural fertilisation fails or sperm count is sub-optimal.
+
+(b) GIFT (Gamete Intra-Fallopian Transfer):
+   • Procedure: Collection of an unfertilised ovum from a healthy donor and transfer into the ampulla of the fallopian tube along with partner sperms.
+   • Clinical Condition: Recommended for females who cannot produce viable ova (anovulatory), but possess normal healthy fallopian tubes and a receptive uterus for internal fertilisation and gestation.
+
+(c) ICSI (Intra-Cytoplasmic Sperm Injection):
+   • Procedure: Laboratory micromanipulation where a single sperm is injected directly into the cytoplasm of an ovum.
+   • Clinical Condition: Recommended for severe male infertility including extreme oligozoospermia (very low sperm count), asthenozoospermia (poor motility), or inability of sperms to penetrate zona pellucida.`
+    },
+
+    // --- CHAPTER 4: PRINCIPLES OF INHERITANCE AND VARIATION ---
+    {
+      id: 'bio-pyq-14',
+      chapterId: 'bio-ch-4',
+      chapterName: 'Ch 4: Principles of Inheritance and Variation',
+      subtopicId: 'bio-sub-4-2',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Explain Incomplete Dominance with the help of a cross in Snapdragon (Antirrhinum majus). What are the phenotypic and genotypic ratios in the F2 generation?',
+      solution: `1. Cross in Snapdragon (Antirrhinum majus):
+   • Parental Generation (P): Red flower (RR) × White flower (rr)
+   • Gametes: R and r
+   • F1 Generation: All Pink flowers (Rr)
+   • F1 Selfing: Rr × Rr
+
+2. F2 Punnett Square:
+   • Gametes: R (0.5), r (0.5)
+   • Combinations: RR (Red), Rr (Pink), Rr (Pink), rr (White)
+
+3. Ratios in F2 Generation:
+   • Phenotypic Ratio: 1 Red : 2 Pink : 1 White (1:2:1)
+   • Genotypic Ratio: 1 RR : 2 Rr : 1 rr (1:2:1)
+   • Conclusion: Phenotypic ratio is exactly identical to the genotypic ratio because the heterozygote (Rr) exhibits an intermediate pink phenotype due to incomplete pigment synthesis.`
+    },
+    {
+      id: 'bio-pyq-15',
+      chapterId: 'bio-ch-4',
+      chapterName: 'Ch 4: Principles of Inheritance and Variation',
+      subtopicId: 'bio-sub-4-6',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Explain haplodiploidy in honeybees. Justify the statement: "A male honeybee has no father and cannot have sons, but has a grandfather and can have grandsons."',
+      solution: `1. Haplodiploid Sex Determination Mechanism:
+   • Females (Queen / Workers) develop from fertilised eggs and are Diploid (2n = 32 chromosomes).
+   • Males (Drones) develop parthenogenetically from unfertilised eggs and are Haploid (n = 16 chromosomes).
+   • Male honeybees produce sperms by MITOSIS (not meiosis) because they are already haploid.
+
+2. Justification of the Statement:
+   • Has No Father: A drone develops from an unfertilised egg produced solely by the diploid queen mother; hence no male parent fertilised the egg.
+   • Cannot Have Sons: When a drone mates, his sperm fertilises an egg, which always develops into a female (queen or worker); an unfertilised egg becomes a male without his genetic contribution.
+   • Has a Grandfather: His mother (queen) had both a mother and a father (the drone's grandfather).
+   • Can Have Grandsons: His daughter (queen) will lay unfertilised eggs that hatch into drones carrying his genetic material.`
+    },
+    {
+      id: 'bio-pyq-16',
+      chapterId: 'bio-ch-4',
+      chapterName: 'Ch 4: Principles of Inheritance and Variation',
+      subtopicId: 'bio-sub-4-8',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Explain the molecular basis of Sickle-Cell Anaemia with relevant codons and amino acids. How does Thalassemia differ fundamentally from Sickle-Cell Anaemia?',
+      solution: `1. Molecular Basis of Sickle-Cell Anaemia:
+   • Gene Locus: Controlled by an autosomal recessive allele on chromosome 11 encoding the beta-globin chain of haemoglobin.
+   • Point Mutation: A single base substitution (transversion) at the 6th codon of the beta-globin gene:
+     – Normal DNA (HbA): CTC on template strand codes for GAG codon on mRNA, specifying Glutamic Acid (hydrophilic amino acid).
+     – Mutant DNA (HbS): CAC on template strand codes for GUG codon on mRNA, specifying Valine (hydrophobic amino acid).
+   • Consequence: Under low oxygen tension, mutant HbS polymerises into rigid insoluble fibrous polymers, distorting flexible biconcave erythrocytes into rigid sickle shapes that occlude microcapillaries.
+
+2. Fundamental Difference:
+   • Sickle-Cell Anaemia is a QUALITATIVE defect: Normal quantity of globin chains is produced, but the synthesized polypeptide has a mutant amino acid sequence that alters molecular function.
+   • Thalassemia is a QUANTITATIVE defect: The structure of synthesized globin chains is normal, but the rate of synthesis of either alpha or beta globin chains is reduced or absent due to gene deletions/mutations.`
+    },
+    {
+      id: 'bio-pyq-17',
+      chapterId: 'bio-ch-4',
+      chapterName: 'Ch 4: Principles of Inheritance and Variation',
+      subtopicId: 'bio-sub-4-9',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Give the karyotypes, chromosomal causes, and two prominent clinical symptoms for: (a) Down syndrome, (b) Turner syndrome, (c) Klinefelter syndrome.',
+      solution: `(a) Down Syndrome:
+   • Karyotype: 47 chromosomes (45A + XX or 45A + XY).
+   • Chromosomal Cause: Trisomy of autosome 21 due to meiotic non-disjunction.
+   • Symptoms: Short stature with small round head, furrowed tongue with partially open mouth, broad palm with distinct simian crease, physical and mental retardation.
+
+(b) Turner Syndrome:
+   • Karyotype: 45 chromosomes (44A + XO).
+   • Chromosomal Cause: Monosomy of sex chromosome X in females.
+   • Symptoms: Sterile female with rudimentary ovaries, short stature, webbed neck, lack of secondary sexual characteristics at puberty.
+
+(c) Klinefelter Syndrome:
+   • Karyotype: 47 chromosomes (44A + XXY).
+   • Chromosomal Cause: Extra X chromosome in males due to non-disjunction.
+   • Symptoms: Overall masculine body habitus with feminine development including breast enlargement (Gynaecomastia), tall stature, sterile testes with azoospermia.`
+    },
+
+    // --- CHAPTER 5: MOLECULAR BASIS OF INHERITANCE ---
+    {
+      id: 'bio-pyq-18',
+      chapterId: 'bio-ch-5',
+      chapterName: 'Ch 5: Molecular Basis of Inheritance',
+      subtopicId: 'bio-sub-5-5',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Describe the Meselson and Stahl experiment that proved DNA replicates semiconservatively. Illustrate the density gradient band patterns observed across Generations 0, 1, and 2.',
+      solution: `1. Experimental System & Principle:
+   • Matthew Meselson and Franklin Stahl (1958) cultured Escherichia coli in medium containing heavy isotope ¹⁵NH₄Cl as the sole nitrogen source for many generations until ¹⁵N was incorporated into both strands of DNA.
+   • Cells were transferred to medium containing light isotope ¹⁴NH₄Cl and sampled at 20-minute generation intervals.
+   • DNA was extracted and analyzed by equilibrium density gradient centrifugation in Caesium Chloride (CsCl).
+
+2. Observations Across Generations:
+   • Generation 0 (Pre-transfer): DNA extracted was 100% heavy (¹⁵N/¹⁵N), forming a single dense band at the bottom of the CsCl gradient.
+   • Generation 1 (After 20 minutes, 1 generation): DNA extracted showed a single intermediate hybrid band (¹⁵N/¹⁴N), completely ruling out the conservative replication hypothesis.
+   • Generation 2 (After 40 minutes, 2 generations): DNA extracted showed two bands of equal intensity: 50% intermediate hybrid (¹⁵N/¹⁴N) and 50% light (¹⁴N/¹⁴N), disproving the dispersive model.
+
+3. Conclusion:
+   • Proved conclusively that DNA replicates semiconservatively: each newly replicated DNA duplex retains one intact parental template strand and one newly synthesized complementary strand.`
+    },
+    {
+      id: 'bio-pyq-19',
+      chapterId: 'bio-ch-5',
+      chapterName: 'Ch 5: Molecular Basis of Inheritance',
+      subtopicId: 'bio-sub-5-6',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Explain the post-transcriptional modifications that convert eukaryotic precursor hnRNA into functional mature mRNA.',
+      solution: `Primary transcript (hnRNA) in eukaryotes undergoes three crucial processing steps in the nucleus:
+
+1. Splicing:
+   • Eukaryotic structural genes contain alternating coding sequences (Exons) and non-coding intervening sequences (Introns).
+   • Spliceosomes (snRNPs + proteins) excise the non-functional introns and precisely ligate the coding exons together in specific order.
+
+2. Capping:
+   • An unusual nucleotide, methyl guanosine triphosphate (m⁷Gppp), is enzymatically added to the 5'-end of hnRNA.
+   • Capping protects the mRNA from 5' exonucleolytic degradation and serves as a ribosomal recognition signal for translation initiation.
+
+3. Tailing (Polyadenylation):
+   • Approximately 200 to 300 adenylate residues [poly(A) tail] are added to the 3'-end of hnRNA in a template-independent enzymatic reaction.
+   • Tailing protects the transcript from 3' exonucleases and facilitates nuclear export to the cytoplasm.`
+    },
+    {
+      id: 'bio-pyq-20',
+      chapterId: 'bio-ch-5',
+      chapterName: 'Ch 5: Molecular Basis of Inheritance',
+      subtopicId: 'bio-sub-5-7',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'State four salient features of the genetic code. Explain the dual function performed by the codon AUG.',
+      solution: `1. Four Salient Features of Genetic Code:
+   (i) Triplet: A group of three adjacent nitrogenous bases specifies one amino acid (61 sense codons + 3 nonsense/stop codons UAA, UAG, UGA).
+   (ii) Unambiguous and Specific: One particular codon codes for only one amino acid without ambiguity.
+   (iii) Degenerate: Most amino acids are specified by more than one triplet codon (e.g., Leucine is specified by six codons).
+   (iv) Universal: A given triplet codes for the same amino acid across all organisms from bacteria to humans (e.g., UUU codes for Phenylalanine).
+
+2. Dual Function of Codon AUG:
+   (i) Initiator Codon: Acts as the universal start signal initiating polypeptide translation at the P-site of the ribosome.
+   (ii) Amino Acid Coding: Codes specifically for the amino acid Methionine.`
+    },
+    {
+      id: 'bio-pyq-21',
+      chapterId: 'bio-ch-5',
+      chapterName: 'Ch 5: Molecular Basis of Inheritance',
+      subtopicId: 'bio-sub-5-9',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Describe the operon model proposed by Jacob and Monod. Explain how the Lac Operon is switched "ON" and "OFF" in Escherichia coli.',
+      solution: `1. Structural Organization:
+   • Regulator Gene (i): Synthesizes the Lac Repressor protein constitutively.
+   • Promoter (p): Binding site for RNA polymerase.
+   • Operator (o): Regulatory DNA sequence where the repressor binds.
+   • Structural Genes:
+     – gene z: Encodes Beta-galactosidase (hydrolyzes lactose into glucose + galactose).
+     – gene y: Encodes Permease (increases cellular permeability to lactose).
+     – gene a: Encodes Transacetylase (transfers acetyl group to beta-galactosides).
+
+2. Operon "OFF" (Absence of Inducer / Lactose):
+   • The i-gene constantly transcribes and translates the active Lac Repressor protein.
+   • The active repressor binds firmly to the Operator region (o).
+   • This physically prevents RNA polymerase from binding to the promoter and transcribing structural genes z, y, a.
+
+3. Operon "ON" (Presence of Inducer / Lactose):
+   • A low basal level of permease allows a small amount of lactose to enter the cell and convert to allolactose (inducer).
+   • Lactose binds to the repressor protein, inducing a conformational change that inactivates it.
+   • The inactive repressor cannot bind to the operator.
+   • RNA polymerase freely transcribes genes z, y, and a into polycistronic mRNA, synthesizing the enzymes needed to metabolize lactose.`
+    },
+    {
+      id: 'bio-pyq-22',
+      chapterId: 'bio-ch-5',
+      chapterName: 'Ch 5: Molecular Basis of Inheritance',
+      subtopicId: 'bio-sub-5-11',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Explain the principle of DNA fingerprinting. Describe the step-by-step procedure of Southern blotting used to detect polymorphic VNTRs.',
+      solution: `1. Biological Principle:
+   • DNA fingerprinting (Alec Jeffreys, 1984) is based on DNA polymorphism in non-coding repetitive satellite DNA called VNTRs (Variable Number of Tandem Repeats).
+   • The copy number and length of VNTR minisatellite sequences vary widely among unrelated individuals and are stably inherited from parents, yielding a unique genetic profile for every individual (except monozygotic twins).
+
+2. Step-by-Step Procedure:
+   (i) DNA Isolation: High molecular weight genomic DNA is extracted from biological specimens (blood, semen, hair follicle).
+   (ii) Restriction Digestion: DNA is cut into fragments using specific restriction endonucleases.
+   (iii) Electrophoresis: Cleaved DNA fragments are separated according to size by agarose gel electrophoresis.
+   (iv) Denaturation & Southern Blotting: Double-stranded DNA in gel is denatured into single strands with alkali and transferred onto a synthetic nylon or nitrocellulose membrane.
+   (v) Hybridisation: The membrane is incubated with radioactive ³²P-labelled single-stranded VNTR probes that bind complementary VNTR fragments.
+   (vi) Autoradiography: The membrane is exposed to X-ray film, producing dark hybridization bands representing the individual's specific DNA profile.`
+    },
+
+    // --- CHAPTER 6: EVOLUTION ---
+    {
+      id: 'bio-pyq-23',
       chapterId: 'bio-ch-6',
       chapterName: 'Ch 6: Evolution',
-      subtopicId: 'bio-sub-6-3',
-      year: 'CBSE 2020 (3 Marks)',
-      question: 'State Hardy-Weinberg Principle. Write five factors that disturb this genetic equilibrium.',
-      solution: `1. Principle:
-Allele frequencies in a large, randomly mating population remain constant and stable from generation to generation in the absence of evolutionary disturbances:
-p² + 2pq + q² = 1  (where p = dominant allele freq, q = recessive allele freq, and p + q = 1).
+      subtopicId: 'bio-sub-6-1',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Describe the Miller-Urey experiment that provided experimental proof for chemical evolution. State the experimental conditions and list the organic molecules identified.',
+      solution: `1. Objective:
+   S.L. Miller and H.C. Urey (1953) simulated prebiotic primitive Earth conditions in a closed laboratory apparatus to test the Oparin-Haldane hypothesis of chemical evolution (abiogenesis).
 
-2. Five Disturbing Factors:
-(i) Gene Migration / Gene Flow (immigration/emigration of alleles).
-(ii) Genetic Drift (random fluctuation in allele frequencies by chance in small populations).
-(iii) Mutation (creation of new alleles).
-(iv) Genetic Recombination (crossing over during meiosis in sexual reproduction).
-(v) Natural Selection (differential reproductive success of favorable genotypes).`
+2. Experimental Conditions:
+   • Reducing Atmosphere: Mixture of methane (CH₄), ammonia (NH₃), hydrogen (H₂), and water vapour (H₂O) in a 2:1:2 ratio; completely devoid of free molecular oxygen (O₂).
+   • Energy Source: Continuous electric discharge sparks between tungsten electrodes simulating primitive lightning storms.
+   • High Temperature: Maintained at ~800 °C in the reaction vessel.
+   • Condensation: Steam from boiling water flask circulated through the spark chamber and condensed via a cooling condenser into a U-tube collection trap.
+
+3. Results & Organic Molecules Identified:
+   • After running the apparatus continuously for one week, chemical analysis revealed the formation of simple amino acids: Glycine, Alanine, and Aspartic acid.
+   • Subsequent similar experiments yielded sugars, purines, pyrimidines, and organic pigments.
+   • Conclusion: Proved that complex organic precursors of life could originate spontaneously from inorganic molecules under primitive Earth conditions.`
+    },
+    {
+      id: 'bio-pyq-24',
+      chapterId: 'bio-ch-6',
+      chapterName: 'Ch 6: Evolution',
+      subtopicId: 'bio-sub-6-2',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Differentiate between Homologous and Analogous organs with suitable plant and animal examples. Name the type of evolution represented by each.',
+      solution: `1. Distinction Table:
+   • Anatomical Design & Origin:
+     – Homologous Organs: Share common fundamental anatomical design and embryonic origin.
+     – Analogous Organs: Possess different anatomical structures and distinct embryonic origins.
+   • Function:
+     – Homologous Organs: Modified to perform different functions in different habitats.
+     – Analogous Organs: Adapted to perform similar functions in response to similar environmental demands.
+   • Type of Evolution:
+     – Homologous Organs: Reflect Divergent Evolution (descent from common ancestor).
+     – Analogous Organs: Reflect Convergent Evolution (independent adaptation of unrelated lineages).
+
+2. Plant & Animal Examples:
+   • Homologous Examples:
+     – Animals: Forelimbs of Cheetah (running), Whale (swimming), Bat (flying), and Human (grasping).
+     – Plants: Thorns of Bougainvillea and Tendrils of Cucurbita (both are modified axillary buds).
+   • Analogous Examples:
+     – Animals: Wings of Butterfly (chitinous skin folds) and Wings of Bird (feathered modified forelimbs); Eye of Octopus and Eye of Mammal.
+     – Plants: Sweet potato (modified root) and Potato (modified stem tuber) for starch storage.`
+    },
+    {
+      id: 'bio-pyq-25',
+      chapterId: 'bio-ch-6',
+      chapterName: 'Ch 6: Evolution',
+      subtopicId: 'bio-sub-6-7',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Arrange the following hominid ancestors in chronological sequence of their evolution. State their cranial capacities and dietary habits: (a) Homo erectus, (b) Australopithecus, (c) Homo habilis, (d) Neanderthal man.',
+      solution: `1. Chronological Sequence:
+   Australopithecus → Homo habilis → Homo erectus → Neanderthal man
+
+2. Cranial Capacities & Dietary Habits:
+   (a) Australopithecus (~2 mya):
+       • Cranial Capacity: 400 to 500 cc.
+       • Diet: Lived in East African grasslands; essentially fruit eaters.
+   (b) Homo habilis (~2 mya, "Handy Man"):
+       • Cranial Capacity: 650 to 800 cc.
+       • Diet: Probably did NOT eat meat (first human-like hominid toolmaker).
+   (c) Homo erectus (~1.5 mya, Java Man):
+       • Cranial Capacity: 900 cc.
+       • Diet: Definitely ate meat; walked fully upright with bipedal posture.
+   (d) Neanderthal man (100,000 to 40,000 years ago):
+       • Cranial Capacity: 1400 cc.
+       • Cultural / Dietary: Lived in near East and Central Asia; used animal hides for clothing, hunted game, and buried their dead.`
+    },
+
+    // --- CHAPTER 7: HUMAN HEALTH AND DISEASE ---
+    {
+      id: 'bio-pyq-26',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-1',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Name the causative organism of typhoid fever and mention its confirmatory diagnostic test. How do the symptoms of pneumonia differ fundamentally from those of common cold?',
+      solution: `1. Typhoid Fever:
+   • Causative Organism: Salmonella typhi (bacterium).
+   • Confirmatory Diagnostic Test: Widal Test.
+
+2. Pneumonia vs Common Cold:
+   • Pneumonia: Caused by Streptococcus pneumoniae or Haemophilus influenzae. Infects the pulmonary alveoli, which become filled with fluid, severely impeding oxygen exchange and causing fever, chills, cough, and in severe cases, grey to bluish fingernails and lips.
+   • Common Cold: Caused by Rhinoviruses. Infects the nasal epithelium and upper respiratory tract, but strictly spares the lungs/alveoli. Characterized by nasal congestion, sore throat, and hoarseness lasting 3 to 7 days.`
+    },
+    {
+      id: 'bio-pyq-27',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-2',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Trace the life cycle of Plasmodium in a schematic flow chart showing the stages in the human body and the mosquito host. Why does a malaria patient experience recurring chills and fever?',
+      solution: `1. Life Cycle of Plasmodium:
+   a) In Human Host (Asexual Phase):
+      • Sporozoites injected: Infected female Anopheles mosquito bites human, injecting motile sporozoites with saliva.
+      • Hepatic Schizogony: Parasites reach liver via bloodstream, reproduce asexually within hepatocytes, and burst cells to release merozoites.
+      • Erythrocytic Cycle: Parasites attack red blood cells (RBCs), multiply asexually, and lyse the cells.
+      • Gametocyte Formation: Some erythrocytic parasites differentiate into sexual stages (male and female gametocytes).
+
+   b) In Mosquito Host (Sexual Phase):
+      • Uptake: Female Anopheles mosquito sucks gametocytes along with blood meal from an infected human.
+      • Fertilisation & Development: Gametocytes fuse and fertilise within the mosquito gut, forming a motile ookinete that develops into an oocyst.
+      • Sporogony: Oocyst undergoes division producing thousands of sporozoites, which burst out and migrate to the mosquito salivary glands, ready for the next infection.
+
+2. Cause of Recurring Chills and Fever:
+   • When infected erythrocytes burst during the erythrocytic cycle, they release toxic crystalline granules of Haemozoin along with new merozoites into the circulation.
+   • Haemozoin acts as a pyrogen, triggering systemic chills followed by recurring high fever every 3 to 4 days.`
+    },
+    {
+      id: 'bio-pyq-28',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-3',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'List the four barriers of innate immunity with one specific example for each. Which type of acquired immunity is responsible for the rejection of kidney transplants in humans?',
+      solution: `1. Four Barriers of Innate Immunity:
+   (i) Physical Barriers: Skin (stratum corneum prevents micro-organism entry) and mucus coating of the epithelium lining the respiratory, gastrointestinal, and urogenital tracts.
+   (ii) Physiological Barriers: Acid (HCl) in the stomach, saliva in the mouth, and lysozyme in tears.
+   (iii) Cellular Barriers: Polymorpho-nuclear leukocytes (PMNL-neutrophils), monocytes, Natural Killer (NK) lymphocytes in blood, and macrophages in tissues.
+   (iv) Cytokine Barriers: Interferons, which are antiviral glycoproteins secreted by virus-infected cells that protect non-infected surrounding cells from viral attack.
+
+2. Immunity Responsible for Graft Rejection:
+   • Cell-Mediated Immunity (CMI), mediated by T lymphocytes, is specifically responsible for graft rejection. T cells recognize foreign HLA antigens on the transplanted kidney and initiate cytotoxic destruction.`
+    },
+    {
+      id: 'bio-pyq-29',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-4',
+      year: 'CBSE 2022 (3 Marks)',
+      question: 'Differentiate between Active and Passive Immunity. Why is the administration of anti-venom in snake bite cases considered passive immunization?',
+      solution: `1. Active vs Passive Immunity:
+   • Production of Antibodies:
+     – Active Immunity: Host's own lymphocytes are stimulated by living or dead antigens to produce antibodies.
+     – Passive Immunity: Pre-formed exogenous antibodies are directly administered into the body.
+   • Time of Action:
+     – Active Immunity: Takes considerable time to establish an effective primary immune response (slow onset).
+     – Passive Immunity: Provides immediate, fast-acting protective relief against lethal toxins or pathogens.
+   • Immunological Memory:
+     – Active Immunity: Generates long-lasting memory B and T cells.
+     – Passive Immunity: Does not generate memory cells; protection is short-lived.
+
+2. Snake Bite Anti-Venom:
+   • Anti-venom consists of pre-formed antibodies (immunoglobulins) raised in donor animals that immediately bind and neutralize the fast-acting lethal snake venom toxins. Because host immune activation is bypassed, it is classified strictly as passive immunization.`
+    },
+    {
+      id: 'bio-pyq-30',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-6',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Describe the replication cycle of HIV inside the human body. Why is the macrophage referred to as an "HIV factory"? Name the diagnostic test used for detecting AIDS.',
+      solution: `1. Replication Cycle of HIV:
+   • Step 1 (Entry): HIV binds to CD4 receptors on host macrophages and enters the cytoplasm, uncoating its viral RNA.
+   • Step 2 (Reverse Transcription): Viral enzyme Reverse Transcriptase transcribes the single-stranded viral RNA into double-stranded viral DNA.
+   • Step 3 (Integration): Viral DNA is transported into the host cell nucleus and integrated into the host chromosomal DNA by viral integrase.
+   • Step 4 (Transcription & Assembly): Host cellular machinery transcribes viral DNA to produce new viral RNA and viral proteins, which assemble into new HIV particles.
+   • Step 5 (Attack on Helper T Cells): Simultaneously, HIV enters Helper T lymphocytes (TH / CD4+ cells), replicates, and lyses the host cells, leading to a progressive and catastrophic collapse in TH lymphocyte counts (< 200 cells/mm³).
+   • Step 6 (Immunodeficiency): Depletion of helper T cells impairs both humoral and cell-mediated immunity, causing opportunistic infections by Mycobacterium, Toxoplasma, and fungi.
+
+2. Macrophage as "HIV Factory":
+   • Inside macrophages, the integrated HIV continually directs the synthesis and budding of new virus particles over prolonged periods without immediately lysing the macrophage, making it function as an enduring viral factory.
+
+3. Diagnostic Test:
+   • ELISA (Enzyme Linked Immunosorbent Assay); confirmed by Western Blot test.`
+    },
+    {
+      id: 'bio-pyq-31',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-7',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'What is contact inhibition? How do malignant cancer cells violate this mechanism? Explain why metastasis is the most feared characteristic of cancer.',
+      solution: `1. Contact Inhibition:
+   • Contact inhibition is a normal regulatory mechanism where physical contact between adjacent cells inhibits their continued mitotic division and uncontrolled growth.
+
+2. Violation by Malignant Cells:
+   • Neoplastic cancer cells lose contact inhibition due to mutations in cell-cycle regulator genes. Consequently, they continue dividing uncontrollably despite crowded conditions, piling on top of each other to form neoplastic masses termed tumours.
+
+3. Why Metastasis is Most Feared:
+   • Metastasis is the property where malignant cells detach from the primary tumor, invade into blood vessels or lymphatic channels, and travel to distant anatomical organs.
+   • Once lodged in distant tissues, they initiate new secondary tumors. This widespread multi-organ dissemination makes complete surgical resection impossible and is the leading cause of cancer mortality.`
+    },
+    {
+      id: 'bio-pyq-32',
+      chapterId: 'bio-ch-7',
+      chapterName: 'Ch 7: Human Health and Disease',
+      subtopicId: 'bio-sub-7-7',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Name the source plant and physiological effect on the human body for: (a) Heroin (Smack), (b) Cannabinoids, (c) Cocaine.',
+      solution: `(a) Heroin (Smack / Diacetylmorphine):
+   • Source Plant: Extracted from the latex of the opium poppy, Papaver somniferum (by acetylation of morphine).
+   • Physiological Effect: Binds to specific opioid receptors in the central nervous system and gastrointestinal tract; acts as a powerful depressant that slows down body functions.
+
+(b) Cannabinoids:
+   • Source Plant: Inflorescences, leaves, and resin of Cannabis sativa (hemp plant).
+   • Physiological Effect: Interacts with cannabinoid receptors present principally in the brain; primarily impacts the cardiovascular system of the body.
+
+(c) Cocaine (Crack / Coke):
+   • Source Plant: Leaves of the South American coca bush, Erythroxylum coca.
+   • Physiological Effect: Interferes with the reuptake of the neurotransmitter dopamine; produces central nervous system stimulation, a sense of euphoria, and increased energy; high doses induce severe hallucinations.`
+    },
+
+    // --- CHAPTER 8: MICROBES IN HUMAN WELFARE ---
+    {
+      id: 'bio-pyq-33',
+      chapterId: 'bio-ch-8',
+      chapterName: 'Ch 8: Microbes in Human Welfare',
+      subtopicId: 'bio-sub-8-1',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Explain the role of Lactic Acid Bacteria (LAB) in converting milk into curd. State two nutritional and therapeutic benefits of consuming curd. Why does Swiss cheese contain large holes?',
+      solution: `1. Role of LAB in Curd Formation:
+   • Inoculum or starter containing millions of LAB (Lactobacillus) added to milk at suitable temperature multiplies.
+   • LAB produce lactic acid that coagulates and partially digests milk casein proteins, converting milk into curd.
+
+2. Two Nutritional / Therapeutic Benefits:
+   (i) Nutritional Enrichment: Increases nutritional value by synthesizing significant amounts of Vitamin B₁₂.
+   (ii) Gut Protection: Inhibits the colonization and growth of harmful, disease-causing putrefactive microbes in the gastrointestinal tract.
+
+3. Large Holes in Swiss Cheese:
+   • The large holes are caused by the production of large volumes of carbon dioxide (CO₂) gas during the fermentation process by the bacterium Propionibacterium shermanii.`
+    },
+    {
+      id: 'bio-pyq-34',
+      chapterId: 'bio-ch-8',
+      chapterName: 'Ch 8: Microbes in Human Welfare',
+      subtopicId: 'bio-sub-8-2',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Name the microbial source and clinical application of: (i) Streptokinase, (ii) Cyclosporin A, (iii) Statins. Name the microbes that produce Citric acid and Butyric acid.',
+      solution: `1. Three Bioactive Molecules:
+   (i) Streptokinase:
+       • Microbial Source: Bacterium Streptococcus (modified by genetic engineering).
+       • Clinical Application: Used as a "clot buster" to dissolve blood clots from blood vessels of patients suffering from myocardial infarction (heart attack).
+   (ii) Cyclosporin A:
+       • Microbial Source: Fungus Trichoderma polysporum.
+       • Clinical Application: Used as an immunosuppressive agent in organ transplant recipients to prevent cell-mediated graft rejection.
+   (iii) Statins:
+       • Microbial Source: Yeast Monascus purpureus.
+       • Clinical Application: Used as blood-cholesterol lowering agents; acts by competitively inhibiting the enzyme HMG-CoA reductase responsible for cholesterol synthesis.
+
+2. Organic Acid Producers:
+   • Citric Acid: Produced by the fungus Aspergillus niger.
+   • Butyric Acid: Produced by the bacterium Clostridium butylicum.`
+    },
+    {
+      id: 'bio-pyq-35',
+      chapterId: 'bio-ch-8',
+      chapterName: 'Ch 8: Microbes in Human Welfare',
+      subtopicId: 'bio-sub-8-3',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Explain the biological (secondary) treatment of sewage wastewater. What are flocs and what is their role? Define Biochemical Oxygen Demand (BOD) and its relationship with water pollution.',
+      solution: `1. Secondary (Biological) Treatment Steps:
+   • Step 1 (Aeration Tank): Primary effluent is pumped into large aeration tanks with continuous mechanical churning and forced air supply.
+   • Step 2 (Floc Formation): Promotes vigorous aerobic growth of useful microbes into Flocs (masses of bacteria associated with fungal filaments to form mesh-like structures).
+   • Step 3 (Organic Digestion): Flocs consume the major fraction of organic matter, dramatically lowering the BOD of the wastewater.
+   • Step 4 (Settling Tank): Effluent passes to a settling tank where flocs settle by gravity, forming Activated Sludge.
+   • Step 5 (Inoculum & Anaerobic Digestion): A small part of activated sludge is pumped back to the aeration tank as inoculum; the remaining major part is transferred into Anaerobic Sludge Digesters.
+   • Step 6 (Biogas Production): Anaerobic bacteria digest the sludge, producing Biogas (methane, hydrogen sulfide, carbon dioxide).
+
+2. Flocs & Their Role:
+   • Flocs are mesh-like consortiums of aerobic bacteria interwoven with fungal hyphae. They rapidly oxidize and digest dissolved organic pollutants in sewage.
+
+3. BOD Definition & Significance:
+   • Biochemical Oxygen Demand (BOD) is the amount of oxygen required by aerobic microorganisms to oxidize all biodegradable organic matter in one litre of water.
+   • Relationship: BOD is directly proportional to the polluting potential of wastewater: High BOD indicates heavy organic contamination; low BOD indicates clean treated effluent.`
+    },
+    {
+      id: 'bio-pyq-36',
+      chapterId: 'bio-ch-8',
+      chapterName: 'Ch 8: Microbes in Human Welfare',
+      subtopicId: 'bio-sub-8-4',
+      year: 'CBSE 2022 (3 Marks)',
+      question: 'Describe the working of a biogas plant. Name the bacteria involved and mention two habitats where they naturally occur. What are the two institutions that developed this technology in India?',
+      solution: `1. Working of Biogas Plant:
+   • Cattle dung and water are mixed (1:1 ratio) to form slurry and fed into a 10–15 feet deep concrete digester tank.
+   • Anaerobic methanogenic bacteria digest the cellulosic slurry, releasing methane, CO₂, and H₂S.
+   • A floating steel gas holder placed over the slurry rises as gas accumulates.
+   • The gas is drawn off through pipes with valves for domestic cooking and lighting.
+   • Spent slurry is discharged through an outlet and collected for use as nutrient-rich organic manure.
+
+2. Bacteria & Natural Habitats:
+   • Bacteria: Methanogens (e.g., Methanobacterium).
+   • Habitats: (i) Anaerobic sludge in sewage treatment plants, (ii) Rumen of cattle.
+
+3. Indian Institutions:
+   • Indian Agricultural Research Institute (IARI) and Khadi and Village Industries Commission (KVIC).`
+    },
+    {
+      id: 'bio-pyq-37',
+      chapterId: 'bio-ch-8',
+      chapterName: 'Ch 8: Microbes in Human Welfare',
+      subtopicId: 'bio-sub-8-5',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'Why are Baculoviruses considered excellent biocontrol agents in Integrated Pest Management (IPM)? Name the biocontrol agent used to control: (a) Aphids, (b) Mosquitoes, (c) Butterfly caterpillars.',
+      solution: `1. Baculoviruses in Integrated Pest Management (IPM):
+   • Baculoviruses of the genus Nucleopolyhedrovirus (NPV) are biological pathogens that attack insects and other arthropods.
+   • Species-Specific & Narrow-Spectrum: They kill target pest species without exerting any negative impacts on plants, mammals, birds, fish, or non-target insects.
+   • Conservation of Beneficials: They preserve beneficial predatory insects and pollinators, making them indispensable in IPM programs in ecologically sensitive zones.
+
+2. Biocontrol Agents:
+   (a) Aphids: Ladybird Beetle (predatory beetle).
+   (b) Mosquitoes: Dragonfly.
+   (c) Butterfly caterpillars: Bacillus thuringiensis (Bt) bacterial spores.`
+    },
+    {
+      id: 'bio-pyq-38',
+      chapterId: 'bio-ch-8',
+      chapterName: 'Ch 8: Microbes in Human Welfare',
+      subtopicId: 'bio-sub-8-5',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'What are biofertilisers? Explain the symbiotic association formed by the fungus Glomus with roots of higher plants and state two benefits conferred to the host plant.',
+      solution: `1. Definition of Biofertilisers:
+   • Biofertilisers are living microorganisms that enrich the nutrient quality and fertility of soil by biological nitrogen fixation, phosphorus solubilization, or organic matter replenishment.
+
+2. Mycorrhizal Association of Glomus:
+   • Fungi of the genus Glomus form symbiotic mutualistic associations with plant roots called Mycorrhiza.
+   • The extensive fungal hyphal network explores a large soil volume and absorbs Phosphorus from the soil, transporting it to the plant roots.
+
+3. Two Benefits Conferred to Host Plant:
+   (i) Disease Resistance: Confers enhanced resistance to root-borne fungal and bacterial pathogens.
+   (ii) Environmental Tolerance: Imparts increased tolerance to soil salinity and drought, promoting overall plant growth and vigor.`
     }
   ],
+
+
 
   psychology: [
     {

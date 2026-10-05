@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { CheckSquare, Award, RotateCw, CheckCircle2, XCircle, ChevronDown, ChevronUp, Trophy, ArrowRight, Sparkles } from 'lucide-react';
 import { getGeneratedMCQs, getGeneratedPYQs } from '../../data/questionEngine';
+import { formatMathString } from './FormulaCard';
 
 export default function SubtopicPracticePanel({
   subjectId,
@@ -308,15 +309,16 @@ export default function SubtopicPracticePanel({
                       <span className="inline-block text-[10px] font-mono font-bold text-[var(--text-accent)] bg-[var(--badge-recommended-bg)]/10 px-2 py-0.5 rounded-full mb-1">
                         {item.year || 'CBSE Board Standard'}
                       </span>
-                      <p className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)] leading-relaxed">
-                        {item.question}
-                      </p>
+                      <p 
+                        className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)] leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(item.question) }}
+                      />
                     </div>
 
                     <button
                       onClick={() => setExpandedPyqId(isExpanded ? 'NONE' : item.id)}
                       className="p-1 rounded-lg border border-[var(--border-default)] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] shrink-0 cursor-pointer"
-                      title={isExpanded ? "Hide solution" : "View marking scheme"}
+                      title={isExpanded ? "Hide answer" : "View verified model answer"}
                     >
                       {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                     </button>
@@ -324,12 +326,13 @@ export default function SubtopicPracticePanel({
 
                   {isExpanded && (
                     <div className="pt-2.5 border-t border-[var(--border-subtle)] space-y-1 animate-in fade-in duration-200">
-                      <span className="text-[10px] font-mono font-bold text-[var(--accent-primary)] uppercase tracking-wider block">
-                        Marking Scheme Solution:
+                      <span className="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">
+                        Verified Model Answer & Solution:
                       </span>
-                      <div className="font-sans text-[11px] sm:text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-elevated)] p-2.5 rounded-lg border border-[var(--border-subtle)] break-words">
-                        {item.solution}
-                      </div>
+                      <div 
+                        className="font-sans text-[11px] sm:text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap bg-[var(--bg-elevated)] p-2.5 rounded-lg border border-[var(--border-subtle)] break-words"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(item.solution) }}
+                      />
                     </div>
                   )}
                 </div>
