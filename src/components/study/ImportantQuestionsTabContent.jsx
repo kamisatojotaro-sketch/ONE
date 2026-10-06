@@ -13,6 +13,7 @@ import {
 } from '../../data/biologyImportantQuestionsData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import BiologyDiagramCard from './BiologyDiagramCard';
+import BiologyPdfGuideViewer from './BiologyPdfGuideViewer';
 import { FormattedLatex, MathBlock } from './LatexView';
 
 const STORAGE_KEY_MASTERED_PHYSICS = 'one_mastered_imp_physics_q';
@@ -113,6 +114,7 @@ export default function ImportantQuestionsTabContent({
   const [derivationDiagramOpen, setDerivationDiagramOpen] = useState({});
   const [isCompactMode, setIsCompactMode] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
+  const [showPdfGuide, setShowPdfGuide] = useState(false);
 
   // Mastered state for Physics
   const [masteredPhysicsIds, setMasteredPhysicsIds] = useState(() => {
@@ -170,6 +172,17 @@ export default function ImportantQuestionsTabContent({
       ...prev,
       [id]: !prev[id]
     }));
+  };
+
+  const handleSelectFromGuide = (qId) => {
+    setShowPdfGuide(false);
+    setTimeout(() => {
+      const el = document.getElementById(qId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setExpandedQuestions(prev => ({ ...prev, [qId]: true }));
+      }
+    }, 150);
   };
 
   const handleCopyAnswer = (q) => {
@@ -313,6 +326,7 @@ export default function ImportantQuestionsTabContent({
               setSelectedUnit('ALL');
               setSelectedMarks('ALL');
               setSelectedCategory('ALL');
+              setShowPdfGuide(false);
             }}
             className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 touch-manipulation ${
               !isBiology
@@ -342,46 +356,62 @@ export default function ImportantQuestionsTabContent({
           </button>
         </div>
 
-        <button
-          onClick={() => setIsCompactMode(prev => !prev)}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 shrink-0 ${
-            isCompactMode 
-              ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs' 
-              : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-          }`}
-        >
-          <Layers size={13} />
-          {isCompactMode ? 'Exit Quick Revision Mode' : 'Quick Revision Sheet'}
-        </button>
-      </div>
+        <div className="flex items-center gap-2">
+          {isBiology && (
+            <button
+              onClick={() => setShowPdfGuide(prev => !prev)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 shrink-0 ${
+                showPdfGuide 
+                  ? 'bg-amber-600 text-white border-amber-600 shadow-xs' 
+                  : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              <FileText size={13} />
+              <span>{showPdfGuide ? 'Question Cards (71 Qs)' : '8-Page Reference Guide (PDF View)'}</span>
+            </button>
+          )}
 
-      {/* 2. Header Banner */}
-      <div className={`relative overflow-hidden rounded-3xl p-5 sm:p-6 shadow-sm border ${
-        isBiology 
-          ? 'bg-gradient-to-br from-amber-500/15 via-[var(--bg-surface)] to-emerald-500/10 border-amber-500/40' 
-          : 'bg-gradient-to-br from-blue-500/10 via-[var(--bg-surface)] to-amber-500/10 border-blue-500/30'
-      }`}>
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-xs font-bold tracking-wide uppercase bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400">
-            <Award size={14} className="text-amber-500" />
-            <span>
-              {isBiology 
-                ? 'Official CBSE Board • Big Orange High-Yield Question Bank' 
-                : 'Official CBSE Board • 22 Core Questions & Derivations'}
-            </span>
-          </div>
-          
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
-            {isBiology ? 'Big Orange Biology: Exam Guaranteed Questions' : 'Top 22 Physics Guaranteed Board Derivations'}
-          </h1>
-          
-          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-3xl leading-relaxed">
-            {isBiology 
-              ? 'Complete point-wise NCERT model answers researched against 10-year CBSE PYQs and official marking schemes, with interactive anatomical & genetic diagrams.' 
-              : 'Rigorous step-by-step mathematical proofs with physical setups, connecting sentences, special cases, and boxed final formulas.'}
-          </p>
+          <button
+            onClick={() => setIsCompactMode(prev => !prev)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 shrink-0 ${
+              isCompactMode 
+                ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs' 
+                : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            }`}
+          >
+            <Layers size={13} />
+            {isCompactMode ? 'Exit Quick Revision Mode' : 'Quick Revision Sheet'}
+          </button>
         </div>
       </div>
+
+      {/* 2. Main Content: PDF Guide View or Question Cards Bank */}
+      {isBiology && showPdfGuide ? (
+        <BiologyPdfGuideViewer 
+          onSelectQuestion={handleSelectFromGuide} 
+          onBackToQuestions={() => setShowPdfGuide(false)}
+        />
+      ) : (
+        <>
+          {/* 2. Header Banner (Physics Only) */}
+          {!isBiology && (
+            <div className="relative overflow-hidden rounded-3xl p-5 sm:p-6 shadow-sm border bg-gradient-to-br from-blue-500/10 via-[var(--bg-surface)] to-amber-500/10 border-blue-500/30">
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-xs font-bold tracking-wide uppercase bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400">
+                  <Award size={14} className="text-amber-500" />
+                  <span>Official CBSE Board • 22 Core Questions & Derivations</span>
+                </div>
+                
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
+                  Top 22 Physics Guaranteed Board Derivations
+                </h1>
+                
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-3xl leading-relaxed">
+                  Rigorous step-by-step mathematical proofs with physical setups, connecting sentences, special cases, and boxed final formulas.
+                </p>
+              </div>
+            </div>
+          )}
 
       {/* 3. Search & Filter Bar */}
       <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] p-3.5 sm:p-4 rounded-2xl space-y-3 shadow-xs">
@@ -414,9 +444,9 @@ export default function ImportantQuestionsTabContent({
           <div className="flex flex-wrap items-center gap-2 pt-1 border-b border-[var(--border-subtle)] pb-2.5">
             <span className="text-[var(--text-muted)] text-xs font-semibold shrink-0">Category:</span>
             <button
-              onClick={() => setSelectedCategory('ALL')}
+              onClick={() => { setSelectedCategory('ALL'); setShowPdfGuide(false); }}
               className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                selectedCategory === 'ALL'
+                selectedCategory === 'ALL' && !showPdfGuide
                   ? 'bg-amber-500 text-white shadow-xs'
                   : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
               }`}
@@ -425,9 +455,9 @@ export default function ImportantQuestionsTabContent({
             </button>
 
             <button
-              onClick={() => setSelectedCategory('CORE')}
+              onClick={() => { setSelectedCategory('CORE'); setShowPdfGuide(false); }}
               className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                selectedCategory === 'CORE'
+                selectedCategory === 'CORE' && !showPdfGuide
                   ? 'bg-amber-600 text-white shadow-xs'
                   : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
               }`}
@@ -436,14 +466,26 @@ export default function ImportantQuestionsTabContent({
             </button>
 
             <button
-              onClick={() => setSelectedCategory('PAGE')}
+              onClick={() => { setSelectedCategory('PAGE'); setShowPdfGuide(false); }}
               className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                selectedCategory === 'PAGE'
+                selectedCategory === 'PAGE' && !showPdfGuide
                   ? 'bg-blue-600 text-white shadow-xs'
                   : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
               }`}
             >
               Page-Referenced &amp; Core Diagrams ({BIG_ORANGE_PAGE_QUESTIONS.length})
+            </button>
+
+            <button
+              onClick={() => setShowPdfGuide(true)}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                showPdfGuide
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+              }`}
+            >
+              <FileText size={12} />
+              <span>Reference Guide (PDF 8 Pages)</span>
             </button>
           </div>
         )}
@@ -1022,6 +1064,8 @@ export default function ImportantQuestionsTabContent({
           })
         )}
       </div>
+        </>
+      )}
     </div>
   );
 }

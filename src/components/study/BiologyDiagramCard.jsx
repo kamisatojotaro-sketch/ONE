@@ -978,6 +978,386 @@ export default function BiologyDiagramCard({ diagramId, subMode, inline = false 
     );
   }
 
+  /* --------------------------------------------------------------------------
+   * 12. MICROSPORE / POLLEN GRAIN STRUCTURE (NCERT Pg 7 / Fig 1.5)
+   * -------------------------------------------------------------------------- */
+  if (diagramId === 'pollen-grain' || diagramId === 'microspore-pollen') {
+    return (
+      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-amber-500/30 space-y-4 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold text-xs">
+              NCERT Fig 1.5 • Pg 7
+            </span>
+            <h4 className="font-bold text-sm text-[var(--text-primary)]">
+              Structure of Mature 2-Celled Pollen Grain (Microspore)
+            </h4>
+          </div>
+          <span className="text-[11px] font-semibold text-amber-500 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
+            PDF Reference Pg 7
+          </span>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-6">
+          <div className="w-full lg:w-1/2 flex justify-center py-2">
+            <svg width="290" height="280" viewBox="0 0 290 280" className="overflow-visible select-none">
+              {svgDefs}
+              {/* Outer Exine with sculptured ridges and Germ Pores */}
+              <circle cx="145" cy="140" r="95" fill="none" stroke="#d97706" strokeWidth="6" strokeDasharray="30 14" />
+              {/* Outer thin decorative border */}
+              <circle cx="145" cy="140" r="99" fill="none" stroke="#b45309" strokeWidth="1.5" strokeDasharray="3 3" />
+
+              {/* Germ Pore Aperture at top right */}
+              <circle cx="212" cy="73" r="10" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="2 2" />
+              <line x1="212" y1="73" x2="265" y2="50" stroke="#ef4444" strokeWidth="1.2" />
+              <text x="268" y="53" fill="#ef4444" fontSize="10.5" fontWeight="bold">Germ pore (no sporopollenin)</text>
+
+              {/* Exine Label */}
+              <line x1="78" y1="73" x2="25" y2="50" stroke="#d97706" strokeWidth="1.2" />
+              <text x="5" y="48" fill="#d97706" fontSize="10.5" fontWeight="bold">Exine (Sporopollenin)</text>
+
+              {/* Inner Intine Layer */}
+              <circle cx="145" cy="140" r="85" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" strokeWidth="2" />
+              <line x1="80" y1="180" x2="25" y2="195" stroke="#10b981" strokeWidth="1.2" />
+              <text x="5" y="200" fill="#10b981" fontSize="10.5" fontWeight="bold">Intine (Cellulose + Pectin)</text>
+
+              {/* Large Vegetative Cell */}
+              <ellipse cx="145" cy="115" rx="55" ry="40" fill="rgba(59, 130, 246, 0.12)" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+              {/* Irregular Nucleus of Vegetative Cell */}
+              <path d="M 125 105 Q 145 95 160 110 Q 170 125 150 130 Q 130 135 125 105 Z" fill="#3b82f6" />
+              <line x1="160" y1="110" x2="250" y2="110" stroke="#3b82f6" strokeWidth="1" />
+              <text x="254" y="108" fill="#3b82f6" fontSize="10" fontWeight="bold">Vegetative cell</text>
+              <text x="254" y="120" fill="#2563eb" fontSize="8.5">(Irregular nucleus &amp; food reserves)</text>
+
+              {/* Generative Cell (Spindle-shaped floating in cytoplasm) */}
+              <ellipse cx="145" cy="185" rx="35" ry="16" fill="rgba(244, 63, 94, 0.2)" stroke="#f43f5e" strokeWidth="2" />
+              {/* Generative Nucleus */}
+              <circle cx="145" cy="185" r="7" fill="#f43f5e" />
+              <line x1="145" y1="202" x2="145" y2="245" stroke="#f43f5e" strokeWidth="1" />
+              <text x="145" y="258" fill="#f43f5e" fontSize="10" fontWeight="bold" textAnchor="middle">
+                Generative cell (Divides into 2 male gametes)
+              </text>
+            </svg>
+          </div>
+
+          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
+              <span className="font-bold text-amber-600 dark:text-amber-400 block text-xs">
+                Key Structural Points (NCERT Pg 7 &amp; Revision Guide):
+              </span>
+              <ul className="space-y-1 text-[var(--text-secondary)]">
+                <li>• <strong className="text-[var(--text-primary)]">Exine:</strong> Hard outer layer composed of <strong className="text-amber-500">sporopollenin</strong>, the most resistant biological material known (unaffected by strong acids, alkalis, enzymes).</li>
+                <li>• <strong className="text-[var(--text-primary)]">Germ Pores:</strong> Prominent apertures in exine where sporopollenin is absent; site where pollen tube emerges during germination.</li>
+                <li>• <strong className="text-[var(--text-primary)]">Intine:</strong> Thin, continuous inner layer made of cellulose and pectin.</li>
+                <li>• <strong className="text-[var(--text-primary)]">Vegetative Cell:</strong> Larger cell containing abundant food reserves and an irregular nucleus.</li>
+                <li>• <strong className="text-[var(--text-primary)]">Generative Cell:</strong> Small, spindle-shaped cell with dense cytoplasm that floats in vegetative cell cytoplasm; divides into 2 male gametes.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* --------------------------------------------------------------------------
+   * 13. PLACENTA AND EMBRYO / HUMAN FETUS IN UTERUS (NCERT Pg 37 / Fig 2.12)
+   * -------------------------------------------------------------------------- */
+  if (diagramId === 'placenta-fetus') {
+    return (
+      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-rose-500/30 space-y-4 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs">
+              NCERT Fig 2.12 • Pg 37
+            </span>
+            <h4 className="font-bold text-sm text-[var(--text-primary)]">
+              Placenta and Human Fetus inside Uterus
+            </h4>
+          </div>
+          <span className="text-[11px] font-semibold text-rose-500 bg-rose-500/10 px-2.5 py-0.5 rounded-full">
+            PDF Reference Pg 7
+          </span>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-6">
+          <div className="w-full lg:w-1/2 flex justify-center py-2">
+            <svg width="290" height="300" viewBox="0 0 290 300" className="overflow-visible select-none">
+              {svgDefs}
+              {/* Uterine Wall (Outer muscular perimeter) */}
+              <path d="M 40 40 Q 145 10 250 40 Q 280 150 250 250 Q 145 285 40 250 Q 10 150 40 40 Z" fill="rgba(244, 63, 94, 0.08)" stroke="#f43f5e" strokeWidth="3" />
+              <line x1="40" y1="40" x2="10" y2="25" stroke="#f43f5e" strokeWidth="1" />
+              <text x="5" y="20" fill="#f43f5e" fontSize="10" fontWeight="bold">Uterine wall (Myometrium)</text>
+
+              {/* Placental Villi (Interdigitating at top-right uterine wall) */}
+              <path d="M 170 30 Q 195 45 210 25 Q 225 50 245 35" fill="none" stroke="#d97706" strokeWidth="4" />
+              <line x1="220" y1="35" x2="265" y2="15" stroke="#d97706" strokeWidth="1" />
+              <text x="268" y="18" fill="#d97706" fontSize="10.5" fontWeight="bold">Placental villi</text>
+
+              {/* Umbilical Cord connecting fetus to placenta */}
+              <path d="M 145 145 Q 185 100 205 40" fill="none" stroke="#8b5cf6" strokeWidth="4.5" strokeDasharray="6 2" />
+              <line x1="175" y1="90" x2="255" y2="80" stroke="#8b5cf6" strokeWidth="1" />
+              <text x="258" y="83" fill="#8b5cf6" fontSize="10.5" fontWeight="bold">Umbilical cord</text>
+              <text x="258" y="94" fill="#7c3aed" fontSize="8.5">(Vessels for transport)</text>
+
+              {/* Amniotic Cavity with Amniotic Fluid enclosing fetus */}
+              <ellipse cx="140" cy="155" rx="75" ry="85" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
+              <line x1="70" y1="120" x2="20" y2="120" stroke="#3b82f6" strokeWidth="1" />
+              <text x="5" y="115" fill="#3b82f6" fontSize="10" fontWeight="bold">Amniotic cavity</text>
+              <text x="5" y="126" fill="#2563eb" fontSize="8.5">(Amniotic fluid)</text>
+
+              {/* Fetus schematic profile */}
+              <circle cx="140" cy="120" r="18" fill="rgba(244, 63, 94, 0.3)" stroke="#f43f5e" strokeWidth="2" />
+              <path d="M 140 138 Q 120 160 135 185 Q 155 195 160 170" fill="none" stroke="#f43f5e" strokeWidth="4" strokeLinecap="round" />
+              <text x="140" y="124" fill="#991b1b" fontSize="8" fontWeight="bold" textAnchor="middle">Fetus</text>
+
+              {/* Yolk Sac */}
+              <circle cx="105" cy="165" r="9" fill="rgba(245, 158, 11, 0.3)" stroke="#f59e0b" strokeWidth="1.5" />
+              <line x1="100" y1="170" x2="20" y2="185" stroke="#f59e0b" strokeWidth="1" />
+              <text x="5" y="188" fill="#d97706" fontSize="10" fontWeight="bold">Yolk sac</text>
+
+              {/* Cervical canal plug at bottom */}
+              <rect x="130" y="260" width="30" height="15" rx="3" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
+              <text x="145" y="290" fill="#64748b" fontSize="9.5" fontWeight="bold" textAnchor="middle">
+                Plug of mucus in cervix
+              </text>
+            </svg>
+          </div>
+
+          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
+              <span className="font-bold text-rose-600 dark:text-rose-400 block text-xs">
+                Essential Components &amp; Endocrine Role:
+              </span>
+              <ul className="space-y-1 text-[var(--text-secondary)]">
+                <li>• <strong className="text-[var(--text-primary)]">Placenta:</strong> Formed by interdigitation of chorionic villi with uterine tissue; provides $O_2$ and nutrients and eliminates waste ($CO_2$, urea).</li>
+                <li>• <strong className="text-[var(--text-primary)]">Umbilical Cord:</strong> Connects developing fetus to placenta, housing fetal blood vessels.</li>
+                <li>• <strong className="text-[var(--text-primary)]">Exclusive Pregnancy Hormones:</strong> Secretes <strong className="text-rose-500">hCG</strong>, <strong className="text-rose-500">hPL</strong>, and <strong className="text-rose-500">Relaxin</strong> (from ovary in late pregnancy), essential for maintaining pregnancy.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* --------------------------------------------------------------------------
+   * 14. TRANSCRIPTION UNIT SCHEMATIC (NCERT Fig 5.9 / PDF Pg 8)
+   * -------------------------------------------------------------------------- */
+  if (diagramId === 'transcription-unit') {
+    return (
+      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-sky-500/30 space-y-4 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold text-xs">
+              NCERT Fig 5.9 • Pg 91
+            </span>
+            <h4 className="font-bold text-sm text-[var(--text-primary)]">
+              Schematic Structure of a Transcription Unit
+            </h4>
+          </div>
+          <span className="text-[11px] font-semibold text-sky-500 bg-sky-500/10 px-2.5 py-0.5 rounded-full">
+            PDF Reference Pg 8
+          </span>
+        </div>
+
+        <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-4">
+          <div className="overflow-x-auto py-2">
+            <svg width="480" height="150" viewBox="0 0 480 150" className="overflow-visible select-none mx-auto">
+              {svgDefs}
+              {/* Template Strand (3' -> 5') */}
+              <line x1="30" y1="50" x2="450" y2="50" stroke="#3b82f6" strokeWidth="4" />
+              <text x="15" y="55" fill="#3b82f6" fontSize="13" fontWeight="bold">3'</text>
+              <text x="460" y="55" fill="#3b82f6" fontSize="13" fontWeight="bold">5'</text>
+              <text x="240" y="42" fill="#3b82f6" fontSize="10.5" fontWeight="bold" textAnchor="middle">
+                Template Strand (Transcribed 3' → 5')
+              </text>
+
+              {/* Coding Strand (5' -> 3') */}
+              <line x1="30" y1="90" x2="450" y2="90" stroke="#f59e0b" strokeWidth="4" />
+              <text x="15" y="95" fill="#f59e0b" fontSize="13" fontWeight="bold">5'</text>
+              <text x="460" y="95" fill="#f59e0b" fontSize="13" fontWeight="bold">3'</text>
+              <text x="240" y="105" fill="#f59e0b" fontSize="10.5" fontWeight="bold" textAnchor="middle">
+                Coding Strand (Non-transcribed reference strand 5' → 3')
+              </text>
+
+              {/* Promoter Region at 5' end of coding strand */}
+              <rect x="70" y="35" width="55" height="70" rx="4" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" strokeWidth="2" />
+              <text x="97" y="73" fill="#10b981" fontSize="10" fontWeight="bold" textAnchor="middle">Promoter</text>
+              <text x="97" y="24" fill="#10b981" fontSize="9" fontWeight="bold" textAnchor="middle">Upstream</text>
+
+              {/* Structural Gene Region */}
+              <rect x="155" y="35" width="180" height="70" rx="4" fill="rgba(148, 163, 184, 0.1)" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="3 3" />
+              <text x="245" y="73" fill="#475569" fontSize="11" fontWeight="bold" textAnchor="middle">
+                Structural Gene
+              </text>
+
+              {/* Terminator Region at 3' end of coding strand */}
+              <rect x="360" y="35" width="60" height="70" rx="4" fill="rgba(244, 63, 94, 0.25)" stroke="#f43f5e" strokeWidth="2" />
+              <text x="390" y="73" fill="#f43f5e" fontSize="10" fontWeight="bold" textAnchor="middle">Terminator</text>
+              <text x="390" y="24" fill="#f43f5e" fontSize="9" fontWeight="bold" textAnchor="middle">Downstream</text>
+
+              {/* Transcription Direction Arrow */}
+              <line x1="100" y1="125" x2="380" y2="125" stroke="#a855f7" strokeWidth="2" markerEnd="url(#bio-arrow-purple)" />
+              <text x="240" y="142" fill="#a855f7" fontSize="10" fontWeight="bold" textAnchor="middle">
+                Direction of Transcription (5' → 3')
+              </text>
+            </svg>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs text-[var(--text-secondary)]">
+            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
+              <strong className="text-emerald-500 block">Promoter:</strong>
+              Located towards 5'-end (upstream) of coding strand. Binding site for RNA polymerase.
+            </div>
+            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
+              <strong className="text-blue-500 block">Template vs Coding:</strong>
+              Template has $3' \to 5'$ polarity. All reference points (promoter/terminator) are defined relative to the <strong className="text-[var(--text-primary)]">Coding Strand ($5' \to 3'$)</strong>.
+            </div>
+            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
+              <strong className="text-rose-500 block">Terminator:</strong>
+              Located towards 3'-end (downstream) of coding strand. Halts transcription process.
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* --------------------------------------------------------------------------
+   * 15. REPLICATING FORK (NCERT Fig 5.8 / PDF Pg 8)
+   * -------------------------------------------------------------------------- */
+  if (diagramId === 'replicating-fork') {
+    return (
+      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-indigo-500/30 space-y-4 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-xs">
+              NCERT Fig 5.8 • Pg 88
+            </span>
+            <h4 className="font-bold text-sm text-[var(--text-primary)]">
+              DNA Replicating Fork: Continuous vs Discontinuous Synthesis
+            </h4>
+          </div>
+          <span className="text-[11px] font-semibold text-indigo-500 bg-indigo-500/10 px-2.5 py-0.5 rounded-full">
+            PDF Reference Pg 8
+          </span>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-6">
+          <div className="w-full lg:w-1/2 flex justify-center py-2">
+            <svg width="290" height="280" viewBox="0 0 290 280" className="overflow-visible select-none">
+              {svgDefs}
+              {/* Unwound Parental Strands forming Y-shape */}
+              {/* Parental Strand 1 (Template 3' -> 5') */}
+              <path d="M 40 40 L 150 140 L 150 250" fill="none" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
+              <text x="25" y="45" fill="#64748b" fontSize="12" fontWeight="bold">3'</text>
+              <text x="145" y="270" fill="#64748b" fontSize="12" fontWeight="bold">5'</text>
+
+              {/* Parental Strand 2 (Template 5' -> 3') */}
+              <path d="M 250 40 L 170 140 L 170 250" fill="none" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
+              <text x="260" y="45" fill="#64748b" fontSize="12" fontWeight="bold">5'</text>
+              <text x="175" y="270" fill="#64748b" fontSize="12" fontWeight="bold">3'</text>
+
+              {/* Continuous Leading Strand Synthesis on 3'->5' template */}
+              <path d="M 60 70 L 135 140" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#bio-arrow-emerald)" />
+              <text x="35" y="80" fill="#10b981" fontSize="10" fontWeight="bold">5'</text>
+              <line x1="90" y1="95" x2="25" y2="120" stroke="#10b981" strokeWidth="1" />
+              <text x="5" y="132" fill="#10b981" fontSize="10" fontWeight="bold">Continuous synthesis</text>
+              <text x="5" y="144" fill="#059669" fontSize="8.5">(Leading strand 5' → 3')</text>
+
+              {/* Discontinuous Lagging Strand Synthesis (Okazaki fragments) */}
+              <path d="M 195 125 L 215 105" fill="none" stroke="#ef4444" strokeWidth="3" markerEnd="url(#bio-arrow-rose)" />
+              <path d="M 215 95 L 235 75" fill="none" stroke="#ef4444" strokeWidth="3" markerEnd="url(#bio-arrow-rose)" />
+              <line x1="220" y1="100" x2="265" y2="120" stroke="#ef4444" strokeWidth="1" />
+              <text x="268" y="123" fill="#ef4444" fontSize="10" fontWeight="bold">Discontinuous synthesis</text>
+              <text x="268" y="135" fill="#dc2626" fontSize="8.5">(Okazaki fragments)</text>
+
+              {/* DNA Ligase Joiner */}
+              <line x1="205" y1="110" x2="205" y2="165" stroke="#f59e0b" strokeWidth="1" />
+              <text x="205" y="178" fill="#d97706" fontSize="9.5" fontWeight="bold">DNA Ligase seals fragments</text>
+            </svg>
+          </div>
+
+          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
+            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
+              <span className="font-bold text-indigo-600 dark:text-indigo-400 block text-xs">
+                Key Features for CBSE Examination:
+              </span>
+              <ul className="space-y-1 text-[var(--text-secondary)]">
+                <li>• <strong className="text-[var(--text-primary)]">DNA Polymerase Polarity:</strong> Synthesizes DNA strictly in the <strong className="text-[var(--text-primary)]">$5' \to 3'$</strong> direction.</li>
+                <li>• <strong className="text-[var(--text-primary)]">Leading Strand:</strong> Synthesized continuously on the $3' \to 5'$ parental template strand towards the replication fork.</li>
+                <li>• <strong className="text-[var(--text-primary)]">Lagging Strand:</strong> Synthesized discontinuously as short fragments (<strong className="text-red-500">Okazaki fragments</strong>) on the $5' \to 3'$ template away from the fork.</li>
+                <li>• <strong className="text-[var(--text-primary)]">DNA Ligase:</strong> Joins the discontinuously synthesized Okazaki fragments into a continuous strand.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* --------------------------------------------------------------------------
+   * 16. HOMOLOGOUS VS ANALOGOUS ORGANS (PDF Pg 1 / Evolution Evidences)
+   * -------------------------------------------------------------------------- */
+  if (diagramId === 'homologous-analogous') {
+    return (
+      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-teal-500/30 space-y-4 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400 font-bold text-xs">
+              NCERT Fig 6.3 &amp; 6.4 • Pg 115
+            </span>
+            <h4 className="font-bold text-sm text-[var(--text-primary)]">
+              Evidences for Evolution: Homologous vs Analogous Organs
+            </h4>
+          </div>
+          <span className="text-[11px] font-semibold text-teal-500 bg-teal-500/10 px-2.5 py-0.5 rounded-full">
+            PDF Reference Pg 1
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          {/* Box 1: Homologous Organs (Divergent Evolution) */}
+          <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-blue-500/30 space-y-2">
+            <span className="font-bold text-blue-600 dark:text-blue-400 block text-xs">
+              1. Homologous Organs (Divergent Evolution)
+            </span>
+            <p className="text-[var(--text-secondary)]">
+              <strong className="text-[var(--text-primary)]">Same anatomical structure</strong> derived from common ancestry, but adapted for <strong className="text-[var(--text-primary)]">different functions</strong>.
+            </p>
+            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] space-y-1">
+              <strong className="text-[var(--text-primary)] block">Examples:</strong>
+              <div>• Forelimbs of <strong className="text-blue-500">whales, bats, cheetahs, and humans</strong> (all share humerus, radius, ulna, carpals, metacarpals).</div>
+              <div>• Thorns of <em>Bougainvillea</em> and tendrils of <em>Cucurbita</em> (both are modified axillary buds).</div>
+            </div>
+            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-wide block">
+              Indicates: Common Ancestry &amp; Divergent Evolution
+            </span>
+          </div>
+
+          {/* Box 2: Analogous Organs (Convergent Evolution) */}
+          <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-amber-500/30 space-y-2">
+            <span className="font-bold text-amber-600 dark:text-amber-400 block text-xs">
+              2. Analogous Organs (Convergent Evolution)
+            </span>
+            <p className="text-[var(--text-secondary)]">
+              <strong className="text-[var(--text-primary)]">Different anatomical origins</strong>, but evolved to perform the <strong className="text-[var(--text-primary)]">same function</strong> due to similar ecological selection pressures.
+            </p>
+            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] space-y-1">
+              <strong className="text-[var(--text-primary)] block">Examples:</strong>
+              <div>• Wings of <strong className="text-amber-500">butterflies</strong> (chitinous fold) and <strong className="text-amber-500">birds</strong> (feathered limbs).</div>
+              <div>• Eye of octopus and eye of mammals.</div>
+              <div>• Sweet potato (root modification) and potato (stem tuber).</div>
+            </div>
+            <span className="text-[10px] font-bold text-amber-500 uppercase tracking-wide block">
+              Indicates: Similar Habitats &amp; Convergent Evolution
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Fallback if no matching diagram
   return (
     <div className="p-4 rounded-xl border border-dashed border-[var(--border-subtle)] text-center text-xs text-[var(--text-muted)]">

@@ -556,7 +556,7 @@ export const BIG_ORANGE_CORE_QUESTIONS = [
     chapterId: "bio-ch-5",
     chapterTitle: "Molecular Basis of Inheritance",
     unit: "Genetics and Evolution",
-    marks: "5 Marks",
+    marks: "3 / 5 Marks",
     marksNum: 5,
     category: "Big Orange",
     frequency: "CBSE 2015, 2017, 2019, 2022, 2024 (Classic 5M Question)",
@@ -1331,11 +1331,11 @@ export const BIG_ORANGE_CORE_QUESTIONS = [
     chapterId: "bio-ch-3",
     chapterTitle: "Reproductive Health",
     unit: "Reproduction",
-    marks: "3 Marks",
-    marksNum: 3,
+    marks: "3 / 5 Marks",
+    marksNum: 5,
     category: "Big Orange",
-    frequency: "CBSE 2016, 2018, 2020, 2022, 2024 (Very High Yield)",
-    questionPrompt: "Explain the full forms, principles, and clinical indications for the following Assisted Reproductive Technologies:\n(a) IVF-ET (In Vitro Fertilisation & Embryo Transfer)\n(b) ZIFT (Zygote Intra-Fallopian Transfer)\n(c) GIFT (Gamete Intra-Fallopian Transfer)\n(d) ICSI (Intra-Cytoplasmic Sperm Injection)\n(e) IUI (Intra-Uterine Insemination)",
+    frequency: "CBSE 2016, 2018, 2020, 2022, 2024 (Very High Yield — 3M or 5M Question)",
+    questionPrompt: "Explain the full forms, principles, and clinical indications for the following Assisted Reproductive Technologies (ART):\n(a) IVF-ET (In Vitro Fertilisation & Embryo Transfer)\n(b) ZIFT (Zygote Intra-Fallopian Transfer)\n(c) GIFT (Gamete Intra-Fallopian Transfer)\n(d) ICSI (Intra-Cytoplasmic Sperm Injection)\n(e) IUI (Intra-Uterine Insemination)",
     ncertRef: {
       textbook: "NCERT Biology Class 12",
       chapter: "Chapter 3: Reproductive Health",
@@ -1360,9 +1360,11 @@ export const BIG_ORANGE_CORE_QUESTIONS = [
     modelAnswer: {
       statement: "ART encompasses clinical procedures to overcome infertility: ZIFT (embryo ≤8 cells into tube), IUT (>8 cells into uterus), GIFT (gamete transfer into tube), ICSI (direct microinjection), and IUI (uterine insemination).",
       markingScheme: [
-        "1 Mark: Distinction between ZIFT (≤ 8 blastomeres into fallopian tube) and IUT (> 8 blastomeres into uterus).",
-        "1 Mark: GIFT definition (transfer of ovum into female who cannot produce gametes).",
-        "1 Mark: ICSI (direct sperm microinjection) and IUI (artificial insemination for low sperm count)."
+        "1 Mark: (a) IVF-ET principle (fertilisation outside the body in vitro under simulated conditions followed by embryo transfer).",
+        "1 Mark: (b) ZIFT vs IUT: Zygote or embryo ≤ 8 blastomeres into Fallopian tube (ZIFT) vs embryo > 8 blastomeres into uterus (IUT).",
+        "1 Mark: (c) GIFT: Transfer of ovum from donor female into Fallopian tube of another female who cannot produce ovum but can support pregnancy.",
+        "1 Mark: (d) ICSI: Intra-Cytoplasmic Sperm Injection — microinjection of a single sperm directly into the cytoplasm of an ovum in vitro.",
+        "1 Mark: (e) IUI: Intra-Uterine Insemination — semen introduced artificially into the uterus for low sperm count (oligospermia) or male erectile dysfunction."
       ],
       examinerTips: "Do not confuse ZIFT and GIFT: ZIFT transfers a ZYGOTE/EMBRYO (post-fertilisation), whereas GIFT transfers a GAMETE/OVUM (pre-fertilisation)."
     }
@@ -2209,6 +2211,7 @@ export const BIG_ORANGE_PAGE_QUESTIONS = [
     marksNum: 2,
     category: "Big Orange (NCERT Page-Referenced)",
     frequency: "NCERT Pg 7 (CBSE 2018, 2021)",
+    diagramId: "pollen-grain",
     questionPrompt: "Explain microsporogenesis. How does a single microspore mother cell (PMC) develop into four functional pollen grains?",
     ncertRef: {
       textbook: "NCERT Biology Class 12",
@@ -2369,6 +2372,7 @@ export const BIG_ORANGE_PAGE_QUESTIONS = [
     marksNum: 3,
     category: "Big Orange (NCERT Page-Referenced)",
     frequency: "NCERT Pg 37 (CBSE 2016, 2018, 2021, 2024)",
+    diagramId: "placenta-fetus",
     questionPrompt: "(a) What is placenta? How is it formed?\n(b) Explain the physiological transport functions of placenta.\n(c) Name the hormones secreted exclusively during pregnancy by the placenta.",
     ncertRef: {
       textbook: "NCERT Biology Class 12",
@@ -3020,6 +3024,199 @@ export const BIG_ORANGE_PAGE_QUESTIONS = [
         "1 Mark: Bacillus thuringiensis mechanism (inactive protoxin activated by alkaline insect gut pH causing pore formation and lysis)."
       ],
       examinerTips: "Remember: Bt toxin is INACTIVE in the bacterium (protoxin) and does NOT kill the bacterium; it is activated ONLY inside the insect midgut by alkaline pH."
+    }
+  },
+  {
+    id: "bio-page-24",
+    number: 68,
+    section: "page",
+    title: "Evidences for Evolution: Homologous vs Analogous Organs",
+    shortLabel: "Homologous vs Analogous (PDF Pg 1)",
+    chapterId: "bio-ch-6",
+    chapterTitle: "Evolution",
+    unit: "Genetics and Evolution",
+    marks: "3 Marks",
+    marksNum: 3,
+    category: "Big Orange (NCERT Page-Referenced)",
+    frequency: "PDF Reference Pg 1 & NCERT Pg 115 (CBSE 2017, 2019, 2022)",
+    diagramId: "homologous-analogous",
+    questionPrompt: "Differentiate between Homologous organs and Analogous organs. Explain how they indicate Divergent Evolution and Convergent Evolution respectively, with two examples of each.",
+    ncertRef: {
+      textbook: "NCERT Biology Class 12",
+      chapter: "Chapter 6: Evolution",
+      page: "Pages 114–116",
+      figures: "Fig 6.3 & Fig 6.4"
+    },
+    theory: [
+      "• 1. Homologous Organs (Divergent Evolution):",
+      "  – Organs that have the same anatomical structure and embryonic origin, but perform different functions in different organisms.",
+      "  – Anatomical commonality: Forelimbs of whales, bats, cheetahs, and humans all share humerus, radius, ulna, carpals, metacarpals, and phalanges.",
+      "  – Plant example: Thorns of Bougainvillea and tendrils of Cucurbita (both are modified axillary buds).",
+      "  – Evolutionary Significance: Indicates Divergent Evolution based on common ancestry (adaptation to diverse habitats).",
+      "• 2. Analogous Organs (Convergent Evolution):",
+      "  – Organs that have different anatomical structures and embryonic origins, but perform similar functions.",
+      "  – Animal example: Wings of butterflies (fold of integument) and wings of birds (modified feathered forelimbs). Eye of octopus and eye of mammals.",
+      "  – Plant example: Sweet potato (root modification) and potato (stem tuber) for storage of food.",
+      "  – Evolutionary Significance: Indicates Convergent Evolution where similar environmental habitats force similar adaptations."
+    ],
+    keyPointsAndKeywords: [
+      "Homologous: Same structure, different function",
+      "Indicates Divergent Evolution & common ancestry",
+      "Forelimbs of whale, bat, cheetah, human",
+      "Analogous: Different structure, same function",
+      "Indicates Convergent Evolution",
+      "Wings of butterfly vs bird, Sweet potato vs potato"
+    ],
+    modelAnswer: {
+      statement: "Homologous organs demonstrate divergent evolution from common ancestors, while analogous organs represent convergent evolution driven by shared environmental demands.",
+      markingScheme: [
+        "1.5 Marks: Homologous organs definition + Divergent evolution + Forelimbs of vertebrates example.",
+        "1.5 Marks: Analogous organs definition + Convergent evolution + Butterfly/Bird wings or Sweet potato/Potato example."
+      ],
+      examinerTips: "Remember: 'Homology indicates Common Ancestry (Divergent)', while 'Analogy indicates Similar Selection Pressures (Convergent)'."
+    }
+  },
+  {
+    id: "bio-page-25",
+    number: 69,
+    section: "page",
+    title: "Theories of Evolution: Lamarckism, Darwinism & Hugo de Vries (Saltation)",
+    shortLabel: "Theories of Evolution (PDF Pg 1)",
+    chapterId: "bio-ch-6",
+    chapterTitle: "Evolution",
+    unit: "Genetics and Evolution",
+    marks: "3 Marks",
+    marksNum: 3,
+    category: "Big Orange (NCERT Page-Referenced)",
+    frequency: "PDF Reference Pg 1 & NCERT Pg 118 (CBSE 2016, 2018, 2021)",
+    questionPrompt: "Compare the three major theories of biological evolution:\n(a) Lamarckism (Use and disuse of organs)\n(b) Darwinism (Branching descent & Natural Selection)\n(c) Mutation Theory of Hugo de Vries (Saltation)",
+    ncertRef: {
+      textbook: "NCERT Biology Class 12",
+      chapter: "Chapter 6: Evolution",
+      page: "Pages 118–120"
+    },
+    theory: [
+      "• 1. Lamarckism (Theory of Inheritance of Acquired Characters):",
+      "  – Proposed by Jean-Baptiste Lamarck (1809).",
+      "  – Evolution is driven by the Use and Disuse of organs.",
+      "  – Example: Giraffes elongated their necks to forage on tall trees; acquired character of elongated neck was passed to next generations (now disproved).",
+      "• 2. Darwinism (Theory of Natural Selection):",
+      "  – Proposed by Charles Darwin (1859).",
+      "  – Based on two key concepts: Branching Descent and Natural Selection.",
+      "  – Variations are small, continuous, and directional. Nature selects organisms with favorable fitness (reproductive fitness), surviving to leave more progeny.",
+      "• 3. Mutation Theory of Hugo de Vries (1901):",
+      "  – Based on experiments on Evening Primrose (Oenothera lamarckiana).",
+      "  – Evolution is driven by Mutations: large, random, and directionless changes, rather than minor continuous variations.",
+      "  – Believed mutation caused speciation in a single step, termed 'Saltation' (single-step large mutation)."
+    ],
+    keyPointsAndKeywords: [
+      "Lamarckism: Use and disuse of organs (giraffe neck)",
+      "Darwinism: Branching descent and Natural Selection",
+      "Darwin variations: Small, continuous, and directional",
+      "Hugo de Vries: Mutations are large, random, and directionless",
+      "Saltation: Single-step large mutation causing speciation"
+    ],
+    modelAnswer: {
+      statement: "Biological evolution theories evolved from Lamarckian use/disuse, to Darwinian gradual natural selection, to de Vriesian saltationary mutations.",
+      markingScheme: [
+        "1 Mark: Lamarckism (use/disuse principle + giraffe example).",
+        "1 Mark: Darwinism (two key concepts: Branching descent & Natural selection; gradual directional variations).",
+        "1 Mark: Hugo de Vries Mutation Theory (random, directionless mutations + Saltation definition)."
+      ],
+      examinerTips: "Contrast Darwin vs de Vries: Darwinian variations are small and directional; de Vriesian mutations are large, random, and directionless."
+    }
+  },
+  {
+    id: "bio-page-26",
+    number: 70,
+    section: "page",
+    title: "Schematic Structure of a Transcription Unit — Diagram",
+    shortLabel: "Transcription Unit Diagram (PDF Pg 8)",
+    chapterId: "bio-ch-5",
+    chapterTitle: "Molecular Basis of Inheritance",
+    unit: "Genetics and Evolution",
+    marks: "3 Marks",
+    marksNum: 3,
+    category: "Big Orange (NCERT Page-Referenced)",
+    frequency: "PDF Reference Pg 8 & NCERT Fig 5.9 (CBSE 2017, 2020, 2023)",
+    diagramId: "transcription-unit",
+    questionPrompt: "Draw a neat labelled schematic diagram of a Transcription Unit as outlined on PDF Page 8 / NCERT Figure 5.9. Label Promoter, Structural gene, Terminator, Template strand, and Coding strand. Why is the coding strand called 'coding' even though it does not code for RNA?",
+    ncertRef: {
+      textbook: "NCERT Biology Class 12",
+      chapter: "Chapter 5: Molecular Basis of Inheritance",
+      page: "Page 91",
+      figures: "Fig 5.9"
+    },
+    theory: [
+      "• A transcription unit in DNA consists of three functional regions:",
+      "  1. A Promoter: Binding site for RNA polymerase located towards the 5'-end (upstream) of the coding strand.",
+      "  2. The Structural Gene: The sequence transcribed into RNA.",
+      "  3. A Terminator: Located towards the 3'-end (downstream) of the coding strand; stops transcription.",
+      "• Two Strands with Opposite Polarities:",
+      "  – Template Strand: Has 3' → 5' polarity; serves as template for transcription by RNA polymerase.",
+      "  – Coding Strand: Has 5' → 3' polarity; does NOT code for RNA, but has the exact same sequence as the synthesized RNA (except Thymine in place of Uracil).",
+      "• Why named 'Coding Strand'? Because all positions and reference points in a transcription unit (promoter, terminator) are defined with respect to the 5' and 3' ends of this strand!"
+    ],
+    keyPointsAndKeywords: [
+      "Promoter (upstream at 5' end of coding strand)",
+      "Structural gene (coding region)",
+      "Terminator (downstream at 3' end of coding strand)",
+      "Template strand: 3' → 5' polarity",
+      "Coding strand: 5' → 3' polarity; reference strand"
+    ],
+    modelAnswer: {
+      statement: "A transcription unit comprises a promoter, structural gene, and terminator; all reference polarities are established relative to the 5'→3' coding strand.",
+      markingScheme: [
+        "1.5 Marks: Accurate schematic diagram with all 5 labels (Promoter, Structural gene, Terminator, Template strand 3'→5', Coding strand 5'→3').",
+        "1.5 Marks: Polarity explanation and justification for why coding strand is used as the reference."
+      ],
+      examinerTips: "Remember: RNA polymerase always polymerizes in the 5' → 3' direction; therefore, the template strand MUST run 3' → 5'."
+    }
+  },
+  {
+    id: "bio-page-27",
+    number: 71,
+    section: "page",
+    title: "DNA Replicating Fork: Continuous vs Discontinuous Synthesis — Diagram",
+    shortLabel: "Replication Fork Diagram (PDF Pg 8)",
+    chapterId: "bio-ch-5",
+    chapterTitle: "Molecular Basis of Inheritance",
+    unit: "Genetics and Evolution",
+    marks: "3 Marks",
+    marksNum: 3,
+    category: "Big Orange (NCERT Page-Referenced)",
+    frequency: "PDF Reference Pg 8 & NCERT Fig 5.8 (CBSE 2016, 2018, 2021, 2024)",
+    diagramId: "replicating-fork",
+    questionPrompt: "Draw a labelled diagram of the DNA Replicating Fork as given on PDF Page 8 / NCERT Figure 5.8. Clearly show the continuous synthesis on the leading strand and discontinuous synthesis on the lagging strand. Name the enzyme that joins Okazaki fragments.",
+    ncertRef: {
+      textbook: "NCERT Biology Class 12",
+      chapter: "Chapter 5: Molecular Basis of Inheritance",
+      page: "Page 88",
+      figures: "Fig 5.8"
+    },
+    theory: [
+      "• Replicating Fork: The Y-shaped unwound region of the DNA double helix where DNA replication takes place.",
+      "• DNA Polymerase Constraint: DNA-dependent DNA polymerase can catalyse polymerisation only in one direction: strictly 5' → 3'.",
+      "• Asymmetric Strand Synthesis:",
+      "  1. Continuous (Leading) Strand: On the template strand with polarity 3' → 5', new DNA is synthesized continuously in the 5' → 3' direction towards the replicating fork.",
+      "  2. Discontinuous (Lagging) Strand: On the template strand with polarity 5' → 3', new DNA is synthesized discontinuously as short segments away from the fork. These segments are called Okazaki fragments.",
+      "• Role of DNA Ligase: The discontinuously synthesized Okazaki fragments are later joined covalently by the enzyme DNA Ligase."
+    ],
+    keyPointsAndKeywords: [
+      "Y-shaped replicating fork",
+      "DNA Polymerase works strictly 5' → 3'",
+      "Continuous leading strand on 3' → 5' template",
+      "Discontinuous lagging strand forming Okazaki fragments",
+      "DNA Ligase seals fragments"
+    ],
+    modelAnswer: {
+      statement: "The DNA replication fork exhibits continuous 5'→3' leading strand synthesis and discontinuous lagging strand synthesis joined by DNA ligase.",
+      markingScheme: [
+        "1.5 Marks: Accurate diagram showing Y-fork, parental template polarities, leading strand, and lagging strand.",
+        "1 Mark: Explanation of continuous vs discontinuous synthesis due to 5'→3' polymerase constraint.",
+        "0.5 Mark: Identification of DNA Ligase enzyme."
+      ],
+      examinerTips: "Remember: The unwinding of DNA into a replication fork is catalyzed by DNA Helicase, while Topoisomerase/Gyrase relieves supercoiling tension."
     }
   }
 ];
