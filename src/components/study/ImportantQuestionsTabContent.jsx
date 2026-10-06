@@ -3,13 +3,20 @@ import {
   CheckCircle2, Circle, Search, Filter, BookOpen, 
   ChevronDown, ChevronUp, Copy, Check, Sparkles, Award, 
   ExternalLink, AlertTriangle, Layers, Zap, Bookmark, FileText,
-  HelpCircle, AlignLeft
+  HelpCircle, AlignLeft, Dna, Eye
 } from 'lucide-react';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
+import { 
+  ALL_BIG_ORANGE_QUESTIONS, 
+  BIG_ORANGE_CORE_QUESTIONS, 
+  BIG_ORANGE_PAGE_QUESTIONS 
+} from '../../data/biologyImportantQuestionsData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
+import BiologyDiagramCard from './BiologyDiagramCard';
 import { FormattedLatex, MathBlock } from './LatexView';
 
-const STORAGE_KEY_MASTERED = 'one_mastered_imp_physics_q';
+const STORAGE_KEY_MASTERED_PHYSICS = 'one_mastered_imp_physics_q';
+const STORAGE_KEY_MASTERED_BIOLOGY = 'one_mastered_imp_bio_q';
 
 const DIAGRAM_MAPPING = {
   'imp-phy-1': 'gauss-applications',
@@ -80,21 +87,47 @@ const getDerivationDiagram = (qId, dIdx) => {
   return null;
 };
 
-export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelectTab }) {
+export default function ImportantQuestionsTabContent({ 
+  selectedSubject: propSelectedSubject = 'physics', 
+  onJumpToChapter, 
+  onSelectTab 
+}) {
+  // Current subject view: 'physics' or 'biology'
+  const [activeSubject, setActiveSubject] = useState(
+    propSelectedSubject === 'biology' ? 'biology' : 'physics'
+  );
+
+  useEffect(() => {
+    if (propSelectedSubject === 'biology' || propSelectedSubject === 'physics') {
+      setActiveSubject(propSelectedSubject);
+    }
+  }, [propSelectedSubject]);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUnit, setSelectedUnit] = useState('ALL');
   const [selectedMarks, setSelectedMarks] = useState('ALL');
   const [selectedStatus, setSelectedStatus] = useState('ALL'); // 'ALL' | 'MASTERED' | 'PENDING'
+  const [selectedCategory, setSelectedCategory] = useState('ALL'); // 'ALL' | 'CORE' | 'PAGE' (Biology only)
   const [onlyDiagrams, setOnlyDiagrams] = useState(false);
   const [expandedQuestions, setExpandedQuestions] = useState({});
   const [derivationDiagramOpen, setDerivationDiagramOpen] = useState({});
   const [isCompactMode, setIsCompactMode] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
 
-  // Mastered state stored in localStorage
-  const [masteredIds, setMasteredIds] = useState(() => {
+  // Mastered state for Physics
+  const [masteredPhysicsIds, setMasteredPhysicsIds] = useState(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY_MASTERED);
+      const stored = localStorage.getItem(STORAGE_KEY_MASTERED_PHYSICS);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // Mastered state for Biology
+  const [masteredBiologyIds, setMasteredBiologyIds] = useState(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_MASTERED_BIOLOGY);
       return stored ? JSON.parse(stored) : [];
     } catch {
       return [];
@@ -103,16 +136,33 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY_MASTERED, JSON.stringify(masteredIds));
+      localStorage.setItem(STORAGE_KEY_MASTERED_PHYSICS, JSON.stringify(masteredPhysicsIds));
     } catch (e) {
-      console.error('Failed to save mastered questions to storage:', e);
+      console.error('Failed to save mastered physics questions:', e);
     }
-  }, [masteredIds]);
+  }, [masteredPhysicsIds]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_MASTERED_BIOLOGY, JSON.stringify(masteredBiologyIds));
+    } catch (e) {
+      console.error('Failed to save mastered biology questions:', e);
+    }
+  }, [masteredBiologyIds]);
+
+  const isBiology = activeSubject === 'biology';
+  const masteredIds = isBiology ? masteredBiologyIds : masteredPhysicsIds;
 
   const toggleMastered = (id) => {
-    setMasteredIds(prev => 
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
-    );
+    if (isBiology) {
+      setMasteredBiologyIds(prev => 
+        prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+      );
+    } else {
+      setMasteredPhysicsIds(prev => 
+        prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+      );
+    }
   };
 
   const toggleExpand = (id) => {
@@ -127,16 +177,16 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
     textToCopy += `Unit: ${q.unit} | Chapter: ${q.chapterTitle}\n\n`;
 
     if (q.ncertRef) {
-      textToCopy += `NCERT Reference: ${q.ncertRef.textbook} - ${q.ncertRef.section}\n\n`;
+      textToCopy += `NCERT Reference: ${q.ncertRef.textbook} - ${q.ncertRef.page || q.ncertRef.section}\n\n`;
     }
 
     textToCopy += `EXAM QUESTION:\n${q.questionPrompt}\n\n`;
 
-    textToCopy += `PART 1: THEORY & PHYSICAL MECHANISM\n`;
+    textToCopy += `PART 1: THEORY & MODEL ANSWER\n`;
     if (q.theory && q.theory.length > 0) {
       textToCopy += q.theory.map(t => `• ${t}`).join('\n') + '\n\n';
-    } else {
-      textToCopy += `${q.modelAnswer?.statement}\n\n`;
+    } else if (q.modelAnswer?.statement) {
+      textToCopy += `${q.modelAnswer.statement}\n\n`;
     }
 
     if (q.derivations && q.derivations.length > 0) {
@@ -166,13 +216,13 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
     }
 
     if (q.keyPointsAndKeywords && q.keyPointsAndKeywords.length > 0) {
-      textToCopy += `PART 4: HIGH-YIELD KEY POINTS & KEYWORDS\n`;
+      textToCopy += `HIGH-YIELD KEY POINTS & KEYWORDS\n`;
       textToCopy += q.keyPointsAndKeywords.map(k => `• ${k}`).join('\n') + '\n\n';
     }
 
     if (q.termsGlossary && q.termsGlossary.length > 0) {
-      textToCopy += `GLOSSARY OF SYMBOLS & TERMS\n`;
-      textToCopy += q.termsGlossary.map(t => `${t.term} (${t.symbol}): ${t.definition}`).join('\n') + '\n\n';
+      textToCopy += `GLOSSARY OF TERMS\n`;
+      textToCopy += q.termsGlossary.map(t => `${t.term}: ${t.definition}`).join('\n') + '\n\n';
     }
 
     if (q.modelAnswer?.markingScheme && q.modelAnswer.markingScheme.length > 0) {
@@ -189,21 +239,31 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  // Active question set based on subject
+  const currentQuestions = isBiology ? ALL_BIG_ORANGE_QUESTIONS : IMPORTANT_PHYSICS_QUESTIONS;
+
   // Units list for filter
   const unitsList = useMemo(() => {
-    const units = Array.from(new Set(IMPORTANT_PHYSICS_QUESTIONS.map(q => q.unit)));
+    const units = Array.from(new Set(currentQuestions.map(q => q.unit)));
     return ['ALL', ...units];
-  }, []);
+  }, [currentQuestions]);
 
   // Filtered questions
   const filteredQuestions = useMemo(() => {
-    return IMPORTANT_PHYSICS_QUESTIONS.filter(q => {
+    return currentQuestions.filter(q => {
+      // Category filter (Biology only)
+      if (isBiology && selectedCategory !== 'ALL') {
+        if (selectedCategory === 'CORE' && q.section !== 'core') return false;
+        if (selectedCategory === 'PAGE' && q.section !== 'page') return false;
+      }
+
       // Search
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchTitle = q.title.toLowerCase().includes(query);
         const matchPrompt = q.questionPrompt.toLowerCase().includes(query);
         const matchKeywords = q.keyPointsAndKeywords?.some(k => k.toLowerCase().includes(query));
+        const matchTheory = q.theory?.some(t => t.toLowerCase().includes(query));
         const matchDerivations = (q.derivations || []).some(d => 
           d.name?.toLowerCase().includes(query) || d.finalFormula?.toLowerCase().includes(query)
         );
@@ -211,7 +271,7 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
           d.name?.toLowerCase().includes(query) || d.formula?.toLowerCase().includes(query)
         );
         const matchNumber = q.number.toString() === query || `q${q.number}` === query;
-        if (!matchTitle && !matchPrompt && !matchKeywords && !matchDerivations && !matchModel && !matchNumber) {
+        if (!matchTitle && !matchPrompt && !matchKeywords && !matchTheory && !matchDerivations && !matchModel && !matchNumber) {
           return false;
         }
       }
@@ -223,6 +283,7 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
 
       // Marks filter
       if (selectedMarks === '5' && q.marksNum !== 5) return false;
+      if (selectedMarks === '4' && q.marksNum !== 4) return false;
       if (selectedMarks === '3' && q.marksNum !== 3) return false;
       if (selectedMarks === '2' && q.marksNum !== 2) return false;
 
@@ -232,42 +293,97 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
       if (selectedStatus === 'PENDING' && isMastered) return false;
 
       // Diagrams only filter
-      if (onlyDiagrams && !DIAGRAM_MAPPING[q.id]) return false;
+      if (onlyDiagrams) {
+        if (isBiology && !q.diagramId) return false;
+        if (!isBiology && !DIAGRAM_MAPPING[q.id]) return false;
+      }
 
       return true;
     });
-  }, [searchQuery, selectedUnit, selectedMarks, selectedStatus, onlyDiagrams, masteredIds]);
+  }, [currentQuestions, isBiology, selectedCategory, searchQuery, selectedUnit, selectedMarks, selectedStatus, onlyDiagrams, masteredIds]);
 
   return (
     <div className="space-y-6 pb-12 animate-in fade-in duration-300">
-      {/* 1. Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500/10 via-[var(--bg-surface)] to-[var(--accent-primary)]/10 border border-amber-500/30 p-5 sm:p-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400 text-xs font-bold tracking-wide uppercase">
-              <Award size={14} className="text-amber-500" />
-              <span>Official CBSE Board • 22 Core Questions</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
-              Top 22 Questions for the Exam
-            </h1>
-          </div>
-
+      {/* 1. Subject Switcher Top Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-surface)] p-2 rounded-2xl border border-[var(--border-default)] shadow-xs">
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setIsCompactMode(prev => !prev)}
-            className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 shrink-0 self-start sm:self-auto ${
-              isCompactMode 
-                ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs' 
-                : 'bg-[var(--bg-surface)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            onClick={() => {
+              setActiveSubject('physics');
+              setSelectedUnit('ALL');
+              setSelectedMarks('ALL');
+              setSelectedCategory('ALL');
+            }}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 touch-manipulation ${
+              !isBiology
+                ? 'bg-[#5B7B9A] text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
             }`}
           >
-            <Layers size={13} />
-            {isCompactMode ? 'Exit Quick Revision Sheet' : 'Quick Revision Sheet Mode'}
+            <Zap size={15} />
+            <span>Physics • Top 22 Core Questions</span>
           </button>
+
+          <button
+            onClick={() => {
+              setActiveSubject('biology');
+              setSelectedUnit('ALL');
+              setSelectedMarks('ALL');
+              setSelectedCategory('ALL');
+            }}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 touch-manipulation ${
+              isBiology
+                ? 'bg-amber-600 text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
+            }`}
+          >
+            <Dna size={15} />
+            <span>Biology • Big Orange Bank ({ALL_BIG_ORANGE_QUESTIONS.length} Qs)</span>
+          </button>
+        </div>
+
+        <button
+          onClick={() => setIsCompactMode(prev => !prev)}
+          className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 shrink-0 ${
+            isCompactMode 
+              ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs' 
+              : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <Layers size={13} />
+          {isCompactMode ? 'Exit Quick Revision Mode' : 'Quick Revision Sheet'}
+        </button>
+      </div>
+
+      {/* 2. Header Banner */}
+      <div className={`relative overflow-hidden rounded-3xl p-5 sm:p-6 shadow-sm border ${
+        isBiology 
+          ? 'bg-gradient-to-br from-amber-500/15 via-[var(--bg-surface)] to-emerald-500/10 border-amber-500/40' 
+          : 'bg-gradient-to-br from-blue-500/10 via-[var(--bg-surface)] to-amber-500/10 border-blue-500/30'
+      }`}>
+        <div className="space-y-1.5">
+          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-xs font-bold tracking-wide uppercase bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400">
+            <Award size={14} className="text-amber-500" />
+            <span>
+              {isBiology 
+                ? 'Official CBSE Board • Big Orange High-Yield Question Bank' 
+                : 'Official CBSE Board • 22 Core Questions & Derivations'}
+            </span>
+          </div>
+          
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
+            {isBiology ? 'Big Orange Biology: Exam Guaranteed Questions' : 'Top 22 Physics Guaranteed Board Derivations'}
+          </h1>
+          
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-3xl leading-relaxed">
+            {isBiology 
+              ? 'Complete point-wise NCERT model answers researched against 10-year CBSE PYQs and official marking schemes, with interactive anatomical & genetic diagrams.' 
+              : 'Rigorous step-by-step mathematical proofs with physical setups, connecting sentences, special cases, and boxed final formulas.'}
+          </p>
         </div>
       </div>
 
-      {/* 2. Search & Filter Bar */}
+      {/* 3. Search & Filter Bar */}
       <div className="bg-[var(--bg-surface)] border border-[var(--border-default)] p-3.5 sm:p-4 rounded-2xl space-y-3 shadow-xs">
         {/* Search Input */}
         <div className="relative">
@@ -276,7 +392,11 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search within the 22 questions (e.g. 'Gauss', 'Transformer', 'Galvanometer', 'RMS', 'Wheatstone', 'RLC')..."
+            placeholder={
+              isBiology 
+                ? "Search Big Orange questions (e.g. 'Embryo sac', 'Lac operon', 'Hardy-Weinberg', 'Antibody', 'MTP', 'Down syndrome')..."
+                : "Search within the 22 questions (e.g. 'Gauss', 'Transformer', 'Galvanometer', 'RMS', 'Wheatstone', 'RLC')..."
+            }
             className="w-full pl-10 pr-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-xl text-xs sm:text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-hidden transition-colors"
           />
           {searchQuery && (
@@ -288,6 +408,45 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
             </button>
           )}
         </div>
+
+        {/* Biology Category Tabs */}
+        {isBiology && (
+          <div className="flex flex-wrap items-center gap-2 pt-1 border-b border-[var(--border-subtle)] pb-2.5">
+            <span className="text-[var(--text-muted)] text-xs font-semibold shrink-0">Category:</span>
+            <button
+              onClick={() => setSelectedCategory('ALL')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                selectedCategory === 'ALL'
+                  ? 'bg-amber-500 text-white shadow-xs'
+                  : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+              }`}
+            >
+              All Big Orange ({ALL_BIG_ORANGE_QUESTIONS.length})
+            </button>
+
+            <button
+              onClick={() => setSelectedCategory('CORE')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                selectedCategory === 'CORE'
+                  ? 'bg-amber-600 text-white shadow-xs'
+                  : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+              }`}
+            >
+              Core High-Yield Questions ({BIG_ORANGE_CORE_QUESTIONS.length})
+            </button>
+
+            <button
+              onClick={() => setSelectedCategory('PAGE')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                selectedCategory === 'PAGE'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+              }`}
+            >
+              Page-Referenced &amp; Core Diagrams ({BIG_ORANGE_PAGE_QUESTIONS.length})
+            </button>
+          </div>
+        )}
 
         {/* Filter Pills */}
         <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
@@ -318,7 +477,8 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
             <span className="text-[var(--text-muted)] font-medium shrink-0">Marks:</span>
             {[
               { id: 'ALL', label: 'All' },
-              { id: '5', label: '5M (Derivations)' },
+              { id: '5', label: '5M' },
+              { id: '4', label: '4M' },
               { id: '3', label: '3M' },
               { id: '2', label: '2M' }
             ].map(m => (
@@ -372,12 +532,12 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
             }`}
           >
             <Layers size={12} className={onlyDiagrams ? 'text-white' : 'text-purple-400'} />
-            <span>Interactive Diagrams ({Object.keys(DIAGRAM_MAPPING).length})</span>
+            <span>Interactive Diagrams</span>
           </button>
         </div>
       </div>
 
-      {/* 3. Question Cards List */}
+      {/* 4. Question Cards List */}
       <div className="space-y-4">
         {filteredQuestions.length === 0 ? (
           <div className="text-center py-12 bg-[var(--bg-surface)] rounded-2xl border border-[var(--border-default)] p-6 space-y-3">
@@ -390,6 +550,8 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                 setSelectedUnit('ALL');
                 setSelectedMarks('ALL');
                 setSelectedStatus('ALL');
+                setSelectedCategory('ALL');
+                setOnlyDiagrams(false);
               }}
               className="px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-colors cursor-pointer"
             >
@@ -400,6 +562,8 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
           filteredQuestions.map((q) => {
             const isMastered = masteredIds.includes(q.id);
             const isExpanded = !!expandedQuestions[q.id] || isCompactMode;
+            const hasBiologyDiagram = isBiology && !!q.diagramId;
+            const hasPhysicsDiagram = !isBiology && !!DIAGRAM_MAPPING[q.id];
 
             return (
               <div 
@@ -430,19 +594,35 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                     {/* Question Number & Title */}
                     <div className="space-y-1 min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-mono text-xs font-extrabold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30">
+                        <span className={`font-mono text-xs font-extrabold px-2 py-0.5 rounded-md border ${
+                          isBiology 
+                            ? 'bg-amber-500/15 text-amber-500 dark:text-amber-400 border-amber-500/30'
+                            : 'bg-blue-500/15 text-blue-500 border-blue-500/30'
+                        }`}>
                           Q{q.number}
                         </span>
                         
                         <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider ${
-                          q.marksNum === 5 
+                          q.marksNum >= 5 
                             ? 'bg-rose-500/15 text-rose-500 border border-rose-500/30' 
-                            : q.marksNum === 3 
-                              ? 'bg-blue-500/15 text-blue-500 border border-blue-500/30' 
-                              : 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/30'
+                            : q.marksNum === 4
+                              ? 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
+                              : q.marksNum === 3 
+                                ? 'bg-blue-500/15 text-blue-500 border border-blue-500/30' 
+                                : 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/30'
                         }`}>
                           {q.marks}
                         </span>
+
+                        {q.category && (
+                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${
+                            q.category.includes('Page')
+                              ? 'bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30'
+                              : 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                          }`}>
+                            {q.category}
+                          </span>
+                        )}
 
                         <span className="text-[11px] text-[var(--text-muted)] font-medium">
                           {q.unit} • {q.chapterTitle}
@@ -451,13 +631,13 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                         {q.ncertRef && (
                           <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-500 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md border border-blue-500/25">
                             <BookOpen size={11} />
-                            <span>{q.ncertRef.section.split(':')[0]}</span>
+                            <span>{q.ncertRef.page || q.ncertRef.section?.split(':')[0]}</span>
                           </span>
                         )}
 
-                        {DIAGRAM_MAPPING[q.id] && (
+                        {(hasBiologyDiagram || hasPhysicsDiagram) && (
                           <span className="inline-flex items-center gap-1 text-[11px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/30">
-                            <Layers size={11} /> Interactive Diagram
+                            <Layers size={11} /> Diagram Card
                           </span>
                         )}
 
@@ -506,7 +686,7 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
 
                     {onJumpToChapter && (
                       <button
-                        onClick={() => onJumpToChapter('physics', 'phy-vol-1', q.chapterId)}
+                        onClick={() => onJumpToChapter(isBiology ? 'biology' : 'physics', isBiology ? 'bio-vol-1' : 'phy-vol-1', q.chapterId)}
                         className="px-2.5 py-1.5 rounded-xl text-xs font-semibold border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-colors cursor-pointer touch-manipulation flex items-center gap-1"
                         title="Jump to full chapter notes"
                       >
@@ -554,13 +734,8 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                             NCERT Standard Textbook Reference:
                           </span>
                           <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-600 dark:text-blue-300 font-mono text-[11px] font-bold">
-                            {q.ncertRef.section}
+                            {q.ncertRef.page || q.ncertRef.section}
                           </span>
-                          {q.ncertRef.equations && (
-                            <span className="text-[11px] font-mono text-[var(--text-muted)] font-medium">
-                              • {q.ncertRef.equations}
-                            </span>
-                          )}
                           {q.ncertRef.figures && (
                             <span className="text-[11px] font-mono text-[var(--text-muted)] font-medium">
                               • {q.ncertRef.figures}
@@ -568,19 +743,19 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                           )}
                         </div>
                         <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                          <strong>{q.ncertRef.textbook}</strong> ({q.ncertRef.chapter}) &mdash; {q.ncertRef.summary}
+                          <strong>{q.ncertRef.textbook}</strong> ({q.ncertRef.chapter})
                         </p>
                       </div>
                     )}
 
-                    {/* PART 1: Theory */}
+                    {/* PART 1: Theory / Model Answer */}
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30">
                           Part 1
                         </span>
                         <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent-primary)]">
-                          Theory &amp; Physical Mechanism
+                          {isBiology ? 'Model Answer & Point-wise Theory' : 'Theory & Physical Mechanism'}
                         </h4>
                       </div>
                       <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2.5">
@@ -599,8 +774,23 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                       </div>
                     </div>
 
-                    {/* PART 2: Step-by-Step Derivations */}
-                    {q.derivations && q.derivations.length > 0 && (
+                    {/* BIOLOGY DIAGRAM CARD (If q.diagramId exists) */}
+                    {isBiology && q.diagramId && (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                            Part 2
+                          </span>
+                          <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                            NCERT Core Diagram &amp; Morphological Schematic
+                          </h4>
+                        </div>
+                        <BiologyDiagramCard diagramId={q.diagramId} />
+                      </div>
+                    )}
+
+                    {/* PHYSICS PART 2: Step-by-Step Derivations */}
+                    {!isBiology && q.derivations && q.derivations.length > 0 && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
@@ -639,14 +829,12 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                                   )}
                                 </div>
 
-                                {/* Narrative setup matching the textbook screenshot */}
                                 {d.setup && (
                                   <div className="text-xs sm:text-sm text-[var(--text-secondary)] italic leading-relaxed pl-2 border-l-2 border-emerald-500/50">
                                     <FormattedLatex content={d.setup} />
                                   </div>
                                 )}
 
-                                {/* Steps formatted with KaTeX math blocks and connecting sentences */}
                                 <div className="space-y-3 pt-1">
                                   {d.steps && d.steps.map((step, sIdx) => {
                                     const isObj = typeof step === 'object' && step !== null;
@@ -670,7 +858,6 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                                   })}
                                 </div>
 
-                                {/* Embedded Visual Diagram right inside this derivation */}
                                 {derivDiag && isDiagOpen && (
                                   <div className="pt-2">
                                     <div className="text-[11px] font-bold text-[var(--text-muted)] mb-1.5 flex items-center gap-1.5 uppercase tracking-wide">
@@ -685,7 +872,6 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                                   </div>
                                 )}
 
-                                {/* Special Cases & Critical Conditions */}
                                 {d.specialCases && d.specialCases.length > 0 && (
                                   <div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-2 mt-2">
                                     <span className="text-[11px] font-bold uppercase tracking-wider text-amber-500 block">
@@ -705,7 +891,6 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                                   </div>
                                 )}
 
-                                {/* Final Boxed Result Formula */}
                                 {d.finalFormula && (
                                   <div className="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-emerald-500/40 text-center space-y-1 shadow-xs">
                                     <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 block">
@@ -721,8 +906,8 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                       </div>
                     )}
 
-                    {/* PART 3: Diagram & Exam Drawing Guide */}
-                    {(DIAGRAM_MAPPING[q.id] || q.diagram?.hasDiagram) && (
+                    {/* PHYSICS PART 3: Diagram & Exam Drawing Guide */}
+                    {!isBiology && (DIAGRAM_MAPPING[q.id] || q.diagram?.hasDiagram) && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-purple-500/15 text-purple-600 dark:text-purple-400 border border-purple-500/30">
@@ -733,12 +918,10 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                           </h4>
                         </div>
 
-                        {/* Interactive Visual Schematic Card */}
                         {DIAGRAM_MAPPING[q.id] && (
                           <PhysicsDiagramCard diagramId={DIAGRAM_MAPPING[q.id]} />
                         )}
 
-                        {/* Drawing Checklist */}
                         {q.diagram?.examDrawingGuide && q.diagram.examDrawingGuide.length > 0 && (
                           <div className="p-3.5 sm:p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-2">
                             <span className="text-xs font-extrabold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
@@ -748,8 +931,8 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                             <ul className="space-y-1.5 text-xs text-[var(--text-secondary)] leading-relaxed pl-1">
                               {q.diagram.examDrawingGuide.map((guide, gIdx) => (
                                 <li key={gIdx} className="flex items-start gap-2">
-                                  <span className="text-purple-400 font-bold">•</span>
-                                  <FormattedLatex content={guide} />
+                                  <span className="text-purple-400 font-bold shrink-0">•</span>
+                                  <span>{guide}</span>
                                 </li>
                               ))}
                             </ul>
@@ -758,55 +941,26 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                       </div>
                     )}
 
-                    {/* PART 4: Key Points & Keywords */}
+                    {/* KEY POINTS & KEYWORDS */}
                     {q.keyPointsAndKeywords && q.keyPointsAndKeywords.length > 0 && (
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
-                            Part 4
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30">
+                            {isBiology ? 'Key Terms' : 'Part 4'}
                           </span>
                           <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-500 dark:text-amber-400">
-                            High-Yield Key Points &amp; Examiner Keywords
+                            High-Yield Key Points &amp; Mandatory Keywords
                           </h4>
                         </div>
-                        <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                        <div className="p-3.5 sm:p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
                           <div className="flex flex-wrap gap-2">
-                            {q.keyPointsAndKeywords.map((kw, kwIdx) => (
-                              <span
-                                key={kwIdx}
-                                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-primary)] shadow-2xs"
+                            {q.keyPointsAndKeywords.map((k, kIdx) => (
+                              <span 
+                                key={kIdx}
+                                className="px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] border border-amber-500/30 text-xs text-[var(--text-primary)] font-medium"
                               >
-                                {kw}
+                                • {k}
                               </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* GLOSSARY OF SYMBOLS & TERMS */}
-                    {q.termsGlossary && q.termsGlossary.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
-                          <Bookmark size={13} />
-                          Glossary of Symbols &amp; Physical Terms
-                        </h4>
-                        <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2.5">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {q.termsGlossary.map((term, tIdx) => (
-                              <div key={tIdx} className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1">
-                                <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)]/50 pb-1">
-                                  <span className="font-bold text-xs text-[var(--text-primary)]">
-                                    {term.term}
-                                  </span>
-                                  <span className="px-1.5 py-0.5 rounded bg-[var(--bg-elevated)] text-[11px] font-mono text-[var(--accent-primary)] font-semibold">
-                                    <MathBlock math={term.symbol} display={false} />
-                                  </span>
-                                </div>
-                                <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed">
-                                  <FormattedLatex content={term.definition} />
-                                </p>
-                              </div>
                             ))}
                           </div>
                         </div>
@@ -831,7 +985,7 @@ export default function ImportantQuestionsTabContent({ onJumpToChapter, onSelect
                         <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
                           <h4 className="text-xs font-extrabold text-amber-500 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
                             <AlertTriangle size={13} />
-                            Examiner's Warning &amp; Common Mistakes
+                            Examiner's Tips &amp; Common Mistakes
                           </h4>
                           <p className="text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
                             {q.modelAnswer.examinerTips}

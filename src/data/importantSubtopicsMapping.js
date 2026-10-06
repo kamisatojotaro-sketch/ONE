@@ -255,6 +255,262 @@ export const HANDWRITTEN_IMPORTANT_SUBTOPICS = {
     reason: 'Integral form: Maxwells displacement current (I_d = ε₀ dΦ_E/dt) and continuity across capacitor (Starred in revision notes)',
     examTag: 'Important Derivation',
     chapterNum: 8
+  },
+
+  // =========================================================================
+  // BIOLOGY CHAPTERS 1 TO 8: "BIG ORANGE" HIGH-YIELD BOARD FOCUS
+  // =========================================================================
+  'bio-sub-1-1': {
+    title: 'Microsporangium 4 Wall Layers, Tapetum & Pollen Grain',
+    reason: 'Big Orange: 4 Wall layers (endothecium dehiscence, tapetum nutrition), sporopollenin exine, 2-celled pollen',
+    examTag: 'Big Orange: Important Diagram & 3M',
+    chapterNum: 1
+  },
+  'bio-sub-1-2': {
+    title: 'Megasporangium (Anatropous Ovule) & 7-Celled Embryo Sac',
+    reason: 'Big Orange: Anatropous ovule diagram (pg 9), 7-celled 8-nucleate embryo sac (pg 10), filiform apparatus function',
+    examTag: 'Big Orange: Core Diagram & 5M',
+    chapterNum: 1
+  },
+  'bio-sub-1-3': {
+    title: 'Pollination: Autogamy, Geitonogamy & Outbreeding Devices',
+    reason: 'Big Orange: Geitonogamy functionally cross vs genetically self; outbreeding devices preventing inbreeding depression',
+    examTag: 'Big Orange: 3M Focus',
+    chapterNum: 1
+  },
+  'bio-sub-1-5': {
+    title: 'Double Fertilisation & Triple Fusion',
+    reason: 'Big Orange: Syngamy (2n zygote) + Triple fusion (3n PEN) in central cell; unique to angiosperms',
+    examTag: 'Big Orange: Core Concept 2M',
+    chapterNum: 1
+  },
+  'bio-sub-1-6': {
+    title: 'Embryo Development: Monocot vs Dicot & Coleoptile vs Coleorhiza',
+    reason: 'Big Orange: Pg 19 differentiate coleoptile (plumule sheath) vs coleorhiza (radicle sheath); scutellum',
+    examTag: 'Big Orange: Differentiate 2M',
+    chapterNum: 1
+  },
+  'bio-sub-1-7': {
+    title: 'Perisperm, False Fruit & Parthenocarpy',
+    reason: 'Big Orange: Perisperm in black pepper/beet; false fruit (apple/strawberry thalamus); parthenocarpic seedless banana',
+    examTag: 'Big Orange: Definitions 2M',
+    chapterNum: 1
+  },
+  'bio-sub-2-2': {
+    title: 'Female Accessory Ducts: Fimbriae & Uterine Wall Layers',
+    reason: 'Big Orange: Fimbriae ovum collection post-ovulation; Myometrium parturition contractions vs Endometrium menstruation',
+    examTag: 'Big Orange: 2M/3M Question',
+    chapterNum: 2
+  },
+  'bio-sub-2-3': {
+    title: 'Spermatogenesis vs Oogenesis',
+    reason: 'Big Orange: Stepwise comparison: unequal meiotic divisions in oogenesis (1 ovum + polar bodies), meiotic arrest points',
+    examTag: 'Big Orange: 4M Comparison',
+    chapterNum: 2
+  },
+  'bio-sub-2-4': {
+    title: 'Menstrual Cycle: Hormonal Curves & LH Surge',
+    reason: 'Big Orange: Day 14 LH surge triggers ovulation; Corpus luteum secretes progesterone; endometrial phase curves',
+    examTag: 'Big Orange: Core 3M/5M Curve',
+    chapterNum: 2
+  },
+  'bio-sub-2-6': {
+    title: 'Blastocyst Structure & Implantation (2 Marks)',
+    reason: 'Big Orange: Trophoblast attaches to endometrium (forms placenta); Inner cell mass forms embryo proper',
+    examTag: 'Big Orange: 2M High Yield',
+    chapterNum: 2
+  },
+  'bio-sub-2-7': {
+    title: 'Placenta: Functions & Endocrine Hormones (Pg 37)',
+    reason: 'Big Orange: Maternal-foetal exchange via umbilical cord; exclusive pregnancy hormones hCG, hPL, relaxin',
+    examTag: 'Big Orange: 3M Focus',
+    chapterNum: 2
+  },
+  'bio-sub-3-2': {
+    title: 'Methods of Birth Control: IUDs, Saheli & Sterilisation',
+    reason: 'Big Orange: IUD classifications (Lippes loop, CuT, LNG-20); Saheli non-steroidal pill; Vasectomy/Tubectomy',
+    examTag: 'Big Orange: 4M Methods',
+    chapterNum: 3
+  },
+  'bio-sub-3-3': {
+    title: 'Amniocentesis & MTP (Amendment) Act 2017',
+    reason: 'Big Orange: Amniocentesis karyotyping & statutory ban (pg 42); MTP safe up to 12 weeks with 1 RMP, 24 weeks with 2 RMPs (pg 46)',
+    examTag: 'Big Orange: 2M/3M Legalities',
+    chapterNum: 3
+  },
+  'bio-sub-3-4': {
+    title: 'Sexually Transmitted Infections (STIs)',
+    reason: 'Big Orange: Incurable STI trio: HIV, Hepatitis-B, Genital herpes; transmission and prevention',
+    examTag: 'Big Orange: 2M Focus',
+    chapterNum: 3
+  },
+  'bio-sub-3-5': {
+    title: 'Assisted Reproductive Technologies: ZIFT, GIFT, ICSI, IVF-ET',
+    reason: 'Big Orange: ZIFT (embryo ≤8 blastomeres into tube) vs GIFT (unfertilized ovum into tube); ICSI & IUI',
+    examTag: 'Big Orange: 3M/5M Differentiation',
+    chapterNum: 3
+  },
+  'bio-sub-4-1': {
+    title: "Mendel's Laws of Inheritance & Monohybrid Cross",
+    reason: 'Big Orange: Law of Dominance (3:1), Law of Segregation (purity of gametes without exception, 1:2:1)',
+    examTag: 'Big Orange: 3M/5M Core',
+    chapterNum: 4
+  },
+  'bio-sub-4-2': {
+    title: 'Deviations of Mendel: Incomplete Dominance & Co-dominance',
+    reason: 'Big Orange: Antirrhinum pink flowers (1:2:1 phenotypic=genotypic); ABO blood group codominant I^A and I^B',
+    examTag: 'Big Orange: 3M Cross',
+    chapterNum: 4
+  },
+  'bio-sub-4-4': {
+    title: 'Linkage and Recombination (T.H. Morgan)',
+    reason: 'Big Orange: Linkage vs recombination definitions; recombination frequency ∝ gene distance; Drosophila selection',
+    examTag: 'Big Orange: 3M Core',
+    chapterNum: 4
+  },
+  'bio-sub-4-5': {
+    title: 'Polygenic Inheritance & Pleiotropy',
+    reason: 'Big Orange: Polygenic skin colour (additive genes) vs Pleiotropic single gene multiple traits (PKU, starch synthesis)',
+    examTag: 'Big Orange: 2M/3M Focus',
+    chapterNum: 4
+  },
+  'bio-sub-4-6': {
+    title: 'Sex Determination in Honeybees & Birds',
+    reason: 'Big Orange: Honeybee haplodiploidy (female 2n=32, male n=16 parthenogenesis); Bird female heterogamety (ZW female, ZZ male)',
+    examTag: 'Big Orange: 3M Mechanism',
+    chapterNum: 4
+  },
+  'bio-sub-4-8': {
+    title: 'Mendelian Disorders: Haemophilia, Sickle-Cell & PKU',
+    reason: 'Big Orange: Haemophilia X-linked clotting failure; Sickle cell point mutation Glu to Val at 6th position; PKU phenylalanine hydroxylase failure',
+    examTag: 'Big Orange: 3M Focus',
+    chapterNum: 4
+  },
+  'bio-sub-4-9': {
+    title: "Chromosomal Disorders: Down's, Klinefelter's & Turner's",
+    reason: 'Big Orange: Down (47, +21 trisomy), Klinefelter (47, XXY gynaecomastia), Turner (45, XO sterile female); Aneuploidy vs Polyploidy',
+    examTag: 'Big Orange: 3M/4M Syndrome Bank',
+    chapterNum: 4
+  },
+  'bio-sub-5-1': {
+    title: 'DNA Double Helix & Chemical Stability vs RNA (Pg 86)',
+    reason: 'Big Orange: Watson-Crick B-DNA pitch 3.4 nm, 10 bp/turn; DNA stability due to lack of 2-OH and presence of thymine',
+    examTag: 'Big Orange: 3M Structural',
+    chapterNum: 5
+  },
+  'bio-sub-5-3': {
+    title: 'Transforming Principle: Griffith & Avery-MacLeod-McCarty',
+    reason: 'Big Orange: Heat-killed S + Live R kills mice; DNase abolishes transformation proving DNA is genetic material',
+    examTag: 'Big Orange: 3M Proof',
+    chapterNum: 5
+  },
+  'bio-sub-5-4': {
+    title: 'Semiconservative Replication: Meselson & Stahl',
+    reason: 'Big Orange: Heavy ¹⁵N isotope, CsCl density gradient centrifugation; Gen 1 hybrid (¹⁵N-¹⁴N), Gen 2 50% hybrid + 50% light',
+    examTag: 'Big Orange: 3M/4M Experiment',
+    chapterNum: 5
+  },
+  'bio-sub-5-5': {
+    title: 'Transcription in Prokaryotes & Eukaryotes',
+    reason: 'Big Orange: Prokaryotes σ initiation & ρ termination factor; Eukaryotes RNA Pol I, II, III, Splicing, Capping, Tailing',
+    examTag: 'Big Orange: 3M Mechanism',
+    chapterNum: 5
+  },
+  'bio-sub-5-9': {
+    title: 'Lac Operon: Jacob-Monod Model (Pg 93 & Pg 101)',
+    reason: 'Big Orange: OFF vs ON with allolactose inducer; z (beta-galactosidase), y (permease), a (transacetylase); negative regulation',
+    examTag: 'Big Orange: 3M/5M Core',
+    chapterNum: 5
+  },
+  'bio-sub-5-10': {
+    title: 'Human Genome Project: 6 Salient Features (Pg 106)',
+    reason: 'Big Orange: 3.164 billion bp, 30000 genes, dystrophin 2.4 Mb, <2% coding, chromosome 1 (2968) vs Y (231)',
+    examTag: 'Big Orange: 3M Direct Q',
+    chapterNum: 5
+  },
+  'bio-sub-5-11': {
+    title: 'DNA Fingerprinting: Alec Jeffreys & VNTRs',
+    reason: 'Big Orange: DNA polymorphism, VNTR minisatellites, Southern blotting, radioactive probe hybridisation, autoradiography',
+    examTag: 'Big Orange: 3M Steps',
+    chapterNum: 5
+  },
+  'bio-sub-6-1': {
+    title: 'Miller-Urey Chemical Evolution Experiment (Pg 117)',
+    reason: 'Big Orange: Spark discharge at 800°C with CH₄, NH₃, H₂O, H₂; synthesized amino acids (glycine, alanine, aspartic acid)',
+    examTag: 'Big Orange: Core Diagram 3M',
+    chapterNum: 6
+  },
+  'bio-sub-6-4': {
+    title: 'Adaptive Radiation: Darwin Finches & Marsupials',
+    reason: 'Big Orange: Radiating to ecological niches: Galapagos finch beaks, Australian marsupials, convergent evolution',
+    examTag: 'Big Orange: 3M Focus',
+    chapterNum: 6
+  },
+  'bio-sub-6-5': {
+    title: 'Hardy-Weinberg Principle: 5 Factors (Pg 121)',
+    reason: 'Big Orange: Equation p²+2pq+q²=1; 5 disrupting factors: gene flow, genetic drift, mutation, recombination, natural selection',
+    examTag: 'Big Orange: 3M Algebraic & Curves',
+    chapterNum: 6
+  },
+  'bio-sub-7-2': {
+    title: 'Innate Immunity: Four Protective Barriers',
+    reason: 'Big Orange: Physical (skin/mucus), Physiological (HCl/lysozyme), Cellular (PMNL/macrophage), Cytokine (interferons)',
+    examTag: 'Big Orange: 3M Barriers',
+    chapterNum: 7
+  },
+  'bio-sub-7-3': {
+    title: 'Antibody Molecule H₂L₂ (Pg 138) & Active vs Passive Immunity',
+    reason: 'Big Orange: H₂L₂ structure with disulfide bonds, antigen-binding sites; IgA colostrum passive immunity',
+    examTag: 'Big Orange: Core Diagram & 3M',
+    chapterNum: 7
+  },
+  'bio-sub-7-4': {
+    title: 'Allergies: Symptoms & Treatment (Pg 136)',
+    reason: 'Big Orange: IgE mediated mast cell release of histamine and serotonin; treatment with antihistamines, adrenaline, steroids',
+    examTag: 'Big Orange: 3M Direct Q',
+    chapterNum: 7
+  },
+  'bio-sub-7-5': {
+    title: 'HIV Life Cycle & Antiretroviral Therapy (Pg 139)',
+    reason: 'Big Orange: Retrovirus reverse transcriptase, macrophage HIV factory, Helper T cell depletion; reverse transcriptase inhibitors',
+    examTag: 'Big Orange: Case-Based 5M',
+    chapterNum: 7
+  },
+  'bio-sub-7-6': {
+    title: 'Cancer Biology: Contact Inhibition & Metastasis (Pg 141)',
+    reason: 'Big Orange: Loss of contact inhibition, Benign vs Malignant tumours, Metastasis spreading through blood/lymph',
+    examTag: 'Big Orange: 3M Focus',
+    chapterNum: 7
+  },
+  'bio-sub-7-7': {
+    title: 'Tabulation of Drugs: Opioids, Cannabinoids & Cocaine',
+    reason: 'Big Orange: Opioids (Papaver somniferum, CNS/GI depressant), Cannabinoids (Cannabis sativa, heart), Cocaine (Erythroxylum coca, dopamine)',
+    examTag: 'Big Orange: 3M Tabulation',
+    chapterNum: 7
+  },
+  'bio-sub-8-1': {
+    title: 'Propionibacterium sharmanii & Swiss Cheese (Pg 149)',
+    reason: 'Big Orange: Propionibacterium sharmanii ferments lactic acid to propionic acid + large CO₂ gas bubbles creating holes',
+    examTag: 'Big Orange: 2M Focus',
+    chapterNum: 8
+  },
+  'bio-sub-8-2': {
+    title: 'Bioactive Molecules & Microbial Enzymes',
+    reason: 'Big Orange: Cyclosporin A (Trichoderma polysporum), Statins (Monascus purpureus), Streptokinase clot buster, lipases, pectinases',
+    examTag: 'Big Orange: 3M High Yield',
+    chapterNum: 8
+  },
+  'bio-sub-8-3': {
+    title: 'Sewage Treatment: Primary, Flocs, BOD & Biogas',
+    reason: 'Big Orange: Primary physical vs Secondary biological treatment: Flocs reduce BOD; anaerobic sludge digester produces biogas (CH₄, CO₂, H₂S)',
+    examTag: 'Big Orange: Guaranteed 5M',
+    chapterNum: 8
+  },
+  'bio-sub-8-4': {
+    title: 'Biocontrol Agents: Baculoviruses & Bacillus thuringiensis',
+    reason: 'Big Orange: Nucleopolyhedrovirus narrow-spectrum IPM safety; Bacillus thuringiensis alkaline gut pore lysis',
+    examTag: 'Big Orange: 3M Focus',
+    chapterNum: 8
   }
 };
 
