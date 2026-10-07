@@ -294,11 +294,20 @@ export default function ImportantQuestionsTabContent({
         return false;
       }
 
-      // Marks filter
-      if (selectedMarks === '5' && q.marksNum !== 5) return false;
-      if (selectedMarks === '4' && q.marksNum !== 4) return false;
-      if (selectedMarks === '3' && q.marksNum !== 3) return false;
-      if (selectedMarks === '2' && q.marksNum !== 2) return false;
+      // Marks filter: supports single marks and multi-mark questions (e.g. '3 / 5 Marks', '2 / 5 Marks', '4 / 5 Marks')
+      if (selectedMarks !== 'ALL') {
+        const target = selectedMarks;
+        const matchesMark = () => {
+          if (q.marksNum === Number(target)) return true;
+          if (Array.isArray(q.marksAllowed) && q.marksAllowed.includes(Number(target))) return true;
+          if (typeof q.marks === 'string') {
+            const digits = q.marks.match(/\b\d\b/g);
+            if (digits && digits.includes(target)) return true;
+          }
+          return false;
+        };
+        if (!matchesMark()) return false;
+      }
 
       // Status filter
       const isMastered = masteredIds.includes(q.id);
@@ -645,11 +654,11 @@ export default function ImportantQuestionsTabContent({
                         </span>
                         
                         <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider ${
-                          q.marksNum >= 5 
+                          (q.marksNum >= 5 || (typeof q.marks === 'string' && q.marks.includes('5')))
                             ? 'bg-rose-500/15 text-rose-500 border border-rose-500/30' 
-                            : q.marksNum === 4
+                            : (q.marksNum === 4 || (typeof q.marks === 'string' && q.marks.includes('4')))
                               ? 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
-                              : q.marksNum === 3 
+                              : (q.marksNum === 3 || (typeof q.marks === 'string' && q.marks.includes('3')))
                                 ? 'bg-blue-500/15 text-blue-500 border border-blue-500/30' 
                                 : 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/30'
                         }`}>
@@ -797,7 +806,7 @@ export default function ImportantQuestionsTabContent({
                           Part 1
                         </span>
                         <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent-primary)]">
-                          {isBiology ? 'Model Answer & Point-wise Theory' : 'Theory & Physical Mechanism'}
+                          {isBiology ? 'Core Biological Principles & NCERT Definitions' : 'Theory & Physical Mechanism'}
                         </h4>
                       </div>
                       <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2.5">
@@ -816,36 +825,23 @@ export default function ImportantQuestionsTabContent({
                       </div>
                     </div>
 
-                    {/* BIOLOGY DIAGRAM CARD (If q.diagramId exists) */}
-                    {isBiology && q.diagramId && (
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                            Part 2
-                          </span>
-                          <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                            NCERT Core Diagram &amp; Morphological Schematic
-                          </h4>
-                        </div>
-                        <BiologyDiagramCard diagramId={q.diagramId} />
-                      </div>
-                    )}
-
-                    {/* PHYSICS PART 2: Step-by-Step Derivations */}
-                    {!isBiology && q.derivations && q.derivations.length > 0 && (
+                    {/* PART 2: Step-by-Step Derivations / Mechanisms / Processes / Crosses */}
+                    {q.derivations && q.derivations.length > 0 && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
                             Part 2
                           </span>
                           <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                            Step-by-Step Mathematical Derivations &amp; Proofs
+                            {isBiology 
+                              ? 'Step-by-Step Biological Mechanism, Flowchart or Genetic Cross' 
+                              : 'Step-by-Step Mathematical Derivations & Proofs'}
                           </h4>
                         </div>
 
                         <div className="space-y-4">
                           {q.derivations.map((d, dIdx) => {
-                            const derivDiag = getDerivationDiagram(q.id, dIdx);
+                            const derivDiag = !isBiology ? getDerivationDiagram(q.id, dIdx) : null;
                             const diagKey = `${q.id}-${dIdx}`;
                             const isDiagOpen = derivationDiagramOpen[diagKey] !== false;
 
@@ -917,7 +913,7 @@ export default function ImportantQuestionsTabContent({
                                 {d.specialCases && d.specialCases.length > 0 && (
                                   <div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-2 mt-2">
                                     <span className="text-[11px] font-bold uppercase tracking-wider text-amber-500 block">
-                                      Special Cases &amp; Critical Conditions:
+                                      {isBiology ? 'Critical Conditions, Exceptions & Controls:' : 'Special Cases & Critical Conditions:'}
                                     </span>
                                     {d.specialCases.map((sc, scIdx) => (
                                       <div key={scIdx} className="space-y-1 text-xs text-[var(--text-secondary)]">
@@ -936,7 +932,7 @@ export default function ImportantQuestionsTabContent({
                                 {d.finalFormula && (
                                   <div className="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-emerald-500/40 text-center space-y-1 shadow-xs">
                                     <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 block">
-                                      Final Boxed Result
+                                      {isBiology ? 'Final Key Result / Phenotypic Ratio / Output' : 'Final Boxed Result'}
                                     </span>
                                     <MathBlock math={d.finalFormula} display={true} className="text-emerald-600 dark:text-emerald-400 font-bold" />
                                   </div>
@@ -948,20 +944,25 @@ export default function ImportantQuestionsTabContent({
                       </div>
                     )}
 
-                    {/* PHYSICS PART 3: Diagram & Exam Drawing Guide */}
-                    {!isBiology && (DIAGRAM_MAPPING[q.id] || q.diagram?.hasDiagram) && (
+                    {/* PART 3: Diagram & Exam Drawing Guide */}
+                    {((!isBiology && (DIAGRAM_MAPPING[q.id] || q.diagram?.hasDiagram)) || 
+                      (isBiology && (q.diagramId || q.diagram?.diagramId || q.diagram?.hasDiagram))) && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
                           <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-purple-500/15 text-purple-600 dark:text-purple-400 border border-purple-500/30">
                             Part 3
                           </span>
                           <h4 className="text-xs font-extrabold uppercase tracking-wider text-purple-400">
-                            Diagram &amp; CBSE Exam Drawing Guide
+                            {isBiology ? 'NCERT Diagram & CBSE Exam Drawing Guide' : 'Diagram & CBSE Exam Drawing Guide'}
                           </h4>
                         </div>
 
-                        {DIAGRAM_MAPPING[q.id] && (
+                        {!isBiology && DIAGRAM_MAPPING[q.id] && (
                           <PhysicsDiagramCard diagramId={DIAGRAM_MAPPING[q.id]} />
+                        )}
+
+                        {isBiology && (q.diagramId || q.diagram?.diagramId) && (
+                          <BiologyDiagramCard diagramId={q.diagramId || q.diagram?.diagramId} />
                         )}
 
                         {q.diagram?.examDrawingGuide && q.diagram.examDrawingGuide.length > 0 && (
@@ -983,12 +984,12 @@ export default function ImportantQuestionsTabContent({
                       </div>
                     )}
 
-                    {/* KEY POINTS & KEYWORDS */}
+                    {/* PART 4: KEY POINTS & KEYWORDS */}
                     {q.keyPointsAndKeywords && q.keyPointsAndKeywords.length > 0 && (
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
                           <span className="px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30">
-                            {isBiology ? 'Key Terms' : 'Part 4'}
+                            Part 4
                           </span>
                           <h4 className="text-xs font-extrabold uppercase tracking-wider text-amber-500 dark:text-amber-400">
                             High-Yield Key Points &amp; Mandatory Keywords

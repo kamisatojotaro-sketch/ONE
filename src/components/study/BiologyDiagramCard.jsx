@@ -1,1367 +1,631 @@
 import { useState } from 'react';
 import { 
-  Dna, ArrowRight, Layers, CheckCircle2, AlertCircle, Info, 
-  ChevronDown, ChevronUp, Sparkles, Activity, Eye
+  Layers, CheckCircle2, AlertCircle, Info, 
+  Sparkles, Eye, ZoomIn, X, BookOpen, PenTool, Award
 } from 'lucide-react';
 
+// Comprehensive Registry of Official NCERT Class 12 Biology Textbook Diagrams
+const BIOLOGY_DIAGRAMS_REGISTRY = {
+  'microsporangium-walls': {
+    title: 'T.S. of Anther & 4 Microsporangial Wall Layers',
+    ncertFig: 'NCERT Fig 1.3 / Fig 2.3 • Page 7 / Page 21',
+    badge: 'CBSE Guaranteed 3M/5M Diagram',
+    marks: '3–5 Marks',
+    imageSrc: '/images/ncert/microsporangium-walls.png',
+    caption: 'Official NCERT Diagram: Transverse section of young anther and enlarged microsporangial wall architecture showing all 4 distinct layers and central sporogenous tissue.',
+    keyLabels: [
+      { name: '1. Epidermis', tag: 'Protective', desc: 'Outermost single protective layer of flattened cells; continuous around all 4 lobes.' },
+      { name: '2. Endothecium', tag: 'Dehiscence', desc: 'Sub-epidermal layer with radial alpha-cellulosic fibrous thickenings; hygroscopic, aids dehiscence at stomium.' },
+      { name: '3. Middle Layers', tag: 'Ephemeral', desc: '1 to 3 layers of thin-walled parenchymatous cells; degenerate to supply nutrients to developing microspores.' },
+      { name: '4. Tapetum', tag: 'Nutritive', desc: 'Innermost nutritive layer; dense cytoplasm, polyploid/multinucleate; secretes callase and Ubisch granules (sporopollenin).' },
+      { name: '5. Sporogenous Cells (PMC 2n)', tag: 'Gametogenesis', desc: 'Compactly arranged diploid tissue at microsporangium centre; undergoes meiosis to produce microspore tetrads.' },
+      { name: '6. Stomium & Connective', tag: 'Structural', desc: 'Point of dehiscence between pollen sacs; connective contains central vascular bundle.' }
+    ],
+    drawingSteps: [
+      'Draw an outline of 4 interconnected lobes (bilobed, dithecous anther) with a shallow groove.',
+      'From outside to inside, sketch 4 concentric cellular concentric strata: Epidermis (1 cell thick), Endothecium (elongated cells), Middle layers (2-3 compressed layers), and Tapetum (innermost layer of large cells with prominent multiple nuclei).',
+      'Fill the center of each lobe with polygonal sporogenous cells (Microspore Mother Cells 2n).',
+      'Mark the stomium (line of dehiscence) at the junction between two microsporangia and vascular bundle in connective tissue.'
+    ],
+    examinerTip: 'CBSE marking schemes strictly allocate 0.5M each for Epidermis, Endothecium, Middle Layers, and Tapetum in order from outer to inner. Always mention that the Tapetum is multinucleate and provides nourishment.'
+  },
+
+  'embryo-sac': {
+    title: 'Mature Female Gametophyte (Embryo Sac) — 7-Celled, 8-Nucleate',
+    ncertFig: 'NCERT Fig 1.8(d) / Fig 2.8(c) • Page 10 / Page 26',
+    badge: 'CBSE Repeated 3M/5M Diagram',
+    marks: '3–5 Marks',
+    imageSrc: '/images/ncert/embryo-sac.png',
+    caption: 'Official NCERT Diagram: Diagrammatic representation of mature 7-celled, 8-nucleate embryo sac alongside stages of 2, 4, and 8-nucleate development from functional megaspore.',
+    keyLabels: [
+      { name: '1. Chalazal End: 3 Antipodals (n)', tag: 'Haploid (n)', desc: 'Group of three cells situated at the chalazal pole; degenerate before or soon after fertilization.' },
+      { name: '2. Central Cell with 2 Polar Nuclei (n+n)', tag: 'Diploid Unit (n+n)', desc: 'Largest cell occupying center of embryo sac containing two haploid polar nuclei; forms triploid PEN (3n) upon triple fusion.' },
+      { name: '3. Micropylar End: Egg Cell (n)', tag: 'Female Gamete', desc: 'Single female gamete located between the two synergids; fuses with 1st male gamete in syngamy to form zygote (2n).' },
+      { name: '4. Two Synergid Cells (n)', tag: 'Guiding', desc: 'Flank the egg cell; possess filiform apparatus at micropylar tips; degenerate after pollen tube discharge.' },
+      { name: '5. Filiform Apparatus', tag: 'Chemotropic Guide', desc: 'Finger-like cellular thickenings at synergid micropylar tips; guides pollen tube chemotactically into synergid.' }
+    ],
+    drawingSteps: [
+      'Draw an elongated oval boundary representing the embryo sac wall.',
+      'At top (Chalazal end), draw 3 triangular or oval antipodal cells each with a distinct nucleus.',
+      'In the large central space, draw a prominent vacuole and 2 round polar nuclei lying close together in the central cell.',
+      'At bottom (Micropylar end), draw 1 egg cell flanked by 2 synergids with wavy finger-like filiform apparatus at their base.'
+    ],
+    examinerTip: 'Ensure you clearly distinguish between Chalazal end (antipodals) and Micropylar end (egg apparatus). Never label the polar nuclei as "2n" prior to fertilization; label as "2 polar nuclei (n + n)".'
+  },
+
+  'megasporangium': {
+    title: 'Diagrammatic View of a Typical Anatropous Ovule (Megasporangium)',
+    ncertFig: 'NCERT Fig 1.7(d) / Fig 2.7(d) • Page 9 / Page 25',
+    badge: 'Repeated 3M CBSE Question',
+    marks: '3 Marks',
+    imageSrc: '/images/ncert/megasporangium.png',
+    caption: 'Official NCERT Diagram: L.S. of typical inverted (anatropous) ovule illustrating funicle, hilum, micropyle, integuments, nucellus, and female gametophyte.',
+    keyLabels: [
+      { name: '1. Funicle & Hilum', tag: 'Attachment', desc: 'Funicle is the stalk attaching ovule to placenta; Hilum is the point of fusion between ovule body and funicle.' },
+      { name: '2. Micropyle & Micropylar Pole', tag: 'Pore', desc: 'Small aperture at ovule apex left unsealed by integuments; entry route for pollen tube during fertilization.' },
+      { name: '3. Outer & Inner Integuments', tag: 'Seed Coat', desc: 'Two protective envelopes surrounding nucellus; transform into testa and tegmen of seed coat.' },
+      { name: '4. Nucellus (2n)', tag: 'Nutritive', desc: 'Central mass of diploid parenchymatous vegetative tissue containing abundant food reserves.' },
+      { name: '5. Embryo Sac (Female Gametophyte)', tag: 'Haploid', desc: 'Seven-celled female gametophyte embedded inside nucellus at micropylar end.' },
+      { name: '6. Chalazal Pole (Chalaza)', tag: 'Base', desc: 'Swollen basal region of ovule opposite to micropyle where integuments originate.' }
+    ],
+    drawingSteps: [
+      'Draw the funicle stalk on the left curving up to the hilum junction.',
+      'Sketch an inverted U-shaped ovule body with outer and inner integuments leaving a narrow micropylar opening at the top.',
+      'Draw the central cellular nucellus mass inside the integuments.',
+      'Place the oval embryo sac at the center and label the Chalaza at the basal end and Micropyle at the apex.'
+    ],
+    examinerTip: 'In anatropous ovule, the ovule is completely inverted (180° curvature) so the micropyle and hilum lie close together. Label all 7 standard parts for full 3 marks.'
+  },
+
+  'blastocyst': {
+    title: 'Blastocyst Stage, Cleavage & Passage to Implantation',
+    ncertFig: 'NCERT Fig 2.11 / Fig 3.11 • Page 36 / Page 52',
+    badge: 'Repeated 2M/3M Question',
+    marks: '2–3 Marks',
+    imageSrc: '/images/ncert/blastocyst.png',
+    caption: 'Official NCERT Diagram: Passage of growing embryo through fallopian tube, cleavage from zygote to morula, and blastocyst implantation into uterine endometrium.',
+    keyLabels: [
+      { name: '1. Trophoblast (Outer Layer)', tag: 'Placenta Formative', desc: 'Single layer of flattened peripheral cells; attaches to uterine endometrium and secretes enzymes for implantation; forms chorionic villi.' },
+      { name: '2. Inner Cell Mass (Embryoblast)', tag: 'Stem Cells', desc: 'Cluster of pluripotent cells attached to one pole of trophoblast; gives rise to all 3 embryonic germ layers of fetus proper.' },
+      { name: '3. Blastocoel (Blastocyst Cavity)', tag: 'Cavity', desc: 'Fluid-filled cavity formed inside blastocyst.' },
+      { name: '4. Uterine Endometrium', tag: 'Implantation Site', desc: 'Glandular lining of uterus where blastocyst becomes completely embedded on Day 7 post-fertilization.' }
+    ],
+    drawingSteps: [
+      'Draw a circle with a single outer ring of flattened cells representing the trophoblast layer.',
+      'At one pole (embryonic pole), draw a compact clump of rounded cells representing the inner cell mass.',
+      'Leave the remaining large central area clear to represent the blastocoel cavity.',
+      'Show the blastocyst adhering to the wavy epithelial lining of uterine endometrium.'
+    ],
+    examinerTip: 'Clear demarcation between Trophoblast (forms extra-embryonic membranes/placenta) and Inner Cell Mass (forms embryo) is the key test point in CBSE.'
+  },
+
+  'placenta-fetus': {
+    title: 'Human Fetus Within Uterus & Placental Relationship',
+    ncertFig: 'NCERT Fig 2.12 / Fig 3.12 • Page 37 / Page 53',
+    badge: 'High-Yield 3M Diagram',
+    marks: '3 Marks',
+    imageSrc: '/images/ncert/placenta-fetus.png',
+    caption: 'Official NCERT Diagram: Diagrammatic representation of human fetus within uterus, chorionic/placental villi interdigitating with maternal uterine tissue, and umbilical cord.',
+    keyLabels: [
+      { name: '1. Placental Villi', tag: 'Interdigitation', desc: 'Finger-like projections of trophoblast interdigitating with uterine tissue to establish structural/functional exchange unit.' },
+      { name: '2. Umbilical Cord with Vessels', tag: 'Vascular Link', desc: 'Connects fetus to placenta; contains 2 umbilical arteries (deoxygenated waste to placenta) and 1 umbilical vein (oxygenated blood to fetus).' },
+      { name: '3. Cavity of Uterus & Amnion', tag: 'Fluid Sac', desc: 'Uterine cavity surrounding amniotic sac filled with protective amniotic fluid.' },
+      { name: '4. Plug of Mucus in Cervix', tag: 'Protective Barrier', desc: 'Dense mucus plug sealing cervical canal during pregnancy to prevent bacterial invasion.' },
+      { name: '5. Developing Fetus & Yolk Sac', tag: 'Fetal Body', desc: 'Developing human fetus cushioned in amniotic cavity.' }
+    ],
+    drawingSteps: [
+      'Draw the pear-shaped uterine wall outline with thick myometrium and cervical canal at the bottom.',
+      'Draw the interdigitating placental villi along the upper fundal uterine wall.',
+      'Draw the fetus suspended inside with the coiled umbilical cord connecting fetal abdomen to placenta.',
+      'Label the mucus plug at the cervix and cavity of uterus.'
+    ],
+    examinerTip: 'Remember to mention both transport function (O2, nutrients in; CO2, urea out) and endocrine function (secretes hCG, hPL, estrogen, progesterone, relaxin).'
+  },
+
+  'monocot-embryo': {
+    title: 'L.S. of Embryo of Grass (Monocot) & Typical Dicot Embryo',
+    ncertFig: 'NCERT Fig 1.14 / Fig 2.14 • Page 19 / Page 35',
+    badge: 'CBSE Guaranteed Difference 3M',
+    marks: '3 Marks',
+    imageSrc: '/images/ncert/monocot-embryo.png',
+    caption: 'Official NCERT Diagram: Longitudinal section of embryo of grass (monocotyledon) highlighting Scutellum, Coleoptile, Coleorhiza, Epiblast, Radicle, and Shoot apex.',
+    keyLabels: [
+      { name: '1. Scutellum', tag: 'Single Cotyledon', desc: 'Large, shield-shaped single cotyledon situated laterally on embryonal axis.' },
+      { name: '2. Coleoptile', tag: 'Foliar Sheath', desc: 'Conical protective sheath enclosing shoot apex (plumule) and first leaf primordia; phototropic.' },
+      { name: '3. Shoot Apex / Plumule', tag: 'Shoot Meristem', desc: 'Embryonic shoot tip enclosed within coleoptile.' },
+      { name: '4. Epiblast', tag: 'Rudiment', desc: 'Small tongue-like outgrowth representing reduced second cotyledon.' },
+      { name: '5. Radicle & Root Cap', tag: 'Root Meristem', desc: 'Embryonic root and its protective calyptra located at lower pole.' },
+      { name: '6. Coleorhiza', tag: 'Root Sheath', desc: 'Undifferentiated solid protective sheath enclosing radicle and root cap.' }
+    ],
+    drawingSteps: [
+      'Draw the shield-shaped curved scutellum body along one side.',
+      'At upper embryonal axis, draw the pointed coleoptile surrounding the leafy shoot apex.',
+      'At lower axis, draw the radicle with root cap covered by the blunt protective coleorhiza.',
+      'Indicate the small epiblast flap opposite to scutellum.'
+    ],
+    examinerTip: 'Classic CBSE 2M question: Differentiate Coleoptile (foliar sheath covering plumule, breaks open during germination) and Coleorhiza (solid sheath covering radicle, remains in soil).'
+  },
+
+  'menstrual-cycle': {
+    title: 'Hormonal Events & Phasic Stages of Menstrual Cycle',
+    ncertFig: 'NCERT Fig 2.9 / Fig 3.9 • Page 33 / Page 49',
+    badge: 'CBSE High-Yield 5M Diagram',
+    marks: '5 Marks',
+    imageSrc: '/images/ncert/menstrual-cycle.png',
+    caption: 'Official NCERT Diagram: Complete 28-day chart correlating Pituitary hormones (FSH, LH), Ovarian follicles, Ovarian hormones (Estrogen, Progesterone), and Endometrial changes.',
+    keyLabels: [
+      { name: '1. Menstrual Phase (Days 1–5)', tag: 'Menses', desc: 'Breakdown of endometrial lining and uterine blood vessels due to sudden drop in progesterone.' },
+      { name: '2. Follicular Phase (Days 6–13)', tag: 'Proliferative', desc: 'FSH stimulates primary follicle into Graafian follicle; growing follicle secretes Estrogen which proliferates endometrium.' },
+      { name: '3. LH Surge & Ovulation (Day 14)', tag: 'Ovulatory Peak', desc: 'Rapid surge of LH induces rupture of Graafian follicle and release of secondary oocyte (ovum).' },
+      { name: '4. Luteal Phase (Days 15–28)', tag: 'Secretory', desc: 'Ruptured follicle transforms into Corpus Luteum; secretes high Progesterone to maintain secretory endometrium for implantation.' },
+      { name: '5. Regression of Corpus Luteum', tag: 'Day 26–28', desc: 'In absence of pregnancy, Corpus Luteum degenerates into Corpus Albicans -> Progesterone falls -> next cycle starts.' }
+    ],
+    drawingSteps: [
+      'Set up 4 horizontal panels on a horizontal 28-day timeline: (1) Pituitary hormones, (2) Ovarian events, (3) Ovarian hormones, (4) Uterine wall.',
+      'Draw FSH curve gentle rise and LH sharp spike at Day 14 (LH Surge).',
+      'In ovarian events, show primary follicle -> secondary -> tertiary -> mature Graafian follicle -> ruptured follicle releasing egg (Day 14) -> corpus luteum -> regressing corpus luteum.',
+      'Draw Estrogen peak right before Day 14 and Progesterone high dome during Days 20-22.',
+      'Draw uterine lining thin at Days 1-5, progressively thickening and vascularizing up to Day 28.'
+    ],
+    examinerTip: 'Never mix up the order of hormonal peaks: Estrogen peaks JUST BEFORE ovulation, LH peaks AT ovulation (Day 14), and Progesterone peaks AFTER ovulation (Days 20–22).'
+  },
+
+  'antibody-molecule': {
+    title: 'Structure of an Antibody Molecule (H₂L₂ Monomer)',
+    ncertFig: 'NCERT Fig 7.4 / Fig 8.4 • Page 135 / Page 151',
+    badge: 'CBSE Repeated 2M/3M Question',
+    marks: '2–3 Marks',
+    imageSrc: '/images/ncert/antibody-molecule.png',
+    caption: 'Official NCERT Diagram: Structure of an antibody molecule illustrating two heavy chains, two light chains, disulfide bridges, and bivalent antigen-binding sites.',
+    keyLabels: [
+      { name: '1. Two Heavy Chains (H)', tag: 'Long Chains', desc: 'Two identical longer polypeptide chains (~440 amino acids each, high molecular weight).' },
+      { name: '2. Two Light Chains (L)', tag: 'Short Chains', desc: 'Two identical shorter polypeptide chains (~220 amino acids each, low molecular weight).' },
+      { name: '3. Antigen Binding Sites', tag: 'Paratope', desc: 'Located at N-terminal variable domains (VH + VL) at the tip of each Y-arm; binds specific epitope.' },
+      { name: '4. Disulfide Bonds (-S-S-)', tag: 'Crosslinks', desc: 'Interchain and intrachain covalent bonds linking heavy-to-heavy and heavy-to-light chains.' },
+      { name: '5. Constant Region (Fc Stem)', tag: 'C-Terminus', desc: 'Constant domains at C-terminal end that mediate effector functions and binding to immune cells.' }
+    ],
+    drawingSteps: [
+      'Draw a central vertical stem with two parallel heavy chains joined together by disulfide bonds (-S-S-).',
+      'Branch each heavy chain outward to form a Y-shaped fork.',
+      'Draw a shorter parallel light chain along the outer upper branch of each arm.',
+      'Add disulfide (-S-S-) bridges between heavy and light chains and between the two heavy chains.',
+      'Label N-terminals at top tips (Antigen-binding sites) and C-terminals at bottom base.'
+    ],
+    examinerTip: 'Formula is H₂L₂. Always indicate the antigen binding site at the N-terminal tips and show disulfide bonds clearly with letter "S-S".'
+  },
+
+  'lac-operon': {
+    title: 'The lac Operon Regulation: Repressed vs Induced States',
+    ncertFig: 'NCERT Fig 5.14 / Fig 6.14 • Page 101 / Page 117',
+    badge: 'CBSE Guaranteed 3M/5M Question',
+    marks: '3–5 Marks',
+    imageSrc: '/images/ncert/lac-operon.png',
+    caption: 'Official NCERT Diagram: Gene arrangement of lac operon (p, i, p, o, z, y, a) showing repression in absence of inducer and transcriptional induction in presence of lactose.',
+    keyLabels: [
+      { name: '1. Regulator Gene (i)', tag: 'Inhibitor', desc: 'Transcribes repressor mRNA constitutively; codes for repressor protein.' },
+      { name: '2. Promoter (p) & Operator (o)', tag: 'Regulatory DNA', desc: 'RNA polymerase binds at promoter; operator acts as the on/off switch where repressor binds.' },
+      { name: '3. Structural Gene z', tag: 'β-Galactosidase', desc: 'Hydrolyzes lactose into glucose and galactose.' },
+      { name: '4. Structural Gene y', tag: 'Permease', desc: 'Increases cell membrane permeability of E. coli to β-galactosides (lactose).' },
+      { name: '5. Structural Gene a', tag: 'Transacetylase', desc: 'Transfers acetyl group from acetyl-CoA to β-galactosides.' },
+      { name: '6. In Absence of Inducer', tag: 'OFF State', desc: 'Active repressor binds operator (o) -> blocks RNA polymerase -> no transcription.' },
+      { name: '7. In Presence of Inducer (Lactose)', tag: 'ON State', desc: 'Lactose binds repressor -> inactive repressor cannot bind operator -> RNA polymerase transcribes z, y, a.' }
+    ],
+    drawingSteps: [
+      'Draw two horizontal DNA strips divided into segments: [p] - [i] - [p] - [o] - [z] - [y] - [a].',
+      'Top strip (In absence of inducer): Show i gene -> repressor mRNA -> active repressor protein binding to [o] operator, with blocking arrow preventing RNA polymerase.',
+      'Bottom strip (In presence of inducer): Show inducer (lactose) binding to repressor -> inactive repressor. Show lac mRNA transcribed from z, y, a and translated into β-galactosidase, permease, transacetylase.'
+    ],
+    examinerTip: 'CBSE frequently asks for the specific functions of z, y, and a genes. Make sure to specify that regulation of lac operon is negative regulation (repressor controlled).'
+  },
+
+  'miller-urey': {
+    title: "Miller-Urey Spark Discharge Experiment Apparatus",
+    ncertFig: 'NCERT Fig 6.1 / Fig 7.1 • Page 117 / Page 128',
+    badge: 'High-Yield 3M Diagram',
+    marks: '3 Marks',
+    imageSrc: '/images/ncert/miller-urey.png',
+    caption: "Official NCERT Diagram: Spark discharge glass apparatus used by Stanley Miller (1953) to demonstrate abiotic synthesis of organic compounds (amino acids) in primitive atmosphere.",
+    keyLabels: [
+      { name: '1. Spark Discharge Chamber', tag: 'Lightning Simulation', desc: 'Large closed glass flask containing tungsten electrodes generating 75,000 V electric sparks at 800°C.' },
+      { name: '2. Gas Mixture (Reducing)', tag: 'CH₄, NH₃, H₂O, H₂', desc: 'Methane (CH₄), Ammonia (NH₃), and Hydrogen (H₂) in 2:1:2 ratio with water vapor; strictly NO O₂.' },
+      { name: '3. Boiling Water Flask', tag: 'Steam Supply', desc: 'Simulates primitive oceans; provides continuous water vapor circulation.' },
+      { name: '4. Condenser & Trap', tag: 'Cooling / Collection', desc: 'Condenses circulating steam into liquid; trap collects red fluid containing amino acids (glycine, alanine, aspartic acid).' },
+      { name: '5. Vacuum Pump Connection', tag: 'Anaerobic State', desc: 'Evacuates air to ensure strictly anaerobic/reducing environment.' }
+    ],
+    drawingSteps: [
+      'Draw the closed circuit glass tubing with a large spherical spark flask at top and smaller boiling flask at bottom.',
+      'Inside spark chamber, draw two opposing tungsten electrodes with spark lines and label gases: CH₄, NH₃, H₂O, H₂.',
+      'Draw condenser jacket with "Water in" and "Water out" on the downward pipe.',
+      'Draw U-tube trap at the bottom with valve to collect synthesized organic compounds.'
+    ],
+    examinerTip: 'Always mention temperature (800°C), absence of oxygen, and specific amino acids formed (glycine, alanine, aspartic acid).'
+  },
+
+  'hardy-weinberg-selection': {
+    title: 'Operation of Natural Selection on Different Traits',
+    ncertFig: 'NCERT Fig 6.8 / Fig 7.8 • Page 121 / Page 136',
+    badge: 'CBSE Repeated 3M Question',
+    marks: '3 Marks',
+    imageSrc: '/images/ncert/hardy-weinberg-selection.png',
+    caption: 'Official NCERT Diagram: Graphical curves depicting three modes of natural selection on phenotypic distribution: (a) Stabilising, (b) Directional, and (c) Disruptive.',
+    keyLabels: [
+      { name: '1. Stabilising Selection', tag: 'Mean Favored', desc: 'Favors average phenotypes; extreme variations eliminated; curve becomes higher and narrower (e.g., human infant birth weight ~3kg).' },
+      { name: '2. Directional Selection', tag: 'One Extreme Favored', desc: 'Favors one phenotypic extreme over average and other extreme; peak shifts in one direction (e.g., industrial melanism in Biston betularia, antibiotic resistance).' },
+      { name: '3. Disruptive Selection', tag: 'Both Extremes Favored', desc: 'Favors individuals at both extremes of distribution; intermediate phenotype selected against; curve splits into two distinct peaks.' },
+      { name: '4. Axes', tag: 'Variables', desc: 'X-axis: Phenotypes favored by natural selection; Y-axis: Number of individuals with phenotype.' }
+    ],
+    drawingSteps: [
+      'Draw the baseline bell-shaped normal distribution curve on the left with central arrow.',
+      'For (a) Stabilising: Draw a taller, narrower bell curve with peak centered at the mean.',
+      'For (b) Directional: Draw a bell curve shifted horizontally to the right.',
+      'For (c) Disruptive: Draw a bimodal curve with two distinct peaks and a trough in the middle.'
+    ],
+    examinerTip: 'Label the axes clearly. Stabilising = peak narrower; Directional = peak shifts; Disruptive = two peaks form.'
+  },
+
+  'hiv-lifecycle': {
+    title: 'Replication of Retrovirus (HIV Lifecycle in Host Cell)',
+    ncertFig: 'NCERT Fig 7.6 / Fig 8.6 • Page 138 / Page 155',
+    badge: 'CBSE Case-Based / 3M Diagram',
+    marks: '3 Marks',
+    imageSrc: '/images/ncert/hiv-lifecycle.png',
+    caption: 'Official NCERT Diagram: Replication of retrovirus inside animal host cell (macrophage/helper T-cell) via reverse transcription and genomic integration.',
+    keyLabels: [
+      { name: '1. Retrovirus Structure', tag: 'Viral RNA + Coat', desc: 'Spherical virion with viral RNA core and reverse transcriptase enzyme surrounded by protein coat.' },
+      { name: '2. Viral Entry & Uncoating', tag: 'Infection', desc: 'Virus infects normal cell; viral protein coat remains outside while viral RNA is introduced into cytoplasm.' },
+      { name: '3. Reverse Transcription', tag: 'RNA -> DNA', desc: 'Viral RNA is transcribed into complementary viral DNA by viral reverse transcriptase enzyme.' },
+      { name: '4. Genomic Integration', tag: 'Host Incorporation', desc: 'Viral DNA enters nucleus and incorporates into host genome DNA.' },
+      { name: '5. Viral Assembly & Budding', tag: 'New Virions', desc: 'Host cell transcribes new viral RNA and proteins; new virions bud off to infect other helper T-cells (TH).' }
+    ],
+    drawingSteps: [
+      'Draw the outer circle representing retrovirus (RNA core + protein coat).',
+      'Draw large animal cell with outer plasma membrane and inner nucleus with host DNA.',
+      'Trace step arrows: Viral RNA -> Reverse transcriptase -> Viral DNA -> Enters nucleus -> Integrates with host DNA.',
+      'Show new viral RNA produced -> translated into proteins -> assembly into progeny viruses that bud out.'
+    ],
+    examinerTip: 'Note the crucial NCERT caption: "Infected cell can survive while viruses are being replicated and released." Macrophages act as HIV factories.'
+  },
+
+  'pollen-grain': {
+    title: 'Microsporogenesis & Mature Pollen Grain Structure',
+    ncertFig: 'NCERT Fig 1.4 & 1.5 / Fig 2.4 & 2.5 • Page 7 / Page 23',
+    badge: 'CBSE 2M/3M Question',
+    marks: '2–3 Marks',
+    imageSrc: '/images/ncert/pollen-grain.png',
+    caption: 'Official NCERT Diagram: Stages of microspore maturing into a 2-celled pollen grain illustrating vacuole development, asymmetric spindle, vegetative cell, and generative cell.',
+    keyLabels: [
+      { name: '1. Microspore Tetrad', tag: 'Meiotic Product', desc: 'Four haploid microspores arranged in tetrahedral or isobilateral cluster formed from PMC (2n).' },
+      { name: '2. Asymmetric Spindle', tag: 'Unequal Division', desc: 'Mitotic division with asymmetric spindle apparatus leading to unequal daughter cells.' },
+      { name: '3. Vegetative Cell', tag: 'Nutritive Cell', desc: 'Bigger cell with abundant food reserve and large irregularly shaped nucleus.' },
+      { name: '4. Generative Cell', tag: 'Gametic Cell', desc: 'Small spindle-shaped cell with dense cytoplasm and nucleus; floats in vegetative cell cytoplasm; divides into 2 male gametes.' },
+      { name: '5. Exine & Germ Pore', tag: 'Outer Wall', desc: 'Sporopollenin-rich sculptured outer wall; germ pore is aperture where sporopollenin is absent.' },
+      { name: '6. Intine', tag: 'Inner Wall', desc: 'Thin continuous inner wall made of cellulose and pectin.' }
+    ],
+    drawingSteps: [
+      'Draw microspore with central nucleus and developing vacuoles.',
+      'Draw asymmetric spindle with chromosomes aligned off-center.',
+      'Draw 2-celled mature pollen grain: large upper vegetative cell with irregular nucleus and smaller lens-shaped generative cell floating at the bottom.',
+      'Add sculptured outer exine with 1-3 circular germ pores and continuous smooth inner intine.'
+    ],
+    examinerTip: 'In over 60% angiosperms, pollen is shed at 2-celled stage (vegetative + generative). In remaining 40%, generative cell divides into two male gametes before shedding (3-celled stage).'
+  },
+
+  'microspore-pollen': {
+    title: 'Microspore Maturation & Pollen Grain Cellular Formation',
+    ncertFig: 'NCERT Fig 1.5 / Fig 2.5 • Page 7 / Page 23',
+    badge: 'CBSE 2M Question',
+    marks: '2 Marks',
+    imageSrc: '/images/ncert/microspore-pollen.png',
+    caption: 'Official NCERT Diagram: Cellular development from single microspore to functional 2-celled male gametophyte.',
+    keyLabels: [
+      { name: '1. Single Microspore with Nucleus', tag: 'Initial', desc: 'Haploid cell with dense cytoplasm and central nucleus.' },
+      { name: '2. Vacuolation Phase', tag: 'Asymmetry', desc: 'Appearance of large vacuoles pushing nucleus to peripheral position.' },
+      { name: '3. Asymmetric Mitotic Spindle', tag: 'Division', desc: 'Spindle fibers orient unequally to generate two unequal cells.' },
+      { name: '4. 2-Celled Pollen Grain', tag: 'Mature', desc: 'Large vegetative cell + small floating generative cell.' }
+    ],
+    drawingSteps: [
+      'Draw 4 circular stages left-to-right showing microspore -> vacuolated cell -> asymmetric spindle -> 2-celled pollen.'
+    ],
+    examinerTip: 'State clearly that the generative cell floats in the cytoplasm of the vegetative cell.'
+  },
+
+  'transcription-unit': {
+    title: 'Schematic Structure of a Transcription Unit',
+    ncertFig: 'NCERT Fig 5.9 / Fig 6.9 • Page 87 / Page 108',
+    badge: 'CBSE Repeated 2M/3M Question',
+    marks: '2–3 Marks',
+    imageSrc: '/images/ncert/transcription-unit.png',
+    caption: 'Official NCERT Diagram: Basic components of transcription unit showing promoter, structural gene, terminator, template strand (3’→5’), and coding strand (5’→3’).',
+    keyLabels: [
+      { name: '1. Promoter', tag: 'Upstream 5’', desc: 'Located towards 5’-end of coding strand; provides RNA polymerase binding site.' },
+      { name: '2. Transcription Start Site', tag: 'Initiation', desc: 'Point adjacent to promoter where RNA synthesis begins.' },
+      { name: '3. Structural Gene', tag: 'Coding Region', desc: 'Segment of DNA bounded by promoter and terminator that is transcribed into RNA.' },
+      { name: '4. Terminator', tag: 'Downstream 3’', desc: 'Located towards 3’-end of coding strand; terminates transcription process.' },
+      { name: '5. Template Strand (3’ → 5’)', tag: 'Transcribed', desc: 'Strand with 3’→5’ polarity used by RNA polymerase as template.' },
+      { name: '6. Coding Strand (5’ → 3’)', tag: 'Reference Strand', desc: 'Strand with 5’→3’ polarity; identical in sequence to synthesized RNA (except T instead of U); all promoter/terminator positions are defined relative to it.' }
+    ],
+    drawingSteps: [
+      'Draw two parallel lines representing double-stranded DNA with polarities: top line 3’ to 5’ (Template), bottom line 5’ to 3’ (Coding).',
+      'Draw a box on left labeled "Promoter" with a transcription start arrow pointing right.',
+      'Label middle region as "Structural gene".',
+      'Draw a box on right labeled "Terminator".'
+    ],
+    examinerTip: 'Key rule: All reference points (upstream/downstream) in a transcription unit are defined WITH RESPECT TO THE CODING STRAND (5’ to 3’).'
+  },
+
+  'transcription-prokaryotes': {
+    title: 'Process of Transcription in Bacteria (Prokaryotes)',
+    ncertFig: 'NCERT Fig 5.10 / Fig 6.10 • Page 89 / Page 109',
+    badge: 'CBSE High-Yield 3M Diagram',
+    marks: '3 Marks',
+    imageSrc: '/images/ncert/transcription-prokaryotes.png',
+    caption: 'Official NCERT Diagram: Three stages of prokaryotic transcription: Initiation (with σ sigma factor), Elongation (RNA polymerase alone), and Termination (with ρ rho factor).',
+    keyLabels: [
+      { name: '1. Initiation', tag: 'Sigma Factor (σ)', desc: 'RNA polymerase associates transiently with initiation factor (σ factor) to bind promoter and initiate transcription.' },
+      { name: '2. Elongation', tag: 'Polymerisation', desc: 'Core RNA polymerase alone catalyzes RNA synthesis in 5’→3’ direction using nucleoside triphosphates.' },
+      { name: '3. Termination', tag: 'Rho Factor (ρ)', desc: 'RNA polymerase associates transiently with termination factor (ρ factor); nascent RNA and enzyme dissociate.' }
+    ],
+    drawingSteps: [
+      'Draw 3 stages vertically: Initiation, Elongation, Termination.',
+      'Initiation: Show RNA polymerase bound to DNA helix promoter with oval σ (sigma factor).',
+      'Elongation: Show transcription bubble with emerging single-stranded RNA chain.',
+      'Termination: Show RNA polymerase dissociated at terminator with round ρ (rho factor) and released mRNA.'
+    ],
+    examinerTip: 'Core RNA polymerase can only elongate; it requires σ factor for initiation and ρ factor for termination.'
+  },
+
+  'replicating-fork': {
+    title: 'Replicating Fork: Continuous & Discontinuous Synthesis',
+    ncertFig: 'NCERT Fig 5.8 / Fig 6.8 • Page 93 / Page 107',
+    badge: 'CBSE High-Yield 3M/4M Question',
+    marks: '3–4 Marks',
+    imageSrc: '/images/ncert/replicating-fork.png',
+    caption: 'Official NCERT Diagram: Y-shaped replicating fork showing continuous synthesis on 3’→5’ template and discontinuous Okazaki synthesis on 5’→3’ template.',
+    keyLabels: [
+      { name: '1. Parental Template Strands', tag: '3’→5’ & 5’→3’', desc: 'Unwound parental DNA strands separated by DNA helicase.' },
+      { name: '2. Continuous Synthesis (Leading Strand)', tag: '3’→5’ Template', desc: 'Synthesized continuously in 5’→3’ direction towards the opening replication fork.' },
+      { name: '3. Discontinuous Synthesis (Lagging Strand)', tag: '5’→3’ Template', desc: 'Synthesized discontinuously as short Okazaki fragments in 5’→3’ direction away from the fork.' },
+      { name: '4. DNA Ligase', tag: 'Enzyme', desc: 'Seals the nicks between Okazaki fragments by forming phosphodiester bonds.' }
+    ],
+    drawingSteps: [
+      'Draw an inverted Y-shape representing the unwound replication fork.',
+      'Label parental template polarities: left arm 3’ at top to 5’ at fork; right arm 5’ at top to 3’ at fork.',
+      'On left arm, draw a continuous bold arrow pointing down towards fork (5’ to 3’ continuous).',
+      'On right arm, draw short dashed/arrow segments pointing away from fork (5’ to 3’ discontinuous Okazaki fragments).'
+    ],
+    examinerTip: 'DNA polymerase catalyzes polymerisation strictly in 5’→3’ direction. That is why one strand is continuous and the opposite strand is discontinuous.'
+  },
+
+  'homologous-analogous': {
+    title: 'Homologous Organs (Divergent Evolution) in Plants and Animals',
+    ncertFig: 'NCERT Fig 6.3 / Fig 7.3 • Page 115 / Page 131',
+    badge: 'CBSE 2M/3M Question',
+    marks: '2–3 Marks',
+    imageSrc: '/images/ncert/homologous-analogous.png',
+    caption: 'Official NCERT Diagram: Examples of homologous organs showing common anatomical ancestry: Thorns & Tendrils in plants; Forelimbs in Man, Cheetah, Whale, and Bat.',
+    keyLabels: [
+      { name: '1. Plant Homology', tag: 'Thorn & Tendril', desc: 'Thorns of Bougainvillea (protection) and Tendrils of Cucurbita (climbing) both arise as modified axillary buds.' },
+      { name: '2. Animal Homology (Forelimbs)', tag: 'Vertebrates', desc: 'Forelimbs of Man, Cheetah, Whale, and Bat share common skeletal elements (humerus, radius, ulna, carpals, metacarpals, phalanges) but perform different functions.' },
+      { name: '3. Evolutionary Concept', tag: 'Divergent Evolution', desc: 'Same basic structure developed along different directions due to adaptation to different needs; indicates common ancestry.' }
+    ],
+    drawingSteps: [
+      'Plant part: Sketch Bougainvillea stem with pointed thorn and Cucurbita stem with coiled tendril.',
+      'Animal part: Sketch simple bone plans of forelimbs of human (grasping), cheetah (running), whale (swimming flipper), bat (flying wing).'
+    ],
+    examinerTip: 'Homologous = Same origin/anatomy, different functions (Divergent evolution). Analogous = Different origin/anatomy, same function (Convergent evolution).'
+  }
+};
+
 export default function BiologyDiagramCard({ diagramId, subMode, inline = false }) {
-  const [activeTab, setActiveTab] = useState(subMode || 'default');
+  const [activeTab, setActiveTab] = useState('ncert'); // 'ncert' | 'labels' | 'guide'
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
 
-  // Common SVG Markers for biology diagrams
-  const svgDefs = (
-    <defs>
-      <marker id="bio-arrow-emerald" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
-      </marker>
-      <marker id="bio-arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6" />
-      </marker>
-      <marker id="bio-arrow-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b" />
-      </marker>
-      <marker id="bio-arrow-rose" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#f43f5e" />
-      </marker>
-      <marker id="bio-arrow-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#a855f7" />
-      </marker>
-    </defs>
-  );
+  // Normalize fallback diagram IDs
+  const effectiveId = diagramId === 'microspore' ? 'pollen-grain' : diagramId;
+  const diagram = BIOLOGY_DIAGRAMS_REGISTRY[effectiveId] || BIOLOGY_DIAGRAMS_REGISTRY['microsporangium-walls'];
 
-  /* --------------------------------------------------------------------------
-   * 1. EMBRYO SAC (7-Celled, 8-Nucleate Female Gametophyte - NCERT Pg 10)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'embryo-sac') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-emerald-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-              NCERT Fig 1.8(d) • Pg 10
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Mature Female Gametophyte (Embryo Sac) — 7-Celled, 8-Nucleate
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-amber-500 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-            Repeated 3M/5M Board Diagram
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="340" viewBox="0 0 290 340" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Outer oval embryo sac boundary */}
-              <ellipse cx="145" cy="170" rx="95" ry="145" fill="rgba(16, 185, 129, 0.04)" stroke="#10b981" strokeWidth="2.5" />
-
-              {/* Chalazal Pole (Top) */}
-              <text x="145" y="16" fill="#64748b" fontSize="10" fontWeight="bold" textAnchor="middle" letterSpacing="1">
-                CHALAZAL END (CHALAZA)
-              </text>
-              <line x1="145" y1="20" x2="145" y2="35" stroke="#94a3b8" strokeWidth="1" strokeDasharray="2 2" />
-
-              {/* 3 Antipodal Cells */}
-              <circle cx="115" cy="55" r="16" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="1.5" />
-              <circle cx="115" cy="55" r="4" fill="#3b82f6" />
-              <circle cx="145" cy="48" r="16" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="1.5" />
-              <circle cx="145" cy="48" r="4" fill="#3b82f6" />
-              <circle cx="175" cy="55" r="16" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="1.5" />
-              <circle cx="175" cy="55" r="4" fill="#3b82f6" />
-
-              {/* Label: Antipodals */}
-              <line x1="190" y1="52" x2="250" y2="52" stroke="#3b82f6" strokeWidth="1" />
-              <text x="254" y="55" fill="#3b82f6" fontSize="10.5" fontWeight="bold">3 Antipodals (n)</text>
-
-              {/* Large Central Cell */}
-              <ellipse cx="145" cy="165" rx="70" ry="60" fill="rgba(245, 158, 11, 0.05)" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
-              <text x="42" y="150" fill="#f59e0b" fontSize="10.5" fontWeight="bold">Central cell</text>
-              <line x1="98" y1="148" x2="120" y2="155" stroke="#f59e0b" strokeWidth="1" />
-
-              {/* 2 Polar Nuclei */}
-              <circle cx="138" cy="160" r="6" fill="#f59e0b" stroke="#d97706" strokeWidth="1.2" />
-              <circle cx="152" cy="160" r="6" fill="#f59e0b" stroke="#d97706" strokeWidth="1.2" />
-              <line x1="160" y1="160" x2="250" y2="160" stroke="#f59e0b" strokeWidth="1" />
-              <text x="254" y="163" fill="#d97706" fontSize="10.5" fontWeight="bold">2 Polar nuclei (n+n)</text>
-
-              {/* Central cell large vacuole */}
-              <ellipse cx="145" cy="115" rx="35" ry="15" fill="rgba(148, 163, 184, 0.1)" stroke="#94a3b8" strokeWidth="1" />
-              <text x="145" y="118" fill="#94a3b8" fontSize="8.5" textAnchor="middle">Vacuole</text>
-
-              {/* Egg Apparatus (Micropylar End: 1 Egg + 2 Synergids) */}
-              {/* Egg cell (central, slightly behind/above synergids) */}
-              <circle cx="145" cy="245" r="18" fill="rgba(244, 63, 94, 0.18)" stroke="#f43f5e" strokeWidth="1.8" />
-              <circle cx="145" cy="240" r="5" fill="#f43f5e" />
-              <line x1="145" y1="240" x2="40" y2="225" stroke="#f43f5e" strokeWidth="1" />
-              <text x="10" y="228" fill="#f43f5e" fontSize="10.5" fontWeight="bold">Egg cell (n)</text>
-
-              {/* 2 Synergid cells */}
-              <ellipse cx="120" cy="270" rx="16" ry="24" fill="rgba(16, 185, 129, 0.18)" stroke="#10b981" strokeWidth="1.5" />
-              <circle cx="120" cy="265" r="4.5" fill="#10b981" />
-              <ellipse cx="170" cy="270" rx="16" ry="24" fill="rgba(16, 185, 129, 0.18)" stroke="#10b981" strokeWidth="1.5" />
-              <circle cx="170" cy="265" r="4.5" fill="#10b981" />
-              <line x1="186" y1="270" x2="250" y2="250" stroke="#10b981" strokeWidth="1" />
-              <text x="254" y="253" fill="#10b981" fontSize="10.5" fontWeight="bold">2 Synergids (n)</text>
-
-              {/* Filiform Apparatus Thickenings at micropylar tip of synergids */}
-              <path d="M 112 284 Q 120 292 128 284 Q 120 288 112 284" fill="#a855f7" stroke="#a855f7" strokeWidth="1.5" />
-              <path d="M 162 284 Q 170 292 178 284 Q 170 288 162 284" fill="#a855f7" stroke="#a855f7" strokeWidth="1.5" />
-              <line x1="175" y1="288" x2="250" y2="288" stroke="#a855f7" strokeWidth="1" />
-              <text x="254" y="291" fill="#a855f7" fontSize="10.5" fontWeight="bold">Filiform apparatus</text>
-
-              {/* Micropylar Pole (Bottom) */}
-              <line x1="145" y1="305" x2="145" y2="320" stroke="#64748b" strokeWidth="1" strokeDasharray="2 2" />
-              <text x="145" y="332" fill="#64748b" fontSize="10" fontWeight="bold" textAnchor="middle" letterSpacing="1">
-                MICROPYLAR END (MICROPYLE)
-              </text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-emerald-600 dark:text-emerald-400 block text-xs">
-                Essential Labeling & Structure (7 Cells, 8 Nuclei):
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• <strong className="text-[var(--text-primary)]">Chalazal Pole (Top):</strong> 3 Antipodal cells (degenerate after fertilisation).</li>
-                <li>• <strong className="text-[var(--text-primary)]">Central Region:</strong> 1 large Central Cell containing 2 Polar Nuclei ($n+n$). Fuses with male gamete to form $3n$ PEN.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Micropylar Pole (Bottom):</strong> Egg apparatus comprising 1 Egg cell + 2 Synergids.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Filiform Apparatus:</strong> Cellular finger-like wall thickenings in synergids that guide the chemotactic entry of the pollen tube.</li>
-              </ul>
-            </div>
-
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[var(--text-secondary)]">
-              <strong className="text-amber-600 dark:text-amber-400 block mb-1">NCERT Exam Drawing Tips:</strong>
-              Do not draw 8 cells! The mature embryo sac is strictly <strong className="text-[var(--text-primary)]">7-celled and 8-nucleate</strong> because the two polar nuclei reside together in the single large central cell. Always orient Chalaza at one end and Micropyle at the other.
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 2. MEGASPORANGIUM (Anatropous Ovule - NCERT Pg 9)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'megasporangium') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-blue-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold text-xs">
-              NCERT Fig 1.7(d) • Pg 9
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Diagrammatic View of a Typical Anatropous Ovule (Megasporangium)
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-blue-500 bg-blue-500/10 px-2.5 py-0.5 rounded-full">
-            Standard 3M Diagram
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="300" height="340" viewBox="0 0 300 340" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Chalaza (Basal Top region) */}
-              <text x="140" y="16" fill="#64748b" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                CHALAZAL POLE
-              </text>
-              <line x1="140" y1="20" x2="140" y2="40" stroke="#94a3b8" strokeWidth="1" strokeDasharray="2 2" />
-
-              {/* Outer & Inner Integuments curving around nucellus */}
-              <path d="M 140 40 C 230 40 250 160 210 240 C 190 270 170 280 155 285" fill="none" stroke="#3b82f6" strokeWidth="2.5" />
-              <path d="M 140 50 C 215 50 230 160 195 235 C 180 260 165 270 155 275" fill="none" stroke="#60a5fa" strokeWidth="2" />
-
-              {/* Inner Curve of Integuments */}
-              <path d="M 140 40 C 50 40 45 160 75 240 C 90 270 115 280 130 285" fill="none" stroke="#3b82f6" strokeWidth="2.5" />
-              <path d="M 140 50 C 65 50 60 160 90 235 C 105 260 120 270 130 275" fill="none" stroke="#60a5fa" strokeWidth="2" />
-
-              {/* Nucellus tissue enclosing embryo sac */}
-              <ellipse cx="140" cy="160" rx="55" ry="80" fill="rgba(245, 158, 11, 0.08)" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3 3" />
-              <line x1="195" y1="130" x2="255" y2="120" stroke="#f59e0b" strokeWidth="1" />
-              <text x="258" y="123" fill="#d97706" fontSize="10.5" fontWeight="bold">Nucellus</text>
-
-              {/* Female Gametophyte (Embryo Sac) */}
-              <ellipse cx="140" cy="165" rx="30" ry="50" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" strokeWidth="2" />
-              <line x1="170" y1="165" x2="255" y2="165" stroke="#10b981" strokeWidth="1" />
-              <text x="258" y="168" fill="#10b981" fontSize="10.5" fontWeight="bold">Embryo sac</text>
-
-              {/* Labels for Integuments */}
-              <line x1="225" y1="80" x2="255" y2="70" stroke="#3b82f6" strokeWidth="1" />
-              <text x="258" y="73" fill="#3b82f6" fontSize="10" fontWeight="bold">Outer integument</text>
-              <line x1="210" y1="100" x2="255" y2="95" stroke="#60a5fa" strokeWidth="1" />
-              <text x="258" y="98" fill="#60a5fa" fontSize="10" fontWeight="bold">Inner integument</text>
-
-              {/* Micropyle pore at bottom */}
-              <line x1="142" y1="285" x2="142" y2="310" stroke="#ef4444" strokeWidth="1.2" />
-              <circle cx="142" cy="285" r="3" fill="#ef4444" />
-              <text x="142" y="325" fill="#ef4444" fontSize="10.5" fontWeight="bold" textAnchor="middle">Micropyle</text>
-
-              {/* Funicle (Stalk) attached at side/base */}
-              <path d="M 125 285 C 100 295 70 300 45 320" fill="none" stroke="#8b5cf6" strokeWidth="3" />
-              <path d="M 130 275 C 105 285 80 290 55 315" fill="none" stroke="#8b5cf6" strokeWidth="2" />
-              <line x1="70" y1="305" x2="25" y2="295" stroke="#8b5cf6" strokeWidth="1" />
-              <text x="5" y="295" fill="#8b5cf6" fontSize="10.5" fontWeight="bold">Funicle</text>
-
-              {/* Hilum (Junction between ovule body and funicle) */}
-              <circle cx="118" cy="280" r="4.5" fill="#ec4899" />
-              <line x1="118" y1="280" x2="25" y2="260" stroke="#ec4899" strokeWidth="1" />
-              <text x="5" y="260" fill="#ec4899" fontSize="10.5" fontWeight="bold">Hilum (junction)</text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-blue-600 dark:text-blue-400 block text-xs">
-                Key Components of the Anatropous Ovule:
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• <strong className="text-[var(--text-primary)]">Funicle:</strong> Stalk attaching the ovule to the placenta.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Hilum:</strong> Point of fusion where the body of ovule joins the funicle.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Integuments:</strong> 1 or 2 protective envelopes enclosing the nucellus except at the micropyle.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Micropyle:</strong> Small opening/pore at the tip through which the pollen tube enters.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Chalaza:</strong> Basal swollen part representing the origin of integuments, opposite to micropyle.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Nucellus:</strong> Nutritive mass of parenchymatous diploid cells.</li>
-              </ul>
-            </div>
-            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[var(--text-secondary)]">
-              <strong className="text-blue-600 dark:text-blue-400 block mb-1">Board PYQ Trap:</strong>
-              In an anatropous (inverted) ovule, the micropyle lies close to the funicle, and the chalaza is at the opposite basal end. Make sure the hilum is clearly indicated at the junction!
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 3. MICROSPORANGIUM 4 WALL LAYERS (NCERT Pg 7)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'microsporangium-walls') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-amber-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold text-xs">
-              NCERT Fig 1.3(b) • Pg 7
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              T.S. of Microsporangium Showing 4 Wall Layers & Tapetum
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-amber-500 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-            Essential 3M Diagram
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="280" viewBox="0 0 290 280" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Layer 1: Epidermis (Outermost single layer) */}
-              <circle cx="145" cy="140" r="125" fill="none" stroke="#64748b" strokeWidth="2.5" />
-              {/* Brick-like cells along epidermis */}
-              <circle cx="145" cy="140" r="118" fill="rgba(100, 116, 139, 0.05)" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3 3" />
-              <line x1="230" y1="50" x2="270" y2="40" stroke="#64748b" strokeWidth="1" />
-              <text x="274" y="43" fill="#64748b" fontSize="10.5" fontWeight="bold">1. Epidermis</text>
-
-              {/* Layer 2: Endothecium (Radially elongated with alpha-cellulosic fibrous bands) */}
-              <circle cx="145" cy="140" r="105" fill="rgba(59, 130, 246, 0.08)" stroke="#3b82f6" strokeWidth="2" />
-              <line x1="235" y1="85" x2="270" y2="80" stroke="#3b82f6" strokeWidth="1" />
-              <text x="274" y="83" fill="#3b82f6" fontSize="10.5" fontWeight="bold">2. Endothecium</text>
-
-              {/* Layer 3: Middle Layers (1 to 3 rows of ephemeral cells) */}
-              <circle cx="145" cy="140" r="88" fill="rgba(245, 158, 11, 0.08)" stroke="#f59e0b" strokeWidth="1.5" />
-              <circle cx="145" cy="140" r="75" fill="rgba(245, 158, 11, 0.05)" stroke="#f59e0b" strokeWidth="1" strokeDasharray="2 2" />
-              <line x1="215" y1="120" x2="270" y2="120" stroke="#f59e0b" strokeWidth="1" />
-              <text x="274" y="123" fill="#d97706" fontSize="10.5" fontWeight="bold">3. Middle layers</text>
-
-              {/* Layer 4: Tapetum (Innermost nutritive layer with dense cytoplasm & binucleate cells) */}
-              <circle cx="145" cy="140" r="58" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" strokeWidth="2.5" />
-              {/* Dense cytoplasm dots and dual nuclei in tapetum cells */}
-              <circle cx="110" cy="115" r="3.5" fill="#10b981" />
-              <circle cx="116" cy="118" r="3.5" fill="#10b981" />
-              <circle cx="170" cy="115" r="3.5" fill="#10b981" />
-              <circle cx="176" cy="118" r="3.5" fill="#10b981" />
-              <line x1="190" y1="155" x2="270" y2="155" stroke="#10b981" strokeWidth="1.2" />
-              <text x="274" y="158" fill="#10b981" fontSize="10.5" fontWeight="bold">4. Tapetum (Nutritive)</text>
-
-              {/* Central Sporogenous Tissue / Microspores */}
-              <circle cx="145" cy="140" r="38" fill="rgba(244, 63, 94, 0.15)" stroke="#f43f5e" strokeWidth="1.5" />
-              <circle cx="138" cy="135" r="6" fill="#f43f5e" />
-              <circle cx="152" cy="135" r="6" fill="#f43f5e" />
-              <circle cx="145" cy="148" r="6" fill="#f43f5e" />
-              <line x1="145" y1="178" x2="145" y2="230" stroke="#f43f5e" strokeWidth="1" />
-              <text x="145" y="244" fill="#f43f5e" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                Sporogenous tissue (PMC 2n)
-              </text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-amber-600 dark:text-amber-400 block text-xs">
-                Functions of the 4 Wall Layers (Outside → Inside):
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>1. <strong className="text-[var(--text-primary)]">Epidermis:</strong> Outermost single protective layer.</li>
-                <li>2. <strong className="text-[var(--text-primary)]">Endothecium:</strong> Has fibrous bands of $\alpha$-cellulose; hygroscopic; helps in anther dehiscence at maturity.</li>
-                <li>3. <strong className="text-[var(--text-primary)]">Middle Layers (1-3):</strong> Ephemeral, degenerate to nourish developing spores.</li>
-                <li>4. <strong className="text-[var(--text-primary)]">Tapetum:</strong> Innermost layer; possesses dense cytoplasm and usually &gt;1 nucleus (polyploid/binucleate). Nourishes developing microspores and produces sporopollenin precursors.</li>
-              </ul>
-            </div>
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[var(--text-secondary)]">
-              <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">Frequent Board Question:</strong>
-              "Why do tapetal cells possess dense cytoplasm and more than one nucleus?" ⟶ Due to endomitosis / free nuclear division without cytokinesis to support high metabolic synthesis of nutrients and enzymes (callase).
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 4. BLASTOCYST & IMPLANTATION (NCERT Pg 36-37)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'blastocyst') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-rose-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs">
-              NCERT Fig 2.11(e) • Pg 36
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Structure of Blastocyst & Implantation into Uterine Endometrium
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-rose-500 bg-rose-500/10 px-2.5 py-0.5 rounded-full">
-            High-Yield 2M/3M
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="280" viewBox="0 0 290 280" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Uterine Endometrium Tissue (Top-Right wavy layer) */}
-              <path d="M 10 30 Q 80 15 150 35 T 280 25 L 280 5 L 10 5 Z" fill="rgba(244, 63, 94, 0.15)" stroke="#f43f5e" strokeWidth="1.5" />
-              <text x="145" y="20" fill="#f43f5e" fontSize="10" fontWeight="bold" textAnchor="middle">
-                Endometrium of Uterus
-              </text>
-
-              {/* Trophoblast Outer Sphere */}
-              <circle cx="145" cy="155" r="90" fill="rgba(59, 130, 246, 0.05)" stroke="#3b82f6" strokeWidth="2.5" />
-              {/* Multiple single-cell trophoblast perimeter units */}
-              <circle cx="145" cy="65" r="7" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.2" />
-              <circle cx="170" cy="68" r="7" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.2" />
-              <circle cx="195" cy="80" r="7" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.2" />
-              <circle cx="215" cy="100" r="7" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.2" />
-              <circle cx="230" cy="130" r="7" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.2" />
-              <circle cx="235" cy="160" r="7" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.2" />
-
-              {/* Label: Trophoblast */}
-              <line x1="225" y1="130" x2="270" y2="130" stroke="#3b82f6" strokeWidth="1" />
-              <text x="274" y="133" fill="#3b82f6" fontSize="10.5" fontWeight="bold">Trophoblast (Outer)</text>
-
-              {/* Inner Cell Mass (ICM) clustered at embryonic pole */}
-              <ellipse cx="145" cy="105" rx="35" ry="25" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" strokeWidth="2" />
-              <circle cx="135" cy="100" r="5" fill="#10b981" />
-              <circle cx="150" cy="98" r="5" fill="#10b981" />
-              <circle cx="140" cy="112" r="5" fill="#10b981" />
-              <circle cx="155" cy="110" r="5" fill="#10b981" />
-              <line x1="110" y1="105" x2="30" y2="105" stroke="#10b981" strokeWidth="1" />
-              <text x="5" y="102" fill="#10b981" fontSize="10.5" fontWeight="bold">Inner Cell Mass (ICM)</text>
-              <text x="5" y="115" fill="#059669" fontSize="9">Differentiates into embryo</text>
-
-              {/* Blastocoel Cavity (Fluid-filled) */}
-              <text x="145" y="195" fill="#94a3b8" fontSize="12" fontWeight="bold" textAnchor="middle">
-                Blastocoel (Cavity)
-              </text>
-              <line x1="145" y1="202" x2="145" y2="255" stroke="#94a3b8" strokeWidth="1" />
-              <text x="145" y="268" fill="#64748b" fontSize="10" textAnchor="middle">Fluid-filled blastocyst cavity</text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-rose-600 dark:text-rose-400 block text-xs">
-                Blastocyst Differentiation (Day 6–7 Post-Fertilisation):
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• <strong className="text-[var(--text-primary)]">Trophoblast:</strong> Outer single cell layer. Gets attached to the uterine endometrium and gives rise to chorionic villi (placenta).</li>
-                <li>• <strong className="text-[var(--text-primary)]">Inner Cell Mass (ICM):</strong> Inner cluster of pluripotent cells attached to trophoblast at the embryonic pole. Differentiates into the 3 germ layers of embryo proper (Ectoderm, Mesoderm, Endoderm).</li>
-                <li>• <strong className="text-[var(--text-primary)]">Implantation:</strong> Uterine cells divide rapidly and cover the blastocyst, completely embedding it in the endometrium (leads to pregnancy).</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 5. COLEOPTILE VS COLEORHIZA & MONOCOT EMBRYO (NCERT Pg 19)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'monocot-embryo') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-teal-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400 font-bold text-xs">
-              NCERT Fig 1.14(b) • Pg 19
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              L.S. of Grass/Monocot Embryo: Coleoptile vs Coleorhiza
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-teal-500 bg-teal-500/10 px-2.5 py-0.5 rounded-full">
-            Differentiate (2M)
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="320" viewBox="0 0 290 320" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Scutellum (Large shield-shaped cotyledon on one lateral side) */}
-              <path d="M 120 40 C 230 40 250 200 160 270 C 130 250 140 180 120 40 Z" fill="rgba(20, 184, 166, 0.15)" stroke="#14b8a6" strokeWidth="2" />
-              <line x1="200" y1="120" x2="255" y2="100" stroke="#14b8a6" strokeWidth="1" />
-              <text x="258" y="103" fill="#0d9488" fontSize="10.5" fontWeight="bold">Scutellum (Cotyledon)</text>
-
-              {/* Coleoptile (Protective sheath of plumule) */}
-              <path d="M 110 50 C 90 60 70 85 70 120 L 115 120 Z" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="2" />
-              <line x1="70" y1="85" x2="15" y2="85" stroke="#3b82f6" strokeWidth="1" />
-              <text x="5" y="80" fill="#3b82f6" fontSize="10.5" fontWeight="bold">Coleoptile (Sheath)</text>
-              <text x="5" y="93" fill="#2563eb" fontSize="9">Protects Plumule</text>
-
-              {/* Shoot Apex / Plumule */}
-              <circle cx="100" cy="115" r="8" fill="#10b981" />
-              <line x1="100" y1="115" x2="15" y2="125" stroke="#10b981" strokeWidth="1" />
-              <text x="5" y="128" fill="#10b981" fontSize="10.5" fontWeight="bold">Shoot apex (Plumule)</text>
-
-              {/* Epiblast (Rudimentary second cotyledon) */}
-              <path d="M 70 150 Q 55 165 70 180" fill="none" stroke="#f59e0b" strokeWidth="2" />
-              <line x1="60" y1="165" x2="15" y2="165" stroke="#f59e0b" strokeWidth="1" />
-              <text x="5" y="168" fill="#d97706" fontSize="10.5" fontWeight="bold">Epiblast</text>
-
-              {/* Radicle & Root Cap */}
-              <circle cx="105" cy="220" r="10" fill="#ef4444" />
-              <line x1="105" y1="220" x2="15" y2="215" stroke="#ef4444" strokeWidth="1" />
-              <text x="5" y="218" fill="#ef4444" fontSize="10.5" fontWeight="bold">Radicle & Root cap</text>
-
-              {/* Coleorhiza (Protective sheath of radicle) */}
-              <path d="M 80 200 C 70 230 85 270 120 270 L 120 200 Z" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" strokeWidth="2" />
-              <line x1="85" y1="250" x2="15" y2="260" stroke="#a855f7" strokeWidth="1" />
-              <text x="5" y="258" fill="#a855f7" fontSize="10.5" fontWeight="bold">Coleorhiza (Sheath)</text>
-              <text x="5" y="271" fill="#7c3aed" fontSize="9">Protects Radicle</text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-teal-600 dark:text-teal-400 block text-xs">
-                Key Differences: Coleoptile vs Coleorhiza
-              </span>
-              <table className="w-full text-left border-collapse text-[11px]">
-                <thead>
-                  <tr className="border-b border-[var(--border-subtle)] text-[var(--text-muted)]">
-                    <th className="py-1">Feature</th>
-                    <th className="py-1">Coleoptile</th>
-                    <th className="py-1">Coleorhiza</th>
-                  </tr>
-                </thead>
-                <tbody className="text-[var(--text-secondary)]">
-                  <tr className="border-b border-[var(--border-subtle)]/50">
-                    <td className="py-1 font-semibold text-[var(--text-primary)]">Location</td>
-                    <td className="py-1">At epicotyl (terminal)</td>
-                    <td className="py-1">At hypocotyl (basal)</td>
-                  </tr>
-                  <tr className="border-b border-[var(--border-subtle)]/50">
-                    <td className="py-1 font-semibold text-[var(--text-primary)]">Protects</td>
-                    <td className="py-1">Plumule / Shoot apex</td>
-                    <td className="py-1">Radicle & Root cap</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1 font-semibold text-[var(--text-primary)]">Growth</td>
-                    <td className="py-1">Emerges from soil, turns green</td>
-                    <td className="py-1">Remains underground as undifferentiated sheath</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 6. MENSTRUAL CYCLE HORMONES & ENDOMETRIUM GRAPH (NCERT Pg 33)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'menstrual-cycle') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-purple-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 font-bold text-xs">
-              NCERT Fig 2.9 • Pg 33
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Menstrual Cycle: Pituitary & Ovarian Hormones with Uterine Changes
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-purple-500 bg-purple-500/10 px-2.5 py-0.5 rounded-full">
-            Standard 3M/5M Curve
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-3/5 flex justify-center py-2 overflow-x-auto">
-            <svg width="340" height="260" viewBox="0 0 340 260" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Day Axis */}
-              <line x1="40" y1="230" x2="320" y2="230" stroke="#64748b" strokeWidth="1.5" />
-              <text x="40" y="245" fill="#64748b" fontSize="9" fontWeight="bold">Day 1</text>
-              <text x="85" y="245" fill="#64748b" fontSize="9">Day 5</text>
-              <text x="175" y="245" fill="#ef4444" fontSize="10" fontWeight="bold">Day 14 (Ovulation)</text>
-              <text x="310" y="245" fill="#64748b" fontSize="9" fontWeight="bold">Day 28</text>
-
-              {/* LH Surge Curve (Peaking sharply at Day 14) */}
-              <path d="M 40 70 Q 120 65 155 50 Q 175 12 185 55 Q 210 70 320 70" fill="none" stroke="#ef4444" strokeWidth="2.5" />
-              <text x="180" y="22" fill="#ef4444" fontSize="9.5" fontWeight="bold">LH Surge</text>
-
-              {/* FSH Curve (Modest peak at Day 14) */}
-              <path d="M 40 85 Q 120 80 160 65 Q 175 45 185 68 Q 210 85 320 85" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="3 2" />
-              <text x="50" y="98" fill="#3b82f6" fontSize="9" fontWeight="bold">FSH</text>
-
-              {/* Estrogen Curve (Peaks prior to ovulation & minor peak in luteal phase) */}
-              <path d="M 40 145 Q 100 140 150 105 Q 175 140 230 120 Q 280 145 320 155" fill="none" stroke="#10b981" strokeWidth="2" />
-              <text x="135" y="102" fill="#10b981" fontSize="9" fontWeight="bold">Estrogen</text>
-
-              {/* Progesterone Curve (High in luteal phase secreted by Corpus Luteum) */}
-              <path d="M 40 165 L 175 165 Q 230 115 285 165 L 320 165" fill="none" stroke="#f59e0b" strokeWidth="2.5" />
-              <text x="245" y="112" fill="#f59e0b" fontSize="9.5" fontWeight="bold">Progesterone</text>
-
-              {/* Endometrial Thickness Curve */}
-              <path d="M 40 220 Q 60 228 85 228 Q 120 220 175 200 Q 230 185 285 185 Q 310 215 320 228" fill="rgba(244, 63, 94, 0.15)" stroke="#f43f5e" strokeWidth="2" />
-              <text x="50" y="215" fill="#f43f5e" fontSize="8.5">Menstruation</text>
-              <text x="105" y="215" fill="#f43f5e" fontSize="8.5">Proliferative</text>
-              <text x="220" y="198" fill="#f43f5e" fontSize="8.5" fontWeight="bold">Secretory Phase</text>
-
-              {/* Day 14 vertical dashed line */}
-              <line x1="175" y1="20" x2="175" y2="230" stroke="#ef4444" strokeWidth="1" strokeDasharray="3 3" />
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-2/5 space-y-2 text-xs">
-            <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-[var(--text-secondary)]">
-              <strong className="text-red-600 dark:text-red-400 block mb-0.5">LH Surge (Day 14):</strong>
-              Rapid secretion of LH reaches maximum level in mid-cycle inducing rupture of Graafian follicle and release of ovum (Ovulation).
-            </div>
-            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[var(--text-secondary)]">
-              <strong className="text-amber-600 dark:text-amber-400 block mb-0.5">Progesterone (Luteal Phase):</strong>
-              Ruptured follicle transforms into Corpus Luteum, secreting large amounts of progesterone essential for maintaining the endometrium.
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 7. ANTIBODY MOLECULE H2L2 (NCERT Pg 138)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'antibody-molecule') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-indigo-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-xs">
-              NCERT Fig 7.4 • Pg 138
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Structure of an Antibody Molecule ($H_2L_2$)
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-indigo-500 bg-indigo-500/10 px-2.5 py-0.5 rounded-full">
-            Standard 2M/3M Diagram
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="290" viewBox="0 0 290 290" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Heavy Chains (2 inner long purple rods forming Y shape) */}
-              {/* Left Heavy Chain */}
-              <path d="M 60 50 L 130 140 L 130 250" fill="none" stroke="#6366f1" strokeWidth="5.5" strokeLinecap="round" />
-              {/* Right Heavy Chain */}
-              <path d="M 230 50 L 160 140 L 160 250" fill="none" stroke="#6366f1" strokeWidth="5.5" strokeLinecap="round" />
-
-              {/* Light Chains (2 outer shorter rods parallel to arms) */}
-              {/* Left Light Chain */}
-              <line x1="35" y1="70" x2="105" y2="160" stroke="#38bdf8" strokeWidth="5" strokeLinecap="round" />
-              {/* Right Light Chain */}
-              <line x1="255" y1="70" x2="185" y2="160" stroke="#38bdf8" strokeWidth="5" strokeLinecap="round" />
-
-              {/* Disulfide Bridges (-S-S-) */}
-              {/* Inter-Heavy chain bridges */}
-              <line x1="130" y1="165" x2="160" y2="165" stroke="#f59e0b" strokeWidth="2.5" />
-              <line x1="130" y1="180" x2="160" y2="180" stroke="#f59e0b" strokeWidth="2.5" />
-              {/* Heavy-Light chain bridges */}
-              <line x1="95" y1="140" x2="118" y2="125" stroke="#f59e0b" strokeWidth="2" />
-              <line x1="195" y1="140" x2="172" y2="125" stroke="#f59e0b" strokeWidth="2" />
-
-              {/* Antigen-Binding Sites at tips of arms */}
-              <ellipse cx="48" cy="58" rx="20" ry="10" fill="rgba(244, 63, 94, 0.25)" stroke="#f43f5e" strokeWidth="1.5" strokeDasharray="2 2" />
-              <text x="48" y="35" fill="#f43f5e" fontSize="9.5" fontWeight="bold" textAnchor="middle">Antigen-binding site</text>
-
-              <ellipse cx="242" cy="58" rx="20" ry="10" fill="rgba(244, 63, 94, 0.25)" stroke="#f43f5e" strokeWidth="1.5" strokeDasharray="2 2" />
-              <text x="242" y="35" fill="#f43f5e" fontSize="9.5" fontWeight="bold" textAnchor="middle">Antigen-binding site</text>
-
-              {/* Labels */}
-              <line x1="75" y1="120" x2="20" y2="120" stroke="#38bdf8" strokeWidth="1" />
-              <text x="5" y="115" fill="#0284c7" fontSize="10" fontWeight="bold">Light chain (L)</text>
-
-              <line x1="145" y1="210" x2="235" y2="210" stroke="#6366f1" strokeWidth="1" />
-              <text x="238" y="213" fill="#4f46e5" fontSize="10" fontWeight="bold">Heavy chain (H)</text>
-
-              <line x1="145" y1="172" x2="235" y2="172" stroke="#f59e0b" strokeWidth="1" />
-              <text x="238" y="175" fill="#d97706" fontSize="9.5" fontWeight="bold">Disulfide bond (-S-S-)</text>
-
-              <text x="145" y="275" fill="#64748b" fontSize="10" fontWeight="bold" textAnchor="middle">
-                Formula: H₂L₂ (4 Polypeptide Chains)
-              </text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-indigo-600 dark:text-indigo-400 block text-xs">
-                Structural Highlights for CBSE Marking Scheme:
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• Each antibody has <strong className="text-[var(--text-primary)]">4 polypeptide chains</strong>: two identical light (L) chains and two identical heavy (H) chains represented as <strong className="text-[var(--text-primary)]">$H_2L_2$</strong>.</li>
-                <li>• The chains are held together by <strong className="text-[var(--text-primary)]">disulfide bonds (-S-S-)</strong>.</li>
-                <li>• Tips of both Y arms form the <strong className="text-[var(--text-primary)]">antigen-binding sites (paratope)</strong> which fit specifically with an epitope on the antigen like lock and key.</li>
-                <li>• Major classes: <strong className="text-[var(--text-primary)]">IgA</strong> (colostrum), <strong className="text-[var(--text-primary)]">IgG</strong> (crosses placenta), <strong className="text-[var(--text-primary)]">IgM</strong> (first responder), <strong className="text-[var(--text-primary)]">IgE</strong> (allergies).</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 8. LAC OPERON (NCERT Pg 93 & Pg 101)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'lac-operon') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-sky-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold text-xs">
-              NCERT Fig 5.14 • Pg 93 & 101
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              The Lac Operon: Switched OFF vs Switched ON
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-sky-500 bg-sky-500/10 px-2.5 py-0.5 rounded-full">
-            Frequent 3M/5M Board Question
-          </span>
-        </div>
-
-        {/* State Toggle Buttons */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setActiveTab('off')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'off' || activeTab === 'default'
-                ? 'bg-rose-500 text-white shadow-xs'
-                : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
-            }`}
-          >
-            In Absence of Inducer (Switched OFF)
-          </button>
-          <button
-            onClick={() => setActiveTab('on')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'on'
-                ? 'bg-emerald-600 text-white shadow-xs'
-                : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
-            }`}
-          >
-            In Presence of Inducer / Lactose (Switched ON)
-          </button>
-        </div>
-
-        {/* Lac Operon Visual */}
-        <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-3">
-          <div className="overflow-x-auto py-2">
-            <svg width="480" height="150" viewBox="0 0 480 150" className="overflow-visible select-none mx-auto">
-              {svgDefs}
-              {/* Gene Segments Bar */}
-              {/* p (promoter for i) */}
-              <rect x="20" y="30" width="40" height="30" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
-              <text x="40" y="50" fill="#334155" fontSize="12" fontWeight="bold" textAnchor="middle">p</text>
-              {/* i (regulator) */}
-              <rect x="60" y="30" width="55" height="30" fill="#fbcfe8" stroke="#db2777" strokeWidth="1.5" />
-              <text x="87" y="50" fill="#be185d" fontSize="12" fontWeight="bold" textAnchor="middle">i</text>
-              {/* p (promoter for operon) */}
-              <rect x="115" y="30" width="40" height="30" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
-              <text x="135" y="50" fill="#334155" fontSize="12" fontWeight="bold" textAnchor="middle">p</text>
-              {/* o (operator) */}
-              <rect x="155" y="30" width="45" height="30" fill="#fed7aa" stroke="#ea580c" strokeWidth="1.5" />
-              <text x="177" y="50" fill="#c2410c" fontSize="12" fontWeight="bold" textAnchor="middle">o</text>
-              {/* z */}
-              <rect x="200" y="30" width="70" height="30" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5" />
-              <text x="235" y="50" fill="#15803d" fontSize="12" fontWeight="bold" textAnchor="middle">z</text>
-              {/* y */}
-              <rect x="270" y="30" width="60" height="30" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5" />
-              <text x="300" y="50" fill="#15803d" fontSize="12" fontWeight="bold" textAnchor="middle">y</text>
-              {/* a */}
-              <rect x="330" y="30" width="60" height="30" fill="#bbf7d0" stroke="#16a34a" strokeWidth="1.5" />
-              <text x="360" y="50" fill="#15803d" fontSize="12" fontWeight="bold" textAnchor="middle">a</text>
-
-              {/* Repressor Synthesis */}
-              <line x1="87" y1="60" x2="87" y2="85" stroke="#db2777" strokeWidth="1.5" markerEnd="url(#bio-arrow-rose)" />
-              <text x="87" y="100" fill="#be185d" fontSize="9" textAnchor="middle">Repressor mRNA</text>
-              <rect x="72" y="105" width="30" height="20" rx="4" fill="#f43f5e" />
-              <text x="87" y="119" fill="#fff" fontSize="9" fontWeight="bold" textAnchor="middle">R</text>
-
-              {/* Switched OFF Flow */}
-              {(activeTab === 'off' || activeTab === 'default') && (
-                <>
-                  <path d="M 102 115 C 140 115 160 85 177 62" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="3 3" markerEnd="url(#bio-arrow-rose)" />
-                  <rect x="165" y="20" width="25" height="15" rx="3" fill="#ef4444" />
-                  <text x="177" y="31" fill="#fff" fontSize="8" fontWeight="bold" textAnchor="middle">Rep</text>
-                  <text x="300" y="110" fill="#ef4444" fontSize="11" fontWeight="bold">
-                    ✕ Repressor binds to Operator ⟶ RNA Pol blocked ⟶ NO Transcription
-                  </text>
-                </>
-              )}
-
-              {/* Switched ON Flow */}
-              {activeTab === 'on' && (
-                <>
-                  {/* Inducer binds repressor */}
-                  <circle cx="115" cy="115" r="7" fill="#10b981" />
-                  <text x="115" y="118" fill="#fff" fontSize="8" fontWeight="bold" textAnchor="middle">L</text>
-                  <text x="145" y="135" fill="#10b981" fontSize="9" fontWeight="bold">Inducer (Allolactose) binds repressor ⟶ Inactive</text>
-
-                  {/* Transcription of z, y, a */}
-                  <line x1="235" y1="60" x2="235" y2="90" stroke="#16a34a" strokeWidth="1.5" markerEnd="url(#bio-arrow-emerald)" />
-                  <line x1="300" y1="60" x2="300" y2="90" stroke="#16a34a" strokeWidth="1.5" markerEnd="url(#bio-arrow-emerald)" />
-                  <line x1="360" y1="60" x2="360" y2="90" stroke="#16a34a" strokeWidth="1.5" markerEnd="url(#bio-arrow-emerald)" />
-                  <text x="235" y="105" fill="#15803d" fontSize="9" fontWeight="bold" textAnchor="middle">β-galactosidase</text>
-                  <text x="300" y="105" fill="#15803d" fontSize="9" fontWeight="bold" textAnchor="middle">Permease</text>
-                  <text x="360" y="105" fill="#15803d" fontSize="9" fontWeight="bold" textAnchor="middle">Transacetylase</text>
-                </>
-              )}
-            </svg>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pt-2 border-t border-[var(--border-subtle)] text-xs">
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)]">
-              <strong className="text-emerald-600 dark:text-emerald-400 block">z gene:</strong>
-              Codes for $\beta$-galactosidase (hydrolyses lactose into galactose + glucose).
-            </div>
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)]">
-              <strong className="text-emerald-600 dark:text-emerald-400 block">y gene:</strong>
-              Codes for Permease (increases cell permeability to $\beta$-galactosides).
-            </div>
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)]">
-              <strong className="text-emerald-600 dark:text-emerald-400 block">a gene:</strong>
-              Codes for Transacetylase (transfers acetyl group to $\beta$-galactosides).
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 9. MILLER-UREY EXPERIMENT (NCERT Pg 117)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'miller-urey') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-orange-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400 font-bold text-xs">
-              NCERT Fig 6.1 • Pg 117
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Miller-Urey Spark Discharge Simulation Apparatus
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-orange-500 bg-orange-500/10 px-2.5 py-0.5 rounded-full">
-            Evidence for Chemical Evolution
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="290" viewBox="0 0 290 290" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Spark Chamber (Top-Right large sphere) */}
-              <circle cx="180" cy="80" r="45" fill="rgba(245, 158, 11, 0.1)" stroke="#f59e0b" strokeWidth="2" />
-              {/* Spark Electrodes */}
-              <line x1="145" y1="55" x2="170" y2="75" stroke="#64748b" strokeWidth="3" />
-              <line x1="215" y1="55" x2="190" y2="75" stroke="#64748b" strokeWidth="3" />
-              {/* Spark lightning symbol */}
-              <path d="M 175 70 L 185 75 L 178 82 L 188 88" fill="none" stroke="#ef4444" strokeWidth="2.5" />
-              <text x="180" y="45" fill="#f59e0b" fontSize="8.5" fontWeight="bold" textAnchor="middle">Spark discharge (800°C)</text>
-              <text x="180" y="105" fill="#d97706" fontSize="8" fontWeight="bold" textAnchor="middle">CH₄ + NH₃ + H₂O + H₂</text>
-
-              {/* Condenser Tube (Right vertical pipe) */}
-              <line x1="180" y1="125" x2="180" y2="210" stroke="#3b82f6" strokeWidth="4" />
-              <rect x="170" y="140" width="20" height="50" rx="3" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1" />
-              <text x="240" y="165" fill="#3b82f6" fontSize="9.5" fontWeight="bold">Condenser (Water out/in)</text>
-              <line x1="195" y1="165" x2="235" y2="165" stroke="#3b82f6" strokeWidth="1" />
-
-              {/* U-Trap collecting liquid */}
-              <path d="M 180 210 L 180 240 Q 180 260 140 260 Q 100 260 100 240 L 100 200" fill="none" stroke="#64748b" strokeWidth="4" />
-              <line x1="140" y1="260" x2="140" y2="280" stroke="#ef4444" strokeWidth="1.5" />
-              <circle cx="140" cy="283" r="4" fill="#ef4444" />
-              <text x="210" y="275" fill="#ef4444" fontSize="9.5" fontWeight="bold">Liquid with Amino Acids</text>
-              <text x="210" y="287" fill="#b91c1c" fontSize="8">(Glycine, Alanine, Aspartic acid)</text>
-
-              {/* Boiling Flask (Steam generator at bottom-left) */}
-              <circle cx="100" cy="180" r="28" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" strokeWidth="2" />
-              <text x="100" y="180" fill="#2563eb" fontSize="8" fontWeight="bold" textAnchor="middle">Boiling Water</text>
-              {/* Flame below */}
-              <path d="M 90 218 Q 100 208 110 218 Z" fill="#f97316" />
-
-              {/* Steam Pipe ascending to spark chamber */}
-              <path d="M 100 152 L 100 80 Q 100 60 135 70" fill="none" stroke="#64748b" strokeWidth="4" />
-              <text x="55" y="110" fill="#64748b" fontSize="8.5" fontWeight="bold">Steam</text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-orange-600 dark:text-orange-400 block text-xs">
-                Key Experimental Parameters (S.L. Miller, 1953):
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• <strong className="text-[var(--text-primary)]">Gaseous Mixture:</strong> Methane ($CH_4$), Ammonia ($NH_3$), Hydrogen ($H_2$), and Water vapor ($H_2O$) in ratio $2 : 1 : 2$.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Energy Source:</strong> High voltage electric spark discharge at <strong className="text-[var(--text-primary)]">$800^\circ\text{C}$</strong> simulating primitive lightning.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Results:</strong> Formation of simple organic compounds — amino acids (glycine, alanine, aspartic acid), sugars, nitrogenous bases, pigments, and fats.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Significance:</strong> Provided direct experimental validation for Oparin-Haldane theory of chemical evolution.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 10. HARDY-WEINBERG NATURAL SELECTION (NCERT Pg 121)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'hardy-weinberg-selection') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-emerald-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs">
-              NCERT Fig 6.8 • Pg 121
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Operation of Natural Selection: Stabilizing, Directional & Disruptive
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-emerald-500 bg-emerald-500/10 px-2.5 py-0.5 rounded-full">
-            Graph Analysis (3M)
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          {/* Curve 1: Stabilizing */}
-          <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex flex-col items-center text-center space-y-2">
-            <span className="font-bold text-xs text-blue-600 dark:text-blue-400">1. Stabilizing Selection</span>
-            <svg width="120" height="90" viewBox="0 0 120 90" className="overflow-visible select-none">
-              <line x1="10" y1="80" x2="110" y2="80" stroke="#94a3b8" strokeWidth="1" />
-              {/* Original bell curve */}
-              <path d="M 15 80 Q 60 20 105 80" fill="none" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="2 2" />
-              {/* Tall narrow peak */}
-              <path d="M 30 80 Q 60 5 90 80" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="2.5" />
-            </svg>
-            <p className="text-[11px] text-[var(--text-secondary)]">
-              Mean phenotype is favored; peak gets higher and narrower (e.g. human birth weight).
-            </p>
-          </div>
-
-          {/* Curve 2: Directional */}
-          <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex flex-col items-center text-center space-y-2">
-            <span className="font-bold text-xs text-amber-600 dark:text-amber-400">2. Directional Selection</span>
-            <svg width="120" height="90" viewBox="0 0 120 90" className="overflow-visible select-none">
-              <line x1="10" y1="80" x2="110" y2="80" stroke="#94a3b8" strokeWidth="1" />
-              {/* Original bell curve */}
-              <path d="M 15 80 Q 50 30 85 80" fill="none" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="2 2" />
-              {/* Shifted peak */}
-              <path d="M 35 80 Q 80 20 115 80" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" strokeWidth="2.5" />
-            </svg>
-            <p className="text-[11px] text-[var(--text-secondary)]">
-              Peak shifts in one direction towards an extreme phenotype (e.g. industrial melanism).
-            </p>
-          </div>
-
-          {/* Curve 3: Disruptive */}
-          <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] flex flex-col items-center text-center space-y-2">
-            <span className="font-bold text-xs text-rose-600 dark:text-rose-400">3. Disruptive Selection</span>
-            <svg width="120" height="90" viewBox="0 0 120 90" className="overflow-visible select-none">
-              <line x1="10" y1="80" x2="110" y2="80" stroke="#94a3b8" strokeWidth="1" />
-              {/* Two peaks forming */}
-              <path d="M 15 80 Q 38 25 60 70 Q 82 25 105 80" fill="rgba(244, 63, 94, 0.2)" stroke="#f43f5e" strokeWidth="2.5" />
-            </svg>
-            <p className="text-[11px] text-[var(--text-secondary)]">
-              Both peripheral extremes are favored while mean is selected against; two peaks form.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 11. HIV REPLICATION IN HOST CELL (NCERT Pg 139)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'hiv-lifecycle') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-rose-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs">
-              NCERT Fig 7.6 • Pg 139
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Replication of Retrovirus (HIV) in Macrophage & T_H Cell
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-rose-500 bg-rose-500/10 px-2.5 py-0.5 rounded-full">
-            Case-Based / 5M
-          </span>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-2 text-xs">
-          <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 text-center font-medium">
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <span className="font-bold text-rose-500 block">1. Viral Entry</span>
-              HIV glycoprotein binds CD4 receptor on macrophage.
-            </div>
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <span className="font-bold text-amber-500 block">2. Reverse Transcription</span>
-              Viral RNA $\to$ viral DNA by Reverse Transcriptase.
-            </div>
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <span className="font-bold text-blue-500 block">3. Integration</span>
-              Viral DNA incorporates into host genome (Integrase).
-            </div>
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <span className="font-bold text-purple-500 block">4. Transcription</span>
-              Host machinery copies viral RNA & translates proteins.
-            </div>
-            <div className="p-2 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <span className="font-bold text-emerald-500 block">5. Progeny Release</span>
-              New virions bud out, destroy Helper T ($T_H$) cells.
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 12. MICROSPORE / POLLEN GRAIN STRUCTURE (NCERT Pg 7 / Fig 1.5)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'pollen-grain' || diagramId === 'microspore-pollen') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-amber-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold text-xs">
-              NCERT Fig 1.5 • Pg 7
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Structure of Mature 2-Celled Pollen Grain (Microspore)
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-amber-500 bg-amber-500/10 px-2.5 py-0.5 rounded-full">
-            PDF Reference Pg 7
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="280" viewBox="0 0 290 280" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Outer Exine with sculptured ridges and Germ Pores */}
-              <circle cx="145" cy="140" r="95" fill="none" stroke="#d97706" strokeWidth="6" strokeDasharray="30 14" />
-              {/* Outer thin decorative border */}
-              <circle cx="145" cy="140" r="99" fill="none" stroke="#b45309" strokeWidth="1.5" strokeDasharray="3 3" />
-
-              {/* Germ Pore Aperture at top right */}
-              <circle cx="212" cy="73" r="10" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="2 2" />
-              <line x1="212" y1="73" x2="265" y2="50" stroke="#ef4444" strokeWidth="1.2" />
-              <text x="268" y="53" fill="#ef4444" fontSize="10.5" fontWeight="bold">Germ pore (no sporopollenin)</text>
-
-              {/* Exine Label */}
-              <line x1="78" y1="73" x2="25" y2="50" stroke="#d97706" strokeWidth="1.2" />
-              <text x="5" y="48" fill="#d97706" fontSize="10.5" fontWeight="bold">Exine (Sporopollenin)</text>
-
-              {/* Inner Intine Layer */}
-              <circle cx="145" cy="140" r="85" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" strokeWidth="2" />
-              <line x1="80" y1="180" x2="25" y2="195" stroke="#10b981" strokeWidth="1.2" />
-              <text x="5" y="200" fill="#10b981" fontSize="10.5" fontWeight="bold">Intine (Cellulose + Pectin)</text>
-
-              {/* Large Vegetative Cell */}
-              <ellipse cx="145" cy="115" rx="55" ry="40" fill="rgba(59, 130, 246, 0.12)" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
-              {/* Irregular Nucleus of Vegetative Cell */}
-              <path d="M 125 105 Q 145 95 160 110 Q 170 125 150 130 Q 130 135 125 105 Z" fill="#3b82f6" />
-              <line x1="160" y1="110" x2="250" y2="110" stroke="#3b82f6" strokeWidth="1" />
-              <text x="254" y="108" fill="#3b82f6" fontSize="10" fontWeight="bold">Vegetative cell</text>
-              <text x="254" y="120" fill="#2563eb" fontSize="8.5">(Irregular nucleus &amp; food reserves)</text>
-
-              {/* Generative Cell (Spindle-shaped floating in cytoplasm) */}
-              <ellipse cx="145" cy="185" rx="35" ry="16" fill="rgba(244, 63, 94, 0.2)" stroke="#f43f5e" strokeWidth="2" />
-              {/* Generative Nucleus */}
-              <circle cx="145" cy="185" r="7" fill="#f43f5e" />
-              <line x1="145" y1="202" x2="145" y2="245" stroke="#f43f5e" strokeWidth="1" />
-              <text x="145" y="258" fill="#f43f5e" fontSize="10" fontWeight="bold" textAnchor="middle">
-                Generative cell (Divides into 2 male gametes)
-              </text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-amber-600 dark:text-amber-400 block text-xs">
-                Key Structural Points (NCERT Pg 7 &amp; Revision Guide):
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• <strong className="text-[var(--text-primary)]">Exine:</strong> Hard outer layer composed of <strong className="text-amber-500">sporopollenin</strong>, the most resistant biological material known (unaffected by strong acids, alkalis, enzymes).</li>
-                <li>• <strong className="text-[var(--text-primary)]">Germ Pores:</strong> Prominent apertures in exine where sporopollenin is absent; site where pollen tube emerges during germination.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Intine:</strong> Thin, continuous inner layer made of cellulose and pectin.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Vegetative Cell:</strong> Larger cell containing abundant food reserves and an irregular nucleus.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Generative Cell:</strong> Small, spindle-shaped cell with dense cytoplasm that floats in vegetative cell cytoplasm; divides into 2 male gametes.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 13. PLACENTA AND EMBRYO / HUMAN FETUS IN UTERUS (NCERT Pg 37 / Fig 2.12)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'placenta-fetus') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-rose-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs">
-              NCERT Fig 2.12 • Pg 37
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Placenta and Human Fetus inside Uterus
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-rose-500 bg-rose-500/10 px-2.5 py-0.5 rounded-full">
-            PDF Reference Pg 7
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="300" viewBox="0 0 290 300" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Uterine Wall (Outer muscular perimeter) */}
-              <path d="M 40 40 Q 145 10 250 40 Q 280 150 250 250 Q 145 285 40 250 Q 10 150 40 40 Z" fill="rgba(244, 63, 94, 0.08)" stroke="#f43f5e" strokeWidth="3" />
-              <line x1="40" y1="40" x2="10" y2="25" stroke="#f43f5e" strokeWidth="1" />
-              <text x="5" y="20" fill="#f43f5e" fontSize="10" fontWeight="bold">Uterine wall (Myometrium)</text>
-
-              {/* Placental Villi (Interdigitating at top-right uterine wall) */}
-              <path d="M 170 30 Q 195 45 210 25 Q 225 50 245 35" fill="none" stroke="#d97706" strokeWidth="4" />
-              <line x1="220" y1="35" x2="265" y2="15" stroke="#d97706" strokeWidth="1" />
-              <text x="268" y="18" fill="#d97706" fontSize="10.5" fontWeight="bold">Placental villi</text>
-
-              {/* Umbilical Cord connecting fetus to placenta */}
-              <path d="M 145 145 Q 185 100 205 40" fill="none" stroke="#8b5cf6" strokeWidth="4.5" strokeDasharray="6 2" />
-              <line x1="175" y1="90" x2="255" y2="80" stroke="#8b5cf6" strokeWidth="1" />
-              <text x="258" y="83" fill="#8b5cf6" fontSize="10.5" fontWeight="bold">Umbilical cord</text>
-              <text x="258" y="94" fill="#7c3aed" fontSize="8.5">(Vessels for transport)</text>
-
-              {/* Amniotic Cavity with Amniotic Fluid enclosing fetus */}
-              <ellipse cx="140" cy="155" rx="75" ry="85" fill="rgba(59, 130, 246, 0.1)" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" />
-              <line x1="70" y1="120" x2="20" y2="120" stroke="#3b82f6" strokeWidth="1" />
-              <text x="5" y="115" fill="#3b82f6" fontSize="10" fontWeight="bold">Amniotic cavity</text>
-              <text x="5" y="126" fill="#2563eb" fontSize="8.5">(Amniotic fluid)</text>
-
-              {/* Fetus schematic profile */}
-              <circle cx="140" cy="120" r="18" fill="rgba(244, 63, 94, 0.3)" stroke="#f43f5e" strokeWidth="2" />
-              <path d="M 140 138 Q 120 160 135 185 Q 155 195 160 170" fill="none" stroke="#f43f5e" strokeWidth="4" strokeLinecap="round" />
-              <text x="140" y="124" fill="#991b1b" fontSize="8" fontWeight="bold" textAnchor="middle">Fetus</text>
-
-              {/* Yolk Sac */}
-              <circle cx="105" cy="165" r="9" fill="rgba(245, 158, 11, 0.3)" stroke="#f59e0b" strokeWidth="1.5" />
-              <line x1="100" y1="170" x2="20" y2="185" stroke="#f59e0b" strokeWidth="1" />
-              <text x="5" y="188" fill="#d97706" fontSize="10" fontWeight="bold">Yolk sac</text>
-
-              {/* Cervical canal plug at bottom */}
-              <rect x="130" y="260" width="30" height="15" rx="3" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
-              <text x="145" y="290" fill="#64748b" fontSize="9.5" fontWeight="bold" textAnchor="middle">
-                Plug of mucus in cervix
-              </text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-rose-600 dark:text-rose-400 block text-xs">
-                Essential Components &amp; Endocrine Role:
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• <strong className="text-[var(--text-primary)]">Placenta:</strong> Formed by interdigitation of chorionic villi with uterine tissue; provides $O_2$ and nutrients and eliminates waste ($CO_2$, urea).</li>
-                <li>• <strong className="text-[var(--text-primary)]">Umbilical Cord:</strong> Connects developing fetus to placenta, housing fetal blood vessels.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Exclusive Pregnancy Hormones:</strong> Secretes <strong className="text-rose-500">hCG</strong>, <strong className="text-rose-500">hPL</strong>, and <strong className="text-rose-500">Relaxin</strong> (from ovary in late pregnancy), essential for maintaining pregnancy.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 14. TRANSCRIPTION UNIT SCHEMATIC (NCERT Fig 5.9 / PDF Pg 8)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'transcription-unit') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-sky-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold text-xs">
-              NCERT Fig 5.9 • Pg 91
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Schematic Structure of a Transcription Unit
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-sky-500 bg-sky-500/10 px-2.5 py-0.5 rounded-full">
-            PDF Reference Pg 8
-          </span>
-        </div>
-
-        <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-4">
-          <div className="overflow-x-auto py-2">
-            <svg width="480" height="150" viewBox="0 0 480 150" className="overflow-visible select-none mx-auto">
-              {svgDefs}
-              {/* Template Strand (3' -> 5') */}
-              <line x1="30" y1="50" x2="450" y2="50" stroke="#3b82f6" strokeWidth="4" />
-              <text x="15" y="55" fill="#3b82f6" fontSize="13" fontWeight="bold">3'</text>
-              <text x="460" y="55" fill="#3b82f6" fontSize="13" fontWeight="bold">5'</text>
-              <text x="240" y="42" fill="#3b82f6" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                Template Strand (Transcribed 3' → 5')
-              </text>
-
-              {/* Coding Strand (5' -> 3') */}
-              <line x1="30" y1="90" x2="450" y2="90" stroke="#f59e0b" strokeWidth="4" />
-              <text x="15" y="95" fill="#f59e0b" fontSize="13" fontWeight="bold">5'</text>
-              <text x="460" y="95" fill="#f59e0b" fontSize="13" fontWeight="bold">3'</text>
-              <text x="240" y="105" fill="#f59e0b" fontSize="10.5" fontWeight="bold" textAnchor="middle">
-                Coding Strand (Non-transcribed reference strand 5' → 3')
-              </text>
-
-              {/* Promoter Region at 5' end of coding strand */}
-              <rect x="70" y="35" width="55" height="70" rx="4" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" strokeWidth="2" />
-              <text x="97" y="73" fill="#10b981" fontSize="10" fontWeight="bold" textAnchor="middle">Promoter</text>
-              <text x="97" y="24" fill="#10b981" fontSize="9" fontWeight="bold" textAnchor="middle">Upstream</text>
-
-              {/* Structural Gene Region */}
-              <rect x="155" y="35" width="180" height="70" rx="4" fill="rgba(148, 163, 184, 0.1)" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="3 3" />
-              <text x="245" y="73" fill="#475569" fontSize="11" fontWeight="bold" textAnchor="middle">
-                Structural Gene
-              </text>
-
-              {/* Terminator Region at 3' end of coding strand */}
-              <rect x="360" y="35" width="60" height="70" rx="4" fill="rgba(244, 63, 94, 0.25)" stroke="#f43f5e" strokeWidth="2" />
-              <text x="390" y="73" fill="#f43f5e" fontSize="10" fontWeight="bold" textAnchor="middle">Terminator</text>
-              <text x="390" y="24" fill="#f43f5e" fontSize="9" fontWeight="bold" textAnchor="middle">Downstream</text>
-
-              {/* Transcription Direction Arrow */}
-              <line x1="100" y1="125" x2="380" y2="125" stroke="#a855f7" strokeWidth="2" markerEnd="url(#bio-arrow-purple)" />
-              <text x="240" y="142" fill="#a855f7" fontSize="10" fontWeight="bold" textAnchor="middle">
-                Direction of Transcription (5' → 3')
-              </text>
-            </svg>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs text-[var(--text-secondary)]">
-            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <strong className="text-emerald-500 block">Promoter:</strong>
-              Located towards 5'-end (upstream) of coding strand. Binding site for RNA polymerase.
-            </div>
-            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <strong className="text-blue-500 block">Template vs Coding:</strong>
-              Template has $3' \to 5'$ polarity. All reference points (promoter/terminator) are defined relative to the <strong className="text-[var(--text-primary)]">Coding Strand ($5' \to 3'$)</strong>.
-            </div>
-            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <strong className="text-rose-500 block">Terminator:</strong>
-              Located towards 3'-end (downstream) of coding strand. Halts transcription process.
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 15. REPLICATING FORK (NCERT Fig 5.8 / PDF Pg 8)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'replicating-fork') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-indigo-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-xs">
-              NCERT Fig 5.8 • Pg 88
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              DNA Replicating Fork: Continuous vs Discontinuous Synthesis
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-indigo-500 bg-indigo-500/10 px-2.5 py-0.5 rounded-full">
-            PDF Reference Pg 8
-          </span>
-        </div>
-
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-full lg:w-1/2 flex justify-center py-2">
-            <svg width="290" height="280" viewBox="0 0 290 280" className="overflow-visible select-none">
-              {svgDefs}
-              {/* Unwound Parental Strands forming Y-shape */}
-              {/* Parental Strand 1 (Template 3' -> 5') */}
-              <path d="M 40 40 L 150 140 L 150 250" fill="none" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
-              <text x="25" y="45" fill="#64748b" fontSize="12" fontWeight="bold">3'</text>
-              <text x="145" y="270" fill="#64748b" fontSize="12" fontWeight="bold">5'</text>
-
-              {/* Parental Strand 2 (Template 5' -> 3') */}
-              <path d="M 250 40 L 170 140 L 170 250" fill="none" stroke="#64748b" strokeWidth="4" strokeLinecap="round" />
-              <text x="260" y="45" fill="#64748b" fontSize="12" fontWeight="bold">5'</text>
-              <text x="175" y="270" fill="#64748b" fontSize="12" fontWeight="bold">3'</text>
-
-              {/* Continuous Leading Strand Synthesis on 3'->5' template */}
-              <path d="M 60 70 L 135 140" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#bio-arrow-emerald)" />
-              <text x="35" y="80" fill="#10b981" fontSize="10" fontWeight="bold">5'</text>
-              <line x1="90" y1="95" x2="25" y2="120" stroke="#10b981" strokeWidth="1" />
-              <text x="5" y="132" fill="#10b981" fontSize="10" fontWeight="bold">Continuous synthesis</text>
-              <text x="5" y="144" fill="#059669" fontSize="8.5">(Leading strand 5' → 3')</text>
-
-              {/* Discontinuous Lagging Strand Synthesis (Okazaki fragments) */}
-              <path d="M 195 125 L 215 105" fill="none" stroke="#ef4444" strokeWidth="3" markerEnd="url(#bio-arrow-rose)" />
-              <path d="M 215 95 L 235 75" fill="none" stroke="#ef4444" strokeWidth="3" markerEnd="url(#bio-arrow-rose)" />
-              <line x1="220" y1="100" x2="265" y2="120" stroke="#ef4444" strokeWidth="1" />
-              <text x="268" y="123" fill="#ef4444" fontSize="10" fontWeight="bold">Discontinuous synthesis</text>
-              <text x="268" y="135" fill="#dc2626" fontSize="8.5">(Okazaki fragments)</text>
-
-              {/* DNA Ligase Joiner */}
-              <line x1="205" y1="110" x2="205" y2="165" stroke="#f59e0b" strokeWidth="1" />
-              <text x="205" y="178" fill="#d97706" fontSize="9.5" fontWeight="bold">DNA Ligase seals fragments</text>
-            </svg>
-          </div>
-
-          <div className="w-full lg:w-1/2 space-y-2.5 text-xs">
-            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-              <span className="font-bold text-indigo-600 dark:text-indigo-400 block text-xs">
-                Key Features for CBSE Examination:
-              </span>
-              <ul className="space-y-1 text-[var(--text-secondary)]">
-                <li>• <strong className="text-[var(--text-primary)]">DNA Polymerase Polarity:</strong> Synthesizes DNA strictly in the <strong className="text-[var(--text-primary)]">$5' \to 3'$</strong> direction.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Leading Strand:</strong> Synthesized continuously on the $3' \to 5'$ parental template strand towards the replication fork.</li>
-                <li>• <strong className="text-[var(--text-primary)]">Lagging Strand:</strong> Synthesized discontinuously as short fragments (<strong className="text-red-500">Okazaki fragments</strong>) on the $5' \to 3'$ template away from the fork.</li>
-                <li>• <strong className="text-[var(--text-primary)]">DNA Ligase:</strong> Joins the discontinuously synthesized Okazaki fragments into a continuous strand.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  /* --------------------------------------------------------------------------
-   * 16. HOMOLOGOUS VS ANALOGOUS ORGANS (PDF Pg 1 / Evolution Evidences)
-   * -------------------------------------------------------------------------- */
-  if (diagramId === 'homologous-analogous') {
-    return (
-      <div className="bg-[var(--bg-surface)] p-4 sm:p-5 rounded-2xl border border-teal-500/30 space-y-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400 font-bold text-xs">
-              NCERT Fig 6.3 &amp; 6.4 • Pg 115
-            </span>
-            <h4 className="font-bold text-sm text-[var(--text-primary)]">
-              Evidences for Evolution: Homologous vs Analogous Organs
-            </h4>
-          </div>
-          <span className="text-[11px] font-semibold text-teal-500 bg-teal-500/10 px-2.5 py-0.5 rounded-full">
-            PDF Reference Pg 1
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          {/* Box 1: Homologous Organs (Divergent Evolution) */}
-          <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-blue-500/30 space-y-2">
-            <span className="font-bold text-blue-600 dark:text-blue-400 block text-xs">
-              1. Homologous Organs (Divergent Evolution)
-            </span>
-            <p className="text-[var(--text-secondary)]">
-              <strong className="text-[var(--text-primary)]">Same anatomical structure</strong> derived from common ancestry, but adapted for <strong className="text-[var(--text-primary)]">different functions</strong>.
-            </p>
-            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] space-y-1">
-              <strong className="text-[var(--text-primary)] block">Examples:</strong>
-              <div>• Forelimbs of <strong className="text-blue-500">whales, bats, cheetahs, and humans</strong> (all share humerus, radius, ulna, carpals, metacarpals).</div>
-              <div>• Thorns of <em>Bougainvillea</em> and tendrils of <em>Cucurbita</em> (both are modified axillary buds).</div>
-            </div>
-            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-wide block">
-              Indicates: Common Ancestry &amp; Divergent Evolution
-            </span>
-          </div>
-
-          {/* Box 2: Analogous Organs (Convergent Evolution) */}
-          <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-amber-500/30 space-y-2">
-            <span className="font-bold text-amber-600 dark:text-amber-400 block text-xs">
-              2. Analogous Organs (Convergent Evolution)
-            </span>
-            <p className="text-[var(--text-secondary)]">
-              <strong className="text-[var(--text-primary)]">Different anatomical origins</strong>, but evolved to perform the <strong className="text-[var(--text-primary)]">same function</strong> due to similar ecological selection pressures.
-            </p>
-            <div className="p-2.5 rounded-lg bg-[var(--bg-surface)] space-y-1">
-              <strong className="text-[var(--text-primary)] block">Examples:</strong>
-              <div>• Wings of <strong className="text-amber-500">butterflies</strong> (chitinous fold) and <strong className="text-amber-500">birds</strong> (feathered limbs).</div>
-              <div>• Eye of octopus and eye of mammals.</div>
-              <div>• Sweet potato (root modification) and potato (stem tuber).</div>
-            </div>
-            <span className="text-[10px] font-bold text-amber-500 uppercase tracking-wide block">
-              Indicates: Similar Habitats &amp; Convergent Evolution
-            </span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Fallback if no matching diagram
   return (
-    <div className="p-4 rounded-xl border border-dashed border-[var(--border-subtle)] text-center text-xs text-[var(--text-muted)]">
-      Diagram reference for ID: {diagramId}
+    <div className="bg-[var(--bg-surface)] rounded-2xl border border-emerald-500/30 overflow-hidden shadow-sm transition-all">
+      {/* 1. Header Banner */}
+      <div className="p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-elevated)]/60 border-b border-[var(--border-subtle)]">
+        <div className="flex items-center gap-2.5 flex-1 min-w-0">
+          <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono font-bold text-xs shrink-0 flex items-center gap-1">
+            <BookOpen size={13} />
+            {diagram.ncertFig}
+          </span>
+          <h4 className="font-bold text-sm text-[var(--text-primary)] truncate">
+            {diagram.title}
+          </h4>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-[11px] font-semibold text-amber-500 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20 flex items-center gap-1">
+            <Award size={12} />
+            {diagram.badge}
+          </span>
+        </div>
+      </div>
+
+      {/* 2. Mode Selector Tabs */}
+      <div className="px-4 sm:px-5 pt-3 flex items-center gap-2 border-b border-[var(--border-subtle)] bg-[var(--bg-elevated)]/20 overflow-x-auto scrollbar-none">
+        <button
+          onClick={() => setActiveTab('ncert')}
+          className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+            activeTab === 'ncert'
+              ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400'
+              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <Eye size={13} />
+          <span>Official NCERT Cutout</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('labels')}
+          className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+            activeTab === 'labels'
+              ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <Layers size={13} />
+          <span>CBSE Marking Labels ({diagram.keyLabels.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('guide')}
+          className={`pb-2.5 px-3 text-xs font-bold transition-all border-b-2 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+            activeTab === 'guide'
+              ? 'border-purple-500 text-purple-600 dark:text-purple-400'
+              : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+          }`}
+        >
+          <PenTool size={13} />
+          <span>3-Min Board Drawing Steps</span>
+        </button>
+      </div>
+
+      {/* 3. Tab Body */}
+      <div className="p-4 sm:p-5">
+        {/* TAB 1: OFFICIAL NCERT TEXTBOOK IMAGE CUTOUT */}
+        {activeTab === 'ncert' && (
+          <div className="space-y-4">
+            <div className="relative group bg-white rounded-xl border border-[var(--border-subtle)] p-3 sm:p-5 flex flex-col items-center justify-center overflow-hidden shadow-2xs">
+              <img
+                src={diagram.imageSrc}
+                alt={diagram.title}
+                className="max-h-[340px] sm:max-h-[400px] w-auto object-contain mx-auto transition-transform duration-200 group-hover:scale-[1.01]"
+                loading="lazy"
+              />
+
+              {/* Enlarge Button Overlay */}
+              <button
+                onClick={() => setIsZoomOpen(true)}
+                className="absolute top-3 right-3 p-2 rounded-lg bg-neutral-900/80 text-white hover:bg-neutral-900 transition-colors cursor-pointer shadow-md flex items-center gap-1 text-xs font-semibold backdrop-blur-xs"
+                title="Click to view full-resolution image"
+              >
+                <ZoomIn size={14} />
+                <span className="hidden sm:inline">Enlarge</span>
+              </button>
+            </div>
+
+            {/* Caption & NCERT Verification Note */}
+            <div className="p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20 flex items-start gap-2.5 text-xs text-[var(--text-secondary)]">
+              <CheckCircle2 size={15} className="text-emerald-500 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="font-semibold text-[var(--text-primary)]">
+                  {diagram.caption}
+                </p>
+                <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                  Authentic NCERT Textbook Illustration. In CBSE Board Examinations, labeling questions and anatomical evaluation are graded directly against this textbook figure.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: KEY LABELS & MARKING CRITERIA */}
+        {activeTab === 'labels' && (
+          <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {diagram.keyLabels.map((lbl, idx) => (
+                <div 
+                  key={idx}
+                  className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1"
+                >
+                  <div className="flex items-center justify-between gap-1.5">
+                    <span className="font-bold text-xs text-[var(--text-primary)]">
+                      {lbl.name}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 font-mono text-[10px] font-bold">
+                      {lbl.tag}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                    {lbl.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {diagram.examinerTip && (
+              <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 space-y-1 text-xs">
+                <span className="font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5 text-[11px]">
+                  <Sparkles size={13} />
+                  CBSE Evaluator Marking Note:
+                </span>
+                <p className="text-[var(--text-primary)] leading-relaxed">
+                  {diagram.examinerTip}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 3: STEP-BY-STEP DRAWING INSTRUCTIONS */}
+        {activeTab === 'guide' && (
+          <div className="space-y-3.5">
+            <div className="p-3.5 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-2.5">
+              <div className="flex items-center gap-2">
+                <PenTool size={14} className="text-purple-400" />
+                <span className="font-bold text-xs uppercase tracking-wider text-purple-400">
+                  How to Draw in CBSE Exam (3-Minute Protocol):
+                </span>
+              </div>
+              <ol className="space-y-2 text-xs text-[var(--text-primary)] leading-relaxed list-decimal pl-4">
+                {diagram.drawingSteps.map((step, idx) => (
+                  <li key={idx} className="pl-1">
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs text-[var(--text-muted)] flex items-start gap-2">
+              <Info size={14} className="text-blue-400 shrink-0 mt-0.5" />
+              <span>
+                Always use an HB pencil for the diagram outline and draw clean, horizontal, uncrossed label leader lines on the right-hand margin.
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 4. Fullscreen Zoom Modal */}
+      {isZoomOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="relative max-w-4xl w-full bg-white rounded-2xl p-4 sm:p-6 shadow-2xl flex flex-col items-center">
+            <div className="w-full flex items-center justify-between pb-3 border-b border-neutral-200">
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-xs font-bold font-mono">
+                  {diagram.ncertFig}
+                </span>
+                <h3 className="font-bold text-sm text-neutral-900 truncate">
+                  {diagram.title}
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsZoomOpen(false)}
+                className="p-1.5 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 transition-colors cursor-pointer"
+                title="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="w-full py-4 flex items-center justify-center overflow-auto max-h-[80vh]">
+              <img
+                src={diagram.imageSrc}
+                alt={diagram.title}
+                className="max-h-[75vh] w-auto object-contain rounded-lg"
+              />
+            </div>
+
+            <div className="w-full pt-3 border-t border-neutral-200 text-center text-xs text-neutral-600">
+              {diagram.caption}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
