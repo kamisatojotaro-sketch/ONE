@@ -186,7 +186,8 @@ export default function StudySearchModal({
     { id: 'physics', label: 'Physics', icon: <Zap size={14} /> },
     { id: 'chemistry', label: 'Chemistry', icon: <FlaskConical size={14} /> },
     { id: 'biology', label: 'Biology', icon: <Dna size={14} /> },
-    { id: 'psychology', label: 'Psychology', icon: <Brain size={14} /> }
+    { id: 'psychology', label: 'Psychology', icon: <Brain size={14} /> },
+    { id: 'english', label: 'English', icon: <BookOpen size={14} /> }
   ];
 
   const filterPills = [

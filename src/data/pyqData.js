@@ -1802,5 +1802,133 @@ Social support refers to the perceived comfort, caring, esteem, and help availab
 4. Conclusion:
    The remainder when 7¹⁰⁰ is divided by 6 is 1.`
     }
+  ],
+  english: [
+    {
+      id: 'eng-pyq-1',
+      chapterId: 'eng-ch-1',
+      chapterName: 'Ch 1: The Last Lesson',
+      subtopicId: 'eng-sub-1-3',
+      year: 'CBSE 2023 (2 Marks)',
+      question: 'What did M. Hamel say about the French language during his last lesson? Why did he ask them to safeguard it?',
+      solution: `1. Description of the French Language:
+   M. Hamel praised French as "the most beautiful language in the world — the clearest, the most logical."
+
+2. Reason to Safeguard It:
+   He urged the people of Alsace to guard it among themselves and never forget it because when a people are enslaved, as long as they hold fast to their native language, it is as if they have the key to their prison.`
+    },
+    {
+      id: 'eng-pyq-2',
+      chapterId: 'eng-ch-2',
+      chapterName: 'Ch 2: Lost Spring',
+      subtopicId: 'eng-sub-2-2',
+      year: 'CBSE 2022 (2 Marks)',
+      question: 'Why does Anees Jung say that daring is not part of the growing up of children in Firozabad?',
+      solution: `1. Generations of Poverty & Caste Baggage:
+   Children in Firozabad are born into the stigma of the bangle-maker caste and are burdened with poverty before they even learn to question it.
+
+2. Vicious Web of Exploitation:
+   They are trapped in a vicious circle (chakravyuh) formed by sahukars (moneylenders), middlemen, policemen, keepers of the law, bureaucrats, and politicians.
+   Any attempt to organize into cooperatives is crushed by police harassment and violence, suffocating initiative and daring before adulthood.`
+    },
+    {
+      id: 'eng-pyq-3',
+      chapterId: 'eng-ch-3',
+      chapterName: 'Ch 3: Deep Water',
+      subtopicId: 'eng-sub-3-3',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'How did William Douglas conquer his fear of water? Describe the step-by-step training given by the instructor.',
+      solution: `1. Determination to Overcome Trauma:
+   Haunted by near-drowning at the YMCA pool, which ruined his canoeing, boating, and fishing trips, Douglas hired an instructor in October to systematically conquer his hydrophobia.
+
+2. Step 1 — Overhead Pulley & Cable:
+   The instructor put a belt around Douglas with a rope attached that ran over an overhead pulley. Douglas swam back and forth across the pool for three months until the terror began to slacken.
+
+3. Step 2 — Breathing Drills:
+   The instructor taught Douglas to put his face underwater and exhale, and to raise his nose above water to inhale. This drill was repeated hundreds of times.
+
+4. Step 3 — Kicking with Legs:
+   For weeks, Douglas was held by the side of the pool to kick his legs. Initially his legs froze with rigid panic, but gradually relaxed and obeyed his command.
+
+5. Step 4 — Integration & Independent Verification:
+   The instructor integrated these parts into a complete swimmer. Douglas then independently swam two miles across Lake Wentworth in New Hampshire and Warm Lake to banish all lingering terror, confirming Roosevelt's maxim: "All we have to fear is fear itself."`
+    },
+    {
+      id: 'eng-pyq-4',
+      chapterId: 'eng-ch-4',
+      chapterName: 'Ch 4: The Rattrap',
+      subtopicId: 'eng-sub-4-3',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'How does the metaphor of the rattrap serve as the central theme of Selma Lagerlöf’s story? How does Edla Willmansson bring about the peddler’s redemption?',
+      solution: `1. The Rattrap Metaphor:
+   The peddler envisions the world as a gigantic rattrap. Worldly riches, joys, food, and shelter act as baits (analogous to cheese and pork in a rat cage). When a man allows himself to be lured by the bait, the trap snaps shut, cutting off redemption.
+   The peddler himself took the bait of thirty stolen kronor and found himself trapped in the maze of the forest.
+
+2. Edla's Unconditional Empathy & Respect:
+   Unlike the ironmaster who threatened to call the sheriff upon discovering the mistaken identity, Edla interceded with pure compassion. She insisted that they fulfill their promise of Christmas peace and treated the tramp with the dignity of a captain.
+
+3. Redemption and Transformation:
+   Being treated like real nobility elevated the peddler’s moral conscience. On Christmas morning, he departed leaving behind the thirty kronor for the crofter and a small rattrap for Edla, signed as "Captain von Stahle." Respect and love redeemed his innate goodness.`
+    },
+    {
+      id: 'eng-pyq-5',
+      chapterId: 'eng-ch-8',
+      chapterName: 'Ch 8: A Thing of Beauty',
+      subtopicId: 'eng-sub-8-2',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'According to John Keats, what are the things that cause suffering and sorrow, and what helps human beings overcome this grief?',
+      solution: `1. Causes of Suffering and Despondence:
+   According to John Keats, human life is afflicted by:
+   • Despondence and spite (malice/desire to offend)
+   • Inhuman dearth of noble natures (scarcity of truly virtuous men)
+   • Gloomy days filled with sorrow
+   • Unhealthy and over-darkened ways of human pursuit
+   • Bad health and physical despair.
+
+2. Deliverance through Beauty:
+   In spite of all these miseries, "some shape of beauty moves away the pall from our dark spirits."
+   Objects of nature (the sun, moon, shady trees, daffodils, clear rills, musk-rose blooms) and heroic tales of the mighty dead act as an "endless fountain of immortal drink" that lifts the veil of gloom and restores joy and spiritual vitality.`
+    },
+    {
+      id: 'eng-pyq-6',
+      chapterId: 'eng-ch-10',
+      chapterName: 'Ch 10: The Tiger King',
+      subtopicId: 'eng-sub-10-3',
+      year: 'CBSE 2022 (5 Marks)',
+      question: 'Comment on the ending of Kalki’s "The Tiger King". How is the climax an ironical culmination of the Maharaja’s obsessive quest?',
+      solution: `1. Irony of the 100th Tiger Hunt:
+   The Maharaja believed he had successfully slain his hundredth tiger and conquered destiny. In reality, the bullet had missed the decrepit tiger, which merely fainted from the sound; the hunters secretly killed it to safeguard their livelihoods.
+
+2. The Trivial Instrument of Death:
+   Having slain 99 living, ferocious beasts in forests, the King fell victim not to a wild beast, but to an inanimate, crudely crafted wooden toy tiger bought for his son's third birthday for a few annas.
+
+3. Sarcastic Medical Pronouncement:
+   A tiny rough wooden sliver pierced his right hand, causing a fatal suppurating infection. The three top British-trained surgeons performed an extensive operation and declared with biting irony: "The operation was successful. The Maharaja is dead." Destiny proved insurmountable, ridiculing royal hubris.`
+    },
+    {
+      id: 'eng-pyq-7',
+      chapterId: 'eng-ch-13',
+      chapterName: 'Ch 13: Notice Writing',
+      subtopicId: 'eng-sub-13-1',
+      year: 'CBSE 2023 (4 Marks)',
+      question: 'Draft a notice in not more than 50 words for your school notice board inviting students to participate in a Science Exhibition. You are Neha/Nitin, Secretary of the Science Club, Kendriya Vidyalaya, Chennai.',
+      solution: `┌─────────────────────────────────────────────────────────────┐
+│              KENDRIYA VIDYALAYA, CHENNAI                    │
+│                         NOTICE                              │
+│                                                             │
+│ 15 October 2026                                             │
+│                ANNUAL SCIENCE EXHIBITION 2026               │
+│                                                             │
+│ All students from Classes IX to XII are hereby informed    │
+│ that the Science Club is organizing the Annual Science      │
+│ Exhibition on 5 November 2026 in the Multipurpose Hall      │
+│ from 9:00 AM to 2:00 PM. Theme: "Sustainable Innovations".  │
+│ Submit working models and chart proposals to the            │
+│ undersigned by 25 October 2026. Attractive trophies await!  │
+│                                                             │
+│ Nitin Sharma                                                │
+│ Secretary, Science Club                                     │
+└─────────────────────────────────────────────────────────────┘`
+    }
   ]
 };

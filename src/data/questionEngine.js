@@ -69,6 +69,18 @@ export const SUBJECT_DISTRACTORS = {
     'In a Poisson distribution, the mean is strictly greater than the variance.',
     'Consumer surplus is calculated by subtracting the demand curve integral from total revenue.',
     'Perpetuity present value decreases when the prevailing interest rate decreases.'
+  ],
+  english: [
+    'M. Hamel instructed the class in German on the day of the last lesson.',
+    'Saheb-e-Alam earned fifteen hundred rupees and maintained complete freedom at the tea stall.',
+    'William Douglas successfully dove into the Yakima River without an instructor.',
+    'The peddler stole thirty kronor from the ironmaster’s private safe at the manor house.',
+    'Rajkumar Shukla was an educated lawyer who represented Gandhi in the Champaran court.',
+    'Kamala Das compared her mother’s cheerful face to a blossoming springtime rose.',
+    'Pablo Neruda advocates total physical inactivity and morbid passivity in Keeping Quiet.',
+    'John Keats states that the loveliness of a thing of beauty decreases and fades into nothingness.',
+    'Charley purchased two train tickets to 1894 Galesburg using modern currency notes.',
+    'The Tiger King was slain in combat by a ferocious hundred-pound wild Bengal tiger.'
   ]
 };
 

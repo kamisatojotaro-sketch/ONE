@@ -1,4 +1,4 @@
-import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, Award, FileText, Calculator, TrendingUp } from 'lucide-react';
+import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, Award, FileText, Calculator, TrendingUp, BookOpen } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 
 export default function SubjectGrid({ 
@@ -25,6 +25,8 @@ export default function SubjectGrid({
         return <Calculator size={size} className="text-[#2563EB]" />;
       case 'applied_maths':
         return <TrendingUp size={size} className="text-[#059669]" />;
+      case 'english':
+        return <BookOpen size={size} className="text-[#D97706]" />;
       default:
         return <Bookmark size={size} className="text-[var(--accent-primary)]" />;
     }

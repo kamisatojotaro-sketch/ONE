@@ -1,4 +1,4 @@
-import { Target, CheckCircle2, Circle, ArrowRight, Zap, FlaskConical, Dna, Brain } from 'lucide-react';
+import { Target, CheckCircle2, Circle, ArrowRight, Zap, FlaskConical, Dna, Brain, BookOpen } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 
@@ -19,6 +19,8 @@ export default function PortionsTabContent({
         return <Dna size={18} className="text-[#6B7F5E]" />;
       case 'psychology':
         return <Brain size={18} className="text-[#8E44AD]" />;
+      case 'english':
+        return <BookOpen size={18} className="text-[#D97706]" />;
       default:
         return <Target size={18} className="text-[var(--accent-primary)]" />;
     }
@@ -79,7 +81,7 @@ export default function PortionsTabContent({
 
       {/* Subject Portions Breakdowns */}
       <div className="space-y-4 sm:space-y-6">
-        {['physics', 'chemistry', 'biology', 'psychology'].map((subjKey) => {
+        {['physics', 'chemistry', 'biology', 'psychology', 'english'].map((subjKey) => {
           const subject = NCERT_SYLLABUS[subjKey];
           const chapters = getSubjectPortionChapters(subjKey);
           const completedCount = chapters.filter((c) => completedPortionChapters.includes(c.id)).length;

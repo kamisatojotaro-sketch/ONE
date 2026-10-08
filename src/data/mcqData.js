@@ -779,5 +779,183 @@ export const MCQ_DATABASE = {
       correct: 0,
       explanation: 'Profit Π = R(x) - C(x). First order condition for maximum profit is dΠ/dx = 0 ⟹ dR/dx - dC/dx = 0 ⟹ MR = MC.'
     }
+  ],
+  english: [
+    {
+      id: 'eng-mcq-1',
+      chapterId: 'eng-ch-1',
+      chapterName: 'Ch 1: The Last Lesson',
+      subtopicId: 'eng-sub-1-3',
+      difficulty: 'medium',
+      question: 'According to M. Hamel in "The Last Lesson", what serves as the key to prison for an enslaved people?',
+      options: [
+        'Their national flag',
+        'Their holding fast to their native language',
+        'Their military strength',
+        'Their economic self-reliance'
+      ],
+      correct: 1,
+      explanation: 'M. Hamel tells the class that when a people are enslaved, as long as they hold fast to their language it is as if they had the key to their prison.'
+    },
+    {
+      id: 'eng-mcq-2',
+      chapterId: 'eng-ch-1',
+      chapterName: 'Ch 1: The Last Lesson',
+      subtopicId: 'eng-sub-1-4',
+      difficulty: 'easy',
+      question: 'What did M. Hamel write on the blackboard before dismissing the class?',
+      options: [
+        '"Adieu Alsace"',
+        '"Vive La France!"',
+        '"Liberte, Egalite, Fraternite"',
+        '"Dieu et Mon Droit"'
+      ],
+      correct: 1,
+      explanation: 'Bearing on with all his might, M. Hamel wrote as large as he could: "Vive La France!" (Long Live France!).'
+    },
+    {
+      id: 'eng-mcq-3',
+      chapterId: 'eng-ch-2',
+      chapterName: 'Ch 2: Lost Spring',
+      subtopicId: 'eng-sub-2-1',
+      difficulty: 'easy',
+      question: 'What is the literal English meaning of the name "Saheb-e-Alam"?',
+      options: [
+        'Prince of the Slums',
+        'King of Delhi',
+        'Lord of the Universe',
+        'Master of the Street'
+      ],
+      correct: 2,
+      explanation: 'The author notes that Saheb-e-Alam literally translates to "Lord of the Universe", creating a profound tragic irony with his barefoot ragpicking existence.'
+    },
+    {
+      id: 'eng-mcq-4',
+      chapterId: 'eng-ch-3',
+      chapterName: 'Ch 3: Deep Water',
+      subtopicId: 'eng-sub-3-3',
+      difficulty: 'medium',
+      question: 'Which famous historical personality did William Douglas quote regarding fear in "Deep Water"?',
+      options: [
+        'Abraham Lincoln',
+        'Franklin D. Roosevelt',
+        'George Washington',
+        'Winston Churchill'
+      ],
+      correct: 1,
+      explanation: 'Douglas remembers President Franklin D. Roosevelt saying: "All we have to fear is fear itself."'
+    },
+    {
+      id: 'eng-mcq-5',
+      chapterId: 'eng-ch-4',
+      chapterName: 'Ch 4: The Rattrap',
+      subtopicId: 'eng-sub-4-3',
+      difficulty: 'medium',
+      question: 'Why did the peddler sign the farewell letter to Edla Willmansson as "Captain von Stahle"?',
+      options: [
+        'Because he wanted to deceive her father one last time',
+        'Because Edla had treated him with the dignity of a captain, elevating him to act honorably',
+        'Because Captain von Stahle was his true military rank',
+        'To prevent the sheriff from identifying him'
+      ],
+      correct: 1,
+      explanation: 'Edla\'s unconditional respect and kindness treated him like a real captain, giving him the moral strength to rise above petty deception and clear his conscience.'
+    },
+    {
+      id: 'eng-mcq-6',
+      chapterId: 'eng-ch-6',
+      chapterName: 'Ch 6: My Mother at Sixty-Six',
+      subtopicId: 'eng-sub-6-2',
+      difficulty: 'easy',
+      question: 'In "My Mother at Sixty-Six", the poet compares her mother’s wan and pale face to:',
+      options: [
+        'A cloudy autumn evening',
+        'A late winter\'s moon',
+        'A withered summer blossom',
+        'An eclipsed morning star'
+      ],
+      correct: 1,
+      explanation: 'Kamala Das uses the simile "as a late winter\'s moon" to capture the mother\'s dim, pale, and fading vitality.'
+    },
+    {
+      id: 'eng-mcq-7',
+      chapterId: 'eng-ch-7',
+      chapterName: 'Ch 7: Keeping Quiet',
+      subtopicId: 'eng-sub-7-2',
+      difficulty: 'medium',
+      question: 'In Pablo Neruda’s "Keeping Quiet", what is the tragic consequence of modern green and gas wars described by the poet?',
+      options: [
+        'Bankruptcy of nations',
+        'Victory with no survivors',
+        'Destruction of monuments',
+        'Global economic recession'
+      ],
+      correct: 1,
+      explanation: 'Neruda describes the bitter paradox of modern warfare as "victory with no survivors", emphasizing the futility of mutual annihilation.'
+    },
+    {
+      id: 'eng-mcq-8',
+      chapterId: 'eng-ch-8',
+      chapterName: 'Ch 8: A Thing of Beauty',
+      subtopicId: 'eng-sub-8-2',
+      difficulty: 'easy',
+      question: 'Which of the following is explicitly listed by John Keats as a "Thing of Beauty" in the poem?',
+      options: [
+        'Golden chariots and royal palaces',
+        'Clear rills that make a cooling covert against the hot season',
+        'Loud victory bugles of warriors',
+        'Wealth accumulated through commerce'
+      ],
+      correct: 1,
+      explanation: 'Keats explicitly lists "clear rills that for themselves a cooling covert make \'gainst the hot season" among the things of beauty alongside the sun, moon, shady trees, daffodils, and the musk-rose brake.'
+    },
+    {
+      id: 'eng-mcq-9',
+      chapterId: 'eng-ch-8',
+      chapterName: 'Ch 8: A Thing of Beauty',
+      subtopicId: 'eng-sub-8-2',
+      difficulty: 'medium',
+      question: 'According to John Keats, what causes an "inhuman dearth" in the human world?',
+      options: [
+        'Dearth of physical resources and gold',
+        'Dearth of noble natures',
+        'Dearth of scientific discoveries',
+        'Dearth of fertile agricultural soil'
+      ],
+      correct: 1,
+      explanation: 'Keats laments the "inhuman dearth of noble natures" as one of the seven causes of human misery and gloomy days.'
+    },
+    {
+      id: 'eng-mcq-10',
+      chapterId: 'eng-ch-10',
+      chapterName: 'Ch 10: The Tiger King',
+      subtopicId: 'eng-sub-10-3',
+      difficulty: 'easy',
+      question: 'How was the Maharaja of Pratibandapuram ultimately killed, fulfilling the prophecy of the hundredth tiger?',
+      options: [
+        'By a ferocious wild tiger in the Royal Forest',
+        'By a venomous cobra bite',
+        'By an infection caused by a tiny wooden sliver from a cheap toy tiger',
+        'By a fatal wound from a British officer\'s gun'
+      ],
+      correct: 2,
+      explanation: 'While playing with his son\'s third-birthday cheap wooden toy tiger, a tiny sliver of unfinished wood pierced the King\'s hand, leading to fatal suppurating gangrene.'
+    },
+    {
+      id: 'eng-mcq-11',
+      chapterId: 'eng-ch-13',
+      chapterName: 'Ch 13: Notice Writing',
+      subtopicId: 'eng-sub-13-1',
+      difficulty: 'easy',
+      question: 'What is the official CBSE word limit prescribed for Notice Writing?',
+      options: [
+        '30 words',
+        '50 words',
+        '80 words',
+        '100 words'
+      ],
+      correct: 1,
+      explanation: 'CBSE mandates a strict word limit of 50 words for Notice Writing, with marks deducted for excessive word count.'
+    }
   ]
 };

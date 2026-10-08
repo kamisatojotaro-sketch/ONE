@@ -4,6 +4,7 @@ import { BIOLOGY_CHAPTERS } from './biologyNotes.js';
 import { PSYCHOLOGY_CHAPTERS } from './psychologyNotes.js';
 import { MATHS_CHAPTERS_VOL1, MATHS_CHAPTERS_VOL2 } from './mathsNotes.js';
 import { APPLIED_MATHS_CHAPTERS_VOL1, APPLIED_MATHS_CHAPTERS_VOL2 } from './appliedMathsNotes.js';
+import { ENGLISH_CHAPTERS_FLAMINGO, ENGLISH_CHAPTERS_VISTAS, ENGLISH_CHAPTERS_WRITING } from './englishNotes.js';
 
 export const EXAM_PORTIONS = {
   physics: ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-4', 'phy-ch-5', 'phy-ch-6', 'phy-ch-7', 'phy-ch-8'],
@@ -11,7 +12,13 @@ export const EXAM_PORTIONS = {
   chemistry: ['chem-ch-1', 'chem-ch-2', 'chem-ch-4', 'chem-ch-6', 'chem-ch-7'],
   psychology: ['psy-ch-1', 'psy-ch-2', 'psy-ch-3'],
   standard_maths: ['math-ch-3', 'math-ch-4', 'math-ch-5', 'math-ch-6', 'math-ch-7', 'math-ch-10', 'math-ch-11', 'math-ch-13'],
-  applied_maths: ['app-ch-1', 'app-ch-3', 'app-ch-4', 'app-ch-5', 'app-ch-7', 'app-ch-8']
+  applied_maths: ['app-ch-1', 'app-ch-3', 'app-ch-4', 'app-ch-5', 'app-ch-7', 'app-ch-8'],
+  english: [
+    'eng-ch-1', 'eng-ch-2', 'eng-ch-3', 'eng-ch-4', 'eng-ch-5', 
+    'eng-ch-6', 'eng-ch-7', 'eng-ch-8', 
+    'eng-ch-9', 'eng-ch-10', 'eng-ch-11', 
+    'eng-ch-12', 'eng-ch-13', 'eng-ch-14', 'eng-ch-15', 'eng-ch-16'
+  ]
 };
 
 export const NCERT_SYLLABUS = {
@@ -157,6 +164,33 @@ export const NCERT_SYLLABUS = {
         title: 'CBSE Applied Mathematics Volume 2',
         subtitle: 'Probability Distributions, Inferential Stats, Financial Mathematics & LPP (Exam Portions 5, 7, 8)',
         chapters: APPLIED_MATHS_CHAPTERS_VOL2
+      }
+    ]
+  },
+  english: {
+    id: 'english',
+    name: 'English Core',
+    code: '301',
+    accentColor: '#D97706',
+    description: 'Flamingo Prose & Poetry, Vistas Supplementary Reader, Unseen Passages & Advanced Writing Skills',
+    volumes: [
+      {
+        id: 'eng-vol-1',
+        title: 'Flamingo (Prose & Poetry)',
+        subtitle: 'The Last Lesson, Lost Spring, Deep Water, Rattrap, Indigo, My Mother at 66, Keeping Quiet, A Thing of Beauty',
+        chapters: ENGLISH_CHAPTERS_FLAMINGO
+      },
+      {
+        id: 'eng-vol-2',
+        title: 'Vistas (Supplementary Reader)',
+        subtitle: 'The Third Level, The Tiger King, Journey to the End of the Earth',
+        chapters: ENGLISH_CHAPTERS_VISTAS
+      },
+      {
+        id: 'eng-vol-3',
+        title: 'Reading & Creative Writing Skills',
+        subtitle: 'Unseen Passages, Notice Writing, Invitations & Replies, Letter to Editor, Job Application with Bio-Data',
+        chapters: ENGLISH_CHAPTERS_WRITING
       }
     ]
   }

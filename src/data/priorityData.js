@@ -57,7 +57,25 @@ export const DEFAULT_CHAPTER_PRIORITIES = {
   'psy-ch-4': 9,  // Psychological Disorders (Schizophrenia, Anxiety, Mood ~12 marks!)
   'psy-ch-5': 6,  // Therapeutic Approaches (CBT, Psychodynamic, Humanistic ~9 marks)
   'psy-ch-6': 5,  // Attitude & Social Cognition (Attitude Change, Prejudice ~8 marks)
-  'psy-ch-7': 3   // Social Influence & Group Processes (Smallest Chapter: ~6 marks)
+  'psy-ch-7': 3,  // Social Influence & Group Processes (Smallest Chapter: ~6 marks)
+
+  // English Core (Total: 80 Marks)
+  'eng-ch-1': 9,  // The Last Lesson (High-yield Opening Prose, Linguistic Chauvinism)
+  'eng-ch-2': 8,  // Lost Spring (Stories of Stolen Childhood, Saheb & Mukesh)
+  'eng-ch-3': 8,  // Deep Water (William Douglas, Overcoming Phobia)
+  'eng-ch-4': 9,  // The Rattrap (Metaphor & Edla's Compassion)
+  'eng-ch-5': 9,  // Indigo (Champaran Movement & Gandhi's Civil Disobedience)
+  'eng-ch-6': 8,  // My Mother at Sixty-Six (Poetic Devices & Aging)
+  'eng-ch-7': 8,  // Keeping Quiet (Pablo Neruda, Universal Stillness)
+  'eng-ch-8': 10, // A Thing of Beauty (John Keats, Endymion, 7 Beauties & 7 Sufferings)
+  'eng-ch-9': 8,  // The Third Level (Jack Finney, Psychological Escapism & 1894 Galesburg)
+  'eng-ch-10': 9, // The Tiger King (Kalki, Satire on Power & 100th Tiger Prophecy)
+  'eng-ch-11': 8, // Journey to the End of the Earth (Tishani Doshi, Antarctica & Phytoplankton)
+  'eng-ch-12': 9, // Unseen Passages (Section A: 22 Marks Reading Comprehension)
+  'eng-ch-13': 8, // Notice Writing (Section B: 4 Marks Short Writing Task)
+  'eng-ch-14': 8, // Invitations and Replies (Section B: 4 Marks Short Writing Task)
+  'eng-ch-15': 9, // Letter to the Editor (Section B: 5 Marks Long Writing Task)
+  'eng-ch-16': 9  // Job Application with Bio-Data (Section B: 5 Marks Long Writing Task)
 };
 
 // Calibrated Granular Subtopic Priorities (0 to 10 scale)
@@ -258,7 +276,52 @@ export const DEFAULT_SUBTOPIC_PRIORITIES = {
   'psy-sub-3-4': 6,  // 3.4 Stress and the Immune System (Psychoneuroimmunology)
   'psy-sub-3-5': 7,  // 3.5 Coping with Stress: Task-Oriented, Emotion-Focused, Avoidance
   'psy-sub-3-6': 5,  // 3.6 Stress Management Techniques (Biofeedback, relaxation, exercise)
-  'psy-sub-3-7': 4   // 3.7 Promoting Positive Health and Well-being (Life skills)
+  'psy-sub-3-7': 4,  // 3.7 Promoting Positive Health and Well-being (Life skills)
+
+  // --- English Flamingo Prose ---
+  'eng-sub-1-1': 8,  // 1.1 The Prussian Conquest & Franz’s Reluctance
+  'eng-sub-1-2': 9,  // 1.2 The Unusual Classroom & M. Hamel’s Announcement
+  'eng-sub-1-3': 10, // 1.3 Linguistic Chauvinism & Mother Tongue as Key to Prison
+  'eng-sub-1-4': 9,  // 1.4 The Emotional Climax — "Vive La France!"
+  'eng-sub-2-1': 9,  // 2.1 Saheb & Seemapuri Ragpickers
+  'eng-sub-2-2': 8,  // 2.2 Mukesh & Firozabad Bangle Makers
+  'eng-sub-3-1': 7,  // 3.1 Childhood Phobia & The YMCA Pool Misadventure
+  'eng-sub-3-2': 8,  // 3.2 Near-Drowning Traumatic Experience
+  'eng-sub-3-3': 9,  // 3.3 Overcoming Fear — Instructor & Roosevelt Philosophy
+  'eng-sub-4-1': 8,  // 4.1 The World as a Rattrap & 30 Kronor Theft
+  'eng-sub-4-2': 7,  // 4.2 Entrapment in the Woods & Ramsjö Ironworks
+  'eng-sub-4-3': 10, // 4.3 Edla’s Compassion & Captain von Stahle's Redemption
+  'eng-sub-5-1': 8,  // 5.1 Rajkumar Shukla & Tinkathia System
+  'eng-sub-5-2': 9,  // 5.2 Civil Disobedience at Motihari
+  'eng-sub-5-3': 8,  // 5.3 The 25% Compromise & Social Transformation
+
+  // --- English Flamingo Poetry ---
+  'eng-sub-6-1': 8,  // 6.1 Cochin Airport & Sprinting Trees Contrast
+  'eng-sub-6-2': 9,  // 6.2 Late Winter's Moon & Parting Smile
+  'eng-sub-7-1': 7,  // 7.1 Counting to Twelve & Exotic Moment
+  'eng-sub-7-2': 8,  // 7.2 Stopping Wars & Ecological Assault
+  'eng-sub-7-3': 8,  // 7.3 Stillness vs Total Inactivity & Earth's Lesson
+  'eng-sub-8-1': 9,  // 8.1 A Thing of Beauty — Joy Forever & Quiet Bower
+  'eng-sub-8-2': 10, // 8.2 The 7 Things of Beauty vs The 7 Causes of Suffering
+  'eng-sub-8-3': 9,  // 8.3 The Endless Fountain of Immortal Drink
+
+  // --- English Vistas Supplementary ---
+  'eng-sub-9-1': 8,  // 9.1 Charley & Grand Central Third Level
+  'eng-sub-9-2': 7,  // 9.2 The World of 1894 Galesburg
+  'eng-sub-9-3': 9,  // 9.3 Sam Weiner's Letter from Galesburg
+  'eng-sub-10-1': 8, // 10.1 Tiger King Infant's Miracle & Vow
+  'eng-sub-10-2': 8, // 10.2 British Officer Crisis & 50 Diamond Rings
+  'eng-sub-10-3': 10,// 10.3 The 100th Tiger Mystery & Wooden Toy Revenge
+  'eng-sub-11-1': 7, // 11.1 Journey to Antarctica & Gondwana
+  'eng-sub-11-2': 8, // 11.2 Climate Change & Students on Ice
+  'eng-sub-11-3': 9, // 11.3 Phytoplankton & Take Care of Small Things
+
+  // --- English Writing & Reading Skills ---
+  'eng-sub-12-1': 9, // 12.1 Unseen Passage Reading Strategies
+  'eng-sub-13-1': 9, // 13.1 Notice Writing (Format, 50 Words & Box)
+  'eng-sub-14-1': 8, // 14.1 Invitations and Replies (Formal & Informal)
+  'eng-sub-15-1': 10,// 15.1 Letter to the Editor (3-Paragraph Layout)
+  'eng-sub-16-1': 10 // 16.1 Job Application with Bio-Data
 };
 
 /**

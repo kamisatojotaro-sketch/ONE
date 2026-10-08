@@ -660,6 +660,8 @@ export const POPULAR_SEARCH_SUGGESTIONS = {
     { label: "DNA Replication", query: "DNA replication", type: "Biology" },
     { label: "Molarity vs Molality", query: "Molarity molality", type: "Chemistry" },
     { label: "Self and Personality", query: "Self personality", type: "Psychology" },
+    { label: "A Thing of Beauty (7 Beauties)", query: "Thing of Beauty", type: "English" },
+    { label: "The Last Lesson (M. Hamel)", query: "Last Lesson", type: "English" },
   ],
   physics: [
     { label: "Faraday's Induction", query: "Faraday", type: "Physics" },
@@ -690,5 +692,14 @@ export const POPULAR_SEARCH_SUGGESTIONS = {
     { label: "Psychological Disorders", query: "Disorder", type: "Psychology" },
     { label: "Therapeutic Approaches", query: "Therapy", type: "Psychology" },
     { label: "Intelligence & Assessment", query: "Intelligence", type: "Psychology" },
+  ],
+  english: [
+    { label: "A Thing of Beauty (John Keats)", query: "Thing of beauty", type: "English" },
+    { label: "The Last Lesson & M. Hamel", query: "Last Lesson", type: "English" },
+    { label: "Notice Writing (50 Words Format)", query: "Notice Writing", type: "English" },
+    { label: "Letter to the Editor Format", query: "Letter to the Editor", type: "English" },
+    { label: "The Rattrap & Edla Willmansson", query: "Rattrap", type: "English" },
+    { label: "The Third Level (Galesburg 1894)", query: "Third Level", type: "English" },
+    { label: "The Tiger King (100th Tiger)", query: "Tiger King", type: "English" },
   ]
 };
