@@ -2,6 +2,7 @@
 // Enhanced with Oswaal-grade study aids: Mnemonics, Commonly Made Errors, CBSE Assertion-Reason, and Exam Trends
 // Covers all active subtopics across Physics, Chemistry & Biology Chapters
 import { BIOLOGY_STRUCTURED_NOTES } from './biologyStructuredNotes';
+import { ENGLISH_STRUCTURED_NOTES } from './englishStructuredNotes';
 
 export const STRUCTURED_NOTES_DATA = {
   "chem-sub-1-1": {
@@ -3650,5 +3651,6 @@ export const STRUCTURED_NOTES_DATA = {
       "hotTopic": "Displacement current derivation and charging capacitor paradox"
     }
   },
-  ...BIOLOGY_STRUCTURED_NOTES
+  ...BIOLOGY_STRUCTURED_NOTES,
+  ...ENGLISH_STRUCTURED_NOTES
 };

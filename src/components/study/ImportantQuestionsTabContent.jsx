@@ -11,6 +11,7 @@ import {
   BIG_ORANGE_CORE_QUESTIONS, 
   BIG_ORANGE_PAGE_QUESTIONS 
 } from '../../data/biologyImportantQuestionsData';
+import { IMPORTANT_ENGLISH_QUESTIONS } from '../../data/englishImportantQuestionsData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import BiologyDiagramCard from './BiologyDiagramCard';
 import BiologyPdfGuideViewer from './BiologyPdfGuideViewer';
@@ -18,6 +19,7 @@ import { FormattedLatex, MathBlock } from './LatexView';
 
 const STORAGE_KEY_MASTERED_PHYSICS = 'one_mastered_imp_physics_q';
 const STORAGE_KEY_MASTERED_BIOLOGY = 'one_mastered_imp_bio_q';
+const STORAGE_KEY_MASTERED_ENGLISH = 'one_mastered_imp_eng_q';
 
 const DIAGRAM_MAPPING = {
   'imp-phy-1': 'gauss-applications',
@@ -93,13 +95,15 @@ export default function ImportantQuestionsTabContent({
   onJumpToChapter, 
   onSelectTab 
 }) {
-  // Current subject view: 'physics' or 'biology'
-  const [activeSubject, setActiveSubject] = useState(
-    propSelectedSubject === 'biology' ? 'biology' : 'physics'
-  );
+  // Current subject view: 'physics', 'biology', or 'english'
+  const [activeSubject, setActiveSubject] = useState(() => {
+    if (propSelectedSubject === 'biology') return 'biology';
+    if (propSelectedSubject === 'english') return 'english';
+    return 'physics';
+  });
 
   useEffect(() => {
-    if (propSelectedSubject === 'biology' || propSelectedSubject === 'physics') {
+    if (propSelectedSubject === 'biology' || propSelectedSubject === 'english' || propSelectedSubject === 'physics') {
       setActiveSubject(propSelectedSubject);
     }
   }, [propSelectedSubject]);
@@ -136,6 +140,16 @@ export default function ImportantQuestionsTabContent({
     }
   });
 
+  // Mastered state for English
+  const [masteredEnglishIds, setMasteredEnglishIds] = useState(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_MASTERED_ENGLISH);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY_MASTERED_PHYSICS, JSON.stringify(masteredPhysicsIds));
@@ -152,11 +166,24 @@ export default function ImportantQuestionsTabContent({
     }
   }, [masteredBiologyIds]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_MASTERED_ENGLISH, JSON.stringify(masteredEnglishIds));
+    } catch (e) {
+      console.error('Failed to save mastered english questions:', e);
+    }
+  }, [masteredEnglishIds]);
+
   const isBiology = activeSubject === 'biology';
-  const masteredIds = isBiology ? masteredBiologyIds : masteredPhysicsIds;
+  const isEnglish = activeSubject === 'english';
+  const masteredIds = isEnglish ? masteredEnglishIds : (isBiology ? masteredBiologyIds : masteredPhysicsIds);
 
   const toggleMastered = (id) => {
-    if (isBiology) {
+    if (isEnglish) {
+      setMasteredEnglishIds(prev => 
+        prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+      );
+    } else if (isBiology) {
       setMasteredBiologyIds(prev => 
         prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
       );
@@ -253,7 +280,9 @@ export default function ImportantQuestionsTabContent({
   };
 
   // Active question set based on subject
-  const currentQuestions = isBiology ? ALL_BIG_ORANGE_QUESTIONS : IMPORTANT_PHYSICS_QUESTIONS;
+  const currentQuestions = isEnglish 
+    ? IMPORTANT_ENGLISH_QUESTIONS 
+    : (isBiology ? ALL_BIG_ORANGE_QUESTIONS : IMPORTANT_PHYSICS_QUESTIONS);
 
   // Units list for filter
   const unitsList = useMemo(() => {
