@@ -1,10 +1,11 @@
 import React from 'react';
 import { 
   BookMarked, Calculator, HelpCircle, Sparkles, 
-  Layers, CheckCircle2, Award, Zap, Compass
+  Layers, CheckCircle2, Award, Zap, Compass, Brain, AlertTriangle
 } from 'lucide-react';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
 import { getImportantSubtopicInfo } from '../../data/importantSubtopicsMapping';
+import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import { FormattedLatex } from './LatexView';
@@ -83,6 +84,14 @@ export default function Physics4PartSectionView({
 
   // 5. Terms Glossary
   const termsGlossary = matchedQ?.termsGlossary || [];
+
+  // 6. Oswaal Structured Notes (Definitions, Mnemonic, Common Errors, Assertion-Reason)
+  const structuredData = STRUCTURED_NOTES_DATA[subtopicId] || null;
+  const oswaalDefinitions = structuredData?.definitions || [];
+  const oswaalMnemonic = structuredData?.oswaalMnemonic || null;
+  const commonlyMadeErrors = structuredData?.commonlyMadeErrors || [];
+  const assertionReason = structuredData?.assertionReason || null;
+  const examTrend = structuredData?.examTrend || null;
 
   return (
     <div className="space-y-6">
@@ -359,6 +368,100 @@ export default function Physics4PartSectionView({
           formulaList={section.keyFormulas} 
           derivations={null} 
         />
+      )}
+
+      {/* ==================================================================== */}
+      {/* OSWAAL STRUCTURED DEFINITIONS, MEMORY BOOSTER & COMMONLY MADE ERRORS */}
+      {/* ==================================================================== */}
+      {oswaalDefinitions.length > 0 && (
+        <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3">
+          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+            <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+              <Award size={16} />
+              <span>Exact Board Definitions &amp; SI Units</span>
+            </div>
+            {examTrend && (
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-500/30">
+                {typeof examTrend === 'object' ? (examTrend.pastYears || examTrend.frequency || 'High Yield') : examTrend}
+              </span>
+            )}
+          </div>
+          <div className="grid grid-cols-1 gap-2.5">
+            {oswaalDefinitions.map((def, idx) => (
+              <div key={idx} className="p-3.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1">
+                <span className="text-xs font-serif font-bold text-[var(--accent-primary)] block">
+                  {def.term}
+                </span>
+                <div
+                  className="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: formatMathString(def.definition || def.meaning || '') }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {oswaalMnemonic && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-purple-500/10 border-2 border-purple-500/30 shadow-xs space-y-1.5">
+          <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
+            <Brain size={15} />
+            <span>Oswaal Memory Booster &amp; Exam Trick</span>
+          </div>
+          <div
+            className="font-sans text-xs sm:text-sm text-[var(--text-primary)] font-medium leading-relaxed"
+            dangerouslySetInnerHTML={{
+              __html: formatMathString(
+                typeof oswaalMnemonic === 'object'
+                  ? `<strong>${oswaalMnemonic.title || 'Mnemonic'}:</strong> ${oswaalMnemonic.phrase || ''} — ${oswaalMnemonic.explanation || ''}`
+                  : oswaalMnemonic
+              )
+            }}
+          />
+        </div>
+      )}
+
+      {commonlyMadeErrors.length > 0 && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/5 border border-rose-500/30 shadow-xs space-y-3">
+          <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
+            <AlertTriangle size={15} />
+            <span>Commonly Made Board Errors &amp; Answering Tips</span>
+          </div>
+          <div className="space-y-2.5">
+            {commonlyMadeErrors.map((err, idx) => (
+              <div key={idx} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase text-rose-500 block">✗ Common Student Error:</span>
+                  <div className="text-[var(--text-secondary)] leading-relaxed" dangerouslySetInnerHTML={{ __html: formatMathString(err.error || '') }} />
+                </div>
+                <div className="space-y-1 md:border-l md:border-[var(--border-subtle)] md:pl-3">
+                  <span className="text-[10px] font-mono font-bold uppercase text-emerald-500 block">✓ Examiner Answering Tip:</span>
+                  <div className="text-[var(--text-primary)] font-medium leading-relaxed" dangerouslySetInnerHTML={{ __html: formatMathString(err.tip || err.correction || '') }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {assertionReason && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/5 border border-amber-500/30 shadow-xs space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+              High-Probability Board Assertion–Reason
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold">
+              Ans: {assertionReason.correctOption || assertionReason.answer || ''}
+            </span>
+          </div>
+          <div className="text-xs sm:text-sm text-[var(--text-primary)] space-y-1">
+            <div dangerouslySetInnerHTML={{ __html: `<strong>Assertion (A):</strong> ${formatMathString(assertionReason.assertion)}` }} />
+            <div dangerouslySetInnerHTML={{ __html: `<strong>Reason (R):</strong> ${formatMathString(assertionReason.reason)}` }} />
+          </div>
+          {assertionReason.explanation && (
+            <div className="text-xs text-[var(--text-secondary)] italic pt-1 border-t border-amber-500/20" dangerouslySetInnerHTML={{ __html: formatMathString(assertionReason.explanation) }} />
+          )}
+        </div>
       )}
     </div>
   );

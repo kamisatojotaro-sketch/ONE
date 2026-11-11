@@ -2,6 +2,10 @@
 // Enhanced with Oswaal-grade study aids: Mnemonics, Commonly Made Errors, CBSE Assertion-Reason, and Exam Trends
 // Covers all active subtopics across Physics, Chemistry & Biology Chapters
 import { BIOLOGY_STRUCTURED_NOTES } from './biologyStructuredNotes';
+import { BIOLOGY_VOL2_STRUCTURED_NOTES } from './biologyVol2StructuredNotes';
+import { PHYSICS_VOL2_STRUCTURED_NOTES } from './physicsVol2StructuredNotes';
+import { CHEMISTRY_REMAINING_STRUCTURED_NOTES } from './chemistryRemainingStructuredNotes';
+import { PSYCHOLOGY_STRUCTURED_NOTES } from './psychologyStructuredNotes';
 import { ENGLISH_STRUCTURED_NOTES } from './englishStructuredNotes';
 
 export const STRUCTURED_NOTES_DATA = {
@@ -3652,5 +3656,9 @@ export const STRUCTURED_NOTES_DATA = {
     }
   },
   ...BIOLOGY_STRUCTURED_NOTES,
+  ...BIOLOGY_VOL2_STRUCTURED_NOTES,
+  ...PHYSICS_VOL2_STRUCTURED_NOTES,
+  ...CHEMISTRY_REMAINING_STRUCTURED_NOTES,
+  ...PSYCHOLOGY_STRUCTURED_NOTES,
   ...ENGLISH_STRUCTURED_NOTES
 };

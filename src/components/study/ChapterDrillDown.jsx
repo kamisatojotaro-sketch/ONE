@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote, Target, Calculator } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote, Target, Calculator, Zap, Brain, AlertTriangle } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
 import ReactionDiagramCard from './ReactionDiagramCard';
@@ -66,7 +67,44 @@ const PHYSICS_SUBTOPIC_DIAGRAMS = {
   'phy-sub-8-1': 'em-wave-structure',
   'phy-sub-8-2': 'em-wave-structure',
   'phy-sub-8-3': 'displacement-current',
-  'phy-sub-8-4': 'em-wave-structure'
+  'phy-sub-8-4': 'em-wave-structure',
+
+  // Chapter 9: Ray Optics and Optical Instruments
+  'phy-sub-9-1': 'ray-optics-instruments',
+  'phy-sub-9-2': 'ray-optics-instruments',
+  'phy-sub-9-3': 'ray-optics-instruments',
+  'phy-sub-9-4': 'ray-optics-instruments',
+  'phy-sub-9-5': 'ray-optics-instruments',
+
+  // Chapter 10: Wave Optics
+  'phy-sub-10-1': 'ydse-wave-optics',
+  'phy-sub-10-2': 'ydse-wave-optics',
+  'phy-sub-10-3': 'ydse-wave-optics',
+  'phy-sub-10-4': 'ydse-wave-optics',
+
+  // Chapter 11: Dual Nature of Radiation and Matter
+  'phy-sub-11-1': 'photoelectric-graphs',
+  'phy-sub-11-2': 'photoelectric-graphs',
+  'phy-sub-11-3': 'photoelectric-graphs',
+  'phy-sub-11-4': 'photoelectric-graphs',
+
+  // Chapter 12: Atoms
+  'phy-sub-12-1': 'bohr-atom-spectra',
+  'phy-sub-12-2': 'bohr-atom-spectra',
+  'phy-sub-12-3': 'bohr-atom-spectra',
+  'phy-sub-12-4': 'bohr-atom-spectra',
+
+  // Chapter 13: Nuclei
+  'phy-sub-13-1': 'bohr-atom-spectra',
+  'phy-sub-13-2': 'bohr-atom-spectra',
+  'phy-sub-13-3': 'bohr-atom-spectra',
+  'phy-sub-13-4': 'bohr-atom-spectra',
+
+  // Chapter 14: Semiconductor Electronics
+  'phy-sub-14-1': 'pn-junction-rectifier',
+  'phy-sub-14-2': 'pn-junction-rectifier',
+  'phy-sub-14-3': 'pn-junction-rectifier',
+  'phy-sub-14-4': 'pn-junction-rectifier'
 };
 
 export default function ChapterDrillDown({
@@ -290,31 +328,35 @@ export default function ChapterDrillDown({
         </div>
       </div>
 
-      {/* Mode Switcher Banner: General Study vs Important Questions */}
+      {/* Mode Switcher Banner: General Study vs Important Questions vs Quick Cheat Sheet */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs">
         <div className="flex items-center gap-2.5">
           <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
-            chapterStudyMode === 'QUESTIONS'
+            chapterStudyMode === 'QUESTIONS' || chapterStudyMode === 'CHEAT_SHEET'
               ? 'bg-[var(--accent-primary)] text-white shadow-xs'
               : 'bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]'
           }`}>
-            {chapterStudyMode === 'QUESTIONS' ? <Target size={16} /> : <BookOpen size={16} />}
+            {chapterStudyMode === 'QUESTIONS' ? <Target size={16} /> : chapterStudyMode === 'CHEAT_SHEET' ? <Zap size={16} /> : <BookOpen size={16} />}
           </div>
           <div>
             <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
               Study Focus Mode
             </span>
             <h4 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
-              {chapterStudyMode === 'QUESTIONS' ? 'Important Questions & Exam Blueprints' : 'General Study & Complete NCERT Notes'}
+              {chapterStudyMode === 'QUESTIONS'
+                ? 'Important Questions & Exam Blueprints'
+                : chapterStudyMode === 'CHEAT_SHEET'
+                ? 'Whole-Chapter Quick Cheat Sheet & Memory Boosters'
+                : 'General Study & Complete NCERT Notes'}
             </h4>
           </div>
         </div>
 
         {/* Toggle Pills */}
-        <div className="flex items-center gap-1 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0 w-full sm:w-auto">
+        <div className="flex items-center gap-1 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0 w-full sm:w-auto overflow-x-auto scrollbar-none">
           <button
             onClick={() => onSetChapterStudyMode?.('GENERAL')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
               chapterStudyMode === 'GENERAL'
                 ? 'bg-[var(--accent-primary)] text-white shadow-xs'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -325,7 +367,7 @@ export default function ChapterDrillDown({
           </button>
           <button
             onClick={() => onSetChapterStudyMode?.('QUESTIONS')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] ${
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
               chapterStudyMode === 'QUESTIONS'
                 ? 'bg-[var(--accent-primary)] text-white shadow-xs'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -333,6 +375,17 @@ export default function ChapterDrillDown({
           >
             <Target size={13} />
             <span>Important Questions</span>
+          </button>
+          <button
+            onClick={() => onSetChapterStudyMode?.('CHEAT_SHEET')}
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
+              chapterStudyMode === 'CHEAT_SHEET'
+                ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            }`}
+          >
+            <Zap size={13} />
+            <span>Quick Cheat Sheet</span>
           </button>
         </div>
       </div>
@@ -346,7 +399,101 @@ export default function ChapterDrillDown({
         </div>
       )}
 
+      {chapterStudyMode === 'CHEAT_SHEET' && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-xs text-purple-600 dark:text-purple-400 font-medium shadow-2xs">
+            <Zap size={16} className="shrink-0" />
+            <span>
+              <strong>Whole-Chapter Last-Minute Cheat Sheet:</strong> Aggregating all exact Board Definitions, Key Formulas &amp; Reactions, Oswaal Memory Boosters, and Common Board Pitfalls across all {chapter.subchapters.length} subtopics of <strong>{chapter.title}</strong>.
+            </span>
+          </div>
+
+          <div className="space-y-5">
+            {chapter.subchapters.map((sub) => {
+              const sData = STRUCTURED_NOTES_DATA[sub.id];
+              const subFormulas = sub.sections?.flatMap((sec) => sec.keyFormulas || []) || [];
+              return (
+                <div key={sub.id} className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+                        Subtopic Rapid Summary
+                      </span>
+                      <h4 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)]">
+                        {sub.title}
+                      </h4>
+                    </div>
+                    <button
+                      onClick={() => {
+                        onSelectSubchapter(sub.id);
+                        onSetChapterStudyMode?.('GENERAL');
+                      }}
+                      className="self-start sm:self-auto px-3 py-1 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-xs font-mono text-[var(--accent-primary)] font-semibold cursor-pointer transition-colors"
+                    >
+                      Open Full Notes →
+                    </button>
+                  </div>
+
+                  {sData?.definitions && sData.definitions.length > 0 && (
+                    <div className="space-y-2">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
+                        Exact Board Definitions:
+                      </span>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                        {sData.definitions.map((d, i) => (
+                          <div key={i} className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1">
+                            <span className="text-xs font-serif font-bold text-[var(--accent-primary)] block">{d.term}</span>
+                            <div className="text-xs text-[var(--text-secondary)] leading-relaxed" dangerouslySetInnerHTML={{ __html: formatMathString(d.definition || d.meaning || '') }} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {subFormulas.length > 0 && (
+                    <FormulaCard formulaList={subFormulas} derivations={null} />
+                  )}
+
+                  {sData?.oswaalMnemonic && (
+                    <div className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-start gap-2.5">
+                      <Brain size={15} className="text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" />
+                      <div
+                        className="text-xs text-[var(--text-primary)] leading-relaxed"
+                        dangerouslySetInnerHTML={{
+                          __html: `<strong>Memory Booster:</strong> ${formatMathString(
+                            typeof sData.oswaalMnemonic === 'object'
+                              ? `${sData.oswaalMnemonic.title || ''}: ${sData.oswaalMnemonic.phrase || ''} — ${sData.oswaalMnemonic.explanation || ''}`
+                              : sData.oswaalMnemonic
+                          )}`
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {sData?.commonlyMadeErrors && sData.commonlyMadeErrors.length > 0 && (
+                    <div className="space-y-2">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-500 flex items-center gap-1.5">
+                        <AlertTriangle size={13} /> Common Board Traps &amp; Corrections:
+                      </span>
+                      <div className="grid grid-cols-1 gap-2">
+                        {sData.commonlyMadeErrors.map((err, idx) => (
+                          <div key={idx} className="p-3 rounded-xl bg-rose-500/5 border border-rose-500/20 text-xs grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <div className="text-[var(--text-secondary)]" dangerouslySetInnerHTML={{ __html: `<strong class="text-rose-500">✗ Error:</strong> ${formatMathString(err.error || '')}` }} />
+                            <div className="text-[var(--text-primary)] font-medium" dangerouslySetInnerHTML={{ __html: `<strong class="text-emerald-500">✓ Tip:</strong> ${formatMathString(err.tip || err.correction || '')}` }} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Sections List */}
+      {chapterStudyMode !== 'CHEAT_SHEET' && (
       <div className="space-y-6 sm:space-y-8">
         {currentSubchapter.sections?.map((section) => {
           const isDone = completedSections.includes(section.id);
@@ -681,6 +828,7 @@ export default function ChapterDrillDown({
           );
         })}
       </div>
+      )}
 
       {/* Subchapter Completed Button */}
       <div className="pt-4 sm:pt-6 pb-8 sm:pb-12 flex flex-col items-center justify-center space-y-3">

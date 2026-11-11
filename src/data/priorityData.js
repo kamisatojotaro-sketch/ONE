@@ -321,7 +321,117 @@ export const DEFAULT_SUBTOPIC_PRIORITIES = {
   'eng-sub-13-1': 9, // 13.1 Notice Writing (Format, 50 Words & Box)
   'eng-sub-14-1': 8, // 14.1 Invitations and Replies (Formal & Informal)
   'eng-sub-15-1': 10,// 15.1 Letter to the Editor (3-Paragraph Layout)
-  'eng-sub-16-1': 10 // 16.1 Job Application with Bio-Data
+  'eng-sub-16-1': 10, // 16.1 Job Application with Bio-Data
+
+  // --- Physics Volume 2 (Ch 9 to 14) ---
+  'phy-sub-9-1': 7,  // 9.1 Reflection by Spherical Mirrors & Mirror Formula
+  'phy-sub-9-2': 9,  // 9.2 Refraction, Snell's Law & Total Internal Reflection (Optical Fibres)
+  'phy-sub-9-3': 10, // 9.3 Refraction at Spherical Surfaces & Lens Maker's Formula (5M Derivation)
+  'phy-sub-9-4': 9,  // 9.4 Refraction and Dispersion through a Prism (Minimum Deviation Formula)
+  'phy-sub-9-5': 10, // 9.5 Optical Instruments: Compound Microscope & Astronomical Telescope (5M Ray Diagrams)
+  'phy-sub-10-1': 7, // 10.1 Huygens Principle & Wavefront Types
+  'phy-sub-10-2': 9, // 10.2 Reflection & Refraction of Plane Waves using Huygens Principle (3M Proof)
+  'phy-sub-10-3': 8, // 10.3 Coherent Sources, Superposition & Interference of Light
+  'phy-sub-10-4': 10,// 10.4 Young's Double Slit Experiment (YDSE) & Fringe Width
+  'phy-sub-10-5': 9, // 10.5 Diffraction Due to a Single Slit & Central Maximum Width
+  'phy-sub-11-1': 6, // 11.1 Work Function, Electron Emission & Photoelectric Effect
+  'phy-sub-11-2': 9, // 11.2 Experimental Study of Photoelectric Effect (Stopping Potential & Intensity Graphs)
+  'phy-sub-11-3': 9, // 11.3 Einstein's Photoelectric Equation & Photon Picture
+  'phy-sub-11-4': 8, // 11.4 Wave Nature of Matter & de Broglie Wavelength
+  'phy-sub-12-1': 7, // 12.1 Alpha-Particle Scattering & Rutherford's Nuclear Model (Closest Approach)
+  'phy-sub-12-2': 9, // 12.2 Bohr's Model of Hydrogen Atom: Postulates, Radii & Energy
+  'phy-sub-12-3': 8, // 12.3 Atomic Spectra, Rydberg Formula & de Broglie Explanation
+  'phy-sub-13-1': 7, // 13.1 Atomic Masses, Nuclear Size & Constant Nuclear Density Proof
+  'phy-sub-13-2': 9, // 13.2 Mass-Energy Equivalence, Mass Defect & Binding Energy per Nucleon Curve
+  'phy-sub-13-3': 7, // 13.3 Nuclear Force, Nuclear Fission & Nuclear Fusion
+  'phy-sub-14-1': 6, // 14.1 Energy Bands in Solids: Conductors, Insulators & Semiconductors
+  'phy-sub-14-2': 8, // 14.2 Intrinsic & Extrinsic Semiconductors (n-type & p-type)
+  'phy-sub-14-3': 9, // 14.3 p-n Junction Formation, Depletion Layer & V-I Characteristics
+  'phy-sub-14-4': 10,// 14.4 p-n Junction Diode as Half-Wave and Full-Wave Rectifier (5M Circuit & Waveforms)
+
+  // --- Chemistry Remaining Chapters (Ch 3, 5, 8, 9, 10) ---
+  'chem-sub-3-1': 6,  // 3.1 Rate of a Chemical Reaction (Average vs Instantaneous)
+  'chem-sub-3-2': 8,  // 3.2 Rate Law, Order vs Molecularity Distinction
+  'chem-sub-3-3': 10, // 3.3 Integrated Rate Equations & Half-Life (Zero & First Order Numericals)
+  'chem-sub-3-4': 9,  // 3.4 Arrhenius Equation, Activation Energy & Catalyst
+  'chem-sub-3-5': 5,  // 3.5 Collision Theory of Chemical Reactions
+  'chem-sub-5-1': 7,  // 5.1 Werner's Theory, Double Salts vs Complexes & Ligands
+  'chem-sub-5-2': 8,  // 5.2 Coordination Number & IUPAC Nomenclature
+  'chem-sub-5-3': 9,  // 5.3 Isomerism in Coordination Compounds (Geometrical, Optical, Structural)
+  'chem-sub-5-4': 10, // 5.4 Valence Bond Theory (VBT): Hybridisation & Magnetic Moment
+  'chem-sub-5-5': 9,  // 5.5 Crystal Field Theory (CFT) Splitting & Metal Carbonyls
+  'chem-sub-8-1': 9,  // 8.1 Nomenclature & Preparation of Aldehydes and Ketones (Rosenmund, Stephen, Etard)
+  'chem-sub-8-2': 8,  // 8.2 Nucleophilic Addition Reactions & Reactivity Order
+  'chem-sub-8-3': 9,  // 8.3 Clemmensen/Wolff-Kishner Reduction & Tollens'/Fehling's/Haloform Tests
+  'chem-sub-8-4': 10, // 8.4 Aldol Condensation & Cannizzaro Reaction (Guaranteed 3M/5M)
+  'chem-sub-8-5': 9,  // 8.5 Carboxylic Acids: Acidity Comparison & HVZ Reaction
+  'chem-sub-9-1': 8,  // 9.1 Preparation of Amines (Gabriel Phthalimide & Hoffmann Bromamide)
+  'chem-sub-9-2': 10, // 9.2 Basicity of Amines in Gas vs Aqueous Phase (pK_b Order)
+  'chem-sub-9-3': 9,  // 9.3 Carbylamine Test & Hinsberg's Reagent (1°, 2°, 3° Distinction)
+  'chem-sub-9-4': 7,  // 9.4 Electrophilic Substitution of Aniline (Bromination, Nitration, Zwitterion)
+  'chem-sub-9-5': 8,  // 9.5 Diazonium Salts: Sandmeyer, Gattermann & Azo Dye Coupling
+  'chem-sub-10-1': 9, // 10.1 Carbohydrates & Glucose Structure Proofs (HI, Br2 water, HNO3)
+  'chem-sub-10-2': 8, // 10.2 Proteins: Amino Acids, Peptide Bond, Structure & Denaturation
+  'chem-sub-10-3': 6, // 10.3 Enzymes & Vitamins (Deficiency Diseases)
+  'chem-sub-10-4': 9, // 10.4 Nucleic Acids: DNA vs RNA, Nucleoside/Nucleotide & Double Helix
+
+  // --- Biology Ch 7 to 13 ---
+  'bio-sub-7-1': 8,  // 7.1 Common Diseases in Humans (Typhoid, Pneumonia, Amoebiasis, Ascariasis)
+  'bio-sub-7-2': 9,  // 7.2 Malaria & Plasmodium Life Cycle (Sporozoites, Gametocytes)
+  'bio-sub-7-3': 9,  // 7.3 Immunity: Innate vs Acquired, Active vs Passive & Antibody Structure
+  'bio-sub-7-4': 7,  // 7.4 Allergies, Autoimmunity & Lymphoid Organs
+  'bio-sub-7-5': 9,  // 7.5 AIDS & HIV Retrovirus Replication
+  'bio-sub-7-6': 8,  // 7.6 Cancer Biology, Contact Inhibition & Metastasis
+  'bio-sub-7-7': 8,  // 7.7 Drugs & Alcohol Abuse (Opioids, Cannabinoids, Coca Alkaloids)
+  'bio-sub-8-1': 6,  // 8.1 Microbes in Household Products (LAB, Baker's Yeast, Swiss Cheese)
+  'bio-sub-8-2': 9,  // 8.2 Microbes in Industrial Products (Streptokinase, Cyclosporin A, Statins)
+  'bio-sub-8-3': 8,  // 8.3 Microbes in Sewage Treatment (Primary vs Secondary, Flocs, BOD)
+  'bio-sub-8-4': 7,  // 8.4 Microbes in Biogas Production (Methanogens, IARI/KVIC Plant)
+  'bio-sub-8-5': 8,  // 8.5 Microbes as Biocontrol Agents & Biofertilisers (Bt, NPV, Glomus)
+  'bio-sub-9-1': 9,  // 9.1 Restriction Endonucleases, Palindromic Sequences & Sticky Ends
+  'bio-sub-9-2': 8,  // 9.2 Agarose Gel Electrophoresis & Elution
+  'bio-sub-9-3': 10, // 9.3 Cloning Vectors: pBR322 Map & Insertional Inactivation
+  'bio-sub-9-4': 7,  // 9.4 Competent Host & Gene Transfer Methods (Biolistics, Microinjection)
+  'bio-sub-9-5': 10, // 9.5 PCR (Denaturation, Annealing, Extension), Bioreactors & Downstream Processing
+  'bio-sub-10-1': 9, // 10.1 Bt Cotton & cry Genes Mechanism
+  'bio-sub-10-2': 9, // 10.2 RNA Interference (RNAi) against Meloidogyne incognita
+  'bio-sub-10-3': 10,// 10.3 Genetically Engineered Insulin (C-peptide) & ADA Gene Therapy
+  'bio-sub-10-4': 7, // 10.4 Molecular Diagnosis (PCR, ELISA) & Transgenic Animals
+  'bio-sub-10-5': 6, // 10.5 Ethical Issues, GEAC & Biopiracy
+  'bio-sub-11-1': 7, // 11.1 Population Attributes & Age Pyramids
+  'bio-sub-11-2': 7, // 11.2 Population Density & Fluctuation Factors
+  'bio-sub-11-3': 9, // 11.3 Exponential (J-Shaped) vs Logistic (S-Shaped) Growth Models
+  'bio-sub-11-4': 9, // 11.4 Population Interactions (Mutualism, Competition, Predation, Parasitism)
+  'bio-sub-12-1': 7, // 12.1 Ecosystem Structure & Productivity (GPP vs NPP)
+  'bio-sub-12-2': 8, // 12.2 Decomposition Steps (Fragmentation to Mineralisation)
+  'bio-sub-12-3': 7, // 12.3 Energy Flow, Food Chains & Lindeman's 10% Law
+  'bio-sub-12-4': 8, // 12.4 Ecological Pyramids (Number, Biomass, Energy)
+  'bio-sub-13-1': 6, // 13.1 Levels of Biodiversity & Global Species Estimates
+  'bio-sub-13-2': 9, // 13.2 Latitudinal Gradients & Humboldt's Species-Area Relationship
+  'bio-sub-13-3': 9, // 13.3 Rivet Popper Hypothesis & The Evil Quartet of Biodiversity Loss
+  'bio-sub-13-4': 8, // 13.4 In-situ (Hotspots, Sacred Groves) vs Ex-situ (Cryopreservation) Conservation
+
+  // --- Psychology Ch 4 to 7 ---
+  'psy-sub-4-1': 7,  // 4.1 Concepts of Abnormality (The 4 Ds) & Historical Views
+  'psy-sub-4-2': 8,  // 4.2 Classification (DSM-5/ICD-11) & Causal Models (Diathesis-Stress)
+  'psy-sub-4-3': 9,  // 4.3 Anxiety Disorders, OCD & PTSD
+  'psy-sub-4-4': 8,  // 4.4 Somatic Symptom & Dissociative Disorders
+  'psy-sub-4-5': 10, // 4.5 Depressive, Bipolar & Schizophrenia Spectrum Disorders
+  'psy-sub-4-6': 8,  // 4.6 Neurodevelopmental (ADHD, ASD), Eating & Substance Disorders
+  'psy-sub-5-1': 7,  // 5.1 Nature, Process & Therapeutic Alliance in Psychotherapy
+  'psy-sub-5-2': 9,  // 5.2 Behaviour Therapy & Systematic Desensitization (Wolpe)
+  'psy-sub-5-3': 10, // 5.3 Cognitive Therapy: Albert Ellis RET (ABC) & Aaron Beck
+  'psy-sub-5-4': 8,  // 5.4 Humanistic-Existential Therapy (Rogers & Frankl Logotherapy)
+  'psy-sub-5-5': 6,  // 5.5 Alternative Therapies (Yoga, SKY) & Rehabilitation
+  'psy-sub-6-1': 8,  // 6.1 A-B-C Components & 4 Properties of Attitudes
+  'psy-sub-6-2': 6,  // 6.2 Attitude Formation & Influencing Factors
+  'psy-sub-6-3': 10, // 6.3 Attitude Change: Heider P-O-X Balance, Festinger Cognitive Dissonance & Mohsin
+  'psy-sub-6-4': 7,  // 6.4 Source/Message/Target Factors & Attitude-Behaviour Link
+  'psy-sub-6-5': 8,  // 6.5 Prejudice: Sources & Strategies for Handling Prejudice
+  'psy-sub-7-1': 8,  // 7.1 Why People Join Groups & Tuckman's 5 Stages of Group Formation
+  'psy-sub-7-2': 8,  // 7.2 Group Structure (Roles, Norms, Status, Cohesiveness & Groupthink)
+  'psy-sub-7-3': 6,  // 7.3 Types of Groups (Primary/Secondary, Formal/Informal, In-group/Out-group)
+  'psy-sub-7-4': 9   // 7.4 Social Loafing & Group Polarisation
 };
 
 /**

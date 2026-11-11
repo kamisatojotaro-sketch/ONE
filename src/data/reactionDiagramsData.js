@@ -866,5 +866,357 @@ export const REACTION_DIAGRAMS = [
       formula: 'q = (N · ΔΦ_B) / R',
       statement: 'Total induced charge depends solely on flux change ΔΦ and resistance R (Zero time dependence!).'
     }
+  },
+
+  // =========================================================================
+  // CHAPTER 3: CHEMICAL KINETICS (Rate Laws, Integrated Equations & Arrhenius)
+  // =========================================================================
+  {
+    id: 'rxn-kinetics-zero-vs-first',
+    subtopicId: 'chem-sub-3-3',
+    chapterId: 'chem-ch-3',
+    title: 'Integrated Rate Equations & Half-Life: Zero Order vs First Order',
+    subtitle: 'Comparative Kinetic Laws, Linear Plots & Half-Life Dependencies',
+    category: 'physical',
+    diagramType: 'kinetics-comparison',
+    equation: 'Zero Order: [R] = [R]₀ − kt   |   First Order: k = (2.303/t) log([R]₀ / [R])',
+    classes: [
+      {
+        class: 'Zero Order Reaction (n = 0)',
+        example: '2NH₃(g) ──(Pt, 1130 K)──> N₂(g) + 3H₂(g)',
+        observation: 'Rate = k[R]⁰ = k (mol L⁻¹ s⁻¹). Plot of [R] vs t is straight line with slope = −k. Half-life t₁/₂ = [R]₀ / (2k) is directly proportional to initial concentration [R]₀.'
+      },
+      {
+        class: 'First Order Reaction (n = 1)',
+        example: 'N₂O₅(g) ⟶ 2NO₂(g) + ½O₂(g) & Radioactive Decay',
+        observation: 'Rate = k[R]¹ (s⁻¹). Plot of log[R] vs t has slope = −k / 2.303. Half-life t₁/₂ = 0.693 / k is strictly INDEPENDENT of initial concentration [R]₀!'
+      },
+      {
+        class: 'Pseudo First-Order Reaction',
+        example: 'CH₃COOC₂H₅ + H₂O(excess) ──(H⁺)──> CH₃COOH + C₂H₅OH',
+        observation: 'Molecularity = 2 (bimolecular), but experimental Order = 1 because solvent H₂O is present in huge excess ([H₂O] remains practically constant).'
+      }
+    ],
+    boardTip: 'CBSE Numericals Golden Rule: For a 1st-order reaction, time required for 99.9% completion is 10 × t₁/₂, and time for 99% completion is 2 × t₉₀%!'
+  },
+  {
+    id: 'rxn-arrhenius-activation',
+    subtopicId: 'chem-sub-3-4',
+    chapterId: 'chem-ch-3',
+    title: 'Arrhenius Equation, Activation Energy (Eₐ) & Catalyst Pathway',
+    subtitle: 'Temperature Dependence of Rate Constant & Maxwell-Boltzmann Distribution',
+    category: 'physical',
+    diagramType: 'arrhenius-pathway',
+    equation: 'k = A · e^(−Eₐ / RT)   ⟹   log(k₂ / k₁) = (Eₐ / 2.303 R) · [(T₂ − T₁) / (T₁ · T₂)]',
+    reactions: [
+      {
+        name: 'Linear Arrhenius Form (ln k vs 1/T)',
+        equation: 'ln k = ln A − (Eₐ / R) · (1 / T)   or   log k = log A − [Eₐ / (2.303 R)] · (1 / T)',
+        note: 'Plot of log k vs (1/T) gives a straight line with negative slope = −Eₐ / (2.303 R) and y-intercept = log A.'
+      },
+      {
+        name: 'Effect of Positive Catalyst on Activation Energy',
+        equation: 'Eₐ(catalysed) < Eₐ(uncatalysed)   |   ΔG and ΔH remain UNCHANGED',
+        note: 'A catalyst provides an alternative reaction pathway of lower activation energy, increasing both forward and backward rates equally so K_eq does not change.'
+      }
+    ],
+    mechanismSteps: [
+      '1. Threshold Energy (E_th): Minimum energy that colliding reactant molecules must possess for an effective collision.',
+      '2. Activation Energy (Eₐ): Eₐ = E_th − Average Kinetic Energy of reacting molecules.',
+      '3. For every 10°C (or 10 K) rise in temperature, the fraction of molecules with energy ≥ Eₐ nearly doubles, doubling the rate constant k.',
+      '4. Effective Collisions require BOTH: (a) Energy ≥ Threshold Energy (energy barrier) AND (b) Proper steric orientation (orientation factor P).'
+    ],
+    boardTip: 'Always convert Eₐ from kJ/mol to J/mol (multiply by 1000) before substituting R = 8.314 J K⁻¹ mol⁻¹ in log(k₂/k₁) numericals!'
+  },
+
+  // =========================================================================
+  // CHAPTER 5: COORDINATION COMPOUNDS (VBT & Crystal Field Splitting)
+  // =========================================================================
+  {
+    id: 'rxn-vbt-cft-bonding',
+    subtopicId: 'chem-sub-5-5',
+    chapterId: 'chem-ch-5',
+    title: 'Valence Bond Theory (VBT) vs Crystal Field Theory (CFT) Master Chart',
+    subtitle: 'Inner vs Outer Orbital Octahedral & Tetrahedral Complexes',
+    category: 'inorganic',
+    diagramType: 'coordination-bonding',
+    equation: 'Octahedral Splitting: t₂g (−0.4 Δ₀) & e_g (+0.6 Δ₀)   |   Tetrahedral: Δ_t = (4/9) Δ₀',
+    classes: [
+      {
+        class: '[Co(NH₃)₆]³⁺ vs [CoF₆]³⁻ (Co³⁺ = 3d⁶)',
+        example: 'NH₃ = Strong field ligand (Δ₀ > P)  |  F⁻ = Weak field ligand (Δ₀ < P)',
+        observation: '[Co(NH₃)₆]³⁺: d²sp³ (inner orbital), diamagnetic (t₂g⁶ e_g⁰, 0 unpaired e⁻). [CoF₆]³⁻: sp³d² (outer orbital), paramagnetic (t₂g⁴ e_g², 4 unpaired e⁻, μ = 4.90 BM).'
+      },
+      {
+        class: '[Ni(CN)₄]²⁻ vs [NiCl₄]²⁻ (Ni²⁺ = 3d⁸)',
+        example: 'CN⁻ = Strong field (Square Planar)  |  Cl⁻ = Weak field (Tetrahedral)',
+        observation: '[Ni(CN)₄]²⁻: dsp² hybridisation, Square Planar, Diamagnetic (0 unpaired e⁻). [NiCl₄]²⁻: sp³ hybridisation, Tetrahedral, Paramagnetic (2 unpaired e⁻, μ = 2.83 BM).'
+      },
+      {
+        class: 'Metal Carbonyl Synergic Bonding',
+        example: '[Ni(CO)₄] (sp³, Tetrahedral) & [Fe(CO)₅] (dsp³, Trigonal Bipyramidal)',
+        observation: 'M←CO σ-bond (lone pair donation from C to empty metal d-orbital) + M→CO π-backbonding (filled metal d-orbital to empty π* antibonding orbital of CO). Strengthens M–C bond!'
+      }
+    ],
+    boardTip: 'Most Repeated 3-Mark Question: Explain why [Co(NH₃)₆]³⁺ is an inner orbital diamagnetic complex whereas [CoF₆]³⁻ is an outer orbital paramagnetic complex.'
+  },
+
+  // =========================================================================
+  // CHAPTER 8: ALDEHYDES, KETONES & CARBOXYLIC ACIDS
+  // =========================================================================
+  {
+    id: 'rxn-carbonyl-preparations',
+    subtopicId: 'chem-sub-8-1',
+    chapterId: 'chem-ch-8',
+    title: 'Named Reactions for Preparation of Aldehydes & Ketones',
+    subtitle: 'Rosenmund, Stephen, Etard, Gatterman-Koch & Friedel-Crafts Acylation',
+    category: 'named-reaction',
+    diagramType: 'carbonyl-prep',
+    reactions: [
+      {
+        name: '1. Rosenmund Reduction',
+        equation: 'R–COCl + H₂ ──(Pd / BaSO₄, Quinoline)──> R–CHO + HCl',
+        note: 'BaSO₄ poisons the Pd catalyst to prevent over-reduction of aldehyde to primary alcohol.'
+      },
+      {
+        name: '2. Stephen Reaction',
+        equation: 'R–C≡N + SnCl₂ + HCl ⟶ [R–CH=NH·HCl] ──(H₃O⁺)──> R–CHO + NH₄Cl',
+        note: 'Nitriles are reduced to imine hydrochloride, which hydrolyses to aldehydes. DIBAL-H also selectively reduces nitriles and esters to aldehydes.'
+      },
+      {
+        name: '3. Etard Reaction',
+        equation: 'C₆H₅–CH₃ + CrO₂Cl₂ ──(CS₂)──> [Chromium Complex] ──(H₃O⁺)──> C₆H₅–CHO',
+        note: 'Chromyl chloride selectively oxidises the methyl group of toluene into benzaldehyde.'
+      },
+      {
+        name: '4. Gatterman-Koch Reaction',
+        equation: 'Benzene + CO + HCl ──(Anhyd. AlCl₃ / CuCl)──> Benzaldehyde (C₆H₅–CHO)',
+        note: 'Direct formylation of benzene ring into benzaldehyde.'
+      }
+    ],
+    boardTip: 'Remember: Acyl chlorides with dialkylcadmium (R₂Cd) give Ketones, whereas with H₂/Pd-BaSO₄ they give Aldehydes!'
+  },
+  {
+    id: 'rxn-nucleophilic-addition-reduction',
+    subtopicId: 'chem-sub-8-3',
+    chapterId: 'chem-ch-8',
+    title: 'Nucleophilic Addition, Clemmensen & Wolff-Kishner Reductions & Chemical Tests',
+    subtitle: 'sp² Planar Carbonyl Attack, Deoxygenation to Alkanes, Tollens & Fehling Tests',
+    category: 'mechanism',
+    diagramType: 'carbonyl-addition',
+    equation: '>C=O + Nu⁻ ──(Slow, sp² ⟶ sp³)──> Tetrahedral Alkoxide ──(H⁺)──> Addition Product',
+    reactions: [
+      {
+        name: 'Clemmensen Reduction (Acidic Medium)',
+        equation: '>C=O ──(Zn–Hg amalgam + Conc. HCl)──> >CH₂ + H₂O',
+        note: 'Reduces aldehydes/ketones to alkanes. Avoid if acid-sensitive groups (like –OH or C=C) are present.'
+      },
+      {
+        name: 'Wolff-Kishner Reduction (Basic Medium)',
+        equation: '>C=O ──(1. NH₂NH₂  2. KOH / Ethylene glycol, Δ)──> >CH₂ + N₂↑',
+        note: 'Reduces carbonyl group to methylene (>CH₂) in strong base via hydrazone intermediate.'
+      },
+      {
+        name: 'Tollens’ Silver Mirror Test',
+        equation: 'R–CHO + 2[Ag(NH₃)₂]⁺ + 3OH⁻ ──(Δ)──> R–COO⁻ + 2Ag↓ (Silver Mirror) + 4NH₃ + 2H₂O',
+        note: 'Given by ALL aldehydes (both aliphatic AND aromatic like Benzaldehyde). Ketones do NOT react.'
+      },
+      {
+        name: 'Iodoform Test (Methyl Ketone Detector)',
+        equation: 'R–CO–CH₃ + 3NaOI (NaOH + I₂) ⟶ R–COONa + CHI₃↓ (Yellow ppt.) + 2NaOH',
+        note: 'Positive ONLY for compounds containing CH₃–C=O or CH₃–CH(OH)– groups (Ethanal, Acetone, Ethanol, Propan-2-ol, Acetophenone).'
+      }
+    ],
+    boardTip: 'Benzaldehyde gives a positive Tollens’ test (Silver mirror) but does NOT respond to Fehling’s solution (no red Cu₂O ppt.) because its carbonyl group is stabilised by resonance!'
+  },
+  {
+    id: 'rxn-aldol-vs-cannizzaro',
+    subtopicId: 'chem-sub-8-4',
+    chapterId: 'chem-ch-8',
+    title: 'Aldol Condensation vs Cannizzaro Reaction',
+    subtitle: 'Role of α-Hydrogen in Carbonyl Disproportionation and Enolate Condensation',
+    category: 'named-reaction',
+    diagramType: 'aldol-cannizzaro',
+    reactions: [
+      {
+        name: 'Aldol Condensation (Requires ≥ 1 α-Hydrogen)',
+        equation: '2 CH₃–CHO ──(Dil. NaOH)──> CH₃–CH(OH)–CH₂–CHO (Aldol) ──(Δ, −H₂O)──> CH₃–CH=CH–CHO (But-2-enal)',
+        note: 'Mild base (dil. NaOH) abstracts acidic α-H to form resonance-stabilised enolate ion, which attacks another carbonyl carbon.'
+      },
+      {
+        name: 'Cannizzaro Reaction (Strictly NO α-Hydrogen)',
+        equation: '2 HCHO + Conc. KOH (50%) ⟶ CH₃OH (Reduced) + HCOOK (Oxidised)',
+        note: 'Self-redox (disproportionation) reaction in strong alkali (50% NaOH/KOH). Shown by Formaldehyde (HCHO), Benzaldehyde (C₆H₅CHO), and Trimethylacetaldehyde.'
+      }
+    ],
+    mechanismSteps: [
+      'Aldol Step 1: OH⁻ abstracts α-proton from CH₃CHO to generate nucleophile [CH₂=CH–O⁻ ↔ ⁻CH₂–CH=O].',
+      'Aldol Step 2: Enolate attacks second CH₃CHO molecule followed by protonation to yield 3-Hydroxybutanal (Aldol).',
+      'Aldol Step 3: Heating eliminates H₂O to form conjugated α,β-unsaturated aldehyde (Crotonaldehyde).',
+      'Cannizzaro Key Step: Hydride ion (H⁻) transfer directly from tetrahedral alkoxide intermediate to the second aldehyde molecule.'
+    ],
+    boardTip: 'Cross-Aldol between Ethanal and Propanal gives a mixture of FOUR products (2 self-aldol + 2 cross-aldol)!'
+  },
+  {
+    id: 'rxn-carboxylic-acid-reactions',
+    subtopicId: 'chem-sub-8-5',
+    chapterId: 'chem-ch-8',
+    title: 'Carboxylic Acids: HVZ Reaction, Decarboxylation & Acidity Trends',
+    subtitle: 'Hell-Volhard-Zelinsky α-Halogenation & Substituent Effects on pKₐ',
+    category: 'named-reaction',
+    diagramType: 'carboxylic-reactions',
+    reactions: [
+      {
+        name: 'Hell-Volhard-Zelinsky (HVZ) Reaction',
+        equation: 'R–CH₂–COOH ──(1. X₂ / Red Phosphorus   2. H₂O)──> R–CH(X)–COOH + HX   (X = Cl, Br)',
+        note: 'Selectively halogenates the α-carbon of carboxylic acids containing α-hydrogens.'
+      },
+      {
+        name: 'Soda-Lime Decarboxylation',
+        equation: 'R–COONa + NaOH ──(CaO, Δ)──> R–H + Na₂CO₃',
+        note: 'Step-down reaction: produces an alkane with one fewer carbon atom than the parent carboxylate salt.'
+      }
+    ],
+    classes: [
+      {
+        class: 'Electron-Withdrawing Groups (–I / –M)',
+        example: 'CF₃COOH > CCl₃COOH > CHCl₂COOH > CH₂ClCOOH > CH₃COOH',
+        observation: 'Stabilise the carboxylate anion by dispersing negative charge ⟹ Increase Acid Strength (Lower pKₐ).'
+      },
+      {
+        class: 'Electron-Donating Groups (+I)',
+        example: 'HCOOH > CH₃COOH > CH₃CH₂COOH > (CH₃)₂CHCOOH',
+        observation: 'Destabilise the carboxylate anion by intensifying negative charge ⟹ Decrease Acid Strength (Higher pKₐ).'
+      },
+      {
+        class: 'Sodium Bicarbonate Distinction Test',
+        example: 'R–COOH + NaHCO₃ ⟶ R–COONa + CO₂↑ (Brisk Effervescence) + H₂O',
+        observation: 'Carboxylic acids give brisk effervescence of CO₂ with NaHCO₃, whereas Phenols do NOT react with NaHCO₃!'
+      }
+    ],
+    boardTip: 'Remember: Higher Kₐ = Smaller pKₐ = Stronger Acid! Benzoic acid is stronger than acetic acid, and p-nitrobenzoic acid is stronger than p-methoxybenzoic acid.'
+  },
+
+  // =========================================================================
+  // CHAPTER 9: AMINES (Preparation, Basicity, Hinsberg & Diazonium Salts)
+  // =========================================================================
+  {
+    id: 'rxn-amines-preparation',
+    subtopicId: 'chem-sub-9-1',
+    chapterId: 'chem-ch-9',
+    title: 'Gabriel Phthalimide Synthesis & Hoffmann Bromamide Degradation',
+    subtitle: 'Pure Primary Aliphatic Amine Synthesis & Step-Down Amide Degradation',
+    category: 'named-reaction',
+    diagramType: 'amines-prep',
+    reactions: [
+      {
+        name: 'Gabriel Phthalimide Synthesis (Pure 1° Aliphatic Amines)',
+        equation: 'Phthalimide ──(1. alc. KOH  2. R–X  3. NaOH(aq), Δ)──> R–NH₂ (Pure 1° Amine) + Sodium Phthalate',
+        note: 'Cannot prepare Aniline (aromatic 1° amines) because aryl halides (C₆H₅–X) do NOT undergo nucleophilic substitution with potassium phthalimide due to partial double-bond character!'
+      },
+      {
+        name: 'Hoffmann Bromamide Degradation (Step-Down by 1 Carbon)',
+        equation: 'R–CO–NH₂ + Br₂ + 4NaOH ──(Δ)──> R–NH₂ + Na₂CO₃ + 2NaBr + 2H₂O',
+        note: 'Converts primary amide into a primary amine having ONE LESS carbon atom than the parent amide via migration of R group to electron-deficient N.'
+      }
+    ],
+    boardTip: 'CBSE Favourite Conversion: Ethanamide (2 carbons) ──(Br₂/NaOH)──> Methanamine (1 carbon) [Step-Down]; Methanamine ──(via R-X + KCN + H₂/Ni)──> Ethanamine [Step-Up]!'
+  },
+  {
+    id: 'rxn-amines-tests-hinsberg',
+    subtopicId: 'chem-sub-9-3',
+    chapterId: 'chem-ch-9',
+    title: 'Carbylamine Reaction & Hinsberg’s Test for 1°, 2° and 3° Amines',
+    subtitle: 'Isocyanide Foul-Smell Test & Benzenesulphonyl Chloride Separation',
+    category: 'named-reaction',
+    diagramType: 'amines-tests',
+    equation: 'Carbylamine Test (Only 1° Amines): R–NH₂ + CHCl₃ + 3KOH(alc.) ──(Δ)──> R–N≡C (Foul Smelling Isocyanide) + 3KCl + 3H₂O',
+    classes: [
+      {
+        class: 'Primary (1°) Amine + Hinsberg Reagent (C₆H₅SO₂Cl)',
+        example: 'R–NH₂ + C₆H₅SO₂Cl ⟶ C₆H₅SO₂–NHR (N-Alkylbenzenesulphonamide)',
+        observation: 'Forms precipitate that DISSOLVES IN ALKali (KOH) due to presence of acidic hydrogen attached to nitrogen.'
+      },
+      {
+        class: 'Secondary (2°) Amine + Hinsberg Reagent (C₆H₅SO₂Cl)',
+        example: 'R₂NH + C₆H₅SO₂Cl ⟶ C₆H₅SO₂–NR₂ (N,N-Dialkylbenzenesulphonamide)',
+        observation: 'Forms precipitate that is INSOLUBLE IN ALKALI (KOH) because there is NO acidic hydrogen on nitrogen.'
+      },
+      {
+        class: 'Tertiary (3°) Amine + Hinsberg Reagent (C₆H₅SO₂Cl)',
+        example: 'R₃N + C₆H₅SO₂Cl ⟶ No Reaction',
+        observation: 'Does NOT react with benzenesulphonyl chloride at all (no replaceable H atom on N).'
+      }
+    ],
+    boardTip: 'Basicity Order in Aqueous Solution: For Ethyl groups: (C₂H₅)₂NH (2°) > (C₂H₅)₃N (3°) > C₂H₅NH₂ (1°) > NH₃ [231]. For Methyl groups: (CH₃)₂NH (2°) > CH₃NH₂ (1°) > (CH₃)₃N (3°) > NH₃ [213]!'
+  },
+  {
+    id: 'rxn-diazonium-hub',
+    subtopicId: 'chem-sub-9-5',
+    chapterId: 'chem-ch-9',
+    title: 'Benzenediazonium Chloride (C₆H₅N₂⁺Cl⁻) Synthetic Hub & Azo Coupling',
+    subtitle: 'Sandmeyer, Gatterman, Balz-Schiemann, Deamination & Dye Coupling',
+    category: 'named-reaction',
+    diagramType: 'diazonium-hub',
+    equation: 'C₆H₅NH₂ + NaNO₂ + 2HCl ──(273–278 K / 0–5°C)──> C₆H₅N₂⁺Cl⁻ + NaCl + 2H₂O',
+    reactions: [
+      {
+        name: 'Sandmeyer vs Gatterman Reaction',
+        equation: 'C₆H₅N₂⁺Cl⁻ ──(Cu₂Cl₂/HCl or Cu/HCl)──> C₆H₅Cl + N₂↑',
+        note: 'Sandmeyer uses Cu(I) salts (Cu₂Cl₂, Cu₂Br₂, CuCN) giving higher yield than Gatterman (copper powder + HX).'
+      },
+      {
+        name: 'Deamination to Benzene (Reduction)',
+        equation: 'C₆H₅N₂⁺Cl⁻ + H₃PO₂ + H₂O ⟶ C₆H₆ (Benzene) + H₃PO₃ + HCl + N₂↑',
+        note: 'Ethanol (CH₃CH₂OH) also reduces diazonium salt to benzene while getting oxidised to ethanal (CH₃CHO).'
+      },
+      {
+        name: 'Phenol coupling (Orange Azo Dye)',
+        equation: 'C₆H₅N₂⁺Cl⁻ + Phenol ──(OH⁻, pH 9–10, 0–5°C)──> p-Hydroxyazobenzene (Orange Dye)',
+        note: 'Electrophilic aromatic substitution at the para-position of phenol.'
+      },
+      {
+        name: 'Aniline coupling (Yellow Azo Dye)',
+        equation: 'C₆H₅N₂⁺Cl⁻ + Aniline ──(H⁺, pH 4–5, 0–5°C)──> p-Aminoazobenzene (Yellow Dye)',
+        note: 'Coupling in mildly acidic medium gives bright yellow azo dye.'
+      }
+    ],
+    boardTip: 'Why is Aniline NOT nitrated directly? Because HNO₃/H₂SO₄ protonates –NH₂ to meta-directing anilinium ion (–NH₃⁺), giving 47% meta-nitroaniline + tarry oxidation products! Protect with Ac₂O first.'
+  },
+
+  // =========================================================================
+  // CHAPTER 10: BIOMOLECULES (Glucose Structure Proofs & Protein/DNA)
+  // =========================================================================
+  {
+    id: 'rxn-glucose-structural-proofs',
+    subtopicId: 'chem-sub-10-1',
+    chapterId: 'chem-ch-10',
+    title: 'Structural Elucidation Reactions of D-Glucose (C₆H₁₂O₆)',
+    subtitle: 'Open-Chain Proofs vs Cyclic Hemiacetal Limitations',
+    category: 'organic',
+    diagramType: 'glucose-proofs',
+    reactions: [
+      {
+        name: '1. Prolonged Heating with HI (Proves Straight 6-C Chain)',
+        equation: 'D-Glucose ──(HI, Δ)──> CH₃–CH₂–CH₂–CH₂–CH₂–CH₃ (n-Hexane)',
+        note: 'Proves that all six carbon atoms in glucose are linked in an unbranched straight chain.'
+      },
+      {
+        name: '2. Mild Oxidation with Bromine Water (Proves –CHO group)',
+        equation: 'D-Glucose ──(Br₂ water)──> D-Gluconic Acid (6-C monocarboxylic acid)',
+        note: 'Proves that the carbonyl group in glucose is present as an aldehyde (–CHO) group (ketones are not oxidised by Br₂ water).'
+      },
+      {
+        name: '3. Strong Oxidation with HNO₃ (Proves Primary –CH₂OH group)',
+        equation: 'D-Glucose (or Gluconic acid) ──(Conc. HNO₃)──> Saccharic Acid (Dicarboxylic acid)',
+        note: 'Proves the presence of a primary alcoholic (–CH₂OH) group at C-6.'
+      },
+      {
+        name: '4. Acetylation with Acetic Anhydride (Proves Five –OH groups)',
+        equation: 'D-Glucose + 5 (CH₃CO)₂O ⟶ Glucose Pentaacetate + 5 CH₃COOH',
+        note: 'Proves the presence of 5 –OH groups on different carbon atoms. Glucose pentaacetate does NOT react with NH₂OH (proving no free –CHO in cyclic form!).'
+      }
+    ],
+    boardTip: 'Reactions NOT explained by open-chain structure of Glucose: (1) Does NOT give Schiff’s test or NaHSO₃ addition product; (2) Pentaacetate does NOT react with NH₂OH; (3) Exhibits mutarotation (α and β anomers).'
   }
 ];

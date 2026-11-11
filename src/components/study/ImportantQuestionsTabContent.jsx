@@ -3,14 +3,16 @@ import {
   CheckCircle2, Circle, Search, Filter, BookOpen, 
   ChevronDown, ChevronUp, Copy, Check, Sparkles, Award, 
   ExternalLink, AlertTriangle, Layers, Zap, Bookmark, FileText,
-  HelpCircle, AlignLeft, Dna, Eye
+  HelpCircle, AlignLeft, Dna, Eye, FlaskConical, Brain
 } from 'lucide-react';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
+import { IMPORTANT_CHEMISTRY_QUESTIONS } from '../../data/chemistryImportantQuestionsData';
 import { 
   ALL_BIG_ORANGE_QUESTIONS, 
   BIG_ORANGE_CORE_QUESTIONS, 
   BIG_ORANGE_PAGE_QUESTIONS 
 } from '../../data/biologyImportantQuestionsData';
+import { IMPORTANT_PSYCHOLOGY_QUESTIONS } from '../../data/psychologyImportantQuestionsData';
 import { IMPORTANT_ENGLISH_QUESTIONS } from '../../data/englishImportantQuestionsData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import BiologyDiagramCard from './BiologyDiagramCard';
@@ -18,7 +20,9 @@ import BiologyPdfGuideViewer from './BiologyPdfGuideViewer';
 import { FormattedLatex, MathBlock } from './LatexView';
 
 const STORAGE_KEY_MASTERED_PHYSICS = 'one_mastered_imp_physics_q';
+const STORAGE_KEY_MASTERED_CHEMISTRY = 'one_mastered_imp_chem_q';
 const STORAGE_KEY_MASTERED_BIOLOGY = 'one_mastered_imp_bio_q';
+const STORAGE_KEY_MASTERED_PSYCHOLOGY = 'one_mastered_imp_psy_q';
 const STORAGE_KEY_MASTERED_ENGLISH = 'one_mastered_imp_eng_q';
 
 const DIAGRAM_MAPPING = {
@@ -95,15 +99,16 @@ export default function ImportantQuestionsTabContent({
   onJumpToChapter, 
   onSelectTab 
 }) {
-  // Current subject view: 'physics', 'biology', or 'english'
+  // Current subject view: 'physics', 'chemistry', 'biology', 'psychology', or 'english'
   const [activeSubject, setActiveSubject] = useState(() => {
-    if (propSelectedSubject === 'biology') return 'biology';
-    if (propSelectedSubject === 'english') return 'english';
+    if (['physics', 'chemistry', 'biology', 'psychology', 'english'].includes(propSelectedSubject)) {
+      return propSelectedSubject;
+    }
     return 'physics';
   });
 
   useEffect(() => {
-    if (propSelectedSubject === 'biology' || propSelectedSubject === 'english' || propSelectedSubject === 'physics') {
+    if (['physics', 'chemistry', 'biology', 'psychology', 'english'].includes(propSelectedSubject)) {
       setActiveSubject(propSelectedSubject);
     }
   }, [propSelectedSubject]);
@@ -130,10 +135,30 @@ export default function ImportantQuestionsTabContent({
     }
   });
 
+  // Mastered state for Chemistry
+  const [masteredChemistryIds, setMasteredChemistryIds] = useState(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_MASTERED_CHEMISTRY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+
   // Mastered state for Biology
   const [masteredBiologyIds, setMasteredBiologyIds] = useState(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_MASTERED_BIOLOGY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // Mastered state for Psychology
+  const [masteredPsychologyIds, setMasteredPsychologyIds] = useState(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_MASTERED_PSYCHOLOGY);
       return stored ? JSON.parse(stored) : [];
     } catch {
       return [];
@@ -160,11 +185,27 @@ export default function ImportantQuestionsTabContent({
 
   useEffect(() => {
     try {
+      localStorage.setItem(STORAGE_KEY_MASTERED_CHEMISTRY, JSON.stringify(masteredChemistryIds));
+    } catch (e) {
+      console.error('Failed to save mastered chemistry questions:', e);
+    }
+  }, [masteredChemistryIds]);
+
+  useEffect(() => {
+    try {
       localStorage.setItem(STORAGE_KEY_MASTERED_BIOLOGY, JSON.stringify(masteredBiologyIds));
     } catch (e) {
       console.error('Failed to save mastered biology questions:', e);
     }
   }, [masteredBiologyIds]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY_MASTERED_PSYCHOLOGY, JSON.stringify(masteredPsychologyIds));
+    } catch (e) {
+      console.error('Failed to save mastered psychology questions:', e);
+    }
+  }, [masteredPsychologyIds]);
 
   useEffect(() => {
     try {
@@ -175,8 +216,20 @@ export default function ImportantQuestionsTabContent({
   }, [masteredEnglishIds]);
 
   const isBiology = activeSubject === 'biology';
+  const isChemistry = activeSubject === 'chemistry';
+  const isPsychology = activeSubject === 'psychology';
   const isEnglish = activeSubject === 'english';
-  const masteredIds = isEnglish ? masteredEnglishIds : (isBiology ? masteredBiologyIds : masteredPhysicsIds);
+  const isPhysics = activeSubject === 'physics';
+
+  const masteredIds = isEnglish
+    ? masteredEnglishIds
+    : isBiology
+      ? masteredBiologyIds
+      : isChemistry
+        ? masteredChemistryIds
+        : isPsychology
+          ? masteredPsychologyIds
+          : masteredPhysicsIds;
 
   const toggleMastered = (id) => {
     if (isEnglish) {
@@ -185,6 +238,14 @@ export default function ImportantQuestionsTabContent({
       );
     } else if (isBiology) {
       setMasteredBiologyIds(prev => 
+        prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+      );
+    } else if (isChemistry) {
+      setMasteredChemistryIds(prev => 
+        prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+      );
+    } else if (isPsychology) {
+      setMasteredPsychologyIds(prev => 
         prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
       );
     } else {
@@ -282,7 +343,13 @@ export default function ImportantQuestionsTabContent({
   // Active question set based on subject
   const currentQuestions = isEnglish 
     ? IMPORTANT_ENGLISH_QUESTIONS 
-    : (isBiology ? ALL_BIG_ORANGE_QUESTIONS : IMPORTANT_PHYSICS_QUESTIONS);
+    : isBiology
+      ? ALL_BIG_ORANGE_QUESTIONS
+      : isChemistry
+        ? IMPORTANT_CHEMISTRY_QUESTIONS
+        : isPsychology
+          ? IMPORTANT_PSYCHOLOGY_QUESTIONS
+          : IMPORTANT_PHYSICS_QUESTIONS;
 
   // Units list for filter
   const unitsList = useMemo(() => {
@@ -357,7 +424,7 @@ export default function ImportantQuestionsTabContent({
     <div className="space-y-6 pb-12 animate-in fade-in duration-300">
       {/* 1. Subject Switcher Top Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 bg-[var(--bg-surface)] p-2 rounded-2xl border border-[var(--border-default)] shadow-xs">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => {
               setActiveSubject('physics');
@@ -366,14 +433,32 @@ export default function ImportantQuestionsTabContent({
               setSelectedCategory('ALL');
               setShowPdfGuide(false);
             }}
-            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 touch-manipulation ${
-              !isBiology
+            className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
+              isPhysics
                 ? 'bg-[#5B7B9A] text-white shadow-xs'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
             }`}
           >
             <Zap size={15} />
-            <span>Physics • Top 22 Core Questions</span>
+            <span>Physics ({IMPORTANT_PHYSICS_QUESTIONS.length})</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveSubject('chemistry');
+              setSelectedUnit('ALL');
+              setSelectedMarks('ALL');
+              setSelectedCategory('ALL');
+              setShowPdfGuide(false);
+            }}
+            className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
+              isChemistry
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
+            }`}
+          >
+            <FlaskConical size={15} />
+            <span>Chemistry ({IMPORTANT_CHEMISTRY_QUESTIONS.length})</span>
           </button>
 
           <button
@@ -383,14 +468,50 @@ export default function ImportantQuestionsTabContent({
               setSelectedMarks('ALL');
               setSelectedCategory('ALL');
             }}
-            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-2 touch-manipulation ${
+            className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
               isBiology
                 ? 'bg-amber-600 text-white shadow-xs'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
             }`}
           >
             <Dna size={15} />
-            <span>Biology • Big Orange Bank ({ALL_BIG_ORANGE_QUESTIONS.length} Qs)</span>
+            <span>Biology ({ALL_BIG_ORANGE_QUESTIONS.length})</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveSubject('psychology');
+              setSelectedUnit('ALL');
+              setSelectedMarks('ALL');
+              setSelectedCategory('ALL');
+              setShowPdfGuide(false);
+            }}
+            className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
+              isPsychology
+                ? 'bg-purple-600 text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
+            }`}
+          >
+            <Brain size={15} />
+            <span>Psychology ({IMPORTANT_PSYCHOLOGY_QUESTIONS.length})</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveSubject('english');
+              setSelectedUnit('ALL');
+              setSelectedMarks('ALL');
+              setSelectedCategory('ALL');
+              setShowPdfGuide(false);
+            }}
+            className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
+              isEnglish
+                ? 'bg-amber-700 text-white shadow-xs'
+                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
+            }`}
+          >
+            <BookOpen size={15} />
+            <span>English ({IMPORTANT_ENGLISH_QUESTIONS.length})</span>
           </button>
         </div>
 
@@ -431,21 +552,41 @@ export default function ImportantQuestionsTabContent({
         />
       ) : (
         <>
-          {/* 2. Header Banner (Physics Only) */}
+          {/* 2. Header Banner */}
           {!isBiology && (
             <div className="relative overflow-hidden rounded-3xl p-5 sm:p-6 shadow-sm border bg-gradient-to-br from-blue-500/10 via-[var(--bg-surface)] to-amber-500/10 border-blue-500/30">
               <div className="space-y-1.5">
                 <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-xs font-bold tracking-wide uppercase bg-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-400">
                   <Award size={14} className="text-amber-500" />
-                  <span>Official CBSE Board • 22 Core Questions & Derivations</span>
+                  <span>
+                    {isChemistry
+                      ? 'Official CBSE Board • Top 20 Guaranteed Chemistry Questions'
+                      : isPsychology
+                        ? 'Official CBSE Board • Top 14 Guaranteed Psychology Questions'
+                        : isEnglish
+                          ? 'Official CBSE Board • High-Yield English Literature & Writing Bank'
+                          : 'Official CBSE Board • 22 Core Questions & Derivations'}
+                  </span>
                 </div>
                 
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
-                  Top 22 Physics Guaranteed Board Derivations
+                  {isChemistry
+                    ? 'Top 20 Chemistry Guaranteed Board Questions (All 10 Chapters)'
+                    : isPsychology
+                      ? 'Top 14 Psychology Guaranteed Board Questions (Units I–VII)'
+                      : isEnglish
+                        ? 'English Core (301) Guaranteed Board Question Bank'
+                        : 'Top 22 Physics Guaranteed Board Derivations'}
                 </h1>
                 
                 <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-3xl leading-relaxed">
-                  Rigorous step-by-step mathematical proofs with physical setups, connecting sentences, special cases, and boxed final formulas.
+                  {isChemistry
+                    ? 'Complete Physical Chemistry numerical frameworks, d/f-block & coordination reasoning, and Organic named reactions with CBSE marking schemes.'
+                    : isPsychology
+                      ? 'Structured 4-mark and 6-mark model answers covering intelligence theories, psychodynamic defence mechanisms, GAS, DSM-5 disorders, and therapies.'
+                      : isEnglish
+                        ? 'High-scoring thematic analyses, character sketches, poetic devices, and official CBSE marking rubrics across Flamingo & Vistas.'
+                        : 'Rigorous step-by-step mathematical proofs with physical setups, connecting sentences, special cases, and boxed final formulas.'}
                 </p>
               </div>
             </div>
@@ -766,7 +907,16 @@ export default function ImportantQuestionsTabContent({
 
                     {onJumpToChapter && (
                       <button
-                        onClick={() => onJumpToChapter(isBiology ? 'biology' : 'physics', isBiology ? 'bio-vol-1' : 'phy-vol-1', q.chapterId)}
+                        onClick={() => {
+                          const chNum = parseInt((q.chapterId || '').split('-').pop(), 10) || 1;
+                          let volId = 'phy-vol-1';
+                          if (isBiology) volId = chNum >= 9 ? 'bio-vol-2' : 'bio-vol-1';
+                          else if (isChemistry) volId = chNum >= 6 ? 'chem-vol-2' : 'chem-vol-1';
+                          else if (isPsychology) volId = chNum >= 4 ? 'psy-vol-2' : 'psy-vol-1';
+                          else if (isEnglish) volId = (q.chapterId || '').startsWith('eng-vis') ? 'eng-vol-2' : 'eng-vol-1';
+                          else volId = chNum >= 9 ? 'phy-vol-2' : 'phy-vol-1';
+                          onJumpToChapter(activeSubject, volId, q.chapterId);
+                        }}
                         className="px-2.5 py-1.5 rounded-xl text-xs font-semibold border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-colors cursor-pointer touch-manipulation flex items-center gap-1"
                         title="Jump to full chapter notes"
                       >
@@ -1039,30 +1189,34 @@ export default function ImportantQuestionsTabContent({
                       </div>
                     )}
 
-                    {/* Marking Scheme Breakdown */}
-                    {q.modelAnswer?.markingScheme && q.modelAnswer.markingScheme.length > 0 && (
+                    {/* Marking Scheme Breakdown & Examiner Tip */}
+                    {(q.modelAnswer?.markingScheme?.length > 0 || q.examinerTip) && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-                          <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                            <Award size={13} />
-                            CBSE Marking Scheme Breakdown
-                          </h4>
-                          <ul className="space-y-1 text-xs text-[var(--text-secondary)] leading-snug">
-                            {q.modelAnswer.markingScheme.map((mark, mIdx) => (
-                              <li key={mIdx}>• {mark}</li>
-                            ))}
-                          </ul>
-                        </div>
+                        {q.modelAnswer?.markingScheme && q.modelAnswer.markingScheme.length > 0 && (
+                          <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
+                            <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                              <Award size={13} />
+                              CBSE Marking Scheme Breakdown
+                            </h4>
+                            <ul className="space-y-1 text-xs text-[var(--text-secondary)] leading-snug">
+                              {q.modelAnswer.markingScheme.map((mark, mIdx) => (
+                                <li key={mIdx}>• {mark}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
 
-                        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
-                          <h4 className="text-xs font-extrabold text-amber-500 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <AlertTriangle size={13} />
-                            Examiner's Tips &amp; Common Mistakes
-                          </h4>
-                          <p className="text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
-                            {q.modelAnswer.examinerTips}
-                          </p>
-                        </div>
+                        {(q.modelAnswer?.examinerTips || q.examinerTip) && (
+                          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
+                            <h4 className="text-xs font-extrabold text-amber-500 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                              <AlertTriangle size={13} />
+                              Examiner's Tips &amp; Common Mistakes
+                            </h4>
+                            <p className="text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
+                              {q.modelAnswer?.examinerTips || q.examinerTip}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     )}
 

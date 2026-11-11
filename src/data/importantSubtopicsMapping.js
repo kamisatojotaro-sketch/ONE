@@ -511,6 +511,214 @@ export const HANDWRITTEN_IMPORTANT_SUBTOPICS = {
     reason: 'Big Orange: Nucleopolyhedrovirus narrow-spectrum IPM safety; Bacillus thuringiensis alkaline gut pore lysis',
     examTag: 'Big Orange: 3M Focus',
     chapterNum: 8
+  },
+
+  // =========================================================================
+  // PHYSICS VOLUME 2 (CHAPTERS 9 TO 14): HIGH-YIELD BOARD DERIVATIONS
+  // =========================================================================
+  'phy-sub-9-2': {
+    title: "Refraction at Spherical Surfaces & Lens Maker's Formula",
+    reason: "Guaranteed 5M Board Derivation: n₂/v − n₁/u = (n₂ − n₁)/R and Lens Maker's Formula 1/f = (n₂₁ − 1)(1/R₁ − 1/R₂)",
+    examTag: 'Important 5M Derivation',
+    chapterNum: 9
+  },
+  'phy-sub-9-4': {
+    title: 'Prism Minimum Deviation Formula',
+    reason: 'Derivation of n = sin[(A + δ_m)/2] / sin(A/2) and i–δ curve (Guaranteed 3M/5M)',
+    examTag: 'Important 3M/5M Derivation',
+    chapterNum: 9
+  },
+  'phy-sub-9-5': {
+    title: 'Compound Microscope & Astronomical Telescope (Refracting & Reflecting)',
+    reason: 'Ray diagrams and magnifying power derivations at D and infinity; Cassegrain telescope advantages',
+    examTag: 'Important 5M Ray Diagram',
+    chapterNum: 9
+  },
+  'phy-sub-10-1': {
+    title: "Huygens' Principle: Laws of Reflection & Refraction Wavefront Proofs",
+    reason: "Wavefront geometric proof of Snell's law n₁ sin i = n₂ sin r and angle of reflection i = r",
+    examTag: 'Important 3M Wavefront Proof',
+    chapterNum: 10
+  },
+  'phy-sub-10-2': {
+    title: "Young's Double-Slit Experiment (YDSE) & Interference Intensity",
+    reason: 'Path difference Δx = yd/D, Fringe width β = λD/d, and I = 4I₀ cos²(φ/2)',
+    examTag: 'Important 5M Question',
+    chapterNum: 10
+  },
+  'phy-sub-10-3': {
+    title: 'Single-Slit Diffraction & Central Maximum Width',
+    reason: 'Condition for secondary minima a sin θ = nλ, central maximum width W = 2λD/a, and Interference vs Diffraction',
+    examTag: 'Important 3M/5M Question',
+    chapterNum: 10
+  },
+  'phy-sub-11-2': {
+    title: "Einstein's Photoelectric Equation & Stopping Potential Graphs",
+    reason: 'K_max = eV₀ = hν − φ₀, slope h/e of V₀ vs ν graph, and why wave theory fails',
+    examTag: 'Important 3M Graph & Numerical',
+    chapterNum: 11
+  },
+  'phy-sub-11-4': {
+    title: 'de Broglie Wavelength of Matter Waves',
+    reason: 'λ = h/p = h/√(2mK) = h/√(2mqV) and ratio problems for proton vs alpha particle',
+    examTag: 'Important 2M/3M Numerical',
+    chapterNum: 11
+  },
+  'phy-sub-12-2': {
+    title: 'Bohr Model of Hydrogen Atom: Radius, Velocity & Total Energy',
+    reason: 'Quantization mvr = nh/2π, r_n ∝ n², v_n ∝ 1/n, and E_n = −13.6/n² eV',
+    examTag: 'Important 5M Derivation',
+    chapterNum: 12
+  },
+  'phy-sub-13-2': {
+    title: 'Mass Defect, Binding Energy Curve & Nuclear Force Properties',
+    reason: 'B.E. per nucleon vs A curve, ⁵⁶Fe peak (8.75 MeV), constancy of nuclear density, and Fission/Fusion',
+    examTag: 'Important 3M Curve & Numerical',
+    chapterNum: 13
+  },
+  'phy-sub-14-3': {
+    title: 'p-n Junction Diode: Depletion Layer & Forward/Reverse Bias V-I Curves',
+    reason: 'Diffusion vs drift current, barrier potential, and V-I characteristics in forward (mA) and reverse (μA) bias',
+    examTag: 'Important 3M Question',
+    chapterNum: 14
+  },
+  'phy-sub-14-4': {
+    title: 'Half-Wave & Centre-Tap Full-Wave Rectifier with Capacitor Filter',
+    reason: 'Circuit diagram, input/output waveforms, f_out = 2f_in (100 Hz), and smoothing action of parallel capacitor',
+    examTag: 'Important 5M Circuit',
+    chapterNum: 14
+  },
+
+  // =========================================================================
+  // CHEMISTRY CHAPTERS 3, 5, 8, 9, 10: HIGH-YIELD BOARD TOPICS
+  // =========================================================================
+  'chem-sub-3-3': {
+    title: 'Integrated Rate Equations & Half-Life (Zero & First Order)',
+    reason: 'k = (2.303/t) log([R]₀/[R]), t₁/₂ = 0.693/k, and proof that t₉₉.₉% = 10 × t₁/₂',
+    examTag: 'Guaranteed 3M/5M Numerical',
+    chapterNum: 3
+  },
+  'chem-sub-3-4': {
+    title: 'Arrhenius Equation & Activation Energy',
+    reason: 'log(k₂/k₁) = (Eₐ/2.303R)[(T₂−T₁)/(T₁T₂)] and effect of catalyst on activation energy',
+    examTag: 'Important 3M Numerical',
+    chapterNum: 3
+  },
+  'chem-sub-5-5': {
+    title: 'Valence Bond Theory (VBT) & Crystal Field Splitting (CFT)',
+    reason: '[Co(NH₃)₆]³⁺ vs [CoF₆]³⁻ and [Ni(CN)₄]²⁻ vs [NiCl₄]²⁻ hybridisation, geometry & magnetic moment',
+    examTag: 'Guaranteed 3M/5M Question',
+    chapterNum: 5
+  },
+  'chem-sub-8-3': {
+    title: 'Nucleophilic Addition, Clemmensen, Wolff-Kishner & Distinction Tests',
+    reason: 'Reactivity order (Aldehydes > Ketones), Tollens, Fehling, and Iodoform distinction tests',
+    examTag: 'Guaranteed 5M Organic Question',
+    chapterNum: 8
+  },
+  'chem-sub-8-4': {
+    title: 'Aldol Condensation & Cannizzaro Reaction',
+    reason: 'Role of α-hydrogen, cross-aldol products, and disproportionation in 50% alkali',
+    examTag: 'Guaranteed Named Reaction',
+    chapterNum: 8
+  },
+  'chem-sub-9-1': {
+    title: 'Gabriel Phthalimide Synthesis & Hoffmann Bromamide Degradation',
+    reason: 'Why aniline cannot be prepared by Gabriel synthesis; step-down amide conversion',
+    examTag: 'Important 3M Question',
+    chapterNum: 9
+  },
+  'chem-sub-9-3': {
+    title: 'Basicity of Amines, Carbylamine & Hinsberg Test',
+    reason: '2° > 3° > 1° (ethyl) vs 2° > 1° > 3° (methyl) in water; Hinsberg separation of 1°, 2°, 3° amines',
+    examTag: 'Guaranteed 3M/5M Question',
+    chapterNum: 9
+  },
+  'chem-sub-10-1': {
+    title: 'Reactions of D-Glucose (HI, Br₂ water, HNO₃) & Cyclic Structure',
+    reason: 'Structural proofs of straight chain, –CHO, and primary –OH; why glucose does not give 2,4-DNP test',
+    examTag: 'Guaranteed 3M Question',
+    chapterNum: 10
+  },
+
+  // =========================================================================
+  // BIOLOGY VOLUME 2 (CHAPTERS 9 TO 13): "BIG ORANGE" BOARD FOCUS
+  // =========================================================================
+  'bio-sub-9-2': {
+    title: 'pBR322 Cloning Vector & Insertional Inactivation',
+    reason: 'Big Orange: ori, rop, amp^R, tet^R restriction sites, and blue-white colony selection',
+    examTag: 'Big Orange: Core Diagram & 5M',
+    chapterNum: 9
+  },
+  'bio-sub-9-3': {
+    title: 'Polymerase Chain Reaction (PCR) & Taq Polymerase',
+    reason: 'Big Orange: Denaturation (94°C), Annealing (54°C), Extension (72°C) with thermostable Taq polymerase',
+    examTag: 'Big Orange: 3M Core',
+    chapterNum: 9
+  },
+  'bio-sub-10-1': {
+    title: 'Bt Cotton (cry Genes) & RNA Interference (RNAi)',
+    reason: 'Big Orange: Alkaline midgut protoxin activation (cryIAc/cryIIAb) and dsRNA silencing of Meloidogyne incognita',
+    examTag: 'Big Orange: Guaranteed 5M',
+    chapterNum: 10
+  },
+  'bio-sub-10-2': {
+    title: 'Genetically Engineered Insulin (Humulin) & ADA Gene Therapy',
+    reason: 'Big Orange: Proinsulin C-peptide removal, Eli Lilly A & B chain disulfide assembly, and ADA retroviral vector',
+    examTag: 'Big Orange: Guaranteed 3M/5M',
+    chapterNum: 10
+  },
+  'bio-sub-11-1': {
+    title: 'Exponential vs Logistic Growth Models & Age Pyramids',
+    reason: 'Big Orange: dN/dt = rN vs dN/dt = rN[(K−N)/K] carrying capacity K',
+    examTag: 'Big Orange: 3M/5M Curve',
+    chapterNum: 11
+  },
+  'bio-sub-12-3': {
+    title: 'Ecological Pyramids & 10% Energy Law',
+    reason: 'Big Orange: Why pyramid of energy is ALWAYS upright; inverted biomass pyramid in sea',
+    examTag: 'Big Orange: 3M Core',
+    chapterNum: 12
+  },
+  'bio-sub-13-2': {
+    title: 'Species-Area Relationship (Alexander von Humboldt) & Evil Quartet',
+    reason: 'Big Orange: log S = log C + Z log A (Z = 0.1–0.2 vs 0.6–1.2) and Habitat Loss, Over-exploitation, Alien Species, Co-extinction',
+    examTag: 'Big Orange: Guaranteed 3M/5M',
+    chapterNum: 13
+  },
+
+  // =========================================================================
+  // PSYCHOLOGY (CHAPTERS 4 TO 7): HIGH-YIELD BOARD FOCUS
+  // =========================================================================
+  'psy-sub-4-1': {
+    title: 'Four Ds of Abnormality & Diathesis-Stress Model',
+    reason: 'Deviance, Distress, Dysfunction, Danger and biological predisposition + environmental stressor interaction',
+    examTag: 'Guaranteed 3M/4M Question',
+    chapterNum: 4
+  },
+  'psy-sub-4-3': {
+    title: 'Schizophrenia Spectrum: Positive, Negative & Psychomotor Symptoms',
+    reason: 'Delusions, hallucinations (positive) vs alogia, avolition, flat affect (negative) vs catatonia',
+    examTag: 'Guaranteed 6M Long Answer',
+    chapterNum: 4
+  },
+  'psy-sub-5-2': {
+    title: 'Behavioural & Cognitive Therapies (Systematic Desensitisation, RET, CBT)',
+    reason: "Wolpe's reciprocal inhibition hierarchy, Ellis's ABC analysis, and Beck's cognitive distortions",
+    examTag: 'Guaranteed 4M/6M Question',
+    chapterNum: 5
+  },
+  'psy-sub-6-2': {
+    title: 'Attitude Change: Heider P-O-X Balance, Festinger Cognitive Dissonance & Mohsin',
+    reason: 'Balanced vs imbalanced triads, cognitive dissonance reduction, and two-step concept',
+    examTag: 'Guaranteed 4M/6M Question',
+    chapterNum: 6
+  },
+  'psy-sub-7-1': {
+    title: "Tuckman's 5 Stages of Group Formation & Groupthink (Irving Janis)",
+    reason: 'Forming, Storming, Norming, Performing, Adjourning and Social Loafing vs Polarisation',
+    examTag: 'Guaranteed 4M Question',
+    chapterNum: 7
   }
 };
 

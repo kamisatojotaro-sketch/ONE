@@ -4,7 +4,7 @@ export default function StudySidebar({ activeTab, onTabChange }) {
   const tabs = [
     { id: 'NOTES', label: 'NOTES', icon: BookOpen, desc: 'Theory & High-Yield' },
     { id: 'WOLFRAM_ENGINE', label: 'WOLFRAM ENGINE', icon: Calculator, desc: 'Maths & Science Solver' },
-    { id: 'IMPORTANT', label: 'TOP 22 QUESTIONS', icon: Award, desc: 'For the Exam' },
+    { id: 'IMPORTANT', label: 'TOP QUESTIONS', icon: Award, desc: 'Guaranteed Board Bank' },
     { id: 'SAMPLE_PAPER', label: 'SAMPLE PAPER', icon: FileText, desc: '2026-27 Official SQP' },
     { id: 'PYQ', label: 'PYQ', icon: FileQuestion, desc: 'Previous Year Qs' },
     { id: 'MCQ', label: 'MCQ', icon: CheckSquare, desc: 'Board Practice' },

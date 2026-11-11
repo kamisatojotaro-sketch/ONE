@@ -1,4 +1,5 @@
-import { Target, CheckCircle2, Circle, ArrowRight, Zap, FlaskConical, Dna, Brain, BookOpen } from 'lucide-react';
+import { useState } from 'react';
+import { Target, CheckCircle2, Circle, ArrowRight, Zap, FlaskConical, Dna, Brain, BookOpen, Layers } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 
@@ -9,6 +10,8 @@ export default function PortionsTabContent({
   portionsStats,
   getPriority
 }) {
+  const [syllabusScope, setSyllabusScope] = useState('ALL'); // 'ALL' (Full NCERT Syllabus) | 'TERM' (Term Exam Portions)
+
   const getSubjectIcon = (subjKey) => {
     switch (subjKey) {
       case 'physics':
@@ -33,7 +36,7 @@ export default function PortionsTabContent({
 
     subject.volumes.forEach((vol) => {
       vol.chapters.forEach((ch) => {
-        if (chapterIds.includes(ch.id)) {
+        if (syllabusScope === 'ALL' || chapterIds.includes(ch.id)) {
           list.push({ ...ch, volumeId: vol.id });
         }
       });
@@ -41,6 +44,11 @@ export default function PortionsTabContent({
 
     return list;
   };
+
+  const allDisplayedChapters = ['physics', 'chemistry', 'biology', 'psychology', 'english'].flatMap(subjKey => getSubjectPortionChapters(subjKey));
+  const totalScopeCount = allDisplayedChapters.length || 1;
+  const completedScopeCount = allDisplayedChapters.filter(c => completedPortionChapters.includes(c.id)).length;
+  const scopePercentage = Math.round((completedScopeCount / totalScopeCount) * 100);
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-300">
@@ -50,23 +58,49 @@ export default function PortionsTabContent({
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[10px] sm:text-xs text-[var(--text-secondary)] font-mono uppercase tracking-wider mb-2">
               <Target size={13} className="text-[var(--accent-primary)]" />
-              <span>Target Exam Portions</span>
+              <span>{syllabusScope === 'ALL' ? 'Complete NCERT Class 12 Syllabus' : 'Target Term Exam Portions'}</span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-              Exam Portions Tracker
+              Exam Portions &amp; Syllabus Tracker
             </h2>
             <p className="font-sans text-xs text-[var(--text-secondary)] mt-1">
-              Mark off syllabus chapters as you master them to track overall exam readiness.
+              Mark off syllabus chapters across Vol 1 &amp; Vol 2 as you master them to track overall CBSE Board readiness.
             </p>
           </div>
 
-          <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center border-t sm:border-t-0 pt-2 sm:pt-0 border-[var(--border-subtle)]">
-            <span className="font-mono text-2xl sm:text-3xl font-bold text-[var(--accent-primary)]">
-              {portionsStats.percentage}%
-            </span>
-            <span className="block text-[11px] sm:text-xs text-[var(--text-muted)] font-mono">
-              {portionsStats.completed} of {portionsStats.total} Chapters Done
-            </span>
+          <div className="flex flex-col sm:items-end justify-center gap-2 border-t sm:border-t-0 pt-3 sm:pt-0 border-[var(--border-subtle)]">
+            <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-subtle)] self-start sm:self-end">
+              <button
+                onClick={() => setSyllabusScope('ALL')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  syllabusScope === 'ALL'
+                    ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                <Layers size={13} />
+                <span>Full NCERT Syllabus</span>
+              </button>
+              <button
+                onClick={() => setSyllabusScope('TERM')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  syllabusScope === 'TERM'
+                    ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                }`}
+              >
+                <Target size={13} />
+                <span>Term Portions</span>
+              </button>
+            </div>
+            <div className="flex sm:flex-col items-center sm:items-end justify-between w-full">
+              <span className="font-mono text-2xl sm:text-3xl font-bold text-[var(--accent-primary)]">
+                {scopePercentage}%
+              </span>
+              <span className="block text-[11px] sm:text-xs text-[var(--text-muted)] font-mono">
+                {completedScopeCount} of {allDisplayedChapters.length} Chapters Done
+              </span>
+            </div>
           </div>
         </div>
 
@@ -74,7 +108,7 @@ export default function PortionsTabContent({
         <div className="w-full h-2.5 sm:h-3 rounded-full bg-[var(--border-default)] overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500 bg-[var(--accent-primary)]"
-            style={{ width: `${portionsStats.percentage}%` }}
+            style={{ width: `${scopePercentage}%` }}
           />
         </div>
       </div>

@@ -1893,5 +1893,318 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
     );
   }
 
+  /* -------------------------------------------------------------
+   * 21. RAY OPTICS: PRISM MINIMUM DEVIATION & OPTICAL INSTRUMENTS
+   * ------------------------------------------------------------- */
+  if (diagramId === 'ray-optics-instruments') {
+    const content = (
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <svg width="280" height="175" viewBox="0 0 280 175" className="overflow-visible select-none">
+            {svgDefs}
+            {/* Prism Triangle */}
+            <polygon points="140,20 70,145 210,145" fill="rgba(59, 130, 246, 0.12)" stroke="#3b82f6" strokeWidth="2.2" />
+            <text x="140" y="48" textAnchor="middle" fill="#3b82f6" fontSize="11" fontWeight="bold">A</text>
+
+            {/* Incident Ray */}
+            <line x1="30" y1="125" x2="105" y2="82" stroke="#f59e0b" strokeWidth="2.5" markerEnd="url(#arrow-amber)" />
+            {/* Refracted Ray inside Prism (Parallel to base at minimum deviation) */}
+            <line x1="105" y1="82" x2="175" y2="82" stroke="#10b981" strokeWidth="2.5" markerEnd="url(#arrow-emerald)" />
+            {/* Emergent Ray */}
+            <line x1="175" y1="82" x2="250" y2="125" stroke="#f43f5e" strokeWidth="2.5" markerEnd="url(#arrow-rose)" />
+
+            {/* Extended incident ray for deviation angle delta_m */}
+            <line x1="105" y1="82" x2="195" y2="32" stroke="#f59e0b" strokeWidth="1.3" strokeDasharray="3 3" />
+            <line x1="140" y1="62" x2="175" y2="82" stroke="#f43f5e" strokeWidth="1.3" strokeDasharray="3 3" />
+            <text x="168" y="55" fill="#a855f7" fontSize="11" fontWeight="bold">δ_m</text>
+            <text x="140" y="98" textAnchor="middle" fill="#10b981" fontSize="9" fontWeight="bold">r₁ = r₂ = A/2</text>
+            <text x="140" y="162" textAnchor="middle" fill="var(--text-primary)" fontSize="10" fontWeight="bold">
+              At δ_m: i = e &amp; Refracted Ray ∥ Base
+            </text>
+          </svg>
+        </div>
+
+        <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+            <span className="text-[10px] text-blue-400 font-bold block uppercase font-sans">Core Ray Optics Formulas:</span>
+            <div className="text-xs text-[var(--text-primary)] font-bold">
+              n₂/v − n₁/u = (n₂ − n₁)/R   |   1/f = (n₂₁ − 1)(1/R₁ − 1/R₂)
+            </div>
+            <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+              • <strong>Prism Formula:</strong> n = sin[(A + δ_m)/2] / sin(A/2).<br />
+              • <strong>Compound Microscope:</strong> M = (L/f₀)(1 + D/f_e) at D; M = (L/f₀)(D/f_e) at ∞.<br />
+              • <strong>Astronomical Telescope:</strong> M = f₀/f_e (normal), L = f₀ + f_e.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-blue-500/15 text-blue-500"><Compass size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Ray Optics: Prism Minimum Deviation &amp; Optical Magnifications</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Refraction through prism, lens maker&apos;s formula &amp; microscope/telescope equations</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 22. WAVE OPTICS: HUYGENS PRINCIPLE, YDSE & SINGLE-SLIT DIFFRACTION
+   * ------------------------------------------------------------- */
+  if (diagramId === 'ydse-wave-optics') {
+    const content = (
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <svg width="280" height="175" viewBox="0 0 280 175" className="overflow-visible select-none">
+            {svgDefs}
+            {/* Double Slit Barrier */}
+            <line x1="50" y1="15" x2="50" y2="55" stroke="var(--text-primary)" strokeWidth="3" />
+            <line x1="50" y1="70" x2="50" y2="105" stroke="var(--text-primary)" strokeWidth="3" />
+            <line x1="50" y1="120" x2="50" y2="160" stroke="var(--text-primary)" strokeWidth="3" />
+            <text x="35" y="66" fill="#3b82f6" fontSize="10" fontWeight="bold">S₁</text>
+            <text x="35" y="116" fill="#3b82f6" fontSize="10" fontWeight="bold">S₂</text>
+            <text x="35" y="92" fill="var(--text-muted)" fontSize="9">d</text>
+
+            {/* Screen */}
+            <line x1="220" y1="15" x2="220" y2="160" stroke="#10b981" strokeWidth="2.5" />
+            <text x="230" y="90" fill="#10b981" fontSize="10" fontWeight="bold">O (Central Max)</text>
+            <circle cx="220" cy="38" r="4" fill="#f43f5e" />
+            <text x="228" y="42" fill="#f43f5e" fontSize="10" fontWeight="bold">P (y_n)</text>
+
+            {/* Rays from S1 and S2 to P */}
+            <line x1="50" y1="62" x2="220" y2="38" stroke="#f59e0b" strokeWidth="1.8" />
+            <line x1="50" y1="112" x2="220" y2="38" stroke="#a855f7" strokeWidth="1.8" />
+
+            {/* Distance D */}
+            <line x1="50" y1="152" x2="220" y2="152" stroke="var(--text-muted)" strokeWidth="1.2" strokeDasharray="3 3" />
+            <text x="135" y="166" textAnchor="middle" fill="var(--text-muted)" fontSize="10" fontWeight="bold">Screen Distance D (D ≫ d)</text>
+          </svg>
+        </div>
+
+        <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+            <span className="text-[10px] text-emerald-400 font-bold block uppercase font-sans">Interference vs Diffraction:</span>
+            <div className="text-xs text-[var(--text-primary)] font-bold">
+              Fringe Width β = λD / d   |   I(φ) = 4I₀ cos²(φ/2)
+            </div>
+            <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+              • <strong>Constructive (Bright):</strong> Δx = nλ.<br />
+              • <strong>Destructive (Dark):</strong> Δx = (2n − 1)λ/2.<br />
+              • <strong>Single-Slit Central Max Width:</strong> W_c = 2λD / a = 2β.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-emerald-500/15 text-emerald-500"><Activity size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Young&apos;s Double-Slit Interference &amp; Diffraction</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Path difference Δx = yd/D, fringe width β = λD/d &amp; central maximum width</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 23. DUAL NATURE: PHOTOELECTRIC EFFECT GRAPHS & DE BROGLIE
+   * ------------------------------------------------------------- */
+  if (diagramId === 'photoelectric-graphs') {
+    const content = (
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <svg width="280" height="175" viewBox="0 0 280 175" className="overflow-visible select-none">
+            {svgDefs}
+            {/* Axes */}
+            <line x1="25" y1="145" x2="260" y2="145" stroke="var(--text-muted)" strokeWidth="1.8" />
+            <line x1="110" y1="160" x2="110" y2="20" stroke="var(--text-muted)" strokeWidth="1.8" />
+            <text x="245" y="160" fill="var(--text-muted)" fontSize="9" fontWeight="bold">+V (Anode)</text>
+            <text x="115" y="25" fill="var(--text-muted)" fontSize="9" fontWeight="bold">Photocurrent i</text>
+
+            {/* Stopping potential curves (same frequency, different intensities I3 > I2 > I1) */}
+            <path d="M 45,145 Q 90,50 140,45 L 245,45" fill="none" stroke="#10b981" strokeWidth="2.2" />
+            <path d="M 45,145 Q 90,80 140,75 L 245,75" fill="none" stroke="#3b82f6" strokeWidth="2.2" />
+            <path d="M 45,145 Q 90,110 140,105 L 245,105" fill="none" stroke="#f59e0b" strokeWidth="2.2" />
+
+            <circle cx="45" cy="145" r="4" fill="#f43f5e" />
+            <text x="45" y="162" textAnchor="middle" fill="#f43f5e" fontSize="10" fontWeight="bold">−V₀ (Stopping)</text>
+            <text x="220" y="39" fill="#10b981" fontSize="9" fontWeight="bold">I₃ (High Intensity)</text>
+            <text x="220" y="69" fill="#3b82f6" fontSize="9" fontWeight="bold">I₂</text>
+            <text x="220" y="99" fill="#f59e0b" fontSize="9" fontWeight="bold">I₁ (Low Intensity)</text>
+          </svg>
+        </div>
+
+        <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+            <span className="text-[10px] text-amber-500 font-bold block uppercase font-sans">Einstein &amp; de Broglie Laws:</span>
+            <div className="text-xs text-[var(--text-primary)] font-bold">
+              K_max = eV₀ = hν − φ₀ = h(ν − ν₀)
+            </div>
+            <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+              • <strong>Slope of V₀ vs ν graph:</strong> h/e (Universal constant!).<br />
+              • <strong>de Broglie Wavelength:</strong> λ = h/p = h / √(2mK) = 1.227 / √V nm (for electrons).
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-amber-500/15 text-amber-500"><Zap size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Photoelectric Effect Graphs &amp; Einstein&apos;s Equation</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Saturation current vs Intensity and Stopping Potential V₀ vs Frequency</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 24. ATOMS & NUCLEI: BOHR ENERGY LEVELS & BINDING ENERGY CURVE
+   * ------------------------------------------------------------- */
+  if (diagramId === 'bohr-atom-spectra') {
+    const content = (
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <svg width="280" height="175" viewBox="0 0 280 175" className="overflow-visible select-none">
+            {svgDefs}
+            {/* Bohr Energy Levels */}
+            <line x1="30" y1="25" x2="210" y2="25" stroke="#a855f7" strokeWidth="1.5" strokeDasharray="3 3" />
+            <text x="215" y="28" fill="#a855f7" fontSize="9" fontWeight="bold">n=∞ (0 eV)</text>
+
+            <line x1="30" y1="45" x2="210" y2="45" stroke="#10b981" strokeWidth="1.8" />
+            <text x="215" y="48" fill="#10b981" fontSize="9" fontWeight="bold">n=3 (−1.51 eV)</text>
+
+            <line x1="30" y1="78" x2="210" y2="78" stroke="#3b82f6" strokeWidth="2" />
+            <text x="215" y="81" fill="#3b82f6" fontSize="9" fontWeight="bold">n=2 (−3.40 eV)</text>
+
+            <line x1="30" y1="150" x2="210" y2="150" stroke="#f43f5e" strokeWidth="2.5" />
+            <text x="215" y="153" fill="#f43f5e" fontSize="9" fontWeight="bold">n=1 (−13.6 eV)</text>
+
+            {/* Transitions */}
+            <line x1="70" y1="78" x2="70" y2="146" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-rose)" />
+            <line x1="100" y1="45" x2="100" y2="146" stroke="#f43f5e" strokeWidth="2" markerEnd="url(#arrow-rose)" />
+            <text x="85" y="135" textAnchor="middle" fill="#f43f5e" fontSize="9" fontWeight="bold">Lyman (UV)</text>
+
+            <line x1="160" y1="45" x2="160" y2="74" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#arrow-blue)" />
+            <text x="165" y="65" fill="#3b82f6" fontSize="9" fontWeight="bold">Balmer (Vis)</text>
+          </svg>
+        </div>
+
+        <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+            <span className="text-[10px] text-rose-400 font-bold block uppercase font-sans">Bohr Orbits &amp; Nuclear Binding:</span>
+            <div className="text-xs text-[var(--text-primary)] font-bold">
+              E_n = −13.6 / n² eV   |   r_n = 0.529 n² Å
+            </div>
+            <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+              • <strong>Energy Relation:</strong> E = −K = U/2.<br />
+              • <strong>Nuclear Radius:</strong> R = R₀ A^(1/3) ⟹ Nuclear density is CONSTANT (independent of A).<br />
+              • <strong>Peak Stability:</strong> ⁵⁶Fe has max B.E./nucleon (8.75 MeV).
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-rose-500/15 text-rose-500"><Layers size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Hydrogen Energy Level Transitions &amp; Nuclear Laws</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Bohr quantization mvr = nh/2π, spectral series &amp; nuclear binding energy</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 25. SEMICONDUCTORS: P-N JUNCTION DIODE & FULL-WAVE RECTIFIER
+   * ------------------------------------------------------------- */
+  if (diagramId === 'pn-junction-rectifier') {
+    const content = (
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-subtle)]">
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <svg width="280" height="175" viewBox="0 0 280 175" className="overflow-visible select-none">
+            {svgDefs}
+            {/* P-N Junction Depletion Region */}
+            <rect x="25" y="35" width="90" height="75" fill="rgba(244, 63, 94, 0.12)" stroke="#f43f5e" strokeWidth="2" rx="4" />
+            <rect x="115" y="35" width="50" height="75" fill="rgba(245, 158, 11, 0.18)" stroke="#f59e0b" strokeWidth="2" />
+            <rect x="165" y="35" width="90" height="75" fill="rgba(59, 130, 246, 0.12)" stroke="#3b82f6" strokeWidth="2" rx="4" />
+
+            <text x="65" y="55" textAnchor="middle" fill="#f43f5e" fontSize="11" fontWeight="bold">p-type (Holes)</text>
+            <text x="215" y="55" textAnchor="middle" fill="#3b82f6" fontSize="11" fontWeight="bold">n-type (e⁻)</text>
+            <text x="140" y="25" textAnchor="middle" fill="#f59e0b" fontSize="10" fontWeight="bold">Depletion Layer</text>
+
+            {/* Immobile ions in depletion layer */}
+            <text x="127" y="65" textAnchor="middle" fill="#f43f5e" fontSize="12" fontWeight="bold">⊖ ⊖</text>
+            <text x="153" y="65" textAnchor="middle" fill="#3b82f6" fontSize="12" fontWeight="bold">⊕ ⊕</text>
+
+            {/* Internal barrier field E_B from n to p */}
+            <line x1="158" y1="92" x2="122" y2="92" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-emerald)" />
+            <text x="140" y="105" textAnchor="middle" fill="#10b981" fontSize="9" fontWeight="bold">E_B (Barrier)</text>
+
+            <text x="140" y="138" textAnchor="middle" fill="var(--text-primary)" fontSize="10" fontWeight="bold">
+              Forward Bias: Width ↓, R ↓  |  Reverse Bias: Width ↑, R ↑
+            </text>
+            <text x="140" y="156" textAnchor="middle" fill="#a855f7" fontSize="10" fontWeight="bold">
+              Full-Wave Rectifier Output: f_out = 2 f_in (100 Hz for 50 Hz AC)
+            </text>
+          </svg>
+        </div>
+
+        <div className="w-full lg:w-1/2 space-y-2 text-xs font-mono">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] space-y-1">
+            <span className="text-[10px] text-amber-500 font-bold block uppercase font-sans">Semiconductor Core Principles:</span>
+            <div className="text-xs text-[var(--text-primary)] font-bold">
+              n_e · n_h = n_i²   (Mass-Action Law)
+            </div>
+            <p className="text-[11px] text-[var(--text-secondary)] font-sans mt-1">
+              • <strong>Diffusion Current:</strong> Majority carriers (p → n holes, n → p electrons).<br />
+              • <strong>Drift Current:</strong> Minority carriers driven by E_B.<br />
+              • <strong>Rectification:</strong> HWR f_out = f_in (50 Hz); FWR f_out = 2f_in (100 Hz).
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-amber-500/15 text-amber-500"><Zap size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">p-n Junction Depletion Layer &amp; Rectification</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Diffusion vs Drift, Forward/Reverse Bias &amp; Half/Full-Wave Rectifiers</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
   return null;
 }

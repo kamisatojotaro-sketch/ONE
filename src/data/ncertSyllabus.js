@@ -1,16 +1,28 @@
 import { PHYSICS_CHAPTERS } from './physicsNotes.js';
+import { PHYSICS_CHAPTERS_VOL2 } from './physicsVol2Notes.js';
 import { CHEMISTRY_CHAPTERS } from './chemistryNotes.js';
+import { CHEMISTRY_CHAPTERS_REMAINING } from './chemistryRemainingNotes.js';
 import { BIOLOGY_CHAPTERS } from './biologyNotes.js';
+import { BIOLOGY_CHAPTERS_VOL2 } from './biologyVol2Notes.js';
 import { PSYCHOLOGY_CHAPTERS } from './psychologyNotes.js';
 import { MATHS_CHAPTERS_VOL1, MATHS_CHAPTERS_VOL2 } from './mathsNotes.js';
 import { APPLIED_MATHS_CHAPTERS_VOL1, APPLIED_MATHS_CHAPTERS_VOL2 } from './appliedMathsNotes.js';
 import { ENGLISH_CHAPTERS_FLAMINGO, ENGLISH_CHAPTERS_VISTAS, ENGLISH_CHAPTERS_WRITING } from './englishNotes.js';
 
 export const EXAM_PORTIONS = {
-  physics: ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-4', 'phy-ch-5', 'phy-ch-6', 'phy-ch-7', 'phy-ch-8'],
-  biology: ['bio-ch-1', 'bio-ch-2', 'bio-ch-3', 'bio-ch-4', 'bio-ch-5', 'bio-ch-6', 'bio-ch-7', 'bio-ch-8'],
-  chemistry: ['chem-ch-1', 'chem-ch-2', 'chem-ch-4', 'chem-ch-6', 'chem-ch-7'],
-  psychology: ['psy-ch-1', 'psy-ch-2', 'psy-ch-3'],
+  physics: [
+    'phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-4', 'phy-ch-5', 'phy-ch-6', 'phy-ch-7', 'phy-ch-8',
+    'phy-ch-9', 'phy-ch-10', 'phy-ch-11', 'phy-ch-12', 'phy-ch-13', 'phy-ch-14'
+  ],
+  biology: [
+    'bio-ch-1', 'bio-ch-2', 'bio-ch-3', 'bio-ch-4', 'bio-ch-5', 'bio-ch-6', 'bio-ch-7', 'bio-ch-8',
+    'bio-ch-9', 'bio-ch-10', 'bio-ch-11', 'bio-ch-12', 'bio-ch-13'
+  ],
+  chemistry: [
+    'chem-ch-1', 'chem-ch-2', 'chem-ch-3', 'chem-ch-4', 'chem-ch-5',
+    'chem-ch-6', 'chem-ch-7', 'chem-ch-8', 'chem-ch-9', 'chem-ch-10'
+  ],
+  psychology: ['psy-ch-1', 'psy-ch-2', 'psy-ch-3', 'psy-ch-4', 'psy-ch-5', 'psy-ch-6', 'psy-ch-7'],
   standard_maths: ['math-ch-3', 'math-ch-4', 'math-ch-5', 'math-ch-6', 'math-ch-7', 'math-ch-10', 'math-ch-11', 'math-ch-13'],
   applied_maths: ['app-ch-1', 'app-ch-3', 'app-ch-4', 'app-ch-5', 'app-ch-7', 'app-ch-8'],
   english: [
@@ -32,21 +44,14 @@ export const NCERT_SYLLABUS = {
       {
         id: 'phy-vol-1',
         title: 'NCERT Physics Volume 1',
-        subtitle: 'Electrostatics, Current, Magnetism, EMI & AC (Exam Portions 1-8)',
+        subtitle: 'Electrostatics, Current, Magnetism, EMI, AC & EM Waves (Chapters 1–8)',
         chapters: PHYSICS_CHAPTERS
       },
       {
         id: 'phy-vol-2',
         title: 'NCERT Physics Volume 2',
-        subtitle: 'Ray Optics, Wave Optics, Dual Nature, Atoms, Nuclei, Semiconductors',
-        chapters: [
-          { id: 'phy-ch-9', number: 9, title: 'Ray Optics and Optical Instruments', tag: 'Optics', available: false, isExamPortion: false },
-          { id: 'phy-ch-10', number: 10, title: 'Wave Optics', tag: 'Optics', available: false, isExamPortion: false },
-          { id: 'phy-ch-11', number: 11, title: 'Dual Nature of Radiation and Matter', tag: 'Modern Physics', available: false, isExamPortion: false },
-          { id: 'phy-ch-12', number: 12, title: 'Atoms', tag: 'Modern Physics', available: false, isExamPortion: false },
-          { id: 'phy-ch-13', number: 13, title: 'Nuclei', tag: 'Modern Physics', available: false, isExamPortion: false },
-          { id: 'phy-ch-14', number: 14, title: 'Semiconductor Electronics: Materials, Devices and Simple Circuits', tag: 'Electronics', available: false, isExamPortion: false }
-        ]
+        subtitle: 'Ray Optics, Wave Optics, Dual Nature, Atoms, Nuclei & Semiconductors (Chapters 9–14)',
+        chapters: PHYSICS_CHAPTERS_VOL2
       }
     ]
   },
@@ -59,26 +64,26 @@ export const NCERT_SYLLABUS = {
     volumes: [
       {
         id: 'chem-vol-1',
-        title: 'NCERT Chemistry Volume 1',
-        subtitle: 'Solutions, Electrochemistry, Kinetics, d & f-Block, Coordination',
+        title: 'NCERT Chemistry Volume 1 (Physical & Inorganic)',
+        subtitle: 'Solutions, Electrochemistry, Chemical Kinetics, d & f-Block, Coordination Compounds (Ch 1–5)',
         chapters: [
           CHEMISTRY_CHAPTERS[0], // Solutions
           CHEMISTRY_CHAPTERS[1], // Electrochemistry
-          { id: 'chem-ch-3', number: 3, title: 'Chemical Kinetics', tag: 'Physical Chemistry', available: false, isExamPortion: false },
+          CHEMISTRY_CHAPTERS_REMAINING['chem-ch-3'], // Chemical Kinetics
           CHEMISTRY_CHAPTERS[2], // d & f Block
-          { id: 'chem-ch-5', number: 5, title: 'Coordination Compounds', tag: 'Inorganic Chemistry', available: false, isExamPortion: false }
+          CHEMISTRY_CHAPTERS_REMAINING['chem-ch-5']  // Coordination Compounds
         ]
       },
       {
         id: 'chem-vol-2',
-        title: 'NCERT Chemistry Volume 2',
-        subtitle: 'Haloalkanes, Alcohols, Aldehydes, Amines, Biomolecules',
+        title: 'NCERT Chemistry Volume 2 (Organic Chemistry)',
+        subtitle: 'Haloalkanes, Alcohols/Phenols/Ethers, Aldehydes/Ketones/Acids, Amines, Biomolecules (Ch 6–10)',
         chapters: [
           CHEMISTRY_CHAPTERS[3], // Haloalkanes
           CHEMISTRY_CHAPTERS[4], // Alcohols, Phenols & Ethers
-          { id: 'chem-ch-8', number: 8, title: 'Aldehydes, Ketones and Carboxylic Acids', tag: 'Organic Chemistry', available: false, isExamPortion: false },
-          { id: 'chem-ch-9', number: 9, title: 'Amines', tag: 'Organic Chemistry', available: false, isExamPortion: false },
-          { id: 'chem-ch-10', number: 10, title: 'Biomolecules', tag: 'Organic Chemistry', available: false, isExamPortion: false }
+          CHEMISTRY_CHAPTERS_REMAINING['chem-ch-8'], // Aldehydes, Ketones & Carboxylic Acids
+          CHEMISTRY_CHAPTERS_REMAINING['chem-ch-9'], // Amines
+          CHEMISTRY_CHAPTERS_REMAINING['chem-ch-10'] // Biomolecules
         ]
       }
     ]
@@ -93,20 +98,14 @@ export const NCERT_SYLLABUS = {
       {
         id: 'bio-vol-1',
         title: 'NCERT Biology Volume 1',
-        subtitle: 'Reproduction, Genetics, Evolution, Health & Microbes (Exam Portions 1-8)',
+        subtitle: 'Reproduction, Genetics, Evolution, Human Health & Microbes (Chapters 1–8)',
         chapters: BIOLOGY_CHAPTERS
       },
       {
         id: 'bio-vol-2',
         title: 'NCERT Biology Volume 2',
-        subtitle: 'Biotechnology & Ecology (Chapters 9-13)',
-        chapters: [
-          { id: 'bio-ch-9', number: 9, title: 'Biotechnology: Principles and Processes', tag: 'Biotechnology', available: false, isExamPortion: false },
-          { id: 'bio-ch-10', number: 10, title: 'Biotechnology and its Applications', tag: 'Biotechnology', available: false, isExamPortion: false },
-          { id: 'bio-ch-11', number: 11, title: 'Organisms and Populations', tag: 'Ecology', available: false, isExamPortion: false },
-          { id: 'bio-ch-12', number: 12, title: 'Ecosystem', tag: 'Ecology', available: false, isExamPortion: false },
-          { id: 'bio-ch-13', number: 13, title: 'Biodiversity and Conservation', tag: 'Ecology', available: false, isExamPortion: false }
-        ]
+        subtitle: 'Biotechnology Principles & Applications, Organisms, Ecosystem & Biodiversity (Chapters 9–13)',
+        chapters: BIOLOGY_CHAPTERS_VOL2
       }
     ]
   },
@@ -115,13 +114,19 @@ export const NCERT_SYLLABUS = {
     name: 'Psychology',
     code: '037',
     accentColor: '#8E44AD',
-    description: 'Intelligence, Self & Personality, Life Challenges, Psychological Disorders & Therapeutic Approaches',
+    description: 'Intelligence, Self & Personality, Life Challenges, Psychological Disorders, Therapies, Attitude & Group Processes',
     volumes: [
       {
         id: 'psy-vol-1',
-        title: 'NCERT Psychology Volume 1',
-        subtitle: 'Intelligence, Self & Personality, Stress & Life Challenges (Exam Portions 1-3)',
-        chapters: PSYCHOLOGY_CHAPTERS
+        title: 'NCERT Psychology Part 1 (Foundations & Stress)',
+        subtitle: 'Intelligence, Self & Personality, Meeting Life Challenges (Chapters 1–3)',
+        chapters: PSYCHOLOGY_CHAPTERS.slice(0, 3)
+      },
+      {
+        id: 'psy-vol-2',
+        title: 'NCERT Psychology Part 2 (Clinical & Social Psychology)',
+        subtitle: 'Psychological Disorders, Therapeutic Approaches, Attitude & Social Cognition, Group Processes (Chapters 4–7)',
+        chapters: PSYCHOLOGY_CHAPTERS.slice(3)
       }
     ]
   },

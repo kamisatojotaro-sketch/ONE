@@ -178,6 +178,118 @@ export const MCQ_DATABASE = {
       ],
       correct: 2,
       explanation: 'Gamma rays have the shortest wavelength (< 10⁻¹² m) and highest frequency (> 10²⁰ Hz), giving them the highest photon energy (E = hν) and deepest penetrating ability through dense matter.'
+    },
+    {
+      id: 'phy-mcq-11',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics and Optical Instruments',
+      subtopicId: 'phy-sub-9-2',
+      difficulty: 'medium',
+      question: 'The critical angle for total internal reflection of light travelling from a denser medium of refractive index n = √2 into air is:',
+      options: [
+        '30°',
+        '45°',
+        '60°',
+        '90°'
+      ],
+      correct: 1,
+      explanation: 'Critical angle is given by sin i_c = 1 / n = 1 / √2, which gives i_c = 45°.'
+    },
+    {
+      id: 'phy-mcq-12',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics and Optical Instruments',
+      subtopicId: 'phy-sub-9-3',
+      difficulty: 'medium',
+      question: 'A biconvex lens of glass (n = 1.5) has focal length f in air. When immersed completely in a liquid of refractive index n_l = 1.5, it behaves as a:',
+      options: [
+        'Converging lens of focal length 2f',
+        'Diverging lens of focal length f',
+        'Plane glass plate of infinite focal length (zero power)',
+        'Concave mirror'
+      ],
+      correct: 2,
+      explanation: 'By Lens Maker\'s formula, 1/f_l = (n_g / n_l − 1)(1/R₁ − 1/R₂). Since n_g = n_l = 1.5, 1/f_l = 0 ⟹ f_l = ∞ and Power P = 0. The lens becomes invisible and acts as a plane glass sheet.'
+    },
+    {
+      id: 'phy-mcq-13',
+      chapterId: 'phy-ch-10',
+      chapterName: 'Ch 10: Wave Optics',
+      subtopicId: 'phy-sub-10-4',
+      difficulty: 'medium',
+      question: 'In Young\'s double-slit experiment (YDSE), if the separation between the coherent slits is halved and the screen distance is doubled, the fringe width β:',
+      options: [
+        'Remains unchanged',
+        'Becomes doubled (2β)',
+        'Becomes four times (4β)',
+        'Becomes one-fourth (β/4)'
+      ],
+      correct: 2,
+      explanation: 'Fringe width β = λD / d. When D\' = 2D and d\' = d/2, new fringe width β\' = λ(2D) / (d/2) = 4(λD / d) = 4β.'
+    },
+    {
+      id: 'phy-mcq-14',
+      chapterId: 'phy-ch-11',
+      chapterName: 'Ch 11: Dual Nature of Radiation and Matter',
+      subtopicId: 'phy-sub-11-3',
+      difficulty: 'easy',
+      question: 'In the photoelectric effect, the slope of the stopping potential (V₀) versus incident frequency (ν) graph is equal to:',
+      options: [
+        'h (Planck\'s constant)',
+        'h / e',
+        'e / h',
+        'φ₀ / e'
+      ],
+      correct: 1,
+      explanation: 'By Einstein\'s photoelectric equation: eV₀ = hν − φ₀ ⟹ V₀ = (h/e)ν − φ₀/e. This is a straight line with universal slope m = h / e.'
+    },
+    {
+      id: 'phy-mcq-15',
+      chapterId: 'phy-ch-12',
+      chapterName: 'Ch 12: Atoms',
+      subtopicId: 'phy-sub-12-2',
+      difficulty: 'medium',
+      question: 'According to Bohr\'s model of the hydrogen atom, the ratio of the radii of the first three allowed stationary orbits (n = 1, 2, 3) is:',
+      options: [
+        '1 : 2 : 3',
+        '1 : 4 : 9',
+        '1 : 8 : 27',
+        '9 : 4 : 1'
+      ],
+      correct: 1,
+      explanation: 'The radius of the nth Bohr orbit in hydrogen is directly proportional to n² (r_n = 0.529 n² Å). Thus r₁ : r₂ : r₃ = 1² : 2² : 3² = 1 : 4 : 9.'
+    },
+    {
+      id: 'phy-mcq-16',
+      chapterId: 'phy-ch-13',
+      chapterName: 'Ch 13: Nuclei',
+      subtopicId: 'phy-sub-13-1',
+      difficulty: 'easy',
+      question: 'Two nuclei have mass numbers in the ratio 8 : 27. The ratio of their nuclear densities is:',
+      options: [
+        '8 : 27',
+        '2 : 3',
+        '4 : 9',
+        '1 : 1'
+      ],
+      correct: 3,
+      explanation: 'Nuclear density ρ = Mass / Volume = (A·m) / [(4/3)π R₀³ A] = 3m / (4π R₀³) ≈ 2.3 × 10¹⁷ kg/m³, which is completely independent of mass number A. Hence the ratio is 1 : 1.'
+    },
+    {
+      id: 'phy-mcq-17',
+      chapterId: 'phy-ch-14',
+      chapterName: 'Ch 14: Semiconductor Electronics',
+      subtopicId: 'phy-sub-14-3',
+      difficulty: 'easy',
+      question: 'When a p-n junction diode is forward biased, the width of the depletion layer and the potential barrier:',
+      options: [
+        'Both increase',
+        'Both decrease',
+        'Width increases while barrier decreases',
+        'Remain unchanged'
+      ],
+      correct: 1,
+      explanation: 'In forward bias, the applied voltage opposes the built-in barrier potential (V_eff = V₀ − V), pushing majority carriers toward the junction and narrowing both the depletion layer width and barrier height.'
     }
   ],
 
@@ -373,6 +485,86 @@ export const MCQ_DATABASE = {
       ],
       correct: 1,
       explanation: 'In protonated anisole C₆H₅-O⁺(H)-CH₃, the C(sp²)-O bond between oxygen and benzene ring has partial double bond character due to resonance and is very strong. Cleavage occurs at the weaker aliphatic C(sp³)-O bond via S_N2 attack by I⁻ on the methyl group, yielding Phenol and CH₃I.'
+    },
+    {
+      id: 'chem-mcq-9',
+      chapterId: 'chem-ch-3',
+      chapterName: 'Ch 3: Chemical Kinetics',
+      subtopicId: 'chem-sub-3-3',
+      difficulty: 'easy',
+      question: 'For a first-order chemical reaction, the half-life period (t₁/₂) is:',
+      options: [
+        'Directly proportional to the initial concentration [R]₀',
+        'Inversely proportional to the initial concentration [R]₀',
+        'Completely independent of the initial concentration [R]₀ (t₁/₂ = 0.693 / k)',
+        'Proportional to the square of initial concentration'
+      ],
+      correct: 2,
+      explanation: 'For a first-order reaction, t₁/₂ = 0.693 / k, which contains no concentration term [R]₀. For a zero-order reaction, t₁/₂ = [R]₀ / (2k) is directly proportional to [R]₀.'
+    },
+    {
+      id: 'chem-mcq-10',
+      chapterId: 'chem-ch-5',
+      chapterName: 'Ch 5: Coordination Compounds',
+      subtopicId: 'chem-sub-5-4',
+      difficulty: 'medium',
+      question: 'The hybridisation, geometry, and magnetic behaviour of the complex ion [Ni(CN)₄]²⁻ (Atomic number of Ni = 28) are:',
+      options: [
+        'sp³, Tetrahedral, Paramagnetic',
+        'dsp², Square planar, Diamagnetic',
+        'sp³, Tetrahedral, Diamagnetic',
+        'd²sp³, Octahedral, Paramagnetic'
+      ],
+      correct: 1,
+      explanation: 'In [Ni(CN)₄]²⁻, Ni²⁺ is a 3d⁸ ion. Since CN⁻ is a strong-field ligand, it pairs up the two unpaired 3d electrons, leaving one 3d orbital empty for dsp² hybridisation (Square planar geometry, n = 0 unpaired electrons, Diamagnetic).'
+    },
+    {
+      id: 'chem-mcq-11',
+      chapterId: 'chem-ch-8',
+      chapterName: 'Ch 8: Aldehydes, Ketones and Carboxylic Acids',
+      subtopicId: 'chem-sub-8-4',
+      difficulty: 'medium',
+      question: 'Which of the following carbonyl compounds undergoes the Cannizzaro disproportionation reaction upon heating with concentrated NaOH?',
+      options: [
+        'Acetaldehyde (CH₃CHO)',
+        'Acetone (CH₃COCH₃)',
+        'Benzaldehyde (C₆H₅CHO)',
+        'Propanal (CH₃CH₂CHO)'
+      ],
+      correct: 2,
+      explanation: 'Cannizzaro reaction is given exclusively by aldehydes that lack an α-hydrogen atom, such as Formaldehyde (HCHO) and Benzaldehyde (C₆H₅CHO), yielding one molecule of alcohol and one molecule of carboxylate salt.'
+    },
+    {
+      id: 'chem-mcq-12',
+      chapterId: 'chem-ch-9',
+      chapterName: 'Ch 9: Amines',
+      subtopicId: 'chem-sub-9-2',
+      difficulty: 'hard',
+      question: 'The correct decreasing order of basic strength of ethyl-substituted amines in aqueous solution is:',
+      options: [
+        '(C₂H₅)₃N > (C₂H₅)₂NH > C₂H₅NH₂ > NH₃',
+        '(C₂H₅)₂NH > (C₂H₅)₃N > C₂H₅NH₂ > NH₃',
+        '(C₂H₅)₂NH > C₂H₅NH₂ > (C₂H₅)₃N > NH₃',
+        'C₂H₅NH₂ > (C₂H₅)₂NH > (C₂H₅)₃N > NH₃'
+      ],
+      correct: 1,
+      explanation: 'Due to the combined interplay of +I inductive effect, solvation (hydration) stabilization of the conjugate ammonium cation, and steric hindrance: for ethyl groups in water, the order is 2° > 3° > 1° > NH₃ (Code: 231). For methyl groups, it is 2° > 1° > 3° > NH₃ (Code: 213).'
+    },
+    {
+      id: 'chem-mcq-13',
+      chapterId: 'chem-ch-10',
+      chapterName: 'Ch 10: Biomolecules',
+      subtopicId: 'chem-sub-10-4',
+      difficulty: 'easy',
+      question: 'Which nitrogenous base is present in RNA in place of Thymine found in DNA?',
+      options: [
+        'Adenine',
+        'Guanine',
+        'Cytosine',
+        'Uracil'
+      ],
+      correct: 3,
+      explanation: 'DNA contains Adenine (A), Guanine (G), Cytosine (C), and Thymine (T, 5-methyluracil), whereas RNA contains Adenine (A), Guanine (G), Cytosine (C), and Uracil (U).'
     }
   ],
 
@@ -504,6 +696,86 @@ export const MCQ_DATABASE = {
       ],
       correct: 1,
       explanation: 'Cyclosporin A is produced by the fungus Trichoderma polysporum and is used as an immunosuppressive drug in organ transplantation. Statins are produced by Monascus purpureus, Citric acid by Aspergillus niger, and Penicillin by Penicillium notatum.'
+    },
+    {
+      id: 'bio-mcq-9',
+      chapterId: 'bio-ch-9',
+      chapterName: 'Ch 9: Biotechnology: Principles and Processes',
+      subtopicId: 'bio-sub-9-5',
+      difficulty: 'easy',
+      question: 'The thermostable DNA polymerase (Taq polymerase) used for repeated amplification cycles in PCR is isolated from the bacterium:',
+      options: [
+        'Escherichia coli',
+        'Thermus aquaticus',
+        'Agrobacterium tumefaciens',
+        'Salmonella typhimurium'
+      ],
+      correct: 1,
+      explanation: 'Taq polymerase is isolated from the thermophilic bacterium Thermus aquaticus. It remains active during the high-temperature denaturation step (94 °C) of Polymerase Chain Reaction (PCR).'
+    },
+    {
+      id: 'bio-mcq-10',
+      chapterId: 'bio-ch-10',
+      chapterName: 'Ch 10: Biotechnology and its Applications',
+      subtopicId: 'bio-sub-10-3',
+      difficulty: 'medium',
+      question: 'During the maturation of human pro-insulin into functional mature insulin, which peptide segment is enzymatically excised?',
+      options: [
+        'A-peptide chain',
+        'B-peptide chain',
+        'C-peptide stretch',
+        'Disulfide bridges'
+      ],
+      correct: 2,
+      explanation: 'Pro-insulin contains an extra stretch called the C-peptide, which is removed during maturation, leaving the A-chain (21 amino acids) and B-chain (30 amino acids) linked together by disulfide bonds.'
+    },
+    {
+      id: 'bio-mcq-11',
+      chapterId: 'bio-ch-11',
+      chapterName: 'Ch 11: Organisms and Populations',
+      subtopicId: 'bio-sub-11-3',
+      difficulty: 'medium',
+      question: 'In the Verhulst-Pearl logistic population growth equation dN/dt = rN[(K − N)/K], the symbol K represents:',
+      options: [
+        'Intrinsic rate of natural increase',
+        'Carrying capacity of the habitat',
+        'Initial population density',
+        'Mortality rate constant'
+      ],
+      correct: 1,
+      explanation: 'In the logistic S-shaped growth model, K represents the Carrying Capacity — the maximum population size of a species that a given habitat\'s limited resources can sustainably support.'
+    },
+    {
+      id: 'bio-mcq-12',
+      chapterId: 'bio-ch-12',
+      chapterName: 'Ch 12: Ecosystem',
+      subtopicId: 'bio-sub-12-4',
+      difficulty: 'easy',
+      question: 'Which of the following ecological pyramids is ALWAYS upright and can never be inverted in any natural ecosystem?',
+      options: [
+        'Pyramid of Numbers',
+        'Pyramid of Biomass',
+        'Pyramid of Energy',
+        'Aquatic Biomass Pyramid'
+      ],
+      correct: 2,
+      explanation: 'The Pyramid of Energy is always upright because when energy flows from one trophic level to the next, only ~10% is transferred while 90% is lost as metabolic heat at each step (Second Law of Thermodynamics).'
+    },
+    {
+      id: 'bio-mcq-13',
+      chapterId: 'bio-ch-13',
+      chapterName: 'Ch 13: Biodiversity and Conservation',
+      subtopicId: 'bio-sub-13-4',
+      difficulty: 'easy',
+      question: 'Which of the following is an example of ex-situ (off-site) conservation of threatened biodiversity?',
+      options: [
+        'National Parks',
+        'Biosphere Reserves',
+        'Sacred Groves',
+        'Cryopreservation of gametes and Seed Banks'
+      ],
+      correct: 3,
+      explanation: 'Cryopreservation (at −196 °C in liquid nitrogen), seed banks, botanical gardens, and zoological parks are ex-situ conservation methods, whereas National Parks, Biosphere Reserves, Wildlife Sanctuaries, and Sacred Groves are in-situ.'
     }
   ],
 
@@ -678,6 +950,70 @@ export const MCQ_DATABASE = {
       ],
       correct: 0,
       explanation: 'When external stressors cannot be changed (uncontrollable events like bereavement), emotion-focused coping helps regulate internal emotional turmoil and distress effectively.'
+    },
+    {
+      id: 'psy-mcq-12',
+      chapterId: 'psy-ch-4',
+      chapterName: 'Ch 4: Psychological Disorders',
+      subtopicId: 'psy-sub-4-5',
+      difficulty: 'medium',
+      question: 'In Schizophrenia, symptoms that represent pathological excesses or bizarre additions to normal thoughts and behaviour (such as delusions and hallucinations) are termed:',
+      options: [
+        'Positive symptoms',
+        'Negative symptoms',
+        'Psychomotor symptoms',
+        'Somatic symptoms'
+      ],
+      correct: 0,
+      explanation: 'Positive symptoms are pathological excesses (delusions, hallucinations, disorganized speech/formal thought disorder), whereas negative symptoms are deficits (alogia, avolition, flat/blunted affect).'
+    },
+    {
+      id: 'psy-mcq-13',
+      chapterId: 'psy-ch-5',
+      chapterName: 'Ch 5: Therapeutic Approaches',
+      subtopicId: 'psy-sub-5-2',
+      difficulty: 'medium',
+      question: 'Joseph Wolpe developed Systematic Desensitization for treating phobias based on the behavioural principle of:',
+      options: [
+        'Reciprocal inhibition',
+        'Token economy',
+        'Free association',
+        'Existential logotherapy'
+      ],
+      correct: 0,
+      explanation: 'Systematic desensitization operates on the principle of reciprocal inhibition, which states that the presence of two mutually opposing forces (deep muscular relaxation vs anxiety) inhibits the weaker anxiety response.'
+    },
+    {
+      id: 'psy-mcq-14',
+      chapterId: 'psy-ch-6',
+      chapterName: 'Ch 6: Attitude and Social Cognition',
+      subtopicId: 'psy-sub-6-3',
+      difficulty: 'easy',
+      question: 'According to Fritz Heider\'s P-O-X Balance Theory of attitude change, an attitude triad is in a state of balance when:',
+      options: [
+        'All three sides are negative',
+        'Two sides are positive and one side is negative',
+        'All three sides are positive, OR two sides are negative and one side is positive',
+        'One side is positive and two sides are neutral'
+      ],
+      correct: 2,
+      explanation: 'In Heider\'s P-O-X triangle, balance exists when the multiplicative product of the signs of the three sides is positive: either all three sides are positive (+ + +), or two sides are negative and one is positive (− − +).'
+    },
+    {
+      id: 'psy-mcq-15',
+      chapterId: 'psy-ch-7',
+      chapterName: 'Ch 7: Social Influence and Group Processes',
+      subtopicId: 'psy-sub-7-4',
+      difficulty: 'easy',
+      question: 'The phenomenon in which individuals exert LESS effort when working collectively in a group than when working individually on a pooled task (such as clapping or tug-of-war) is called:',
+      options: [
+        'Social facilitation',
+        'Social loafing',
+        'Group polarisation',
+        'Groupthink'
+      ],
+      correct: 1,
+      explanation: 'Social loafing (demonstrated by Latane\'s clapping experiment) is the reduction in individual effort when working on a collective task due to diffusion of responsibility and lack of individual evaluation.'
     }
   ],
   standard_maths: [

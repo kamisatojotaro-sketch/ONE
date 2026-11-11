@@ -244,6 +244,123 @@ export const PYQ_DATABASE = {
 3. Ampere-Maxwell Equation:
    Total current = Conduction current (I_c) + Displacement current (I_d).
    ∮ B · dl = μ₀ (I_c + I_d) = μ₀ [ I_c + ε₀ (dΦ_E / dt) ]`
+    },
+    {
+      id: 'phy-pyq-12',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics and Optical Instruments',
+      subtopicId: 'phy-sub-9-3',
+      year: 'CBSE 2024, 2023 (5 Marks)',
+      question: 'Draw a ray diagram for refraction at a convex spherical surface and hence derive the Lens Maker\'s Formula: 1/f = (n₂₁ − 1)(1/R₁ − 1/R₂). State the assumptions made.',
+      solution: `1. Assumptions Made:
+   • The lens is thin so distances measured from either surface are equal to those from the optical centre O.
+   • The aperture of the lens is small, so all incident and refracted rays are paraxial (tan θ ≈ sin θ ≈ θ).
+   • The object is a point object lying on the principal axis.
+
+2. Step 1 — Refraction at First Spherical Surface (R₁, n₁ ⟶ n₂):
+   Object O is at distance u in medium n₁; virtual/intermediate image I₁ is formed at distance v₁ in medium n₂:
+   (n₂ / v₁) − (n₁ / u) = (n₂ − n₁) / R₁   ---- (1)
+
+3. Step 2 — Refraction at Second Spherical Surface (R₂, n₂ ⟶ n₁):
+   Image I₁ acts as a virtual object in medium n₂, forming final real image I at distance v in medium n₁:
+   (n₁ / v) − (n₂ / v₁) = (n₁ − n₂) / R₂ = −(n₂ − n₁) / R₂   ---- (2)
+
+4. Step 3 — Adding Equations (1) and (2):
+   n₁ (1/v − 1/u) = (n₂ − n₁)(1/R₁ − 1/R₂)
+   Dividing by n₁ and setting n₂₁ = n₂ / n₁:
+   (1/v − 1/u) = (n₂₁ − 1)(1/R₁ − 1/R₂)
+   When object is at infinity (u = −∞), image forms at focus (v = f):
+   ⟹ 1/f = (n₂₁ − 1)(1/R₁ − 1/R₂)`
+    },
+    {
+      id: 'phy-pyq-13',
+      chapterId: 'phy-ch-10',
+      chapterName: 'Ch 10: Wave Optics',
+      subtopicId: 'phy-sub-10-2',
+      year: 'CBSE 2024, 2022 (3 Marks)',
+      question: 'State Huygens\' principle. Using Huygens\' geometrical construction of wavefronts, verify Snell\'s law of refraction of a plane wave passing from a rarer medium (v₁) to a denser medium (v₂).',
+      solution: `1. Huygens' Principle:
+   (i) Every point on a given primary wavefront acts as a fresh source of secondary spherical wavelets travelling outward with the speed of light in that medium.
+   (ii) The forward common tangent envelope to all secondary wavelets at any later instant gives the new wavefront at that instant.
+
+2. Proof of Snell's Law of Refraction:
+   • Let plane wavefront AB incident at angle i on interface XY separating Medium 1 (speed v₁) and Medium 2 (speed v₂ < v₁).
+   • In time τ taken by disturbance to travel from B to C in Medium 1 (BC = v₁ τ), the secondary wavelet from A travels into Medium 2 covering radius AD = v₂ τ.
+   • Draw tangent CD from C to the secondary wavelet arc; CD is the refracted wavefront at angle r.
+   • In right ΔABC: sin i = BC / AC = (v₁ τ) / AC.
+   • In right ΔADC: sin r = AD / AC = (v₂ τ) / AC.
+   • Dividing the two equations:
+     sin i / sin r = v₁ / v₂ = (c / n₁) / (c / n₂) = n₂ / n₁
+     ⟹ n₁ sin i = n₂ sin r (Snell's Law Verified).`
+    },
+    {
+      id: 'phy-pyq-14',
+      chapterId: 'phy-ch-11',
+      chapterName: 'Ch 11: Dual Nature of Radiation and Matter',
+      subtopicId: 'phy-sub-11-3',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Write Einstein\'s photoelectric equation. Explain how it accounts for: (i) existence of threshold frequency, (ii) independence of maximum kinetic energy from intensity of light.',
+      solution: `1. Einstein's Photoelectric Equation:
+   A single photon of energy hν is absorbed by a single electron. Part of this energy overcomes the work function φ₀ = hν₀, and the rest appears as maximum kinetic energy:
+   K_max = eV₀ = hν − φ₀ = h(ν − ν₀)
+
+2. Explanation of Observations:
+   (i) Threshold Frequency (ν₀): Since kinetic energy K_max cannot be negative, photoelectric emission is possible only if ν ≥ ν₀. Below ν₀, no electrons are emitted regardless of intensity.
+   (ii) Independence of K_max from Intensity: Increasing intensity only increases the number of photons striking per second (increasing saturation current), while the energy of each individual photon (hν) and hence K_max depends solely on frequency ν.`
+    },
+    {
+      id: 'phy-pyq-15',
+      chapterId: 'phy-ch-12',
+      chapterName: 'Ch 12: Atoms',
+      subtopicId: 'phy-sub-12-2',
+      year: 'CBSE 2024 (3 Marks)',
+      question: 'State Bohr\'s quantization condition for angular momentum. Derive the expression for the total energy of an electron in the nth stationary orbit of a hydrogen atom.',
+      solution: `1. Bohr's Quantization Postulate:
+   Electrons revolve only in those stationary orbits for which the orbital angular momentum L is an integral multiple of h / 2π:
+   L = m v r = n h / (2π)   (n = 1, 2, 3, ...)
+
+2. Total Energy Derivation:
+   • Electrostatic attraction provides centripetal force:
+     m v² / r = (1 / 4πε₀) · (e² / r²)  ⟹  K = ½ m v² = e² / (8πε₀ r)
+   • Electrostatic potential energy:
+     U = −(1 / 4πε₀) · (e² / r) = −2 K
+   • Total Energy E = K + U:
+     E = e² / (8πε₀ r) − e² / (4πε₀ r) = −e² / (8πε₀ r)
+   • Substituting Bohr radius r_n = (ε₀ n² h²) / (π m e²):
+     E_n = −(m e⁴) / (8 ε₀² n² h²) = −13.6 / n² eV.`
+    },
+    {
+      id: 'phy-pyq-16',
+      chapterId: 'phy-ch-13',
+      chapterName: 'Ch 13: Nuclei',
+      subtopicId: 'phy-sub-13-2',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Draw the plot of Binding Energy per nucleon (BE/A) versus mass number (A). Use this curve to explain why energy is released in both nuclear fission of heavy nuclei and nuclear fusion of light nuclei.',
+      solution: `1. Salient Features of BE/A Curve:
+   • BE/A is practically constant (~8.0 MeV) for intermediate nuclei (30 < A < 170), reaching a maximum of 8.75 MeV for ⁵⁶Fe.
+   • BE/A is significantly lower for both very light nuclei (A < 20) and very heavy nuclei (A > 200, ~7.6 MeV for ²³⁸U).
+
+2. Energy Release in Fission & Fusion:
+   • Nuclear Fission: When a heavy nucleus like ²³⁵U (BE/A ≈ 7.6 MeV) splits into two mid-sized fragments (A ≈ 100–140, BE/A ≈ 8.5 MeV), nucleons move to a more tightly bound state. The increase in BE/A (~0.9 MeV/nucleon × 235 ≈ 200 MeV) is released as energy.
+   • Nuclear Fusion: When two very light nuclei like ²H (BE/A ≈ 1.1 MeV) fuse to form ⁴He (BE/A ≈ 7.07 MeV), the product has a much higher binding energy per nucleon, releasing the difference as enormous thermal energy.`
+    },
+    {
+      id: 'phy-pyq-17',
+      chapterId: 'phy-ch-14',
+      chapterName: 'Ch 14: Semiconductor Electronics',
+      subtopicId: 'phy-sub-14-4',
+      year: 'CBSE 2024, 2023 (5 Marks)',
+      question: 'Explain with the help of a labelled circuit diagram the working of a p-n junction diode as a Full-Wave Rectifier. Draw the input and output voltage waveforms.',
+      solution: `1. Principle:
+   A p-n junction diode conducts current easily when forward biased (low resistance) and blocks current when reverse biased (high resistance).
+
+2. Circuit Setup:
+   Consists of a step-down centre-tap transformer, two diodes D₁ and D₂ whose p-sides are connected to the secondary ends A and B, and load resistor R_L connected between the common n-sides and the central tap C.
+
+3. Working:
+   • Positive Half-Cycle: End A is positive and B is negative with respect to centre-tap C. Diode D₁ is forward biased and conducts through R_L, while D₂ is reverse biased (OFF).
+   • Negative Half-Cycle: End A becomes negative and B becomes positive with respect to C. Diode D₁ is reverse biased (OFF) while D₂ is forward biased and conducts through R_L in the SAME direction.
+   • Output: Unidirectional pulsating DC voltage is obtained across R_L during both half-cycles (output ripple frequency = 2 × input AC frequency).`
     }
   ],
 
@@ -450,6 +567,110 @@ Sodium phenoxide + CO₂ (at 400 K, 4-7 atm) ⟶ Sodium salicylate ⟶ (acidific
 
 (iii) Williamson Synthesis of Anisole:
 Sodium phenoxide (C₆H₅O⁻Na⁺) + Methyl iodide (CH₃-I) ⟶ Anisole (C₆H₅-O-CH₃) + NaI.`
+    },
+    {
+      id: 'chem-pyq-9',
+      chapterId: 'chem-ch-3',
+      chapterName: 'Ch 3: Chemical Kinetics',
+      subtopicId: 'chem-sub-3-3',
+      year: 'CBSE 2024, 2023 (3 Marks)',
+      question: 'Derive the integrated rate equation for a first-order reaction: k = (2.303 / t) log([R]₀ / [R]). Show that the time required for 99.9% completion of a first-order reaction is 10 times its half-life (t₁/₂).',
+      solution: `1. Integrated Rate Equation Derivation:
+   • For a first-order reaction R ⟶ P:
+     Rate = −d[R]/dt = k[R]  ⟹  d[R]/[R] = −k dt
+   • Integrating both sides: ln[R] = −kt + I.
+   • At t = 0, [R] = [R]₀ ⟹ I = ln[R]₀.
+   • Substituting I: ln([R]₀ / [R]) = kt
+   • Converting to base-10 log:
+     k = (2.303 / t) log([R]₀ / [R])
+
+2. Proof that t(99.9%) = 10 × t₁/₂:
+   • For 99.9% completion, [R] = [R]₀ − 0.999[R]₀ = 0.001[R]₀ = [R]₀ / 10³.
+   • t(99.9%) = (2.303 / k) log([R]₀ / ([R]₀ / 10³)) = (2.303 / k) log(10³) = 3 × (2.303 / k) = 6.909 / k.
+   • Since t₁/₂ = 0.693 / k:
+     t(99.9%) / t₁/₂ = (6.909 / k) / (0.693 / k) ≈ 10  ⟹  t(99.9%) = 10 × t₁/₂.`
+    },
+    {
+      id: 'chem-pyq-10',
+      chapterId: 'chem-ch-5',
+      chapterName: 'Ch 5: Coordination Compounds',
+      subtopicId: 'chem-sub-5-4',
+      year: 'CBSE 2024, 2022 (3 Marks)',
+      question: 'Using Valence Bond Theory (VBT), compare the hybridisation, geometry, and magnetic behaviour of [Fe(CN)₆]⁴⁻ and [FeF₆]³⁻ (Atomic number of Fe = 26).',
+      solution: `1. [Fe(CN)₆]⁴⁻ (Hexacyanoferrate(II) ion):
+   • Oxidation state of Fe = +2 (3d⁶ configuration).
+   • CN⁻ is a strong-field ligand; it forces pairing of all six 3d electrons into three 3d orbitals (t₂g⁶), leaving two 3d orbitals vacant.
+   • Hybridisation: d²sp³ (Inner orbital / low-spin complex).
+   • Geometry: Octahedral.
+   • Magnetic Behaviour: Diamagnetic (n = 0 unpaired electrons, μ = 0 BM).
+
+2. [FeF₆]³⁻ (Hexafluoroferrate(III) ion):
+   • Oxidation state of Fe = +3 (3d⁵ configuration).
+   • F⁻ is a weak-field halide ligand; it cannot pair the five 3d electrons. Outer 4d orbitals are used.
+   • Hybridisation: sp³d² (Outer orbital / high-spin complex).
+   • Geometry: Octahedral.
+   • Magnetic Behaviour: Strongly Paramagnetic (n = 5 unpaired electrons, μ = √35 = 5.92 BM).`
+    },
+    {
+      id: 'chem-pyq-11',
+      chapterId: 'chem-ch-8',
+      chapterName: 'Ch 8: Aldehydes, Ketones and Carboxylic Acids',
+      subtopicId: 'chem-sub-8-4',
+      year: 'CBSE 2024, 2023 (5 Marks)',
+      question: 'Explain the following named organic reactions with balanced chemical equations:\n(i) Aldol Condensation\n(ii) Cannizzaro Reaction\n(iii) Rosenmund Reduction\n(iv) Clemmensen Reduction\n(v) Hell-Volhard-Zelinsky (HVZ) Reaction.',
+      solution: `(i) Aldol Condensation:
+   Aldehydes/ketones having at least one α-hydrogen react in dilute NaOH to form β-hydroxy aldehydes (aldols), which on heating lose H₂O to give α,β-unsaturated carbonyls:
+   2 CH₃CHO ──(dil. NaOH)──> CH₃-CH(OH)-CH₂-CHO ──(Δ, −H₂O)──> CH₃-CH=CH-CHO (But-2-enal).
+
+(ii) Cannizzaro Reaction:
+   Aldehydes lacking α-hydrogen undergo self-redox disproportionation in concentrated alkali:
+   2 HCHO + conc. NaOH ⟶ CH₃OH (Methanol) + HCOONa (Sodium formate).
+
+(iii) Rosenmund Reduction:
+   Catalytic hydrogenation of acyl chlorides over Pd-BaSO₄ produces aldehydes:
+   C₆H₅COCl + H₂ ──(Pd / BaSO₄)──> C₆H₅CHO + HCl.
+
+(iv) Clemmensen Reduction:
+   Reduction of aldehydes/ketones to alkanes using zinc-amalgam and conc. HCl:
+   >C=O + 4[H] ──(Zn-Hg / conc. HCl)──> −CH₂− + H₂O.
+
+(v) Hell-Volhard-Zelinsky (HVZ) Reaction:
+   Carboxylic acids having α-hydrogen are halogenated at the α-position with Cl₂/Br₂ and red phosphorus:
+   R-CH₂-COOH + Br₂ ──(i) Red P, (ii) H₂O──> R-CH(Br)-COOH + HBr.`
+    },
+    {
+      id: 'chem-pyq-12',
+      chapterId: 'chem-ch-9',
+      chapterName: 'Ch 9: Amines',
+      subtopicId: 'chem-sub-9-3',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'How is Hinsberg\'s reagent used to chemically distinguish between Primary (1°), Secondary (2°), and Tertiary (3°) amines? Write the chemical name and formula of Hinsberg\'s reagent.',
+      solution: `1. Hinsberg's Reagent:
+   Benzenesulphonyl chloride (C₆H₅SO₂Cl).
+
+2. Distinction Between 1°, 2°, and 3° Amines:
+   • Primary (1°) Amine (R-NH₂): Reacts with C₆H₅SO₂Cl to form N-alkylbenzenesulphonamide (C₆H₅SO₂-NH-R), which contains an acidic hydrogen on nitrogen and therefore DISSOLVES in aqueous KOH.
+   • Secondary (2°) Amine (R₂NH): Reacts with C₆H₅SO₂Cl to form N,N-dialkylbenzenesulphonamide (C₆H₅SO₂-NR₂), which has NO acidic hydrogen on nitrogen and remains INSOLUBLE in aqueous KOH.
+   • Tertiary (3°) Amine (R₃N): Has no hydrogen attached to nitrogen and therefore DOES NOT REACT with Hinsberg's reagent at all.`
+    },
+    {
+      id: 'chem-pyq-13',
+      chapterId: 'chem-ch-10',
+      chapterName: 'Ch 10: Biomolecules',
+      subtopicId: 'chem-sub-10-1',
+      year: 'CBSE 2024, 2022 (3 Marks)',
+      question: 'Write the chemical reactions of D-Glucose with: (i) Prolonged heating with HI, (ii) Bromine water (Br₂/H₂O), (iii) Concentrated HNO₃. What structural feature of glucose does each reaction establish?',
+      solution: `(i) Reaction with HI (Heat):
+   C₆H₁₂O₆ (Glucose) ──(HI, Δ)──> CH₃-CH₂-CH₂-CH₂-CH₂-CH₃ (n-Hexane).
+   Structural Proof: Proves that all six carbon atoms in glucose are linked in an unbranched straight chain.
+
+(ii) Reaction with Bromine Water (Mild Oxidising Agent):
+   CHO-(CHOH)₄-CH₂OH + [O] (Br₂ water) ⟶ COOH-(CHOH)₄-CH₂OH (Gluconic acid).
+   Structural Proof: Proves that the carbonyl group in glucose is present as an ALDEHYDE (−CHO) group.
+
+(iii) Reaction with Concentrated HNO₃ (Strong Oxidising Agent):
+   CHO-(CHOH)₄-CH₂OH + [O] (HNO₃) ⟶ COOH-(CHOH)₄-COOH (Saccharic acid / Glucaric acid).
+   Structural Proof: Proves the presence of a primary alcoholic (−CH₂OH) group at C-6.`
     }
   ],
 
@@ -1219,6 +1440,102 @@ Sodium phenoxide (C₆H₅O⁻Na⁺) + Methyl iodide (CH₃-I) ⟶ Anisole (C₆
 3. Two Benefits Conferred to Host Plant:
    (i) Disease Resistance: Confers enhanced resistance to root-borne fungal and bacterial pathogens.
    (ii) Environmental Tolerance: Imparts increased tolerance to soil salinity and drought, promoting overall plant growth and vigor.`
+    },
+    {
+      id: 'bio-pyq-39',
+      chapterId: 'bio-ch-9',
+      chapterName: 'Ch 9: Biotechnology: Principles and Processes',
+      subtopicId: 'bio-sub-9-5',
+      year: 'CBSE 2024, 2023 (5 Marks)',
+      question: 'Explain the three sequential steps of Polymerase Chain Reaction (PCR) with the exact temperature requirements and enzymes used. Why is Taq polymerase essential for this process?',
+      solution: `1. Three Sequential Steps of PCR:
+   (i) Denaturation (94 °C):
+       • Double-stranded target DNA is heated to 94 °C for 1 minute to break hydrogen bonds between complementary nitrogenous bases, separating it into two single-stranded templates.
+   (ii) Annealing (54 °C):
+       • Reaction mixture is cooled to 54 °C to allow two sets of chemically synthesized oligonucleotide primers to bind (anneal) to the 3' ends of each single-stranded template.
+   (iii) Extension (72 °C):
+       • Temperature is raised to 72 °C. Thermostable Taq DNA polymerase synthesizes new complementary DNA strands in the 5' ⟶ 3' direction using dNTPs and Mg²⁺ cofactors.
+
+2. Role of Taq Polymerase:
+   • Isolated from the thermophilic bacterium Thermus aquaticus.
+   • Unlike ordinary DNA polymerases that denature at 94 °C, Taq polymerase is thermostable and remains enzymatically active through 30+ cycles of high-temperature denaturation, enabling ~1 billion-fold amplification.`
+    },
+    {
+      id: 'bio-pyq-40',
+      chapterId: 'bio-ch-10',
+      chapterName: 'Ch 10: Biotechnology and its Applications',
+      subtopicId: 'bio-sub-10-1',
+      year: 'CBSE 2024, 2022 (3 Marks)',
+      question: 'How does the Bt toxin protein produced by Bacillus thuringiensis kill the cotton bollworm without killing the bacterium itself? Name the specific cry genes that control cotton bollworms and corn borer.',
+      solution: `1. Why Bt Toxin Does Not Kill Bacillus thuringiensis:
+   • Inside the bacterium, the Bt toxin protein is synthesized as an inactive crystalline protoxin (insecticidal crystal protein).
+
+2. Mechanism of Action in Cotton Bollworm:
+   • Once the insect larva ingests the plant tissue containing inactive protoxin crystals, the crystals reach the insect's midgut.
+   • The ALKALINE pH of the insect gut solubilizes the crystals and converts the inactive protoxin into the active form of the toxin.
+   • The activated toxin binds to specific receptors on the surface of midgut epithelial cells and creates pores, causing cell swelling, osmotic lysis, gut paralysis, and death of the insect.
+
+3. Specific cry Genes:
+   • Cotton Bollworms: Controlled by proteins encoded by genes cryIAc and cryIIAb.
+   • Corn Borer: Controlled by protein encoded by gene cryIAb.`
+    },
+    {
+      id: 'bio-pyq-41',
+      chapterId: 'bio-ch-11',
+      chapterName: 'Ch 11: Organisms and Populations',
+      subtopicId: 'bio-sub-11-3',
+      year: 'CBSE 2023 (5 Marks)',
+      question: 'Compare the Exponential and Logistic models of population growth with their differential equations and growth curves. Which model is considered more realistic in nature and why?',
+      solution: `1. Exponential Growth Model (J-Shaped Curve):
+   • Condition: Occurs when resources (food and space) in the habitat are unlimited.
+   • Differential Equation: dN / dt = (b − d) × N = rN  (or N_t = N₀ e^{rt}), where r is intrinsic rate of natural increase.
+   • Curve Shape: J-shaped curve when N is plotted against time t.
+
+2. Logistic Growth Model / Verhulst-Pearl Logistic Growth (S-Shaped / Sigmoid Curve):
+   • Condition: Occurs when resources are finite and limited, leading to competition among individuals.
+   • Differential Equation: dN / dt = rN [ (K − N) / K ], where K is the Carrying Capacity.
+   • Curve Phases: Lag phase ⟶ Acceleration (Log) phase ⟶ Deceleration phase ⟶ Asymptote (when N reaches K).
+
+3. Which Model is More Realistic:
+   • The Logistic Growth model is far more realistic because no natural ecosystem possesses infinite resources forever; environmental resistance and carrying capacity K inevitably limit population growth.`
+    },
+    {
+      id: 'bio-pyq-42',
+      chapterId: 'bio-ch-12',
+      chapterName: 'Ch 12: Ecosystem',
+      subtopicId: 'bio-sub-12-2',
+      year: 'CBSE 2024 (5 Marks)',
+      question: 'Describe the five sequential steps involved in the decomposition of detritus in a terrestrial ecosystem. How do chemical composition of detritus and climatic factors regulate the rate of decomposition?',
+      solution: `1. Five Steps of Decomposition:
+   (i) Fragmentation: Detritivores (e.g., earthworms) break down detritus into smaller particles, increasing surface area.
+   (ii) Leaching: Water-soluble inorganic nutrients percolate down into the soil horizon and precipitate as unavailable salts.
+   (iii) Catabolism: Bacterial and fungal extracellular enzymes degrade detritus into simpler inorganic substances.
+   (iv) Humification: Accumulation of a dark-coloured amorphous substance called Humus, which is highly resistant to microbial action and acts as a nutrient reservoir.
+   (v) Mineralisation: Slow degradation of humus by microbes to release inorganic nutrients (Ca²⁺, Mg²⁺, K⁺, NH₄⁺) back into the soil.
+
+2. Factors Regulating Decomposition Rate:
+   • Chemical Quality: Slower if detritus is rich in lignin and chitin; faster if rich in nitrogen and water-soluble sugars.
+   • Climatic Factors: Warm and moist environment with aerobic conditions strongly accelerates decomposition; low temperature (< 10 °C) and anaerobiosis inhibit decomposition.`
+    },
+    {
+      id: 'bio-pyq-43',
+      chapterId: 'bio-ch-13',
+      chapterName: 'Ch 13: Biodiversity and Conservation',
+      subtopicId: 'bio-sub-13-3',
+      year: 'CBSE 2023 (3 Marks)',
+      question: 'Explain the "Evil Quartet" responsible for the accelerated loss of biodiversity across the globe with suitable examples.',
+      solution: `The four major causes of biodiversity loss ("The Evil Quartet") are:
+1. Habitat Loss and Fragmentation (Most Important Cause):
+   • Tropical rainforests (which once covered 14% of Earth's land, now < 6%), such as the Amazon rainforest ("lungs of the planet"), are being cleared for soya cultivation and cattle grasslands. Fragmentation severely impacts migratory species and animals requiring large territories.
+
+2. Over-Exploitation:
+   • When human need turns to greed, natural populations are harvested beyond sustainable renewal, leading to the extinction of Steller's sea cow and the Passenger pigeon.
+
+3. Alien Species Invasions:
+   • Unintentional or deliberate introduction of exotic species threatens indigenous species: Nile perch in Lake Victoria caused extinction of >200 species of cichlid fish; Water hyacinth (Eichhornia), Lantana, Parthenium, and African catfish (Clarias gariepinus).
+
+4. Co-Extinctions:
+   • When a host species becomes extinct, obligate parasites or coevolved mutualists (such as a coevolved plant-pollinator fig-wasp pair) also become extinct obligatorily.`
     }
   ],
 
@@ -1625,6 +1942,82 @@ Social support refers to the perceived comfort, caring, esteem, and help availab
 • Informational Support: Relevant guidance, advice, feedback, and strategies provided during crisis.
 • Emotional Support: Unconditional empathy, listening, affection, and reassurance that restores self-esteem.
 • Protective Buffer: High social support acts as a psychological buffer against toxic stress hormones, enhancing immune resilience and overall longevity.`
+    },
+    {
+      id: 'psy-pyq-19',
+      chapterId: 'psy-ch-4',
+      chapterName: 'Ch 4: Psychological Disorders',
+      subtopicId: 'psy-sub-4-5',
+      year: 'CBSE 2024, 2023 (6 Marks)',
+      question: 'Differentiate between Positive, Negative, and Psychomotor symptoms of Schizophrenia Spectrum Disorders with clinical examples of each.',
+      solution: `1. Positive Symptoms (Pathological Excesses / Bizarre Additions):
+   • Delusions: False, unshakeable beliefs held despite clear contradictory evidence:
+     – Delusions of Persecution (belief that one is being plotted against, spied on, or threatened).
+     – Delusions of Reference (attaching personal meaning to neutral actions of others).
+     – Delusions of Grandeur (believing one has extraordinary divine or political power).
+     – Delusions of Control (believing one's thoughts and feelings are controlled by external forces).
+   • Hallucinations: Perceptions experienced in the absence of external stimuli (most commonly auditory hallucinations—hearing voices commenting on or commanding the patient, as well as tactile, somatic, visual, gustatory, and olfactory).
+   • Formal Thought Disorder: Rapidly shifting topics (loosening of associations / derailment), neologisms (inventing new words), and perseveration.
+
+2. Negative Symptoms (Pathological Deficits / Losses):
+   • Alogia: Poverty of speech or reduction in speech content.
+   • Blunted / Flat Affect: Severe reduction or complete absence of emotional expression (anger, joy, sadness).
+   • Avolition: Apathy and inability to initiate or persist in goal-directed everyday activities.
+
+3. Psychomotor Symptoms:
+   • Catatonic Stupor: Remaining motionless and silent for long stretches of time.
+   • Catatonic Rigidity: Maintaining a rigid, upright posture for hours against efforts to move them.
+   • Catatonic Posturing: Assuming awkward, bizarre positions for prolonged periods.`
+    },
+    {
+      id: 'psy-pyq-20',
+      chapterId: 'psy-ch-5',
+      chapterName: 'Ch 5: Therapeutic Approaches',
+      subtopicId: 'psy-sub-5-3',
+      year: 'CBSE 2024, 2022 (4 Marks)',
+      question: 'Explain Albert Ellis\'s Rational Emotive Therapy (RET) using the ABC analysis framework. How does it differ from Aaron Beck\'s Cognitive Therapy?',
+      solution: `1. Albert Ellis's Rational Emotive Therapy (RET) & ABC Analysis:
+   • Core Premise: Irrational beliefs mediate between antecedent life events and their emotional consequences.
+   • A (Antecedent Event): The activating environmental event (e.g., failing an interview or being criticized).
+   • B (Beliefs): The client's irrational beliefs characterized by rigid "musts" and "shoulds" (e.g., "I MUST always succeed and be loved by everyone, otherwise I am worthless").
+   • C (Consequence): Distorted negative emotions (depression, panic) and maladaptive behaviours caused directly by B, not A.
+   • Therapeutic Intervention: Through Nondirective Questioning, the therapist gently challenges and refutes the irrational beliefs, replacing them with rational philosophy.
+
+2. Comparison with Aaron Beck's Cognitive Therapy:
+   • Beck focuses on Childhood Core Schemas ("I am unwanted/ugly") triggered by critical incidents, producing Negative Automatic Thoughts and cognitive distortions (overgeneralization, catastrophizing).
+   • While Ellis actively disputes irrational "musts" philosophical beliefs, Beck uses collaborative empiricism and Socratic questioning to help the client test the reality of their automatic thoughts.`
+    },
+    {
+      id: 'psy-pyq-21',
+      chapterId: 'psy-ch-6',
+      chapterName: 'Ch 6: Attitude and Social Cognition',
+      subtopicId: 'psy-sub-6-3',
+      year: 'CBSE 2023 (4 Marks)',
+      question: 'Explain Leon Festinger\'s theory of Cognitive Dissonance and Fritz Heider\'s P-O-X Balance Theory of attitude change with examples.',
+      solution: `1. Leon Festinger's Cognitive Dissonance Theory:
+   • Proposes that cognitive components of an attitude must remain in consonance (logical harmony).
+   • When two cognitions are inconsistent (e.g., Cognitions: "Smoking causes fatal lung cancer" AND "I smoke 20 cigarettes daily"), an uncomfortable state of psychological tension called Cognitive Dissonance arises.
+   • To reduce dissonance, the person changes one of the cognitions to restore consonance (e.g., quitting smoking or rationalizing that light smoking is safe).
+
+2. Fritz Heider's Balance Theory (P-O-X Triangle):
+   • Describes an attitude system between P (person whose attitude is studied), O (another person), and X (the attitude object/topic).
+   • Imbalance occurs when: (i) all three sides of the P-O-X triangle are negative, OR (ii) two sides are positive and one side is negative.
+   • Balance occurs when: (i) all three sides are positive, OR (ii) two sides are negative and one side is positive. Attitude change occurs in the direction that restores balance.`
+    },
+    {
+      id: 'psy-pyq-22',
+      chapterId: 'psy-ch-7',
+      chapterName: 'Ch 7: Social Influence and Group Processes',
+      subtopicId: 'psy-sub-7-4',
+      year: 'CBSE 2024 (4 Marks)',
+      question: 'What is Group Polarisation? Explain the three psychological processes that cause groups to take more extreme decisions than individuals.',
+      solution: `1. Definition of Group Polarisation:
+   Group polarisation is the strengthening of a group's initial prevailing position following group discussion, resulting in extreme decisions (either toward extreme risk or extreme caution) compared to individual decisions.
+
+2. Three Causes of Group Polarisation:
+   (i) Persuasive Arguments: During group discussion, members hear novel arguments favoring their initial inclination, reinforcing and intensifying their original stance.
+   (ii) Social Comparison / Bandwagon Effect: When individuals discover that others in the group also share their view, they feel validated and adopt an even stronger version of that view to be seen as a prototypical group member.
+   (iii) Shared Cultural Values: Perceiving the group's consensus as the socially desirable norm pushes members further toward the extreme pole.`
     }
   ],
   standard_maths: [
