@@ -4,6 +4,7 @@
 import { BIOLOGY_STRUCTURED_NOTES } from './biologyStructuredNotes';
 import { BIOLOGY_VOL2_STRUCTURED_NOTES } from './biologyVol2StructuredNotes';
 import { PHYSICS_VOL2_STRUCTURED_NOTES } from './physicsVol2StructuredNotes';
+import { PHYSICS_VOL1_REMAINING_STRUCTURED_NOTES } from './physicsVol1RemainingStructuredNotes';
 import { CHEMISTRY_REMAINING_STRUCTURED_NOTES } from './chemistryRemainingStructuredNotes';
 import { PSYCHOLOGY_STRUCTURED_NOTES } from './psychologyStructuredNotes';
 import { ENGLISH_STRUCTURED_NOTES } from './englishStructuredNotes';
@@ -3655,6 +3656,7 @@ export const STRUCTURED_NOTES_DATA = {
       "hotTopic": "Displacement current derivation and charging capacitor paradox"
     }
   },
+  ...PHYSICS_VOL1_REMAINING_STRUCTURED_NOTES,
   ...BIOLOGY_STRUCTURED_NOTES,
   ...BIOLOGY_VOL2_STRUCTURED_NOTES,
   ...PHYSICS_VOL2_STRUCTURED_NOTES,

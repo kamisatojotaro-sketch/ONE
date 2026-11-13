@@ -563,6 +563,135 @@ export const CURATED_MCQS = [
   },
 
   // --------------------------------------------------------------------------
+  // PHYSICS CH 5 & CH 9–14 CURATED BOARD BANK
+  // --------------------------------------------------------------------------
+  {
+    subtopicId: 'phy-sub-5-1',
+    chapterId: 'phy-ch-5',
+    subjectId: 'physics',
+    question: 'Which class of magnetic materials has negative magnetic susceptibility (χ < 0) and is slightly repelled by a strong magnet regardless of temperature?',
+    options: [
+      'Diamagnetic substances (e.g. Bismuth, Copper, Water)',
+      'Paramagnetic substances (e.g. Aluminium, Sodium)',
+      'Ferromagnetic substances (e.g. Soft Iron, Nickel)',
+      'Ferrimagnetic oxides above Curie point'
+    ],
+    correct: 0,
+    explanation: 'Diamagnetic materials have paired electrons causing induced opposing magnetic moments (−1 ≤ χ < 0, μ_r < 1) independent of temperature.'
+  },
+  {
+    subtopicId: 'phy-sub-5-3',
+    chapterId: 'phy-ch-5',
+    subjectId: 'physics',
+    question: 'Soft iron is preferred over steel for making the core of a transformer because soft iron has:',
+    options: [
+      'High initial permeability, low retentivity, low coercivity, and narrow hysteresis loop',
+      'High coercivity and very wide hysteresis loop',
+      'Zero electrical conductivity and negative susceptibility',
+      'Permanent domain lock at all temperatures'
+    ],
+    correct: 0,
+    explanation: 'Narrow hysteresis loop minimizes hysteresis energy dissipation per AC cycle while high permeability concentrates magnetic flux linkage.'
+  },
+  {
+    subtopicId: 'phy-sub-9-2',
+    chapterId: 'phy-ch-9',
+    subjectId: 'physics',
+    question: 'Why does a diamond (n = 2.42) sparkle brilliantly compared to ordinary glass (n = 1.5)?',
+    options: [
+      'High refractive index gives a very small critical angle (~24.4°), trapping entered light via repeated Total Internal Reflections',
+      'Diamond absorbs ambient UV and glows by fluorescence alone',
+      'Critical angle of diamond is ~42°, larger than crown glass',
+      'Snell\'s law reverses inside tetrahedral carbon lattices'
+    ],
+    correct: 0,
+    explanation: 'Since sin(i_c) = 1/n, diamond\'s large n = 2.42 lowers i_c to ≈ 24.4°, causing light entering the cut facets to undergo multiple total internal reflections.'
+  },
+  {
+    subtopicId: 'phy-sub-9-3',
+    chapterId: 'phy-ch-9',
+    subjectId: 'physics',
+    question: 'An equi-convex glass lens (n = 1.5) of focal length f is cut into two equal plano-convex halves perpendicular to its principal axis (Vedantu Ch 9 Q15). Each half has focal length:',
+    options: ['2 f', 'f', 'f / 2', '−2 f'],
+    correct: 0,
+    explanation: 'By Lens Maker\'s formula, originally 1/f = (n−1)(2/R) ⟹ R = f for n = 1.5. After vertical cutting (plano-convex, R₁ = R, R₂ = ∞), 1/f\' = (n−1)(1/R) = 1/(2f), so f\' = 2f.'
+  },
+  {
+    subtopicId: 'phy-sub-9-5',
+    chapterId: 'phy-ch-9',
+    subjectId: 'physics',
+    question: 'Why are reflecting telescopes (Cassegrain design with parabolic concave mirror) preferred over large refracting telescopes?',
+    options: [
+      'Free from chromatic aberration and spherical aberration, lighter mirror support, and easier large-aperture fabrication',
+      'Higher chromatic dispersion for spectroscopy',
+      'Smaller light-gathering power per aperture',
+      'Can magnify virtual objects only at finite distances'
+    ],
+    correct: 0,
+    explanation: 'Mirrors reflect all colours identically (zero chromatic aberration), parabolic shape eliminates spherical aberration, and only one optical face needs polishing.'
+  },
+  {
+    subtopicId: 'phy-sub-10-3',
+    chapterId: 'phy-ch-10',
+    subjectId: 'physics',
+    question: 'Two independent sodium lamps illuminating two nearby pinholes CANNOT produce a sustained interference pattern because:',
+    options: [
+      'Phase difference between atoms in two independent sources changes rapidly (~10⁻⁸ s), failing coherence',
+      'Sodium lamps emit longitudinal waves',
+      'Light wavelength exceeds slit separation',
+      'Intensity of two sodium lamps cancels via energy non-conservation'
+    ],
+    correct: 0,
+    explanation: 'Coherent sources must maintain a constant phase relationship over time; independent emitters radiate random phase bursts.'
+  },
+  {
+    subtopicId: 'phy-sub-11-2',
+    chapterId: 'phy-ch-11',
+    subjectId: 'physics',
+    question: 'In a photoelectric experiment, if light intensity is DOUBLED while keeping frequency (ν > ν₀) constant, how do saturation photocurrent and stopping potential change?',
+    options: [
+      'Saturation photocurrent DOUBLES, while stopping potential V₀ remains UNCHANGED',
+      'Both saturation current and stopping potential double',
+      'Saturation current stays constant while stopping potential doubles',
+      'Both remain unaffected'
+    ],
+    correct: 0,
+    explanation: 'Higher intensity means more photons/sec (twice as many emitted electrons ⟹ double saturation current), while maximum KE per electron (eV₀ = hν − φ₀) depends strictly on frequency ν.'
+  },
+  {
+    subtopicId: 'phy-sub-12-1',
+    chapterId: 'phy-ch-12',
+    subjectId: 'physics',
+    question: 'In Rutherford\'s alpha-particle scattering experiment, for a head-on collision (scattering angle θ = 180°), the impact parameter b equals:',
+    options: ['Zero', 'r₀ (distance of closest approach)', 'Atomic radius ~10⁻¹⁰ m', 'Infinity'],
+    correct: 0,
+    explanation: 'Impact parameter b = [Ze² cot(θ/2)] / (4πε₀ E). For head-on rebound θ = 180°, cot(90°) = 0 so b = 0.'
+  },
+  {
+    subtopicId: 'phy-sub-13-1',
+    chapterId: 'phy-ch-13',
+    subjectId: 'physics',
+    question: 'Two nuclei have mass numbers in the ratio 1 : 8. What is the ratio of their nuclear radii?',
+    options: ['1 : 2', '1 : 4', '1 : 8', '2 : 1'],
+    correct: 0,
+    explanation: 'Nuclear radius scales as R = R₀ A^{1/3}, so R₁ : R₂ = 1^{1/3} : 8^{1/3} = 1 : 2.'
+  },
+  {
+    subtopicId: 'phy-sub-14-3',
+    chapterId: 'phy-ch-14',
+    subjectId: 'physics',
+    question: 'Under reverse bias of an ideal p-n junction diode below breakdown voltage, the depletion layer width ______ and the effective barrier height ______.',
+    options: [
+      'Increases ; increases',
+      'Decreases ; decreases',
+      'Increases ; decreases',
+      'Remains constant ; increases'
+    ],
+    correct: 0,
+    explanation: 'Reverse bias pulls majority carriers away from the junction and reinforces the built-in barrier field (V_eff = V₀ + V_R), widening the depletion layer.'
+  },
+
+  // --------------------------------------------------------------------------
   // CHEMISTRY CH 1: Solutions
   // --------------------------------------------------------------------------
   {
@@ -1604,6 +1733,326 @@ const PROCEDURAL_GENERATORS = {
     }
   ],
 
+  'phy-ch-9': [
+    (v) => {
+      const f_cm = [15, 20, 30][v % 3];
+      const f_w_cm = f_cm * 4;
+      return {
+        subtopicId: 'phy-sub-9-3',
+        subtopicName: '9.3 Refraction at Spherical Surfaces & Lens Maker\'s Formula',
+        difficulty: 'medium',
+        question: `A converging glass lens (n_g = 1.50) has focal length +${f_cm} cm in air. When completely immersed in water (n_w = 4/3, CBSE & NCERT Ex 9.7 pattern), its new focal length in water is:`,
+        options: [
+          `+${f_w_cm} cm (quadruples in water)`,
+          `+${(f_cm / 4).toFixed(1)} cm`,
+          `−${f_w_cm} cm`,
+          `+${f_cm * 2} cm`
+        ],
+        correct: 0,
+        explanation: `Using Lens Maker's Formula: f_w / f_a = (n_g − 1) / (n_g/n_w − 1) = (1.5 − 1) / (1.5/(4/3) − 1) = 0.5 / (1.125 − 1) = 0.5 / 0.125 = 4. Thus f_w = 4 × ${f_cm} = +${f_w_cm} cm.`
+      };
+    },
+    (v) => {
+      const P1 = [4, 5, 6][v % 3];
+      const P2 = [-2, -3, -4][(v + 1) % 3];
+      const Pnet = P1 + P2;
+      const f_cm = (100 / Pnet).toFixed(1);
+      return {
+        subtopicId: 'phy-sub-9-3',
+        subtopicName: '9.3 Refraction at Spherical Surfaces & Lens Maker\'s Formula',
+        difficulty: 'easy',
+        question: `Two thin lenses of power +${P1} D and ${P2} D are kept in contact coaxial to each other (NCERT Exer 9.9 pattern). The net power and combined focal length are:`,
+        options: [
+          `P = +${Pnet} D, f = +${f_cm} cm`,
+          `P = +${P1 - P2} D, f = +${(100 / (P1 - P2)).toFixed(1)} cm`,
+          `P = ${P2 - P1} D, f = ${(100 / (P2 - P1)).toFixed(1)} cm`,
+          `P = +${P1 * Math.abs(P2)} D, f = +10 cm`
+        ],
+        correct: 0,
+        explanation: `Net power in contact P = P₁ + P₂ = ${P1} + (${P2}) = +${Pnet} D. Combined focal length f = 100 / P = 100 / ${Pnet} = +${f_cm} cm.`
+      };
+    },
+    (v) => {
+      const scenarios = [
+        { u: -30, f: -15, ansV: -10, m: '+0.33 (virtual, erect)' },
+        { u: -15, f: -10, ansV: -30, m: '−2.0 (real, inverted)' },
+        { u: -20, f: +15, ansV: 60, m: '−3.0 (real, inverted)' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-9-1',
+        subtopicName: '9.1 Reflection by Spherical Mirrors & Mirror Formula',
+        difficulty: 'medium',
+        question: `An object is placed at u = ${scenarios.u} cm in front of a concave mirror/lens system of focal length f = ${scenarios.f} cm (sign-convention check, NCERT Exer 9.1 / Ex 9.2). Where is the image formed using 1/v + 1/u = 1/f?`,
+        options: [
+          `v = ${scenarios.ansV} cm`,
+          `v = ${-scenarios.ansV} cm`,
+          `v = ${(scenarios.ansV / 2).toFixed(1)} cm`,
+          `v = ${(scenarios.ansV * 3).toFixed(0)} cm`
+        ],
+        correct: 0,
+        explanation: `Using mirror formula 1/v = 1/f − 1/u = 1/(${scenarios.f}) − 1/(${scenarios.u}), we get v = ${scenarios.ansV} cm.`
+      };
+    },
+    (v) => {
+      const angles = [
+        { dm: 30, n: '1.414 (√2)', sinHalf: '0.707' },
+        { dm: 60, n: '1.732 (√3)', sinHalf: '0.866' },
+        { dm: 37.2, n: '1.50', sinHalf: '0.750' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-9-4',
+        subtopicName: '9.4 Refraction and Dispersion through a Prism',
+        difficulty: 'medium',
+        question: `An equilateral glass prism (prism angle A = 60°) produces minimum deviation δ_m = ${angles.dm}° in air (NCERT Exer 9.14 style). Using the prism formula, the refractive index of the glass is:`,
+        options: [angles.n, '1.33', '2.00', '1.15'],
+        correct: 0,
+        explanation: `n = sin[(A + δ_m)/2] / sin(A/2) = sin[(60° + ${angles.dm}°)/2] / sin 30° = ${angles.sinHalf} / 0.5 = ${angles.n}.`
+      };
+    },
+    (v) => {
+      const pairs = [
+        { fo: 140, fe: 5, M: 28, L: 145 },
+        { fo: 150, fe: 5, M: 30, L: 155 },
+        { fo: 120, fe: 4, M: 30, L: 124 }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-9-5',
+        subtopicName: '9.5 Optical Instruments: Microscopes & Telescopes',
+        difficulty: 'easy',
+        question: `A refracting astronomical telescope has objective focal length ${pairs.fo} cm and eyepiece focal length ${pairs.fe} cm in normal adjustment (NCERT Exer 9.13 / 9.19 pattern). Its magnifying power and separation between lenses are:`,
+        options: [
+          `M = ${pairs.M}, L = ${pairs.L} cm`,
+          `M = ${pairs.M}, L = ${pairs.fo - pairs.fe} cm`,
+          `M = ${(pairs.fo / pairs.fe / 2).toFixed(0)}, L = ${pairs.L} cm`,
+          `M = ${pairs.fo + pairs.fe}, L = ${pairs.M} cm`
+        ],
+        correct: 0,
+        explanation: `In normal adjustment, M = f_o / f_e = ${pairs.fo}/${pairs.fe} = ${pairs.M} and tube length L = f_o + f_e = ${pairs.L} cm.`
+      };
+    }
+  ],
+
+  'phy-ch-10': [
+    (v) => {
+      const cases = [
+        { lambdaAir: 600, n: 1.5, lambdaMed: 400, vMed: '2.0 × 10⁸ m/s' },
+        { lambdaAir: 589, n: 1.33, lambdaMed: 443, vMed: '2.26 × 10⁸ m/s' },
+        { lambdaAir: 520, n: 1.3, lambdaMed: 400, vMed: '2.31 × 10⁸ m/s' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-10-2',
+        subtopicName: '10.2 Reflection & Refraction of Plane Waves using Huygens Principle',
+        difficulty: 'medium',
+        question: `Monochromatic light of wavelength ${cases.lambdaAir} nm in air enters a transparent medium of refractive index n = ${cases.n} (NCERT Exer 10.1 pattern). Its wavelength and speed inside the medium are:`,
+        options: [
+          `λ = ${cases.lambdaMed} nm, v = ${cases.vMed}`,
+          `λ = ${cases.lambdaAir} nm, v = 3.0 × 10⁸ m/s`,
+          `λ = ${Math.round(cases.lambdaAir * cases.n)} nm, v = ${cases.vMed}`,
+          `λ = ${cases.lambdaMed} nm, frequency drops by ${cases.n}×`
+        ],
+        correct: 0,
+        explanation: `Frequency stays invariant; wavelength scales as λ' = λ / n = ${cases.lambdaAir} / ${cases.n} ≈ ${cases.lambdaMed} nm and speed v = c / n = ${cases.vMed}.`
+      };
+    },
+    (v) => {
+      const sets = [
+        { path: 'λ / 3', ratio: 'K / 4', angle: '60°' },
+        { path: 'λ / 4', ratio: 'K / 2', angle: '45°' },
+        { path: 'λ / 2', ratio: '0 (Dark fringe)', angle: '90°' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-10-4',
+        subtopicName: '10.4 Young\'s Double Slit Experiment (YDSE) & Fringe Width',
+        difficulty: 'hard',
+        question: `In Young's double-slit experiment using monochromatic light of wavelength λ, the intensity at a point where path difference is λ is K units (NCERT Exer 10.5 pattern). What is the intensity where path difference is ${sets.path}?`,
+        options: [sets.ratio, '3 K / 4', 'K / 8', 'K'],
+        correct: 0,
+        explanation: `Using I = K cos²(φ/2) where φ = 2π(Δx)/λ, φ/2 = ${sets.angle}, giving cos²(${sets.angle}) = ${sets.ratio}.`
+      };
+    },
+    (v) => {
+      const a_mm = [0.2, 0.4, 0.5][v % 3];
+      const lambda_nm = [500, 600, 650][(v + 1) % 3];
+      const D_m = [1.0, 2.0][(v + 2) % 2];
+      const width_mm = ((2 * lambda_nm * 1e-9 * D_m) / (a_mm * 1e-3) * 1e3).toFixed(2);
+      return {
+        subtopicId: 'phy-sub-10-5',
+        subtopicName: '10.5 Diffraction Due to a Single Slit',
+        difficulty: 'medium',
+        question: `A single slit of width ${a_mm} mm is illuminated by light of wavelength ${lambda_nm} nm, forming a diffraction pattern on a screen ${D_m} m away. The linear width of the central bright maximum is:`,
+        options: [
+          `${width_mm} mm`,
+          `${(width_mm / 2).toFixed(2)} mm`,
+          `${(width_mm * 2).toFixed(2)} mm`,
+          `${(width_mm / 4).toFixed(2)} mm`
+        ],
+        correct: 0,
+        explanation: `Central maximum linear width w = 2 λ D / a = 2 × (${lambda_nm}×10⁻⁹) × ${D_m} / (${a_mm}×10⁻³) = ${width_mm} mm.`
+      };
+    }
+  ],
+
+  'phy-ch-11': [
+    (v) => {
+      const cases = [
+        { V: 100, lam: '0.123 nm (1.23 Å)' },
+        { V: 64, lam: '0.153 nm (1.53 Å)' },
+        { V: 144, lam: '0.102 nm (1.02 Å)' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-11-4',
+        subtopicName: '11.4 Wave Nature of Matter & de Broglie Wavelength',
+        difficulty: 'medium',
+        question: `An electron is accelerated from rest through a potential difference V = ${cases.V} V (NCERT Ex 11.3 / Exer 11.10 pattern). Its associated de Broglie wavelength λ = 1.227 / √V nm equals:`,
+        options: [cases.lam, '1.227 nm', '0.012 nm', '2.45 Å'],
+        correct: 0,
+        explanation: `For an electron, λ = h / √(2meV) ≈ 1.227 / √V nm = 1.227 / √${cases.V} nm = ${cases.lam}.`
+      };
+    },
+    (v) => {
+      const metals = [
+        { name: 'Caesium', phi: 2.14, hnu: 5.14, kmax: '3.00 eV' },
+        { name: 'Potassium', phi: 2.30, hnu: 4.10, kmax: '1.80 eV' },
+        { name: 'Sodium', phi: 2.75, hnu: 4.55, kmax: '1.80 eV' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-11-3',
+        subtopicName: '11.3 Einstein\'s Photoelectric Equation & Photon Picture',
+        difficulty: 'medium',
+        question: `${metals.name} has work function φ₀ = ${metals.phi} eV. When photons of energy ${metals.hnu} eV strike the surface, the maximum kinetic energy K_max (and numerically equal stopping potential V₀ in Volts) is:`,
+        options: [
+          metals.kmax,
+          `${(metals.hnu + metals.phi).toFixed(2)} eV`,
+          `${(metals.phi / 2).toFixed(2)} eV`,
+          `Zero (below threshold)`
+        ],
+        correct: 0,
+        explanation: `By Einstein's equation, K_max = hν − φ₀ = ${metals.hnu} − ${metals.phi} = ${metals.kmax}.`
+      };
+    }
+  ],
+
+  'phy-ch-12': [
+    (v) => {
+      const n = [1, 2, 3][v % 3];
+      const E = (-13.6 / (n * n)).toFixed(2);
+      const K = (13.6 / (n * n)).toFixed(2);
+      const U = (-27.2 / (n * n)).toFixed(2);
+      return {
+        subtopicId: 'phy-sub-12-2',
+        subtopicName: '12.2 Bohr\'s Model of Hydrogen Atom: Postulates, Radii & Energy',
+        difficulty: 'medium',
+        question: `The total energy of an electron in the n = ${n} Bohr orbit of hydrogen is E = ${E} eV (NCERT Exer 12.5 pattern). What are its Kinetic Energy (K) and Potential Energy (U)?`,
+        options: [
+          `K = +${K} eV, U = ${U} eV`,
+          `K = ${E} eV, U = +${(-E * 2).toFixed(2)} eV`,
+          `K = +${(Number(K) / 2).toFixed(2)} eV, U = ${E} eV`,
+          `K = +${(-Number(U)).toFixed(2)} eV, U = ${U} eV`
+        ],
+        correct: 0,
+        explanation: `In Bohr's orbit, K = −E = +${K} eV and U = 2E = ${U} eV (verifying K + U = ${E} eV).`
+      };
+    },
+    (v) => {
+      const transitions = [
+        { trans: 'n = 3 → n = 2 (Balmer H_α)', dE: '1.89 eV', region: 'Visible Red' },
+        { trans: 'n = 2 → n = 1 (Lyman α)', dE: '10.2 eV', region: 'Ultraviolet' },
+        { trans: 'n = 4 → n = 2 (Balmer H_β)', dE: '2.55 eV', region: 'Visible Blue-Green' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-12-3',
+        subtopicName: '12.3 Atomic Spectra, Rydberg Formula & de Broglie Explanation',
+        difficulty: 'medium',
+        question: `When an excited hydrogen electron jumps ${transitions.trans} (NCERT Ex 12.4 / Exer 12.7 pattern), the emitted photon energy and spectral region are:`,
+        options: [
+          `${transitions.dE} (${transitions.region})`,
+          '13.6 eV (X-ray)',
+          '0.85 eV (Infrared)',
+          '3.40 eV (Microwave)'
+        ],
+        correct: 0,
+        explanation: `Photon energy ΔE = E_i − E_f = −13.6/n_i² − (−13.6/n_f²) = ${transitions.dE} in the ${transitions.region} region.`
+      };
+    }
+  ],
+
+  'phy-ch-13': [
+    (v) => {
+      const dm = [0.02, 0.05, 0.10][v % 3];
+      const E = (dm * 931.5).toFixed(2);
+      return {
+        subtopicId: 'phy-sub-13-2',
+        subtopicName: '13.2 Mass-Energy Equivalence, Mass Defect & Binding Energy Curve',
+        difficulty: 'easy',
+        question: `A nuclear reaction results in a mass defect Δm = ${dm} u (taking 1 u = 931.5 MeV/c², NCERT Ex 13.3 / Exer 13.5 pattern). The energy released Q is:`,
+        options: [
+          `${E} MeV`,
+          `${(E * 2).toFixed(2)} MeV`,
+          `${(E / 10).toFixed(2)} MeV`,
+          `0.93 MeV`
+        ],
+        correct: 0,
+        explanation: `Energy released Q = Δm × 931.5 MeV = ${dm} × 931.5 = ${E} MeV.`
+      };
+    },
+    (v) => {
+      const pairs = [
+        { A1: 27, A2: 125, ratio: '3 : 5' },
+        { A1: 8, A2: 64, ratio: '1 : 2' },
+        { A1: 27, A2: 64, ratio: '3 : 4' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-13-1',
+        subtopicName: '13.1 Atomic Masses, Isotopes/Isobars/Isotones, Nuclear Size & Constant Density',
+        difficulty: 'easy',
+        question: `Two stable nuclei have mass numbers A₁ = ${pairs.A1} and A₂ = ${pairs.A2}. What is the ratio of their nuclear radii R₁ : R₂?`,
+        options: [pairs.ratio, `${pairs.A1} : ${pairs.A2}`, '1 : 1', '9 : 25'],
+        correct: 0,
+        explanation: `Since R = R₀ A^{1/3}, R₁ : R₂ = ${pairs.A1}^{1/3} : ${pairs.A2}^{1/3} = ${pairs.ratio}.`
+      };
+    }
+  ],
+
+  'phy-ch-14': [
+    (v) => {
+      const cases = [
+        { ni: '1.5 × 10¹⁶', ne: '5.0 × 10²²', nh: '4.5 × 10⁹ m⁻³', type: 'n-type' },
+        { ni: '1.0 × 10¹⁶', ne: '2.0 × 10²²', nh: '5.0 × 10⁹ m⁻³', type: 'n-type' },
+        { ni: '2.0 × 10¹⁶', ne: '8.0 × 10²¹', nh: '5.0 × 10¹⁰ m⁻³', type: 'n-type' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-14-2',
+        subtopicName: '14.2 Intrinsic & Extrinsic Semiconductors (n-type & p-type)',
+        difficulty: 'medium',
+        question: `Intrinsic silicon has n_i = ${cases.ni} m⁻³. After pentavalent donor doping (NCERT Ex 14.2 pattern), electron concentration rises to n_e = ${cases.ne} m⁻³. The new hole concentration n_h is:`,
+        options: [
+          cases.nh,
+          `${cases.ne} m⁻³`,
+          `${cases.ni} m⁻³`,
+          `1.0 × 10¹⁶ m⁻³`
+        ],
+        correct: 0,
+        explanation: `Mass-action law n_e · n_h = n_i² gives n_h = n_i² / n_e = ${cases.nh}. Since n_e >> n_h, it is ${cases.type}.`
+      };
+    },
+    (v) => {
+      const cases = [
+        { dV: 0.1, dI_mA: 10, rd: '10 Ω' },
+        { dV: 0.2, dI_mA: 20, rd: '10 Ω' },
+        { dV: 0.15, dI_mA: 30, rd: '5 Ω' }
+      ][v % 3];
+      return {
+        subtopicId: 'phy-sub-14-3',
+        subtopicName: '14.3 p-n Junction Formation & V-I Characteristics',
+        difficulty: 'medium',
+        question: `On the forward V–I curve of a Si diode (NCERT Ex 14.4 pattern), changing bias by ΔV = ${cases.dV} V produces a current change ΔI = ${cases.dI_mA} mA. The dynamic forward resistance r_d is:`,
+        options: [cases.rd, '1000 Ω', '0.01 Ω', '1.0 × 10⁷ Ω'],
+        correct: 0,
+        explanation: `Dynamic resistance r_d = ΔV / ΔI = ${cases.dV} / (${cases.dI_mA} × 10⁻³ A) = ${cases.rd}.`
+      };
+    }
+  ],
+
   // CHEMISTRY
   'chem-ch-1': [
     (v) => {
@@ -2252,6 +2701,15 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
     });
   };
 
+  const subjectLabel = subjectId === 'physics'
+    ? 'Physics'
+    : subjectId === 'biology'
+      ? 'Biology'
+      : subjectId === 'psychology'
+        ? 'Psychology'
+        : subjectId === 'english'
+          ? 'English Core'
+          : 'Chemistry';
   const genericChemDistractors = SUBJECT_DISTRACTORS[subjectId] || SUBJECT_DISTRACTORS.chemistry;
   const cbseOptions = [
     'Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
@@ -2336,8 +2794,12 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
           options: [
             cleanTip,
             cleanError,
-            `Substrate steric hindrance and leaving group ability have zero effect on the reaction course.`,
-            `Reagents can be interchanged freely without altering chemical selectivity or yields.`
+            subjectId === 'chemistry'
+              ? `Substrate steric hindrance and leaving group ability have zero effect on the reaction course.`
+              : genericChemDistractors[idx % genericChemDistractors.length],
+            subjectId === 'chemistry'
+              ? `Reagents can be interchanged freely without altering chemical selectivity or yields.`
+              : genericChemDistractors[(idx + 1) % genericChemDistractors.length]
           ],
           correct: 0,
           explanation: `Examination Rule: ${cleanTip}`
@@ -2417,14 +2879,19 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
 
         if (d.definition.includes('Unit:')) {
           const unitPart = d.definition.split('Unit:')[1].trim().replace(/\.$/, '');
+          const altUnit1 = subjectId === 'physics'
+            ? (unitPart.includes('V') ? 'Wb · m⁻¹' : 'V · m⁻¹')
+            : (unitPart.includes('mol·L⁻¹') ? 'mol·kg⁻¹' : 'mol·L⁻¹');
+          const altUnit2 = subjectId === 'physics' ? 'Dimensionless (or rad)' : 'Dimensionless';
+          const altUnit3 = subjectId === 'physics' ? 'J · s⁻¹ · T⁻¹' : 'J·K⁻¹·mol⁻¹';
           addQ({
             difficulty: 'easy',
-            question: `What is the standard unit of "${d.term}" according to NCERT Class 12 Chemistry?`,
+            question: `What is the standard unit of "${d.term}" according to NCERT Class 12 ${subjectLabel}?`,
             options: [
               unitPart,
-              unitPart.includes('mol·L⁻¹') ? 'mol·kg⁻¹' : 'mol·L⁻¹',
-              'Dimensionless',
-              'J·K⁻¹·mol⁻¹'
+              altUnit1,
+              altUnit2,
+              altUnit3
             ],
             correct: 0,
             explanation: `Standard unit of ${d.term} is ${unitPart}.`
@@ -2697,8 +3164,12 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
         options: [
           trueAnswer,
           invertClaim(trueAnswer),
-          `The question is out of scope as it violates modern thermodynamic formulations.`,
-          `No reaction occurs because the reagents form an unreactive clathrate cage.`
+          subjectId === 'chemistry'
+            ? `The question is out of scope as it violates modern thermodynamic formulations.`
+            : genericChemDistractors[0],
+          subjectId === 'chemistry'
+            ? `No reaction occurs because the reagents form an unreactive clathrate cage.`
+            : genericChemDistractors[1 % genericChemDistractors.length]
         ],
         correct: 0,
         explanation: `CBSE Exam Trend (${et.pattern}): ${et.highYieldPrompt}\nStandard Solution: ${trueAnswer}`
@@ -2733,7 +3204,7 @@ export function synthesizeChemistrySubtopicMCQs(subtopicId, seed = 1) {
 
               addQ({
                 difficulty: 'medium',
-                question: `In NCERT Class 12 Chemistry, what is the primary function or feature of "${topicName}"?`,
+                question: `In NCERT Class 12 ${subjectLabel}, what is the primary function or feature of "${topicName}"?`,
                 options: [
                   desc,
                   invertClaim(desc),
@@ -3366,7 +3837,24 @@ export function deriveDifficulty(mcq) {
 // 4. Shuffled options (fair distribution across A, B, C, D).
 // 5. Authentic NCERT/Oswaal-grade question stems and distractors (ZERO sci-fi filler).
 // ============================================================================
-export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null, count = 20, seed = 1, difficultyFilter = null) {
+export function deriveQuestionStyle(mcq) {
+  if (mcq && mcq.questionStyle) return mcq.questionStyle;
+  const q = ((mcq && mcq.question) || '').toLowerCase();
+  if (q.includes('assertion (a)') || q.includes('assertion-reason')) return 'assertion';
+  if (
+    q.includes('calculate') ||
+    q.includes('compute') ||
+    q.includes('ratio') ||
+    /\d+\s*(cm|mm|m|nm|pm|fm|µm|ev|kev|mev|kv|mv|v|khz|mhz|hz|ma|µa|a|ω|ohm|kω|d)(?![a-z])/i.test(q) ||
+    /\d+\s*(°|%)/i.test(q) ||
+    /=\s*-?\d/.test(q)
+  ) {
+    return 'numerical';
+  }
+  return 'conceptual';
+}
+
+export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null, count = 20, seed = 1, difficultyFilter = null, styleFilter = null) {
   const seenQuestions = new Set();
   const result = [];
 
@@ -3387,13 +3875,19 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
     return diff === difficultyFilter.toLowerCase();
   };
 
+  const isMatchingStyle = (style) => {
+    if (!styleFilter || styleFilter === 'ALL' || styleFilter === 'all') return true;
+    return style === styleFilter.toLowerCase();
+  };
+
   const tryAddQuestion = (mcq, allowFallback = false) => {
     if (!mcq || !mcq.question) return false;
     const key = normalizeKey(mcq.question);
     if (seenQuestions.has(key)) return false;
 
     const diff = deriveDifficulty(mcq);
-    if (!allowFallback && !isMatchingDifficulty(diff)) return false;
+    const style = deriveQuestionStyle(mcq);
+    if (!allowFallback && (!isMatchingDifficulty(diff) || !isMatchingStyle(style))) return false;
 
     seenQuestions.add(key);
 
@@ -3415,7 +3909,8 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
       options: shuffledOptions,
       correct: shuffledCorrect,
       explanation: mcq.explanation || 'Refer to NCERT textbook Class 12 official standard answer.',
-      difficulty: diff
+      difficulty: diff,
+      questionStyle: style
     });
     return true;
   };
@@ -3485,14 +3980,29 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
       }
     }
 
-    // 4. Fallback pass: If difficultyFilter was specified and result is still below count,
+    // 4. Fallback pass: If difficultyFilter or styleFilter was specified and result is still below count,
     // fill remaining slots from the exact same subtopics with available questions,
     // strictly deduplicated by seenQuestions with ZERO leakage!
-    if (result.length < count && difficultyFilter && difficultyFilter !== 'ALL') {
+    if (result.length < count && ((difficultyFilter && difficultyFilter !== 'ALL') || (styleFilter && styleFilter !== 'ALL'))) {
       for (const q of pool) {
         if (q && isMatchingSubtopic(q.subtopicId)) {
           tryAddQuestion(q, true);
           if (result.length >= count) return result;
+        }
+      }
+      for (const chKey of chKeys) {
+        const gens = PROCEDURAL_GENERATORS[chKey] || [];
+        let attempts = 0;
+        while (result.length < count && attempts < gens.length * 10) {
+          attempts++;
+          const genFn = gens[(seed + attempts) % gens.length];
+          if (genFn) {
+            const generated = genFn(seed + attempts * 31);
+            if (generated && isMatchingSubtopic(generated.subtopicId)) {
+              tryAddQuestion(generated, true);
+              if (result.length >= count) return result;
+            }
+          }
         }
       }
       for (const subId of targetSubtopics) {
@@ -3553,7 +4063,7 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
     }
 
     // 4. Fallback pass within chapter
-    if (result.length < count && difficultyFilter && difficultyFilter !== 'ALL') {
+    if (result.length < count && ((difficultyFilter && difficultyFilter !== 'ALL') || (styleFilter && styleFilter !== 'ALL'))) {
       for (const q of pool) {
         if (q && q.chapterId === chapterId) {
           tryAddQuestion(q, true);
@@ -3622,7 +4132,7 @@ export function getGeneratedMCQs(subjectId, chapterId = null, subtopicId = null,
   }
 
   // Fallback pass across subject
-  if (result.length < count && difficultyFilter && difficultyFilter !== 'ALL') {
+  if (result.length < count && ((difficultyFilter && difficultyFilter !== 'ALL') || (styleFilter && styleFilter !== 'ALL'))) {
     for (const q of pool) {
       tryAddQuestion(q, true);
       if (result.length >= count) return result;
@@ -3684,7 +4194,18 @@ function formatImportantQuestionAsFullAnswer(iq) {
   return ans.trim();
 }
 
-export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null, count = 15, seed = 1) {
+export function derivePYQMarksNum(pyq) {
+  if (pyq && pyq.marksNum) return String(pyq.marksNum);
+  const label = `${(pyq && pyq.marks) || ''} ${(pyq && pyq.year) || ''}`;
+  const match = label.match(/(\d)\s*Marks?\b/i) || label.match(/\[(\d)M\]/i);
+  if (match) return match[1];
+  if (/assertion-reason|1\s*m\b/i.test(label)) return '1';
+  if (/definition|give-reason|short/i.test(label)) return '2';
+  if (/5\s*marks?|long answer|derivation/i.test(label)) return '5';
+  return '3';
+}
+
+export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null, count = 15, seed = 1, marksFilter = null) {
   const seenQuestions = new Set();
   const result = [];
 
@@ -3700,10 +4221,19 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
     return targetSubtopics.includes(qSubtopicId);
   };
 
+  const isMatchingMarks = (marksNum) => {
+    if (!marksFilter || marksFilter === 'ALL' || marksFilter === 'all') return true;
+    return String(marksNum) === String(marksFilter);
+  };
+
   const tryAddPYQ = (pyq) => {
     if (!pyq || !pyq.question) return false;
     const key = normalizeKey(pyq.question);
     if (seenQuestions.has(key)) return false;
+
+    const mNum = derivePYQMarksNum(pyq);
+    if (!isMatchingMarks(mNum)) return false;
+
     seenQuestions.add(key);
 
     result.push({
@@ -3711,6 +4241,10 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
       chapterId: pyq.chapterId || chapterId || 'general',
       chapterName: pyq.chapterName || getChapterTitle(pyq.chapterId || chapterId),
       subtopicId: pyq.subtopicId || (targetSubtopics ? targetSubtopics[0] : null),
+      marksNum: Number(mNum),
+      marks: pyq.marks || `${mNum} ${Number(mNum) === 1 ? 'Mark' : 'Marks'}`,
+      sourceType: pyq.sourceType || null,
+      ncertRefCode: pyq.ncertRefCode || null,
       year: pyq.year || 'CBSE Board Examination',
       question: pyq.question,
       solution: pyq.solution || 'Refer to NCERT textbook Class 12 standard solution.'
@@ -3720,16 +4254,20 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
 
   let pool = PYQ_DATABASE[subjectId] ? [...PYQ_DATABASE[subjectId]] : [];
   if (subjectId === 'physics' && Array.isArray(IMPORTANT_PHYSICS_QUESTIONS)) {
-    const importantPhysicsPyqs = IMPORTANT_PHYSICS_QUESTIONS.map(iq => ({
+    const importantPyqsMapped = IMPORTANT_PHYSICS_QUESTIONS.map(iq => ({
       id: iq.id,
       chapterId: iq.chapterId,
       chapterName: iq.chapterTitle,
-      subtopicId: null,
-      year: `CBSE Board ${iq.marks} (${iq.frequency || 'Guaranteed'})`,
+      subtopicId: iq.subtopicId || null,
+      marks: iq.marks,
+      marksNum: iq.marksNum,
+      sourceType: iq.sourceType,
+      ncertRefCode: iq.ncertRefCode,
+      year: `CBSE Board ${iq.marks} (${iq.ncertRefCode ? `NCERT ${iq.ncertRefCode} • ` : ''}${iq.frequency || 'High-Yield'})`,
       question: iq.questionPrompt,
       solution: formatImportantQuestionAsFullAnswer(iq)
     }));
-    pool = [...importantPhysicsPyqs, ...pool];
+    pool = [...importantPyqsMapped, ...pool];
   }
   pool = shuffleArray(pool, seed);
 
@@ -3796,14 +4334,14 @@ export function getGeneratedPYQs(subjectId, chapterId = null, subtopicId = null,
 // Generates exactly 30 MCQs strictly drawn from ONLY the selected subtopics!
 // Guarantees 100% unique question stems with authentic distractors
 // ============================================================================
-export function getTestMakerMCQs(subjectId, subtopicIds, count = 30, seed = 1, difficultyFilter = null) {
+export function getTestMakerMCQs(subjectId, subtopicIds, count = 30, seed = 1, difficultyFilter = null, styleFilter = null) {
   if (!subtopicIds || subtopicIds.length === 0) return [];
-  return getGeneratedMCQs(subjectId, null, subtopicIds, count, seed, difficultyFilter);
+  return getGeneratedMCQs(subjectId, null, subtopicIds, count, seed, difficultyFilter, styleFilter);
 }
 
-export function getTestMakerPYQs(subjectId, subtopicIds, count = 20, seed = 1) {
+export function getTestMakerPYQs(subjectId, subtopicIds, count = 20, seed = 1, marksFilter = null) {
   if (!subtopicIds || subtopicIds.length === 0) return [];
-  return getGeneratedPYQs(subjectId, null, subtopicIds, count, seed);
+  return getGeneratedPYQs(subjectId, null, subtopicIds, count, seed, marksFilter);
 }
 
 // Helper to look up chapter title

@@ -516,7 +516,7 @@ export const HANDWRITTEN_IMPORTANT_SUBTOPICS = {
   // =========================================================================
   // PHYSICS VOLUME 2 (CHAPTERS 9 TO 14): HIGH-YIELD BOARD DERIVATIONS
   // =========================================================================
-  'phy-sub-9-2': {
+  'phy-sub-9-3': {
     title: "Refraction at Spherical Surfaces & Lens Maker's Formula",
     reason: "Guaranteed 5M Board Derivation: n₂/v − n₁/u = (n₂ − n₁)/R and Lens Maker's Formula 1/f = (n₂₁ − 1)(1/R₁ − 1/R₂)",
     examTag: 'Important 5M Derivation',
@@ -534,28 +534,28 @@ export const HANDWRITTEN_IMPORTANT_SUBTOPICS = {
     examTag: 'Important 5M Ray Diagram',
     chapterNum: 9
   },
-  'phy-sub-10-1': {
+  'phy-sub-10-2': {
     title: "Huygens' Principle: Laws of Reflection & Refraction Wavefront Proofs",
     reason: "Wavefront geometric proof of Snell's law n₁ sin i = n₂ sin r and angle of reflection i = r",
     examTag: 'Important 3M Wavefront Proof',
     chapterNum: 10
   },
-  'phy-sub-10-2': {
+  'phy-sub-10-4': {
     title: "Young's Double-Slit Experiment (YDSE) & Interference Intensity",
     reason: 'Path difference Δx = yd/D, Fringe width β = λD/d, and I = 4I₀ cos²(φ/2)',
     examTag: 'Important 5M Question',
     chapterNum: 10
   },
-  'phy-sub-10-3': {
+  'phy-sub-10-5': {
     title: 'Single-Slit Diffraction & Central Maximum Width',
     reason: 'Condition for secondary minima a sin θ = nλ, central maximum width W = 2λD/a, and Interference vs Diffraction',
     examTag: 'Important 3M/5M Question',
     chapterNum: 10
   },
-  'phy-sub-11-2': {
-    title: "Einstein's Photoelectric Equation & Stopping Potential Graphs",
-    reason: 'K_max = eV₀ = hν − φ₀, slope h/e of V₀ vs ν graph, and why wave theory fails',
-    examTag: 'Important 3M Graph & Numerical',
+  'phy-sub-11-3': {
+    title: "Einstein's Photoelectric Equation & Photon Picture",
+    reason: 'K_max = eV₀ = hν − φ₀, slope h/e of V₀ vs ν graph, and why classical wave theory fails',
+    examTag: 'Important 3M Graph & Proof',
     chapterNum: 11
   },
   'phy-sub-11-4': {
@@ -571,9 +571,15 @@ export const HANDWRITTEN_IMPORTANT_SUBTOPICS = {
     chapterNum: 12
   },
   'phy-sub-13-2': {
-    title: 'Mass Defect, Binding Energy Curve & Nuclear Force Properties',
-    reason: 'B.E. per nucleon vs A curve, ⁵⁶Fe peak (8.75 MeV), constancy of nuclear density, and Fission/Fusion',
+    title: 'Mass Defect, Binding Energy Curve & Stability',
+    reason: 'B.E. per nucleon vs A curve, ⁵⁶Fe peak (8.75 MeV), and energy release in Fission & Fusion',
     examTag: 'Important 3M Curve & Numerical',
+    chapterNum: 13
+  },
+  'phy-sub-13-3': {
+    title: 'Nuclear Force Properties, Potential Curve, Fission & Fusion',
+    reason: 'Strong nuclear force saturation, r₀ = 0.8 fm potential minimum, and fission vs fusion comparison',
+    examTag: 'Important 3M Theory & Graph',
     chapterNum: 13
   },
   'phy-sub-14-3': {

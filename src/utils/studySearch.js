@@ -4,6 +4,7 @@ import { REACTION_DIAGRAMS } from '../data/reactionDiagramsData.js';
 import { MCQ_DATABASE } from '../data/mcqData.js';
 import { PYQ_DATABASE } from '../data/pyqData.js';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../data/importantQuestionsData.js';
+import { PHYSICS_DERIVATIONS_REFERENCE } from '../data/physicsDerivationsReference.js';
 import { PHYSICS_SAMPLE_PAPER_2026_27 } from '../data/physicsSamplePaper2026_27.js';
 
 // Cache for the compiled in-memory index
@@ -465,26 +466,52 @@ export function buildStudySearchIndex() {
     });
   });
 
-  // 6. Top 22 Guaranteed Board Exam Questions
+  // 6. Important Questions Bank (53 Rationalized NCERT Numericals + Derivations Reference)
   if (Array.isArray(IMPORTANT_PHYSICS_QUESTIONS)) {
     IMPORTANT_PHYSICS_QUESTIONS.forEach((iq) => {
+      const chNum = iq.chapterNum || 9;
       items.push({
         id: `imp-${iq.id}`,
         subjectId: 'physics',
         subjectName: 'Physics',
-        volumeId: 'phy-vol-1',
-        volumeTitle: 'Physics Part I',
+        volumeId: chNum >= 9 ? 'phy-vol-2' : 'phy-vol-1',
+        volumeTitle: chNum >= 9 ? 'Physics Part II' : 'Physics Part I',
         chapterId: iq.chapterId,
         chapterTitle: iq.chapterTitle,
-        chapterNumber: null,
-        subchapterId: null,
-        subchapterTitle: null,
+        chapterNumber: chNum,
+        subchapterId: iq.subtopicId || null,
+        subchapterTitle: iq.shortLabel || null,
         type: 'question',
-        typeLabel: `Top 22 Question (${iq.marks})`,
+        typeLabel: `Important Question (${iq.marks})`,
         title: `Q${iq.number}: ${iq.title} (${iq.marks})`,
-        content: `${iq.questionPrompt} ${iq.modelAnswer.statement} ${iq.ncertRef ? `${iq.ncertRef.section} ${iq.ncertRef.equations} ${iq.ncertRef.figures}` : ''} ${iq.modelAnswer.derivations.map(d => `${d.name} ${d.formula}`).join(' ')} ${iq.modelAnswer.examinerTips}`,
+        content: `${iq.ncertRefCode || ''} ${iq.questionPrompt} ${iq.modelAnswer?.statement || ''} ${iq.ncertRef ? `${iq.ncertRef.section || iq.ncertRef.page || ''} ${iq.ncertRef.equations || ''} ${iq.ncertRef.figures || ''}` : ''} ${(iq.modelAnswer?.derivations || []).map(d => `${d.name} ${d.formula}`).join(' ')} ${iq.examinerTips || iq.modelAnswer?.examinerTips || ''}`,
         tab: 'IMPORTANT',
         rawItem: iq
+      });
+    });
+  }
+
+  // 6b. 47 SlideShare Physics Derivations Reference
+  if (Array.isArray(PHYSICS_DERIVATIONS_REFERENCE)) {
+    PHYSICS_DERIVATIONS_REFERENCE.forEach((drv) => {
+      const chNum = drv.chapterNum || 1;
+      items.push({
+        id: `drv-${drv.id}`,
+        subjectId: 'physics',
+        subjectName: 'Physics',
+        volumeId: chNum >= 9 ? 'phy-vol-2' : 'phy-vol-1',
+        volumeTitle: chNum >= 9 ? 'Physics Part II' : 'Physics Part I',
+        chapterId: `phy-ch-${chNum}`,
+        chapterTitle: drv.chapterTitle,
+        chapterNumber: chNum,
+        subchapterId: drv.subtopicId || null,
+        subchapterTitle: null,
+        type: 'question',
+        typeLabel: `Physics Derivation (Ch ${chNum} • ${drv.marks || '3–5M'})`,
+        title: `${drv.title} (${drv.ncertRef || ''})`,
+        content: `${drv.statement || ''} ${drv.finalFormula || ''} ${(drv.steps || []).map(s => `${s.text || ''} ${s.equation || ''}`).join(' ')} ${(drv.specialCases || []).join(' ')}`,
+        tab: 'NOTES',
+        rawItem: drv
       });
     });
   }

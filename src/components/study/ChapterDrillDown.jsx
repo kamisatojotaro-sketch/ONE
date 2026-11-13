@@ -73,14 +73,15 @@ const PHYSICS_SUBTOPIC_DIAGRAMS = {
   'phy-sub-9-1': 'ray-optics-instruments',
   'phy-sub-9-2': 'ray-optics-instruments',
   'phy-sub-9-3': 'ray-optics-instruments',
-  'phy-sub-9-4': 'ray-optics-instruments',
+  'phy-sub-9-4': 'prism-dispersion',
   'phy-sub-9-5': 'ray-optics-instruments',
 
   // Chapter 10: Wave Optics
-  'phy-sub-10-1': 'ydse-wave-optics',
-  'phy-sub-10-2': 'ydse-wave-optics',
+  'phy-sub-10-1': 'huygens-wavefronts',
+  'phy-sub-10-2': 'huygens-wavefronts',
   'phy-sub-10-3': 'ydse-wave-optics',
   'phy-sub-10-4': 'ydse-wave-optics',
+  'phy-sub-10-5': 'single-slit-diffraction',
 
   // Chapter 11: Dual Nature of Radiation and Matter
   'phy-sub-11-1': 'photoelectric-graphs',
@@ -95,10 +96,10 @@ const PHYSICS_SUBTOPIC_DIAGRAMS = {
   'phy-sub-12-4': 'bohr-atom-spectra',
 
   // Chapter 13: Nuclei
-  'phy-sub-13-1': 'bohr-atom-spectra',
-  'phy-sub-13-2': 'bohr-atom-spectra',
-  'phy-sub-13-3': 'bohr-atom-spectra',
-  'phy-sub-13-4': 'bohr-atom-spectra',
+  'phy-sub-13-1': 'nuclei-binding-force',
+  'phy-sub-13-2': 'nuclei-binding-force',
+  'phy-sub-13-3': 'nuclei-binding-force',
+  'phy-sub-13-4': 'nuclei-binding-force',
 
   // Chapter 14: Semiconductor Electronics
   'phy-sub-14-1': 'pn-junction-rectifier',

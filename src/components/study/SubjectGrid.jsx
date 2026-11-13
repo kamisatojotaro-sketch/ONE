@@ -137,7 +137,7 @@ export default function SubjectGrid({
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/35 text-xs font-bold text-amber-500 dark:text-amber-400 hover:bg-amber-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
           >
             <Award size={13} className="text-amber-500" />
-            <span>Guaranteed Top Board Questions (All 5 Subjects)</span>
+            <span>Important Questions Bank (All 5 Subjects)</span>
           </button>
 
           <button

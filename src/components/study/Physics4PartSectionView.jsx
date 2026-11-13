@@ -3,54 +3,12 @@ import {
   BookMarked, Calculator, HelpCircle, Sparkles, 
   Layers, CheckCircle2, Award, Zap, Compass, Brain, AlertTriangle
 } from 'lucide-react';
-import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
+import { getPhysicsSectionEnrichment } from '../../data/physicsSectionEnrichments';
 import { getImportantSubtopicInfo } from '../../data/importantSubtopicsMapping';
 import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import { FormattedLatex } from './LatexView';
-
-// Mapping from physics subtopic IDs to Top 22 question IDs
-const SUBTOPIC_TO_IMPORTANT_Q = {
-  'phy-sub-1-1': 'imp-phy-8',
-  'phy-sub-1-2': 'imp-phy-8',
-  'phy-sub-1-3': 'imp-phy-8',
-  'phy-sub-1-4': 'imp-phy-9',
-  'phy-sub-1-6': 'imp-phy-18',
-  'phy-sub-1-7': 'imp-phy-19',
-  'phy-sub-1-8': 'imp-phy-6',
-  'phy-sub-1-9': 'imp-phy-1',
-  'phy-sub-1-10': 'imp-phy-1',
-  'phy-sub-1-11': 'imp-phy-1',
-  'phy-sub-2-2': 'imp-phy-7',
-  'phy-sub-2-3': 'imp-phy-7',
-  'phy-sub-2-4': 'imp-phy-19',
-  'phy-sub-2-7': 'imp-phy-10',
-  'phy-sub-2-8': 'imp-phy-10',
-  'phy-sub-3-5': 'imp-phy-11',
-  'phy-sub-3-7': 'imp-phy-11',
-  'phy-sub-3-8': 'imp-phy-11',
-  'phy-sub-3-9': 'imp-phy-15',
-  'phy-sub-4-2': 'imp-phy-2',
-  'phy-sub-4-7': 'imp-phy-2',
-  'phy-sub-4-8': 'imp-phy-20',
-  'phy-sub-4-9': 'imp-phy-5',
-  'phy-sub-4-10': 'imp-phy-22',
-  'phy-sub-5-1': 'imp-phy-16',
-  'phy-sub-5-2': 'imp-phy-16',
-  'phy-sub-5-3': 'imp-phy-16',
-  'phy-sub-6-2': 'imp-phy-3',
-  'phy-sub-6-3': 'imp-phy-3',
-  'phy-sub-6-5': 'imp-phy-3',
-  'phy-sub-7-4': 'imp-phy-17',
-  'phy-sub-7-5': 'imp-phy-4',
-  'phy-sub-7-6': 'imp-phy-17',
-  'phy-sub-7-8': 'imp-phy-13',
-  'phy-sub-8-1': 'imp-phy-12',
-  'phy-sub-8-2': 'imp-phy-21',
-  'phy-sub-8-3': 'imp-phy-14',
-  'phy-sub-8-4': 'imp-phy-12'
-};
 
 export default function Physics4PartSectionView({ 
   section, 
@@ -59,10 +17,8 @@ export default function Physics4PartSectionView({
   diagramId 
 }) {
   const importantInfo = getImportantSubtopicInfo(subtopicId);
-  const matchedQId = SUBTOPIC_TO_IMPORTANT_Q[subtopicId];
-  const matchedQ = matchedQId 
-    ? IMPORTANT_PHYSICS_QUESTIONS.find(q => q.id === matchedQId)
-    : null;
+  const matchedQ = getPhysicsSectionEnrichment(subtopicId);
+  const comparisonTable = matchedQ?.comparisonTable || null;
 
   // 1. Resolve Part 1: Theory
   const theoryPoints = matchedQ?.theory && matchedQ.theory.length > 0 
@@ -144,6 +100,40 @@ export default function Physics4PartSectionView({
             </div>
           ))}
         </div>
+
+        {comparisonTable && comparisonTable.rows && (
+          <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] space-y-2">
+            <div className="text-xs font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+              {comparisonTable.title}
+            </div>
+            <div className="overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="bg-[var(--bg-surface)] border-b border-[var(--border-subtle)]">
+                    {comparisonTable.headers.map((h, hIdx) => (
+                      <th key={hIdx} className="p-2.5 font-bold text-[var(--text-primary)] whitespace-nowrap">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[var(--border-subtle)]">
+                  {comparisonTable.rows.map((row, rIdx) => (
+                    <tr key={rIdx} className="hover:bg-[var(--bg-surface)]/50">
+                      {row.map((cell, cIdx) => (
+                        <td
+                          key={cIdx}
+                          className={`p-2.5 text-[var(--text-secondary)] ${cIdx === 0 ? 'font-semibold text-[var(--text-primary)]' : ''}`}
+                          dangerouslySetInnerHTML={{ __html: formatMathString(cell) }}
+                        />
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ==================================================================== */}

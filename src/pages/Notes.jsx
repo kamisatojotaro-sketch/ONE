@@ -138,7 +138,7 @@ export default function Notes() {
                 />
               )}
 
-              {/* Tab 3: Top 22 Questions for the Exam */}
+              {/* Tab 3: Important Questions for the Exam */}
               {session.activeSidebarTab === 'IMPORTANT' && (
                 <ImportantQuestionsTabContent
                   selectedSubject={session.selectedSubject}

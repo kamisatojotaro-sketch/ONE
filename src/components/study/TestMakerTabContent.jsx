@@ -3,7 +3,7 @@ import {
   CheckSquare, Award, Clock, ArrowRight, ArrowLeft, RotateCcw, RotateCw, 
   Sparkles, Filter, Check, Flag, AlertCircle, BarChart3, ChevronDown, 
   BookOpen, Layers, CheckCircle2, XCircle, Sliders, Play, RotateCcw as ResetIcon,
-  Zap, HelpCircle
+  Zap, HelpCircle, Copy, Eye, EyeOff
 } from 'lucide-react';
 import { getTestMakerMCQs, getTestMakerPYQs } from '../../data/questionEngine';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
@@ -19,13 +19,16 @@ export default function TestMakerTabContent({
 }) {
   const [currentSubjectKey, setCurrentSubjectKey] = useState(initialSubject || 'physics');
   const [currentChapterId, setCurrentChapterId] = useState(initialChapter || null);
+  const [selectedChapterIds, setSelectedChapterIds] = useState(() => (initialChapter ? [initialChapter] : []));
   const [selectedSubtopicIds, setSelectedSubtopicIds] = useState([]);
   const [testMode, setTestMode] = useState('MCQ'); // 'MCQ' | 'PYQ'
   const [difficultyFilter, setDifficultyFilter] = useState('ALL'); // 'ALL' | 'easy' | 'medium' | 'hard'
+  const [styleFilter, setStyleFilter] = useState('ALL'); // 'ALL' | 'conceptual' | 'numerical' | 'assertion'
+  const [pyqMarksFilter, setPyqMarksFilter] = useState('ALL'); // 'ALL' | '1' | '2' | '3' | '5'
   const [questionCount, setQuestionCount] = useState(30); // 10 | 15 | 20 | 30
   const [seed, setSeed] = useState(1);
 
-  // Test Execution State
+  // Test Execution & PYQ State
   const [isTestStarted, setIsTestStarted] = useState(false);
   const [isTestSubmitted, setIsTestSubmitted] = useState(false);
   const [currentQIndex, setCurrentQIndex] = useState(0);
@@ -35,6 +38,8 @@ export default function TestMakerTabContent({
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [instantFeedbackMode, setInstantFeedbackMode] = useState(false); // Practice vs Exam mode
   const [paletteFilter, setPaletteFilter] = useState('ALL'); // 'ALL' | 'FLAGGED' | 'UNANSWERED'
+  const [revealedPyqIds, setRevealedPyqIds] = useState(() => new Set());
+  const [copiedPaper, setCopiedPaper] = useState(false);
 
   // Subject syllabus & chapters
   const currentSubject = NCERT_SYLLABUS[currentSubjectKey];
@@ -59,38 +64,88 @@ export default function TestMakerTabContent({
     }
   }, [initialSubject]);
 
-  // Synchronize chapter safely ensuring it belongs to current subject
+  // Synchronize chapter selection safely ensuring valid chapters for current subject
   useEffect(() => {
-    if (availableChapters.length > 0) {
-      const match = availableChapters.find(ch => ch.id === currentChapterId);
-      if (!match) {
-        // Fall back to initialChapter if valid in this subject, else first available
-        const fallback = availableChapters.find(ch => ch.id === initialChapter) || availableChapters[0];
-        setCurrentChapterId(fallback.id);
-        if (fallback.subchapters) {
-          setSelectedSubtopicIds(fallback.subchapters.map(s => s.id));
-        }
-      }
+    if (availableChapters.length === 0) return;
+    const validSelected = selectedChapterIds.filter(id => availableChapters.some(ch => ch.id === id));
+    if (validSelected.length === 0) {
+      const fallback = availableChapters.find(ch => ch.id === initialChapter) || availableChapters[0];
+      setCurrentChapterId(fallback.id);
+      setSelectedChapterIds([fallback.id]);
+      setSelectedSubtopicIds(fallback.subchapters ? fallback.subchapters.map(s => s.id) : []);
+    } else if (validSelected.length !== selectedChapterIds.length) {
+      setSelectedChapterIds(validSelected);
+      setCurrentChapterId(validSelected[0]);
     }
-  }, [currentSubjectKey, availableChapters, currentChapterId, initialChapter]);
+  }, [currentSubjectKey, availableChapters, initialChapter, selectedChapterIds]);
 
-  // Active chapter object
+  // Sync when initialChapter prop changes explicitly from parent navigation
+  useEffect(() => {
+    if (initialChapter && availableChapters.some(ch => ch.id === initialChapter)) {
+      const chObj = availableChapters.find(ch => ch.id === initialChapter);
+      setCurrentChapterId(initialChapter);
+      setSelectedChapterIds([initialChapter]);
+      setSelectedSubtopicIds(chObj?.subchapters ? chObj.subchapters.map(s => s.id) : []);
+    }
+  }, [initialChapter, availableChapters]);
+
+  // Active primary chapter object
   const activeChapter = useMemo(() => {
     return availableChapters.find(ch => ch.id === currentChapterId) || availableChapters[0] || null;
   }, [availableChapters, currentChapterId]);
 
-  // Subchapters of the active chapter
-  const subchapters = useMemo(() => {
-    if (!activeChapter || !activeChapter.subchapters) return [];
-    return activeChapter.subchapters;
-  }, [activeChapter]);
+  // Selected chapters list (supports single & multi-chapter selection)
+  const selectedChapters = useMemo(() => {
+    const picked = availableChapters.filter(ch => selectedChapterIds.includes(ch.id));
+    return picked.length > 0 ? picked : (activeChapter ? [activeChapter] : []);
+  }, [availableChapters, selectedChapterIds, activeChapter]);
 
-  // Auto-select all subchapters when switching chapter
-  useEffect(() => {
-    if (subchapters.length > 0) {
-      setSelectedSubtopicIds(subchapters.map(s => s.id));
-    }
-  }, [currentChapterId]);
+  // Subchapters across all selected chapters (tagged with parent chapter number)
+  const subchapters = useMemo(() => {
+    const list = [];
+    selectedChapters.forEach(ch => {
+      (ch.subchapters || []).forEach(sub => {
+        list.push({ ...sub, chapterNumber: ch.number, chapterTitle: ch.title });
+      });
+    });
+    return list;
+  }, [selectedChapters]);
+
+  // Toggle single chapter pill cleanly (maintaining at least 1 chapter active)
+  const toggleChapterSelection = useCallback((chId) => {
+    const chObj = availableChapters.find(c => c.id === chId);
+    if (!chObj) return;
+    const chSubIds = (chObj.subchapters || []).map(s => s.id);
+
+    setSelectedChapterIds(prev => {
+      const isSelected = prev.includes(chId);
+      if (isSelected) {
+        if (prev.length === 1) return prev; // Keep at least 1 chapter selected
+        const next = prev.filter(id => id !== chId);
+        setCurrentChapterId(next[0]);
+        setSelectedSubtopicIds(prevSubs => prevSubs.filter(sid => !chSubIds.includes(sid)));
+        return next;
+      } else {
+        const next = [...prev, chId];
+        setCurrentChapterId(chId);
+        setSelectedSubtopicIds(prevSubs => Array.from(new Set([...prevSubs, ...chSubIds])));
+        return next;
+      }
+    });
+  }, [availableChapters]);
+
+  // Apply chapter preset (e.g. Book 1, Book 2 Ch 9-14, Optics, Modern Physics, All)
+  const applyChapterPreset = useCallback((chapterIds) => {
+    const matching = availableChapters.filter(c => chapterIds.includes(c.id));
+    if (matching.length === 0) return;
+    setSelectedChapterIds(matching.map(c => c.id));
+    setCurrentChapterId(matching[0].id);
+    const allSubs = [];
+    matching.forEach(ch => {
+      (ch.subchapters || []).forEach(s => allSubs.push(s.id));
+    });
+    setSelectedSubtopicIds(allSubs);
+  }, [availableChapters]);
 
   // Toggle single subchapter tickbox (rock-solid, single-event handler)
   const toggleSubchapter = useCallback((id) => {
@@ -103,7 +158,7 @@ export default function TestMakerTabContent({
     });
   }, []);
 
-  // Select all subchapters of current chapter
+  // Select all subchapters across chosen chapters
   const handleSelectAll = () => {
     const allIds = subchapters.map(s => s.id);
     setSelectedSubtopicIds(allIds);
@@ -126,14 +181,71 @@ export default function TestMakerTabContent({
   // Generate MCQs strictly from ONLY the selected subtopics
   const generatedMCQs = useMemo(() => {
     if (selectedSubtopicIds.length === 0) return [];
-    return getTestMakerMCQs(currentSubjectKey, selectedSubtopicIds, questionCount, seed, difficultyFilter);
-  }, [currentSubjectKey, selectedSubtopicIds, questionCount, seed, difficultyFilter]);
+    return getTestMakerMCQs(currentSubjectKey, selectedSubtopicIds, questionCount, seed, difficultyFilter, styleFilter);
+  }, [currentSubjectKey, selectedSubtopicIds, questionCount, seed, difficultyFilter, styleFilter]);
 
-  // Generate PYQs strictly from ONLY the selected subtopics
+  // Generate PYQs strictly from ONLY the selected subtopics (supports multi-chapter 53 numericals)
   const generatedPYQs = useMemo(() => {
     if (selectedSubtopicIds.length === 0) return [];
-    return getTestMakerPYQs(currentSubjectKey, selectedSubtopicIds, 25, seed);
-  }, [currentSubjectKey, selectedSubtopicIds, seed]);
+    const pyqLimit = selectedChapterIds.length > 1 ? 55 : 30;
+    return getTestMakerPYQs(currentSubjectKey, selectedSubtopicIds, pyqLimit, seed, pyqMarksFilter);
+  }, [currentSubjectKey, selectedSubtopicIds, selectedChapterIds.length, seed, pyqMarksFilter]);
+
+  const toggleRevealPyq = useCallback((id) => {
+    setRevealedPyqIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
+
+  const allPyqsRevealed = useMemo(() => {
+    return generatedPYQs.length > 0 && generatedPYQs.every((p, idx) => revealedPyqIds.has(p.id || `pyq-${idx}`));
+  }, [generatedPYQs, revealedPyqIds]);
+
+  const toggleRevealAllPyqs = useCallback(() => {
+    if (allPyqsRevealed) {
+      setRevealedPyqIds(new Set());
+    } else {
+      setRevealedPyqIds(new Set(generatedPYQs.map((p, idx) => p.id || `pyq-${idx}`)));
+    }
+  }, [allPyqsRevealed, generatedPYQs]);
+
+  const handleCopyTestPaper = useCallback(() => {
+    const subjTitle = currentSubject?.name || currentSubjectKey;
+    const chLabel = selectedChapters.map(c => `Ch ${c.number}`).join(', ');
+    let text = `CBSE CLASS 12 ${subjTitle.toUpperCase()} — CUSTOM PRACTICE PAPER (${chLabel})\n`;
+    text += `${'='.repeat(68)}\n\n`;
+
+    if (testMode === 'MCQ') {
+      text += `SECTION: MULTIPLE CHOICE QUESTIONS (${generatedMCQs.length} Qs)\n\n`;
+      generatedMCQs.forEach((q, idx) => {
+        text += `Q${idx + 1}. [${(q.questionStyle || 'conceptual').toUpperCase()} | ${(q.difficulty || 'medium').toUpperCase()}] ${q.question}\n`;
+        (q.options || []).forEach((opt, oi) => {
+          text += `   (${String.fromCharCode(65 + oi)}) ${opt}\n`;
+        });
+        text += `\n`;
+      });
+      text += `${'='.repeat(68)}\nANSWER KEY:\n`;
+      generatedMCQs.forEach((q, idx) => {
+        text += `Q${idx + 1}: (${String.fromCharCode(65 + (q.correct || 0))}) `;
+        if ((idx + 1) % 5 === 0) text += `\n`;
+      });
+    } else {
+      text += `SECTION: CURATED BOARD PYQs & IMPORTANT NUMERICALS (${generatedPYQs.length} Qs)\n\n`;
+      generatedPYQs.forEach((pyq, idx) => {
+        text += `Q${idx + 1}. [${pyq.marks || 'Board Q'} | ${pyq.year}]\n${pyq.question}\n\nSolution:\n${pyq.solution}\n\n${'-'.repeat(50)}\n\n`;
+      });
+    }
+
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        setCopiedPaper(true);
+        setTimeout(() => setCopiedPaper(false), 2500);
+      }).catch(() => {});
+    }
+  }, [currentSubject, currentSubjectKey, selectedChapters, testMode, generatedMCQs, generatedPYQs]);
 
   // Calculate default timer duration based on question count
   const defaultTimerForCount = useMemo(() => {
@@ -305,8 +417,8 @@ export default function TestMakerTabContent({
   return (
     <div className="space-y-5 sm:space-y-6 animate-in fade-in duration-300">
       {/* 1. Header Banner */}
-      <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xs">
-        <div>
+      <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] flex flex-col gap-4 shadow-2xs overflow-hidden">
+        <div className="min-w-0">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] text-[11px] font-mono text-[var(--accent-primary)] font-semibold uppercase tracking-wider mb-1.5 border border-[var(--border-subtle)]">
             <Sliders size={12} />
             <span>Interactive Custom Exam Generator</span>
@@ -322,16 +434,20 @@ export default function TestMakerTabContent({
         </div>
 
         {/* Subject Switcher Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] shrink-0">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] w-full min-w-0">
           {Object.entries(NCERT_SYLLABUS).map(([key, subj]) => {
             const isActive = currentSubjectKey === key;
             return (
               <button
                 key={key}
+                type="button"
                 onClick={() => {
                   if (currentSubjectKey !== key) {
                     setCurrentSubjectKey(key);
                     setCurrentChapterId(null);
+                    setSelectedChapterIds([]);
+                    setSelectedSubtopicIds([]);
+                    setRevealedPyqIds(new Set());
                     setIsTestStarted(false);
                     setIsTestSubmitted(false);
                   }
@@ -354,26 +470,31 @@ export default function TestMakerTabContent({
         <div className="space-y-5">
           {/* Controls Bar: Chapter Dropdown + Mode Toggle + Select All */}
           <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
               {/* Chapter Selector Dropdown */}
-              <div className="flex items-center gap-2 flex-1 min-w-[240px]">
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 flex-1 min-w-0 w-full">
                 <BookOpen size={16} className="text-[var(--accent-primary)] shrink-0" />
-                <span className="text-xs font-bold text-[var(--text-secondary)] shrink-0">Select Chapter:</span>
+                <span className="text-xs font-bold text-[var(--text-secondary)] shrink-0">
+                  {selectedChapterIds.length > 1 ? `Primary Focus (${selectedChapterIds.length} Chs):` : 'Select Chapter:'}
+                </span>
                 {activeChapter && (
-                  <PriorityBadge
-                    id={activeChapter.id}
-                    rating={getPriority ? getPriority(activeChapter.id) : undefined}
-                    onChangePriority={onSetPriority}
-                    title={activeChapter.title}
-                    size="sm"
-                  />
+                  <div className="shrink-0">
+                    <PriorityBadge
+                      id={activeChapter.id}
+                      rating={getPriority ? getPriority(activeChapter.id) : undefined}
+                      onChangePriority={onSetPriority}
+                      title={activeChapter.title}
+                      size="sm"
+                    />
+                  </div>
                 )}
-                <div className="relative flex-1">
+                <div className="relative flex-1 min-w-[180px] w-full">
                   <select
                     value={currentChapterId || ''}
                     onChange={(e) => {
                       const newChId = e.target.value;
                       setCurrentChapterId(newChId);
+                      setSelectedChapterIds([newChId]);
                       const matchCh = availableChapters.find(c => c.id === newChId);
                       if (matchCh && matchCh.subchapters) {
                         setSelectedSubtopicIds(matchCh.subchapters.map(s => s.id));
@@ -381,7 +502,7 @@ export default function TestMakerTabContent({
                         setSelectedSubtopicIds([]);
                       }
                     }}
-                    className="w-full appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-2xs"
+                    className="w-full max-w-full truncate appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-2xs"
                   >
                     {availableChapters.map(ch => (
                       <option key={ch.id} value={ch.id}>
@@ -394,10 +515,11 @@ export default function TestMakerTabContent({
               </div>
 
               {/* Mode Toggle: MCQs Test vs Curated PYQs */}
-              <div className="flex items-center gap-1.5 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0">
+              <div className="relative z-10 flex items-center gap-1.5 bg-[var(--bg-elevated)] p-1 rounded-xl border border-[var(--border-subtle)] shrink-0 self-start lg:self-auto">
                 <button
+                  type="button"
                   onClick={() => setTestMode('MCQ')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     testMode === 'MCQ'
                       ? 'bg-[var(--accent-primary)] text-white shadow-xs'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -406,8 +528,9 @@ export default function TestMakerTabContent({
                   Interactive MCQ Test
                 </button>
                 <button
+                  type="button"
                   onClick={() => setTestMode('PYQ')}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     testMode === 'PYQ'
                       ? 'bg-[var(--accent-primary)] text-white shadow-xs'
                       : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -418,12 +541,73 @@ export default function TestMakerTabContent({
               </div>
             </div>
 
+            {/* Multi-Chapter Quick Selector & Subject Presets */}
+            <div className="pt-2 border-t border-[var(--border-subtle)] space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-[11px] font-bold text-[var(--text-secondary)] flex items-center gap-1.5">
+                  <Layers size={13} className="text-[var(--accent-primary)]" />
+                  Multi-Chapter Mix ({selectedChapterIds.length}/{availableChapters.length} chapters included):
+                </span>
+
+                {currentSubjectKey === 'physics' && (
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {[
+                      { label: 'Book 1 (Ch 1–8)', ids: ['phy-ch-1','phy-ch-2','phy-ch-3','phy-ch-4','phy-ch-5','phy-ch-6','phy-ch-7','phy-ch-8'] },
+                      { label: 'Book 2 / Ch 9–14 (53 Numericals)', ids: ['phy-ch-9','phy-ch-10','phy-ch-11','phy-ch-12','phy-ch-13','phy-ch-14'] },
+                      { label: 'Optics (Ch 9–10)', ids: ['phy-ch-9','phy-ch-10'] },
+                      { label: 'Modern Physics (Ch 11–14)', ids: ['phy-ch-11','phy-ch-12','phy-ch-13','phy-ch-14'] },
+                      { label: 'All 14 Chapters', ids: availableChapters.map(c => c.id) }
+                    ].map(preset => {
+                      const isPresetActive =
+                        preset.ids.length === selectedChapterIds.length &&
+                        preset.ids.every(id => selectedChapterIds.includes(id));
+                      return (
+                        <button
+                          key={preset.label}
+                          type="button"
+                          onClick={() => applyChapterPreset(preset.ids)}
+                          className={`px-2 py-0.5 rounded-md text-[10px] font-semibold border transition-all cursor-pointer ${
+                            isPresetActive
+                              ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/50'
+                          }`}
+                        >
+                          {preset.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-1.5">
+                {availableChapters.map(ch => {
+                  const isIn = selectedChapterIds.includes(ch.id);
+                  return (
+                    <button
+                      key={ch.id}
+                      type="button"
+                      onClick={() => toggleChapterSelection(ch.id)}
+                      title={`Toggle Ch ${ch.number}: ${ch.title}`}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-mono border transition-all cursor-pointer ${
+                        isIn
+                          ? 'bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border-[var(--accent-primary)] font-bold'
+                          : 'bg-[var(--bg-elevated)] text-[var(--text-muted)] border-[var(--border-subtle)] hover:text-[var(--text-primary)]'
+                      }`}
+                    >
+                      Ch {ch.number}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Subchapter Tickbox Grid */}
             <div className="pt-2 border-t border-[var(--border-subtle)]">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2">
                   <span className="font-serif text-sm font-bold text-[var(--text-primary)]">
-                    Pick Subchapters for this Test
+                    Pick Subchapters ({selectedChapterIds.length} {selectedChapterIds.length === 1 ? 'chapter' : 'chapters'})
                   </span>
                   <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] font-bold">
                     {selectedSubtopicIds.length} of {subchapters.length} chosen
@@ -457,7 +641,7 @@ export default function TestMakerTabContent({
               </div>
 
               {/* Robust Checkbox Cards (Single-event, keyboard accessible, non-double-firing) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 max-h-[340px] overflow-y-auto pr-1">
                 {subchapters.map((sub) => {
                   const isChecked = selectedSubtopicIds.includes(sub.id);
                   return (
@@ -488,7 +672,7 @@ export default function TestMakerTabContent({
                       <div className="flex-1 min-w-0 pointer-events-none">
                         <div className="flex items-center justify-between gap-1.5">
                           <span className="block font-medium text-[var(--text-primary)] leading-tight">
-                            {sub.title}
+                            {selectedChapterIds.length > 1 ? `Ch ${sub.chapterNumber} • ${sub.title}` : sub.title}
                           </span>
                           <PriorityBadge
                             id={sub.id}
@@ -508,10 +692,10 @@ export default function TestMakerTabContent({
               </div>
             </div>
 
-            {/* Test Customization Bar (Question Count + Difficulty + Feedback Mode) */}
+            {/* Test Customization Bar (Question Count + Difficulty + Question Style + Feedback Mode) */}
             {testMode === 'MCQ' && (
               <div className="pt-3 border-t border-[var(--border-subtle)] space-y-3">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                   {/* Option 1: Question Count */}
                   <div className="space-y-1.5">
                     <span className="text-xs font-bold text-[var(--text-secondary)] block">
@@ -561,7 +745,34 @@ export default function TestMakerTabContent({
                     </div>
                   </div>
 
-                  {/* Option 3: Instant Feedback vs Exam Mode */}
+                  {/* Option 3: Question Style Filter */}
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-bold text-[var(--text-secondary)] block">
+                      Question Style:
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      {[
+                        { id: 'ALL', label: 'All' },
+                        { id: 'conceptual', label: 'Concept' },
+                        { id: 'numerical', label: 'Numerical' },
+                        { id: 'assertion', label: 'A-R' }
+                      ].map(st => (
+                        <button
+                          key={st.id}
+                          onClick={() => setStyleFilter(st.id)}
+                          className={`flex-1 py-2 sm:py-1 px-1.5 rounded-lg text-xs font-medium border transition-all cursor-pointer touch-manipulation active:scale-95 ${
+                            styleFilter === st.id
+                              ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-xs font-bold'
+                              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] border-[var(--border-subtle)] hover:border-[var(--accent-primary)]/50'
+                          }`}
+                        >
+                          {st.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Option 4: Instant Feedback vs Exam Mode */}
                   <div className="space-y-1.5">
                     <span className="text-xs font-bold text-[var(--text-secondary)] block">
                       Exam Environment:
@@ -595,7 +806,7 @@ export default function TestMakerTabContent({
               </div>
             )}
 
-            {/* Action Bar: Start Test Button */}
+            {/* Action Bar: Start Test & Copy Test Paper Buttons */}
             <div className="pt-3 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="text-xs text-[var(--text-muted)]">
                 {selectedSubtopicIds.length === 0 ? (
@@ -610,17 +821,30 @@ export default function TestMakerTabContent({
               </div>
 
               {testMode === 'MCQ' ? (
-                <button
-                  disabled={selectedSubtopicIds.length === 0}
-                  onClick={handleStartTest}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-2.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs sm:text-sm font-bold font-serif hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto touch-manipulation min-h-[44px]"
-                >
-                  <Play size={14} fill="currentColor" />
-                  <span>Start {questionCount}-Question Custom Test</span>
-                </button>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                  <button
+                    type="button"
+                    disabled={selectedSubtopicIds.length === 0 || generatedMCQs.length === 0}
+                    onClick={handleCopyTestPaper}
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-all cursor-pointer disabled:opacity-40"
+                    title="Copy formatted questions + Answer Key to clipboard"
+                  >
+                    {copiedPaper ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                    <span>{copiedPaper ? 'Copied Paper!' : 'Copy Test Paper'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    disabled={selectedSubtopicIds.length === 0 || generatedMCQs.length === 0}
+                    onClick={handleStartTest}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-2.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs sm:text-sm font-bold font-serif hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-md disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto touch-manipulation min-h-[44px]"
+                  >
+                    <Play size={14} fill="currentColor" />
+                    <span>Start {questionCount}-Question Custom Test</span>
+                  </button>
+                </div>
               ) : (
                 <div className="text-xs font-bold text-[var(--accent-primary)]">
-                  Scroll down to view Curated Board PYQs ({generatedPYQs.length} questions)
+                  Scroll down to view Curated Board PYQs & Numericals ({generatedPYQs.length} questions)
                 </div>
               )}
             </div>
@@ -629,61 +853,152 @@ export default function TestMakerTabContent({
           {/* If Mode is PYQ, show the curated PYQs list for the chosen subchapters */}
           {testMode === 'PYQ' && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                 <h4 className="font-serif text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
                   <Award size={18} className="text-[var(--accent-primary)]" />
-                  Curated Board PYQs ({generatedPYQs.length} questions)
+                  Curated Board PYQs & Numericals ({generatedPYQs.length} questions)
                 </h4>
-                <button
-                  onClick={() => setSeed(prev => prev + 1)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border-default)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
-                >
-                  <RotateCw size={12} />
-                  <span>Refresh PYQs</span>
-                </button>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* Marks Filter Pills */}
+                  <div className="flex items-center gap-1 bg-[var(--bg-surface)] p-1 rounded-xl border border-[var(--border-default)]">
+                    {[
+                      { id: 'ALL', label: 'All Marks' },
+                      { id: '1', label: '1M' },
+                      { id: '2', label: '2M' },
+                      { id: '3', label: '3M' },
+                      { id: '5', label: '5M' }
+                    ].map(mk => (
+                      <button
+                        key={mk.id}
+                        type="button"
+                        onClick={() => setPyqMarksFilter(mk.id)}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                          pyqMarksFilter === mk.id
+                            ? 'bg-[var(--accent-primary)] text-white shadow-2xs'
+                            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                        }`}
+                      >
+                        {mk.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Show / Hide All Solutions */}
+                  <button
+                    type="button"
+                    onClick={toggleRevealAllPyqs}
+                    disabled={generatedPYQs.length === 0}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer disabled:opacity-40"
+                  >
+                    {allPyqsRevealed ? <EyeOff size={13} /> : <Eye size={13} />}
+                    <span>{allPyqsRevealed ? 'Hide All Solutions' : 'Show All Solutions'}</span>
+                  </button>
+
+                  {/* Copy PYQ Paper */}
+                  <button
+                    type="button"
+                    onClick={handleCopyTestPaper}
+                    disabled={generatedPYQs.length === 0}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer disabled:opacity-40"
+                  >
+                    {copiedPaper ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
+                    <span>{copiedPaper ? 'Copied!' : 'Copy PYQ Paper'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => setSeed(prev => prev + 1)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+                  >
+                    <RotateCw size={12} />
+                    <span>Refresh PYQs</span>
+                  </button>
+                </div>
               </div>
 
               {generatedPYQs.length === 0 ? (
-                <div className="p-8 text-center text-xs text-[var(--text-muted)] bg-[var(--bg-surface)] rounded-2xl border border-[var(--border-default)]">
-                  No PYQs found for the selected subchapters. Try checking more subchapters above.
+                <div className="p-8 text-center text-xs text-[var(--text-muted)] bg-[var(--bg-surface)] rounded-2xl border border-[var(--border-default)] space-y-2">
+                  <p>
+                    No PYQs found matching your selection
+                    {pyqMarksFilter !== 'ALL' ? ` for the ${pyqMarksFilter}-Mark filter` : ''}.
+                  </p>
+                  {pyqMarksFilter !== 'ALL' && (
+                    <button
+                      type="button"
+                      onClick={() => setPyqMarksFilter('ALL')}
+                      className="px-3 py-1.5 rounded-lg bg-[var(--accent-primary)] text-white font-bold text-xs cursor-pointer"
+                    >
+                      Show All Marks
+                    </button>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {generatedPYQs.map((pyq, idx) => (
-                    <div
-                      key={pyq.id || idx}
-                      className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-4 sm:p-5 shadow-xs space-y-3"
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
-                            PYQ {idx + 1}
-                          </span>
-                          <span className="text-[11px] font-mono font-bold text-[var(--accent-primary)] px-2 py-0.5 rounded-full bg-[var(--accent-primary)]/10">
-                            {pyq.year}
-                          </span>
+                  {generatedPYQs.map((pyq, idx) => {
+                    const pyqKey = pyq.id || `pyq-${idx}`;
+                    const isRevealed = revealedPyqIds.has(pyqKey);
+                    return (
+                      <div
+                        key={pyqKey}
+                        className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-4 sm:p-5 shadow-xs space-y-3"
+                      >
+                        <div className="flex flex-wrap items-start justify-between gap-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
+                              PYQ {idx + 1}
+                            </span>
+                            {pyq.marks && (
+                              <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                                {pyq.marks}
+                              </span>
+                            )}
+                            {pyq.sourceType && (
+                              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30">
+                                {pyq.sourceType}
+                              </span>
+                            )}
+                            <span className="text-[11px] font-mono font-bold text-[var(--accent-primary)] px-2 py-0.5 rounded-full bg-[var(--accent-primary)]/10">
+                              {pyq.year}
+                            </span>
+                          </div>
+                          {pyq.chapterName && (
+                            <span className="text-[10px] font-mono text-[var(--text-muted)]">
+                              {pyq.chapterName}
+                            </span>
+                          )}
                         </div>
-                        {pyq.subtopicName && (
-                          <span className="text-[10px] font-mono text-[var(--text-muted)]">
-                            {pyq.subtopicName}
-                          </span>
+                        <p 
+                          className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug"
+                          dangerouslySetInnerHTML={{ __html: formatMathString(pyq.question) }}
+                        />
+                        <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between">
+                          <button
+                            type="button"
+                            onClick={() => toggleRevealPyq(pyqKey)}
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                              isRevealed
+                                ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30'
+                                : 'bg-[var(--bg-elevated)] text-[var(--accent-primary)] border-[var(--border-default)] hover:border-[var(--accent-primary)]'
+                            }`}
+                          >
+                            {isRevealed ? <EyeOff size={13} /> : <Eye size={13} />}
+                            <span>{isRevealed ? 'Hide Board Solution' : 'Reveal Answer & Marking Steps'}</span>
+                          </button>
+                        </div>
+                        {isRevealed && (
+                          <div className="pt-2 animate-in fade-in duration-200">
+                            <p className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 mb-1 uppercase tracking-wider">
+                              Verified Board Model Answer:
+                            </p>
+                            <pre 
+                              className="font-sans text-xs text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed bg-[var(--bg-elevated)] p-3 rounded-xl border border-[var(--border-subtle)]"
+                              dangerouslySetInnerHTML={{ __html: formatMathString(pyq.solution) }}
+                            />
+                          </div>
                         )}
                       </div>
-                      <p 
-                        className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug"
-                        dangerouslySetInnerHTML={{ __html: formatMathString(pyq.question) }}
-                      />
-                      <div className="pt-3 border-t border-[var(--border-subtle)]">
-                        <p className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 mb-1 uppercase tracking-wider">
-                          Verified Board Model Answer:
-                        </p>
-                        <pre 
-                          className="font-sans text-xs text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed bg-[var(--bg-elevated)] p-3 rounded-xl border border-[var(--border-subtle)]"
-                          dangerouslySetInnerHTML={{ __html: formatMathString(pyq.solution) }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -806,19 +1121,36 @@ export default function TestMakerTabContent({
                   </span>
                 </div>
 
-                <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
-                  generatedMCQs[currentQIndex].difficulty === 'hard'
-                    ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
-                    : generatedMCQs[currentQIndex].difficulty === 'medium'
-                    ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
-                    : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                }`}>
-                  {generatedMCQs[currentQIndex].difficulty === 'hard'
-                    ? 'Hard • HOTS'
-                    : generatedMCQs[currentQIndex].difficulty === 'medium'
-                    ? 'Medium • Board'
-                    : 'Easy • Foundation'}
-                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {generatedMCQs[currentQIndex].questionStyle && (
+                    <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                      generatedMCQs[currentQIndex].questionStyle === 'assertion'
+                        ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30'
+                        : generatedMCQs[currentQIndex].questionStyle === 'numerical'
+                        ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30'
+                        : 'bg-slate-500/10 text-slate-600 dark:text-slate-300 border-slate-500/30'
+                    }`}>
+                      {generatedMCQs[currentQIndex].questionStyle === 'assertion'
+                        ? 'Assertion-Reason'
+                        : generatedMCQs[currentQIndex].questionStyle === 'numerical'
+                        ? 'Numerical'
+                        : 'Conceptual'}
+                    </span>
+                  )}
+                  <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                    generatedMCQs[currentQIndex].difficulty === 'hard'
+                      ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+                      : generatedMCQs[currentQIndex].difficulty === 'medium'
+                      ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                      : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                  }`}>
+                    {generatedMCQs[currentQIndex].difficulty === 'hard'
+                      ? 'Hard • HOTS'
+                      : generatedMCQs[currentQIndex].difficulty === 'medium'
+                      ? 'Medium • Board'
+                      : 'Easy • Foundation'}
+                  </span>
+                </div>
               </div>
 
               {/* Question Stem with formatted typography */}

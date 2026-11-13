@@ -4,6 +4,7 @@ import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 import { getDefaultPriority } from '../../data/priorityData';
 import { isSubtopicImportant } from '../../data/importantSubtopicsMapping';
+import PhysicsDerivationsReferencePanel from './PhysicsDerivationsReferencePanel';
 
 export default function ChapterList({
   selectedSubject,
@@ -172,6 +173,14 @@ export default function ChapterList({
           </select>
         </div>
       </div>
+
+      {/* Physics Derivations Reference Bank (SlideShare 47 Slides Integrated by Volume) */}
+      {subject.id === 'physics' && (
+        <PhysicsDerivationsReferencePanel
+          volumeFilter={volume.id}
+          onJumpToChapter={(chNum) => onSelectChapter(`phy-ch-${chNum}`)}
+        />
+      )}
 
       {/* Chapters Grid */}
       {displayedChapters.length === 0 ? (

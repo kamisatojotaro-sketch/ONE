@@ -12,6 +12,8 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
   const [lcrMode, setLcrMode] = useState('phasor'); // 'phasor' | 'resonance'
   const [parallelMode, setParallelMode] = useState('attractive'); // 'attractive' | 'repulsive'
   const [equiMode, setEquiMode] = useState('two-surfaces'); // 'two-surfaces' | 'normal-proof' | 'geometry'
+  const [huygensTab, setHuygensTab] = useState(0); // 0: Wavefronts | 1: Reflection | 2: Denser | 3: Rarer
+  const [activeTab, setActiveTab] = useState(0); // Tab toggle for Ch 9/10/13 dual-view SVG diagrams
 
   // Render SVG Marker definition helper
   const svgDefs = (
@@ -1894,6 +1896,296 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
   }
 
   /* -------------------------------------------------------------
+   * 20b. PRISM REFRACTION & ASYMMETRIC i-δ MINIMUM DEVIATION CURVE
+   * ------------------------------------------------------------- */
+  if (diagramId === 'prism-dispersion') {
+    const content = (
+      <div className="space-y-4">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setActiveTab(0)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 0 ? 'bg-amber-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            Prism Deviation (i–δ Curve)
+          </button>
+          <button
+            onClick={() => setActiveTab(1)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 1 ? 'bg-amber-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            Symmetrical Minimum Deviation Ray
+          </button>
+        </div>
+
+        <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] p-4">
+          {activeTab === 0 ? (
+            <svg viewBox="0 0 460 220" className="w-full h-auto max-h-56">
+              <line x1="65" y1="190" x2="430" y2="190" stroke="#64748b" strokeWidth="1.5" />
+              <line x1="65" y1="20" x2="65" y2="190" stroke="#64748b" strokeWidth="1.5" />
+              <text x="220" y="210" fill="#94a3b8" fontSize="11" fontWeight="bold">Angle of Incidence (i) →</text>
+              <text x="16" y="110" fill="#94a3b8" fontSize="11" fontWeight="bold" transform="rotate(-90 16,110)">Deviation (δ) →</text>
+
+              {/* Asymmetric U-shaped i-delta curve */}
+              <path d="M 105,45 Q 160,152 215,152 Q 290,152 385,68" fill="none" stroke="#f59e0b" strokeWidth="3" />
+              {/* Horizontal line through δ_m */}
+              <line x1="65" y1="152" x2="215" y2="152" stroke="#10b981" strokeDasharray="4,3" strokeWidth="1.5" />
+              <line x1="215" y1="152" x2="215" y2="190" stroke="#10b981" strokeDasharray="4,3" strokeWidth="1.5" />
+              <circle cx="215" cy="152" r="4.5" fill="#10b981" />
+              <text x="35" y="155" fill="#10b981" fontSize="11" fontWeight="bold">δ_m</text>
+              <text x="195" y="203" fill="#10b981" fontSize="10" fontWeight="bold">i = e = (A+δ_m)/2</text>
+
+              {/* Horizontal cut showing two values i1 and i2 for same delta */}
+              <line x1="65" y1="100" x2="345" y2="100" stroke="#60a5fa" strokeDasharray="3,3" strokeWidth="1" />
+              <circle cx="136" cy="100" r="3.5" fill="#60a5fa" />
+              <circle cx="332" cy="100" r="3.5" fill="#60a5fa" />
+              <text x="142" y="95" fill="#60a5fa" fontSize="10">i₁ (or e)</text>
+              <text x="305" y="95" fill="#60a5fa" fontSize="10">i₂ (or i)</text>
+              <text x="235" y="38" fill="#fbbf24" fontSize="10.5" fontWeight="bold">Unique minimum δ = δ_m when i = e &amp; r₁ = r₂ = A/2</text>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 460 220" className="w-full h-auto max-h-56">
+              {/* Equilateral prism triangle */}
+              <polygon points="230,30 140,185 320,185" fill="#f59e0b" fillOpacity="0.08" stroke="#f59e0b" strokeWidth="2" />
+              <text x="226" y="23" fill="#fbbf24" fontSize="12" fontWeight="bold">A</text>
+              <text x="128" y="196" fill="#94a3b8" fontSize="11">B</text>
+              <text x="325" y="196" fill="#94a3b8" fontSize="11">C</text>
+              {/* Normals */}
+              <line x1="150" y1="115" x2="215" y2="152" stroke="#64748b" strokeDasharray="3,3" />
+              <line x1="310" y1="115" x2="245" y2="152" stroke="#64748b" strokeDasharray="3,3" />
+              {/* Symmetrical ray parallel to base BC */}
+              <polyline points="75,158 176,129 284,129 385,158" fill="none" stroke="#38bdf8" strokeWidth="2.5" />
+              {/* Extended straight lines meeting at deviation delta */}
+              <line x1="176" y1="129" x2="295" y2="95" stroke="#38bdf8" strokeDasharray="4,3" strokeWidth="1" />
+              <line x1="284" y1="129" x2="180" y2="99" stroke="#38bdf8" strokeDasharray="4,3" strokeWidth="1" />
+              <text x="225" y="93" fill="#10b981" fontSize="11" fontWeight="bold">δ_m</text>
+              <text x="193" y="143" fill="#38bdf8" fontSize="10" fontWeight="bold">Ray || Base BC</text>
+              <text x="115" y="138" fill="#e2e8f0" fontSize="10">i</text>
+              <text x="342" y="138" fill="#e2e8f0" fontSize="10">e = i</text>
+            </svg>
+          )}
+          <div className="mt-2 text-xs text-[var(--text-secondary)] font-mono flex flex-wrap justify-between gap-2">
+            <span>r₁ + r₂ = A | δ = i + e − A</span>
+            <span className="text-amber-500 font-bold">n = sin[(A + δ_m)/2] / sin(A/2)</span>
+          </div>
+        </div>
+      </div>
+    );
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-amber-500/15 text-amber-500"><Zap size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Refraction Through a Prism &amp; i–δ Curve</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Asymmetric deviation curve, minimum deviation symmetry &amp; prism formula</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 20c. SINGLE-SLIT FRAUNHOFER DIFFRACTION vs YDSE INTENSITY CURVE
+   * ------------------------------------------------------------- */
+  if (diagramId === 'single-slit-diffraction') {
+    const content = (
+      <div className="space-y-4">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setActiveTab(0)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 0 ? 'bg-indigo-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            Single-Slit Diffraction I(θ)
+          </button>
+          <button
+            onClick={() => setActiveTab(1)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 1 ? 'bg-indigo-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            Compare: YDSE Equal Fringes
+          </button>
+        </div>
+
+        <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] p-4">
+          {activeTab === 0 ? (
+            <svg viewBox="0 0 460 210" className="w-full h-auto max-h-56">
+              <line x1="20" y1="175" x2="440" y2="175" stroke="#64748b" strokeWidth="1.5" />
+              <line x1="230" y1="15" x2="230" y2="175" stroke="#64748b" strokeDasharray="3,3" strokeWidth="1" />
+              {/* Single slit diffraction lobes: broad tall centre + steep decay I0/22, I0/61 */}
+              <path
+                d="M 35,175 Q 65,175 82,163 Q 100,175 112,175 Q 132,145 148,175 C 168,175 186,26 230,26 C 274,26 292,175 312,175 Q 328,145 348,175 Q 360,175 378,163 Q 395,175 425,175"
+                fill="#818cf8"
+                fillOpacity="0.18"
+                stroke="#818cf8"
+                strokeWidth="2.5"
+              />
+              {/* Central width arrow */}
+              <line x1="168" y1="186" x2="292" y2="186" stroke="#10b981" strokeWidth="2" />
+              <text x="180" y="202" fill="#10b981" fontSize="10.5" fontWeight="bold">Central Width = 2λD/a (2β)</text>
+              <text x="236" y="34" fill="#e2e8f0" fontSize="11" fontWeight="bold">I₀ (Central Max)</text>
+              <text x="155" y="190" fill="#f87171" fontSize="9.5">-λ/a</text>
+              <text x="285" y="190" fill="#f87171" fontSize="9.5">+λ/a</text>
+              <text x="102" y="190" fill="#f87171" fontSize="9.5">-2λ/a</text>
+              <text x="336" y="190" fill="#f87171" fontSize="9.5">+2λ/a</text>
+              <text x="310" y="142" fill="#fbbf24" fontSize="9.5">1st Sec. Max (≈ I₀/22)</text>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 460 210" className="w-full h-auto max-h-56">
+              <line x1="20" y1="175" x2="440" y2="175" stroke="#64748b" strokeWidth="1.5" />
+              <line x1="230" y1="20" x2="230" y2="175" stroke="#64748b" strokeDasharray="3,3" strokeWidth="1" />
+              {/* YDSE equal height cosine-squared peaks */}
+              <path
+                d="M 45,175 Q 70,50 95,175 Q 120,50 145,175 Q 170,50 195,175 Q 230,50 265,175 Q 290,50 315,175 Q 340,50 365,175 Q 390,50 415,175"
+                fill="none"
+                stroke="#38bdf8"
+                strokeWidth="2.5"
+              />
+              <line x1="40" y1="88" x2="420" y2="88" stroke="#10b981" strokeDasharray="4,3" strokeWidth="1" />
+              <text x="255" y="42" fill="#38bdf8" fontSize="11" fontWeight="bold">All Maxima Equal Intensity = 4I₀</text>
+              <text x="165" y="197" fill="#10b981" fontSize="10.5" fontWeight="bold">Uniform Fringe Width β = λD/d</text>
+            </svg>
+          )}
+          <div className="mt-2 text-xs text-[var(--text-secondary)] font-mono flex flex-wrap justify-between gap-2">
+            <span>Diffraction Minima: a sin θ = nλ</span>
+            <span className="text-indigo-400 font-bold">Central Angular Width = 2λ/a</span>
+          </div>
+        </div>
+      </div>
+    );
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400"><Zap size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Single-Slit Diffraction Pattern vs YDSE</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Double-width central maximum (2λ/a) &amp; rapidly falling secondary maxima</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 20d. NUCLEI: BINDING ENERGY CURVE (E_bn vs A) & NUCLEAR POTENTIAL U(r)
+   * ------------------------------------------------------------- */
+  if (diagramId === 'nuclei-binding-force') {
+    const content = (
+      <div className="space-y-4">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setActiveTab(0)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 0 ? 'bg-rose-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            Binding Energy/Nucleon (BE/A vs A)
+          </button>
+          <button
+            onClick={() => setActiveTab(1)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              activeTab === 1 ? 'bg-rose-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
+            }`}
+          >
+            Nuclear Force Potential U(r) vs r
+          </button>
+        </div>
+
+        <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] p-4">
+          {activeTab === 0 ? (
+            <svg viewBox="0 0 460 220" className="w-full h-auto max-h-56">
+              <line x1="55" y1="185" x2="430" y2="185" stroke="#64748b" strokeWidth="1.5" />
+              <line x1="55" y1="20" x2="55" y2="185" stroke="#64748b" strokeWidth="1.5" />
+              <text x="200" y="206" fill="#94a3b8" fontSize="11" fontWeight="bold">Mass Number (A) →</text>
+              <text x="15" y="115" fill="#94a3b8" fontSize="11" fontWeight="bold" transform="rotate(-90 15,115)">E_bn (MeV) →</text>
+
+              {/* Axis ticks */}
+              <text x="35" y="42" fill="#94a3b8" fontSize="9.5">8.75</text>
+              <text x="35" y="65" fill="#94a3b8" fontSize="9.5">7.5</text>
+              <text x="35" y="135" fill="#94a3b8" fontSize="9.5">4.0</text>
+              <text x="135" y="198" fill="#94a3b8" fontSize="9.5">56 (Fe)</text>
+              <text x="275" y="198" fill="#94a3b8" fontSize="9.5">170</text>
+              <text x="385" y="198" fill="#94a3b8" fontSize="9.5">238 (U)</text>
+
+              {/* BE/A curve with He-4, C-12, O-16 peaks and broad Fe-56 max tapering down to U-238 */}
+              <polyline
+                points="65,172 72,148 79,68 84,96 90,58 96,74 104,54 118,46 142,36 220,40 285,48 395,62"
+                fill="none"
+                stroke="#f43f5e"
+                strokeWidth="2.5"
+              />
+              {/* Key nuclide dots */}
+              <circle cx="79" cy="68" r="3" fill="#fbbf24" />
+              <text x="72" y="61" fill="#fbbf24" fontSize="9" fontWeight="bold">⁴He</text>
+              <circle cx="90" cy="58" r="3" fill="#fbbf24" />
+              <text x="86" y="49" fill="#fbbf24" fontSize="9">¹²C</text>
+              <circle cx="142" cy="36" r="4.5" fill="#10b981" />
+              <text x="140" y="27" fill="#10b981" fontSize="10" fontWeight="bold">⁵⁶Fe (8.75 MeV Peak)</text>
+              <circle cx="395" cy="62" r="4" fill="#38bdf8" />
+              <text x="362" y="54" fill="#38bdf8" fontSize="9.5" fontWeight="bold">²³⁸U (7.6 MeV)</text>
+
+              {/* Fusion and Fission arrows */}
+              <text x="175" y="100" fill="#10b981" fontSize="10" fontWeight="bold">30 &lt; A &lt; 170 Plateau (Saturation)</text>
+              <text x="64" y="112" fill="#fbbf24" fontSize="9.5">Fusion ↑</text>
+              <text x="315" y="88" fill="#38bdf8" fontSize="9.5">← Fission Releases Energy</text>
+            </svg>
+          ) : (
+            <svg viewBox="0 0 460 220" className="w-full h-auto max-h-56">
+              {/* Zero potential axis */}
+              <line x1="65" y1="88" x2="425" y2="88" stroke="#64748b" strokeWidth="1.5" />
+              <line x1="65" y1="20" x2="65" y2="200" stroke="#64748b" strokeWidth="1.5" />
+              <text x="355" y="80" fill="#94a3b8" fontSize="11" fontWeight="bold">Distance r (fm) →</text>
+              <text x="18" y="115" fill="#94a3b8" fontSize="11" fontWeight="bold" transform="rotate(-90 18,115)">Potential U(r) →</text>
+              <text x="45" y="45" fill="#f87171" fontSize="10">+U</text>
+              <text x="43" y="165" fill="#10b981" fontSize="10">−U</text>
+
+              {/* Steep repulsive rise r < 0.8 fm, minimum at r0=0.8 fm, rise back to 0 at ~3 fm */}
+              <path
+                d="M 102,25 C 108,125 120,178 148,178 C 190,178 230,96 340,90 L 415,89"
+                fill="none"
+                stroke="#f43f5e"
+                strokeWidth="3"
+              />
+              {/* r0 = 0.8 fm marker */}
+              <line x1="148" y1="88" x2="148" y2="178" stroke="#fbbf24" strokeDasharray="4,3" strokeWidth="1.5" />
+              <circle cx="148" cy="178" r="4.5" fill="#fbbf24" />
+              <text x="130" y="79" fill="#fbbf24" fontSize="10.5" fontWeight="bold">r₀ = 0.8 fm</text>
+              <text x="155" y="180" fill="#fbbf24" fontSize="9.5">U_min ≈ −100 MeV (F = 0)</text>
+              <text x="72" y="55" fill="#f87171" fontSize="9.5" fontWeight="bold">Repulsive (r &lt; 0.8 fm)</text>
+              <text x="210" y="138" fill="#10b981" fontSize="9.5" fontWeight="bold">Attractive (r &gt; 0.8 fm, Saturation ~3 fm)</text>
+            </svg>
+          )}
+          <div className="mt-2 text-xs text-[var(--text-secondary)] font-mono flex flex-wrap justify-between gap-2">
+            <span>ρ_nuclear ≈ 2.3×10¹⁷ kg/m³ (Independent of A)</span>
+            <span className="text-rose-400 font-bold">Max BE/A = 8.75 MeV (⁵⁶Fe) | r₀ = 0.8 fm</span>
+          </div>
+        </div>
+      </div>
+    );
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-rose-500/15 text-rose-400"><Zap size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Nuclear Binding Energy Curve &amp; Strong Nuclear Force</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">BE/A stability plateau, fission/fusion energy yield &amp; 0.8 fm potential well</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
    * 21. RAY OPTICS: PRISM MINIMUM DEVIATION & OPTICAL INSTRUMENTS
    * ------------------------------------------------------------- */
   if (diagramId === 'ray-optics-instruments') {
@@ -2199,6 +2491,192 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
           <div>
             <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">p-n Junction Depletion Layer &amp; Rectification</h4>
             <p className="text-[11px] text-[var(--text-muted)]">Diffusion vs Drift, Forward/Reverse Bias &amp; Half/Full-Wave Rectifiers</p>
+          </div>
+        </div>
+        {content}
+      </div>
+    );
+  }
+
+  /* -------------------------------------------------------------
+   * 26. WAVE OPTICS: HUYGENS PRINCIPLE, WAVEFRONT TYPES, REFLECTION & DENSER/RARER REFRACTION
+   * ------------------------------------------------------------- */
+  if (diagramId === 'huygens-wavefronts') {
+    const content = (
+      <div className="space-y-4">
+        <div className="flex flex-wrap gap-2">
+          {[
+            { id: 0, label: 'Types of Wavefronts' },
+            { id: 1, label: 'Reflection (i = r)' },
+            { id: 2, label: 'Refraction: Denser (v₂ < v₁)' },
+            { id: 3, label: 'Refraction: Rarer (v₂ > v₁)' }
+          ].map(t => (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => setHuygensTab(t.id)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                huygensTab === t.id
+                  ? 'bg-sky-600 text-white shadow-sm'
+                  : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)] hover:border-sky-500/40'
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] p-4">
+          {huygensTab === 0 && (
+            <svg viewBox="0 0 480 185" className="w-full h-auto max-h-56 select-none">
+              {svgDefs}
+              {/* 1. Spherical Wavefront */}
+              <circle cx="75" cy="82" r="4" fill="#f59e0b" />
+              <circle cx="75" cy="82" r="18" fill="none" stroke="#38bdf8" strokeWidth="1.6" />
+              <circle cx="75" cy="82" r="34" fill="none" stroke="#38bdf8" strokeWidth="1.8" strokeDasharray="3,2" />
+              <circle cx="75" cy="82" r="50" fill="none" stroke="#38bdf8" strokeWidth="2" />
+              <line x1="75" y1="82" x2="128" y2="55" stroke="#10b981" strokeWidth="1.4" markerEnd="url(#arrow-emerald)" />
+              <line x1="75" y1="82" x2="128" y2="108" stroke="#10b981" strokeWidth="1.4" markerEnd="url(#arrow-emerald)" />
+              <text x="75" y="152" textAnchor="middle" fill="#e2e8f0" fontSize="10.5" fontWeight="bold">Point Source → Spherical</text>
+              <text x="75" y="167" textAnchor="middle" fill="#38bdf8" fontSize="9.5">I ∝ 1/r² (A ∝ 1/r)</text>
+
+              {/* 2. Cylindrical Wavefront */}
+              <line x1="235" y1="45" x2="235" y2="118" stroke="#f59e0b" strokeWidth="3" />
+              <ellipse cx="235" cy="82" rx="18" ry="42" fill="none" stroke="#a855f7" strokeWidth="1.7" />
+              <ellipse cx="235" cy="82" rx="34" ry="50" fill="none" stroke="#a855f7" strokeWidth="1.9" strokeDasharray="3,2" />
+              <line x1="235" y1="68" x2="275" y2="68" stroke="#10b981" strokeWidth="1.4" markerEnd="url(#arrow-emerald)" />
+              <line x1="235" y1="96" x2="275" y2="96" stroke="#10b981" strokeWidth="1.4" markerEnd="url(#arrow-emerald)" />
+              <text x="235" y="152" textAnchor="middle" fill="#e2e8f0" fontSize="10.5" fontWeight="bold">Linear Slit → Cylindrical</text>
+              <text x="235" y="167" textAnchor="middle" fill="#c084fc" fontSize="9.5">I ∝ 1/r (A ∝ 1/√r)</text>
+
+              {/* 3. Plane Wavefront */}
+              <line x1="365" y1="38" x2="365" y2="126" stroke="#10b981" strokeWidth="2.2" />
+              <line x1="392" y1="38" x2="392" y2="126" stroke="#10b981" strokeWidth="2.2" />
+              <line x1="419" y1="38" x2="419" y2="126" stroke="#10b981" strokeWidth="2.2" />
+              <line x1="345" y1="55" x2="442" y2="55" stroke="#f59e0b" strokeWidth="1.5" markerEnd="url(#arrow-amber)" />
+              <line x1="345" y1="82" x2="442" y2="82" stroke="#f59e0b" strokeWidth="1.5" markerEnd="url(#arrow-amber)" />
+              <line x1="345" y1="109" x2="442" y2="109" stroke="#f59e0b" strokeWidth="1.5" markerEnd="url(#arrow-amber)" />
+              <text x="395" y="152" textAnchor="middle" fill="#e2e8f0" fontSize="10.5" fontWeight="bold">Source at ∞ → Plane</text>
+              <text x="395" y="167" textAnchor="middle" fill="#10b981" fontSize="9.5">I = const, Rays ⊥ WF</text>
+            </svg>
+          )}
+
+          {huygensTab === 1 && (
+            <svg viewBox="0 0 460 190" className="w-full h-auto max-h-56 select-none">
+              {svgDefs}
+              {/* Mirror Surface XY */}
+              <line x1="55" y1="150" x2="405" y2="150" stroke="#94a3b8" strokeWidth="2.5" />
+              <text x="42" y="154" fill="#94a3b8" fontSize="11" fontWeight="bold">X</text>
+              <text x="412" y="154" fill="#94a3b8" fontSize="11" fontWeight="bold">Y</text>
+
+              {/* Normal at A and C */}
+              <line x1="120" y1="35" x2="120" y2="150" stroke="#64748b" strokeDasharray="3,3" strokeWidth="1" />
+              <line x1="315" y1="35" x2="315" y2="150" stroke="#64748b" strokeDasharray="3,3" strokeWidth="1" />
+
+              {/* Incident Plane Wavefront AB */}
+              <line x1="120" y1="150" x2="185" y2="62" stroke="#38bdf8" strokeWidth="2.5" />
+              {/* Incident Rays */}
+              <line x1="70" y1="82" x2="120" y2="150" stroke="#f59e0b" strokeWidth="1.8" markerEnd="url(#arrow-amber)" />
+              <line x1="185" y1="62" x2="315" y2="150" stroke="#f59e0b" strokeWidth="1.8" markerEnd="url(#arrow-amber)" />
+
+              {/* Secondary Wavelet from A with radius v*tau */}
+              <path d="M 120,42 A 108,108 0 0,1 228,150" fill="none" stroke="#c084fc" strokeDasharray="4,3" strokeWidth="1.8" />
+              {/* Reflected Wavefront CE & Reflected Ray AE */}
+              <line x1="120" y1="150" x2="212" y2="96" stroke="#10b981" strokeWidth="1.8" markerEnd="url(#arrow-emerald)" />
+              <line x1="212" y1="96" x2="315" y2="150" stroke="#10b981" strokeWidth="2.5" />
+              <line x1="315" y1="150" x2="375" y2="85" stroke="#10b981" strokeWidth="1.8" markerEnd="url(#arrow-emerald)" />
+
+              {/* Labels */}
+              <text x="115" y="166" fill="#e2e8f0" fontSize="11" fontWeight="bold">A</text>
+              <text x="182" y="54" fill="#38bdf8" fontSize="11" fontWeight="bold">B</text>
+              <text x="313" y="166" fill="#e2e8f0" fontSize="11" fontWeight="bold">C</text>
+              <text x="208" y="88" fill="#10b981" fontSize="11" fontWeight="bold">E</text>
+              <text x="255" y="96" fill="#f59e0b" fontSize="10" fontWeight="bold">BC = vτ</text>
+              <text x="148" y="114" fill="#10b981" fontSize="10" fontWeight="bold">AE = vτ</text>
+              <text x="230" y="25" textAnchor="middle" fill="#fbbf24" fontSize="10.5" fontWeight="bold">△ABC ≅ △AEC (RHS: AE = BC = vτ, AC common) ⟹ ∠i = ∠r</text>
+            </svg>
+          )}
+
+          {huygensTab === 2 && (
+            <svg viewBox="0 0 460 195" className="w-full h-auto max-h-56 select-none">
+              {svgDefs}
+              {/* Denser Medium Shading below XY */}
+              <rect x="45" y="102" width="370" height="82" fill="#38bdf8" fillOpacity="0.08" />
+              <line x1="45" y1="102" x2="415" y2="102" stroke="#94a3b8" strokeWidth="2.2" />
+              <text x="55" y="92" fill="#94a3b8" fontSize="10" fontWeight="bold">Medium 1 (Rarer: v₁, n₁)</text>
+              <text x="55" y="175" fill="#38bdf8" fontSize="10" fontWeight="bold">Medium 2 (Denser: v₂ &lt; v₁, n₂ &gt; n₁)</text>
+
+              {/* Normal at A */}
+              <line x1="125" y1="25" x2="125" y2="175" stroke="#64748b" strokeDasharray="3,3" strokeWidth="1" />
+
+              {/* Incident WF AB and Rays */}
+              <line x1="125" y1="102" x2="215" y2="38" stroke="#f59e0b" strokeWidth="2.5" />
+              <line x1="80" y1="38" x2="125" y2="102" stroke="#f59e0b" strokeWidth="1.7" markerEnd="url(#arrow-amber)" />
+              <line x1="215" y1="38" x2="310" y2="102" stroke="#f59e0b" strokeWidth="1.7" markerEnd="url(#arrow-amber)" />
+
+              {/* Secondary Wavelet in Denser Medium: radius v2*tau < BC */}
+              <path d="M 125,168 A 66,66 0 0,0 191,102" fill="none" stroke="#c084fc" strokeDasharray="4,3" strokeWidth="1.7" />
+              <line x1="125" y1="102" x2="152" y2="162" stroke="#10b981" strokeWidth="1.8" markerEnd="url(#arrow-emerald)" />
+              <line x1="152" y1="162" x2="310" y2="102" stroke="#10b981" strokeWidth="2.5" />
+
+              <text x="115" y="114" fill="#e2e8f0" fontSize="11" fontWeight="bold">A</text>
+              <text x="218" y="34" fill="#f59e0b" fontSize="11" fontWeight="bold">B</text>
+              <text x="315" y="114" fill="#e2e8f0" fontSize="11" fontWeight="bold">C</text>
+              <text x="148" y="176" fill="#10b981" fontSize="11" fontWeight="bold">E</text>
+              <text x="268" y="64" fill="#f59e0b" fontSize="10" fontWeight="bold">BC = v₁τ</text>
+              <text x="165" y="156" fill="#10b981" fontSize="10" fontWeight="bold">AE = v₂τ (&lt; BC)</text>
+              <text x="275" y="142" fill="#38bdf8" fontSize="10.5" fontWeight="bold">sin i / sin r = v₁ / v₂ = n₂ / n₁ (r &lt; i)</text>
+            </svg>
+          )}
+
+          {huygensTab === 3 && (
+            <svg viewBox="0 0 460 195" className="w-full h-auto max-h-56 select-none">
+              {svgDefs}
+              {/* Denser Medium Shading on top */}
+              <rect x="45" y="18" width="370" height="84" fill="#a855f7" fillOpacity="0.08" />
+              <line x1="45" y1="102" x2="415" y2="102" stroke="#94a3b8" strokeWidth="2.2" />
+              <text x="55" y="32" fill="#c084fc" fontSize="10" fontWeight="bold">Medium 1 (Denser: v₁, n₁)</text>
+              <text x="55" y="178" fill="#10b981" fontSize="10" fontWeight="bold">Medium 2 (Rarer: v₂ &gt; v₁, n₂ &lt; n₁) → Bends Away from Normal (r &gt; i)</text>
+
+              {/* Normal at A */}
+              <line x1="125" y1="28" x2="125" y2="165" stroke="#64748b" strokeDasharray="3,3" strokeWidth="1" />
+
+              {/* Incident WF AB (shorter BC = v1*tau) */}
+              <line x1="125" y1="102" x2="215" y2="55" stroke="#f59e0b" strokeWidth="2.5" />
+              <line x1="90" y1="52" x2="125" y2="102" stroke="#f59e0b" strokeWidth="1.7" markerEnd="url(#arrow-amber)" />
+              <line x1="215" y1="55" x2="285" y2="102" stroke="#f59e0b" strokeWidth="1.7" markerEnd="url(#arrow-amber)" />
+
+              {/* Expanded Wavelet in Rarer Medium: radius v2*tau > BC */}
+              <path d="M 125,182 A 88,88 0 0,0 218,125" fill="none" stroke="#38bdf8" strokeDasharray="4,3" strokeWidth="1.7" />
+              <line x1="125" y1="102" x2="205" y2="145" stroke="#10b981" strokeWidth="1.8" markerEnd="url(#arrow-emerald)" />
+              <line x1="205" y1="145" x2="285" y2="102" stroke="#10b981" strokeWidth="2.5" />
+
+              <text x="114" y="115" fill="#e2e8f0" fontSize="11" fontWeight="bold">A</text>
+              <text x="216" y="49" fill="#f59e0b" fontSize="11" fontWeight="bold">B</text>
+              <text x="290" y="115" fill="#e2e8f0" fontSize="11" fontWeight="bold">C</text>
+              <text x="208" y="156" fill="#10b981" fontSize="11" fontWeight="bold">E</text>
+              <text x="255" y="72" fill="#f59e0b" fontSize="10" fontWeight="bold">BC = v₁τ</text>
+              <text x="155" y="148" fill="#10b981" fontSize="10" fontWeight="bold">AE = v₂τ (&gt; BC)</text>
+              <text x="292" y="142" fill="#fbbf24" fontSize="10" fontWeight="bold">TIR if BC/AC ≥ v₁/v₂ (i ≥ i_c)</text>
+            </svg>
+          )}
+
+          <div className="mt-2 text-xs text-[var(--text-secondary)] font-mono flex flex-wrap justify-between gap-2">
+            <span>Snell&apos;s Law: sin i / sin r = v₁ / v₂ = n₂ / n₁</span>
+            <span className="text-sky-400 font-bold">Frequency ν = Constant; λ₂ / λ₁ = v₂ / v₁</span>
+          </div>
+        </div>
+      </div>
+    );
+
+    if (inline) return content;
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-4 sm:p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <span className="p-1.5 rounded-lg bg-sky-500/15 text-sky-400"><Layers size={16} /></span>
+          <div>
+            <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Huygens&apos; Principle: Wavefronts, Reflection &amp; Denser/Rarer Refraction</h4>
+            <p className="text-[11px] text-[var(--text-muted)]">Types of wavefronts, geometric proof of i = r, and wave-theory refraction at denser &amp; rarer interfaces</p>
           </div>
         </div>
         {content}

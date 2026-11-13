@@ -21,7 +21,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       '• <strong>Mirror Formula:</strong> $1/v + 1/u = 1/f = 2/R$. Concave mirror has $f < 0$; Convex mirror has $f > 0$ (always forms diminished, virtual, erect image between P and F).'
     ],
     extraPoints: [
-      '• <strong>Paraxial Approximation:</strong> Mirror formula is strictly valid when aperture is small compared to radius of curvature ($\theta$ is small so $\tan\theta \approx \theta$).'
+      '• <strong>Paraxial Approximation:</strong> Mirror formula is strictly valid when aperture is small compared to radius of curvature ($\\theta$ is small so $\\tan\\theta \\approx \\theta$).'
     ],
     reactions: [],
     oswaalMnemonic: {
@@ -58,7 +58,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       },
       {
         term: 'Critical Angle (i_c)',
-        definition: 'The angle of incidence in the denser medium for which the angle of refraction in the rarer medium is exactly $90^\circ$: $\sin i_c = n_{\\text{rarer}} / n_{\\text{denser}} = 1 / n$.'
+        definition: 'The angle of incidence in the denser medium for which the angle of refraction in the rarer medium is exactly $90^\\circ$: $\\sin i_c = n_{\\text{rarer}} / n_{\\text{denser}} = 1 / n$.'
       }
     ],
     keyPoints: [
@@ -66,7 +66,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       '• <strong>Optical Fibres:</strong> Consist of a high-index core ($n_1$) surrounded by a lower-index cladding ($n_2 < n_1$). Light undergoes repeated TIR with negligible attenuation.'
     ],
     extraPoints: [
-      '• <strong>Diamond Brilliance:</strong> Diamond has $n = 2.42$ and a very small critical angle $i_c = 24.4^\circ$, trapping entered light via multiple internal reflections.'
+      '• <strong>Diamond Brilliance:</strong> Diamond has $n = 2.42$ and a very small critical angle $i_c = 24.4^\\circ$, trapping entered light via multiple internal reflections.'
     ],
     reactions: [],
     oswaalMnemonic: {
@@ -91,7 +91,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       pastYears: 'CBSE 2024, 2023, 2022, 2019',
       frequency: '99% Guaranteed',
       typicalMarks: '3 Marks',
-      questionTypes: 'Ray tracing through right-angled isosceles prism ($45^\circ-90^\circ-45^\circ$) given critical angle',
+      questionTypes: 'Ray tracing through right-angled isosceles prism ($45^\\circ-90^\\circ-45^\\circ$) given critical angle',
       hotTopic: 'Red, Green, Blue ray incidence at 45° on prism face'
     }
   },
@@ -103,12 +103,12 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       },
       {
         term: 'Power of a Lens (P)',
-        definition: 'The tangent of the angle by which a lens converges or diverges a beam of light parallel to the principal axis falling at unit distance from the optical centre: $P = 1 / f(\\text{in m})$. SI unit: Dioptre ($\text{D} = \text{m}^{-1}$).'
+        definition: 'The tangent of the angle by which a lens converges or diverges a beam of light parallel to the principal axis falling at unit distance from the optical centre: $P = 1 / f(\\text{in m})$. SI unit: Dioptre ($\\text{D} = \\text{m}^{-1}$).'
       }
     ],
     keyPoints: [
       '• <strong>Spherical Refracting Surface Formula:</strong> $\\frac{n_2}{v} - \\frac{n_1}{u} = \\frac{n_2 - n_1}{R}$ (valid for both convex and concave surfaces with proper signs).',
-      '• <strong>Effect of Immersing Lens in Liquid ($n_L$):</strong> $\\frac{f_L}{f_a} = \\frac{(n_g - 1)}{(n_g/n_L - 1)}$. If $n_L < n_g$, focal length increases; if $n_L = n_g$, lens becomes invisible ($f = \infty, P = 0$); if $n_L > n_g$, nature reverses (convex acts as diverging!).',
+      '• <strong>Effect of Immersing Lens in Liquid ($n_L$):</strong> $\\frac{f_L}{f_a} = \\frac{(n_g - 1)}{(n_g/n_L - 1)}$. If $n_L < n_g$, focal length increases; if $n_L = n_g$, lens becomes invisible ($f = \\infty, P = 0$); if $n_L > n_g$, nature reverses (convex acts as diverging!).',
       '• <strong>Thin Lenses in Contact:</strong> $1/f = 1/f_1 + 1/f_2$ and $P = P_1 + P_2$.'
     ],
     extraPoints: [
@@ -153,7 +153,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       }
     ],
     keyPoints: [
-      '• <strong>Prism Formula:</strong> $n = \\frac{\\sin[(A + \\delta_m)/2]}{\\sin(A/2)}$. For a thin prism ($A \\le 10^\circ$), $\\delta_m = (n - 1)A$.',
+      '• <strong>Prism Formula:</strong> $n = \\frac{\\sin[(A + \\delta_m)/2]}{\\sin(A/2)}$. For a thin prism ($A \\le 10^\\circ$), $\\delta_m = (n - 1)A$.',
       '• <strong>Symmetry at Minimum Deviation:</strong> At $\\delta = \\delta_m$, the refracted ray inside the prism travels strictly parallel to the base of an equilateral/isosceles prism.'
     ],
     extraPoints: [
@@ -190,11 +190,11 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
     definitions: [
       {
         term: 'Magnifying Power (Angular Magnification) of Microscope',
-        definition: 'The ratio of the angle subtended at the eye by the final image ($\beta$) to the angle subtended by the object placed at the least distance of distinct vision $D = 25\\text{ cm}$ ($\alpha$): $m = \\beta / \\alpha$.'
+        definition: 'The ratio of the angle subtended at the eye by the final image ($\\beta$) to the angle subtended by the object placed at the least distance of distinct vision $D = 25\\text{ cm}$ ($\\alpha$): $m = \\beta / \\alpha$.'
       },
       {
         term: 'Astronomical Telescope Magnifying Power',
-        definition: 'The ratio of angle subtended at the eye by the final image ($\beta$) to the angle subtended by the distant object at the objective ($\alpha$): $m = f_o / f_e$ (in normal adjustment).'
+        definition: 'The ratio of angle subtended at the eye by the final image ($\\beta$) to the angle subtended by the distant object at the objective ($\\alpha$): $m = f_o / f_e$ (in normal adjustment).'
       }
     ],
     keyPoints: [
@@ -284,6 +284,93 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
   'phy-sub-10-2': {
     definitions: [
       {
+        term: 'Huygens Wavefront Proof of Reflection & Refraction (Denser & Rarer)',
+        definition: 'Geometric construction tracing incident plane wavefront $AB$ over time $\\tau$ into reflected wavefront ($AE = BC = v\\tau \\implies i = r$) or refracted wavefront ($AE = v_2\\tau$, $BC = v_1\\tau \\implies \\sin i / \\sin r = v_1 / v_2 = n_2 / n_1$).'
+      },
+      {
+        term: 'Refraction at a Rarer Medium on Wave Theory',
+        definition: 'When a plane wavefront passes from an optically denser medium ($v_1, n_1$) into a rarer medium ($v_2 > v_1, n_2 < n_1$), the secondary wavelet radius $AE = v_2\\tau$ exceeds $BC = v_1\\tau$, so $r > i$ (wave bends away from normal). At critical angle $i = i_c$, $AE = AC$ so $r = 90^\\circ$ and $\\sin i_c = v_1/v_2 = n_2/n_1$.'
+      }
+    ],
+    keyPoints: [
+      '• <strong>Denser Interface Result:</strong> Light slows down inside a denser medium ($v_2 < v_1$ since $n_2 > n_1$), directly contradicting Newton’s corpuscular model.',
+      '• <strong>Rarer Interface & Critical Angle:</strong> Entering a rarer medium increases speed ($v_2 > v_1$) and wavelength ($\\lambda_2 = \\frac{v_2}{v_1}\\lambda_1 > \\lambda_1$), bending rays away from the normal ($r > i$) with TIR when $\\sin i > v_1/v_2$.',
+      '• <strong>Invariant Quantity:</strong> Frequency $\\nu$ remains unchanged during both reflection and denser/rarer refraction.'
+    ],
+    extraPoints: [
+      '• Draw normal rays perpendicular to both incident wavefront $AB$ and refracted wavefront $CE$ for full CBSE 3M derivation credit.'
+    ],
+    reactions: [],
+    oswaalMnemonic: {
+      title: 'Huygens Transit Triangles',
+      phrase: 'sin i = (v₁τ)/AC, sin r = (v₂τ)/AC ⟹ sin i / sin r = v₁/v₂ = n₂/n₁',
+      explanation: 'Sharing common hypotenuse AC makes Snell’s Law proof effortless!'
+    },
+    commonlyMadeErrors: [
+      {
+        error: 'Writing that speed of light increases in optically denser glass/water.',
+        tip: 'By wave theory, v = c/n is strictly LESS in denser media ($v_2 < v_1$).',
+        penalty: '1 mark deduction.'
+      }
+    ],
+    assertionReason: {
+      assertion: 'During refraction of a plane wavefront from air into glass, the wavefront bends toward the normal.',
+      reason: 'The speed of light decreases in glass compared to air, so the secondary wavelet travels a shorter distance v₂τ in glass in the same time.',
+      correctOption: 'Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
+      explanation: 'Huygens geometry directly links smaller v₂ to smaller angle r.'
+    },
+    examTrend: {
+      pastYears: 'CBSE 2024, 2023, 2020',
+      frequency: '99% Guaranteed 3M Proof',
+      typicalMarks: '3 Marks',
+      questionTypes: 'Prove Snell’s law or reflection law via Huygens wavefronts',
+      hotTopic: 'Huygens refraction wavefront derivation'
+    }
+  },
+  'phy-sub-10-3': {
+    definitions: [
+      {
+        term: 'Coherent Sources & Resultant Interference Intensity',
+        definition: 'Two sources emitting waves of identical frequency and constant/zero phase difference. Resultant intensity is $I = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\phi$; when $I_1 = I_2 = I_0$, $I = 4I_0\\cos^2(\\phi/2)$.'
+      }
+    ],
+    keyPoints: [
+      '• <strong>Constructive vs Destructive:</strong> Maxima when $\\phi = 2n\\pi$ ($\\Delta x = n\\lambda$), $I_{\\max} = (\\sqrt{I_1}+\\sqrt{I_2})^2$; Minima when $\\phi = (2n-1)\\pi$ ($\\Delta x = (2n-1)\\lambda/2$), $I_{\\min} = (\\sqrt{I_1}-\\sqrt{I_2})^2$.',
+      '• <strong>Energy Conservation:</strong> Average intensity $I_{\\text{avg}} = (I_{\\max}+I_{\\min})/2 = I_1+I_2$; energy is merely redistributed from dark to bright fringes.'
+    ],
+    extraPoints: [
+      '• Intensity ratio $\\frac{I_1}{I_2} = \\frac{w_1}{w_2} = \\frac{a_1^2}{a_2^2}$.'
+    ],
+    reactions: [],
+    oswaalMnemonic: {
+      title: 'Coherence Condition',
+      phrase: 'Same Frequency + Constant Phase Difference = Sustained Interference',
+      explanation: 'Two independent lamps fail because atomic emission phase jumps randomly every 10⁻⁸ s.'
+    },
+    commonlyMadeErrors: [
+      {
+        error: 'Adding intensities linearly I = I₁ + I₂ even for coherent superposition.',
+        tip: 'Linear sum I₁ + I₂ applies ONLY to incoherent sources; coherent waves include interference term 2√(I₁I₂) cos φ.',
+        penalty: '2 marks lost in intensity numericals.'
+      }
+    ],
+    assertionReason: {
+      assertion: 'Two independent sodium lamps of identical wavelength cannot produce sustained interference fringes.',
+      reason: 'Two independent sources undergo random phase fluctuations every ~10⁻⁸ s, averaging cos φ to zero.',
+      correctOption: 'Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
+      explanation: 'Coherent slits must divide wavefronts from a single primary source.'
+    },
+    examTrend: {
+      pastYears: 'CBSE 2024, 2022, 2019',
+      frequency: 'High Frequency',
+      typicalMarks: '2 Marks / 3 Marks',
+      questionTypes: 'Derive I = 4I₀ cos²(φ/2); find I_max/I_min from slit width or amplitude ratios',
+      hotTopic: 'Coherence conditions & intensity ratio numericals'
+    }
+  },
+  'phy-sub-10-4': {
+    definitions: [
+      {
         term: 'Coherent Sources',
         definition: 'Two sources of light that emit waves of identical frequency/wavelength with a zero or strictly constant phase difference with time.'
       },
@@ -299,7 +386,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       '• <strong>Effect of Immersing YDSE in Water ($n$):</strong> Wavelength becomes $\\lambda\' = \\lambda/n$, so fringe width shrinks to $\\beta\' = \\beta / n$.'
     ],
     extraPoints: [
-      '• Two independent light bulbs (even monochromatic sodium lamps) can NEVER be coherent because atomic emissions occur randomly every $10^{-8}\\text{ s}$, causing phase difference $\\phi(t)$ to fluctuate rapidly and producing uniform illumination $I = 2I_0$.'
+      '• Path difference in YDSE is $\\Delta x = \\frac{yd}{D}$; angular fringe width $\\theta = \\frac{\\beta}{D} = \\frac{\\lambda}{d}$.'
     ],
     reactions: [],
     oswaalMnemonic: {
@@ -315,20 +402,20 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       }
     ],
     assertionReason: {
-      assertion: 'Two independent monochromatic sources of light cannot produce a sustained interference pattern.',
-      reason: 'The phase difference between light waves emitted by two independent sources changes randomly and rapidly in about 10⁻⁸ s.',
+      assertion: 'When Young’s double-slit apparatus is immersed completely in water, the fringe width decreases.',
+      reason: 'Wavelength of light in water drops to λ/n (where n = 1.33), and fringe width β = λD/d is directly proportional to λ.',
       correctOption: 'Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
-      explanation: 'Coherence requires wave division from a single parent wavefront.'
+      explanation: 'Shorter wavelength in water compresses angular and linear fringe spacing.'
     },
     examTrend: {
       pastYears: 'CBSE 2024, 2023, 2022, 2020, 2018',
       frequency: '99% Guaranteed',
       typicalMarks: '3 Marks / 5 Marks',
-      questionTypes: 'Conditions for sustained interference, I = 4I₀ cos²(φ/2), YDSE numericals',
-      hotTopic: 'YDSE fringe shift when immersed in liquid or two-wavelength coincidence'
+      questionTypes: 'YDSE fringe width β = λD/d derivation, liquid immersion, two-wavelength coincidence',
+      hotTopic: 'YDSE fringe shift & two-wavelength coincidence'
     }
   },
-  'phy-sub-10-3': {
+  'phy-sub-10-5': {
     definitions: [
       {
         term: 'Diffraction of Light',
@@ -426,8 +513,52 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
   'phy-sub-11-2': {
     definitions: [
       {
+        term: 'Saturation Photocurrent & Stopping Potential (V₀)',
+        definition: 'Saturation current is the maximum collector current reached when all emitted photoelectrons reach the collector plate ($I_{\\text{sat}} \\propto \\text{Intensity}$). Stopping potential $V_0$ is the minimum negative anode voltage at which photocurrent just drops to zero ($K_{\\max} = eV_0$).'
+      }
+    ],
+    keyPoints: [
+      '• <strong>Experimental Laws of Photoemission:</strong> (1) Photocurrent $\\propto$ Intensity (at $\\nu > \\nu_0$); (2) $K_{\\max}$ and $V_0$ depend linearly on frequency $\\nu$ and are independent of intensity; (3) Below threshold frequency $\\nu_0$, zero emission occurs regardless of intensity; (4) Emission is instantaneous ($\\sim 10^{-9}\\text{ s}$).'
+    ],
+    extraPoints: [
+      '• Plotting Photocurrent vs Collector Potential at three intensities $I_3 > I_2 > I_1$ (fixed $\\nu$) gives three curves starting from the SAME stopping potential $-V_0$ and flattening at higher plateaus.'
+    ],
+    reactions: [],
+    oswaalMnemonic: {
+      title: 'Experimental Curve Signature',
+      phrase: 'Same Frequency ⟹ Converge at Same −V₀ | Different Frequencies ⟹ Parallel V₀ Lines of Slope h/e',
+      explanation: 'Sketch both Hallwachs/Lenard curve families accurately!'
+    },
+    commonlyMadeErrors: [
+      {
+        error: 'Showing different stopping potentials −V₀ for different light intensities of the same frequency.',
+        tip: 'Curves for intensities I₁, I₂, I₃ MUST all meet at a SINGLE common −V₀ intercept on the negative voltage axis!',
+        penalty: '1 mark deducted on graph.'
+      }
+    ],
+    assertionReason: {
+      assertion: 'Increasing the intensity of incident light of fixed frequency (> ν₀) increases the saturation photocurrent without changing stopping potential.',
+      reason: 'Higher intensity means more incident photons per second, whereas energy per photon hν remains fixed.',
+      correctOption: 'Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
+      explanation: 'More photons eject more electrons per second with unchanged K_max.'
+    },
+    examTrend: {
+      pastYears: 'CBSE 2024, 2023, 2021',
+      frequency: '99% Guaranteed Graph',
+      typicalMarks: '3 Marks',
+      questionTypes: 'Draw photocurrent vs V and V₀ vs ν graphs and interpret',
+      hotTopic: 'Hallwachs & Lenard experimental laws'
+    }
+  },
+  'phy-sub-11-3': {
+    definitions: [
+      {
         term: "Einstein's Photoelectric Equation",
         definition: 'Conservation of energy for absorption of a single photon of energy $h\\nu$: $K_{\\max} = eV_0 = h\\nu - \\phi_0 = h(\\nu - \\nu_0) = hc\\left(\\frac{1}{\\lambda} - \\frac{1}{\\lambda_0}\\right)$.'
+      },
+      {
+        term: 'Properties of Photon (Quantum Picture of Radiation)',
+        definition: 'Each photon travels in vacuum at speed $c$, carries energy $E = h\\nu = hc/\\lambda$ and momentum $p = E/c = h/\\lambda$, has zero rest mass ($m_0 = 0$), is electrically neutral (undeflected by $E$ or $B$ fields), and interacts with matter in one-to-one collisions.'
       }
     ],
     keyPoints: [
@@ -464,7 +595,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       hotTopic: 'Finding Planck constant h and work function from V₀ vs ν graph'
     }
   },
-  'phy-sub-11-3': {
+  'phy-sub-11-4': {
     definitions: [
       {
         term: 'de Broglie Matter-Wave Hypothesis',
@@ -513,15 +644,15 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
     definitions: [
       {
         term: 'Distance of Closest Approach (r₀)',
-        definition: 'The minimum distance from the target nucleus at which a head-on incident $\\alpha$-particle ($b = 0$) momentarily comes to rest before retracing its path ($180^\circ$), where all its kinetic energy converts to electrostatic potential energy: $r_0 = \\frac{1}{4\\pi\\varepsilon_0}\\frac{2Ze^2}{K}$.'
+        definition: 'The minimum distance from the target nucleus at which a head-on incident $\\alpha$-particle ($b = 0$) momentarily comes to rest before retracing its path ($180^\\circ$), where all its kinetic energy converts to electrostatic potential energy: $r_0 = \\frac{1}{4\\pi\\varepsilon_0}\\frac{2Ze^2}{K}$.'
       },
       {
         term: 'Impact Parameter (b)',
-        definition: 'The perpendicular distance of the initial velocity vector of the $\\alpha$-particle from the centre of the target nucleus: $b = \\frac{Ze^2 \\cot(\\theta/2)}{4\\pi\\varepsilon_0 K}$. For head-on collision, $b = 0 \\implies \\theta = 180^\circ$.'
+        definition: 'The perpendicular distance of the initial velocity vector of the $\\alpha$-particle from the centre of the target nucleus: $b = \\frac{Ze^2 \\cot(\\theta/2)}{4\\pi\\varepsilon_0 K}$. For head-on collision, $b = 0 \\implies \\theta = 180^\\circ$.'
       }
     ],
     keyPoints: [
-      '• <strong>Geiger-Marsden Alpha Scattering Observations:</strong> (1) Most $\\alpha$-particles pass straight through undeflected (atom is mostly empty space); (2) Only $\\sim 0.14\\%$ scatter by $> 1^\circ$; (3) About $1\\text{ in }8000$ deflect by $> 90^\circ$ (entire positive charge and mass concentrated in tiny nucleus of radius $\\sim 10^{-15}\\text{ m}$).',
+      '• <strong>Geiger-Marsden Alpha Scattering Observations:</strong> (1) Most $\\alpha$-particles pass straight through undeflected (atom is mostly empty space); (2) Only $\\sim 0.14\\%$ scatter by $> 1^\\circ$; (3) About $1\\text{ in }8000$ deflect by $> 90^\\circ$ (entire positive charge and mass concentrated in tiny nucleus of radius $\\sim 10^{-15}\\text{ m}$).',
       '• <strong>Drawbacks of Rutherford Model:</strong> Fails to explain (1) Stability of the atom (revolving accelerating electron should continuously radiate EM energy and spiral into the nucleus in $10^{-8}\\text{ s}$), and (2) Discrete line spectra of atoms.'
     ],
     extraPoints: [
@@ -706,7 +837,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       '• <strong>Features of B.E./Nucleon ($E_{bn}$) vs Mass Number ($A$) Curve:</strong>\n  1. $E_{bn}$ is practically constant ($\\approx 8.0\\text{ MeV}$) for middle-mass nuclei ($30 < A < 170$), proving saturation of nuclear force.\n  2. Maximum stability peak is at $^{56}_{26}\\text{Fe}$ ($E_{bn} = 8.75\\text{ MeV}$).\n  3. $E_{bn}$ is lower for both very light nuclei ($A < 30$) and heavy nuclei ($A > 170$).\n• <strong>Why Fission & Fusion Release Energy:</strong> When a heavy nucleus ($A \\approx 235$, lower $E_{bn} \\approx 7.6\\text{ MeV}$) splits into two middle-mass nuclei ($E_{bn} \\approx 8.5\\text{ MeV}$), or when very light nuclei ($A < 10$) fuse into a heavier nucleus with higher $E_{bn}$, the final system is more tightly bound and the difference in binding energy is released as exothermic energy!'
     ],
     extraPoints: [
-      '• <strong>Properties of Strong Nuclear Force:</strong> (1) Strongest force in nature ($100\\times$ Coulomb force), (2) Short-range ($\sim 1-3\\text{ fm}$) showing saturation, (3) Charge-independent ($F_{pp} \\approx F_{nn} \\approx F_{pn}$), (4) Spin-dependent, (5) Becomes strongly REPULSIVE at inter-nucleon distances $< 0.8\\text{ fm}$ (preventing nuclear collapse).'
+      '• <strong>Properties of Strong Nuclear Force:</strong> (1) Strongest force in nature ($100\\times$ Coulomb force), (2) Short-range ($\\sim 1-3\\text{ fm}$) showing saturation, (3) Charge-independent ($F_{pp} \\approx F_{nn} \\approx F_{pn}$), (4) Spin-dependent, (5) Becomes strongly REPULSIVE at inter-nucleon distances $< 0.8\\text{ fm}$ (preventing nuclear collapse).'
     ],
     reactions: [],
     oswaalMnemonic: {
@@ -733,6 +864,70 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       typicalMarks: '3 Marks',
       questionTypes: 'Draw B.E./nucleon vs A curve and explain fission/fusion; plot nuclear P.E. vs r curve',
       hotTopic: 'Binding energy curve + nuclear force properties'
+    }
+  },
+  'phy-sub-13-3': {
+    definitions: [
+      {
+        term: 'Strong Nuclear Force',
+        definition: 'The extremely short-ranged, strongly attractive, charge-independent interaction that binds protons and neutrons together inside a nucleus, overcoming electrostatic proton-proton repulsion.'
+      },
+      {
+        term: 'Nuclear Fission vs Nuclear Fusion',
+        definition: 'Fission is the splitting of a heavy unstable nucleus (like $^{235}\\text{U}$ bombarded by a slow thermal neutron) into two intermediate-mass daughter nuclei with $\\sim 200\\text{ MeV}$ energy release. Fusion is the combining of light nuclei (like $4\\,^1_1\\text{H} \\rightarrow ^4_2\\text{He}$) at ultra-high temperature ($T \\sim 10^7\\text{ K}$) releasing $26.7\\text{ MeV}$ per $\\text{He}$ nucleus.'
+      }
+    ],
+    keyPoints: [
+      '• <strong>Five Board-Tested Properties of Strong Nuclear Force:</strong>\n  1. <em>Strongest fundamental force in nature</em> ($\\sim 100\\times$ electrostatic force, $\\sim 10^{38}\\times$ gravitational force).\n  2. <em>Short-ranged & shows saturation:</em> Acts only over $\\sim 1\\text{–}3\\text{ fm}$, so each nucleon interacts only with its immediate neighbours (explaining constant $E_{bn}$ for $30 < A < 170$).\n  3. <em>Charge-independent:</em> Force between $n\\text{–}n$, $p\\text{–}p$ (nuclear part), and $n\\text{–}p$ is identically attractive ($F_{nn} \\approx F_{pp} \\approx F_{pn}$).\n  4. <em>Becomes strongly REPULSIVE for $r < 0.8\\text{ fm}$:</em> Prevents the nucleus from collapsing to a point.\n  5. <em>Spin-dependent and non-central</em> (depends on whether nucleon spins are parallel or antiparallel).',
+      '• <strong>Nucleon Potential Energy $U(r)$ Curve:</strong> Potential energy reaches a sharp minimum ($U_{\\min} \\approx -100\\text{ MeV}$) at equilibrium separation $r_0 \\approx 0.8\\text{ fm}$. For $r > 0.8\\text{ fm}$, $\\frac{dU}{dr} > 0$ so force $F = -\\frac{dU}{dr} < 0$ (attractive); for $r < 0.8\\text{ fm}$, slope is strongly negative so force is steeply REPULSIVE!',
+      '• <strong>Why Slow (Thermal) Neutrons Cause $^{235}\\text{U}$ Fission:</strong> Fast neutrons pass too quickly; a slow/thermal neutron ($E \\approx 0.025\\text{ eV}$) has a large capture cross-section and faces zero Coulomb barrier.'
+    ],
+    extraPoints: [
+      '• <strong>Comparison — Energy per Nucleon Released:</strong> In $^{235}\\text{U}$ fission, total energy $\\approx 200\\text{ MeV}$ for $235$ nucleons gives $\\approx 0.85\\text{ MeV/nucleon}$; in $p\\text{–}p$ fusion ($4\\text{ nucleons} \\rightarrow 26.7\\text{ MeV}$), yield is $\\approx 6.7\\text{ MeV/nucleon}$ — nearly $8\\times$ more energy per unit fuel mass!'
+    ],
+    reactions: [
+      {
+        name: 'Thermal Fission of U-235',
+        equation: '²³⁵₉₂U + ¹₀n (slow) → ²³⁶₉₂U* → ¹⁴¹₅₆Ba + ⁹²₃₆Kr + 3 ¹₀n + Q (≈ 200 MeV)'
+      },
+      {
+        name: 'Stellar Proton-Proton Fusion Cycle',
+        equation: '4 ¹₁H + 2 e⁻ → ⁴₂He + 2 νₑ + 6 γ + 26.7 MeV'
+      },
+      {
+        name: 'Deuterium-Tritium (D-T) Fusion',
+        equation: '²₁H + ³₁H → ⁴₂He + ¹₀n + 17.6 MeV'
+      }
+    ],
+    oswaalMnemonic: {
+      title: 'Nuclear Force 0.8 fm & Slow Neutron Rule',
+      phrase: 'r₀ = 0.8 fm Minimum (U min) | Charge Independent (F_nn = F_pp = F_np) | Slow n⁰ splits U-235 (+200 MeV) | Hot T = 10⁷ K fuses H (+26.7 MeV)',
+      explanation: 'Directly covers 3-mark Nuclear Force property + Fission/Fusion comparison board questions.'
+    },
+    commonlyMadeErrors: [
+      {
+        error: 'Writing r₀ = 0.8 Å or 0.8 nm on the nucleon potential energy curve axis.',
+        tip: 'Nuclear distances are always in FEMTOMETRES (1 fm = 10⁻¹⁵ m). Mark r₀ = 0.8 fm cleanly on the horizontal axis!',
+        penalty: 'Loss of 0.5–1 mark on graph labelling.'
+      },
+      {
+        error: 'Confusing why extreme temperature (10⁷ K) is required for nuclear fusion.',
+        tip: 'Positive nuclei (like two protons or ²H nuclei) experience huge electrostatic Coulomb repulsion at short distances; thermal kinetic energy (k_B T) at ~10⁷ K is needed to overcome the Coulomb barrier (~400 keV).',
+        penalty: 'Loss of 1 mark.'
+      }
+    ],
+    assertionReason: {
+      assertion: 'Thermonuclear fusion reactions require an extremely high temperature of the order of 10⁷ K.',
+      reason: 'High thermal kinetic energy is required by positively charged nuclei to overcome their mutual electrostatic Coulomb repulsion and come within the short range (~1–2 fm) of the strong nuclear force.',
+      correctOption: 'Option (a): Both Assertion and Reason are true, and Reason is the correct explanation of Assertion.',
+      explanation: 'Neutrons have no Coulomb barrier (used for fission), whereas fusing light nuclei are all positively charged.'
+    },
+    examTrend: {
+      pastYears: 'CBSE 2025, 2024, 2023, 2021',
+      frequency: '98% Guaranteed Graph + 2M Concept',
+      typicalMarks: '3 Marks',
+      questionTypes: 'Draw U(r) vs r graph for pair of nucleons; state 3–4 properties of nuclear force; explain why fusion needs high T and why neutrons initiate fission easily',
+      hotTopic: 'Potential energy curve at 0.8 fm & Fission vs Fusion'
     }
   },
 
@@ -787,7 +982,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
       }
     ],
     keyPoints: [
-      '• <strong>n-Type Semiconductor (Pentavalent Group 15 Doping: P, As, Sb):</strong> Impurity donates a 5th electron ($\sim 0.01\\text{ eV}$ for Ge, $0.05\\text{ eV}$ for Si). Donor energy level $E_D$ lies just below conduction band $E_C$. Majority carriers: Electrons ($n_e \\gg n_h$).',
+      '• <strong>n-Type Semiconductor (Pentavalent Group 15 Doping: P, As, Sb):</strong> Impurity donates a 5th electron ($\\sim 0.01\\text{ eV}$ for Ge, $0.05\\text{ eV}$ for Si). Donor energy level $E_D$ lies just below conduction band $E_C$. Majority carriers: Electrons ($n_e \\gg n_h$).',
       '• <strong>p-Type Semiconductor (Trivalent Group 13 Doping: B, Al, In, Ga):</strong> Impurity creates a vacancy/hole. Acceptor energy level $E_A$ lies just above valence band $E_V$. Majority carriers: Holes ($n_h \\gg n_e$).',
       '• <strong>Electrical Neutrality:</strong> Both n-type and p-type semiconductors are strictly ELECTRICALLY NEUTRAL as a whole because each dopant atom planted into the crystal is itself electrically neutral!'
     ],
@@ -825,7 +1020,7 @@ export const PHYSICS_VOL2_STRUCTURED_NOTES = {
     definitions: [
       {
         term: 'Depletion Region & Barrier Potential (V_B)',
-        definition: 'Depletion region is the space-charge zone ($\sim 10^{-6}\\text{ m}$) on either side of a p-n junction devoid of mobile charge carriers and containing only immobile acceptor ($-$) and donor ($+$) ions. Barrier potential $V_B$ ($\sim 0.7\\text{ V}$ for Si, $0.3\\text{ V}$ for Ge) opposes further diffusion of majority carriers.'
+        definition: 'Depletion region is the space-charge zone ($\\sim 10^{-6}\\text{ m}$) on either side of a p-n junction devoid of mobile charge carriers and containing only immobile acceptor ($-$) and donor ($+$) ions. Barrier potential $V_B$ ($\\sim 0.7\\text{ V}$ for Si, $0.3\\text{ V}$ for Ge) opposes further diffusion of majority carriers.'
       }
     ],
     keyPoints: [

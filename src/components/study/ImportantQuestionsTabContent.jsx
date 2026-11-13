@@ -6,6 +6,7 @@ import {
   HelpCircle, AlignLeft, Dna, Eye, FlaskConical, Brain
 } from 'lucide-react';
 import { IMPORTANT_PHYSICS_QUESTIONS } from '../../data/importantQuestionsData';
+import { PHYSICS_DERIVATIONS_REFERENCE } from '../../data/physicsDerivationsReference';
 import { IMPORTANT_CHEMISTRY_QUESTIONS } from '../../data/chemistryImportantQuestionsData';
 import { 
   ALL_BIG_ORANGE_QUESTIONS, 
@@ -15,6 +16,7 @@ import {
 import { IMPORTANT_PSYCHOLOGY_QUESTIONS } from '../../data/psychologyImportantQuestionsData';
 import { IMPORTANT_ENGLISH_QUESTIONS } from '../../data/englishImportantQuestionsData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
+import PhysicsDerivationsReferencePanel from './PhysicsDerivationsReferencePanel';
 import BiologyDiagramCard from './BiologyDiagramCard';
 import BiologyPdfGuideViewer from './BiologyPdfGuideViewer';
 import { FormattedLatex, MathBlock } from './LatexView';
@@ -26,72 +28,100 @@ const STORAGE_KEY_MASTERED_PSYCHOLOGY = 'one_mastered_imp_psy_q';
 const STORAGE_KEY_MASTERED_ENGLISH = 'one_mastered_imp_eng_q';
 
 const DIAGRAM_MAPPING = {
-  'imp-phy-1': 'gauss-applications',
-  'imp-phy-4': 'transformer',
-  'imp-phy-5': 'galvanometer-torque',
-  'imp-phy-15': 'wheatstone-bridge',
-  'imp-phy-17': 'lcr-circuit',
-  'imp-phy-18': 'dipole-fields',
-  'imp-phy-20': 'parallel-wires',
-  'imp-phy-22': 'galvanometer-conversion'
+  'imp-phy-9-ex2': 'ray-optics-instruments',
+  'imp-phy-9-ex4': 'ray-optics-instruments',
+  'imp-phy-9-ex5': 'ray-optics-instruments',
+  'imp-phy-9-ex7': 'ray-optics-instruments',
+  'imp-phy-9-ex8': 'ray-optics-instruments',
+  'imp-phy-9-q1': 'ray-optics-instruments',
+  'imp-phy-9-q5': 'ray-optics-instruments',
+  'imp-phy-9-q11': 'ray-optics-instruments',
+  'imp-phy-9-q13': 'ray-optics-instruments',
+  'imp-phy-9-q21': 'prism-dispersion',
+  'imp-phy-9-q26': 'ray-optics-instruments',
+  'imp-phy-9-q29': 'ray-optics-instruments',
+  'imp-phy-9-th1': 'ray-optics-instruments',
+  'imp-phy-9-th2': 'ray-optics-instruments',
+  'imp-phy-9-th3': 'ray-optics-instruments',
+  'imp-phy-9-th4': 'ray-optics-instruments',
+  'imp-phy-9-th5': 'prism-dispersion',
+  'imp-phy-9-th6': 'prism-dispersion',
+  'imp-phy-9-th7': 'ray-optics-instruments',
+  'imp-phy-9-th8': 'ray-optics-instruments',
+  'imp-phy-9-th9': 'ray-optics-instruments',
+  'imp-phy-10-q1': 'ydse-wave-optics',
+  'imp-phy-10-q4': 'ydse-wave-optics',
+  'imp-phy-10-q5': 'ydse-wave-optics',
+  'imp-phy-10-th1': 'huygens-wavefronts',
+  'imp-phy-10-th2': 'huygens-wavefronts',
+  'imp-phy-10-th3': 'huygens-wavefronts',
+  'imp-phy-10-th4': 'huygens-wavefronts',
+  'imp-phy-10-th5': 'huygens-wavefronts',
+  'imp-phy-10-th6': 'ydse-wave-optics',
+  'imp-phy-10-th7': 'ydse-wave-optics',
+  'imp-phy-10-th8': 'single-slit-diffraction',
+  'imp-phy-11-ex2': 'photoelectric-graphs',
+  'imp-phy-11-q2': 'photoelectric-graphs',
+  'imp-phy-11-q6': 'photoelectric-graphs',
+  'imp-phy-11-th1': 'photoelectric-graphs',
+  'imp-phy-11-th2': 'photoelectric-graphs',
+  'imp-phy-11-th3': 'photoelectric-graphs',
+  'imp-phy-11-th4': 'photoelectric-graphs',
+  'imp-phy-11-th5': 'photoelectric-graphs',
+  'imp-phy-11-th6': 'photoelectric-graphs',
+  'imp-phy-12-ex3': 'bohr-atom-spectra',
+  'imp-phy-12-q5': 'bohr-atom-spectra',
+  'imp-phy-12-th1': 'bohr-atom-spectra',
+  'imp-phy-12-th2': 'bohr-atom-spectra',
+  'imp-phy-12-th3': 'bohr-atom-spectra',
+  'imp-phy-12-th4': 'bohr-atom-spectra',
+  'imp-phy-13-ex1': 'nuclei-binding-force',
+  'imp-phy-13-q2': 'nuclei-binding-force',
+  'imp-phy-13-q5': 'nuclei-binding-force',
+  'imp-phy-13-th1': 'nuclei-binding-force',
+  'imp-phy-13-th2': 'nuclei-binding-force',
+  'imp-phy-13-th3': 'nuclei-binding-force',
+  'imp-phy-14-ex1': 'pn-junction-rectifier',
+  'imp-phy-14-ex2': 'pn-junction-rectifier',
+  'imp-phy-14-ex4': 'pn-junction-rectifier',
+  'imp-phy-14-th1': 'pn-junction-rectifier',
+  'imp-phy-14-th2': 'pn-junction-rectifier',
+  'imp-phy-14-th3': 'pn-junction-rectifier'
 };
 
 const SQP_CORRELATIONS = {
-  'imp-phy-1': { sqpId: 'sqp-2027-q1', label: '2026-27 SQP: Q1 & Q20' },
-  'imp-phy-4': { sqpId: 'sqp-2027-q33', label: '2026-27 SQP: Q33 (5M Transformer)' },
-  'imp-phy-5': { sqpId: 'sqp-2027-q27', label: '2026-27 SQP: Q27 (3M Galvanometer)' },
-  'imp-phy-6': { sqpId: 'sqp-2027-q1', label: '2026-27 SQP: Q1 (Electric Flux)' },
-  'imp-phy-7': { sqpId: 'sqp-2027-q31', label: '2026-27 SQP: Q31 (Potential Gradient)' },
-  'imp-phy-8': { sqpId: 'sqp-2027-q18', label: '2026-27 SQP: Q18 (Field due to Charge)' },
-  'imp-phy-10': { sqpId: 'sqp-2027-q31', label: '2026-27 SQP: Q31 (5M Capacitance)' },
-  'imp-phy-11': { sqpId: 'sqp-2027-q2', label: '2026-27 SQP: Q2 (Power & Potential)' },
-  'imp-phy-12': { sqpId: 'sqp-2027-q8', label: '2026-27 SQP: Q8 (EM Waves Properties)' },
-  'imp-phy-15': { sqpId: 'sqp-2027-q9', label: '2026-27 SQP: Q9 (Wheatstone Bridge)' },
-  'imp-phy-16': { sqpId: 'sqp-2027-q20', label: '2026-27 SQP: Q20 (Magnetic Materials)' },
-  'imp-phy-17': { sqpId: 'sqp-2027-q33', label: '2026-27 SQP: Q33 (5M Series LCR)' },
-  'imp-phy-18': { sqpId: 'sqp-2027-q1', label: '2026-27 SQP: Q1 (Dipole & Field)' },
-  'imp-phy-20': { sqpId: 'sqp-2027-q16', label: '2026-27 SQP: Q16 (Parallel Currents)' },
-  'imp-phy-21': { sqpId: 'sqp-2027-q8', label: '2026-27 SQP: Q8 (Displacement Current)' },
-  'imp-phy-22': { sqpId: 'sqp-2027-q27', label: '2026-27 SQP: Q27 (3M Ammeter Conversion)' }
+  'imp-phy-9-ex7': { sqpId: 'sqp-2027-q14', label: '2026-27 SQP: Q14 (Thin Lens)' },
+  'imp-phy-9-q5': { sqpId: 'sqp-2027-q25', label: '2026-27 SQP: Q25 (TIR & Critical Angle)' },
+  'imp-phy-9-q11': { sqpId: 'sqp-2027-q32', label: '2026-27 SQP: Q32 (5M Compound Microscope)' },
+  'imp-phy-9-q21': { sqpId: 'sqp-2027-q25', label: '2026-27 SQP: Q25 (Critical Angle & Prism)' },
+  'imp-phy-9-q26': { sqpId: 'sqp-2027-q32', label: '2026-27 SQP: Q32 (5M Microscope Design)' },
+  'imp-phy-10-q4': { sqpId: 'sqp-2027-q15', label: '2026-27 SQP: Q15 (YDSE Interference)' },
+  'imp-phy-10-q5': { sqpId: 'sqp-2027-q15', label: '2026-27 SQP: Q15 (YDSE Intensity)' },
+  'imp-phy-11-q2': { sqpId: 'sqp-2027-q30', label: '2026-27 SQP: Q30 (Case Study: Photoelectric)' },
+  'imp-phy-11-q6': { sqpId: 'sqp-2027-q30', label: '2026-27 SQP: Q30 (Threshold & Stopping V₀)' },
+  'imp-phy-12-ex4': { sqpId: 'sqp-2027-q21', label: '2026-27 SQP: Q21 (Hydrogen Spectral Lines)' },
+  'imp-phy-12-q7': { sqpId: 'sqp-2027-q21', label: '2026-27 SQP: Q21 (Bohr Series Transition)' },
+  'imp-phy-13-ex3': { sqpId: 'sqp-2027-q24', label: '2026-27 SQP: Q24 (Exact ¹⁶O Binding Energy)' },
+  'imp-phy-13-q2': { sqpId: 'sqp-2027-q24', label: '2026-27 SQP: Q24 (3M Binding Energy)' },
+  'imp-phy-14-ex1': { sqpId: 'sqp-2027-q22', label: '2026-27 SQP: Q22 (3M Energy Bands)' },
+  'imp-phy-14-ex4': { sqpId: 'sqp-2027-q29', label: '2026-27 SQP: Q29 (Case Study: p-n Diode)' }
 };
 
-const getDerivationDiagram = (qId, dIdx) => {
-  if (qId === 'imp-phy-1') {
-    if (dIdx === 0) return { diagramId: 'gauss-applications', subMode: 'wire', title: 'Gaussian Cylinder & Radial Field' };
-    if (dIdx === 1) return { diagramId: 'gauss-applications', subMode: 'sheet', title: 'Gaussian Pillbox Piercing Sheet' };
-    if (dIdx === 2) return { diagramId: 'gauss-applications', subMode: 'shell', title: 'Concentric Spherical Surfaces & Graph' };
-  }
-  if (qId === 'imp-phy-2') return { diagramId: 'force-conductor', title: 'Conductor in Uniform B-Field (F = ILB sinθ)' };
-  if (qId === 'imp-phy-3') return { diagramId: 'faraday-lenz', title: "Lenz's Law & Induced Current Direction" };
-  if (qId === 'imp-phy-4') return { diagramId: 'transformer', title: 'Transformer Core & Mutual Flux Linkage' };
-  if (qId === 'imp-phy-5') return { diagramId: 'galvanometer-torque', title: 'Radial Magnetic Field & Deflection Torque' };
-  if (qId === 'imp-phy-7') {
-    if (dIdx === 0) return { diagramId: 'equipotential-surfaces', subMode: 'normal-proof', title: 'Proof: Electric Field is Perpendicular to Equipotential Surface' };
-    return { diagramId: 'equipotential-surfaces', subMode: 'two-surfaces', title: 'Test Charge Travelling Between Two Equipotential Surfaces (E = -dV/dr)' };
-  }
-  if (qId === 'imp-phy-9') return { diagramId: 'field-lines-properties', title: 'Electric Field Lines Geometry & Properties' };
-  if (qId === 'imp-phy-10') return { diagramId: 'capacitor-circuits', title: 'Series & Parallel Capacitor Networks' };
-  if (qId === 'imp-phy-11') return { diagramId: 'cell-circuit', title: 'Cell with Internal Resistance & Load Circuit' };
-  if (qId === 'imp-phy-12') return { diagramId: 'em-wave-structure', title: 'Transverse EM Wave: E and B Orthogonal Vectors' };
-  if (qId === 'imp-phy-13') return { diagramId: 'ac-rms-waveform', title: 'Sinusoidal AC Waveform & RMS Value' };
-  if (qId === 'imp-phy-14' || qId === 'imp-phy-21') return { diagramId: 'displacement-current', title: 'Charging Capacitor & Displacement Current' };
-  if (qId === 'imp-phy-15') return { diagramId: 'wheatstone-bridge', title: 'Wheatstone Bridge Null-Deflection Circuit' };
-  if (qId === 'imp-phy-16') return { diagramId: 'magnetic-materials', title: 'Magnetic Field Penetration (Dia, Para, Ferro)' };
-  if (qId === 'imp-phy-17') {
-    if (dIdx === 0) return { diagramId: 'lcr-circuit', subMode: 'phasor', title: 'Series LCR Phasor Diagram' };
-    return { diagramId: 'lcr-circuit', subMode: 'resonance', title: 'Series LCR Resonance Curve' };
-  }
-  if (qId === 'imp-phy-18') {
-    if (dIdx === 0) return { diagramId: 'dipole-fields', subMode: 'axial', title: 'Axial Field Vector Alignment' };
-    return { diagramId: 'dipole-fields', subMode: 'equatorial', title: 'Equatorial Field Component Cancellation' };
-  }
-  if (qId === 'imp-phy-19') return { diagramId: 'energy-storage', title: 'Energy Storage in Electric & Magnetic Fields' };
-  if (qId === 'imp-phy-20') return { diagramId: 'parallel-wires', subMode: 'attractive', title: 'Magnetic Forces on Parallel Currents' };
-  if (qId === 'imp-phy-22') {
-    if (dIdx === 0) return { diagramId: 'galvanometer-conversion', subMode: 'ammeter', title: 'Conversion to Ammeter (Parallel Shunt S)' };
-    return { diagramId: 'galvanometer-conversion', subMode: 'voltmeter', title: 'Conversion to Voltmeter (Series High R)' };
-  }
-  return null;
+const getDerivationDiagram = (qId) => {
+  const diagramId = DIAGRAM_MAPPING[qId];
+  if (!diagramId) return null;
+  const labels = {
+    'ray-optics-instruments': 'Ray Optics: Mirrors, Refraction, Lenses & Instruments',
+    'prism-dispersion': 'Prism Refraction, Minimum Deviation & TIR Condition',
+    'huygens-wavefronts': 'Huygens Wavefronts: Types, Reflection & Refraction (Denser / Rarer)',
+    'ydse-wave-optics': 'Wave Optics: YDSE Fringes & Interference Intensity',
+    'single-slit-diffraction': 'Single-Slit Diffraction & Angular Width',
+    'photoelectric-graphs': 'Photoelectric Effect: Stopping Potential vs Frequency',
+    'bohr-atom-spectra': 'Bohr Model Orbits & Hydrogen Spectral Series',
+    'nuclei-binding-force': 'Binding Energy per Nucleon Curve & Nuclear Force',
+    'pn-junction-rectifier': 'Semiconductor Energy Bands, p-n Diode & V–I Curve'
+  };
+  return { diagramId, title: labels[diagramId] || 'Interactive Physics Diagram' };
 };
 
 export default function ImportantQuestionsTabContent({ 
@@ -115,6 +145,8 @@ export default function ImportantQuestionsTabContent({
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUnit, setSelectedUnit] = useState('ALL');
+  const [selectedChapter, setSelectedChapter] = useState('ALL'); // 'ALL' | '9'..'14' (Physics)
+  const [selectedSource, setSelectedSource] = useState('ALL'); // 'ALL' | 'NCERT Example' | 'NCERT Exercise' (Physics)
   const [selectedMarks, setSelectedMarks] = useState('ALL');
   const [selectedStatus, setSelectedStatus] = useState('ALL'); // 'ALL' | 'MASTERED' | 'PENDING'
   const [selectedCategory, setSelectedCategory] = useState('ALL'); // 'ALL' | 'CORE' | 'PAGE' (Biology only)
@@ -124,6 +156,7 @@ export default function ImportantQuestionsTabContent({
   const [isCompactMode, setIsCompactMode] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
   const [showPdfGuide, setShowPdfGuide] = useState(false);
+  const [showDerivationsRef, setShowDerivationsRef] = useState(false);
 
   // Mastered state for Physics
   const [masteredPhysicsIds, setMasteredPhysicsIds] = useState(() => {
@@ -326,13 +359,15 @@ export default function ImportantQuestionsTabContent({
       textToCopy += q.termsGlossary.map(t => `${t.term}: ${t.definition}`).join('\n') + '\n\n';
     }
 
-    if (q.modelAnswer?.markingScheme && q.modelAnswer.markingScheme.length > 0) {
+    const copyMarking = q.markingScheme || q.modelAnswer?.markingScheme;
+    if (copyMarking && copyMarking.length > 0) {
       textToCopy += `CBSE MARKING SCHEME BREAKDOWN:\n`;
-      textToCopy += q.modelAnswer.markingScheme.map(m => `• ${m}`).join('\n') + '\n\n';
+      textToCopy += copyMarking.map(m => `• ${m}`).join('\n') + '\n\n';
     }
 
-    if (q.modelAnswer?.examinerTips) {
-      textToCopy += `EXAMINER TIPS & COMMON PITFALLS:\n${q.modelAnswer.examinerTips}\n`;
+    const copyTips = q.examinerTips || q.modelAnswer?.examinerTips || q.examinerTip;
+    if (copyTips) {
+      textToCopy += `EXAMINER TIPS & COMMON PITFALLS:\n${copyTips}\n`;
     }
 
     navigator.clipboard?.writeText(textToCopy);
@@ -366,11 +401,18 @@ export default function ImportantQuestionsTabContent({
         if (selectedCategory === 'PAGE' && q.section !== 'page') return false;
       }
 
+      // Physics Chapter & Source filters
+      if (isPhysics) {
+        if (selectedChapter !== 'ALL' && String(q.chapterNum) !== selectedChapter) return false;
+        if (selectedSource !== 'ALL' && q.sourceType !== selectedSource) return false;
+      }
+
       // Search
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchTitle = q.title.toLowerCase().includes(query);
         const matchPrompt = q.questionPrompt.toLowerCase().includes(query);
+        const matchRef = q.ncertRefCode?.toLowerCase().includes(query) || q.shortLabel?.toLowerCase().includes(query);
         const matchKeywords = q.keyPointsAndKeywords?.some(k => k.toLowerCase().includes(query));
         const matchTheory = q.theory?.some(t => t.toLowerCase().includes(query));
         const matchDerivations = (q.derivations || []).some(d => 
@@ -380,7 +422,7 @@ export default function ImportantQuestionsTabContent({
           d.name?.toLowerCase().includes(query) || d.formula?.toLowerCase().includes(query)
         );
         const matchNumber = q.number.toString() === query || `q${q.number}` === query;
-        if (!matchTitle && !matchPrompt && !matchKeywords && !matchTheory && !matchDerivations && !matchModel && !matchNumber) {
+        if (!matchTitle && !matchPrompt && !matchRef && !matchKeywords && !matchTheory && !matchDerivations && !matchModel && !matchNumber) {
           return false;
         }
       }
@@ -418,7 +460,7 @@ export default function ImportantQuestionsTabContent({
 
       return true;
     });
-  }, [currentQuestions, isBiology, selectedCategory, searchQuery, selectedUnit, selectedMarks, selectedStatus, onlyDiagrams, masteredIds]);
+  }, [currentQuestions, isBiology, isPhysics, selectedCategory, selectedChapter, selectedSource, searchQuery, selectedUnit, selectedMarks, selectedStatus, onlyDiagrams, masteredIds]);
 
   return (
     <div className="space-y-6 pb-12 animate-in fade-in duration-300">
@@ -429,9 +471,12 @@ export default function ImportantQuestionsTabContent({
             onClick={() => {
               setActiveSubject('physics');
               setSelectedUnit('ALL');
+              setSelectedChapter('ALL');
+              setSelectedSource('ALL');
               setSelectedMarks('ALL');
               setSelectedCategory('ALL');
               setShowPdfGuide(false);
+              setShowDerivationsRef(false);
             }}
             className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
               isPhysics
@@ -447,9 +492,12 @@ export default function ImportantQuestionsTabContent({
             onClick={() => {
               setActiveSubject('chemistry');
               setSelectedUnit('ALL');
+              setSelectedChapter('ALL');
+              setSelectedSource('ALL');
               setSelectedMarks('ALL');
               setSelectedCategory('ALL');
               setShowPdfGuide(false);
+              setShowDerivationsRef(false);
             }}
             className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
               isChemistry
@@ -465,8 +513,11 @@ export default function ImportantQuestionsTabContent({
             onClick={() => {
               setActiveSubject('biology');
               setSelectedUnit('ALL');
+              setSelectedChapter('ALL');
+              setSelectedSource('ALL');
               setSelectedMarks('ALL');
               setSelectedCategory('ALL');
+              setShowDerivationsRef(false);
             }}
             className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
               isBiology
@@ -482,9 +533,12 @@ export default function ImportantQuestionsTabContent({
             onClick={() => {
               setActiveSubject('psychology');
               setSelectedUnit('ALL');
+              setSelectedChapter('ALL');
+              setSelectedSource('ALL');
               setSelectedMarks('ALL');
               setSelectedCategory('ALL');
               setShowPdfGuide(false);
+              setShowDerivationsRef(false);
             }}
             className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
               isPsychology
@@ -500,9 +554,12 @@ export default function ImportantQuestionsTabContent({
             onClick={() => {
               setActiveSubject('english');
               setSelectedUnit('ALL');
+              setSelectedChapter('ALL');
+              setSelectedSource('ALL');
               setSelectedMarks('ALL');
               setSelectedCategory('ALL');
               setShowPdfGuide(false);
+              setShowDerivationsRef(false);
             }}
             className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 touch-manipulation ${
               isEnglish
@@ -516,6 +573,20 @@ export default function ImportantQuestionsTabContent({
         </div>
 
         <div className="flex items-center gap-2">
+          {isPhysics && (
+            <button
+              onClick={() => setShowDerivationsRef(prev => !prev)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer touch-manipulation flex items-center gap-1.5 shrink-0 ${
+                showDerivationsRef
+                  ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                  : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              <BookOpen size={13} />
+              <span>{showDerivationsRef ? `${IMPORTANT_PHYSICS_QUESTIONS.length} Important Questions` : `${PHYSICS_DERIVATIONS_REFERENCE.length} Derivations Reference`}</span>
+            </button>
+          )}
+
           {isBiology && (
             <button
               onClick={() => setShowPdfGuide(prev => !prev)}
@@ -544,8 +615,36 @@ export default function ImportantQuestionsTabContent({
         </div>
       </div>
 
-      {/* 2. Main Content: PDF Guide View or Question Cards Bank */}
-      {isBiology && showPdfGuide ? (
+      {/* 2. Main Content: PDF Guide / Derivations Panel or Question Cards Bank */}
+      {isPhysics && showDerivationsRef ? (
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/30">
+            <div>
+              <h2 className="text-base sm:text-lg font-extrabold text-[var(--text-primary)]">
+                Complete {PHYSICS_DERIVATIONS_REFERENCE.length} Class 12 Physics Derivations (Ch 1–14 Reference Bank)
+              </h2>
+              <p className="text-xs text-[var(--text-secondary)]">
+                Every chapter derivation from Ch 1–14 with physical setups, step-by-step KaTeX proofs, special cases, and chapter note links.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowDerivationsRef(false)}
+              className="px-3.5 py-1.5 rounded-xl bg-[var(--accent-primary)] text-white text-xs font-bold cursor-pointer hover:opacity-90 transition-opacity"
+            >
+              ← Back to {IMPORTANT_PHYSICS_QUESTIONS.length} Important Questions
+            </button>
+          </div>
+          <PhysicsDerivationsReferencePanel
+            defaultExpanded={true}
+            onJumpToChapter={
+              onJumpToChapter
+                ? (chapterNum) =>
+                    onJumpToChapter('physics', chapterNum >= 9 ? 'phy-vol-2' : 'phy-vol-1', `phy-ch-${chapterNum}`)
+                : null
+            }
+          />
+        </div>
+      ) : isBiology && showPdfGuide ? (
         <BiologyPdfGuideViewer 
           onSelectQuestion={handleSelectFromGuide} 
           onBackToQuestions={() => setShowPdfGuide(false)}
@@ -565,7 +664,7 @@ export default function ImportantQuestionsTabContent({
                         ? 'Official CBSE Board • Top 14 Guaranteed Psychology Questions'
                         : isEnglish
                           ? 'Official CBSE Board • High-Yield English Literature & Writing Bank'
-                          : 'Official CBSE Board • 22 Core Questions & Derivations'}
+                          : 'Official CBSE Board • Rationalized NCERT Chapters 9–14'}
                   </span>
                 </div>
                 
@@ -576,7 +675,7 @@ export default function ImportantQuestionsTabContent({
                       ? 'Top 14 Psychology Guaranteed Board Questions (Units I–VII)'
                       : isEnglish
                         ? 'English Core (301) Guaranteed Board Question Bank'
-                        : 'Top 22 Physics Guaranteed Board Derivations'}
+                        : 'Important Questions'}
                 </h1>
                 
                 <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-3xl leading-relaxed">
@@ -586,7 +685,7 @@ export default function ImportantQuestionsTabContent({
                       ? 'Structured 4-mark and 6-mark model answers covering intelligence theories, psychodynamic defence mechanisms, GAS, DSM-5 disorders, and therapies.'
                       : isEnglish
                         ? 'High-scoring thematic analyses, character sketches, poetic devices, and official CBSE marking rubrics across Flamingo & Vistas.'
-                        : 'Rigorous step-by-step mathematical proofs with physical setups, connecting sentences, special cases, and boxed final formulas.'}
+                        : `All ${IMPORTANT_PHYSICS_QUESTIONS.length} high-yield Rationalized NCERT Physics questions (53 NCERT Examples & Exercises + 33 Board Theory & Derivations across Ch 9–14: Ray Optics, Wave Optics, Dual Nature, Atoms, Nuclei & Semiconductors) with complete step-by-step solutions and examiner tips.`}
                 </p>
               </div>
             </div>
@@ -604,7 +703,9 @@ export default function ImportantQuestionsTabContent({
             placeholder={
               isBiology 
                 ? "Search Big Orange questions (e.g. 'Embryo sac', 'Lac operon', 'Hardy-Weinberg', 'Antibody', 'MTP', 'Down syndrome')..."
-                : "Search within the 22 questions (e.g. 'Gauss', 'Transformer', 'Galvanometer', 'RMS', 'Wheatstone', 'RLC')..."
+                : isPhysics
+                  ? `Search ${IMPORTANT_PHYSICS_QUESTIONS.length} important questions (e.g. 'Huygens', 'Wavefront', 'YDSE', 'Diffraction', 'Einstein', 'de Broglie', '9.21')...`
+                  : "Search questions, keywords, or formulas..."
             }
             className="w-full pl-10 pr-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-xl text-xs sm:text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] outline-hidden transition-colors"
           />
@@ -693,6 +794,54 @@ export default function ImportantQuestionsTabContent({
 
           <div className="h-4 w-[1px] bg-[var(--border-subtle)] hidden sm:block" />
 
+          {/* Physics Chapter & Source Filters */}
+          {isPhysics && (
+            <>
+              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+                <span className="text-[var(--text-muted)] font-medium shrink-0">Chapter:</span>
+                {['ALL', '9', '10', '11', '12', '13', '14'].map(ch => (
+                  <button
+                    key={ch}
+                    onClick={() => setSelectedChapter(ch)}
+                    className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer whitespace-nowrap touch-manipulation ${
+                      selectedChapter === ch
+                        ? 'bg-[#5B7B9A] text-white shadow-xs'
+                        : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+                    }`}
+                  >
+                    {ch === 'ALL' ? 'All (Ch 9–14)' : `Ch ${ch}`}
+                  </button>
+                ))}
+              </div>
+
+              <div className="h-4 w-[1px] bg-[var(--border-subtle)] hidden sm:block" />
+
+              <div className="flex items-center gap-1.5">
+                <span className="text-[var(--text-muted)] font-medium shrink-0">Source:</span>
+                {[
+                  { id: 'ALL', label: `All (${IMPORTANT_PHYSICS_QUESTIONS.length})` },
+                  { id: 'NCERT Example', label: 'Examples' },
+                  { id: 'NCERT Exercise', label: 'Exercises' },
+                  { id: 'Board Theory & Derivation', label: 'Theory & Derivations' }
+                ].map(src => (
+                  <button
+                    key={src.id}
+                    onClick={() => setSelectedSource(src.id)}
+                    className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer whitespace-nowrap touch-manipulation ${
+                      selectedSource === src.id
+                        ? 'bg-sky-600 text-white shadow-xs'
+                        : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-subtle)]'
+                    }`}
+                  >
+                    {src.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="h-4 w-[1px] bg-[var(--border-subtle)] hidden sm:block" />
+            </>
+          )}
+
           {/* Marks Filter */}
           <div className="flex items-center gap-1.5">
             <span className="text-[var(--text-muted)] font-medium shrink-0">Marks:</span>
@@ -701,7 +850,8 @@ export default function ImportantQuestionsTabContent({
               { id: '5', label: '5M' },
               { id: '4', label: '4M' },
               { id: '3', label: '3M' },
-              { id: '2', label: '2M' }
+              { id: '2', label: '2M' },
+              ...(isPhysics ? [{ id: '1', label: '1M' }] : [])
             ].map(m => (
               <button
                 key={m.id}
@@ -769,6 +919,8 @@ export default function ImportantQuestionsTabContent({
               onClick={() => {
                 setSearchQuery('');
                 setSelectedUnit('ALL');
+                setSelectedChapter('ALL');
+                setSelectedSource('ALL');
                 setSelectedMarks('ALL');
                 setSelectedStatus('ALL');
                 setSelectedCategory('ALL');
@@ -834,6 +986,16 @@ export default function ImportantQuestionsTabContent({
                         }`}>
                           {q.marks}
                         </span>
+
+                        {q.sourceType && (
+                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${
+                            q.sourceType === 'NCERT Example'
+                              ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                              : 'bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30'
+                          }`}>
+                            {q.ncertRefCode ? `${q.sourceType}: ${q.ncertRefCode}` : q.sourceType}
+                          </span>
+                        )}
 
                         {q.category && (
                           <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${
@@ -926,12 +1088,13 @@ export default function ImportantQuestionsTabContent({
                     )}
 
                     <button
+                      type="button"
                       onClick={() => toggleExpand(q.id)}
                       className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer touch-manipulation flex items-center gap-1 shadow-2xs"
                     >
                       {isExpanded ? (
                         <>
-                          <span>Hide</span>
+                          <span>Hide Answer</span>
                           <ChevronUp size={14} />
                         </>
                       ) : (
@@ -946,9 +1109,9 @@ export default function ImportantQuestionsTabContent({
 
                 {/* Question Prompt Callout */}
                 <div className="p-4 sm:p-5 bg-[var(--bg-surface)] border-b border-[var(--border-subtle)]/60">
-                  <div className="p-3.5 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs sm:text-sm text-[var(--text-primary)] font-mono leading-relaxed whitespace-pre-line">
+                  <div className="p-3.5 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-line">
                     <span className="font-bold text-amber-500 block mb-1">Exam Question Framing:</span>
-                    {q.questionPrompt}
+                    <FormattedLatex content={q.questionPrompt} />
                   </div>
                 </div>
 
@@ -1190,35 +1353,43 @@ export default function ImportantQuestionsTabContent({
                     )}
 
                     {/* Marking Scheme Breakdown & Examiner Tip */}
-                    {(q.modelAnswer?.markingScheme?.length > 0 || q.examinerTip) && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {q.modelAnswer?.markingScheme && q.modelAnswer.markingScheme.length > 0 && (
-                          <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
-                            <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                              <Award size={13} />
-                              CBSE Marking Scheme Breakdown
-                            </h4>
-                            <ul className="space-y-1 text-xs text-[var(--text-secondary)] leading-snug">
-                              {q.modelAnswer.markingScheme.map((mark, mIdx) => (
-                                <li key={mIdx}>• {mark}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                    {(() => {
+                      const markingList = q.markingScheme || q.modelAnswer?.markingScheme || [];
+                      const tipsText = q.examinerTips || q.modelAnswer?.examinerTips || q.examinerTip;
+                      if (markingList.length === 0 && !tipsText) return null;
+                      return (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {markingList.length > 0 && (
+                            <div className="p-3.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] space-y-1.5">
+                              <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                                <Award size={13} />
+                                CBSE Marking Scheme Breakdown
+                              </h4>
+                              <ul className="space-y-1 text-xs text-[var(--text-secondary)] leading-snug">
+                                {markingList.map((mark, mIdx) => (
+                                  <li key={mIdx} className="flex items-start gap-1.5">
+                                    <span>•</span>
+                                    <FormattedLatex content={mark} />
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
 
-                        {(q.modelAnswer?.examinerTips || q.examinerTip) && (
-                          <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
-                            <h4 className="text-xs font-extrabold text-amber-500 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-                              <AlertTriangle size={13} />
-                              Examiner's Tips &amp; Common Mistakes
-                            </h4>
-                            <p className="text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
-                              {q.modelAnswer?.examinerTips || q.examinerTip}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    )}
+                          {tipsText && (
+                            <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1">
+                              <h4 className="text-xs font-extrabold text-amber-500 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <AlertTriangle size={13} />
+                                Examiner's Tips &amp; Common Mistakes
+                              </h4>
+                              <div className="text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
+                                <FormattedLatex content={tipsText} />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
 
                     {/* Toggle Mastered Button at bottom */}
                     <div className="pt-2 flex items-center justify-between border-t border-[var(--border-subtle)]">

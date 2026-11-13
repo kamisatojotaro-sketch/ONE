@@ -290,6 +290,326 @@ export const MCQ_DATABASE = {
       ],
       correct: 1,
       explanation: 'In forward bias, the applied voltage opposes the built-in barrier potential (V_eff = V₀ − V), pushing majority carriers toward the junction and narrowing both the depletion layer width and barrier height.'
+    },
+    {
+      id: 'phy-mcq-18',
+      chapterId: 'phy-ch-5',
+      chapterName: 'Ch 5: Magnetism & Matter',
+      subtopicId: 'phy-sub-5-1',
+      difficulty: 'easy',
+      question: 'A sample of bismuth is placed in a non-uniform magnetic field. How does it behave, and what is the sign of its magnetic susceptibility (χ)?',
+      options: [
+        'Tends to move from stronger to weaker field; χ is small and negative',
+        'Tends to move from weaker to stronger field; χ is small and positive',
+        'Strongly pulled toward stronger field; χ is large and positive',
+        'Remains unaffected; χ = 0'
+      ],
+      correct: 0,
+      explanation: 'Bismuth is a diamagnetic material. Diamagnetic substances are weakly repelled by magnets (move from stronger to weaker field regions), have relative permeability 0 ≤ μ_r < 1, and small negative susceptibility (−1 ≤ χ < 0) independent of temperature.'
+    },
+    {
+      id: 'phy-mcq-19',
+      chapterId: 'phy-ch-5',
+      chapterName: 'Ch 5: Magnetism & Matter',
+      subtopicId: 'phy-sub-5-2',
+      difficulty: 'medium',
+      question: 'According to Curie\'s Law, the magnetic susceptibility (χ) of a paramagnetic material varies with absolute temperature T as:',
+      options: [
+        'χ ∝ T',
+        'χ ∝ 1 / T',
+        'χ is independent of T',
+        'χ ∝ T²'
+      ],
+      correct: 1,
+      explanation: 'Curie\'s Law states χ = C μ₀ / T, so paramagnetic susceptibility is inversely proportional to absolute temperature T (thermal agitation opposes dipole alignment).'
+    },
+    {
+      id: 'phy-mcq-20',
+      chapterId: 'phy-ch-5',
+      chapterName: 'Ch 5: Magnetism & Matter',
+      subtopicId: 'phy-sub-5-3',
+      difficulty: 'medium',
+      question: 'For a superconducting sphere exhibiting the Meissner effect (perfect diamagnetism), the magnetic susceptibility χ and relative permeability μ_r are:',
+      options: [
+        'χ = +1, μ_r = 2',
+        'χ = −1, μ_r = 0',
+        'χ = 0, μ_r = 1',
+        'χ = ∞, μ_r = ∞'
+      ],
+      correct: 1,
+      explanation: 'Superconductors expel all magnetic flux lines completely (B = 0 inside), making μ_r = 0 and χ = μ_r − 1 = −1.'
+    },
+    {
+      id: 'phy-mcq-21',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-1',
+      difficulty: 'medium',
+      question: 'A mobile phone lies along the principal axis of a concave mirror (as in NCERT Ex 9.2). Why is the longitudinal magnification NOT uniform along the phone?',
+      options: [
+        'The mirror changes focal length for parts closer to the pole',
+        'Transverse magnification m = −f / (u − f) varies inversely with distance from focus, so portions closer to the centre of curvature vs focus are magnified differently',
+        'Concave mirrors invert only the vertical dimension',
+        'Only plane mirrors preserve uniform lateral magnification'
+      ],
+      correct: 1,
+      explanation: 'In NCERT Example 9.2, the end touching C gives m = −1 (same size) while points closer to F have larger magnitude of |m| = f/|u − f|, stretching the image non-uniformly.'
+    },
+    {
+      id: 'phy-mcq-22',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-2',
+      difficulty: 'medium',
+      question: 'A point source of light is placed at depth h inside a tank filled with water of refractive index n (NCERT Exer 9.5). The radius R of the circular illuminated patch on the water surface through which light emerges is:',
+      options: [
+        'R = h / √(n² − 1)',
+        'R = h · √(n² − 1)',
+        'R = h · n',
+        'R = h / n'
+      ],
+      correct: 0,
+      explanation: 'Light emerges within a cone of semi-vertical angle i_c where sin(i_c) = 1/n. Hence tan(i_c) = 1 / √(n² − 1), giving patch radius R = h tan(i_c) = h / √(n² − 1) and area A = π h² / (n² − 1).'
+    },
+    {
+      id: 'phy-mcq-23',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-3',
+      difficulty: 'hard',
+      question: 'A biconvex glass lens (n_g = 1.50) has focal length +20 cm in air. If it is immersed in carbon disulphide (n_l = 1.65), the lens will:',
+      options: [
+        'Behave as a converging lens of focal length +80 cm',
+        'Behave as a diverging lens (f < 0)',
+        'Become an optical flat slab of infinite focal length',
+        'Keep the exact same focal length +20 cm'
+      ],
+      correct: 1,
+      explanation: 'By Lens Maker\'s formula, 1/f_l = (n_g/n_l − 1)(1/R₁ − 1/R₂). Since n_l (1.65) > n_g (1.50), the factor (1.50/1.65 − 1) becomes NEGATIVE, reversing the sign of f so the converging lens acts as a diverging lens!'
+    },
+    {
+      id: 'phy-mcq-24',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-4',
+      difficulty: 'medium',
+      question: 'For an equilateral glass prism (A = 60°) in minimum deviation with δ_m = 60°, the angle of incidence i inside the air-glass interface is:',
+      options: [
+        '30°',
+        '45°',
+        '60°',
+        '90°'
+      ],
+      correct: 2,
+      explanation: 'At minimum deviation, δ_m = 2i − A ⟹ i = (A + δ_m)/2 = (60° + 60°)/2 = 60°, and r = A/2 = 30°, yielding n = sin 60° / sin 30° = √3.'
+    },
+    {
+      id: 'phy-mcq-25',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-5',
+      difficulty: 'easy',
+      question: 'For a small astronomical telescope in normal adjustment (final image at infinity) with f_o = 144 cm and f_e = 6.0 cm (NCERT Exer 9.13), the magnifying power and separation between lenses are:',
+      options: [
+        'M = 24, Length L = 150 cm',
+        'M = 24, Length L = 138 cm',
+        'M = 864, Length L = 150 cm',
+        'M = 0.04, Length L = 144 cm'
+      ],
+      correct: 0,
+      explanation: 'In normal adjustment, M = f_o / f_e = 144 / 6 = 24, and tube length L = f_o + f_e = 144 + 6 = 150 cm.'
+    },
+    {
+      id: 'phy-mcq-26',
+      chapterId: 'phy-ch-10',
+      chapterName: 'Ch 10: Wave Optics',
+      subtopicId: 'phy-sub-10-2',
+      difficulty: 'easy',
+      question: 'When monochromatic light of wavelength 589 nm in air enters water (n = 1.33, NCERT Exer 10.1), which quantity remains strictly UNCHANGED?',
+      options: [
+        'Wavelength λ',
+        'Speed of light v',
+        'Frequency ν',
+        'Wavefront direction θ'
+      ],
+      correct: 2,
+      explanation: 'Both speed (v = c/n) and wavelength (λ\' = λ/n) decrease by factor n in water, whereas frequency ν = c/λ depends solely on the source and remains unchanged across refraction.'
+    },
+    {
+      id: 'phy-mcq-27',
+      chapterId: 'phy-ch-10',
+      chapterName: 'Ch 10: Wave Optics',
+      subtopicId: 'phy-sub-10-4',
+      difficulty: 'hard',
+      question: 'In a Young\'s double-slit experiment, intensity at a screen point where path difference is λ equals K (NCERT Exer 10.5). What is the intensity at a point where path difference is λ / 3?',
+      options: [
+        'K / 2',
+        'K / 4',
+        '3 K / 4',
+        'K / 3'
+      ],
+      correct: 1,
+      explanation: 'At Δx = λ, phase difference φ = 2π ⟹ I_max = 4I₀ = K. At Δx = λ/3, φ = 2π/3 (120°), so I = 4I₀ cos²(φ/2) = K cos²(60°) = K (1/2)² = K / 4.'
+    },
+    {
+      id: 'phy-mcq-28',
+      chapterId: 'phy-ch-10',
+      chapterName: 'Ch 10: Wave Optics',
+      subtopicId: 'phy-sub-10-5',
+      difficulty: 'medium',
+      question: 'In single-slit Fraunhofer diffraction with slit width a illuminated by wavelength λ, how does the angular width of the central bright maximum compare with the first secondary maximum?',
+      options: [
+        'Both have angular width λ / a',
+        'Central maximum angular width is 2λ / a (double the secondary fringe width λ / a)',
+        'Central maximum angular width is λ / (2a)',
+        'Independent of slit width a'
+      ],
+      correct: 1,
+      explanation: 'First minima on either side lie at θ = ±λ/a, so total angular width of the central maximum is 2θ = 2λ/a, twice that of any secondary maximum.'
+    },
+    {
+      id: 'phy-mcq-29',
+      chapterId: 'phy-ch-11',
+      chapterName: 'Ch 11: Dual Nature of Radiation & Matter',
+      subtopicId: 'phy-sub-11-3',
+      difficulty: 'medium',
+      question: 'According to Einstein\'s photoelectric equation, the slope of the straight-line graph between stopping potential (V₀) on the y-axis and incident frequency (ν) on the x-axis equals:',
+      options: [
+        'h (Planck\'s constant)',
+        'h / e (universal for ALL metals)',
+        'φ₀ / e (depends on metal)',
+        'e / h'
+      ],
+      correct: 1,
+      explanation: 'Since eV₀ = hν − φ₀, V₀ = (h/e)ν − φ₀/e. The slope is h/e ≈ 4.14 × 10⁻¹⁵ V·s, identical and parallel for every photosensitive metal.'
+    },
+    {
+      id: 'phy-mcq-30',
+      chapterId: 'phy-ch-11',
+      chapterName: 'Ch 11: Dual Nature of Radiation & Matter',
+      subtopicId: 'phy-sub-11-4',
+      difficulty: 'hard',
+      question: 'An electron, an alpha particle, and a proton all have the SAME kinetic energy K (NCERT Exer 11.8). Which particle has the SHORTEST de Broglie wavelength?',
+      options: [
+        'Electron',
+        'Proton',
+        'Alpha particle',
+        'All have equal de Broglie wavelength'
+      ],
+      correct: 2,
+      explanation: 'Since λ = h / √(2 m K), for equal kinetic energy K, λ ∝ 1 / √m. The alpha particle has the largest mass (~4 m_p), hence the shortest de Broglie wavelength.'
+    },
+    {
+      id: 'phy-mcq-31',
+      chapterId: 'phy-ch-12',
+      chapterName: 'Ch 12: Atoms',
+      subtopicId: 'phy-sub-12-2',
+      difficulty: 'medium',
+      question: 'The total energy of an electron in the first excited state (n = 2) of a hydrogen atom is −3.4 eV (NCERT Exer 12.5). What are its kinetic energy (K) and potential energy (U) in this state?',
+      options: [
+        'K = +3.4 eV, U = −6.8 eV',
+        'K = +1.7 eV, U = −5.1 eV',
+        'K = −3.4 eV, U = +6.8 eV',
+        'K = +6.8 eV, U = −10.2 eV'
+      ],
+      correct: 0,
+      explanation: 'In a Coulomb bound orbit, K = −E = −(−3.4) = +3.4 eV, and U = 2E = 2(−3.4) = −6.8 eV (check: K + U = +3.4 − 6.8 = −3.4 eV = E).'
+    },
+    {
+      id: 'phy-mcq-32',
+      chapterId: 'phy-ch-12',
+      chapterName: 'Ch 12: Atoms',
+      subtopicId: 'phy-sub-12-3',
+      difficulty: 'easy',
+      question: 'How does de Broglie\'s matter-wave hypothesis explain Bohr\'s second postulate of quantized angular momentum (L = nh / 2π)?',
+      options: [
+        'The circumference 2πr of an allowed orbit must contain an integral number of de Broglie wavelengths (2πr = nλ) for a stationary standing wave',
+        'Electrons emit continuous radiation only at n = 1',
+        'Electrons spiral inward when 2πr > nλ',
+        'Nuclear charge quantizes orbit eccentricity'
+      ],
+      correct: 0,
+      explanation: 'Only orbits forming closed standing electron waves (2πr = nλ = nh / mv) do not suffer destructive interference, yielding mvr = nh / 2π.'
+    },
+    {
+      id: 'phy-mcq-33',
+      chapterId: 'phy-ch-13',
+      chapterName: 'Ch 13: Nuclei',
+      subtopicId: 'phy-sub-13-2',
+      difficulty: 'easy',
+      question: '1 atomic mass unit (1 u ≈ 1.6605 × 10⁻²⁷ kg) is equivalent to how much energy (NCERT Ex 13.3)?',
+      options: [
+        '13.6 eV',
+        '931.5 MeV',
+        '0.511 MeV',
+        '200 MeV'
+      ],
+      correct: 1,
+      explanation: 'Using E = Δmc², 1 u × c² = (1.660539 × 10⁻²⁷ kg)(2.9979 × 10⁸ m/s)² / (1.602 × 10⁻¹³ J/MeV) ≈ 931.5 MeV.'
+    },
+    {
+      id: 'phy-mcq-34',
+      chapterId: 'phy-ch-13',
+      chapterName: 'Ch 13: Nuclei',
+      subtopicId: 'phy-sub-13-3',
+      difficulty: 'medium',
+      question: 'Which statement accurately describes the Strong Nuclear Force between nucleons (n-n, p-p, n-p)?',
+      options: [
+        'It follows an inverse-square 1/r² law and acts strongly only on protons',
+        'It is charge-independent, short-ranged (saturates beyond ~2–3 fm), attractive for r > 0.8 fm, and strongly repulsive for r < 0.8 fm',
+        'It is weaker than electrostatic repulsion at 1.5 fm',
+        'It acts infinitely across the entire atom'
+      ],
+      correct: 1,
+      explanation: 'Nuclear force is the strongest fundamental interaction at short range (~1–2 fm), equal between p-p, n-p, and n-n (charge-independent), repulsive below 0.8 fm (preventing collapse), and drops to zero rapidly beyond a few femtometres (saturation).'
+    },
+    {
+      id: 'phy-mcq-35',
+      chapterId: 'phy-ch-14',
+      chapterName: 'Ch 14: Semiconductor Electronics',
+      subtopicId: 'phy-sub-14-1',
+      difficulty: 'easy',
+      question: 'Why are carbon (diamond, E_g = 5.4 eV), silicon (E_g = 1.1 eV), and germanium (E_g = 0.7 eV) classified differently at room temperature despite having the same valence configuration (NCERT Ex 14.1)?',
+      options: [
+        'Diamond has large forbidden energy gap (5.4 eV, insulator), whereas Si (1.1 eV) and Ge (0.7 eV) have small gaps allowing thermal electron excitation (semiconductors)',
+        'Carbon has partially filled 3d orbitals',
+        'Silicon and Germanium lack covalent bonds',
+        'Diamond is a metallic conductor at 300 K'
+      ],
+      correct: 0,
+      explanation: 'Thermal energy kT (~0.026 eV at 300 K) cannot bridge the 5.4 eV band gap of C (diamond, insulator), while small intrinsic carriers exist in Si (1.1 eV) and Ge (0.7 eV).'
+    },
+    {
+      id: 'phy-mcq-36',
+      chapterId: 'phy-ch-14',
+      chapterName: 'Ch 14: Semiconductor Electronics',
+      subtopicId: 'phy-sub-14-2',
+      difficulty: 'medium',
+      question: 'Pure Si at 300 K has n_i = 1.5 × 10¹⁶ m⁻³. After doping with pentavalent donor atoms, n_e = 5 × 10²² m⁻³ (NCERT Ex 14.2). The hole concentration n_h becomes:',
+      options: [
+        '4.5 × 10⁹ m⁻³ (n-type semiconductor)',
+        '5.0 × 10²² m⁻³ (p-type semiconductor)',
+        '3.3 × 10⁶ m⁻³',
+        'Zero'
+      ],
+      correct: 0,
+      explanation: 'By mass-action law n_e · n_h = n_i² ⟹ n_h = (1.5 × 10¹⁶)² / (5 × 10²²) = 2.25 × 10³² / (5 × 10²²) = 4.5 × 10⁹ m⁻³. Since n_e >> n_h, it is n-type.'
+    },
+    {
+      id: 'phy-mcq-37',
+      chapterId: 'phy-ch-14',
+      chapterName: 'Ch 14: Semiconductor Electronics',
+      subtopicId: 'phy-sub-14-4',
+      difficulty: 'easy',
+      question: 'If an AC mains supply of 50 Hz is fed to a Full-Wave Rectifier, the fundamental ripple frequency of the output pulsating DC voltage is:',
+      options: [
+        '25 Hz',
+        '50 Hz',
+        '100 Hz',
+        '200 Hz'
+      ],
+      correct: 2,
+      explanation: 'A half-wave rectifier passes only one pulse per AC cycle (output frequency = f = 50 Hz), whereas a full-wave rectifier passes BOTH half-cycles in the same direction, doubling the ripple frequency to 2f = 100 Hz.'
     }
   ],
 

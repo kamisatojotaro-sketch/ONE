@@ -361,6 +361,186 @@ export const PYQ_DATABASE = {
    • Positive Half-Cycle: End A is positive and B is negative with respect to centre-tap C. Diode D₁ is forward biased and conducts through R_L, while D₂ is reverse biased (OFF).
    • Negative Half-Cycle: End A becomes negative and B becomes positive with respect to C. Diode D₁ is reverse biased (OFF) while D₂ is forward biased and conducts through R_L in the SAME direction.
    • Output: Unidirectional pulsating DC voltage is obtained across R_L during both half-cycles (output ripple frequency = 2 × input AC frequency).`
+    },
+    {
+      id: 'phy-pyq-18',
+      chapterId: 'phy-ch-5',
+      chapterName: 'Ch 5: Magnetism & Matter',
+      subtopicId: 'phy-sub-5-1',
+      year: 'CBSE 2024, 2023 (3 Marks)',
+      question: 'Draw magnetic field lines showing the behaviour of (a) Diamagnetic and (b) Paramagnetic materials when placed in a uniform external magnetic field. Compare their magnetic susceptibility (χ) and temperature dependence (Curie\'s Law).',
+      solution: `1. Field Line Pattern:
+   • Diamagnetic (e.g. Bismuth, Copper): Field lines are expelled out of the specimen; magnetic field inside is weaker than outside (0 ≤ μ_r < 1).
+   • Paramagnetic (e.g. Aluminium, Oxygen): Field lines prefer to pass through the specimen and crowd slightly inside (μ_r slightly > 1).
+
+2. Susceptibility (χ) & Temperature Dependence:
+   • Diamagnetic: −1 ≤ χ < 0 (small, negative); strictly INDEPENDENT of temperature.
+   • Paramagnetic: χ > 0 (small, positive); inversely proportional to absolute temperature T according to Curie's Law: χ = C μ₀ / T.`
+    },
+    {
+      id: 'phy-pyq-19',
+      chapterId: 'phy-ch-5',
+      chapterName: 'Ch 5: Magnetism & Matter',
+      subtopicId: 'phy-sub-5-3',
+      year: 'CBSE 2022, 2020 (3 Marks)',
+      question: 'Explain why ferromagnetic domains align in an external magnetic field. Distinguish between soft ferromagnetic materials (soft iron) and hard ferromagnetic materials (steel/Alnico) with one application each.',
+      solution: `1. Domain Theory of Ferromagnetism:
+   • Atoms possess permanent dipole moments grouped into macroscopic domains (~1 mm³, ~10¹¹ atoms). Without external B, domains orient randomly so net magnetization M = 0.
+   • On applying external B, domains aligned along B grow in size and rotate along B, giving μ_r >> 1 and χ >> 1.
+
+2. Soft vs Hard Ferromagnets:
+   • Soft Ferromagnets (Soft Iron): Low retentivity, low coercivity, narrow hysteresis loop (minimal hysteresis energy loss per AC cycle). Used in transformer cores and electromagnets.
+   • Hard Ferromagnets (Steel, Alnico): High retentivity and high coercivity; retain magnetization when field is removed. Used in permanent magnets.`
+    },
+    {
+      id: 'phy-pyq-20',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-2',
+      year: 'CBSE 2024, NCERT Exer 9.5 (3 Marks)',
+      question: 'A small bulb is placed at the bottom of a tank containing water to a depth of 80 cm (n = 1.33). What is the area of the surface of water through which light from the bulb can emerge out?',
+      solution: `1. Critical Angle Condition:
+   Light escapes into air only for angles of incidence i ≤ i_c where sin i_c = 1 / n.
+   • n = 1.33 = 4/3 ⟹ sin i_c = 3/4 = 0.750.
+   • cos i_c = √(1 − sin² i_c) = √(1 − 9/16) = √7 / 4.
+   • tan i_c = sin i_c / cos i_c = 3 / √7.
+
+2. Area of Circular Patch:
+   • Radius of emerging circle: R = h tan i_c = 0.80 × (3 / √7) = 0.907 m.
+   • Surface Area: A = π R² = π (0.80² × 9 / 7) = 3.1416 × 0.8229 ≈ 2.58 m² (≈ 2.6 m²).`
+    },
+    {
+      id: 'phy-pyq-21',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-4',
+      year: 'CBSE 2023, 2021 (5 Marks)',
+      question: 'Trace the path of a monochromatic ray passing through an equilateral triangular prism of angle A. Plot the variation of angle of deviation δ with angle of incidence i and derive the Prism Formula n = sin[(A + δ_m)/2] / sin(A/2).',
+      solution: `1. Prism Geometry Relations:
+   • In ΔQNR and quadrilateral AQNR: r₁ + r₂ = A and total deviation δ = (i + e) − A.
+
+2. Minimum Deviation Condition (δ = δ_m):
+   • The δ–i curve is asymmetric U-shaped with a unique minimum δ_m when light traverses symmetrically: i = e and r₁ = r₂ = r.
+   • Therefore: 2r = A ⟹ r = A / 2.
+   • And: δ_m = 2i − A ⟹ i = (A + δ_m) / 2.
+
+3. Refractive Index (Snell's Law):
+   n = sin i / sin r = sin[(A + δ_m) / 2] / sin(A / 2).`
+    },
+    {
+      id: 'phy-pyq-22',
+      chapterId: 'phy-ch-9',
+      chapterName: 'Ch 9: Ray Optics & Optical Instruments',
+      subtopicId: 'phy-sub-9-5',
+      year: 'CBSE 2024 SQP/Board, NCERT Exer 9.11 (5 Marks)',
+      question: 'Draw a labelled ray diagram of a Compound Microscope forming the final image at the least distance of distinct vision (D = 25 cm). Write expressions for its magnifying power and mention why both f_o and f_e are kept short.',
+      solution: `1. Ray Diagram & Image Formation:
+   • Object AB is placed just beyond the first focus F_o of the short-focal-length objective lens. Objective forms a real, inverted, magnified intermediate image A'B'.
+   • Eyepiece is adjusted so A'B' lies within its focus F_e, producing a final virtual, highly magnified image A''B'' at D = 25 cm.
+
+2. Magnifying Power Formulas:
+   • At D = 25 cm: M = (v_o / u_o) · (1 + D / f_e) ≈ −(L / f_o) · (1 + D / f_e)
+   • Normal Adjustment (∞): M = −(L / f_o) · (D / f_e)
+
+3. Design Reason:
+   • Since f_o and f_e appear in the denominator, smaller values maximize total magnification without making tube length L bulky.`
+    },
+    {
+      id: 'phy-pyq-23',
+      chapterId: 'phy-ch-10',
+      chapterName: 'Ch 10: Wave Optics',
+      subtopicId: 'phy-sub-10-4',
+      year: 'CBSE 2023, 2020 (3 Marks)',
+      question: 'In Young\'s double-slit experiment, write the conditions for constructive and destructive interference in terms of path difference Δx. Derive the expression for fringe width β = λD / d. How does β change if the apparatus is immersed in water (n = 4/3)?',
+      solution: `1. Interference Conditions:
+   • Constructive (Bright fringes): Path difference Δx = nλ  (n = 0, 1, 2, ...). Position y_n = n λ D / d.
+   • Destructive (Dark fringes): Δx = (n + 1/2)λ  (n = 0, 1, 2, ...). Position y'_n = (2n + 1) λ D / (2d).
+
+2. Fringe Width:
+   β = y_{n+1} − y_n = λ D / d (equal for all bright and dark fringes under small-angle approximation).
+
+3. Water Immersion Effect:
+   In water of refractive index n = 4/3, wavelength shrinks to λ' = λ / n, so fringe width decreases to β' = β / n = (3/4) β (fringes come closer).`
+    },
+    {
+      id: 'phy-pyq-24',
+      chapterId: 'phy-ch-10',
+      chapterName: 'Ch 10: Wave Optics',
+      subtopicId: 'phy-sub-10-5',
+      year: 'CBSE 2024, 2022 (3 Marks)',
+      question: 'Explain diffraction at a single slit of width a and plot the intensity distribution graph versus angular position θ. Compare interference fringes (YDSE) with single-slit diffraction bands.',
+      solution: `1. Single-Slit Maxima & Minima:
+   • Central maximum lies at θ = 0 (all secondary wavelets arrive in phase).
+   • Minima occur at a sin θ = n λ (n = ±1, ±2, ...). Total angular width of central max = 2λ / a.
+   • Secondary maxima occur near a sin θ ≈ (2n + 1) λ / 2 with rapidly falling intensities (~4.5%, ~1.6%).
+
+2. Interference vs Diffraction:
+   • Interference (YDSE): Superposition of two distinct coherent wavefronts; ALL bright fringes have equal intensity and uniform width β = λD/d; dark fringes are perfectly black (zero intensity).
+   • Diffraction (Single slit): Superposition of secondary wavelets from different parts of ONE wavefront; central maximum is twice as wide (2λD/a) and brightest; intensity drops steeply for secondary maxima.`
+    },
+    {
+      id: 'phy-pyq-25',
+      chapterId: 'phy-ch-11',
+      chapterName: 'Ch 11: Dual Nature of Radiation & Matter',
+      subtopicId: 'phy-sub-11-3',
+      year: 'CBSE 2023, 2021 (3 Marks)',
+      question: 'State Einstein\'s photoelectric equation. Explain why wave theory of light fails to account for the existence of threshold frequency ν₀ and instantaneous emission of photoelectrons.',
+      solution: `1. Einstein's Photoelectric Equation:
+   K_max = (1/2) m v_max² = e V₀ = hν − φ₀ = h(ν − ν₀)
+   where φ₀ = hν₀ is the work function of the metal.
+
+2. Failure of Classical Wave Theory:
+   • Threshold Frequency: Wave theory predicts sufficiently intense low-frequency light should eventually eject electrons; experiment shows NO emission below ν₀ regardless of intensity because each photon must individually deliver energy hν ≥ φ₀.
+   • Instantaneous Emission: Wave energy spreads uniformly over all surface atoms (~10⁻⁹ s delay expected); photon-electron 1:1 elastic collision occurs within < 10⁻⁹ s.`
+    },
+    {
+      id: 'phy-pyq-26',
+      chapterId: 'phy-ch-12',
+      chapterName: 'Ch 12: Atoms',
+      subtopicId: 'phy-sub-12-3',
+      year: 'CBSE 2024, 2022 (3 Marks)',
+      question: 'Draw the energy level diagram for the hydrogen atom and show transitions corresponding to Lyman, Balmer, and Paschen series. Calculate the shortest wavelength emitted in the Balmer series.',
+      solution: `1. Spectral Series of Hydrogen:
+   • Lyman series (n_f = 1): Ultraviolet region (n_i = 2, 3, ...).
+   • Balmer series (n_f = 2): Visible region (n_i = 3, 4, ...).
+   • Paschen series (n_f = 3): Infrared region (n_i = 4, 5, ...).
+
+2. Shortest Wavelength of Balmer Series (Series Limit n_i = ∞ → n_f = 2):
+   1 / λ_min = R (1/2² − 1/∞²) = R / 4
+   Since R = 1.097 × 10⁷ m⁻¹:
+   λ_min = 4 / R = 4 / (1.097 × 10⁷) = 3.646 × 10⁻⁷ m = 364.6 nm (UV limit of Balmer).`
+    },
+    {
+      id: 'phy-pyq-27',
+      chapterId: 'phy-ch-13',
+      chapterName: 'Ch 13: Nuclei',
+      subtopicId: 'phy-sub-13-3',
+      year: 'CBSE 2023, MLL 2026 (3 Marks)',
+      question: 'Plot the potential energy U(r) of a pair of nucleons as a function of separation r. Highlight three characteristic properties of the nuclear force from this plot.',
+      solution: `1. Potential Energy U(r) Curve Features:
+   • U(r) reaches a sharp minimum (~ −100 MeV) at equilibrium distance r₀ ≈ 0.8 fm.
+   • For r < 0.8 fm, U(r) shoots up steeply to large positive values (strong short-range repulsion).
+   • For r > 0.8 fm up to ~3 fm, U(r) rises towards zero (attractive force), becoming negligible beyond ~4 fm.
+
+2. Three Key Properties of Strong Nuclear Force:
+   • Short-Range & Saturation: A nucleon interacts only with its immediate neighbours (~2–3 fm range), explaining why BE/A stays ~8.5 MeV for medium/heavy nuclei.
+   • Repulsive Core (r < 0.8 fm): Prevents the nucleus from collapsing to zero volume.
+   • Charge Independence: Nuclear force between p-p, p-n, and n-n is virtually identical.`
+    },
+    {
+      id: 'phy-pyq-28',
+      chapterId: 'phy-ch-14',
+      chapterName: 'Ch 14: Semiconductor Electronics',
+      subtopicId: 'phy-sub-14-3',
+      year: 'CBSE 2024, 2021 (3 Marks)',
+      question: 'Explain the formation of the depletion layer and potential barrier in a p-n junction. Draw the V-I characteristics of a p-n junction diode under forward and reverse bias.',
+      solution: `1. Formation Processes:
+   • Diffusion: Due to concentration gradient, holes diffuse from p → n and electrons from n → p, recombining near the junction.
+   • Depletion Region & Barrier Potential: Diffusion leaves behind immobile ionized acceptor ions (−) on the p-side and donor ions (+) on the n-side, creating a carrier-free depletion layer (~0.5–1 μm) and an internal electric field (n → p) that opposes further majority diffusion until drift current balances diffusion current (V₀ ≈ 0.7 V for Si, 0.3 V for Ge).
+
+2. V–I Characteristics:
+   • Forward Bias: Negligible current until threshold/knee voltage (0.7 V Si), then exponential surge in mA.
+   • Reverse Bias: Tiny temperature-dependent reverse saturation current (~μA) until breakdown voltage V_br.`
     }
   ],
 
