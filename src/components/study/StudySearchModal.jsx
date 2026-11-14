@@ -14,7 +14,8 @@ export default function StudySearchModal({
   initialScope = 'all', // 'all' | 'physics' | 'chemistry' | 'biology' | 'psychology'
   onNavigate,
   currentSubject = null,
-  getPriority
+  getPriority,
+  isCleanMode = false
 }) {
   const [query, setQuery] = useState('');
   const [scope, setScope] = useState(initialScope || 'all');
@@ -44,9 +45,10 @@ export default function StudySearchModal({
       query,
       subject: scope,
       type: filterType,
-      limit: 60
+      limit: 60,
+      cleanMode: isCleanMode
     });
-  }, [query, scope, filterType]);
+  }, [query, scope, filterType, isCleanMode]);
 
   // Reset selected index when results change
   useEffect(() => {
@@ -196,7 +198,7 @@ export default function StudySearchModal({
     { id: 'definition', label: 'Definitions' },
     { id: 'formula_reaction', label: 'Formulas & Reactions' },
     { id: 'key_point', label: 'Key Concepts' },
-    { id: 'question', label: 'Board Qs' }
+    ...(!isCleanMode ? [{ id: 'question', label: 'Board Qs' }] : [])
   ];
 
   return (
@@ -308,7 +310,7 @@ export default function StudySearchModal({
               <div>
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-3">
                   <Sparkles size={14} className="text-[var(--accent-primary)]" />
-                  <span>Popular High-Yield Searches ({scope === 'all' ? 'Universal' : NCERT_SYLLABUS[scope]?.name})</span>
+                  <span>{isCleanMode ? 'Popular Searches' : 'Popular High-Yield Searches'} ({scope === 'all' ? 'Universal' : NCERT_SYLLABUS[scope]?.name})</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {suggestions.map((s, idx) => (
@@ -407,7 +409,7 @@ export default function StudySearchModal({
                       </span>
 
                       {/* Exam Priority Badge */}
-                      {getPriority && (item.subchapterId || item.chapterId) && (
+                      {!isCleanMode && getPriority && (item.subchapterId || item.chapterId) && (
                         <PriorityBadge
                           id={item.subchapterId || item.chapterId}
                           rating={getPriority(item.subchapterId || item.chapterId)}

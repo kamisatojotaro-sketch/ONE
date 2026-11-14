@@ -7,6 +7,7 @@ import { getDerivationsByChapter } from '../../data/physicsDerivationsReference'
 import PhysicsDerivationsReferencePanel from './PhysicsDerivationsReferencePanel';
 
 export default function ChapterList({
+  isCleanMode = false,
   selectedSubject,
   selectedVolume,
   onSelectChapter,
@@ -78,8 +79,9 @@ export default function ChapterList({
     };
   }, [chaptersWithPriority]);
 
-  // Filtered & Sorted Chapter List
+  // Filtered & Sorted Chapter List (In Clean Mode, always show all chapters in syllabus order)
   const displayedChapters = useMemo(() => {
+    if (isCleanMode) return chaptersWithPriority;
     let list = chaptersWithPriority.filter((c) => {
       if (priorityFilter === 'HIGH') return c.priority >= 8;
       if (priorityFilter === 'MED') return c.priority >= 5 && c.priority <= 7;
@@ -93,7 +95,7 @@ export default function ChapterList({
       list = [...list].sort((a, b) => a.priority - b.priority);
     }
     return list;
-  }, [chaptersWithPriority, priorityFilter, sortBy]);
+  }, [chaptersWithPriority, priorityFilter, sortBy, isCleanMode]);
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -112,7 +114,8 @@ export default function ChapterList({
         </div>
       </div>
 
-      {/* Filter and Sort Toolbar */}
+      {/* Filter and Sort Toolbar (Non-D Version only) */}
+      {!isCleanMode && (
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xs">
         {/* Priority Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
@@ -173,9 +176,10 @@ export default function ChapterList({
           </select>
         </div>
       </div>
+      )}
 
-      {/* Physics Derivations Reference Bank (SlideShare 47 Slides Integrated by Volume) */}
-      {subject.id === 'physics' && (
+      {/* Physics Derivations Reference Bank (SlideShare 47 Slides Integrated by Volume - Non-D only) */}
+      {!isCleanMode && subject.id === 'physics' && (
         <PhysicsDerivationsReferencePanel
           volumeFilter={volume.id}
           onJumpToChapter={(chNum) => onSelectChapter(`phy-ch-${chNum}`)}
@@ -216,24 +220,26 @@ export default function ChapterList({
                     <span className="text-xs font-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-subtle)]">
                       Chapter {ch.number}
                     </span>
-                    <PriorityBadge
-                      id={ch.id}
-                      rating={ch.priority}
-                      title={ch.title}
-                      onChangePriority={onSetPriority}
-                      onResetPriority={onResetPriority}
-                      size="sm"
-                    />
+                    {!isCleanMode && (
+                      <PriorityBadge
+                        id={ch.id}
+                        rating={ch.priority}
+                        title={ch.title}
+                        onChangePriority={onSetPriority}
+                        onResetPriority={onResetPriority}
+                        size="sm"
+                      />
+                    )}
                   </div>
 
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    {selectedSubject === 'physics' && ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-7'].includes(ch.id) && (
+                    {!isCleanMode && selectedSubject === 'physics' && ['phy-ch-1', 'phy-ch-2', 'phy-ch-3', 'phy-ch-7'].includes(ch.id) && (
                       <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30">
                         ★ High-Yield Numericals
                       </span>
                     )}
 
-                    {isPortion && (
+                    {!isCleanMode && isPortion && (
                       <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium px-2 py-0.5 rounded-full bg-[var(--badge-recommended-bg)]/15 text-[var(--text-accent)] border border-[var(--badge-recommended-bg)]/30">
                         <Sparkles size={11} />
                         Exam Portion
@@ -278,7 +284,7 @@ export default function ChapterList({
                   </div>
 
                   {/* Mode Selector Buttons */}
-                  <div className="grid grid-cols-2 gap-2 pt-1">
+                  <div className={`grid ${(!isCleanMode || (selectedSubject === 'physics' && getDerivationsByChapter(ch.id).length > 0)) ? 'grid-cols-2' : 'grid-cols-1'} gap-2 pt-1`}>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -288,7 +294,7 @@ export default function ChapterList({
                       title="Read complete NCERT theory, derivations & notes"
                     >
                       <BookOpen size={13} className="text-[var(--accent-primary)] shrink-0" />
-                      <span className="truncate">General Study</span>
+                      <span className="truncate">{isCleanMode ? 'Read Notes' : 'General Study'}</span>
                     </button>
 
                     {selectedSubject === 'physics' && getDerivationsByChapter(ch.id).length > 0 ? (
@@ -303,7 +309,7 @@ export default function ChapterList({
                         <Compass size={13} className="shrink-0" />
                         <span className="truncate">Derivations ({getDerivationsByChapter(ch.id).length})</span>
                       </button>
-                    ) : (
+                    ) : !isCleanMode && (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

@@ -378,7 +378,7 @@ export default function FormulaCard({ formulaList, derivations }) {
               Core Formulas & Variable Meanings
             </h5>
             <span className="text-[11px] sm:text-xs font-cursive text-[var(--text-muted)] block">
-              board-standard mathematical relations with variable definitions
+              key mathematical relations with variable definitions
             </span>
           </div>
         </div>

@@ -1951,7 +1951,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
           <span className="p-1.5 rounded-lg bg-blue-500/15 text-blue-500"><Zap size={16} /></span>
           <div>
             <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">Electric Field of Point Charge &amp; Field Lines Properties</h4>
-            <p className="text-[11px] text-[var(--text-muted)]">Radial inverse-square law field and 4 core CBSE properties</p>
+            <p className="text-[11px] text-[var(--text-muted)]">Radial inverse-square law field and 4 core electric field properties</p>
           </div>
         </div>
         {content}

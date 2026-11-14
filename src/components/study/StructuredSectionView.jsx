@@ -93,7 +93,7 @@ function parseFallbackContent(section, subtopicId, chapterId) {
   return { definitions, keyPoints, extraPoints, reactions, examTrend, commonlyMadeErrors };
 }
 
-export default function StructuredSectionView({ section, subtopicId, chapterId, subjectId }) {
+export default function StructuredSectionView({ section, subtopicId, chapterId, subjectId, isCleanMode = false }) {
   // 1. Get structured data (either curated or parsed)
   const structuredData = useMemo(() => {
     const curated = STRUCTURED_NOTES_DATA[subtopicId];
@@ -194,7 +194,7 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
       {/* ==================================================================== */}
       {/* 3. OSWAAL MEMORY BOOSTER & MNEMONICS (Brain Trick) */}
       {/* ==================================================================== */}
-      {oswaalMnemonic && (
+      {!isCleanMode && oswaalMnemonic && (
         <div className="p-4 sm:p-5 rounded-2xl bg-purple-500/10 border-2 border-purple-500/35 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300">
             <Brain size={16} className="text-purple-600 dark:text-purple-400 shrink-0" />
@@ -224,7 +224,7 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
       {/* ==================================================================== */}
       {/* 4. EXTRA POINTS (High-Yield Exam Notes & Nuances) */}
       {/* ==================================================================== */}
-      {extraPoints && extraPoints.length > 0 && (
+      {!isCleanMode && extraPoints && extraPoints.length > 0 && (
         <div className="p-4 sm:p-5 rounded-2xl bg-[var(--badge-recommended-bg)]/15 border border-[var(--badge-recommended-bg)]/35 shadow-xs space-y-2.5">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-accent)]">
             <Sparkles size={16} className="text-[var(--text-accent)] shrink-0" />
@@ -317,7 +317,7 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
                       <Sparkles size={13} className="text-[var(--accent-primary)]" />
                       Visual Diagram of Reaction:
                     </span>
-                    <SingleReactionDiagram rxn={rxn.diagRef} />
+                    <SingleReactionDiagram rxn={rxn.diagRef} isCleanMode={isCleanMode} />
                   </div>
                 )}
               </div>
@@ -329,7 +329,7 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
       {/* ==================================================================== */}
       {/* 6. OSWAAL COMMONLY MADE ERRORS & ANSWERING TIPS (⚠️ / ✅) */}
       {/* ==================================================================== */}
-      {commonlyMadeErrors && commonlyMadeErrors.length > 0 && (
+      {!isCleanMode && commonlyMadeErrors && commonlyMadeErrors.length > 0 && (
         <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3.5">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
             <AlertTriangle size={16} className="shrink-0" />
@@ -379,7 +379,7 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
       {/* ==================================================================== */}
       {/* 7. CBSE ASSERTION & REASONING CORNER (⚖️ Section A Special) */}
       {/* ==================================================================== */}
-      {assertionReason && (
+      {!isCleanMode && assertionReason && (
         <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border-2 border-indigo-500/30 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
             <Scale size={16} className="shrink-0" />
@@ -437,7 +437,7 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
       {/* ==================================================================== */}
       {/* 8. CBSE BOARD EXAM TRENDS & RECURRING QUESTIONS (🎯) */}
       {/* ==================================================================== */}
-      {examTrend && (
+      {!isCleanMode && examTrend && (
         <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/10 border border-amber-500/35 shadow-xs space-y-2.5">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
             <Target size={16} className="shrink-0" />

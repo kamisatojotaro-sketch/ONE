@@ -3,6 +3,7 @@ import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { useTimer } from '../../context/TimerContext';
 
 export default function StudyHeader({
+  isCleanMode = false,
   selectedSubject,
   selectedVolume,
   onSelectVolume,
@@ -18,10 +19,10 @@ export default function StudyHeader({
 
   return (
     <header className="bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-2xl p-3 sm:p-5 mb-4 sm:mb-8 shadow-sm">
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-5">
+      <div className="flex flex-col lg:flex-row lg:flex-wrap items-stretch lg:items-center justify-between gap-3 sm:gap-4">
         
         {/* Left Row: Back button, Dynamic Volume Progress & Mobile Search Icons */}
-        <div className="flex items-center justify-between gap-2.5 sm:gap-4 flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-2.5 sm:gap-4 flex-1 min-w-[200px]">
           <div className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0">
             <button
               onClick={onBackToSubjects}
@@ -31,7 +32,7 @@ export default function StudyHeader({
               <ArrowLeft size={18} />
             </button>
 
-            <div className="flex-1 min-w-0 max-w-xs">
+            <div className="flex-1 min-w-[120px] max-w-xs">
               <div className="flex items-center justify-between text-xs mb-1 font-medium">
                 <span className="text-[var(--text-muted)] flex items-center gap-1.5 truncate text-[11px] sm:text-xs">
                   <BookOpen size={12} className="text-[var(--accent-primary)] shrink-0" />
@@ -57,13 +58,15 @@ export default function StudyHeader({
             >
               <Search size={16} />
             </button>
-            <button
-              onClick={onOpenUniversalSearch}
-              className="p-2 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all min-w-[36px] min-h-[36px] flex items-center justify-center touch-manipulation cursor-pointer"
-              title="Universal Search (All Subjects)"
-            >
-              <Globe size={16} />
-            </button>
+            {!isCleanMode && (
+              <button
+                onClick={onOpenUniversalSearch}
+                className="p-2 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all min-w-[36px] min-h-[36px] flex items-center justify-center touch-manipulation cursor-pointer"
+                title="Universal Search (All Subjects)"
+              >
+                <Globe size={16} />
+              </button>
+            )}
           </div>
         </div>
 
@@ -80,21 +83,23 @@ export default function StudyHeader({
           </button>
 
           {/* Universal Search Button */}
-          <button
-            onClick={onOpenUniversalSearch}
-            className="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-medium text-xs sm:text-sm transition-all cursor-pointer group"
-            title="Search topics, definitions, formulas, or words across all Class 12 subjects (Ctrl+K)"
-          >
-            <Globe size={14} className="text-[var(--text-muted)] group-hover:text-[var(--accent-primary)] transition-colors" />
-            <span>Universal Search</span>
-            <kbd className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
-              Ctrl+K
-            </kbd>
-          </button>
+          {!isCleanMode && (
+            <button
+              onClick={onOpenUniversalSearch}
+              className="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-medium text-xs sm:text-sm transition-all cursor-pointer group"
+              title="Search topics, definitions, formulas, or words across all Class 12 subjects (Ctrl+K)"
+            >
+              <Globe size={14} className="text-[var(--text-muted)] group-hover:text-[var(--accent-primary)] transition-colors" />
+              <span>Universal Search</span>
+              <kbd className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
+                Ctrl+K
+              </kbd>
+            </button>
+          )}
         </div>
 
         {/* Bottom/Right: Volume Dropdown + Timer Widget */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-center gap-2 sm:gap-3 shrink-0">
           {/* NCERT Volume Dropdown */}
           <div className="relative w-full lg:w-auto">
             <select

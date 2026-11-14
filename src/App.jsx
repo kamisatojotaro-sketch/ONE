@@ -9,7 +9,7 @@ import Anime from './pages/Anime';
 import Notes from './pages/Notes';
 import Settings from './pages/Settings';
 
-const IS_TEMPORARILY_DOWN = true;
+const IS_TEMPORARILY_DOWN = false;
 
 function App() {
   if (IS_TEMPORARILY_DOWN) {

@@ -591,7 +591,8 @@ export function searchStudyContent({
   query = '',
   subject = 'all',
   type = 'all',
-  limit = 50
+  limit = 50,
+  cleanMode = false
 }) {
   const q = query.trim().toLowerCase();
   if (!q) return [];
@@ -605,6 +606,18 @@ export function searchStudyContent({
 
   for (let i = 0; i < index.length; i++) {
     const item = index[i];
+
+    // 0. Clean mode filter: exclude questions, Oswaal mnemonics, common errors, extra exam points, and non-NOTES tabs
+    if (cleanMode) {
+      if (
+        item.type === 'question' ||
+        item.type === 'mnemonic' ||
+        (item.tab && item.tab !== 'NOTES') ||
+        (item.id && (item.id.startsWith('err-') || item.id.startsWith('ep-')))
+      ) {
+        continue;
+      }
+    }
 
     // 1. Subject filter check
     if (subject && subject !== 'all' && item.subjectId !== subject) {

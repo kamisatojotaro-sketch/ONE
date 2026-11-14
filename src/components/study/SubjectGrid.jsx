@@ -2,6 +2,7 @@ import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Sear
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 
 export default function SubjectGrid({ 
+  isCleanMode = false,
   onSelectSubject, 
   onSelectSubjectAndTab,
   completedSections, 
@@ -63,8 +64,12 @@ export default function SubjectGrid({
       <div className="border-b border-[var(--border-default)] pb-5 sm:pb-8">
         <div className="inline-flex items-center gap-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[11px] sm:text-xs text-[var(--text-secondary)] font-sans uppercase tracking-wider mb-3 sm:mb-4">
           <span>NCERT Class 12</span>
-          <span>•</span>
-          <span className="font-semibold text-[var(--text-accent)]">CBSE Core</span>
+          {!isCleanMode && (
+            <>
+              <span>•</span>
+              <span className="font-semibold text-[var(--text-accent)]">CBSE Core</span>
+            </>
+          )}
         </div>
         <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-bold text-[var(--text-primary)] tracking-tight">
           Study Session
@@ -73,7 +78,9 @@ export default function SubjectGrid({
           </span>
         </h1>
         <p className="font-sans text-[var(--text-secondary)] mt-2 sm:mt-3 max-w-2xl text-xs sm:text-base leading-relaxed">
-          Select a subject to explore textbook volumes, study high-yield NCERT notes, track completed subtopics, and practice exam portions.
+          {isCleanMode
+            ? 'Choose a subject to read clean, distraction-free NCERT textbook notes, formulas, diagrams, and derivations.'
+            : 'Select a subject to explore textbook volumes, study high-yield NCERT notes, track completed subtopics, and practice exam portions.'}
         </p>
       </div>
 
@@ -113,41 +120,43 @@ export default function SubjectGrid({
           </button>
         </div>
 
-        {/* Quick Subject Search Scope Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none touch-pan-x text-xs">
-          <span className="text-[var(--text-muted)] text-[11px] font-medium shrink-0 flex items-center gap-1">
-            <Sparkles size={12} className="text-[var(--accent-primary)]" />
-            Subject Search:
-          </span>
-          {subjects.map((s) => (
+        {/* Quick Subject Search Scope Pills (Non-D only for a cleaner Subject Grid in D Mode) */}
+        {!isCleanMode && (
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none touch-pan-x text-xs">
+            <span className="text-[var(--text-muted)] text-[11px] font-medium shrink-0 flex items-center gap-1">
+              <Sparkles size={12} className="text-[var(--accent-primary)]" />
+              Subject Search:
+            </span>
+            {subjects.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(s.id)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
+              >
+                {getSubjectIcon(s.id, 13)}
+                <span>Search {s.name}</span>
+              </button>
+            ))}
+
+            <div className="h-4 w-[1px] bg-[var(--border-subtle)] shrink-0 hidden sm:block" />
+
             <button
-              key={s.id}
-              onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(s.id)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[var(--accent-primary)] text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
+              onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('physics', 'SAMPLE_PAPER') : onSelectSubject('physics')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/15 border border-blue-500/35 text-xs font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
             >
-              {getSubjectIcon(s.id, 13)}
-              <span>Search {s.name}</span>
+              <FileText size={13} className="text-blue-500" />
+              <span>2026–27 Physics Sample Paper (70M)</span>
             </button>
-          ))}
 
-          <div className="h-4 w-[1px] bg-[var(--border-subtle)] shrink-0 hidden sm:block" />
-
-          <button
-            onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('physics', 'SAMPLE_PAPER') : onSelectSubject('physics')}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/15 border border-blue-500/35 text-xs font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
-          >
-            <FileText size={13} className="text-blue-500" />
-            <span>2026–27 Physics Sample Paper (70M)</span>
-          </button>
-
-          <button
-            onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('standard_maths', 'WOLFRAM_ENGINE') : onSelectSubject('standard_maths')}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 border border-indigo-500/35 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
-          >
-            <Calculator size={13} className="text-indigo-500" />
-            <span>Wolfram Engine & Science Calculator</span>
-          </button>
-        </div>
+            <button
+              onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('standard_maths', 'WOLFRAM_ENGINE') : onSelectSubject('standard_maths')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 border border-indigo-500/35 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
+            >
+              <Calculator size={13} className="text-indigo-500" />
+              <span>Wolfram Engine & Science Calculator</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Subject Cards Grid */}
@@ -181,9 +190,11 @@ export default function SubjectGrid({
                     >
                       <Search size={14} />
                     </button>
-                    <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-[var(--bg-base)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
-                      Code {subj.code}
-                    </span>
+                    {!isCleanMode && (
+                      <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-[var(--bg-base)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
+                        Code {subj.code}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -202,13 +213,15 @@ export default function SubjectGrid({
                   <span className="font-medium text-[var(--text-primary)]">{subj.volumes.length} Books</span>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-[var(--text-secondary)]">
-                  <span>Exam Portions</span>
-                  <span className="font-medium text-[var(--accent-primary)] flex items-center gap-1">
-                    <CheckCircle2 size={13} />
-                    {completedPortions} / {portionChapters.length} Chapters
-                  </span>
-                </div>
+                {!isCleanMode && (
+                  <div className="flex items-center justify-between text-xs text-[var(--text-secondary)]">
+                    <span>Exam Portions</span>
+                    <span className="font-medium text-[var(--accent-primary)] flex items-center gap-1">
+                      <CheckCircle2 size={13} />
+                      {completedPortions} / {portionChapters.length} Chapters
+                    </span>
+                  </div>
+                )}
 
                 {/* Progress bar */}
                 <div>

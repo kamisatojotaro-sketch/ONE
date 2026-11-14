@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Sparkles, Layers, Check, BookOpen } from 'lucide-react';
 import { useStudySession } from '../hooks/useStudySession';
 import SubjectGrid from '../components/study/SubjectGrid';
 import StudyHeader from '../components/study/StudyHeader';
@@ -15,6 +16,46 @@ import WolframEngine from '../components/calculator/WolframEngine';
 
 export default function Notes() {
   const session = useStudySession();
+
+  // Notes Version Prompt State ('D' = Clean UI, 'NON_D' = Full UI)
+  // Opens on first visit, and every time the user arrives via a "Notes" click
+  // (AppShell / Home set a sessionStorage flag because Notes isn't mounted yet at click time).
+  const [isVersionPromptOpen, setIsVersionPromptOpen] = useState(() => {
+    let askFlag = false;
+    try {
+      askFlag = sessionStorage.getItem('notes-ask-version') === '1';
+      sessionStorage.removeItem('notes-ask-version');
+    } catch { /* ignore */ }
+    return askFlag || !session.notesVersion;
+  });
+
+  useEffect(() => {
+    const handleOpenPrompt = () => {
+      try { sessionStorage.removeItem('notes-ask-version'); } catch { /* ignore */ }
+      setIsVersionPromptOpen(true);
+    };
+    window.addEventListener('open-notes-version-prompt', handleOpenPrompt);
+    return () => window.removeEventListener('open-notes-version-prompt', handleOpenPrompt);
+  }, []);
+
+  const isCleanMode = session.notesVersion === 'D';
+  const effectiveSidebarTab = isCleanMode ? 'NOTES' : session.activeSidebarTab;
+  const showVersionPrompt = isVersionPromptOpen || !session.notesVersion;
+
+  const handleChooseVersion = (version) => {
+    session.setNotesVersion(version);
+    setIsVersionPromptOpen(false);
+  };
+
+  // Allow Escape to dismiss the prompt when a version is already chosen
+  useEffect(() => {
+    if (!showVersionPrompt || !session.notesVersion) return;
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setIsVersionPromptOpen(false);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [showVersionPrompt, session.notesVersion]);
 
   // Search Modal State
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -82,13 +123,67 @@ export default function Notes() {
 
   return (
     <div className="min-h-full flex flex-col animate-in fade-in duration-300">
+      {/* Top Version Bar (Always accessible D / Non-D toggle) */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 mb-4 sm:mb-6 px-3.5 py-2.5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xs">
+        <div className="flex items-center gap-2 text-xs">
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono font-bold text-[11px] border ${
+            isCleanMode
+              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/35'
+              : 'bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border-[var(--accent-primary)]/35'
+          }`}>
+            {isCleanMode ? <Sparkles size={12} /> : <Layers size={12} />}
+            <span>{isCleanMode ? 'D Version — Clean UI' : 'Non-D Version — Full UI'}</span>
+          </span>
+          <span className="hidden sm:inline text-[var(--text-muted)] text-[11px]">
+            {isCleanMode
+              ? 'Clean reading view — pure textbook notes & derivations'
+              : 'Complete exam suite with Oswaal boxes, priority tags, and Wolfram Solver'}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <div className="inline-flex items-center p-0.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+            <button
+              type="button"
+              onClick={() => handleChooseVersion('D')}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                isCleanMode
+                  ? 'bg-emerald-600 text-white shadow-2xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              D Version
+            </button>
+            <button
+              type="button"
+              onClick={() => handleChooseVersion('NON_D')}
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                !isCleanMode && session.notesVersion === 'NON_D'
+                  ? 'bg-[var(--accent-primary)] text-white shadow-2xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              Non-D Version
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsVersionPromptOpen(true)}
+            className="px-2.5 py-1 rounded-lg text-[11px] font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] border border-[var(--border-subtle)] transition-colors cursor-pointer"
+          >
+            Choose Version
+          </button>
+        </div>
+      </div>
+
       {/* 1. Subject Grid View (Initial View when no subject is selected) */}
       {!session.selectedSubject ? (
         <SubjectGrid
+          isCleanMode={isCleanMode}
           onSelectSubject={session.setSelectedSubject}
           onSelectSubjectAndTab={(subjKey, tab) => {
             session.setSelectedSubject(subjKey);
-            session.setActiveSidebarTab(tab);
+            session.setActiveSidebarTab(isCleanMode ? 'NOTES' : tab);
           }}
           completedSections={session.completedSections}
           completedPortionChapters={session.completedPortionChapters}
@@ -100,6 +195,7 @@ export default function Notes() {
         <div className="flex-1 flex flex-col">
           {/* Top Header Bar */}
           <StudyHeader
+            isCleanMode={isCleanMode}
             selectedSubject={session.selectedSubject}
             selectedVolume={session.selectedVolume}
             onSelectVolume={session.setSelectedVolume}
@@ -109,18 +205,20 @@ export default function Notes() {
             onOpenSubjectSearch={handleOpenSubjectSearch}
           />
 
-          {/* Body: Left Sidebar + Main Content Area */}
-          <div className="flex flex-col lg:flex-row items-start gap-8 flex-1">
-            {/* Left Vertical Menu */}
-            <StudySidebar
-              activeTab={session.activeSidebarTab}
-              onTabChange={session.setActiveSidebarTab}
-            />
+          {/* Body: Left Sidebar (Non-D only) + Main Content Area */}
+          <div className={`flex flex-col lg:flex-row items-start gap-8 flex-1 ${isCleanMode ? 'justify-center' : ''}`}>
+            {/* Left Vertical Menu (Hidden in D Version for clean calm reading) */}
+            {!isCleanMode && (
+              <StudySidebar
+                activeTab={effectiveSidebarTab}
+                onTabChange={session.setActiveSidebarTab}
+              />
+            )}
 
             {/* Main Content Area */}
-            <div className="flex-1 w-full min-w-0">
+            <div className={`flex-1 w-full min-w-0 ${isCleanMode ? 'max-w-4xl mx-auto' : ''}`}>
               {/* Tab 1: Exam Portions Tracker */}
-              {session.activeSidebarTab === 'PORTIONS' && (
+              {effectiveSidebarTab === 'PORTIONS' && (
                 <PortionsTabContent
                   completedPortionChapters={session.completedPortionChapters}
                   onTogglePortionChapter={session.togglePortionChapter}
@@ -131,21 +229,21 @@ export default function Notes() {
               )}
 
               {/* Tab 2: Wolfram Engine & Science Calculator */}
-              {session.activeSidebarTab === 'WOLFRAM_ENGINE' && (
+              {effectiveSidebarTab === 'WOLFRAM_ENGINE' && (
                 <WolframEngine
                   initialSubject={session.selectedSubject || 'standard_maths'}
                 />
               )}
 
               {/* Tab 3: Official 2026-27 Sample Question Paper & Marking Scheme */}
-              {session.activeSidebarTab === 'SAMPLE_PAPER' && (
+              {effectiveSidebarTab === 'SAMPLE_PAPER' && (
                 <SamplePaperTabContent
                   onJumpToChapter={handleJumpToChapter}
                 />
               )}
 
               {/* Tab 4: Previous Year Questions */}
-              {session.activeSidebarTab === 'PYQ' && (
+              {effectiveSidebarTab === 'PYQ' && (
                 <PyqTabContent
                   selectedSubject={session.selectedSubject}
                   selectedChapter={session.selectedChapter}
@@ -155,7 +253,7 @@ export default function Notes() {
               )}
 
               {/* Tab 3: Board MCQs Practice */}
-              {session.activeSidebarTab === 'MCQ' && (
+              {effectiveSidebarTab === 'MCQ' && (
                 <McqTabContent
                   selectedSubject={session.selectedSubject}
                   selectedChapter={session.selectedChapter}
@@ -165,7 +263,7 @@ export default function Notes() {
               )}
 
               {/* Tab 4: Custom Test Maker */}
-              {session.activeSidebarTab === 'TEST_MAKER' && (
+              {effectiveSidebarTab === 'TEST_MAKER' && (
                 <TestMakerTabContent
                   selectedSubject={session.selectedSubject}
                   selectedChapter={session.selectedChapter}
@@ -176,11 +274,12 @@ export default function Notes() {
               )}
 
               {/* Tab 5: NOTES (Default NCERT Structured Notes) */}
-              {session.activeSidebarTab === 'NOTES' && (
+              {effectiveSidebarTab === 'NOTES' && (
                 <>
                   {/* Chapter List (when no chapter is selected) */}
                   {!session.selectedChapter ? (
                     <ChapterList
+                      isCleanMode={isCleanMode}
                       selectedSubject={session.selectedSubject}
                       selectedVolume={session.selectedVolume}
                       onSelectChapter={session.setSelectedChapter}
@@ -193,6 +292,7 @@ export default function Notes() {
                   ) : (
                     /* Chapter Drill-down View */
                     <ChapterDrillDown
+                      isCleanMode={isCleanMode}
                       selectedSubject={session.selectedSubject}
                       selectedVolume={session.selectedVolume}
                       selectedChapter={session.selectedChapter}
@@ -221,6 +321,142 @@ export default function Notes() {
         </div>
       )}
 
+      {/* Version Prompt Modal: D vs Non-D */}
+      {showVersionPrompt && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="notes-version-prompt-title"
+          onClick={() => {
+            if (session.notesVersion) setIsVersionPromptOpen(false);
+          }}
+        >
+          <div
+            className="w-full max-w-2xl rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xl p-6 sm:p-8 space-y-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center space-y-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[11px] font-mono uppercase tracking-wider text-[var(--text-accent)] font-bold">
+                <BookOpen size={13} />
+                <span>Choose Notes Experience</span>
+              </div>
+              <h2
+                id="notes-version-prompt-title"
+                className="font-serif text-2xl sm:text-3xl font-bold text-[var(--text-primary)]"
+              >
+                Which version would you like to open?
+              </h2>
+              <p className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] max-w-lg mx-auto">
+                You can switch anytime from the top bar in Notes.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* D Version Card */}
+              <button
+                type="button"
+                onClick={() => handleChooseVersion('D')}
+                className={`group text-left p-5 rounded-2xl border-2 transition-all duration-200 flex flex-col justify-between space-y-4 cursor-pointer hover:-translate-y-0.5 hover:shadow-md ${
+                  session.notesVersion === 'D'
+                    ? 'border-emerald-500 bg-emerald-500/10'
+                    : 'border-[var(--border-default)] bg-[var(--bg-elevated)] hover:border-emerald-500/70'
+                }`}
+              >
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-xs font-mono font-bold border border-emerald-500/30">
+                      <Sparkles size={13} />
+                      D Version
+                    </span>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                      Clean &amp; Calm UI
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+                    Clean Study Interface
+                  </h3>
+                  <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
+                    <li className="flex items-start gap-2">
+                      <Check size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                      <span>Pure NCERT theory, definitions, formulas, diagrams &amp; derivations</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                      <span>No Oswaal boxes, high-yield numericals, or priority scores</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                      <span>No Wolfram solver or extra sidebar clutter</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 group-hover:bg-emerald-700 text-white text-xs font-bold text-center transition-colors">
+                  Open D Version (Clean)
+                </div>
+              </button>
+
+              {/* Non-D Version Card */}
+              <button
+                type="button"
+                onClick={() => handleChooseVersion('NON_D')}
+                className={`group text-left p-5 rounded-2xl border-2 transition-all duration-200 flex flex-col justify-between space-y-4 cursor-pointer hover:-translate-y-0.5 hover:shadow-md ${
+                  session.notesVersion === 'NON_D'
+                    ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10'
+                    : 'border-[var(--border-default)] bg-[var(--bg-elevated)] hover:border-[var(--accent-primary)]'
+                }`}
+              >
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] text-xs font-mono font-bold border border-[var(--accent-primary)]/30">
+                      <Layers size={13} />
+                      Non-D Version
+                    </span>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
+                      Full Version
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+                    Full Exam Interface
+                  </h3>
+                  <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
+                    <li className="flex items-start gap-2">
+                      <Check size={14} className="text-[var(--accent-primary)] shrink-0 mt-0.5" />
+                      <span>Includes Oswaal memory boosters, common errors &amp; exam trends</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check size={14} className="text-[var(--accent-primary)] shrink-0 mt-0.5" />
+                      <span>Priority ratings, filters, PYQs, MCQs &amp; Test Maker</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check size={14} className="text-[var(--accent-primary)] shrink-0 mt-0.5" />
+                      <span>Wolfram Engine, Sample Paper &amp; Exam Portraits</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="w-full py-2.5 px-4 rounded-xl bg-[var(--accent-primary)] group-hover:bg-[var(--accent-primary-hover)] text-white text-xs font-bold text-center transition-colors">
+                  Open Non-D Version (Full)
+                </div>
+              </button>
+            </div>
+
+            {session.notesVersion && (
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={() => setIsVersionPromptOpen(false)}
+                  className="text-xs font-medium text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer underline"
+                >
+                  Continue with {isCleanMode ? 'D Version' : 'Non-D Version'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Universal & Subject Knowledge Search Modal */}
       <StudySearchModal
         isOpen={isSearchOpen}
@@ -228,7 +464,8 @@ export default function Notes() {
         initialScope={searchScope}
         onNavigate={handleNavigateSearchResult}
         currentSubject={session.selectedSubject}
-        getPriority={session.getPriority}
+        getPriority={isCleanMode ? undefined : session.getPriority}
+        isCleanMode={isCleanMode}
       />
     </div>
   );

@@ -22,7 +22,8 @@ export default function Physics4PartSectionView({
   subtopicId, 
   chapterId, 
   diagramId,
-  diagramSubMode = null
+  diagramSubMode = null,
+  isCleanMode = false
 }) {
   const matchedQ = getPhysicsSectionEnrichment(subtopicId);
   const comparisonTable = matchedQ?.comparisonTable || null;
@@ -148,11 +149,13 @@ export default function Physics4PartSectionView({
         <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
             <BookMarked size={16} />
-            <span>Part 1: Theory & Physical Principle</span>
+            <span>{isCleanMode ? 'Theory & Core Principles' : 'Part 1: Theory & Physical Principle'}</span>
           </div>
-          <span className="text-[10px] font-mono text-[var(--text-muted)]">
-            Concise NCERT Core Concepts
-          </span>
+          {!isCleanMode && (
+            <span className="text-[10px] font-mono text-[var(--text-muted)]">
+              Concise NCERT Core Concepts
+            </span>
+          )}
         </div>
 
         <div className="space-y-2.5">
@@ -210,7 +213,7 @@ export default function Physics4PartSectionView({
           <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5 flex-wrap gap-2">
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               <Calculator size={16} />
-              <span>Part 2: Derivation — Step-by-Step Mathematical Proof</span>
+              <span>{isCleanMode ? 'Derivation — Step-by-Step Mathematical Proof' : 'Part 2: Derivation — Step-by-Step Mathematical Proof'}</span>
             </div>
             <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-500/35">
               📐 DERIVATION{combinedDerivations.length > 1 ? ` (${combinedDerivations.length})` : ''}
@@ -231,7 +234,7 @@ export default function Physics4PartSectionView({
                     <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 shrink-0">
                       DERIVATION {combinedDerivations.length > 1 ? dIdx + 1 : ''}
                     </span>
-                    {d.importance && (
+                    {!isCleanMode && d.importance && (
                       <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/25">
                         {d.importance}
                       </span>
@@ -332,18 +335,20 @@ export default function Physics4PartSectionView({
           <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-accent)]">
               <Compass size={16} />
-              <span>Part 3: Diagram & Exam Drawing Guide</span>
+              <span>{isCleanMode ? 'Visual Diagram' : 'Part 3: Diagram & Exam Drawing Guide'}</span>
             </div>
-            <span className="text-[10px] font-mono text-[var(--text-muted)]">
-              Labeling & Ray Checklist
-            </span>
+            {!isCleanMode && (
+              <span className="text-[10px] font-mono text-[var(--text-muted)]">
+                Labeling & Ray Checklist
+              </span>
+            )}
           </div>
 
           <div className="py-2">
             <PhysicsDiagramCard diagramId={resolvedDiagramId} subMode={resolvedDiagramSubMode} />
           </div>
 
-          {examDrawingGuide && examDrawingGuide.length > 0 && (
+          {!isCleanMode && examDrawingGuide && examDrawingGuide.length > 0 && (
             <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-2">
               <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-primary)] block">
                 CBSE Exam Drawing Checklist:
@@ -367,6 +372,7 @@ export default function Physics4PartSectionView({
       {/* ==================================================================== */}
       {/* PART 4: KEY POINTS, KEYWORDS & BLUEPRINT */}
       {/* ==================================================================== */}
+      {!isCleanMode && (
       <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4">
         <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
@@ -404,6 +410,7 @@ export default function Physics4PartSectionView({
           </div>
         )}
       </div>
+      )}
 
       {/* ==================================================================== */}
       {/* DEDICATED TERMS & VARIABLES GLOSSARY (Shunt, Epsilon, Phi, etc.) */}
@@ -455,7 +462,7 @@ export default function Physics4PartSectionView({
       {/* ==================================================================== */}
       {/* OSWAAL STRUCTURED DEFINITIONS, MEMORY BOOSTER & COMMONLY MADE ERRORS */}
       {/* ==================================================================== */}
-      {oswaalDefinitions.length > 0 && (
+      {!isCleanMode && oswaalDefinitions.length > 0 && (
         <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3">
           <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
@@ -484,7 +491,7 @@ export default function Physics4PartSectionView({
         </div>
       )}
 
-      {oswaalMnemonic && (
+      {!isCleanMode && oswaalMnemonic && (
         <div className="p-4 sm:p-5 rounded-2xl bg-purple-500/10 border-2 border-purple-500/30 shadow-xs space-y-1.5">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
             <Brain size={15} />
@@ -503,7 +510,7 @@ export default function Physics4PartSectionView({
         </div>
       )}
 
-      {commonlyMadeErrors.length > 0 && (
+      {!isCleanMode && commonlyMadeErrors.length > 0 && (
         <div className="p-4 sm:p-5 rounded-2xl bg-rose-500/5 border border-rose-500/30 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
             <AlertTriangle size={15} />
@@ -526,7 +533,7 @@ export default function Physics4PartSectionView({
         </div>
       )}
 
-      {assertionReason && (
+      {!isCleanMode && assertionReason && (
         <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/5 border border-amber-500/30 shadow-xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">

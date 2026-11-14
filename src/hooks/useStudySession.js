@@ -10,6 +10,10 @@ export function useStudySession() {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
+        const savedVersion =
+          parsed.notesVersion === 'D' || parsed.notesVersion === 'NON_D'
+            ? parsed.notesVersion
+            : null;
         // Self-heal and validate state so no stale/mismatched IDs can break the app on page refresh
         if (parsed.selectedSubject && NCERT_SYLLABUS[parsed.selectedSubject]) {
           const subject = NCERT_SYLLABUS[parsed.selectedSubject];
@@ -35,20 +39,46 @@ export function useStudySession() {
 
           return {
             ...parsed,
-            activeSidebarTab: parsed.activeSidebarTab === 'IMPORTANT' ? 'NOTES' : (parsed.activeSidebarTab || 'NOTES'),
+            notesVersion: savedVersion,
+            activeSidebarTab:
+              savedVersion === 'D'
+                ? 'NOTES'
+                : parsed.activeSidebarTab === 'IMPORTANT'
+                ? 'NOTES'
+                : (parsed.activeSidebarTab || 'NOTES'),
             selectedVolume: matchingVolume || parsed.selectedVolume || subject.volumes[0]?.id,
             selectedChapter: matchingChapter,
             selectedSubchapter: matchingSub,
-            chapterStudyMode: parsed.chapterStudyMode === 'QUESTIONS' ? 'GENERAL' : (parsed.chapterStudyMode || 'GENERAL'),
+            chapterStudyMode:
+              parsed.chapterStudyMode === 'QUESTIONS' ||
+              (savedVersion === 'D' && parsed.chapterStudyMode === 'CHEAT_SHEET')
+                ? 'GENERAL'
+                : (parsed.chapterStudyMode || 'GENERAL'),
             userPriorities: parsed.userPriorities || {}
           };
         }
+
+        return {
+          selectedSubject: null,
+          notesVersion: savedVersion,
+          activeSidebarTab: 'NOTES',
+          selectedVolume: null,
+          selectedChapter: null,
+          selectedSubchapter: null,
+          chapterStudyMode: 'GENERAL',
+          completedSections: parsed.completedSections || [],
+          completedSubchapters: parsed.completedSubchapters || [],
+          completedPortionChapters: parsed.completedPortionChapters || [],
+          userNotes: parsed.userNotes || {},
+          userPriorities: parsed.userPriorities || {}
+        };
       }
     } catch (e) {
       console.error('Error loading study session from storage:', e);
     }
     return {
       selectedSubject: null,
+      notesVersion: null,
       activeSidebarTab: 'NOTES', // 'NOTES' | 'PYQ' | 'MCQ' | 'PORTIONS'
       selectedVolume: null,
       selectedChapter: null,
@@ -97,6 +127,17 @@ export function useStudySession() {
 
   const setActiveSidebarTab = useCallback((tab) => {
     setSessionState(prev => ({ ...prev, activeSidebarTab: tab }));
+  }, []);
+
+  const setNotesVersion = useCallback((version) => {
+    setSessionState(prev => ({
+      ...prev,
+      notesVersion: version,
+      chapterStudyMode:
+        version === 'D' && prev.chapterStudyMode === 'CHEAT_SHEET'
+          ? 'GENERAL'
+          : prev.chapterStudyMode
+    }));
   }, []);
 
   const setSelectedVolume = useCallback((volumeId) => {
@@ -339,6 +380,7 @@ export function useStudySession() {
     ...sessionState,
     setSelectedSubject,
     setActiveSidebarTab,
+    setNotesVersion,
     setSelectedVolume,
     setSelectedChapter,
     setSelectedSubchapter,

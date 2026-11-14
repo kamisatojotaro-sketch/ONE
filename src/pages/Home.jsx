@@ -9,6 +9,12 @@ import StatusBadge from '../components/shared/StatusBadge';
 
 export default function Home() {
   const navigate = useNavigate();
+  const goTo = (route) => {
+    if (route === '/notes') {
+      try { sessionStorage.setItem('notes-ask-version', '1'); } catch { /* ignore */ }
+    }
+    navigate(route);
+  };
   const { games = [] } = useGames();
   const { movies = [] } = useMovies();
   const { animeList = [] } = useAnime();
@@ -78,7 +84,7 @@ export default function Home() {
         ].map(item => (
           <button
             key={item.label}
-            onClick={() => navigate(item.route)}
+            onClick={() => goTo(item.route)}
             className="flex items-center gap-2 px-6 py-3 bg-[var(--bg-surface)] border border-[var(--border-default)] rounded-full hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors shadow-sm group cursor-pointer"
           >
             <Plus size={18} className="text-[var(--text-muted)] group-hover:text-[var(--accent-primary)] transition-colors" />
@@ -123,7 +129,7 @@ export default function Home() {
               return (
                 <div 
                   key={`${item.itemType}-${item.id || idx}`}
-                  onClick={() => navigate(item.route)}
+                  onClick={() => goTo(item.route)}
                   className={`flex flex-col sm:flex-row sm:items-center gap-4 p-4 hover:bg-[var(--bg-elevated)] cursor-pointer transition-colors ${
                     idx !== allItems.length - 1 ? 'border-b border-[var(--border-default)]' : ''
                   }`}

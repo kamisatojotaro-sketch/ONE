@@ -65,7 +65,7 @@ function SvgOrthoSubstitutedBenzene({ r1 = 'OH', r2 = 'CHO', sub = 'Salicylaldeh
 }
 
 // Visual Reaction Diagram for a single reaction object
-export function SingleReactionDiagram({ rxn }) {
+export function SingleReactionDiagram({ rxn, isCleanMode = false }) {
   const [showMechanism, setShowMechanism] = useState(false);
 
   return (
@@ -78,7 +78,7 @@ export function SingleReactionDiagram({ rxn }) {
               {rxn.category.toUpperCase()} DIAGRAM
             </span>
             <span className="text-xs font-mono text-[var(--text-muted)]">
-              NCERT CBSE Class 12
+              {isCleanMode ? 'NCERT Class 12' : 'NCERT CBSE Class 12'}
             </span>
           </div>
           <h4 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] mt-1">
@@ -900,7 +900,7 @@ export function SingleReactionDiagram({ rxn }) {
             <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] text-xs font-mono overflow-x-auto">
               <div className="font-bold text-[var(--accent-primary)] mb-2 flex items-center gap-1.5">
                 <Scale size={14} />
-                <span>Quick-Glance CBSE Board Exam Distinction Matrix:</span>
+                <span>{isCleanMode ? 'Quick Comparison Matrix:' : 'Quick-Glance CBSE Board Exam Distinction Matrix:'}</span>
               </div>
               <table className="w-full text-left border-collapse text-[11px]">
                 <thead>
@@ -1243,7 +1243,7 @@ export function SingleReactionDiagram({ rxn }) {
             {rxn.depositionRequirements && (
               <div className="bg-[var(--bg-surface)] rounded-xl border border-[var(--border-subtle)] p-3 space-y-2">
                 <span className="text-xs font-mono font-bold text-[var(--text-primary)] uppercase block">
-                  Stoichiometric Electron & Charge Requirements (CBSE High-Yield):
+                  {isCleanMode ? 'Stoichiometric Electron & Charge Requirements:' : 'Stoichiometric Electron & Charge Requirements (CBSE High-Yield):'}
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {rxn.depositionRequirements.map((req, idx) => (
@@ -1342,7 +1342,9 @@ export function SingleReactionDiagram({ rxn }) {
               </div>
 
               <div className="p-3 bg-[var(--bg-elevated)] rounded-xl border-2 border-emerald-500/60 space-y-1">
-                <span className="text-xs font-mono font-bold text-emerald-500 uppercase block">Total Induced Charge (CBSE Trap!)</span>
+                <span className="text-xs font-mono font-bold text-emerald-500 uppercase block">
+                  {isCleanMode ? 'Total Induced Charge' : 'Total Induced Charge (CBSE Trap!)'}
+                </span>
                 <div className="font-mono text-xs font-bold text-emerald-500">q = (N · ΔΦ) / R</div>
                 <p className="text-[11px] text-[var(--text-secondary)]"><strong>INDEPENDENT OF TIME & SPEED!</strong> Slow and fast motion transfer the EXACT SAME total charge q!</p>
               </div>
@@ -1411,7 +1413,7 @@ export function SingleReactionDiagram({ rxn }) {
       )}
 
       {/* CBSE Board Exam Tip Banner */}
-      {(rxn.boardTip || rxn.boardNote) && (
+      {!isCleanMode && (rxn.boardTip || rxn.boardNote) && (
         <div className="flex items-start gap-2.5 p-3 rounded-xl bg-[var(--badge-recommended-bg)]/15 border border-[var(--badge-recommended-bg)]/30 text-xs text-[var(--text-accent)] font-medium">
           <Info size={15} className="shrink-0 mt-0.5 text-[var(--text-accent)]" />
           <span>
@@ -1424,7 +1426,7 @@ export function SingleReactionDiagram({ rxn }) {
 }
 
 // Master Container Component rendered inside Chapter Drill Down
-export default function ReactionDiagramCard({ subtopicId, chapterId }) {
+export default function ReactionDiagramCard({ subtopicId, chapterId, isCleanMode = false }) {
   // Find matching diagrams for this subtopic or chapter
   const matchingDiagrams = REACTION_DIAGRAMS.filter(d => {
     if (subtopicId && d.subtopicId === subtopicId) return true;
@@ -1448,7 +1450,7 @@ export default function ReactionDiagramCard({ subtopicId, chapterId }) {
 
       <div className="space-y-4">
         {matchingDiagrams.map((rxn) => (
-          <SingleReactionDiagram key={rxn.id} rxn={rxn} />
+          <SingleReactionDiagram key={rxn.id} rxn={rxn} isCleanMode={isCleanMode} />
         ))}
       </div>
     </div>

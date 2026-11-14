@@ -169,7 +169,8 @@ export default function ChapterDrillDown({
   getPriority,
   onSetPriority,
   onResetPriority,
-  onOpenWolframEngine
+  onOpenWolframEngine,
+  isCleanMode = false
 }) {
   const subject = NCERT_SYLLABUS[selectedSubject];
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
@@ -226,7 +227,11 @@ export default function ChapterDrillDown({
           Content Not Available For Now
         </h3>
         <p className="font-sans text-sm text-[var(--text-secondary)] max-w-md mx-auto leading-relaxed">
-          The comprehensive high-yield notes for <strong>{chapter.title}</strong> will be added in upcoming study modules. Currently, complete exam portions are active for Physics and Chemistry Volume 1.
+          {isCleanMode ? (
+            <>Clean textbook notes for <strong>{chapter.title}</strong> will be added soon.</>
+          ) : (
+            <>The comprehensive high-yield notes for <strong>{chapter.title}</strong> will be added in upcoming study modules. Currently, complete exam portions are active for Physics and Chemistry Volume 1.</>
+          )}
         </p>
       </div>
     );
@@ -365,7 +370,7 @@ export default function ChapterDrillDown({
                               {subtopicObj.title}
                             </span>
                           )}
-                          {drv.importance && (
+                          {!isCleanMode && drv.importance && (
                             <span className="px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/25 text-[10px] font-mono font-bold">
                               {drv.importance}
                             </span>
@@ -519,14 +524,16 @@ export default function ChapterDrillDown({
                 <span>/</span>
                 <span className="shrink-0">Ch {chapter.number}</span>
               </div>
-              <PriorityBadge
-                id={chapter.id}
-                rating={getPriority ? getPriority(chapter.id) : undefined}
-                onChangePriority={onSetPriority}
-                onResetPriority={onResetPriority}
-                title={chapter.title}
-                size="sm"
-              />
+              {!isCleanMode && (
+                <PriorityBadge
+                  id={chapter.id}
+                  rating={getPriority ? getPriority(chapter.id) : undefined}
+                  onChangePriority={onSetPriority}
+                  onResetPriority={onResetPriority}
+                  title={chapter.title}
+                  size="sm"
+                />
+              )}
             </div>
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] mt-0.5 truncate">
               {chapter.title}
@@ -544,7 +551,7 @@ export default function ChapterDrillDown({
             {chapter.subchapters.map((sub) => {
               const subCompleted = completedSubchapters.includes(sub.id);
               const pRating = getPriority ? getPriority(sub.id) : undefined;
-              const pTag = pRating !== undefined ? `[P: ${pRating}/10] ` : '';
+              const pTag = !isCleanMode && pRating !== undefined ? `[P: ${pRating}/10] ` : '';
               const drvCount = getSubtopicDerivationCount(sub);
               const drvTag = drvCount > 0 ? `📐 [DERIVATION${drvCount > 1 ? ` ×${drvCount}` : ''}] ` : '';
               return (
@@ -574,14 +581,16 @@ export default function ChapterDrillDown({
                   📐 DERIVATION{currentSubDrvCount > 1 ? ` (${currentSubDrvCount})` : ''}
                 </span>
               )}
-              <PriorityBadge
-                id={currentSubchapter.id}
-                rating={getPriority ? getPriority(currentSubchapter.id) : undefined}
-                onChangePriority={onSetPriority}
-                onResetPriority={onResetPriority}
-                title={currentSubchapter.title}
-                size="sm"
-              />
+              {!isCleanMode && (
+                <PriorityBadge
+                  id={currentSubchapter.id}
+                  rating={getPriority ? getPriority(currentSubchapter.id) : undefined}
+                  onChangePriority={onSetPriority}
+                  onResetPriority={onResetPriority}
+                  title={currentSubchapter.title}
+                  size="sm"
+                />
+              )}
             </div>
             <h3 className="font-serif text-base sm:text-lg md:text-xl font-bold text-[var(--text-primary)] truncate">
               {currentSubchapter.title}
@@ -589,7 +598,7 @@ export default function ChapterDrillDown({
           </div>
         </div>
         <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
-          {onOpenWolframEngine && (
+          {!isCleanMode && onOpenWolframEngine && (
             <button
               onClick={onOpenWolframEngine}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border border-indigo-500/25 text-xs font-semibold cursor-pointer transition-all shadow-xs"
@@ -606,6 +615,7 @@ export default function ChapterDrillDown({
       </div>
 
       {/* Mode Switcher Banner: General Study vs Chapter Derivations vs Quick Cheat Sheet */}
+      {(!isCleanMode || totalChapterDerivationsCount > 0) && (
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs">
         <div className="flex items-center gap-2.5">
           <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
@@ -619,13 +629,15 @@ export default function ChapterDrillDown({
           </div>
           <div>
             <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
-              Study Focus Mode
+              {isCleanMode ? 'View' : 'Study Focus Mode'}
             </span>
             <h4 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
               {chapterStudyMode === 'DERIVATIONS'
                 ? `All Chapter ${chapter.number} Derivations (${totalChapterDerivationsCount})`
-                : chapterStudyMode === 'CHEAT_SHEET'
+                : !isCleanMode && chapterStudyMode === 'CHEAT_SHEET'
                 ? 'Whole-Chapter Quick Cheat Sheet & Memory Boosters'
+                : isCleanMode
+                ? 'Study Notes'
                 : 'General Study & Complete NCERT Notes'}
             </h4>
           </div>
@@ -642,7 +654,7 @@ export default function ChapterDrillDown({
             }`}
           >
             <BookOpen size={13} />
-            <span>General Study</span>
+            <span>{isCleanMode ? 'Study Notes' : 'General Study'}</span>
           </button>
           {(selectedSubject === 'physics' || totalChapterDerivationsCount > 0) && (
             <button
@@ -657,33 +669,40 @@ export default function ChapterDrillDown({
               <span>Derivations ({totalChapterDerivationsCount})</span>
             </button>
           )}
-          <button
-            onClick={() => onSetChapterStudyMode?.('CHEAT_SHEET')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
-              chapterStudyMode === 'CHEAT_SHEET'
-                ? 'bg-[var(--accent-primary)] text-white shadow-xs'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-            }`}
-          >
-            <Zap size={13} />
-            <span>Quick Cheat Sheet</span>
-          </button>
+          {!isCleanMode && (
+            <button
+              onClick={() => onSetChapterStudyMode?.('CHEAT_SHEET')}
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
+                chapterStudyMode === 'CHEAT_SHEET'
+                  ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              <Zap size={13} />
+              <span>Quick Cheat Sheet</span>
+            </button>
+          )}
         </div>
       </div>
+      )}
 
       {chapterStudyMode === 'DERIVATIONS' && (
         <div className="space-y-6 animate-in fade-in duration-300">
           <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/35 text-xs text-emerald-700 dark:text-emerald-300 font-medium shadow-2xs">
             <Compass size={16} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
             <span>
-              <strong>Chapter Derivations Mode:</strong> Showing all <strong>{totalChapterDerivationsCount}</strong> step-by-step mathematical derivations, schematic diagrams, and boxed final formulas for <strong>Ch {chapter.number}: {chapter.title}</strong> in one dedicated section.
+              {isCleanMode ? (
+                <>Showing all <strong>{totalChapterDerivationsCount}</strong> derivations, diagrams, and final formulas for <strong>Ch {chapter.number}: {chapter.title}</strong>.</>
+              ) : (
+                <><strong>Chapter Derivations Mode:</strong> Showing all <strong>{totalChapterDerivationsCount}</strong> step-by-step mathematical derivations, schematic diagrams, and boxed final formulas for <strong>Ch {chapter.number}: {chapter.title}</strong> in one dedicated section.</>
+              )}
             </span>
           </div>
           {renderChapterDerivationsSection()}
         </div>
       )}
 
-      {chapterStudyMode === 'CHEAT_SHEET' && (
+      {!isCleanMode && chapterStudyMode === 'CHEAT_SHEET' && (
         <div className="space-y-6 animate-in fade-in duration-300">
           <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-xs text-purple-600 dark:text-purple-400 font-medium shadow-2xs">
             <Zap size={16} className="shrink-0" />
@@ -838,6 +857,7 @@ export default function ChapterDrillDown({
                   chapterId={selectedChapter}
                   diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
                   diagramSubMode={PHYSICS_SUBTOPIC_SUBMODES[currentSubchapter.id]}
+                  isCleanMode={isCleanMode}
                 />
               ) : (
                 <>
@@ -848,6 +868,7 @@ export default function ChapterDrillDown({
                     subtopicId={currentSubchapter.id}
                     chapterId={selectedChapter}
                     subjectId={selectedSubject}
+                    isCleanMode={isCleanMode}
                   />
 
                   {/* 2. Key Formulas with Variable Breakdown Card */}
@@ -862,6 +883,7 @@ export default function ChapterDrillDown({
                   <ReactionDiagramCard
                     subtopicId={currentSubchapter.id}
                     chapterId={selectedChapter}
+                    isCleanMode={isCleanMode}
                   />
 
                   {/* Visual Physics Concept & Derivation Diagrams */}
@@ -875,7 +897,7 @@ export default function ChapterDrillDown({
                   )}
 
                   {/* 3. How questions could be framed / asked */}
-                  {section.questionFraming && (
+                  {!isCleanMode && section.questionFraming && (
                     <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
@@ -919,6 +941,7 @@ export default function ChapterDrillDown({
               )}
 
               {/* 5. Subtopic-Level 20 MCQs and Board PYQs Practice Drawer */}
+              {!isCleanMode && (
               <div className="pt-1">
                 <button
                   onClick={() => togglePracticeSection(section.id)}
@@ -947,6 +970,7 @@ export default function ChapterDrillDown({
                   </div>
                 )}
               </div>
+              )}
 
               {/* 6. Custom User Notepad for this subtopic */}
               <div className="pt-3 sm:pt-4 border-t border-[var(--border-subtle)]">
@@ -1003,7 +1027,7 @@ export default function ChapterDrillDown({
       )}
 
       {/* Dedicated Chapter-Level Derivations Section directly on the Chapter Page in General Study Mode */}
-      {chapterStudyMode === 'GENERAL' && totalChapterDerivationsCount > 0 && (
+      {!isCleanMode && chapterStudyMode === 'GENERAL' && totalChapterDerivationsCount > 0 && (
         <div className="pt-2">
           {renderChapterDerivationsSection()}
         </div>
