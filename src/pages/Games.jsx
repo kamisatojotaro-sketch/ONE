@@ -5,6 +5,7 @@ import { GameCard } from '../components/games/GameCard';
 import { AddGameModal } from '../components/games/AddGameModal';
 import { GameDetail } from '../components/games/GameDetail';
 import { GameStats } from '../components/games/GameStats';
+import { CustomSelect } from '../components/shared/CustomSelect';
 
 const FILTER_TABS = ['All', 'Playing', 'Completed', 'Backlog', 'On Hold', 'Dropped'];
 
@@ -106,7 +107,7 @@ export default function Games() {
           </div>
           <div className="flex items-center gap-2">
             <Filter size={14} className="text-[var(--text-muted)] hidden sm:block" />
-            <select
+            <CustomSelect
               value={sortBy}
               onChange={e => setSortBy(e.target.value)}
               className="bg-[var(--bg-base)] text-sm border border-[var(--border-default)] rounded-full py-1.5 px-3 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] cursor-pointer"
@@ -116,7 +117,7 @@ export default function Games() {
               <option value="title_asc">Title A-Z</option>
               <option value="rating_desc">Highest Rated</option>
               <option value="hours_desc">Most Played</option>
-            </select>
+            </CustomSelect>
           </div>
         </div>
       </div>

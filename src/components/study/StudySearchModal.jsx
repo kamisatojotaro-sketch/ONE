@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Search, X, Globe, Zap, FlaskConical, Dna, Brain, 
   BookOpen, Bookmark, FileText, ArrowRight, CornerDownLeft, 
@@ -201,9 +202,9 @@ export default function StudySearchModal({
     ...(!isCleanMode ? [{ id: 'question', label: 'Board Qs' }] : [])
   ];
 
-  return (
+  return createPortal(
     <div 
-      className="fixed inset-0 z-50 flex items-end sm:items-start justify-center sm:pt-16 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 cursor-pointer"
+      className="fixed inset-0 z-[100] flex items-end sm:items-start justify-center sm:pt-16 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 cursor-pointer"
       onClick={onClose}
     >
       <div 
@@ -480,6 +481,7 @@ export default function StudySearchModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

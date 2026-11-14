@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Trash2, Edit3, Save } from 'lucide-react';
+import { CustomSelect } from '../shared/CustomSelect';
 
 const STATUS_OPTIONS = [
   { value: 'watching', label: 'Watching' },
@@ -110,9 +111,9 @@ export default function AnimeDetail({ anime, onClose, onUpdate, onDelete }) {
                 </>
               ) : (
                 <div className="space-y-3">
-                  <select name="status" value={formData.status} onChange={handleChange} className="w-full px-3 py-1.5 text-sm bg-[var(--bg-base)] border border-[var(--border-default)] rounded-md">
+                  <CustomSelect name="status" value={formData.status} onChange={handleChange} className="w-full px-3 py-1.5 text-sm bg-[var(--bg-base)] border border-[var(--border-default)] rounded-md">
                     {STATUS_OPTIONS.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                  </select>
+                  </CustomSelect>
                   <div className="flex items-center gap-2">
                     <input type="number" name="episodesWatched" value={formData.episodesWatched} onChange={handleChange} className="w-16 px-2 py-1 text-sm bg-[var(--bg-base)] border border-[var(--border-default)] rounded-md text-center" />
                     <span className="text-[var(--text-muted)]">/</span>

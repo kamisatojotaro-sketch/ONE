@@ -1,6 +1,7 @@
-import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, ChevronDown, Search, Globe, Sparkles } from 'lucide-react';
+import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, Search, Globe } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { useTimer } from '../../context/TimerContext';
+import CustomSelect from '../shared/CustomSelect';
 
 export default function StudyHeader({
   isCleanMode = false,
@@ -56,10 +57,10 @@ export default function StudyHeader({
             {isCleanMode && selectedSubject === 'physics' && onOpenPhysicsImportantQuestions && (
               <button
                 onClick={() => onOpenPhysicsImportantQuestions()}
-                className="px-2.5 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition-all min-h-[36px] flex items-center gap-1.5 touch-manipulation cursor-pointer shadow-xs"
+                className="px-2.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] text-xs font-medium hover:bg-[var(--bg-surface-hover)] transition-all min-h-[36px] flex items-center gap-1.5 touch-manipulation cursor-pointer"
                 title="Open Physics Important Questions Pop-up"
               >
-                <Sparkles size={14} />
+                <BookOpen size={14} className="text-[var(--accent-primary)]" />
                 <span>Imp Qs</span>
               </button>
             )}
@@ -87,10 +88,10 @@ export default function StudyHeader({
           {isCleanMode && selectedSubject === 'physics' && onOpenPhysicsImportantQuestions && (
             <button
               onClick={() => onOpenPhysicsImportantQuestions()}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm transition-all shadow-xs cursor-pointer"
-              title="Open Recently Added Physics Important Questions & Derivations Pop-up"
+              className="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-[var(--text-primary)] font-medium text-xs sm:text-sm transition-all hover:shadow-xs cursor-pointer"
+              title="Open Physics Important Questions & Derivations Pop-up"
             >
-              <Sparkles size={14} className="shrink-0" />
+              <BookOpen size={14} className="text-[var(--accent-primary)] shrink-0" />
               <span>Important Questions</span>
             </button>
           )}
@@ -125,18 +126,17 @@ export default function StudyHeader({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-center gap-2 sm:gap-3 shrink-0">
           {/* NCERT Volume Dropdown */}
           <div className="relative w-full lg:w-auto">
-            <select
+            <CustomSelect
               value={selectedVolume || ''}
               onChange={(e) => onSelectVolume(e.target.value)}
-              className="w-full lg:w-auto appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 pr-9 rounded-xl font-medium text-xs sm:text-sm cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-sm"
+              className="w-full lg:min-w-[230px] bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
             >
               {subject.volumes.map((vol) => (
-                <option key={vol.id} value={vol.id} className="bg-[var(--bg-surface)] text-[var(--text-primary)]">
+                <option key={vol.id} value={vol.id}>
                   {vol.title}
                 </option>
               ))}
-            </select>
-            <ChevronDown size={15} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+            </CustomSelect>
           </div>
 
           {/* Study Timer Widget */}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X, AlertCircle, Key, Check, Plus, Edit3 } from 'lucide-react';
 import { searchGames, getRawgApiKey } from '../../api/rawg';
+import { CustomSelect } from '../shared/CustomSelect';
 
 const PLATFORMS = ['PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile', 'Other'];
 const STATUSES = ['playing', 'completed', 'dropped', 'backlog', 'on_hold'];
@@ -325,7 +326,7 @@ export function AddGameModal({ isOpen, onClose, onAdd }) {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-[var(--text-secondary)] mb-1">Status</label>
-                  <select 
+                  <CustomSelect 
                     value={formData.status} 
                     onChange={e => setFormData({...formData, status: e.target.value})} 
                     className="w-full bg-[var(--bg-base)] border border-[var(--border-default)] rounded-lg px-4 py-2 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)]"
@@ -333,7 +334,7 @@ export function AddGameModal({ isOpen, onClose, onAdd }) {
                     {STATUSES.map(s => (
                       <option key={s} value={s}>{s.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</option>
                     ))}
-                  </select>
+                  </CustomSelect>
                 </div>
                 <div>
                   <label className="block text-sm text-[var(--text-secondary)] mb-1">Genres (comma separated)</label>

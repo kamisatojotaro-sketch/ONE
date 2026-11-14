@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../shared/Modal';
+import { CustomSelect } from '../shared/CustomSelect';
 
 const PLATFORMS = ['spotify', 'youtube_music', 'apple_music', 'other'];
 const STATUSES = ['listening', 'loved', 'on_repeat', 'archived'];
@@ -66,19 +67,19 @@ export function AddMusicModal({ isOpen, onClose, onAdd }) {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-[var(--text-secondary)] mb-1">Platform</label>
-            <select value={formData.platform} onChange={e => setFormData({...formData, platform: e.target.value})} className="w-full bg-[var(--bg-base)] border border-[var(--border-default)] rounded-lg px-4 py-2 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)]">
+            <CustomSelect value={formData.platform} onChange={e => setFormData({...formData, platform: e.target.value})} className="w-full bg-[var(--bg-base)] border border-[var(--border-default)] rounded-lg px-4 py-2 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)]">
               {PLATFORMS.map(p => (
                 <option key={p} value={p}>{p.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</option>
               ))}
-            </select>
+            </CustomSelect>
           </div>
           <div>
             <label className="block text-sm text-[var(--text-secondary)] mb-1">Status</label>
-            <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-[var(--bg-base)] border border-[var(--border-default)] rounded-lg px-4 py-2 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)]">
+            <CustomSelect value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-[var(--bg-base)] border border-[var(--border-default)] rounded-lg px-4 py-2 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)]">
               {STATUSES.map(s => (
                 <option key={s} value={s}>{s.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</option>
               ))}
-            </select>
+            </CustomSelect>
           </div>
           <div>
             <label className="block text-sm text-[var(--text-secondary)] mb-1">Genres (comma separated)</label>

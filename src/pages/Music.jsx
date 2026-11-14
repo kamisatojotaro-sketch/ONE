@@ -5,6 +5,7 @@ import { MusicCard } from '../components/music/MusicCard';
 import { AddMusicModal } from '../components/music/AddMusicModal';
 import { MusicDetail } from '../components/music/MusicDetail';
 import { MusicStats } from '../components/music/MusicStats';
+import { CustomSelect } from '../components/shared/CustomSelect';
 
 const FILTER_TABS = ['All', 'Listening', 'Loved', 'On Repeat', 'Archived'];
 
@@ -110,7 +111,7 @@ export default function MusicPage() {
           </div>
           <div className="flex items-center gap-2">
             <Filter size={14} className="text-[var(--text-muted)] hidden sm:block" />
-            <select
+            <CustomSelect
               value={sortBy}
               onChange={e => setSortBy(e.target.value)}
               className="bg-[var(--bg-base)] text-sm border border-[var(--border-default)] rounded-full py-1.5 px-3 text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)] cursor-pointer"
@@ -121,7 +122,7 @@ export default function MusicPage() {
               <option value="artist_asc">Artist A-Z</option>
               <option value="rating_desc">Highest Rated</option>
               <option value="plays_desc">Most Played</option>
-            </select>
+            </CustomSelect>
           </div>
         </div>
       </div>

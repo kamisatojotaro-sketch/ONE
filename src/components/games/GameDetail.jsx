@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Star, Clock, Calendar, Trash2 } from 'lucide-react';
+import { CustomSelect } from '../shared/CustomSelect';
 
 const STATUSES = ['playing', 'completed', 'dropped', 'backlog', 'on_hold'];
 
@@ -73,7 +74,7 @@ export function GameDetail({ game, isOpen, onClose, onUpdate, onDelete }) {
           <div className="flex items-center gap-4 border-b border-[var(--border-subtle)] pb-4">
             <div className="flex-1">
               <label className="text-xs text-[var(--text-muted)] uppercase tracking-wider block mb-1">Status</label>
-              <select 
+              <CustomSelect 
                 value={formData.status || 'backlog'} 
                 onChange={(e) => handleChange('status', e.target.value)}
                 onBlur={handleBlur}
@@ -84,7 +85,7 @@ export function GameDetail({ game, isOpen, onClose, onUpdate, onDelete }) {
                     {s.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                   </option>
                 ))}
-              </select>
+              </CustomSelect>
             </div>
 
             <div className="flex-1">

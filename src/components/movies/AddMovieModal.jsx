@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, Loader2, Key, Check, Edit3 } from 'lucide-react';
 import Modal from '../shared/Modal';
+import { CustomSelect } from '../shared/CustomSelect';
 import { searchMovies, getMovieDetails, getImageUrl } from '../../api/tmdb';
 
 const STATUSES = ['watching', 'want_to_watch', 'watched', 'rewatching', 'dropped'];
@@ -264,7 +265,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd }) {
               </div>
               <div>
                 <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1">Status</label>
-                <select
+                <CustomSelect
                   value={formData.status}
                   onChange={e => setFormData({ ...formData, status: e.target.value })}
                   className="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent-primary)]"
@@ -272,7 +273,7 @@ export default function AddMovieModal({ isOpen, onClose, onAdd }) {
                   {STATUSES.map(s => (
                     <option key={s} value={s}>{s.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</option>
                   ))}
-                </select>
+                </CustomSelect>
               </div>
             </div>
 

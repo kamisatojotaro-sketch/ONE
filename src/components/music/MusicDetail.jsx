@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Star, Play, Trash2, Music } from 'lucide-react';
+import { CustomSelect } from '../shared/CustomSelect';
 
 const STATUSES = ['listening', 'loved', 'on_repeat', 'archived'];
 
@@ -67,7 +68,7 @@ export function MusicDetail({ track, isOpen, onClose, onUpdate, onDelete }) {
           <div className="flex flex-wrap items-center gap-4 border-b border-[var(--border-subtle)] pb-4">
             <div className="flex-1 min-w-[120px]">
               <label className="text-xs text-[var(--text-muted)] uppercase tracking-wider block mb-1">Status</label>
-              <select 
+              <CustomSelect 
                 value={formData.status || 'listening'} 
                 onChange={(e) => handleChange('status', e.target.value)}
                 onBlur={handleBlur}
@@ -78,7 +79,7 @@ export function MusicDetail({ track, isOpen, onClose, onUpdate, onDelete }) {
                     {s.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                   </option>
                 ))}
-              </select>
+              </CustomSelect>
             </div>
 
             <div className="flex-1 min-w-[120px]">

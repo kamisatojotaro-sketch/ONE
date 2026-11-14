@@ -10,6 +10,7 @@ import PhysicsDiagramCard from './PhysicsDiagramCard';
 import StructuredSectionView from './StructuredSectionView';
 import PriorityBadge from './PriorityBadge';
 import Physics4PartSectionView from './Physics4PartSectionView';
+import CustomSelect from '../shared/CustomSelect';
 import { getDerivationsByChapter, getDerivationsBySubtopic } from '../../data/physicsDerivationsReference';
 import { getPhysicsSectionEnrichment } from '../../data/physicsSectionEnrichments';
 
@@ -543,25 +544,29 @@ export default function ChapterDrillDown({
 
         {/* Subchapter Selector Dropdown */}
         <div className="relative w-full md:w-auto">
-          <select
+          <CustomSelect
             value={currentSubchapter.id}
             onChange={(e) => onSelectSubchapter(e.target.value)}
-            className="w-full md:w-96 appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 pr-10 rounded-xl font-medium text-xs sm:text-sm cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-sm"
+            className="w-full md:w-96 bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
           >
             {chapter.subchapters.map((sub) => {
               const subCompleted = completedSubchapters.includes(sub.id);
               const pRating = getPriority ? getPriority(sub.id) : undefined;
               const pTag = !isCleanMode && pRating !== undefined ? `[P: ${pRating}/10] ` : '';
               const drvCount = getSubtopicDerivationCount(sub);
-              const drvTag = drvCount > 0 ? `📐 [DERIVATION${drvCount > 1 ? ` ×${drvCount}` : ''}] ` : '';
+              const drvBadge = drvCount > 0 ? (drvCount > 1 ? `Derivation ×${drvCount}` : 'Derivation') : undefined;
               return (
-                <option key={sub.id} value={sub.id} className="bg-[var(--bg-surface)] text-[var(--text-primary)]">
-                  {subCompleted ? '✓ ' : ''}{drvTag}{pTag}{sub.title}
+                <option
+                  key={sub.id}
+                  value={sub.id}
+                  data-completed={subCompleted}
+                  data-badge={drvBadge}
+                >
+                  {pTag}{sub.title}
                 </option>
               );
             })}
-          </select>
-          <ChevronDown size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+          </CustomSelect>
         </div>
       </div>
 

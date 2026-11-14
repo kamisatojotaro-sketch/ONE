@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { CheckCircle2, XCircle, RotateCcw, CheckSquare, Filter, Sparkles, Trophy, RotateCw, ArrowRight, ChevronDown } from 'lucide-react';
 import { getGeneratedMCQs } from '../../data/questionEngine';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import CustomSelect from '../shared/CustomSelect';
 
 export default function McqTabContent({
   selectedSubject,
@@ -141,7 +142,7 @@ export default function McqTabContent({
           <div className="flex items-center gap-1.5">
             <Filter size={13} className="text-[var(--text-muted)] shrink-0" />
             <div className="relative w-full sm:w-52">
-              <select
+              <CustomSelect
                 value={chapterFilter}
                 onChange={(e) => {
                   const val = e.target.value;
@@ -152,7 +153,7 @@ export default function McqTabContent({
                     onSelectChapter(val);
                   }
                 }}
-                className="w-full appearance-none bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-xs"
+                className="w-full bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 rounded-xl font-medium text-xs hover:border-[var(--accent-primary)] shadow-xs"
               >
                 <option value="ALL">All Syllabus Chapters</option>
                 {availableChapters.map((ch) => (
@@ -160,21 +161,20 @@ export default function McqTabContent({
                     {ch.title}
                   </option>
                 ))}
-              </select>
-              <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+              </CustomSelect>
             </div>
           </div>
 
           {/* Subchapter Filter (when chapter is selected) */}
           {chapterFilter !== 'ALL' && availableSubchapters.length > 0 && (
             <div className="relative w-full sm:w-56">
-              <select
+              <CustomSelect
                 value={subchapterFilter}
                 onChange={(e) => {
                   setSubchapterFilter(e.target.value);
                   setSelectedAnswers({});
                 }}
-                className="w-full appearance-none bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-xs"
+                className="w-full bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 rounded-xl font-medium text-xs hover:border-[var(--accent-primary)] shadow-xs"
               >
                 <option value="ALL">All Subchapters in Ch</option>
                 {availableSubchapters.map((sub) => (
@@ -182,8 +182,7 @@ export default function McqTabContent({
                     {sub.title}
                   </option>
                 ))}
-              </select>
-              <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+              </CustomSelect>
             </div>
           )}
 

@@ -5,6 +5,7 @@ import PriorityBadge from './PriorityBadge';
 import { getDefaultPriority } from '../../data/priorityData';
 import { getDerivationsByChapter } from '../../data/physicsDerivationsReference';
 import PhysicsDerivationsReferencePanel from './PhysicsDerivationsReferencePanel';
+import CustomSelect from '../shared/CustomSelect';
 
 export default function ChapterList({
   isCleanMode = false,
@@ -165,15 +166,15 @@ export default function ChapterList({
         {/* Sort Controls */}
         <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
           <span className="text-[11px] font-mono text-[var(--text-muted)] hidden md:inline">Sort:</span>
-          <select
+          <CustomSelect
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="text-xs font-semibold bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 rounded-xl cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)]"
+            className="min-w-[175px] text-xs font-semibold bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 rounded-xl hover:border-[var(--accent-primary)]"
           >
             <option value="DEFAULT">Syllabus Order</option>
             <option value="PRIORITY_DESC">🔥 Priority: High to Low</option>
             <option value="PRIORITY_ASC">⚡ Priority: Low to High</option>
-          </select>
+          </CustomSelect>
         </div>
       </div>
       )}

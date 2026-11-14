@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { searchAnime } from '../../api/jikan';
 import { Search, X, Loader2 } from 'lucide-react';
+import { CustomSelect } from '../shared/CustomSelect';
 
 export default function AddAnimeModal({ isOpen, onClose, onAdd }) {
   const [query, setQuery] = useState('');
@@ -175,13 +176,13 @@ export default function AddAnimeModal({ isOpen, onClose, onAdd }) {
                 
                 <div className="space-y-1">
                   <label className="text-sm font-medium text-[var(--text-secondary)]">Status</label>
-                  <select name="status" value={formData.status} onChange={handleChange} className="w-full px-3 py-2 bg-[var(--bg-base)] border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--accent-primary)] text-[var(--text-primary)]">
+                  <CustomSelect name="status" value={formData.status} onChange={handleChange} className="w-full px-3 py-2 bg-[var(--bg-base)] border border-[var(--border-default)] rounded-lg focus:outline-none focus:border-[var(--accent-primary)] text-[var(--text-primary)]">
                     <option value="watching">Watching</option>
                     <option value="completed">Completed</option>
                     <option value="plan_to_watch">Plan to Watch</option>
                     <option value="on_hold">On Hold</option>
                     <option value="dropped">Dropped</option>
-                  </select>
+                  </CustomSelect>
                 </div>
 
                 <div className="space-y-1">

@@ -9,6 +9,7 @@ import { getTestMakerMCQs, getTestMakerPYQs } from '../../data/questionEngine';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { formatMathString } from './FormulaCard';
 import PriorityBadge from './PriorityBadge';
+import CustomSelect from '../shared/CustomSelect';
 
 export default function TestMakerTabContent({
   selectedSubject: initialSubject = 'physics',
@@ -489,7 +490,7 @@ export default function TestMakerTabContent({
                   </div>
                 )}
                 <div className="relative flex-1 min-w-[180px] w-full">
-                  <select
+                  <CustomSelect
                     value={currentChapterId || ''}
                     onChange={(e) => {
                       const newChId = e.target.value;
@@ -502,15 +503,14 @@ export default function TestMakerTabContent({
                         setSelectedSubtopicIds([]);
                       }
                     }}
-                    className="w-full max-w-full truncate appearance-none bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 pr-8 rounded-xl font-medium text-xs cursor-pointer hover:border-[var(--accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-primary)] transition-colors shadow-2xs"
+                    className="w-full max-w-full bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3 py-1.5 rounded-xl font-medium text-xs hover:border-[var(--accent-primary)] shadow-2xs"
                   >
                     {availableChapters.map(ch => (
                       <option key={ch.id} value={ch.id}>
                         Ch {ch.number}: {ch.title}
                       </option>
                     ))}
-                  </select>
-                  <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-muted)]" />
+                  </CustomSelect>
                 </div>
               </div>
 

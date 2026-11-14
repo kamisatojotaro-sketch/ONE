@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Trash2, Edit3, Check } from 'lucide-react';
 import Modal from '../shared/Modal';
+import { CustomSelect } from '../shared/CustomSelect';
 import RatingInput from '../shared/RatingInput';
 import StatusBadge from '../shared/StatusBadge';
 import GenreTag from '../shared/GenreTag';
@@ -77,7 +78,7 @@ export default function MovieDetail({ movie, isOpen, onClose, onUpdate, onDelete
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-[var(--text-secondary)] mb-1 font-serif italic">Status</label>
-                <select 
+                <CustomSelect 
                   value={editForm.status} 
                   onChange={(e) => setEditForm({...editForm, status: e.target.value})}
                   className="w-full p-2 bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-xl"
@@ -87,7 +88,7 @@ export default function MovieDetail({ movie, isOpen, onClose, onUpdate, onDelete
                   <option value="want_to_watch">Want to Watch</option>
                   <option value="rewatching">Rewatching</option>
                   <option value="dropped">Dropped</option>
-                </select>
+                </CustomSelect>
               </div>
               <div>
                 <label className="block text-sm text-[var(--text-secondary)] mb-1 font-serif italic">Rating</label>
