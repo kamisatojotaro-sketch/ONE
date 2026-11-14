@@ -535,7 +535,7 @@ export default function ChapterDrillDown({
                 />
               )}
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] mt-0.5 truncate">
+            <h2 className="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] mt-0.5 line-clamp-2 sm:truncate leading-tight">
               {chapter.title}
             </h2>
           </div>
@@ -592,7 +592,7 @@ export default function ChapterDrillDown({
                 />
               )}
             </div>
-            <h3 className="font-serif text-base sm:text-lg md:text-xl font-bold text-[var(--text-primary)] truncate">
+            <h3 className="font-serif text-sm sm:text-lg md:text-xl font-bold text-[var(--text-primary)] line-clamp-2 sm:truncate leading-snug">
               {currentSubchapter.title}
             </h3>
           </div>
@@ -818,7 +818,7 @@ export default function ChapterDrillDown({
               <div className="flex items-start justify-between gap-3 sm:gap-4 border-b border-[var(--border-subtle)] pb-4 sm:pb-5">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap mb-1.5 sm:mb-2">
-                    <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[10px] sm:text-[11px] font-mono text-[var(--text-accent)] font-semibold uppercase tracking-wider">
+                    <div className="inline-flex max-w-full items-center gap-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[10px] sm:text-[11px] font-mono text-[var(--text-accent)] font-semibold uppercase tracking-wider">
                       <span className="truncate">{currentSubchapter.title}</span>
                     </div>
                     {sectionHasDerivation && (

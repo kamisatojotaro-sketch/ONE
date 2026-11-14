@@ -97,9 +97,10 @@ export default function SubjectGrid({
                 <Search size={16} />
               </div>
               <div className="min-w-0">
-                <div className="text-xs sm:text-sm font-medium text-[var(--text-primary)] truncate flex items-center gap-2">
-                  <span>Universal Knowledge & Topic Search</span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono">
+                <div className="text-xs sm:text-sm font-medium text-[var(--text-primary)] flex items-center gap-2 min-w-0">
+                  <span className="sm:hidden truncate">Search Topics &amp; Formulas</span>
+                  <span className="hidden sm:inline truncate">Universal Knowledge &amp; Topic Search</span>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono shrink-0">
                     All Subjects
                   </span>
                 </div>

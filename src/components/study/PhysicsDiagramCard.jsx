@@ -2773,7 +2773,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
     const content = (
       <div className="space-y-4">
         {!(inline && subMode) && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 flex-nowrap sm:flex-wrap">
             {[
               { id: 'mirror', label: '1. Mirror (R=2f)' },
               { id: 'spherical-surface', label: '2. Spherical Refraction' },
@@ -2786,7 +2786,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
                 key={t.id}
                 type="button"
                 onClick={() => setRayOpticsMode(t.id)}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 whitespace-nowrap px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   activeRay === t.id
                     ? 'bg-blue-600 text-white shadow-sm'
                     : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)] hover:border-blue-500/40'
@@ -3148,7 +3148,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
     const content = (
       <div className="space-y-4">
         {!(inline && subMode) && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 flex-nowrap sm:flex-wrap">
             {[
               { id: 'experimental-setup', label: '1. Quartz Tube Setup' },
               { id: 'collector-potential', label: '2. i vs V Curves' },
@@ -3159,7 +3159,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
                 key={t.id}
                 type="button"
                 onClick={() => setPhotoMode(t.id)}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 whitespace-nowrap px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   activePhoto === t.id ? 'bg-amber-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
                 }`}
               >
@@ -3583,7 +3583,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
     const content = (
       <div className="space-y-4">
         {!(inline && subMode) && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 flex-nowrap sm:flex-wrap">
             {[
               { id: 'energy-bands', label: '1. Energy Bands (n / p-Type)' },
               { id: 'depletion-layer', label: '2. p-n Junction Depletion' },
@@ -3594,7 +3594,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
                 key={t.id}
                 type="button"
                 onClick={() => setSemiMode(t.id)}
-                className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 whitespace-nowrap px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   activeSemi === t.id ? 'bg-amber-600 text-white shadow-sm' : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
                 }`}
               >
@@ -3633,7 +3633,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
     const content = (
       <div className="space-y-4">
         {!(inline && subMode) && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 flex-nowrap sm:flex-wrap">
             {[
               { id: 0, label: 'Types of Wavefronts' },
               { id: 1, label: 'Reflection (i = r)' },
@@ -3644,7 +3644,7 @@ export default function PhysicsDiagramCard({ diagramId, subMode, inline = false 
                 key={t.id}
                 type="button"
                 onClick={() => setHuygensTab(t.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   activeHuygens === t.id
                     ? 'bg-sky-600 text-white shadow-sm'
                     : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)] hover:border-sky-500/40'

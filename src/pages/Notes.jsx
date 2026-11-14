@@ -12,6 +12,7 @@ import McqTabContent from '../components/study/McqTabContent';
 import TestMakerTabContent from '../components/study/TestMakerTabContent';
 import SamplePaperTabContent from '../components/study/SamplePaperTabContent';
 import StudySearchModal from '../components/study/StudySearchModal';
+import PhysicsImportantQuestionsModal from '../components/study/PhysicsImportantQuestionsModal';
 import WolframEngine from '../components/calculator/WolframEngine';
 
 export default function Notes() {
@@ -60,6 +61,17 @@ export default function Notes() {
   // Search Modal State
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchScope, setSearchScope] = useState('all');
+
+  // Physics Important Questions Clean Pop-up State (for D Version Physics)
+  const [physicsImpModal, setPhysicsImpModal] = useState({
+    open: false,
+    filter: 'THEORY_DERIVATIONS',
+    chapter: 'ALL',
+  });
+
+  const handleOpenPhysicsImpModal = useCallback((filter = 'THEORY_DERIVATIONS', chapter = 'ALL') => {
+    setPhysicsImpModal({ open: true, filter, chapter });
+  }, []);
 
   const handleOpenUniversalSearch = useCallback(() => {
     setSearchScope('all');
@@ -203,7 +215,69 @@ export default function Notes() {
             volumeProgress={session.volumeProgress}
             onOpenUniversalSearch={handleOpenUniversalSearch}
             onOpenSubjectSearch={handleOpenSubjectSearch}
+            onOpenPhysicsImportantQuestions={() => handleOpenPhysicsImpModal('THEORY_DERIVATIONS', 'ALL')}
           />
+
+          {/* Clean UI Top Pop-up Bar for Recently Added Physics Important Questions */}
+          {isCleanMode && session.selectedSubject === 'physics' && (
+            <div className="max-w-4xl w-full mx-auto mb-3.5 sm:mb-5 rounded-2xl bg-gradient-to-r from-indigo-50/90 via-white to-sky-50/90 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 p-3 sm:p-4 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3">
+                <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                    <Sparkles size={16} />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="text-xs sm:text-base font-bold text-slate-900 dark:text-white leading-snug">
+                        Recently Added Physics Important Questions &amp; Derivations
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300">
+                        Ch 9–14 Pop-up
+                      </span>
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5 line-clamp-1 sm:line-clamp-none">
+                      Ray Optics, Wave Optics, Dual Nature, Atoms, Nuclei &amp; Semiconductors — Theory, Derivations, Diagrams &amp; NCERT Problems
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleOpenPhysicsImpModal('THEORY_DERIVATIONS', 'ALL')}
+                  className="w-full sm:w-auto px-3.5 sm:px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all shrink-0 cursor-pointer flex items-center justify-center gap-1.5"
+                >
+                  <Sparkles size={14} />
+                  <span>Open Important Questions Pop-up</span>
+                </button>
+              </div>
+
+              {/* Quick Chapter & Category Launch Pills — Single-Row Horizontal Scroll on Mobile */}
+              <div className="mt-2.5 pt-2 border-t border-indigo-100 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-nowrap sm:flex-wrap pb-0.5">
+                <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mr-0.5 shrink-0">
+                  Quick open:
+                </span>
+                {[
+                  { label: 'All 33 Topics & Derivations', filter: 'THEORY_DERIVATIONS', ch: 'ALL' },
+                  { label: 'Ch 9 Ray Optics', filter: 'THEORY_DERIVATIONS', ch: 9 },
+                  { label: 'Ch 10 Wave Optics', filter: 'THEORY_DERIVATIONS', ch: 10 },
+                  { label: 'Ch 11 Dual Nature', filter: 'THEORY_DERIVATIONS', ch: 11 },
+                  { label: 'Ch 12 Atoms', filter: 'THEORY_DERIVATIONS', ch: 12 },
+                  { label: 'Ch 13 Nuclei', filter: 'THEORY_DERIVATIONS', ch: 13 },
+                  { label: 'Ch 14 Semiconductors', filter: 'THEORY_DERIVATIONS', ch: 14 },
+                  { label: 'NCERT Examples & Exercises (53)', filter: 'EXAMPLES_EXERCISES', ch: 'ALL' },
+                ].map((pill) => (
+                  <button
+                    key={pill.label}
+                    type="button"
+                    onClick={() => handleOpenPhysicsImpModal(pill.filter, pill.ch)}
+                    className="shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/90 dark:border-slate-700 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors cursor-pointer"
+                  >
+                    {pill.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Body: Left Sidebar (Non-D only) + Main Content Area */}
           <div className={`flex flex-col lg:flex-row items-start gap-8 flex-1 ${isCleanMode ? 'justify-center' : ''}`}>
@@ -324,7 +398,7 @@ export default function Notes() {
       {/* Version Prompt Modal: D vs Non-D */}
       {showVersionPrompt && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-4 bg-black/55 backdrop-blur-sm animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
           aria-labelledby="notes-version-prompt-title"
@@ -333,17 +407,17 @@ export default function Notes() {
           }}
         >
           <div
-            className="w-full max-w-2xl rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xl p-6 sm:p-8 space-y-6"
+            className="w-full max-w-2xl max-h-[90dvh] overflow-y-auto rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xl p-4 sm:p-8 space-y-4 sm:space-y-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-1.5 sm:space-y-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[11px] font-mono uppercase tracking-wider text-[var(--text-accent)] font-bold">
                 <BookOpen size={13} />
                 <span>Choose Notes Experience</span>
               </div>
               <h2
                 id="notes-version-prompt-title"
-                className="font-serif text-2xl sm:text-3xl font-bold text-[var(--text-primary)]"
+                className="font-serif text-xl sm:text-3xl font-bold text-[var(--text-primary)]"
               >
                 Which version would you like to open?
               </h2>
@@ -352,18 +426,18 @@ export default function Notes() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {/* D Version Card */}
               <button
                 type="button"
                 onClick={() => handleChooseVersion('D')}
-                className={`group text-left p-5 rounded-2xl border-2 transition-all duration-200 flex flex-col justify-between space-y-4 cursor-pointer hover:-translate-y-0.5 hover:shadow-md ${
+                className={`group text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 flex flex-col justify-between space-y-3 sm:space-y-4 cursor-pointer hover:-translate-y-0.5 hover:shadow-md ${
                   session.notesVersion === 'D'
                     ? 'border-emerald-500 bg-emerald-500/10'
                     : 'border-[var(--border-default)] bg-[var(--bg-elevated)] hover:border-emerald-500/70'
                 }`}
               >
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-xs font-mono font-bold border border-emerald-500/30">
                       <Sparkles size={13} />
@@ -373,10 +447,10 @@ export default function Notes() {
                       Clean &amp; Calm UI
                     </span>
                   </div>
-                  <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+                  <h3 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)]">
                     Clean Study Interface
                   </h3>
-                  <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
+                  <ul className="space-y-1 sm:space-y-1.5 text-xs text-[var(--text-secondary)]">
                     <li className="flex items-start gap-2">
                       <Check size={14} className="text-emerald-500 shrink-0 mt-0.5" />
                       <span>Pure NCERT theory, definitions, formulas, diagrams &amp; derivations</span>
@@ -392,7 +466,7 @@ export default function Notes() {
                   </ul>
                 </div>
 
-                <div className="w-full py-2.5 px-4 rounded-xl bg-emerald-600 group-hover:bg-emerald-700 text-white text-xs font-bold text-center transition-colors">
+                <div className="w-full py-2 sm:py-2.5 px-4 rounded-xl bg-emerald-600 group-hover:bg-emerald-700 text-white text-xs font-bold text-center transition-colors">
                   Open D Version (Clean)
                 </div>
               </button>
@@ -401,13 +475,13 @@ export default function Notes() {
               <button
                 type="button"
                 onClick={() => handleChooseVersion('NON_D')}
-                className={`group text-left p-5 rounded-2xl border-2 transition-all duration-200 flex flex-col justify-between space-y-4 cursor-pointer hover:-translate-y-0.5 hover:shadow-md ${
+                className={`group text-left p-4 sm:p-5 rounded-2xl border-2 transition-all duration-200 flex flex-col justify-between space-y-3 sm:space-y-4 cursor-pointer hover:-translate-y-0.5 hover:shadow-md ${
                   session.notesVersion === 'NON_D'
                     ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10'
                     : 'border-[var(--border-default)] bg-[var(--bg-elevated)] hover:border-[var(--accent-primary)]'
                 }`}
               >
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] text-xs font-mono font-bold border border-[var(--accent-primary)]/30">
                       <Layers size={13} />
@@ -417,10 +491,10 @@ export default function Notes() {
                       Full Version
                     </span>
                   </div>
-                  <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+                  <h3 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)]">
                     Full Exam Interface
                   </h3>
-                  <ul className="space-y-1.5 text-xs text-[var(--text-secondary)]">
+                  <ul className="space-y-1 sm:space-y-1.5 text-xs text-[var(--text-secondary)]">
                     <li className="flex items-start gap-2">
                       <Check size={14} className="text-[var(--accent-primary)] shrink-0 mt-0.5" />
                       <span>Includes Oswaal memory boosters, common errors &amp; exam trends</span>
@@ -436,7 +510,7 @@ export default function Notes() {
                   </ul>
                 </div>
 
-                <div className="w-full py-2.5 px-4 rounded-xl bg-[var(--accent-primary)] group-hover:bg-[var(--accent-primary-hover)] text-white text-xs font-bold text-center transition-colors">
+                <div className="w-full py-2 sm:py-2.5 px-4 rounded-xl bg-[var(--accent-primary)] group-hover:bg-[var(--accent-primary-hover)] text-white text-xs font-bold text-center transition-colors">
                   Open Non-D Version (Full)
                 </div>
               </button>
@@ -466,6 +540,15 @@ export default function Notes() {
         currentSubject={session.selectedSubject}
         getPriority={isCleanMode ? undefined : session.getPriority}
         isCleanMode={isCleanMode}
+      />
+
+      {/* Clean UI Pop-up Modal for Physics Important Questions & Derivations */}
+      <PhysicsImportantQuestionsModal
+        isOpen={physicsImpModal.open}
+        onClose={() => setPhysicsImpModal((prev) => ({ ...prev, open: false }))}
+        initialFilter={physicsImpModal.filter}
+        initialChapter={physicsImpModal.chapter}
+        onJumpToSubtopic={(loc) => session.jumpToLocation(loc)}
       />
     </div>
   );

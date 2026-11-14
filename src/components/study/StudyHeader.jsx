@@ -1,4 +1,4 @@
-import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, ChevronDown, Search, Globe } from 'lucide-react';
+import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, ChevronDown, Search, Globe, Sparkles } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { useTimer } from '../../context/TimerContext';
 
@@ -10,7 +10,8 @@ export default function StudyHeader({
   onBackToSubjects,
   volumeProgress,
   onOpenUniversalSearch,
-  onOpenSubjectSearch
+  onOpenSubjectSearch,
+  onOpenPhysicsImportantQuestions
 }) {
   const subject = NCERT_SYLLABUS[selectedSubject];
   const timer = useTimer();
@@ -32,11 +33,12 @@ export default function StudyHeader({
               <ArrowLeft size={18} />
             </button>
 
-            <div className="flex-1 min-w-[120px] max-w-xs">
+            <div className="flex-1 min-w-[100px] max-w-xs">
               <div className="flex items-center justify-between text-xs mb-1 font-medium">
                 <span className="text-[var(--text-muted)] flex items-center gap-1.5 truncate text-[11px] sm:text-xs">
                   <BookOpen size={12} className="text-[var(--accent-primary)] shrink-0" />
-                  <span className="truncate">{subject.name} Progress</span>
+                  <span className="sm:hidden truncate">{subject.name}</span>
+                  <span className="hidden sm:inline truncate">{subject.name} Progress</span>
                 </span>
                 <span className="text-[var(--text-primary)] font-mono ml-2 shrink-0 text-[11px] sm:text-xs">{volumeProgress}%</span>
               </div>
@@ -51,6 +53,16 @@ export default function StudyHeader({
 
           {/* Quick Mobile Search Buttons (Visible on mobile/tablet) */}
           <div className="flex lg:hidden items-center gap-1.5 shrink-0">
+            {isCleanMode && selectedSubject === 'physics' && onOpenPhysicsImportantQuestions && (
+              <button
+                onClick={() => onOpenPhysicsImportantQuestions()}
+                className="px-2.5 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition-all min-h-[36px] flex items-center gap-1.5 touch-manipulation cursor-pointer shadow-xs"
+                title="Open Physics Important Questions Pop-up"
+              >
+                <Sparkles size={14} />
+                <span>Imp Qs</span>
+              </button>
+            )}
             <button
               onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(selectedSubject)}
               className="p-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--accent-primary)] hover:bg-[var(--bg-surface-hover)] transition-all min-w-[36px] min-h-[36px] flex items-center justify-center touch-manipulation cursor-pointer"
@@ -72,6 +84,17 @@ export default function StudyHeader({
 
         {/* Center / Action: Full Subject Search & Universal Search Buttons (Desktop) */}
         <div className="hidden lg:flex items-center gap-2">
+          {isCleanMode && selectedSubject === 'physics' && onOpenPhysicsImportantQuestions && (
+            <button
+              onClick={() => onOpenPhysicsImportantQuestions()}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm transition-all shadow-xs cursor-pointer"
+              title="Open Recently Added Physics Important Questions & Derivations Pop-up"
+            >
+              <Sparkles size={14} className="shrink-0" />
+              <span>Important Questions</span>
+            </button>
+          )}
+
           {/* Subject Search Button */}
           <button
             onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(selectedSubject)}
@@ -148,17 +171,17 @@ export default function StudyHeader({
               <div className="flex items-center gap-1 ml-0.5">
                 <button
                   onClick={timer.isRunning ? timer.pauseTimer : timer.startTimer}
-                  className="p-1.5 rounded-lg bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-colors cursor-pointer touch-manipulation"
+                  className="min-w-[34px] min-h-[34px] p-2 rounded-lg bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-colors flex items-center justify-center cursor-pointer touch-manipulation"
                   title={timer.isRunning ? "Pause Timer" : "Start Timer"}
                 >
-                  {timer.isRunning ? <Pause size={12} /> : <Play size={12} className="ml-0.5" />}
+                  {timer.isRunning ? <Pause size={14} /> : <Play size={14} className="ml-0.5" />}
                 </button>
                 <button
                   onClick={timer.resetTimer}
-                  className="p-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors cursor-pointer touch-manipulation"
+                  className="min-w-[34px] min-h-[34px] p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)] transition-colors flex items-center justify-center cursor-pointer touch-manipulation"
                   title="Reset Timer"
                 >
-                  <RotateCcw size={12} />
+                  <RotateCcw size={14} />
                 </button>
               </div>
             </div>
