@@ -4,19 +4,26 @@ import {
   Layers, CheckCircle2, Award, Zap, Compass, Brain, AlertTriangle
 } from 'lucide-react';
 import { getPhysicsSectionEnrichment } from '../../data/physicsSectionEnrichments';
-import { getImportantSubtopicInfo } from '../../data/importantSubtopicsMapping';
+import { getDerivationsBySubtopic } from '../../data/physicsDerivationsReference';
 import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import { FormattedLatex } from './LatexView';
 
+const normalizeDerivationTitle = (str = '') =>
+  str
+    .toLowerCase()
+    .replace(/\(slide[^)]*\)/gi, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+
 export default function Physics4PartSectionView({ 
   section, 
   subtopicId, 
   chapterId, 
-  diagramId 
+  diagramId,
+  diagramSubMode = null
 }) {
-  const importantInfo = getImportantSubtopicInfo(subtopicId);
   const matchedQ = getPhysicsSectionEnrichment(subtopicId);
   const comparisonTable = matchedQ?.comparisonTable || null;
 
@@ -25,12 +32,57 @@ export default function Physics4PartSectionView({
     ? matchedQ.theory 
     : (section.explanation ? [section.explanation] : []);
 
-  // 2. Resolve Part 2: Derivations
-  const hasCuratedDerivation = matchedQ && matchedQ.derivations && matchedQ.derivations.length > 0;
+  // 2. Resolve Part 2: Derivations (merge curations from physicsDerivationsReference & physicsSectionEnrichments)
+  const refDerivations = getDerivationsBySubtopic(subtopicId) || [];
+  const enrichDerivations = matchedQ?.derivations || [];
+  const mappedRefDerivations = refDerivations.map((d) => ({
+    id: d.id,
+    name: d.title,
+    setup: d.setup,
+    steps: d.steps || [],
+    specialCases: Array.isArray(d.specialCases)
+      ? d.specialCases.map((sc) =>
+          typeof sc === 'string'
+            ? { title: 'Key Result & Special Case', text: sc }
+            : sc
+        )
+      : [],
+    finalFormula: d.finalFormula,
+    diagramId: d.diagramId,
+    diagramSubMode: d.diagramSubMode || d.subMode || undefined,
+    importance: d.importance,
+    syllabusStatus: d.syllabusStatus,
+    slideRange: d.slideRange
+  }));
+
+  const combinedDerivations = [...mappedRefDerivations];
+  for (const enrD of enrichDerivations) {
+    const enrKey = normalizeDerivationTitle(enrD.name);
+    const alreadyCovered = combinedDerivations.some((refD) => {
+      const refKey = normalizeDerivationTitle(refD.name);
+      if (refKey === enrKey) return true;
+      const enrTokens = enrKey.split(' ').filter((w) => w.length >= 4);
+      const refTokens = new Set(refKey.split(' ').filter((w) => w.length >= 4));
+      if (enrTokens.length === 0) return false;
+      const overlap = enrTokens.filter((w) => refTokens.has(w)).length;
+      return overlap / enrTokens.length >= 0.6;
+    });
+    if (!alreadyCovered) {
+      combinedDerivations.push({
+        ...enrD,
+        diagramId: enrD.diagramId || matchedQ?.diagram?.diagramId || diagramId || null,
+        diagramSubMode: enrD.diagramSubMode || enrD.subMode || matchedQ?.diagram?.subMode || diagramSubMode || undefined
+      });
+    }
+  }
+
+  const hasCuratedDerivation = combinedDerivations.length > 0;
   const sectionDerivationText = section.derivations || null;
+  const hasAnyDerivation = hasCuratedDerivation || Boolean(sectionDerivationText);
 
   // 3. Resolve Part 3: Diagram
   const resolvedDiagramId = diagramId || matchedQ?.diagram?.diagramId || null;
+  const resolvedDiagramSubMode = diagramSubMode || matchedQ?.diagram?.subMode || undefined;
   const examDrawingGuide = matchedQ?.diagram?.examDrawingGuide || [];
 
   // 4. Resolve Part 4: Key Points & Blueprint
@@ -52,25 +104,39 @@ export default function Physics4PartSectionView({
   return (
     <div className="space-y-6">
       {/* ==================================================================== */}
-      {/* HANDWRITTEN REVISION SHEET IMPORTANT BADGE */}
+      {/* EXPLICIT DERIVATION INDICATOR BANNER */}
       {/* ==================================================================== */}
-      {importantInfo && (
-        <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-500/10 border-2 border-amber-500/40 shadow-xs flex items-start gap-3">
-          <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 font-bold">
-            ★
+      {hasAnyDerivation && (
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-emerald-500/10 border-2 border-emerald-500/40 shadow-xs flex items-start gap-3">
+          <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 font-bold text-base">
+            📐
           </div>
-          <div className="space-y-0.5">
+          <div className="space-y-1.5 min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                Important Board Exam Question
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
+                Derivation Topic
               </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold">
-                {importantInfo.examTag}
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-500/30">
+                📐 DERIVATION{combinedDerivations.length > 1 ? ` ×${combinedDerivations.length}` : ''}
               </span>
             </div>
-            <p className="font-sans text-xs text-[var(--text-secondary)] leading-relaxed font-medium">
-              {importantInfo.reason}
-            </p>
+            {hasCuratedDerivation ? (
+              <div className="flex flex-wrap gap-1.5 pt-0.5">
+                {combinedDerivations.map((drv, idx) => (
+                  <span
+                    key={drv.id || idx}
+                    className="inline-flex items-center gap-1 text-[11px] font-sans font-semibold px-2.5 py-0.5 rounded-lg bg-[var(--bg-surface)] border border-emerald-500/25 text-[var(--text-primary)]"
+                  >
+                    <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">#{idx + 1}</span>
+                    {drv.name}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="font-sans text-xs text-[var(--text-secondary)] leading-relaxed font-medium">
+                This subtopic includes a complete mathematical derivation in Part 2 below.
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -137,32 +203,57 @@ export default function Physics4PartSectionView({
       </div>
 
       {/* ==================================================================== */}
-      {/* PART 2: STEP-BY-STEP DERIVATION (NODIA QB Page 83 Standard) */}
+      {/* PART 2: DERIVATION — STEP-BY-STEP MATHEMATICAL PROOF                 */}
       {/* ==================================================================== */}
-      {(hasCuratedDerivation || sectionDerivationText) && (
-        <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface)] border-2 border-[var(--border-default)] shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+      {hasAnyDerivation && (
+        <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface)] border-2 border-emerald-500/35 shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5 flex-wrap gap-2">
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               <Calculator size={16} />
-              <span>Part 2: Step-by-Step Derivation</span>
+              <span>Part 2: Derivation — Step-by-Step Mathematical Proof</span>
             </div>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/30">
-              Board Derivation Steps
+            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-500/35">
+              📐 DERIVATION{combinedDerivations.length > 1 ? ` (${combinedDerivations.length})` : ''}
             </span>
           </div>
 
           {hasCuratedDerivation ? (
             <div className="space-y-6 divide-y divide-[var(--border-subtle)]">
-              {matchedQ.derivations.map((d, dIdx) => (
-                <div key={dIdx} className="pt-4 first:pt-0 space-y-3.5">
-                  <h4 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
-                    {d.name}
-                  </h4>
+              {combinedDerivations.map((d, dIdx) => {
+                const cardDiagramId = d.diagramId || resolvedDiagramId;
+                const cardDiagramSubMode = d.diagramSubMode || undefined;
+                const showInlineDiagram = Boolean(
+                  cardDiagramId && (combinedDerivations.length > 1 || (d.diagramSubMode && d.diagramSubMode !== resolvedDiagramSubMode))
+                );
+                return (
+                <div key={d.id || dIdx} className="pt-4 first:pt-0 space-y-3.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 shrink-0">
+                      DERIVATION {combinedDerivations.length > 1 ? dIdx + 1 : ''}
+                    </span>
+                    {d.importance && (
+                      <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/25">
+                        {d.importance}
+                      </span>
+                    )}
+                    <h4 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
+                      {d.name}
+                    </h4>
+                  </div>
                   {d.setup && (
                     <div 
                       className="p-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs sm:text-sm text-[var(--text-secondary)] italic leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: formatMathString(d.setup) }}
                     />
+                  )}
+                  {showInlineDiagram && (
+                    <div className="py-1">
+                      <PhysicsDiagramCard
+                        diagramId={cardDiagramId}
+                        subMode={cardDiagramSubMode}
+                        inline={true}
+                      />
+                    </div>
                   )}
                   {d.steps && d.steps.length > 0 && (
                     <div className="space-y-3">
@@ -222,7 +313,8 @@ export default function Physics4PartSectionView({
                     </div>
                   )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)] break-words">
@@ -248,7 +340,7 @@ export default function Physics4PartSectionView({
           </div>
 
           <div className="py-2">
-            <PhysicsDiagramCard diagramId={resolvedDiagramId} />
+            <PhysicsDiagramCard diagramId={resolvedDiagramId} subMode={resolvedDiagramSubMode} />
           </div>
 
           {examDrawingGuide && examDrawingGuide.length > 0 && (

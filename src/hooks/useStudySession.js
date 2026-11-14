@@ -35,10 +35,11 @@ export function useStudySession() {
 
           return {
             ...parsed,
+            activeSidebarTab: parsed.activeSidebarTab === 'IMPORTANT' ? 'NOTES' : (parsed.activeSidebarTab || 'NOTES'),
             selectedVolume: matchingVolume || parsed.selectedVolume || subject.volumes[0]?.id,
             selectedChapter: matchingChapter,
             selectedSubchapter: matchingSub,
-            chapterStudyMode: parsed.chapterStudyMode || 'GENERAL',
+            chapterStudyMode: parsed.chapterStudyMode === 'QUESTIONS' ? 'GENERAL' : (parsed.chapterStudyMode || 'GENERAL'),
             userPriorities: parsed.userPriorities || {}
           };
         }
@@ -52,7 +53,7 @@ export function useStudySession() {
       selectedVolume: null,
       selectedChapter: null,
       selectedSubchapter: null,
-      chapterStudyMode: 'GENERAL', // 'GENERAL' | 'QUESTIONS'
+      chapterStudyMode: 'GENERAL', // 'GENERAL' | 'DERIVATIONS' | 'CHEAT_SHEET'
       completedSections: [],
       completedSubchapters: [],
       completedPortionChapters: [],

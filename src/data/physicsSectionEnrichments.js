@@ -4757,6 +4757,284 @@ export const PHYSICS_SECTION_ENRICHMENTS = {
       }
     ]
   },
+  "phy-sub-10-1": {
+    "theory": [
+      "A Wavefront is the continuous locus of all particles of a medium vibrating in the same phase at a given instant.",
+      "Three Wavefront Geometries: (1) Spherical wavefront (point source at finite distance, $I \\propto 1/r^2$); (2) Cylindrical wavefront (linear slit source, $I \\propto 1/r$); (3) Plane wavefront (very distant source or parallel beam from focal lens, $I$ constant).",
+      "Huygens' Principle: (1) Every point on a primary wavefront acts as a fresh source of secondary wavelets spreading forward at wave speed $v$; (2) The new wavefront at time $\\tau$ is the forward tangential envelope to all secondary wavelets of radius $v\\tau$."
+    ],
+    "derivations": [
+      {
+        "name": "Wavefront Speed, Wavelength & Medium Transition Relations (Huygens Construction)",
+        "setup": "Consider a primary wavefront moving at wave speed $v$ in medium of refractive index $n = c/v$. Secondary spherical wavelets expand with radius $R = v\\tau$ in time $\\tau$.",
+        "steps": [
+          {
+            "text": "Light rays are always perpendicular to the local wavefront and trace energy flow outward at speed $v$:",
+            "equation": "R_{\\text{wavelet}} = v \\tau = \\frac{c}{n}\\tau"
+          },
+          {
+            "text": "When a wavefront enters a denser medium ($n_2 > n_1$), source oscillation frequency $\\nu$ stays invariant while speed and wavelength decrease inversely with $n$:",
+            "equation": "\\nu = \\text{constant}, \\qquad v \\propto \\frac{1}{n}, \\qquad \\lambda = \\frac{\\lambda_0}{n}"
+          }
+        ],
+        "finalFormula": "R = v\\tau, \\qquad n_1 \\lambda_1 = n_2 \\lambda_2 = \\lambda_0 \\;(\\nu = \\text{constant})",
+        "specialCases": [
+          {
+            "title": "Why Backward Wavelets Do Not Propagate:",
+            "text": "Voigt–Kirchhoff obliquity factor $\\frac{1}{2}(1 + \\cos\\theta)$ vanishes in the backward direction ($\\theta = 180^\\circ$)."
+          }
+        ]
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "huygens-wavefronts",
+      "subMode": "wavefronts",
+      "title": "Types of Wavefronts & Huygens Secondary Wavelets",
+      "examDrawingGuide": [
+        "1. Draw spherical arcs around point source S, cylindrical arcs around slit, and parallel vertical lines for plane wavefront.",
+        "2. Always draw rays perpendicular to every wavefront surface."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Spherical, Cylindrical & Plane Wavefronts",
+      "Rays Perpendicular to Wavefront",
+      "Frequency Invariant Across Interface"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "v\\tau",
+        "term": "Secondary Wavelet Radius",
+        "definition": "Distance covered by secondary spherical disturbance in time interval $\\tau$"
+      }
+    ]
+  },
+  "phy-sub-10-3": {
+    "theory": [
+      "Coherent Sources are two sources emitting waves of the same frequency having either zero or strictly constant phase difference with time (achieved via wavefront division like YDSE, never from two independent bulbs).",
+      "Superposition of waves $y_1 = a_1\\sin\\omega t$ and $y_2 = a_2\\sin(\\omega t + \\phi)$ produces interference intensity redistribution obeying energy conservation."
+    ],
+    "derivations": [
+      {
+        "name": "Resultant Amplitude, Intensity Distribution & Maxima/Minima Conditions",
+        "setup": "Superpose two coherent monochromatic waves of amplitudes $a_1, a_2$ ($I_1 = k a_1^2, I_2 = k a_2^2$) having constant phase difference $\\phi = \\frac{2\\pi}{\\lambda}\\Delta x$.",
+        "steps": [
+          {
+            "text": "Using parallelogram/phasor addition of displacement amplitudes $A = \\sqrt{a_1^2 + a_2^2 + 2 a_1 a_2 \\cos\\phi}$:",
+            "equation": "I = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\phi"
+          },
+          {
+            "text": "For identical slits ($I_1 = I_2 = I_0$):",
+            "equation": "I = 2I_0(1 + \\cos\\phi) = 4 I_0 \\cos^2\\!\\left(\\frac{\\phi}{2}\\right)"
+          },
+          {
+            "text": "Constructive Interference (Maxima, $\\cos\\phi = +1$) vs Destructive Interference (Minima, $\\cos\\phi = -1$):",
+            "equation": "\\Delta x_{\\max} = n\\lambda \\;(\\phi = 2n\\pi), \\qquad \\Delta x_{\\min} = (2n-1)\\frac{\\lambda}{2} \\;(\\phi = (2n-1)\\pi)"
+          }
+        ],
+        "finalFormula": "I = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\phi = 4 I_0 \\cos^2\\!\\left(\\frac{\\phi}{2}\\right) \\; (I_1=I_2=I_0)"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "ydse-wave-optics",
+      "subMode": "interference-intensity",
+      "title": "Coherent Interference Intensity vs Phase",
+      "examDrawingGuide": [
+        "1. Plot equal-height bright peaks ($4I_0$) spaced every $2\\pi$ (or $\\lambda$) around average intensity $2I_0$."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "I_max / I_min = (a1+a2)^2 / (a1-a2)^2",
+      "Energy Conserved (I_avg = I1 + I2)",
+      "Phase Difference = (2pi/lambda) x Path Difference"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\phi",
+        "term": "Phase Difference",
+        "definition": "Constant angular phase offset between superposing coherent waves ($2\\pi\\Delta x/\\lambda$)"
+      }
+    ]
+  },
+  "phy-sub-11-1": {
+    "theory": [
+      "Work Function ($\\phi_0$): Minimum energy required by an electron to just escape from a metal surface without kinetic energy; smallest for Caesium ($2.14\\text{ eV}$) and largest for Platinum ($5.65\\text{ eV}$).",
+      "Four Electron Emission Mechanisms: (1) Thermionic emission (heating), (2) Field emission ($\\sim 10^8\\text{ V/m}$ electric field), (3) Photoelectric emission (light $\\nu > \\nu_0$), (4) Secondary emission.",
+      "Laws of Photoelectric Emission: Instantaneous ($\sim 10^{-9}\\text{ s}$), requires $\\nu \\ge \\nu_0$ regardless of intensity, photocurrent $\\propto$ intensity, $K_{\\max}$ depends linearly only on frequency $\\nu$."
+    ],
+    "derivations": [
+      {
+        "name": "Threshold Frequency, Threshold Wavelength & Stopping Potential Relations",
+        "setup": "Relate metal work function $\\phi_0$ to threshold frequency $\\nu_0$, threshold wavelength $\\lambda_0$, and photo-electron cutoff voltage $V_0$.",
+        "steps": [
+          {
+            "text": "At threshold condition ($K_{\\max} = 0$), incident photon energy equals work function $\\phi_0$:",
+            "equation": "\\phi_0 = h\\nu_0 = \\frac{h c}{\\lambda_0} \\implies \\lambda_0(\\text{\\AA}) \\approx \\frac{12400}{\\phi_0(\\text{eV})}"
+          },
+          {
+            "text": "For emission to occur ($K_{\\max} \\ge 0$): $\\nu \\ge \\nu_0$ and $\\lambda \\le \\lambda_0$, with stopping work $e V_0 = K_{\\max} = h(\\nu - \\nu_0)$:"
+          }
+        ],
+        "finalFormula": "\\phi_0 = h\\nu_0 = \\frac{hc}{\\lambda_0}, \\qquad K_{\\max} = eV_0 = h(\\nu - \\nu_0)"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "photoelectric-graphs",
+      "subMode": "experimental-setup",
+      "title": "Photoelectric Cell Setup & Threshold Emission",
+      "examDrawingGuide": [
+        "1. Show evacuated quartz tube with photosensitive emitter C, collector A, commutator, microammeter, and voltmeter."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Work Function phi0 (lowest for Cs = 2.14 eV)",
+      "Threshold Frequency nu0 & Wavelength lambda0",
+      "hc = 1240 eV.nm = 12400 eV.A"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "\\phi_0",
+        "term": "Work Function",
+        "definition": "Characteristic surface barrier energy measured in electron-volts (eV)"
+      }
+    ]
+  },
+  "phy-sub-11-2": {
+    "theory": [
+      "Hertz, Hallwachs and Lenard Experiment: Monochromatic UV light passes through a quartz window onto emitter $C$ in an evacuated glass tube; commutator reverses plate $A$'s polarity to measure both saturation photocurrent and negative stopping potential $-V_0$.",
+      "Three Experimental Curves: (1) Photocurrent vs Intensity is linear ($I \\propto \\text{Intensity}$ for $\\nu > \\nu_0$); (2) Photocurrent vs Collector Potential $V$ saturates at positive $V$ and drops to zero at retarding potential $-V_0$; (3) Different intensities at same $\\nu$ share identical $-V_0$, whereas higher frequencies $\\nu_3 > \\nu_2 > \\nu_1$ produce more negative stopping potentials ($|V_{03}| > |V_{02}| > |V_{01}|$)."
+    ],
+    "derivations": [
+      {
+        "name": "Stopping Potential ($V_0$), Photon Flux & Saturation Photocurrent Relations",
+        "setup": "Connect incident radiation power $P$, photon frequency $\\nu$, quantum efficiency $\\eta$, and retarding collector voltage $-V_0$.",
+        "steps": [
+          {
+            "text": "The minimum retarding potential $V_0$ halting the fastest photoelectron ($v_{\\max}$) converts its kinetic energy completely into electrostatic potential energy:",
+            "equation": "K_{\\max} = \\frac{1}{2}m v_{\\max}^2 = e V_0"
+          },
+          {
+            "text": "Number of photons incident per second (photon flux $n_p = P/(h\\nu)$) governs saturation current ($i_s = \\eta n_p e$):",
+            "equation": "i_s \\propto \\text{Intensity } (I) \\;(\\text{at fixed } \\nu), \\qquad V_0 \\text{ independent of Intensity}"
+          }
+        ],
+        "finalFormula": "K_{\\max} = eV_0, \\qquad i_{\\text{sat}} \\propto \\text{Intensity } (\\text{for } \\nu > \\nu_0)"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "photoelectric-graphs",
+      "subMode": "collector-potential",
+      "title": "Photocurrent vs Collector Potential V (Lenard Curves)",
+      "examDrawingGuide": [
+        "1. Show same stopping potential -V0 for different intensities (I3 > I2 > I1).",
+        "2. Show same saturation current but deeper stopping potentials for higher frequencies (v3 > v2 > v1)."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Stopping Potential -V0 measures K_max",
+      "Saturation Current proportional to Intensity",
+      "Wave Theory Failure: Instantaneous Emission & Threshold"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "V_0",
+        "term": "Stopping Potential",
+        "definition": "Minimum negative anode potential reducing photoelectric current strictly to zero"
+      }
+    ]
+  },
+  "phy-sub-12-1": {
+    "theory": [
+      "Rutherford–Geiger–Marsden $\\alpha$-Scattering Experiment: Collimated $5.5\\text{ MeV}$ $\\alpha$-particles ($^4_2\\text{He}$ nuclei) strike a thin $2.1\\times 10^{-7}\\text{ m}$ gold foil ($Z = 79$). Most ($>99.86\\%$) pass undeflected, while $\\sim 1$ in $8000$ rebounds by $\\theta > 90^\\circ$ or $180^\\circ$, proving nearly all mass and $+Ze$ charge lie inside a tiny nucleus ($\\sim 10^{-15}\\text{–}10^{-14}\\text{ m}$).",
+      "Impact parameter $b = \\frac{Ze^2 \\cot(\\theta/2)}{4\\pi\\varepsilon_0 K}$ governs scattering angle $\\theta$; head-on collision ($b = 0, \\theta = 180^\\circ$) defines the distance of closest approach $r_0$."
+    ],
+    "derivations": [
+      {
+        "name": "Distance of Closest Approach ($r_0$) & Impact Parameter Formula",
+        "setup": "Fire an $\\alpha$-particle (charge $q_1 = +2e$, kinetic energy $K = \\frac{1}{2}mv^2$) head-on toward stationary heavy nucleus (charge $q_2 = +Ze$).",
+        "steps": [
+          {
+            "text": "At distance of closest approach $r_0$, the $\\alpha$-particle stops instantaneously ($K_f = 0$), converting full initial kinetic energy into Coulomb potential energy:",
+            "equation": "K = \\frac{1}{4\\pi\\varepsilon_0}\\frac{(2e)(Ze)}{r_0} \\implies r_0 = \\frac{1}{4\\pi\\varepsilon_0}\\frac{2Ze^2}{K}"
+          },
+          {
+            "text": "For general scattering deflection angle $\\theta$, impact parameter $b$ satisfies:",
+            "equation": "b = \\frac{Ze^2 \\cot(\\theta/2)}{4\\pi\\varepsilon_0 K}, \\qquad N(\\theta) \\propto \\frac{1}{\\sin^4(\\theta/2)}"
+          }
+        ],
+        "finalFormula": "r_0 = \\frac{1}{4\\pi\\varepsilon_0}\\frac{2Ze^2}{\\frac{1}{2}mv^2}, \\qquad b = \\frac{Ze^2\\cot(\\theta/2)}{4\\pi\\varepsilon_0 K}"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "bohr-atom-spectra",
+      "subMode": "alpha-scattering",
+      "title": "Rutherford Alpha-Scattering & Closest Approach r₀",
+      "examDrawingGuide": [
+        "1. Show small b giving large theta and b = 0 rebounding 180 deg at distance r0."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Distance of Closest Approach r0 ~ 10^-14 m",
+      "Head-on Collision (b = 0 => theta = 180 deg)",
+      "Rutherford Failure: Accelerating Electron Stability & Continuous Spectrum"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "r_0",
+        "term": "Distance of Closest Approach",
+        "definition": "Minimum centre-to-centre separation before head-on $\\alpha$-particle rebounds, bounding nuclear size"
+      }
+    ]
+  },
+  "phy-sub-12-3": {
+    "theory": [
+      "Hydrogen Line Emission Spectra arise from downward transitions ($n_i \\to n_f$), obeying $h\\nu = E_{n_i} - E_{n_f}$, grouping into Lyman (UV, $n_f=1$), Balmer (Visible, $n_f=2$), Paschen ($n_f=3$), Brackett ($n_f=4$), and Pfund ($n_f=5$) infrared series.",
+      "de Broglie’s standing electron-wave condition along a closed circular orbit ($2\\pi r_n = n\\lambda = n h / mv$) directly yields Bohr’s angular momentum quantization $mvr_n = nh/(2\\pi)$."
+    ],
+    "derivations": [
+      {
+        "name": "Rydberg Wavenumber Formula & de Broglie Derivation of Bohr Quantization",
+        "setup": "Equate emitted photon energy $\\frac{hc}{\\lambda} = E_{n_i} - E_{n_f}$ between Bohr levels $E_n = -\\frac{R h c}{n^2}$, and match circumference $2\\pi r_n$ to integer standing waves.",
+        "steps": [
+          {
+            "text": "Substitute Bohr energy levels into transition energy $hc/\\lambda = E_{n_i} - E_{n_f}$:",
+            "equation": "\\frac{hc}{\\lambda} = R h c\\left(\\frac{1}{n_f^2} - \\frac{1}{n_i^2}\\right) \\implies \\bar{\\nu} = \\frac{1}{\\lambda} = R\\left(\\frac{1}{n_f^2} - \\frac{1}{n_i^2}\\right)"
+          },
+          {
+            "text": "Standing de Broglie wave condition avoids destructive self-interference around orbit $r_n$:",
+            "equation": "2\\pi r_n = n\\lambda = n\\left(\\frac{h}{mv_n}\\right) \\implies L = m v_n r_n = \\frac{n h}{2\\pi}"
+          }
+        ],
+        "finalFormula": "\\frac{1}{\\lambda} = R\\left(\\frac{1}{n_f^2} - \\frac{1}{n_i^2}\\right) \\; (R = 1.097\\times 10^7\\text{ m}^{-1}), \\qquad 2\\pi r_n = n\\lambda"
+      }
+    ],
+    "diagram": {
+      "hasDiagram": true,
+      "diagramId": "bohr-atom-spectra",
+      "subMode": "spectral-series",
+      "title": "Hydrogen Energy Levels & Spectral Series Transitions",
+      "examDrawingGuide": [
+        "1. Draw horizontal levels -13.6, -3.4, -1.51, -0.85, -0.54, 0 eV with non-uniform shrinking spacing.",
+        "2. Show downward arrows terminating on n=1 (Lyman UV), n=2 (Balmer Visible), n=3 (Paschen IR)."
+      ]
+    },
+    "keyPointsAndKeywords": [
+      "Lyman (UV), Balmer (Visible), Paschen/Brackett/Pfund (IR)",
+      "Rydberg Constant R = 1.097 x 10^7 m^-1",
+      "Emission Lines N = n(n-1)/2"
+    ],
+    "termsGlossary": [
+      {
+        "symbol": "R",
+        "term": "Rydberg Constant",
+        "definition": "Atomic spectral constant equal to $1.097 \\times 10^7\\text{ m}^{-1}$ for infinite nuclear mass"
+      }
+    ]
+  },
   "phy-sub-13-1": {
     "theory": [
       "Nuclear radius varies as $R = R_0 A^{1/3}$ where $R_0 \\approx 1.2 \\times 10^{-15}\\text{ m} = 1.2\\text{ fm}$. Because nuclear volume $V = \\frac{4}{3}\\pi R_0^3 A$ is directly proportional to mass number $A$, nuclear density $\\rho = \\frac{m_N A}{V} = \\frac{3m_N}{4\\pi R_0^3} \\approx 2.3\\times 10^{17}\\text{ kg/m}^3$ is CONSTANT and strictly independent of $A$."

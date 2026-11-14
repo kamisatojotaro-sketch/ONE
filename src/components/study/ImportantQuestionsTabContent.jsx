@@ -27,67 +27,82 @@ const STORAGE_KEY_MASTERED_BIOLOGY = 'one_mastered_imp_bio_q';
 const STORAGE_KEY_MASTERED_PSYCHOLOGY = 'one_mastered_imp_psy_q';
 const STORAGE_KEY_MASTERED_ENGLISH = 'one_mastered_imp_eng_q';
 
-const DIAGRAM_MAPPING = {
-  'imp-phy-9-ex2': 'ray-optics-instruments',
-  'imp-phy-9-ex4': 'ray-optics-instruments',
-  'imp-phy-9-ex5': 'ray-optics-instruments',
-  'imp-phy-9-ex7': 'ray-optics-instruments',
-  'imp-phy-9-ex8': 'ray-optics-instruments',
-  'imp-phy-9-q1': 'ray-optics-instruments',
-  'imp-phy-9-q5': 'ray-optics-instruments',
-  'imp-phy-9-q11': 'ray-optics-instruments',
-  'imp-phy-9-q13': 'ray-optics-instruments',
-  'imp-phy-9-q21': 'prism-dispersion',
-  'imp-phy-9-q26': 'ray-optics-instruments',
-  'imp-phy-9-q29': 'ray-optics-instruments',
-  'imp-phy-9-th1': 'ray-optics-instruments',
-  'imp-phy-9-th2': 'ray-optics-instruments',
-  'imp-phy-9-th3': 'ray-optics-instruments',
-  'imp-phy-9-th4': 'ray-optics-instruments',
-  'imp-phy-9-th5': 'prism-dispersion',
-  'imp-phy-9-th6': 'prism-dispersion',
-  'imp-phy-9-th7': 'ray-optics-instruments',
-  'imp-phy-9-th8': 'ray-optics-instruments',
-  'imp-phy-9-th9': 'ray-optics-instruments',
-  'imp-phy-10-q1': 'ydse-wave-optics',
-  'imp-phy-10-q4': 'ydse-wave-optics',
-  'imp-phy-10-q5': 'ydse-wave-optics',
-  'imp-phy-10-th1': 'huygens-wavefronts',
-  'imp-phy-10-th2': 'huygens-wavefronts',
-  'imp-phy-10-th3': 'huygens-wavefronts',
-  'imp-phy-10-th4': 'huygens-wavefronts',
-  'imp-phy-10-th5': 'huygens-wavefronts',
-  'imp-phy-10-th6': 'ydse-wave-optics',
-  'imp-phy-10-th7': 'ydse-wave-optics',
-  'imp-phy-10-th8': 'single-slit-diffraction',
-  'imp-phy-11-ex2': 'photoelectric-graphs',
-  'imp-phy-11-q2': 'photoelectric-graphs',
-  'imp-phy-11-q6': 'photoelectric-graphs',
-  'imp-phy-11-th1': 'photoelectric-graphs',
-  'imp-phy-11-th2': 'photoelectric-graphs',
-  'imp-phy-11-th3': 'photoelectric-graphs',
-  'imp-phy-11-th4': 'photoelectric-graphs',
-  'imp-phy-11-th5': 'photoelectric-graphs',
-  'imp-phy-11-th6': 'photoelectric-graphs',
-  'imp-phy-12-ex3': 'bohr-atom-spectra',
-  'imp-phy-12-q5': 'bohr-atom-spectra',
-  'imp-phy-12-th1': 'bohr-atom-spectra',
-  'imp-phy-12-th2': 'bohr-atom-spectra',
-  'imp-phy-12-th3': 'bohr-atom-spectra',
-  'imp-phy-12-th4': 'bohr-atom-spectra',
-  'imp-phy-13-ex1': 'nuclei-binding-force',
-  'imp-phy-13-q2': 'nuclei-binding-force',
-  'imp-phy-13-q5': 'nuclei-binding-force',
-  'imp-phy-13-th1': 'nuclei-binding-force',
-  'imp-phy-13-th2': 'nuclei-binding-force',
-  'imp-phy-13-th3': 'nuclei-binding-force',
-  'imp-phy-14-ex1': 'pn-junction-rectifier',
-  'imp-phy-14-ex2': 'pn-junction-rectifier',
-  'imp-phy-14-ex4': 'pn-junction-rectifier',
-  'imp-phy-14-th1': 'pn-junction-rectifier',
-  'imp-phy-14-th2': 'pn-junction-rectifier',
-  'imp-phy-14-th3': 'pn-junction-rectifier'
+const QUESTION_DIAGRAM_CONFIG = {
+  // Chapter 9: Ray Optics & Optical Instruments (Specific per-question subMode + title)
+  'imp-phy-9-ex2': { diagramId: 'ray-optics-instruments', subMode: 'mirror', title: 'Concave Mirror Image Formation & Magnification' },
+  'imp-phy-9-ex4': { diagramId: 'ray-optics-instruments', subMode: 'mirror', title: 'Spherical Mirror Geometry (f = R/2)' },
+  'imp-phy-9-ex5': { diagramId: 'ray-optics-instruments', subMode: 'spherical-surface', title: 'Refraction at a Convex Spherical Surface (n₂/v − n₁/u = (n₂ − n₁)/R)' },
+  'imp-phy-9-ex7': { diagramId: 'ray-optics-instruments', subMode: 'lens-maker', title: "Double Convex Thin Lens & Lens Maker's Formula" },
+  'imp-phy-9-ex8': { diagramId: 'ray-optics-instruments', subMode: 'lens-maker', title: 'Coaxial Thin Lens Combination' },
+  'imp-phy-9-q1': { diagramId: 'ray-optics-instruments', subMode: 'mirror', title: 'Concave Mirror Ray Diagram & Mirror Equation' },
+  'imp-phy-9-q5': { diagramId: 'prism-dispersion', subMode: 'tir', title: 'Total Internal Reflection (TIR) & Critical Cone i_c' },
+  'imp-phy-9-q11': { diagramId: 'ray-optics-instruments', subMode: 'microscope', title: 'Compound Microscope Two-Lens Ray Diagram' },
+  'imp-phy-9-q13': { diagramId: 'ray-optics-instruments', subMode: 'astronomical-telescope', title: 'Astronomical Refracting Telescope (Normal Adjustment)' },
+  'imp-phy-9-q21': { diagramId: 'prism-dispersion', subMode: 'tir', title: 'Prism Critical Angle & Total Internal Reflection' },
+  'imp-phy-9-q26': { diagramId: 'ray-optics-instruments', subMode: 'microscope', title: 'Compound Microscope Design (M = 30×)' },
+  'imp-phy-9-q29': { diagramId: 'ray-optics-instruments', subMode: 'microscope', title: 'Magnifier Angular vs Area Magnification' },
+  'imp-phy-9-th1': { diagramId: 'ray-optics-instruments', subMode: 'mirror', title: 'Concave Spherical Mirror: Relation R = 2f Paraxial Geometry' },
+  'imp-phy-9-th2': { diagramId: 'ray-optics-instruments', subMode: 'mirror', title: 'Concave Mirror Ray Diagram & Mirror Equation (1/v + 1/u = 1/f)' },
+  'imp-phy-9-th3': { diagramId: 'ray-optics-instruments', subMode: 'spherical-surface', title: 'Refraction at a Convex Spherical Surface (n₂/v − n₁/u = (n₂ − n₁)/R)' },
+  'imp-phy-9-th4': { diagramId: 'ray-optics-instruments', subMode: 'lens-maker', title: "Double Convex Thin Lens & Lens Maker's Formula" },
+  'imp-phy-9-th5': { diagramId: 'prism-dispersion', subMode: 'tir', title: 'Total Internal Reflection (TIR), Critical Angle i_c & Optical Fibre' },
+  'imp-phy-9-th6': { diagramId: 'prism-dispersion', subMode: 'prism-ray', title: 'Triangular Prism Refraction & i–δ Minimum Deviation Curve' },
+  'imp-phy-9-th7': { diagramId: 'ray-optics-instruments', subMode: 'microscope', title: 'Compound Microscope Two-Lens Ray Diagram (Objective & Eyepiece)' },
+  'imp-phy-9-th8': { diagramId: 'ray-optics-instruments', subMode: 'astronomical-telescope', title: 'Astronomical Refracting Telescope (L = f_o + f_e, M = f_o / f_e)' },
+  'imp-phy-9-th9': { diagramId: 'ray-optics-instruments', subMode: 'cassegrain', title: 'Cassegrain Reflecting Telescope (Parabolic Primary & Convex Secondary Mirror)' },
+
+  // Chapter 10: Wave Optics
+  'imp-phy-10-q1': { diagramId: 'huygens-wavefronts', subMode: 'denser', title: "Huygens' Refraction at Denser Medium (Snell's Law)" },
+  'imp-phy-10-q4': { diagramId: 'ydse-wave-optics', subMode: 'ydse-geometry', title: "Young's Double-Slit Geometry & Fringe Width (β = λD/d)" },
+  'imp-phy-10-q5': { diagramId: 'ydse-wave-optics', subMode: 'interference-intensity', title: 'Coherent Interference Intensity Curve I(φ) = 4I₀ cos²(φ/2)' },
+  'imp-phy-10-th1': { diagramId: 'huygens-wavefronts', subMode: 'wavefronts', title: 'Types of Wavefronts: Spherical, Cylindrical & Plane' },
+  'imp-phy-10-th2': { diagramId: 'huygens-wavefronts', subMode: 'wavefronts', title: "Huygens' Principle & Secondary Wavefront Construction" },
+  'imp-phy-10-th3': { diagramId: 'huygens-wavefronts', subMode: 'reflection', title: 'Reflection at a Plane Surface on Wave Theory (∠i = ∠r)' },
+  'imp-phy-10-th4': { diagramId: 'huygens-wavefronts', subMode: 'denser', title: "Refraction at a Denser Medium (v₂ < v₁) on Huygens' Theory" },
+  'imp-phy-10-th5': { diagramId: 'huygens-wavefronts', subMode: 'rarer', title: 'Refraction at a Rarer Medium (v₂ > v₁) & Critical Angle Condition' },
+  'imp-phy-10-th6': { diagramId: 'ydse-wave-optics', subMode: 'interference-intensity', title: 'Coherent Interference Intensity I(φ) = 4I₀ cos²(φ/2)' },
+  'imp-phy-10-th7': { diagramId: 'ydse-wave-optics', subMode: 'ydse-geometry', title: "Young's Double-Slit Path Difference & Fringe Width (β = λD/d)" },
+  'imp-phy-10-th8': { diagramId: 'single-slit-diffraction', subMode: 'diffraction-lobe', title: 'Single-Slit Fraunhofer Diffraction Pattern vs YDSE' },
+
+  // Chapter 11: Dual Nature of Radiation & Matter
+  'imp-phy-11-ex2': { diagramId: 'photoelectric-graphs', subMode: 'einstein-slope', title: 'Einstein Photoelectric Slope (V₀ vs ν) & Threshold ν₀' },
+  'imp-phy-11-q2': { diagramId: 'photoelectric-graphs', subMode: 'einstein-slope', title: "Einstein's Equation V₀ = (h/e)ν − φ₀/e" },
+  'imp-phy-11-q6': { diagramId: 'photoelectric-graphs', subMode: 'collector-potential', title: 'Photocurrent vs Collector Potential (−V₀)' },
+  'imp-phy-11-th1': { diagramId: 'photoelectric-graphs', subMode: 'collector-potential', title: 'Laws of Photoelectric Emission: Intensity & Stopping Potential Curves' },
+  'imp-phy-11-th2': { diagramId: 'photoelectric-graphs', subMode: 'einstein-slope', title: "Einstein's Photoelectric Equation & Universal Slope h/e" },
+  'imp-phy-11-th3': { diagramId: 'photoelectric-graphs', subMode: 'einstein-slope', title: 'Quantum Picture of Radiation: Photon Energy & Momentum' },
+  'imp-phy-11-th4': { diagramId: 'photoelectric-graphs', subMode: 'de-broglie', title: 'de Broglie Matter Wave (λ = h/p) & Bohr Standing Electron Wave' },
+  'imp-phy-11-th5': { diagramId: 'photoelectric-graphs', subMode: 'experimental-setup', title: 'Electron Emission, Work Function φ₀ & Quartz Tube Apparatus' },
+  'imp-phy-11-th6': { diagramId: 'photoelectric-graphs', subMode: 'experimental-setup', title: 'Lenard-Millikan Photoelectric Experimental Setup & Collector Curves' },
+
+  // Chapter 12: Atoms
+  'imp-phy-12-ex3': { diagramId: 'bohr-atom-spectra', subMode: 'bohr-orbits', title: 'Bohr Quantized Hydrogen Orbits (r_n, v_n)' },
+  'imp-phy-12-q5': { diagramId: 'bohr-atom-spectra', subMode: 'spectral-series', title: 'Hydrogen Spectral Transitions (Lyman, Balmer & Paschen)' },
+  'imp-phy-12-th1': { diagramId: 'bohr-atom-spectra', subMode: 'alpha-scattering', title: 'Rutherford Nuclear Atom & Geiger-Marsden α-Scattering' },
+  'imp-phy-12-th2': { diagramId: 'bohr-atom-spectra', subMode: 'alpha-scattering', title: 'Alpha-Particle Closest Approach r₀ & Impact Parameter b' },
+  'imp-phy-12-th3': { diagramId: 'bohr-atom-spectra', subMode: 'bohr-orbits', title: 'Bohr Atom Model: Quantized Orbits, Radius r_n, Velocity v_n & Energy E_n' },
+  'imp-phy-12-th4': { diagramId: 'bohr-atom-spectra', subMode: 'spectral-series', title: 'Hydrogen Atom Energy Levels & Spectral Series (Lyman/Balmer/Paschen)' },
+
+  // Chapter 13: Nuclei
+  'imp-phy-13-ex1': { diagramId: 'nuclei-binding-force', subMode: 'be-curve', title: 'Nuclear Density Independence & Binding Energy Curve' },
+  'imp-phy-13-q2': { diagramId: 'nuclei-binding-force', subMode: 'be-curve', title: 'Mass Defect & Binding Energy per Nucleon Curve (⁵⁶Fe Peak)' },
+  'imp-phy-13-q5': { diagramId: 'nuclei-binding-force', subMode: 'fission-fusion', title: 'Nuclear Fission & Thermonuclear Fusion Q-Value' },
+  'imp-phy-13-th1': { diagramId: 'nuclei-binding-force', subMode: 'be-curve', title: 'Binding Energy per Nucleon (BE/A vs A) Stability Curve' },
+  'imp-phy-13-th2': { diagramId: 'nuclei-binding-force', subMode: 'nuclear-force', title: 'Strong Nuclear Force Potential Energy U(r) vs Distance r' },
+  'imp-phy-13-th3': { diagramId: 'nuclei-binding-force', subMode: 'fission-fusion', title: 'Nuclear Fission (²³⁵U) & Solar Proton-Proton Fusion' },
+
+  // Chapter 14: Semiconductor Electronics
+  'imp-phy-14-ex1': { diagramId: 'pn-junction-rectifier', subMode: 'energy-bands', title: 'Energy Band Classification: Insulator vs Semiconductor (E_g)' },
+  'imp-phy-14-ex2': { diagramId: 'pn-junction-rectifier', subMode: 'energy-bands', title: 'Extrinsic n-Type & p-Type Energy Bands (n_e · n_h = n_i²)' },
+  'imp-phy-14-ex4': { diagramId: 'pn-junction-rectifier', subMode: 'vi-characteristics', title: 'Silicon Diode Forward & Reverse V–I Characteristics' },
+  'imp-phy-14-th1': { diagramId: 'pn-junction-rectifier', subMode: 'energy-bands', title: 'Solid Classification & n-Type / p-Type Semiconductor Energy Bands' },
+  'imp-phy-14-th2': { diagramId: 'pn-junction-rectifier', subMode: 'vi-characteristics', title: 'p-n Junction Depletion Layer, Forward Bias & Reverse Bias V–I Curve' },
+  'imp-phy-14-th3': { diagramId: 'pn-junction-rectifier', subMode: 'rectifiers', title: 'Half-Wave & Centre-Tap Full-Wave Rectifier Circuits & Waveforms' }
 };
+
+const DIAGRAM_MAPPING = Object.fromEntries(
+  Object.entries(QUESTION_DIAGRAM_CONFIG).map(([qId, cfg]) => [qId, cfg.diagramId])
+);
 
 const SQP_CORRELATIONS = {
   'imp-phy-9-ex7': { sqpId: 'sqp-2027-q14', label: '2026-27 SQP: Q14 (Thin Lens)' },
@@ -107,21 +122,12 @@ const SQP_CORRELATIONS = {
   'imp-phy-14-ex4': { sqpId: 'sqp-2027-q29', label: '2026-27 SQP: Q29 (Case Study: p-n Diode)' }
 };
 
-const getDerivationDiagram = (qId) => {
-  const diagramId = DIAGRAM_MAPPING[qId];
-  if (!diagramId) return null;
-  const labels = {
-    'ray-optics-instruments': 'Ray Optics: Mirrors, Refraction, Lenses & Instruments',
-    'prism-dispersion': 'Prism Refraction, Minimum Deviation & TIR Condition',
-    'huygens-wavefronts': 'Huygens Wavefronts: Types, Reflection & Refraction (Denser / Rarer)',
-    'ydse-wave-optics': 'Wave Optics: YDSE Fringes & Interference Intensity',
-    'single-slit-diffraction': 'Single-Slit Diffraction & Angular Width',
-    'photoelectric-graphs': 'Photoelectric Effect: Stopping Potential vs Frequency',
-    'bohr-atom-spectra': 'Bohr Model Orbits & Hydrogen Spectral Series',
-    'nuclei-binding-force': 'Binding Energy per Nucleon Curve & Nuclear Force',
-    'pn-junction-rectifier': 'Semiconductor Energy Bands, p-n Diode & V–I Curve'
-  };
-  return { diagramId, title: labels[diagramId] || 'Interactive Physics Diagram' };
+const getDerivationDiagram = (qId, dIdx = 0) => {
+  if (qId === 'imp-phy-9-th6' && dIdx === 1) {
+    return { diagramId: 'prism-dispersion', subMode: 'curve', title: 'Prism i–δ Minimum Deviation Curve (i = e & r = A/2)' };
+  }
+  const cfg = QUESTION_DIAGRAM_CONFIG[qId];
+  return cfg || null;
 };
 
 export default function ImportantQuestionsTabContent({ 
@@ -1287,7 +1293,7 @@ export default function ImportantQuestionsTabContent({
                     )}
 
                     {/* PART 3: Diagram & Exam Drawing Guide */}
-                    {((!isBiology && (DIAGRAM_MAPPING[q.id] || q.diagram?.hasDiagram)) || 
+                    {((!isBiology && ((!(q.derivations && q.derivations.length > 0 && DIAGRAM_MAPPING[q.id]) && (DIAGRAM_MAPPING[q.id] || q.diagram?.hasDiagram)) || q.diagram?.examDrawingGuide?.length > 0)) || 
                       (isBiology && (q.diagramId || q.diagram?.diagramId || q.diagram?.hasDiagram))) && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
@@ -1299,8 +1305,11 @@ export default function ImportantQuestionsTabContent({
                           </h4>
                         </div>
 
-                        {!isBiology && DIAGRAM_MAPPING[q.id] && (
-                          <PhysicsDiagramCard diagramId={DIAGRAM_MAPPING[q.id]} />
+                        {!isBiology && DIAGRAM_MAPPING[q.id] && !(q.derivations && q.derivations.length > 0) && (
+                          <PhysicsDiagramCard
+                            diagramId={DIAGRAM_MAPPING[q.id]}
+                            subMode={QUESTION_DIAGRAM_CONFIG[q.id]?.subMode}
+                          />
                         )}
 
                         {isBiology && (q.diagramId || q.diagram?.diagramId) && (

@@ -9,7 +9,6 @@ import PortionsTabContent from '../components/study/PortionsTabContent';
 import PyqTabContent from '../components/study/PyqTabContent';
 import McqTabContent from '../components/study/McqTabContent';
 import TestMakerTabContent from '../components/study/TestMakerTabContent';
-import ImportantQuestionsTabContent from '../components/study/ImportantQuestionsTabContent';
 import SamplePaperTabContent from '../components/study/SamplePaperTabContent';
 import StudySearchModal from '../components/study/StudySearchModal';
 import WolframEngine from '../components/calculator/WolframEngine';
@@ -135,15 +134,6 @@ export default function Notes() {
               {session.activeSidebarTab === 'WOLFRAM_ENGINE' && (
                 <WolframEngine
                   initialSubject={session.selectedSubject || 'standard_maths'}
-                />
-              )}
-
-              {/* Tab 3: Important Questions for the Exam */}
-              {session.activeSidebarTab === 'IMPORTANT' && (
-                <ImportantQuestionsTabContent
-                  selectedSubject={session.selectedSubject}
-                  onJumpToChapter={handleJumpToChapter}
-                  onSelectTab={session.setActiveSidebarTab}
                 />
               )}
 

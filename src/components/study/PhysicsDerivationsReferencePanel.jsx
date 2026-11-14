@@ -310,7 +310,7 @@ export default function PhysicsDerivationsReferencePanel({
 
                         {showDiagram && drv.diagramId && (
                           <div className="pt-2">
-                            <PhysicsDiagramCard diagramId={drv.diagramId} />
+                            <PhysicsDiagramCard diagramId={drv.diagramId} subMode={drv.diagramSubMode} />
                           </div>
                         )}
                       </div>

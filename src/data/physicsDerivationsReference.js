@@ -7,6 +7,27 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
   // CHAPTER 1: ELECTRIC CHARGES AND FIELDS (Slides 1–6)
   // =========================================================================
   {
+    id: 'drv-1-0',
+    slideRange: 'Ch 1 Core',
+    chapterNum: 1,
+    chapterId: 'phy-ch-1',
+    chapterTitle: 'Electric Charges and Fields',
+    subtopicId: 'phy-sub-1-3',
+    title: 'Electric Field Due to a Point Charge & Superposition Principle',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Fundamental Proof',
+    diagramId: 'point-charge-field',
+    setup: 'Place a source charge $q$ at origin $O$ and a vanishingly small positive test charge $q_0$ at position vector $\\vec{r}$ from $O$ in vacuum.',
+    steps: [
+      { text: 'By Coulomb’s Law, electrostatic force exerted by source charge $q$ on test charge $q_0$ is:', equation: '\\vec{F} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q q_0}{r^2}\\hat{r}' },
+      { text: 'By definition, electric field intensity is force per unit positive test charge as $q_0 \\to 0$:', equation: '\\vec{E}(\\vec{r}) = \\lim_{q_0 \\to 0}\\frac{\\vec{F}}{q_0} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}\\hat{r}' },
+      { text: 'In full position-vector form ($\\hat{r} = \\vec{r}/r$), showing inverse-square spherical symmetry:', equation: '\\vec{E}(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^3}\\vec{r} \\qquad (E \\propto \\frac{1}{r^2})' },
+      { text: 'For $n$ discrete point charges $q_1, q_2, \\dots, q_n$ at displacements $\\vec{r}_{1P}, \\dots, \\vec{r}_{nP}$ from $P$, apply the Superposition Principle:', equation: '\\vec{E}_{\\text{net}}(P) = \\sum_{i=1}^{n} \\vec{E}_i = \\frac{1}{4\\pi\\varepsilon_0}\\sum_{i=1}^{n} \\frac{q_i}{r_{iP}^2}\\hat{r}_{iP}' }
+    ],
+    finalFormula: '\\vec{E} = \\frac{1}{4\\pi\\varepsilon_0}\\frac{q}{r^2}\\hat{r}, \\qquad \\vec{E}_{\\text{net}} = \\sum_{i=1}^{n}\\vec{E}_i',
+    specialCases: ['Field points radially OUTWARD for $q > 0$ and radially INWARD for $q < 0$.', 'Independent of magnitude of test charge $q_0$.']
+  },
+  {
     id: 'drv-1-1',
     slideRange: 'Slide 1',
     chapterNum: 1,
@@ -501,6 +522,27 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     specialCases: ['Magnetic field inside a toroid is strictly confined within the core and zero everywhere else.']
   },
   {
+    id: 'drv-4-5b',
+    slideRange: 'Ch 4 Core',
+    chapterNum: 4,
+    chapterId: 'phy-ch-4',
+    chapterTitle: 'Moving Charges and Magnetism',
+    subtopicId: 'phy-sub-4-6',
+    title: 'Motion of a Charged Particle in a Uniform Magnetic Field (Radius, Period & Helical Pitch)',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks / 5 Marks Board Derivation',
+    diagramId: 'force-conductor',
+    setup: 'A particle of mass $m$ and charge $q$ enters a uniform magnetic field $\\vec{B}$ with velocity $\\vec{v}$ perpendicular to $\\vec{B}$ ($\\theta = 90^\\circ$).',
+    steps: [
+      { text: 'Magnetic Lorentz force $\\vec{F} = q(\\vec{v}\\times\\vec{B})$ acts always perpendicular to $\\vec{v}$, so speed $v$ and kinetic energy remain constant ($dK/dt = 0$).' },
+      { text: 'For $\\vec{v}\\perp\\vec{B}$, magnetic force provides necessary centripetal force for uniform circular motion of radius $r$:', equation: 'qvB = \\frac{mv^2}{r} \\implies r = \\frac{mv}{qB} = \\frac{p}{qB} = \\frac{\\sqrt{2mK}}{qB}' },
+      { text: 'Time period $T$ and cyclotron angular frequency $\\omega_c$ / frequency $\\nu_c$ (strictly independent of speed $v$ and radius $r$):', equation: 'T = \\frac{2\\pi r}{v} = \\frac{2\\pi m}{qB}, \\qquad \\nu_c = \\frac{1}{T} = \\frac{qB}{2\\pi m}' },
+      { text: 'For oblique entry at angle $\\theta$ ($0^\\circ < \\theta < 90^\\circ$): $v_\\perp = v\\sin\\theta$ gives circle of radius $r = \\frac{mv\\sin\\theta}{qB}$, while $v_\\parallel = v\\cos\\theta$ advances linearly in a helix of pitch:', equation: 'p = v_\\parallel T = \\frac{2\\pi m v \\cos\\theta}{qB}' }
+    ],
+    finalFormula: 'r = \\frac{mv}{qB}, \\qquad T = \\frac{2\\pi m}{qB}, \\qquad \\nu_c = \\frac{qB}{2\\pi m}, \\qquad p = \\frac{2\\pi m v\\cos\\theta}{qB}',
+    specialCases: ['Because magnetic force is always $\\perp \\vec{v}$, it does ZERO work on a free moving charge.', 'Time period $T$ and cyclotron frequency $\\nu_c$ are independent of particle speed $v$ (isochronism).']
+  },
+  {
     id: 'drv-4-6',
     slideRange: 'Slide 25',
     chapterNum: 4,
@@ -584,8 +626,93 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
   },
 
   // =========================================================================
-  // CHAPTER 6: ELECTROMAGNETIC INDUCTION (Slides 29–31)
+  // CHAPTER 5: MAGNETISM AND MATTER (Core Dipole & Material Laws)
   // =========================================================================
+  {
+    id: 'drv-5-1',
+    slideRange: 'Ch 5 Core 1',
+    chapterNum: 5,
+    chapterId: 'phy-ch-5',
+    chapterTitle: 'Magnetism and Matter',
+    subtopicId: 'phy-sub-5-1',
+    title: 'Magnetisation, Susceptibility Relation (μ_r = 1 + χ) & Diamagnetic Flux Expulsion',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Standard Proof',
+    diagramId: 'magnetic-materials',
+    setup: 'Place a cylindrical specimen inside a long solenoid carrying magnetising intensity $H = nI$, developing magnetisation $M = m_{\\text{net}}/V$.',
+    steps: [
+      { text: 'Total magnetic induction inside the core is the sum of external field $B_0 = \\mu_0 H$ and induced material field $B_m = \\mu_0 M$:', equation: 'B = \\mu_0 (H + M)' },
+      { text: 'Define dimensionless magnetic susceptibility $\\chi_m$ relating induced magnetisation $\\vec{M}$ to $\\vec{H}$ ($\\vec{M} = \\chi_m \\vec{H}$):', equation: 'B = \\mu_0 (H + \\chi_m H) = \\mu_0 (1 + \\chi_m) H' },
+      { text: 'Comparing with constitutive relation $B = \\mu H = \\mu_0 \\mu_r H$ yields relative permeability $\\mu_r$:', equation: '\\mu = \\mu_0(1 + \\chi_m) \\implies \\mu_r = \\frac{\\mu}{\\mu_0} = 1 + \\chi_m' },
+      { text: 'For diamagnetic materials (paired orbital electrons opposing external flux by Lenz’s rule):', equation: '-1 \\le \\chi_m < 0, \\quad 0 \\le \\mu_r < 1, \\quad B_{\\text{inside}} < B_0 \\; (\\text{superconductor: } \\chi_m = -1, \\mu_r = 0)' }
+    ],
+    finalFormula: '\\vec{B} = \\mu_0(\\vec{H} + \\vec{M}), \\qquad \\mu_r = 1 + \\chi_m',
+    specialCases: ['Diamagnetic susceptibility $\\chi_m$ is small, negative, and independent of temperature.', 'Meissner effect in superconductors gives perfect diamagnetism ($\\chi_m = -1$, $B_{\\text{in}} = 0$).']
+  },
+  {
+    id: 'drv-5-2',
+    slideRange: 'Ch 5 Core 2',
+    chapterNum: 5,
+    chapterId: 'phy-ch-5',
+    chapterTitle: 'Magnetism and Matter',
+    subtopicId: 'phy-sub-5-2',
+    title: 'Magnetic Dipole Torque, Potential Energy & Curie’s Law for Paramagnets (χ = C/T)',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Conceptual Derivation',
+    diagramId: 'magnetic-materials',
+    setup: 'Place a magnetic dipole (bar magnet / atomic moment) of moment $\\vec{m}$ at angle $\\theta$ in a uniform magnetic field $\\vec{B}$.',
+    steps: [
+      { text: 'Magnetic poles $+q_m$ and $-q_m$ separated by magnetic length $2l$ ($m = q_m \\cdot 2l$) experience opposite forces $\\pm q_m B$, forming a restoring torque:', equation: '\\tau = (q_m B)(2l\\sin\\theta) = mB\\sin\\theta \\implies \\vec{\\tau} = \\vec{m} \\times \\vec{B}' },
+      { text: 'Work done in rotating dipole from zero-energy reference $\\theta_1 = 90^\\circ$ to $\\theta_2 = \\theta$ gives potential energy:', equation: 'U(\\theta) = \\int_{90^\\circ}^{\\theta} mB\\sin\\theta\\,d\\theta = -mB\\cos\\theta = -\\vec{m}\\cdot\\vec{B}' },
+      { text: 'In a paramagnetic solid, thermal energy $k_B T$ opposes magnetic alignment energy $mB$, giving Curie’s Law for small fields:', equation: 'M = C\\frac{B_0}{T} \\implies \\chi_m = \\frac{M}{H} = \\frac{C}{T} \\qquad (\\chi_m > 0, \\; \\chi_m \\propto T^{-1})' }
+    ],
+    finalFormula: '\\vec{\\tau} = \\vec{m}\\times\\vec{B}, \\qquad U = -mB\\cos\\theta, \\qquad \\chi_m = \\frac{C}{T}',
+    specialCases: ['$\\theta = 0^\\circ$ ($U = -mB$): stable equilibrium; $\\theta = 180^\\circ$ ($U = +mB$): unstable equilibrium.', 'Paramagnetic susceptibility increases when cooled until saturation is reached at very low $T$ / high $B$.']
+  },
+  {
+    id: 'drv-5-3',
+    slideRange: 'Ch 5 Core 3',
+    chapterNum: 5,
+    chapterId: 'phy-ch-5',
+    chapterTitle: 'Magnetism and Matter',
+    subtopicId: 'phy-sub-5-3',
+    title: 'Ferromagnetic Domain Alignment & Curie–Weiss Law (χ = C′/(T − Tc))',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '2–3 Marks Conceptual Proof',
+    diagramId: 'magnetic-materials',
+    setup: 'In ferromagnets (Fe, Co, Ni), neighbouring atomic moments couple via quantum exchange into macroscopic domains ($\\sim 10^{11}$ atoms) producing an internal Weiss molecular field $\\vec{B}_{\\text{eff}} = \\vec{B}_0 + \\lambda\\vec{M}$.',
+    steps: [
+      { text: 'Above Curie temperature $T_c$, spontaneous domain magnetisation vanishes and the effective magnetising field is $\\vec{H}_{\\text{eff}} = \\vec{H} + \\lambda\\vec{M}$.' },
+      { text: 'Applying Curie’s Law $M = C(H + \\lambda M)/T$ with $T_c = C\\lambda$:', equation: 'M\\left(1 - \\frac{C\\lambda}{T}\\right) = \\frac{C}{T}H \\implies \\chi_m = \\frac{M}{H} = \\frac{C}{T - T_c} \\quad (T > T_c)' },
+      { text: 'Inside external flux $\\vec{B}_0$, domain boundaries move and rotate, giving massive flux crowding ($\\chi_m \\gg 10^3$, $\\mu_r \\gg 1$, $B_{\\text{in}} \\gg B_0$).' }
+    ],
+    finalFormula: '\\chi_m = \\frac{C}{T - T_c} \\; (T > T_c), \\qquad \\mu_r = 1 + \\chi_m \\gg 1',
+    specialCases: ['For $T > T_c$, ferromagnetic Iron ($T_c = 1043\\text{ K}$) transitions into a paramagnetic material.', 'Hard vs soft ferromagnets are chosen via area of hysteresis loop (though detailed hysteresis loop is qualitative in rationalized NCERT).']
+  },
+
+  // =========================================================================
+  // CHAPTER 6: ELECTROMAGNETIC INDUCTION (Slides 29–31 + Faraday & AC Gen)
+  // =========================================================================
+  {
+    id: 'drv-6-0',
+    slideRange: 'Ch 6 Core 1',
+    chapterNum: 6,
+    chapterId: 'phy-ch-6',
+    chapterTitle: 'Electromagnetic Induction',
+    subtopicId: 'phy-sub-6-2',
+    title: 'Faraday’s Law of Electromagnetic Induction, Induced Current & Total Induced Charge',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Board Derivation + Numerical Basis',
+    diagramId: 'faraday-lenz',
+    setup: 'Consider a closed conducting coil of $N$ turns and total circuit resistance $R$ linked by a time-varying magnetic flux $\\Phi_B(t) = BA\\cos\\theta$.',
+    steps: [
+      { text: 'By Faraday’s law and Lenz’s rule (energy conservation), instantaneous induced EMF equals the negative time rate of change of total magnetic flux linkage:', equation: '\\varepsilon = -N\\frac{d\\Phi_B}{dt}' },
+      { text: 'Instantaneous induced current in the closed loop of resistance $R$ is:', equation: 'I = \\frac{|\\varepsilon|}{R} = \\frac{N}{R}\\left|\\frac{d\\Phi_B}{dt}\\right|' },
+      { text: 'Total induced charge $\\Delta q$ flowing in time interval $t_1 \\to t_2$ as flux changes from $\\Phi_1$ to $\\Phi_2$:', equation: '\\Delta q = \\int_{t_1}^{t_2} I\\,dt = \\frac{N}{R}\\int_{\\Phi_1}^{\\Phi_2} d\\Phi_B = \\frac{N(\\Phi_1 - \\Phi_2)}{R} = \\frac{N\\,\\Delta\\Phi_B}{R}' }
+    ],
+    finalFormula: '\\varepsilon = -N\\frac{d\\Phi_B}{dt}, \\qquad \\Delta q = \\frac{N\\,\\Delta\\Phi_B}{R}',
+    specialCases: ['Induced EMF $\\varepsilon$ and current $I$ depend on HOW FAST flux changes ($d\\Phi_B/dt$).', 'Total induced charge $\\Delta q$ depends ONLY on net flux change $\\Delta\\Phi_B$ and resistance $R$ — completely independent of time taken!']
+  },
   {
     id: 'drv-6-1',
     slideRange: 'Slide 29',
@@ -645,6 +772,47 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     ],
     finalFormula: 'M = \\mu_0 \\mu_r n_1 n_2 (\\pi r_1^2) l',
     specialCases: ['Notice ONLY the INNER cross-sectional area $A_1 = \\pi r_1^2$ appears because outside field of a long solenoid is zero!', 'Reciprocity: $M_{12} = M_{21} = M$.']
+  },
+  {
+    id: 'drv-7-5',
+    slideRange: 'Slide 36',
+    chapterNum: 6,
+    chapterId: 'phy-ch-6',
+    chapterTitle: 'Electromagnetic Induction',
+    subtopicId: 'phy-sub-6-9',
+    title: 'Magnetic Energy Stored in an Inductor & Magnetic Energy Density',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Standard Proof',
+    diagramId: 'energy-storage',
+    setup: 'Build current in a pure inductor $L$ from $0$ to $I_0$ against back EMF $\\varepsilon = L\\frac{dI}{dt}$.',
+    steps: [
+      { text: 'Instantaneous rate of work done against self-induced back EMF:', equation: '\\frac{dW}{dt} = |\\varepsilon| I = L I \\frac{dI}{dt} \\implies dW = L I\\,dI' },
+      { text: 'Integrate from $I = 0$ to final steady current $I_0$:', equation: 'U_B = W = \\int_0^{I_0} L I\\,dI = \\frac{1}{2} L I_0^2' },
+      { text: 'For a long solenoid ($L = \\mu_0 n^2 A l$, $B = \\mu_0 n I_0 \\implies I_0 = B/(\\mu_0 n)$), magnetic energy density $u_B = U_B/(Al)$:', equation: 'u_B = \\frac{\\frac{1}{2}(\\mu_0 n^2 A l)(B/\\mu_0 n)^2}{A l} = \\frac{B^2}{2\\mu_0}' }
+    ],
+    finalFormula: 'U_B = \\frac{1}{2}L I_0^2, \\qquad u_B = \\frac{B^2}{2\\mu_0}',
+    specialCases: ['Notice exact electromagnetic duality: capacitor $u_e = \\frac{1}{2}\\varepsilon_0 E^2$ vs inductor $u_B = \\frac{B^2}{2\\mu_0}$.']
+  },
+  {
+    id: 'drv-6-4',
+    slideRange: 'Ch 6 Core 5',
+    chapterNum: 6,
+    chapterId: 'phy-ch-6',
+    chapterTitle: 'Electromagnetic Induction',
+    subtopicId: 'phy-sub-6-10',
+    title: 'AC Generator: Principle & Instantaneous Alternating EMF (ε = ε₀ sin ωt)',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '5 Marks Guaranteed Board Question',
+    diagramId: 'faraday-lenz',
+    setup: 'Rotate an armature coil of $N$ turns and face area $A$ with constant angular velocity $\\omega = 2\\pi\\nu$ inside a uniform magnetic field $\\vec{B}$, with $\\theta(t) = \\omega t$ at time $t$.',
+    steps: [
+      { text: 'Magnetic flux linked with the rotating coil at instant $t$ is:', equation: '\\Phi_B(t) = N B A \\cos\\theta = N B A \\cos(\\omega t)' },
+      { text: 'By Faraday’s Law of Electromagnetic Induction, instantaneous induced EMF is:', equation: '\\varepsilon(t) = -\\frac{d\\Phi_B}{dt} = -\\frac{d}{dt}[N B A \\cos(\\omega t)] = N B A \\omega \\sin(\\omega t)' },
+      { text: 'Define peak (maximum) induced EMF $\\varepsilon_0 = N B A \\omega = 2\\pi\\nu N B A$ (at $\\omega t = 90^\\circ$, plane parallel to $\\vec{B}$):', equation: '\\varepsilon(t) = \\varepsilon_0 \\sin(\\omega t) = \\varepsilon_0 \\sin(2\\pi\\nu t)' },
+      { text: 'Instantaneous current delivered to external load resistance $R$:', equation: 'I(t) = \\frac{\\varepsilon(t)}{R} = I_0 \\sin(\\omega t), \\qquad I_0 = \\frac{N B A \\omega}{R}' }
+    ],
+    finalFormula: '\\varepsilon(t) = N B A \\omega \\sin(\\omega t) = \\varepsilon_0 \\sin(\\omega t)',
+    specialCases: ['Maximum EMF occurs when coil plane is PARALLEL to $\\vec{B}$ ($\\Phi_B = 0$ but $d\\Phi_B/dt$ is max!).', 'Zero EMF occurs when coil plane is PERPENDICULAR to $\\vec{B}$ ($\\Phi_B$ is max, $d\\Phi_B/dt = 0$).']
   },
 
   // =========================================================================
@@ -713,6 +881,27 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     specialCases: ['At resonance, $\\phi = 0^\\circ$ and power factor $\\cos\\phi = 1$ (purely resistive).', 'Resonance frequency depends ONLY on $L$ and $C$, independent of $R$ (though sharpness $Q$ increases when $R$ decreases).']
   },
   {
+    id: 'drv-7-3b',
+    slideRange: 'Ch 7 Core',
+    chapterNum: 7,
+    chapterId: 'phy-ch-7',
+    chapterTitle: 'Alternating Current',
+    subtopicId: 'phy-sub-7-6',
+    title: 'Electrical Resonance in Series LCR Circuit, Half-Power Frequencies & Quality Factor (Q)',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3–5 Marks Board Graph & Proof',
+    diagramId: 'lcr-circuit',
+    subMode: 'resonance',
+    setup: 'Sweep source angular frequency $\\omega$ across a series LCR circuit ($I_m(\\omega) = V_m / \\sqrt{R^2 + (\\omega L - 1/\\omega C)^2}$) to locate peak resonance and measure sharpness of tuning.',
+    steps: [
+      { text: 'At resonant frequency $\\omega_0$, inductive reactance cancels capacitive reactance ($X_L = X_C$), making impedance purely resistive ($Z_{\\min} = R$):', equation: '\\omega_0 L = \\frac{1}{\\omega_0 C} \\implies \\omega_0 = \\frac{1}{\\sqrt{LC}}, \\qquad \\nu_0 = \\frac{1}{2\\pi\\sqrt{LC}}' },
+      { text: 'Half-power frequencies $\\omega_1, \\omega_2$ occur where current falls to $I_{\\max}/\\sqrt{2}$ (power halves), requiring $|X_L - X_C| = R$:', equation: '\\omega_1 = \\omega_0 - \\Delta\\omega, \\quad \\omega_2 = \\omega_0 + \\Delta\\omega, \\qquad \\text{Bandwidth } 2\\Delta\\omega = \\omega_2 - \\omega_1 = \\frac{R}{L}' },
+      { text: 'Quality factor (Q-factor) measures sharpness of resonance as ratio $\\omega_0 / (2\\Delta\\omega)$ (equivalently voltage magnification $V_L/V$ at resonance):', equation: 'Q = \\frac{\\omega_0}{\\omega_2 - \\omega_1} = \\frac{\\omega_0 L}{R} = \\frac{1}{\\omega_0 C R} = \\frac{1}{R}\\sqrt{\\frac{L}{C}}' }
+    ],
+    finalFormula: '\\omega_0 = \\frac{1}{\\sqrt{LC}}, \\qquad \\Delta\\omega_{\\text{BW}} = \\frac{R}{L}, \\qquad Q = \\frac{\\omega_0 L}{R} = \\frac{1}{R}\\sqrt{\\frac{L}{C}}',
+    specialCases: ['Smaller resistance $R$ gives sharper resonance peak and higher selectivity (higher $Q$-factor).', 'Series LCR resonance circuit acts as an acceptor circuit in radio receivers.']
+  },
+  {
     id: 'drv-7-4',
     slideRange: 'Slide 35',
     chapterNum: 7,
@@ -731,26 +920,6 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     ],
     finalFormula: 'P_{\\text{avg}} = V_{\\text{rms}} I_{\\text{rms}} \\cos\\phi, \\qquad \\cos\\phi = \\frac{R}{Z}',
     specialCases: ['In a pure $L$ or pure $C$ circuit, $\\phi = \\pm 90^\\circ \\implies P_{\\text{avg}} = 0$ (Wattless current: $I_{\\text{rms}}\\sin\\phi$).']
-  },
-  {
-    id: 'drv-7-5',
-    slideRange: 'Slide 36',
-    chapterNum: 7,
-    chapterId: 'phy-ch-7',
-    chapterTitle: 'Alternating Current',
-    subtopicId: 'phy-sub-6-9',
-    title: 'Magnetic Energy Stored in an Inductor & Magnetic Energy Density',
-    syllabusStatus: 'Core CBSE 2026',
-    importance: '3 Marks Standard Proof',
-    diagramId: 'energy-storage',
-    setup: 'Build current in a pure inductor $L$ from $0$ to $I_0$ against back EMF $\\varepsilon = L\\frac{dI}{dt}$.',
-    steps: [
-      { text: 'Instantaneous rate of work done against self-induced back EMF:', equation: '\\frac{dW}{dt} = |\\varepsilon| I = L I \\frac{dI}{dt} \\implies dW = L I\\,dI' },
-      { text: 'Integrate from $I = 0$ to final steady current $I_0$:', equation: 'U_B = W = \\int_0^{I_0} L I\\,dI = \\frac{1}{2} L I_0^2' },
-      { text: 'For a long solenoid ($L = \\mu_0 n^2 A l$, $B = \\mu_0 n I_0 \\implies I_0 = B/(\\mu_0 n)$), magnetic energy density $u_B = U_B/(Al)$:', equation: 'u_B = \\frac{\\frac{1}{2}(\\mu_0 n^2 A l)(B/\\mu_0 n)^2}{A l} = \\frac{B^2}{2\\mu_0}' }
-    ],
-    finalFormula: 'U_B = \\frac{1}{2}L I_0^2, \\qquad u_B = \\frac{B^2}{2\\mu_0}',
-    specialCases: ['Notice exact electromagnetic duality: capacitor $u_e = \\frac{1}{2}\\varepsilon_0 E^2$ vs inductor $u_B = \\frac{B^2}{2\\mu_0}$.']
   },
   {
     id: 'drv-7-6',
@@ -773,6 +942,51 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
   },
 
   // =========================================================================
+  // CHAPTER 8: ELECTROMAGNETIC WAVES (Core Maxwell Proofs)
+  // =========================================================================
+  {
+    id: 'drv-8-1',
+    slideRange: 'Ch 8 Core 1',
+    chapterNum: 8,
+    chapterId: 'phy-ch-8',
+    chapterTitle: 'Electromagnetic Waves',
+    subtopicId: 'phy-sub-8-3',
+    title: 'Maxwell’s Displacement Current & Ampere–Maxwell Circuital Law',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Guaranteed Board Proof',
+    diagramId: 'displacement-current',
+    setup: 'Charge a parallel-plate capacitor (plate area $A$, instantaneous plate charge $q(t)$) using conduction current $I_c(t) = dq/dt$. Compare a circular Amperian loop $C$ bounding flat surface $S_1$ (pierced by wire) and pot surface $S_2$ (passing inside capacitor gap).',
+    steps: [
+      { text: 'Inconsistency of naive Ampere’s law: Surface $S_1$ gives $\\oint_C \\vec{B}\\cdot d\\vec{l} = \\mu_0 I_c$, whereas balloon surface $S_2$ has zero wire piercing it ($0$).' },
+      { text: 'Inside the capacitor gap, uniform electric field is $E(t) = \\frac{\\sigma(t)}{\\varepsilon_0} = \\frac{q(t)}{\\varepsilon_0 A}$, so electric flux $\\Phi_E$ across $S_2$ is:', equation: '\\Phi_E = E(t) A = \\frac{q(t)}{\\varepsilon_0} \\implies q(t) = \\varepsilon_0 \\Phi_E' },
+      { text: 'Differentiate with respect to time $t$ to relate conduction current $I_c = dq/dt$ to changing electric flux:', equation: 'I_c = \\frac{dq}{dt} = \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\equiv I_d' },
+      { text: 'Adding Displacement Current $I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}$ gives the consistent Ampere–Maxwell Law:', equation: '\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0(I_c + I_d) = \\mu_0\\left(I_c + \\varepsilon_0\\frac{d\\Phi_E}{dt}\\right)' }
+    ],
+    finalFormula: 'I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt} = I_c, \\qquad \\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0\\left(I_c + \\varepsilon_0\\frac{d\\Phi_E}{dt}\\right)',
+    specialCases: ['Outside capacitor plates: $I_c \\neq 0, I_d = 0$; inside air gap: $I_c = 0, I_d = I_c(\\text{leads})$.', 'Proves current continuity around the entire capacitive AC/charging loop.']
+  },
+  {
+    id: 'drv-8-2',
+    slideRange: 'Ch 8 Core 2',
+    chapterNum: 8,
+    chapterId: 'phy-ch-8',
+    chapterTitle: 'Electromagnetic Waves',
+    subtopicId: 'phy-sub-8-4',
+    title: 'Speed of Electromagnetic Waves, Field Ratio (E₀/B₀ = c) & Equal Energy Partition',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Conceptual + Wave Equation Proof',
+    diagramId: 'em-wave-structure',
+    setup: 'Plane harmonic EM wave propagates along $+z$ (or $+x$) with mutually perpendicular transverse fields $E_x = E_0\\sin(kz - \\omega t)$ and $B_y = B_0\\sin(kz - \\omega t)$ in vacuum ($\\varepsilon_0, \\mu_0$).',
+    steps: [
+      { text: 'Maxwell’s coupled curl equations in charge-free vacuum give second-order 3D wave equations travelling at phase speed:', equation: 'c = \\frac{\\omega}{k} = \\nu\\lambda = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\approx 3.0 \\times 10^8\\text{ m/s}' },
+      { text: 'From Faraday’s differential relation $\\frac{\\partial E_x}{\\partial z} = -\\frac{\\partial B_y}{\\partial t}$: $k E_0 = \\omega B_0$, yielding the invariant amplitude ratio:', equation: '\\frac{E_0}{B_0} = \\frac{\\omega}{k} = c, \\qquad \\vec{E} \\times \\vec{B} \\parallel \\text{direction of propagation}' },
+      { text: 'Using $B_{\\text{rms}} = E_{\\text{rms}}/c$ and $c^2 = 1/(\\mu_0\\varepsilon_0)$, show average electric energy density equals average magnetic energy density:', equation: 'u_B = \\frac{B_{\\text{rms}}^2}{2\\mu_0} = \\frac{E_{\\text{rms}}^2}{2\\mu_0 c^2} = \\frac{1}{2}\\varepsilon_0 E_{\\text{rms}}^2 = u_E \\implies u_{\\text{total}} = \\varepsilon_0 E_{\\text{rms}}^2 = \\frac{B_{\\text{rms}}^2}{\\mu_0}' }
+    ],
+    finalFormula: 'c = \\frac{1}{\\sqrt{\\mu_0\\varepsilon_0}} = \\frac{E_0}{B_0}, \\qquad u_{\\text{total}} = \\varepsilon_0 E_{\\text{rms}}^2 \\; (u_E = u_B)',
+    specialCases: ['In a medium of constants $\\mu, \\varepsilon$, wave speed slows to $v = c/\\sqrt{\\mu_r\\varepsilon_r} = c/n$.', 'Intensity $I = u_{\\text{total}} c = \\varepsilon_0 c E_{\\text{rms}}^2$; radiation momentum $p = U/c$ (complete absorption).']
+  },
+
+  // =========================================================================
   // CHAPTER 9: RAY OPTICS AND OPTICAL INSTRUMENTS (Slides 38–41 + Complete Core)
   // =========================================================================
   {
@@ -786,6 +1000,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '2 Marks / 3 Marks Board Derivation',
     diagramId: 'ray-optics-instruments',
+    diagramSubMode: 'mirror',
     setup: 'A paraxial ray $MD$ parallel to the principal axis strikes a spherical mirror (pole $P$, focus $F$, centre of curvature $C$, $PC = R$, $PF = f$) at small aperture point $M$.',
     steps: [
       { text: 'Normal $MC$ bisects the angle between incident and reflected rays ($\\angle DMC = \\angle CMF = \\theta$). By alternate interior angles, $\\angle MCP = \\theta$ and exterior angle $\\angle MFP = 2\\theta$.' },
@@ -806,6 +1021,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Board Classic',
     diagramId: 'ray-optics-instruments',
+    diagramSubMode: 'mirror',
     setup: 'Object $AB$ placed beyond $C$ in front of a concave mirror forms real inverted image $A\'B\'$ between $C$ and $F$. Apply paraxial triangle similarity + Cartesian signs ($u, v, f < 0$).',
     steps: [
       { text: 'From similar right triangles $\\triangle A\'B\'F \\sim \\triangle MPF$ ($MP = AB$):', equation: '\\frac{B\'A\'}{BA} = \\frac{B\'F}{FP} = \\frac{B\'P - FP}{FP}' },
@@ -826,6 +1042,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Guaranteed Concept + Prism Derivation',
     diagramId: 'prism-dispersion',
+    diagramSubMode: 'tir',
     setup: 'Light travels from optically denser medium $n_d$ to optically rarer medium $n_r$ ($n_d > n_r$) at angle of incidence $i$.',
     steps: [
       { text: 'By Snell’s law $n_d \\sin i = n_r \\sin r$. At the critical angle $i = i_c$, refracted ray grazes the boundary ($r = 90^\\circ$):', equation: 'n_d \\sin i_c = n_r \\sin 90^\\circ \\implies \\sin i_c = \\frac{n_r}{n_d} = \\frac{1}{n_{dr}}' },
@@ -846,6 +1063,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Guaranteed Derivation',
     diagramId: 'ray-optics-instruments',
+    diagramSubMode: 'spherical-surface',
     setup: 'Point object $O$ in rarer medium ($n_1$) forms real image $I$ in denser medium ($n_2$) through convex spherical interface of radius of curvature $R$. Paraxial angles $\\alpha, \\beta, \\gamma$ are small.',
     steps: [
       { text: 'Small-angle trigonometry ($NM \\approx h$ perpendicular dropped from point of incidence $N$):', equation: '\\tan\\alpha \\approx \\alpha = \\frac{h}{-u}, \\quad \\tan\\beta \\approx \\beta = \\frac{h}{+v}, \\quad \\tan\\gamma \\approx \\gamma = \\frac{h}{+R}' },
@@ -866,6 +1084,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks #1 Board Derivation',
     diagramId: 'ray-optics-instruments',
+    diagramSubMode: 'lens-maker',
     setup: 'Thin lens (refractive index $n_2$, radii $R_1, R_2$) in surrounding medium $n_1$. Trace refraction step-by-step across Surface 1 ($I_1$ virtual image) and Surface 2 (final image $I$).',
     steps: [
       { text: 'Refraction at first surface ($n_1 \\to n_2$, radius $R_1$):', equation: '\\frac{n_2}{v_1} - \\frac{n_1}{u} = \\frac{n_2 - n_1}{R_1}' },
@@ -886,7 +1105,8 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     title: 'Prism Deviation & Refractive Index at Minimum Deviation',
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Board Derivation',
-    diagramId: 'ray-optics-instruments',
+    diagramId: 'prism-dispersion',
+    diagramSubMode: 'prism-ray',
     setup: 'Triangular glass prism of refracting angle $A$ and refractive index $n$. Incident angle $i$, emergent angle $e$, internal refraction angles $r_1, r_2$, and deviation $\\delta$.',
     steps: [
       { text: 'From quadrilateral $AQNR$ and internal triangle $QNR$: $A + \\angle QNR = 180^\\circ$ and $r_1 + r_2 + \\angle QNR = 180^\\circ$:', equation: 'r_1 + r_2 = A' },
@@ -908,6 +1128,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Guaranteed Ray Diagram + Derivation',
     diagramId: 'ray-optics-instruments',
+    diagramSubMode: 'microscope',
     setup: 'Simple microscope uses one converging lens ($f < D$). Compound microscope uses short-$f_o$ objective and larger-aperture eyepiece ($f_e$) separated by tube length $L$.',
     steps: [
       { text: 'Simple Microscope at near point ($v = -D$): Since $m = h\'/h = D/u_o$ and $\\frac{1}{-D} - \\frac{1}{-u_o} = \\frac{1}{f} \\implies \\frac{D}{u_o} = 1 + \\frac{D}{f}$:', equation: 'm_{\\text{simple}}(D) = 1 + \\frac{D}{f}, \\qquad m_{\\text{simple}}(\\infty) = \\frac{D}{f}' },
@@ -928,6 +1149,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Guaranteed Optical Instrument Question',
     diagramId: 'ray-optics-instruments',
+    diagramSubMode: 'astronomical-telescope',
     setup: 'Distant object subtends angle $\\alpha \\approx h\'/f_o$ at objective ($f_o \\gg f_e$); real inverted image $A\'B\'$ at $F_o$ acts as object for eyepiece subtending angle $\\beta \\approx h\'/|u_e|$.',
     steps: [
       { text: 'Angular magnification of Astronomical Refracting Telescope:', equation: 'm = \\frac{\\tan\\beta}{\\tan\\alpha} = \\frac{h\'/|u_e|}{h\'/f_o} = \\frac{f_o}{|u_e|}' },
@@ -953,6 +1175,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '2 Marks / 3 Marks Board Staple',
     diagramId: 'huygens-wavefronts',
+    diagramSubMode: 'wavefronts',
     setup: 'A wavefront is a continuous locus of points oscillating in identical phase at time $t$; light rays propagate perpendicular to the wavefront.',
     steps: [
       { text: 'Spherical Wavefront: Emitted by a point source in an isotropic medium; spherical area $4\\pi r^2$ scales intensity as $I \\propto \\frac{1}{r^2}$ and amplitude as $A \\propto \\frac{1}{r}$.' },
@@ -973,6 +1196,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '2 Marks / 3 Marks Conceptual Proof',
     diagramId: 'huygens-wavefronts',
+    diagramSubMode: 'wavefronts',
     setup: 'Given primary wavefront $AB$ at $t = 0$ in a homogeneous medium of wave speed $v$, construct the wavefront position at $t = \\tau$.',
     steps: [
       { text: 'Postulate 1: Every point on primary wavefront $AB$ acts as an independent point source of secondary spherical wavelets travelling outward at speed $v$.' },
@@ -992,6 +1216,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Guaranteed Wave-Theory Proof',
     diagramId: 'huygens-wavefronts',
+    diagramSubMode: 'reflection',
     setup: 'Plane wavefront $AB$ is incident obliquely at angle $i$ on reflecting mirror $XY$ in a medium of constant wave speed $v$.',
     steps: [
       { text: 'Point $B$ on the wavefront travels to mirror point $C$ in time $\\tau$ covering distance $BC = v\\tau$.' },
@@ -1012,6 +1237,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks / 5 Marks #1 Board Derivation',
     diagramId: 'huygens-wavefronts',
+    diagramSubMode: 'denser',
     setup: 'Plane wavefront $AB$ enters from rarer medium $1$ (speed $v_1$, index $n_1$) into denser medium $2$ (speed $v_2 < v_1$, index $n_2 > n_1$) across boundary $XY$.',
     steps: [
       { text: 'In transit time $\\tau$ taken by disturbance from $B$ to reach $C$ ($BC = v_1\\tau$), secondary wavelet from $A$ advances into medium 2 by shorter radius $AE = v_2\\tau$.' },
@@ -1032,6 +1258,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Classic Board Variation',
     diagramId: 'huygens-wavefronts',
+    diagramSubMode: 'rarer',
     setup: 'Plane wavefront $AB$ travels from optically denser medium $1$ (speed $v_1, n_1$) into optically rarer medium $2$ (speed $v_2 > v_1, n_2 < n_1$) across interface $XY$.',
     steps: [
       { text: 'In time $\\tau$ during which $B$ reaches $C$ in the denser medium ($BC = v_1\\tau$), the secondary wavelet from $A$ travels FASTER in the rarer medium ($AE = v_2\\tau > BC$).' },
@@ -1052,6 +1279,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks / 5 Marks Board Derivation',
     diagramId: 'ydse-wave-optics',
+    diagramSubMode: 'interference-intensity',
     setup: 'Two coherent waves $y_1 = a_1\\cos(\\omega t)$ and $y_2 = a_2\\cos(\\omega t + \\phi)$ of constant phase difference $\\phi$ superpose at point $P$.',
     steps: [
       { text: 'Resultant displacement $y = y_1 + y_2 = A\\cos(\\omega t + \\theta)$ has squared amplitude:', equation: 'A^2 = a_1^2 + a_2^2 + 2a_1a_2\\cos\\phi \\implies I = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\phi' },
@@ -1072,6 +1300,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Guaranteed Derivation',
     diagramId: 'ydse-wave-optics',
+    diagramSubMode: 'ydse-geometry',
     setup: 'Two coherent slits $S_1, S_2$ separated by $d$ illuminate a screen at distance $D \\gg d$. Point $P$ lies at distance $y$ from central maximum $O$.',
     steps: [
       { text: 'Path lengths from slits to $P$: $S_2 P^2 - S_1 P^2 = \\left[D^2 + \\left(y + \\frac{d}{2}\\right)^2\\right] - \\left[D^2 + \\left(y - \\frac{d}{2}\\right)^2\\right] = 2 y d$.' },
@@ -1093,6 +1322,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks / 5 Marks Board Derivation',
     diagramId: 'single-slit-diffraction',
+    diagramSubMode: 'diffraction-lobe',
     setup: 'Monochromatic plane wave of wavelength $\\lambda$ falls normally on a single slit of width $a$. Focus diffracted rays at angle $\\theta$ onto screen at distance $D$.',
     steps: [
       { text: 'Path difference between top edge $A$ and bottom edge $B$ of slit is $\\Delta x = a\\sin\\theta$.' },
@@ -1117,6 +1347,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '2 Marks / 3 Marks Board Concept + Setup',
     diagramId: 'photoelectric-graphs',
+    diagramSubMode: 'experimental-setup',
     setup: 'Free electrons in metals require minimum energy $\\phi_0$ (work function) to escape the surface potential barrier via thermionic, field, or photoelectric emission.',
     steps: [
       { text: 'Work function $\\phi_0$ depends strictly on the metal identity and surface purity (Cesium lowest $2.14\\text{ eV}$, Platinum highest $5.65\\text{ eV}$):', equation: '\\phi_0 = h\\nu_0 = \\frac{hc}{\\lambda_0}' },
@@ -1137,6 +1368,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Guaranteed Graph & Laws Question',
     diagramId: 'photoelectric-graphs',
+    diagramSubMode: 'collector-potential',
     setup: 'Monochromatic light of frequency $\\nu > \\nu_0$ and intensity $I$ illuminates photosensitive cathode $C$ opposite variable anode $A$ in an evacuated quartz tube.',
     steps: [
       { text: 'Law 1 (Intensity): For fixed $\\nu > \\nu_0$, saturation photoelectric current $i_{\\text{sat}} \\propto I$ (more photons eject more electrons/s), while $V_0$ is independent of $I$.' },
@@ -1157,6 +1389,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '2 Marks / 3 Marks Board Concept Staple',
     diagramId: 'photoelectric-graphs',
+    diagramSubMode: 'einstein-slope',
     setup: 'In interaction with matter, electromagnetic radiation behaves as discrete energy–momentum packets called photons (radiation quanta).',
     steps: [
       { text: 'Energy and Momentum: Each photon of frequency $\\nu$ and wavelength $\\lambda$ moves in vacuum at speed $c$ with discrete energy and linear momentum:', equation: 'E = h\\nu = \\frac{hc}{\\lambda}, \\qquad p = \\frac{E}{c} = \\frac{h\\nu}{c} = \\frac{h}{\\lambda}' },
@@ -1177,6 +1410,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Board Staple',
     diagramId: 'photoelectric-graphs',
+    diagramSubMode: 'einstein-slope',
     setup: 'Incident photon of energy $h\\nu$ transfers its entire energy in a single all-or-none elastic quantum collision to a surface electron (work function $\\phi_0 = h\\nu_0$).',
     steps: [
       { text: 'Conservation of energy yields Einstein’s Photoelectric Equation:', equation: 'K_{\\max} = \\frac{1}{2}m v_{\\max}^2 = h\\nu - \\phi_0 = h(\\nu - \\nu_0)' },
@@ -1196,6 +1430,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks High-Yield Derivation + Numerical',
     diagramId: 'photoelectric-graphs',
+    diagramSubMode: 'de-broglie',
     setup: 'Generalize photon momentum $p = E/c = h/\\lambda$ to all moving particles of mass $m$, speed $v$, kinetic energy $K$, and accelerating potential $V$.',
     steps: [
       { text: 'de Broglie relation between wavelength $\\lambda$ and linear momentum $p = mv$:', equation: '\\lambda = \\frac{h}{p} = \\frac{h}{mv}' },
@@ -1220,6 +1455,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Guaranteed Modern Physics Derivation',
     diagramId: 'bohr-atom-spectra',
+    diagramSubMode: 'alpha-scattering',
     setup: 'Alpha particle ($q_1 = +2e$, kinetic energy $K = \\frac{1}{2}mv_0^2$) from $^{214}_{83}\\text{Bi}$ approaches stationary heavy nucleus ($q_2 = +Ze$) head-on ($b = 0, \\theta = 180^\\circ$).',
     steps: [
       { text: 'At distance of closest approach $r_0$, the $\\alpha$-particle stops momentarily ($K_f = 0$) and initial kinetic energy converts entirely into electrostatic potential energy:', equation: 'K = \\frac{1}{4\\pi\\varepsilon_0}\\frac{(2e)(Ze)}{r_0} \\implies r_0 = \\frac{1}{4\\pi\\varepsilon_0}\\frac{2Ze^2}{K}' },
@@ -1240,6 +1476,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Board Classic',
     diagramId: 'bohr-atom-spectra',
+    diagramSubMode: 'bohr-orbits',
     setup: 'Electron ($m, -e$) revolves in circular orbit of radius $r$ at speed $v$ around nucleus $+Ze$. Coulomb attraction provides centripetal force, paired with Bohr’s angular momentum quantization.',
     steps: [
       { text: 'Centripetal force balance ($k = \\frac{1}{4\\pi\\varepsilon_0}$):', equation: '\\frac{m v^2}{r} = \\frac{k Z e^2}{r^2} \\implies m v^2 r = k Z e^2 \\quad \\text{--- (1)}' },
@@ -1261,6 +1498,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Guaranteed Board Derivation',
     diagramId: 'bohr-atom-spectra',
+    diagramSubMode: 'bohr-orbits',
     setup: 'Evaluate total mechanical energy $E_n = K_n + U_n$ of an electron bound in the $n^{\\text{th}}$ Bohr orbit of a hydrogen-like atom ($Z$).',
     steps: [
       { text: 'From centripetal force $\\frac{mv^2}{r} = \\frac{kZe^2}{r^2}$, kinetic energy is:', equation: 'K_n = \\frac{1}{2}mv_n^2 = \\frac{k Z e^2}{2 r_n}' },
@@ -1282,6 +1520,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Guaranteed Spectral Formula + de Broglie Proof',
     diagramId: 'bohr-atom-spectra',
+    diagramSubMode: 'spectral-series',
     setup: 'Electron transition from higher orbit $n_i$ to lower orbit $n_f$ emits photon $h\\nu = E_{n_i} - E_{n_f}$. Circular matter wave fits $n$ wavelengths around orbit circumference.',
     steps: [
       { text: 'Substitute $E_n = -\\frac{mZ^2e^4}{8\\varepsilon_0^2 n^2 h^2}$ into Bohr’s 3rd postulate $hc/\\lambda = E_{n_i} - E_{n_f}$:', equation: '\\frac{1}{\\lambda} = R Z^2 \\left(\\frac{1}{n_f^2} - \\frac{1}{n_i^2}\\right), \\qquad R = \\frac{me^4}{8\\varepsilon_0^2 c h^3} \\approx 1.097 \\times 10^7\\text{ m}^{-1}' },
@@ -1296,6 +1535,27 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
   // CHAPTER 13: NUCLEI
   // =========================================================================
   {
+    id: 'drv-13-0',
+    slideRange: 'Nuclei Core 0',
+    chapterNum: 13,
+    chapterId: 'phy-ch-13',
+    chapterTitle: 'Nuclei',
+    subtopicId: 'phy-sub-13-1',
+    title: 'Nuclear Radius Relation (R = R₀A¹/³) & Proof of Constant Nuclear Density',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '2–3 Marks Standard Proof',
+    diagramId: 'nuclei-binding-force',
+    diagramSubMode: 'be-curve',
+    setup: 'Experimental electron-scattering measurements show nuclear volume $V$ is directly proportional to mass number $A$ (total number of nucleons), with empirical constant $R_0 = 1.2 \\times 10^{-15}\\text{ m}$ ($1.2\\text{ fm}$).',
+    steps: [
+      { text: 'Assume spherical nucleus of radius $R$ and mass number $A$: $V = \\frac{4}{3}\\pi R^3 \\propto A$:', equation: 'R = R_0 A^{1/3} \\qquad (R_0 \\approx 1.2\\text{ fm})' },
+      { text: 'Total mass of nucleus with average nucleon mass $m \\approx 1.66 \\times 10^{-27}\\text{ kg}$ is $M = m A$. Substituting $V = \\frac{4}{3}\\pi R^3 = \\frac{4}{3}\\pi R_0^3 A$:', equation: '\\rho = \\frac{M}{V} = \\frac{m A}{\\frac{4}{3}\\pi (R_0 A^{1/3})^3} = \\frac{m A}{\\frac{4}{3}\\pi R_0^3 A}' },
+      { text: 'Mass number $A$ cancels out completely, proving nuclear matter density is constant for all nuclei from $^2\\text{H}$ to $^{238}\\text{U}$:', equation: '\\rho = \\frac{3m}{4\\pi R_0^3} \\approx 2.3 \\times 10^{17}\\text{ kg m}^{-3} \\quad (\\text{independent of } A)' }
+    ],
+    finalFormula: 'R = R_0 A^{1/3}, \\qquad \\rho = \\frac{3m}{4\\pi R_0^3} \\approx 2.3 \\times 10^{17}\\text{ kg m}^{-3}',
+    specialCases: ['If mass numbers of two nuclei are $A_1$ and $A_2$, ratio of radii is $(A_1/A_2)^{1/3}$ while ratio of their nuclear densities is strictly $1:1$.']
+  },
+  {
     id: 'drv-13-1',
     slideRange: 'Nuclei Core 1',
     chapterNum: 13,
@@ -1306,6 +1566,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Guaranteed Graph + Density Proof',
     diagramId: 'nuclei-binding-force',
+    diagramSubMode: 'be-curve',
     setup: 'Nucleus $^A_Z X$ has radius $R = R_0 A^{1/3}$ ($R_0 = 1.2\\text{ fm}$), nucleon mass $m$, constituent masses $Zm_p + (A-Z)m_n$, and observed rest mass $M$.',
     steps: [
       { text: 'Nuclear density $\\rho = \\text{Mass}/\\text{Volume}$ cancels $A$ identically:', equation: '\\rho = \\frac{mA}{\\frac{4}{3}\\pi (R_0 A^{1/3})^3} = \\frac{3m}{4\\pi R_0^3} \\approx 2.3 \\times 10^{17}\\text{ kg/m}^3 \\;(\\text{independent of } A)' },
@@ -1326,6 +1587,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Guaranteed Graph + Concept',
     diagramId: 'nuclei-binding-force',
+    diagramSubMode: 'nuclear-force',
     setup: 'Analyze nucleon-nucleon potential energy $U(r)$ vs separation $r$ and nuclear energy release via thermal fission vs thermonuclear fusion.',
     steps: [
       { text: 'From $F = -dU/dr$: potential $U(r)$ attains minimum ($\\sim -100\\text{ MeV}$) at $r_0 \\approx 0.8\\text{ fm}$; force is ATTRACTIVE for $0.8\\text{ fm} < r < 3\\text{ fm}$ and steeply REPULSIVE for $r < 0.8\\text{ fm}$.' },
@@ -1340,6 +1602,27 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
   // CHAPTER 14: SEMICONDUCTOR ELECTRONICS
   // =========================================================================
   {
+    id: 'drv-14-0',
+    slideRange: 'Semiconductors Core 0',
+    chapterNum: 14,
+    chapterId: 'phy-ch-14',
+    chapterTitle: 'Semiconductor Electronics',
+    subtopicId: 'phy-sub-14-1',
+    title: 'Energy Band Theory Classification (E_g) & Semiconductor Conductivity Expression',
+    syllabusStatus: 'Core CBSE 2026',
+    importance: '3 Marks Board Concept + Relation',
+    diagramId: 'pn-junction-rectifier',
+    diagramSubMode: 'energy-bands',
+    setup: 'When $N$ isolated atoms combine into a solid crystal, discrete $3s/3p$ orbitals split into a continuous Valence Band ($E_V$) and Conduction Band ($E_C$) separated by forbidden energy gap $E_g = E_C - E_V$.',
+    steps: [
+      { text: 'Band Gap Definition and Classification Criterion:', equation: 'E_g = E_C - E_V \\;\\implies\\; \\begin{cases} \\text{Metals:} & E_g \\approx 0 \\;(\\text{overlapping}) \\\\ \\text{Semiconductors:} & 0 < E_g < 3\\text{ eV} \\\\ \\text{Insulators:} & E_g > 3\\text{ eV} \\end{cases}' },
+      { text: 'For intrinsic Si ($E_g = 1.1\\text{ eV}$) and Ge ($E_g = 0.72\\text{ eV}$), thermal excitation creates equal electron-hole pairs ($n_e = n_h = n_i$), obeying Mass-Action Law:', equation: 'n_e \\cdot n_h = n_i^2, \\qquad n_i \\propto e^{-E_g / (2k_B T)}' },
+      { text: 'Total drift current under electric field $E$ combines electron and hole drift currents ($I = I_e + I_h$):', equation: 'I = e A (n_e v_e + n_h v_h) = e A E (n_e \\mu_e + n_h \\mu_h) \\implies \\sigma = e(n_e \\mu_e + n_h \\mu_h)' }
+    ],
+    finalFormula: 'E_g = E_C - E_V, \\qquad \\sigma = \\frac{1}{\\rho} = e(n_e \\mu_e + n_h \\mu_h)',
+    specialCases: ['Unlike metals (positive $\\alpha$), semiconductors have a NEGATIVE temperature coefficient of resistivity ($\\alpha < 0$): rising $T$ exponentially boosts $n_i$, sharply decreasing $\\rho$.']
+  },
+  {
     id: 'drv-14-1',
     slideRange: 'Semiconductors Core 1',
     chapterNum: 14,
@@ -1350,6 +1633,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks Board Band Diagram & Doping Question',
     diagramId: 'pn-junction-rectifier',
+    diagramSubMode: 'energy-bands',
     setup: 'Compare crystalline solids by forbidden band gap $E_g = E_C - E_V$, and doped Group-14 crystals (Si/Ge) obeying thermal equilibrium Mass Action Law.',
     steps: [
       { text: 'Energy Band Classification: Metals ($E_g \\approx 0$, overlapping bands), Semiconductors ($E_g < 3\\text{ eV}$: Si $1.1\\text{ eV}$, Ge $0.72\\text{ eV}$), Insulators ($E_g > 3\\text{ eV}$, diamond $5.4\\text{ eV}$).' },
@@ -1370,6 +1654,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '3 Marks / 5 Marks Guaranteed Diode Question',
     diagramId: 'pn-junction-rectifier',
+    diagramSubMode: 'vi-characteristics',
     setup: 'Metallurgical p-n junction reaches equilibrium barrier potential $V_0$ ($0.7\\text{ V}$ Si, $0.3\\text{ V}$ Ge) and responds asymmetrically to forward vs reverse DC bias.',
     steps: [
       { text: 'Two junction formation processes: (1) Diffusion of majority carriers ($p \\to n$ holes, $n \\to p$ electrons) uncovering immobile ions (depletion width $W$); (2) Drift of minority carriers under barrier field ($n \\to p$) until $I_{\\text{diff}} = I_{\\text{drift}}$.' },
@@ -1390,6 +1675,7 @@ export const PHYSICS_DERIVATIONS_REFERENCE = [
     syllabusStatus: 'Core CBSE 2026',
     importance: '5 Marks Guaranteed Circuit + Waveform Derivation',
     diagramId: 'pn-junction-rectifier',
+    diagramSubMode: 'rectifiers',
     setup: 'AC mains voltage $V = V_m\\sin\\omega t$ stepped down via transformer feeds either a single diode (HWR) or two diodes $D_1, D_2$ with centre-tap secondary (FWR) into load $R_L$.',
     steps: [
       { text: 'Half-Wave Rectifier (1 diode): Conducts only in positive half-cycle ($V > 0$) and blocks negative half-cycle $\\implies$ discontinuous DC pulses at fundamental frequency:', equation: 'f_{\\text{out,HWR}} = f_{\\text{in}} \\quad (50\\text{ Hz mains} \\to 50\\text{ Hz output})' },

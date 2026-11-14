@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Quote, Target, Calculator, Zap, Brain, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Target, Calculator, Zap, Brain, AlertTriangle, Compass, ArrowRight } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import FormulaCard, { formatMathString } from './FormulaCard';
+import { FormattedLatex } from './LatexView';
 import SubtopicPracticePanel from './SubtopicPracticePanel';
 import ReactionDiagramCard from './ReactionDiagramCard';
 import PhysicsDiagramCard from './PhysicsDiagramCard';
 import StructuredSectionView from './StructuredSectionView';
 import PriorityBadge from './PriorityBadge';
 import Physics4PartSectionView from './Physics4PartSectionView';
-import { isSubtopicImportant, getImportantSubtopicInfo } from '../../data/importantSubtopicsMapping';
+import { getDerivationsByChapter, getDerivationsBySubtopic } from '../../data/physicsDerivationsReference';
+import { getPhysicsSectionEnrichment } from '../../data/physicsSectionEnrichments';
 
 const PHYSICS_SUBTOPIC_DIAGRAMS = {
   // Chapter 1: Electric Charges and Fields
@@ -71,7 +73,7 @@ const PHYSICS_SUBTOPIC_DIAGRAMS = {
 
   // Chapter 9: Ray Optics and Optical Instruments
   'phy-sub-9-1': 'ray-optics-instruments',
-  'phy-sub-9-2': 'ray-optics-instruments',
+  'phy-sub-9-2': 'prism-dispersion',
   'phy-sub-9-3': 'ray-optics-instruments',
   'phy-sub-9-4': 'prism-dispersion',
   'phy-sub-9-5': 'ray-optics-instruments',
@@ -108,6 +110,46 @@ const PHYSICS_SUBTOPIC_DIAGRAMS = {
   'phy-sub-14-4': 'pn-junction-rectifier'
 };
 
+const PHYSICS_SUBTOPIC_SUBMODES = {
+  // Chapter 9: Ray Optics and Optical Instruments
+  'phy-sub-9-1': 'mirror',
+  'phy-sub-9-2': 'tir',
+  'phy-sub-9-3': 'lens-maker',
+  'phy-sub-9-4': 'prism-ray',
+  'phy-sub-9-5': 'microscope',
+
+  // Chapter 10: Wave Optics
+  'phy-sub-10-1': 'wavefronts',
+  'phy-sub-10-2': 'denser',
+  'phy-sub-10-3': 'interference-intensity',
+  'phy-sub-10-4': 'ydse-geometry',
+  'phy-sub-10-5': 'diffraction-lobe',
+
+  // Chapter 11: Dual Nature of Radiation and Matter
+  'phy-sub-11-1': 'experimental-setup',
+  'phy-sub-11-2': 'einstein-slope',
+  'phy-sub-11-3': 'collector-potential',
+  'phy-sub-11-4': 'de-broglie',
+
+  // Chapter 12: Atoms
+  'phy-sub-12-1': 'alpha-scattering',
+  'phy-sub-12-2': 'bohr-orbits',
+  'phy-sub-12-3': 'spectral-series',
+  'phy-sub-12-4': 'bohr-orbits',
+
+  // Chapter 13: Nuclei
+  'phy-sub-13-1': 'nuclear-force',
+  'phy-sub-13-2': 'be-curve',
+  'phy-sub-13-3': 'nuclear-force',
+  'phy-sub-13-4': 'fission-fusion',
+
+  // Chapter 14: Semiconductor Electronics
+  'phy-sub-14-1': 'energy-bands',
+  'phy-sub-14-2': 'depletion-layer',
+  'phy-sub-14-3': 'vi-characteristics',
+  'phy-sub-14-4': 'rectifiers'
+};
+
 export default function ChapterDrillDown({
   selectedSubject,
   selectedVolume,
@@ -134,7 +176,6 @@ export default function ChapterDrillDown({
   const [localNoteText, setLocalNoteText] = useState('');
   const [expandedReferences, setExpandedReferences] = useState({});
   const [openPracticeSections, setOpenPracticeSections] = useState({});
-  const [expandedTheories, setExpandedTheories] = useState({});
 
   if (!subject) return null;
 
@@ -218,11 +259,245 @@ export default function ChapterDrillDown({
     }));
   };
 
-  const toggleTheory = (sectionId) => {
-    setExpandedTheories((prev) => ({
-      ...prev,
-      [sectionId]: !prev[sectionId]
-    }));
+  // Derivation counters and chapter-level derivations bank
+  const getSubtopicDerivationCount = (sub) => {
+    if (!sub) return 0;
+    if (selectedSubject === 'physics') {
+      return Math.max(
+        getDerivationsBySubtopic(sub.id).length,
+        getPhysicsSectionEnrichment(sub.id)?.derivations?.length || 0,
+        sub.sections?.filter((s) => Boolean(s.derivations)).length || 0
+      );
+    }
+    return sub.sections?.filter((s) => Boolean(s.derivations)).length || 0;
+  };
+
+  const chapterDerivations = selectedSubject === 'physics' ? getDerivationsByChapter(chapter.id) : [];
+  const chapterSectionDerivations = chapter.subchapters.flatMap((sub) =>
+    (sub.sections || [])
+      .filter((sec) => Boolean(sec.derivations))
+      .map((sec) => ({
+        id: sec.id,
+        subtopicId: sub.id,
+        subtopicTitle: sub.title,
+        title: sec.title,
+        derivationText: sec.derivations
+      }))
+  );
+  const totalChapterDerivationsCount =
+    selectedSubject === 'physics' ? chapterDerivations.length : chapterSectionDerivations.length;
+  const currentSubDrvCount = getSubtopicDerivationCount(currentSubchapter);
+
+  const renderChapterDerivationsSection = () => {
+    if (totalChapterDerivationsCount === 0) {
+      return (
+        <div className="p-8 text-center rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] space-y-2">
+          <Compass size={28} className="mx-auto text-[var(--text-muted)]" />
+          <h4 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+            No Mathematical Derivations Listed in {chapter.title}
+          </h4>
+          <p className="text-xs text-[var(--text-secondary)]">
+            This chapter focuses on qualitative concepts, laws, or descriptive theory.
+          </p>
+        </div>
+      );
+    }
+
+    const items = selectedSubject === 'physics' ? chapterDerivations : chapterSectionDerivations;
+
+    return (
+      <section
+        id="chapter-derivations-section"
+        className="space-y-5 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-[var(--bg-surface)] border-2 border-emerald-500/35 shadow-sm"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
+          <div className="space-y-1">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/35">
+              📐 CHAPTER DERIVATIONS BANK
+            </span>
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[var(--text-primary)]">
+              All Derivations of Ch {chapter.number}: {chapter.title}
+            </h3>
+            <p className="text-xs text-[var(--text-secondary)] font-sans">
+              Dedicated chapter reference containing every step-by-step mathematical proof, diagram, and final formula in this chapter.
+            </p>
+          </div>
+          <span className="self-start sm:self-auto shrink-0 px-3 py-1.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/35 text-xs font-mono font-bold">
+            {totalChapterDerivationsCount} Complete Derivation{totalChapterDerivationsCount === 1 ? '' : 's'}
+          </span>
+        </div>
+
+        {/* Quick-Jump Index Pills */}
+        <div className="flex flex-wrap gap-2">
+          {items.map((drv, idx) => (
+            <a
+              key={drv.id}
+              href={`#chapter-drv-${drv.id}`}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-emerald-500/50 text-[11px] font-sans font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+            >
+              <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">#{idx + 1}</span>
+              <span className="truncate max-w-[240px]">{drv.title}</span>
+            </a>
+          ))}
+        </div>
+
+        {/* Derivation Cards */}
+        <div className="space-y-5">
+          {selectedSubject === 'physics'
+            ? chapterDerivations.map((drv, idx) => {
+                const subtopicObj = chapter.subchapters.find((s) => s.id === drv.subtopicId);
+                const resolvedDiagId = drv.diagramId || PHYSICS_SUBTOPIC_DIAGRAMS[drv.subtopicId];
+                const resolvedSubMode = drv.diagramSubMode || drv.subMode || PHYSICS_SUBTOPIC_SUBMODES[drv.subtopicId];
+                return (
+                  <div
+                    key={drv.id}
+                    id={`chapter-drv-${drv.id}`}
+                    className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] space-y-4 shadow-xs scroll-mt-24"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-[var(--border-subtle)] pb-3">
+                      <div className="space-y-1.5 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold uppercase tracking-wider">
+                            📐 DERIVATION {idx + 1}
+                          </span>
+                          {subtopicObj && (
+                            <span className="px-2 py-0.5 rounded-full bg-[var(--bg-surface)] text-[var(--text-secondary)] border border-[var(--border-subtle)] text-[10px] font-mono font-semibold">
+                              {subtopicObj.title}
+                            </span>
+                          )}
+                          {drv.importance && (
+                            <span className="px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border border-indigo-500/25 text-[10px] font-mono font-bold">
+                              {drv.importance}
+                            </span>
+                          )}
+                        </div>
+                        <h4 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug">
+                          {drv.title}
+                        </h4>
+                      </div>
+                      {drv.subtopicId && (
+                        <button
+                          onClick={() => {
+                            onSelectSubchapter(drv.subtopicId);
+                            onSetChapterStudyMode?.('GENERAL');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="self-start shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-[11px] font-mono font-bold text-[var(--accent-primary)] transition-colors cursor-pointer"
+                        >
+                          <span>Open Subtopic Notes</span>
+                          <ArrowRight size={12} />
+                        </button>
+                      )}
+                    </div>
+
+                    {drv.setup && (
+                      <div
+                        className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-xs sm:text-sm text-[var(--text-secondary)] italic leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(drv.setup) }}
+                      />
+                    )}
+
+                    {resolvedDiagId && (
+                      <div className="py-1">
+                        <PhysicsDiagramCard diagramId={resolvedDiagId} subMode={resolvedSubMode} inline={true} />
+                      </div>
+                    )}
+
+                    {drv.steps && drv.steps.length > 0 && (
+                      <div className="space-y-2.5">
+                        {drv.steps.map((st, sIdx) => (
+                          <div
+                            key={sIdx}
+                            className="p-3 sm:p-3.5 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] space-y-2"
+                          >
+                            <div className="flex items-start gap-2">
+                              <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 shrink-0">
+                                Step {sIdx + 1}:
+                              </span>
+                              <div
+                                className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed flex-1"
+                                dangerouslySetInnerHTML={{ __html: formatMathString(st.text || '') }}
+                              />
+                            </div>
+                            {st.equation && (
+                              <div className="py-1 px-3 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-subtle)] overflow-x-auto text-center scrollbar-none">
+                                <FormattedLatex content={`$$${st.equation}$$`} />
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {drv.specialCases && drv.specialCases.length > 0 && (
+                      <div className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1.5">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)] block">
+                          Special Cases &amp; Physical Deductions:
+                        </span>
+                        <ul className="space-y-1">
+                          {drv.specialCases.map((sc, scIdx) => (
+                            <li
+                              key={scIdx}
+                              className="text-xs text-[var(--text-secondary)] flex items-start gap-2"
+                            >
+                              <span className="text-emerald-500 font-bold shrink-0">•</span>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: formatMathString(typeof sc === 'string' ? sc : `${sc.title || ''} ${sc.text || ''}`)
+                                }}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {drv.finalFormula && (
+                      <div className="p-3.5 rounded-xl bg-emerald-500/10 border-2 border-emerald-500/40 text-center space-y-1">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-700 dark:text-emerald-300 font-bold block">
+                          FINAL DERIVED FORMULA:
+                        </span>
+                        <div className="overflow-x-auto scrollbar-none py-1">
+                          <FormattedLatex content={`$$${drv.finalFormula}$$`} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            : chapterSectionDerivations.map((secDrv, idx) => (
+                <div
+                  key={secDrv.id}
+                  id={`chapter-drv-${secDrv.id}`}
+                  className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] space-y-3 shadow-xs scroll-mt-24"
+                >
+                  <div className="flex items-center justify-between gap-2 flex-wrap border-b border-[var(--border-subtle)] pb-2.5">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold uppercase">
+                        📐 DERIVATION {idx + 1}
+                      </span>
+                      <h4 className="font-serif text-base font-bold text-[var(--text-primary)]">{secDrv.title}</h4>
+                    </div>
+                    <button
+                      onClick={() => {
+                        onSelectSubchapter(secDrv.subtopicId);
+                        onSetChapterStudyMode?.('GENERAL');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-default)] text-[11px] font-mono font-bold text-[var(--accent-primary)] cursor-pointer"
+                    >
+                      <span>Open Subtopic</span>
+                      <ArrowRight size={11} />
+                    </button>
+                  </div>
+                  <div className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-emerald-500/50 break-words">
+                    <FormattedLatex content={secDrv.derivationText} />
+                  </div>
+                </div>
+              ))}
+        </div>
+      </section>
+    );
   };
 
   return (
@@ -270,10 +545,11 @@ export default function ChapterDrillDown({
               const subCompleted = completedSubchapters.includes(sub.id);
               const pRating = getPriority ? getPriority(sub.id) : undefined;
               const pTag = pRating !== undefined ? `[P: ${pRating}/10] ` : '';
-              const impTag = isSubtopicImportant(sub.id) || sub.isImportant ? '★ [IMP] ' : '';
+              const drvCount = getSubtopicDerivationCount(sub);
+              const drvTag = drvCount > 0 ? `📐 [DERIVATION${drvCount > 1 ? ` ×${drvCount}` : ''}] ` : '';
               return (
                 <option key={sub.id} value={sub.id} className="bg-[var(--bg-surface)] text-[var(--text-primary)]">
-                  {subCompleted ? '✓ ' : ''}{impTag}{pTag}{sub.title}
+                  {subCompleted ? '✓ ' : ''}{drvTag}{pTag}{sub.title}
                 </option>
               );
             })}
@@ -293,9 +569,9 @@ export default function ChapterDrillDown({
               <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
                 Active NCERT Subtopic
               </span>
-              {(isSubtopicImportant(currentSubchapter.id) || currentSubchapter.isImportant) && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">
-                  ★ IMPORTANT EXAM TOPIC
+              {currentSubDrvCount > 0 && (
+                <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/35">
+                  📐 DERIVATION{currentSubDrvCount > 1 ? ` (${currentSubDrvCount})` : ''}
                 </span>
               )}
               <PriorityBadge
@@ -329,23 +605,25 @@ export default function ChapterDrillDown({
         </div>
       </div>
 
-      {/* Mode Switcher Banner: General Study vs Important Questions vs Quick Cheat Sheet */}
+      {/* Mode Switcher Banner: General Study vs Chapter Derivations vs Quick Cheat Sheet */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs">
         <div className="flex items-center gap-2.5">
           <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
-            chapterStudyMode === 'QUESTIONS' || chapterStudyMode === 'CHEAT_SHEET'
+            chapterStudyMode === 'DERIVATIONS'
+              ? 'bg-emerald-600 text-white shadow-xs'
+              : chapterStudyMode === 'CHEAT_SHEET'
               ? 'bg-[var(--accent-primary)] text-white shadow-xs'
               : 'bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]'
           }`}>
-            {chapterStudyMode === 'QUESTIONS' ? <Target size={16} /> : chapterStudyMode === 'CHEAT_SHEET' ? <Zap size={16} /> : <BookOpen size={16} />}
+            {chapterStudyMode === 'DERIVATIONS' ? <Compass size={16} /> : chapterStudyMode === 'CHEAT_SHEET' ? <Zap size={16} /> : <BookOpen size={16} />}
           </div>
           <div>
             <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
               Study Focus Mode
             </span>
             <h4 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
-              {chapterStudyMode === 'QUESTIONS'
-                ? 'Important Questions & Exam Blueprints'
+              {chapterStudyMode === 'DERIVATIONS'
+                ? `All Chapter ${chapter.number} Derivations (${totalChapterDerivationsCount})`
                 : chapterStudyMode === 'CHEAT_SHEET'
                 ? 'Whole-Chapter Quick Cheat Sheet & Memory Boosters'
                 : 'General Study & Complete NCERT Notes'}
@@ -366,17 +644,19 @@ export default function ChapterDrillDown({
             <BookOpen size={13} />
             <span>General Study</span>
           </button>
-          <button
-            onClick={() => onSetChapterStudyMode?.('QUESTIONS')}
-            className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
-              chapterStudyMode === 'QUESTIONS'
-                ? 'bg-[var(--accent-primary)] text-white shadow-xs'
-                : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-            }`}
-          >
-            <Target size={13} />
-            <span>Important Questions</span>
-          </button>
+          {(selectedSubject === 'physics' || totalChapterDerivationsCount > 0) && (
+            <button
+              onClick={() => onSetChapterStudyMode?.('DERIVATIONS')}
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
+                chapterStudyMode === 'DERIVATIONS'
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              <Compass size={13} />
+              <span>Derivations ({totalChapterDerivationsCount})</span>
+            </button>
+          )}
           <button
             onClick={() => onSetChapterStudyMode?.('CHEAT_SHEET')}
             className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
@@ -391,12 +671,15 @@ export default function ChapterDrillDown({
         </div>
       </div>
 
-      {chapterStudyMode === 'QUESTIONS' && (
-        <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[var(--badge-recommended-bg)]/15 border border-[var(--badge-recommended-bg)]/30 text-xs text-[var(--text-accent)] font-medium shadow-2xs">
-          <Target size={16} className="shrink-0 text-[var(--text-accent)]" />
-          <span>
-            <strong>Important Questions Mode:</strong> Highlighting recurring Board Question Blueprints, Exam Question Framing, Key Formulas, and Instant Practice. Comprehensive theory is collapsed for fast revision.
-          </span>
+      {chapterStudyMode === 'DERIVATIONS' && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/35 text-xs text-emerald-700 dark:text-emerald-300 font-medium shadow-2xs">
+            <Compass size={16} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <span>
+              <strong>Chapter Derivations Mode:</strong> Showing all <strong>{totalChapterDerivationsCount}</strong> step-by-step mathematical derivations, schematic diagrams, and boxed final formulas for <strong>Ch {chapter.number}: {chapter.title}</strong> in one dedicated section.
+            </span>
+          </div>
+          {renderChapterDerivationsSection()}
         </div>
       )}
 
@@ -494,14 +777,14 @@ export default function ChapterDrillDown({
       )}
 
       {/* Sections List */}
-      {chapterStudyMode !== 'CHEAT_SHEET' && (
+      {chapterStudyMode !== 'CHEAT_SHEET' && chapterStudyMode !== 'DERIVATIONS' && (
       <div className="space-y-6 sm:space-y-8">
         {currentSubchapter.sections?.map((section) => {
           const isDone = completedSections.includes(section.id);
           const hasCustomNote = userNotes[section.id];
           const isEditing = activeNoteEdit === section.id;
           const isRefExpanded = expandedReferences[section.id] !== false; // default expanded in general mode
-          const isTheoryExpanded = expandedTheories[section.id] === true;
+          const sectionHasDerivation = currentSubDrvCount > 0 || Boolean(section.derivations);
 
           return (
             <div
@@ -515,8 +798,15 @@ export default function ChapterDrillDown({
               {/* Section Header with Clickable Circle Completion Tracker */}
               <div className="flex items-start justify-between gap-3 sm:gap-4 border-b border-[var(--border-subtle)] pb-4 sm:pb-5">
                 <div className="min-w-0 flex-1">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[10px] sm:text-[11px] font-mono text-[var(--text-accent)] font-semibold uppercase tracking-wider mb-1.5 sm:mb-2">
-                    <span className="truncate">{currentSubchapter.title}</span>
+                  <div className="flex items-center gap-2 flex-wrap mb-1.5 sm:mb-2">
+                    <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[10px] sm:text-[11px] font-mono text-[var(--text-accent)] font-semibold uppercase tracking-wider">
+                      <span className="truncate">{currentSubchapter.title}</span>
+                    </div>
+                    {sectionHasDerivation && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/35 text-[10px] font-mono font-bold uppercase tracking-wider">
+                        📐 DERIVATION
+                      </span>
+                    )}
                   </div>
                   <h4 className="font-serif text-lg sm:text-2xl font-bold text-[var(--text-primary)] leading-snug">
                     {section.title}
@@ -541,241 +831,122 @@ export default function ChapterDrillDown({
                 </button>
               </div>
 
-              {/* CONDITIONAL LAYOUT: IMPORTANT QUESTIONS MODE VS GENERAL STUDY */}
-              {chapterStudyMode === 'QUESTIONS' ? (
-                <>
-                  {selectedSubject === 'physics' ? (
-                    <Physics4PartSectionView
-                      section={section}
-                      subtopicId={currentSubchapter.id}
-                      chapterId={selectedChapter}
-                      diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
-                    />
-                  ) : (
-                    <>
-                      {/* In Important Questions Mode: Exam Question Blueprint is FIRST and Highlighted */}
-                      {section.questionFraming && (
-                        <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
-                              <Target size={14} />
-                              High-Yield Board Exam Question Blueprint
-                            </span>
-                            <span className="text-[11px] font-cursive text-[var(--text-muted)]">
-                              frequently tested patterns
-                            </span>
-                          </div>
-                          <div
-                            className="font-sans text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words font-medium"
-                            dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
-                          />
-                        </div>
-                      )}
-
-                      {/* Key Formulas for Solving the Exam Questions */}
-                      {section.keyFormulas && section.keyFormulas.length > 0 && (
-                        <FormulaCard
-                          formulaList={section.keyFormulas}
-                          derivations={section.derivations}
-                        />
-                      )}
-
-                      {/* Visual Chemical Reaction & Mechanism Diagrams */}
-                      <ReactionDiagramCard
-                        subtopicId={currentSubchapter.id}
-                        chapterId={selectedChapter}
-                      />
-
-                      {/* Visual Physics Concept & Derivation Diagrams */}
-                      {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
-                        <div className="py-2">
-                          <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
-                        </div>
-                      )}
-                    </>
-                  )}
-
-                  {/* Instant Practice Panel (MCQs & Board PYQs) */}
-                  <div className="pt-1">
-                    <button
-                      onClick={() => togglePracticeSection(section.id)}
-                      className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
-                        openPracticeSections[section.id]
-                          ? 'bg-[var(--accent-primary)] text-white shadow-xs'
-                          : 'bg-[var(--bg-elevated)] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white'
-                      }`}
-                    >
-                      <Sparkles size={13} />
-                      <span>
-                        {openPracticeSections[section.id]
-                          ? 'Hide Subtopic Practice'
-                          : 'Practice 20 MCQs & Board PYQs for this Subtopic'}
-                      </span>
-                    </button>
-
-                    {openPracticeSections[section.id] && (
-                      <div className="mt-3.5">
-                        <SubtopicPracticePanel
-                          subjectId={selectedSubject}
-                          chapterId={selectedChapter}
-                          subtopicId={currentSubchapter.id}
-                          subtopicTitle={section.title}
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Collapsed Theory & Concept Reference Accordion */}
-                  {section.explanation && (
-                    <div className="border border-[var(--border-subtle)] rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--bg-base)]/50 shadow-2xs">
-                      <button
-                        onClick={() => toggleTheory(section.id)}
-                        className="w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-[var(--bg-elevated)]/60 flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
-                      >
-                        <span className="flex items-center gap-2">
-                          <BookOpen size={14} className="text-[var(--accent-primary)] shrink-0" />
-                          Theoretical Concept & Detailed Background
-                        </span>
-                        {isTheoryExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                      </button>
-
-                      {isTheoryExpanded && (
-                        <div className="p-4 sm:p-5 border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] space-y-4">
-                          <StructuredSectionView
-                            section={section}
-                            subtopicId={currentSubchapter.id}
-                            chapterId={selectedChapter}
-                            subjectId={selectedSubject}
-                          />
-                          {section.textbookRef && (
-                            <div className="pt-3 border-t border-[var(--border-subtle)] text-[var(--text-secondary)]">
-                              <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block mb-1">
-                                NCERT Textbook Context:
-                              </span>
-                              <div dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }} />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </>
+              {selectedSubject === 'physics' ? (
+                <Physics4PartSectionView
+                  section={section}
+                  subtopicId={currentSubchapter.id}
+                  chapterId={selectedChapter}
+                  diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
+                  diagramSubMode={PHYSICS_SUBTOPIC_SUBMODES[currentSubchapter.id]}
+                />
               ) : (
                 <>
-                  {selectedSubject === 'physics' ? (
-                    <Physics4PartSectionView
-                      section={section}
-                      subtopicId={currentSubchapter.id}
-                      chapterId={selectedChapter}
-                      diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
+                  {/* General Study Mode: Structured Editorial Notes */}
+                  {/* Definitions, Bulleted Key Points, Extra Points & Reactions with Diagrams */}
+                  <StructuredSectionView
+                    section={section}
+                    subtopicId={currentSubchapter.id}
+                    chapterId={selectedChapter}
+                    subjectId={selectedSubject}
+                  />
+
+                  {/* 2. Key Formulas with Variable Breakdown Card */}
+                  {section.keyFormulas && section.keyFormulas.length > 0 && (
+                    <FormulaCard
+                      formulaList={section.keyFormulas}
+                      derivations={section.derivations}
                     />
-                  ) : (
-                    <>
-                      {/* General Study Mode: Structured Editorial Notes */}
-                      {/* Definitions, Bulleted Key Points, Extra Points & Reactions with Diagrams */}
-                      <StructuredSectionView
-                        section={section}
-                        subtopicId={currentSubchapter.id}
-                        chapterId={selectedChapter}
-                        subjectId={selectedSubject}
-                      />
-
-                      {/* 2. Key Formulas with Variable Breakdown Card */}
-                      {section.keyFormulas && section.keyFormulas.length > 0 && (
-                        <FormulaCard
-                          formulaList={section.keyFormulas}
-                          derivations={section.derivations}
-                        />
-                      )}
-
-                      {/* Visual Chemical Reaction & Mechanism Diagrams */}
-                      <ReactionDiagramCard
-                        subtopicId={currentSubchapter.id}
-                        chapterId={selectedChapter}
-                      />
-
-                      {/* Visual Physics Concept & Derivation Diagrams */}
-                      {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
-                        <div className="py-2">
-                          <PhysicsDiagramCard diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]} />
-                        </div>
-                      )}
-
-                      {/* 3. How questions could be framed / asked */}
-                      {section.questionFraming && (
-                        <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
-                              <HelpCircle size={14} />
-                              Exam Question Blueprint
-                            </span>
-                            <span className="text-[11px] font-cursive text-[var(--text-muted)]">
-                              frequently tested patterns
-                            </span>
-                          </div>
-                          <div
-                            className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words"
-                            dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
-                          />
-                        </div>
-                      )}
-                    </>
                   )}
 
-                  {/* 4. Detailed Textbook Reference (Editorial Collapsible Box) */}
-                  {section.textbookRef && (
-                    <div className="border border-[var(--border-subtle)] rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--bg-base)] shadow-xs">
-                      <button
-                        onClick={() => toggleReference(section.id)}
-                        className="w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-[var(--bg-elevated)] flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
-                      >
-                        <span className="flex items-center gap-2">
-                          <BookMarked size={14} className="text-[var(--accent-primary)] shrink-0" />
-                          Detailed NCERT Textbook Reference
-                        </span>
-                        {isRefExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                      </button>
+                  {/* Visual Chemical Reaction & Mechanism Diagrams */}
+                  <ReactionDiagramCard
+                    subtopicId={currentSubchapter.id}
+                    chapterId={selectedChapter}
+                  />
 
-                      {isRefExpanded && (
-                        <div
-                          className="p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] break-words"
-                          dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }}
-                        />
-                      )}
+                  {/* Visual Physics Concept & Derivation Diagrams */}
+                  {PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id] && (
+                    <div className="py-2">
+                      <PhysicsDiagramCard
+                        diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
+                        subMode={PHYSICS_SUBTOPIC_SUBMODES[currentSubchapter.id]}
+                      />
                     </div>
                   )}
 
-                  {/* 5. Subtopic-Level 20 MCQs and Board PYQs Practice Drawer */}
-                  <div className="pt-1">
-                    <button
-                      onClick={() => togglePracticeSection(section.id)}
-                      className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
-                        openPracticeSections[section.id]
-                          ? 'bg-[var(--accent-primary)] text-white shadow-xs'
-                          : 'bg-[var(--bg-elevated)] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white'
-                      }`}
-                    >
-                      <Sparkles size={13} />
-                      <span>
-                        {openPracticeSections[section.id]
-                          ? 'Hide Subtopic Practice'
-                          : 'Practice 20 MCQs & Board PYQs for this Subtopic'}
-                      </span>
-                    </button>
-
-                    {openPracticeSections[section.id] && (
-                      <div className="mt-3.5">
-                        <SubtopicPracticePanel
-                          subjectId={selectedSubject}
-                          chapterId={selectedChapter}
-                          subtopicId={currentSubchapter.id}
-                          subtopicTitle={section.title}
-                        />
+                  {/* 3. How questions could be framed / asked */}
+                  {section.questionFraming && (
+                    <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2.5 sm:space-y-3 shadow-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider flex items-center gap-1.5">
+                          <HelpCircle size={14} />
+                          Exam Question Blueprint
+                        </span>
+                        <span className="text-[11px] font-cursive text-[var(--text-muted)]">
+                          frequently tested patterns
+                        </span>
                       </div>
-                    )}
-                  </div>
+                      <div
+                        className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-2 border-l-2 border-[var(--border-default)] break-words"
+                        dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
+                      />
+                    </div>
+                  )}
                 </>
               )}
+
+              {/* 4. Detailed Textbook Reference (Editorial Collapsible Box) */}
+              {section.textbookRef && (
+                <div className="border border-[var(--border-subtle)] rounded-xl sm:rounded-2xl overflow-hidden bg-[var(--bg-base)] shadow-xs">
+                  <button
+                    onClick={() => toggleReference(section.id)}
+                    className="w-full px-4 py-2.5 sm:px-5 sm:py-3 bg-[var(--bg-elevated)] flex items-center justify-between text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      <BookMarked size={14} className="text-[var(--accent-primary)] shrink-0" />
+                      Detailed NCERT Textbook Reference
+                    </span>
+                    {isRefExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  </button>
+
+                  {isRefExpanded && (
+                    <div
+                      className="p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] break-words"
+                      dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }}
+                    />
+                  )}
+                </div>
+              )}
+
+              {/* 5. Subtopic-Level 20 MCQs and Board PYQs Practice Drawer */}
+              <div className="pt-1">
+                <button
+                  onClick={() => togglePracticeSection(section.id)}
+                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
+                    openPracticeSections[section.id]
+                      ? 'bg-[var(--accent-primary)] text-white shadow-xs'
+                      : 'bg-[var(--bg-elevated)] border border-[var(--accent-primary)]/40 text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-white'
+                  }`}
+                >
+                  <Sparkles size={13} />
+                  <span>
+                    {openPracticeSections[section.id]
+                      ? 'Hide Subtopic Practice'
+                      : 'Practice 20 MCQs & Board PYQs for this Subtopic'}
+                  </span>
+                </button>
+
+                {openPracticeSections[section.id] && (
+                  <div className="mt-3.5">
+                    <SubtopicPracticePanel
+                      subjectId={selectedSubject}
+                      chapterId={selectedChapter}
+                      subtopicId={currentSubchapter.id}
+                      subtopicTitle={section.title}
+                    />
+                  </div>
+                )}
+              </div>
 
               {/* 6. Custom User Notepad for this subtopic */}
               <div className="pt-3 sm:pt-4 border-t border-[var(--border-subtle)]">
@@ -829,6 +1000,13 @@ export default function ChapterDrillDown({
           );
         })}
       </div>
+      )}
+
+      {/* Dedicated Chapter-Level Derivations Section directly on the Chapter Page in General Study Mode */}
+      {chapterStudyMode === 'GENERAL' && totalChapterDerivationsCount > 0 && (
+        <div className="pt-2">
+          {renderChapterDerivationsSection()}
+        </div>
       )}
 
       {/* Subchapter Completed Button */}

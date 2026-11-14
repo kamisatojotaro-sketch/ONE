@@ -482,10 +482,10 @@ export function buildStudySearchIndex() {
         subchapterId: iq.subtopicId || null,
         subchapterTitle: iq.shortLabel || null,
         type: 'question',
-        typeLabel: `Important Question (${iq.marks})`,
+        typeLabel: `Board Derivation / Concept (${iq.marks})`,
         title: `Q${iq.number}: ${iq.title} (${iq.marks})`,
         content: `${iq.ncertRefCode || ''} ${iq.questionPrompt} ${iq.modelAnswer?.statement || ''} ${iq.ncertRef ? `${iq.ncertRef.section || iq.ncertRef.page || ''} ${iq.ncertRef.equations || ''} ${iq.ncertRef.figures || ''}` : ''} ${(iq.modelAnswer?.derivations || []).map(d => `${d.name} ${d.formula}`).join(' ')} ${iq.examinerTips || iq.modelAnswer?.examinerTips || ''}`,
-        tab: 'IMPORTANT',
+        tab: 'NOTES',
         rawItem: iq
       });
     });

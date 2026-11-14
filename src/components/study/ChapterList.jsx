@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
-import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target, ArrowDownUp, Filter, Flame } from 'lucide-react';
+import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target, ArrowDownUp, Filter, Flame, Compass } from 'lucide-react';
 import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 import { getDefaultPriority } from '../../data/priorityData';
-import { isSubtopicImportant } from '../../data/importantSubtopicsMapping';
+import { getDerivationsByChapter } from '../../data/physicsDerivationsReference';
 import PhysicsDerivationsReferencePanel from './PhysicsDerivationsReferencePanel';
 
 export default function ChapterList({
@@ -259,9 +259,9 @@ export default function ChapterList({
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[var(--text-muted)] flex items-center gap-1.5 flex-wrap">
                       <span>{ch.subchapters?.length || 0} Topics • {stats.total} Sections</span>
-                      {selectedSubject === 'physics' && ch.subchapters?.filter(s => isSubtopicImportant(s.id)).length > 0 && (
-                        <span className="text-amber-600 dark:text-amber-400 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
-                          ★ {ch.subchapters.filter(s => isSubtopicImportant(s.id)).length} Important
+                      {selectedSubject === 'physics' && getDerivationsByChapter(ch.id).length > 0 && (
+                        <span className="text-emerald-700 dark:text-emerald-300 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30">
+                          📐 {getDerivationsByChapter(ch.id).length} Derivations
                         </span>
                       )}
                     </span>
@@ -291,17 +291,31 @@ export default function ChapterList({
                       <span className="truncate">General Study</span>
                     </button>
 
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSelectChapter(ch.id, 'QUESTIONS');
-                      }}
-                      className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-xs"
-                      title="Focus on important exam questions, blueprints & PYQs"
-                    >
-                      <Target size={13} className="shrink-0" />
-                      <span className="truncate">Important Qs</span>
-                    </button>
+                    {selectedSubject === 'physics' && getDerivationsByChapter(ch.id).length > 0 ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSelectChapter(ch.id, 'DERIVATIONS');
+                        }}
+                        className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-all cursor-pointer shadow-xs"
+                        title={`View all ${getDerivationsByChapter(ch.id).length} derivations of ${ch.title}`}
+                      >
+                        <Compass size={13} className="shrink-0" />
+                        <span className="truncate">Derivations ({getDerivationsByChapter(ch.id).length})</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSelectChapter(ch.id, 'CHEAT_SHEET');
+                        }}
+                        className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-xs"
+                        title="Open whole-chapter quick cheat sheet"
+                      >
+                        <Target size={13} className="shrink-0" />
+                        <span className="truncate">Cheat Sheet</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               ) : (

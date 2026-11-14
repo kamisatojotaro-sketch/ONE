@@ -1,4 +1,4 @@
-import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, Award, FileText, Calculator, TrendingUp, BookOpen } from 'lucide-react';
+import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, FileText, Calculator, TrendingUp, BookOpen } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
 
 export default function SubjectGrid({ 
@@ -131,14 +131,6 @@ export default function SubjectGrid({
           ))}
 
           <div className="h-4 w-[1px] bg-[var(--border-subtle)] shrink-0 hidden sm:block" />
-
-          <button
-            onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('physics', 'IMPORTANT') : onSelectSubject('physics')}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/35 text-xs font-bold text-amber-500 dark:text-amber-400 hover:bg-amber-500/25 transition-all cursor-pointer shrink-0 hover:-translate-y-0.5 touch-manipulation active:scale-95"
-          >
-            <Award size={13} className="text-amber-500" />
-            <span>Important Questions Bank (All 5 Subjects)</span>
-          </button>
 
           <button
             onClick={() => onSelectSubjectAndTab ? onSelectSubjectAndTab('physics', 'SAMPLE_PAPER') : onSelectSubject('physics')}
