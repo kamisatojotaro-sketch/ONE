@@ -8,6 +8,7 @@ import { PSYCHOLOGY_CHAPTERS } from './psychologyNotes.js';
 import { MATHS_CHAPTERS_VOL1, MATHS_CHAPTERS_VOL2 } from './mathsNotes.js';
 import { APPLIED_MATHS_CHAPTERS_VOL1, APPLIED_MATHS_CHAPTERS_VOL2 } from './appliedMathsNotes.js';
 import { ENGLISH_CHAPTERS_FLAMINGO, ENGLISH_CHAPTERS_VISTAS, ENGLISH_CHAPTERS_WRITING } from './englishNotes.js';
+import { CLEAN_CHEMISTRY_SYLLABUS } from './chemistryCleanExamNotes.js';
 
 export const EXAM_PORTIONS = {
   physics: [
@@ -200,3 +201,13 @@ export const NCERT_SYLLABUS = {
     ]
   }
 };
+
+export function getSubjectSyllabus(subjectId, isCleanMode = false) {
+  if (!subjectId) return null;
+  if (isCleanMode && subjectId === 'chemistry') {
+    return CLEAN_CHEMISTRY_SYLLABUS;
+  }
+  return NCERT_SYLLABUS[subjectId] || null;
+}
+
+export { CLEAN_CHEMISTRY_SYLLABUS };

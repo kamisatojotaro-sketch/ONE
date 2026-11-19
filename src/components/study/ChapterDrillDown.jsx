@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Target, Calculator, Zap, Brain, AlertTriangle, Compass, ArrowRight } from 'lucide-react';
-import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import { getSubjectSyllabus } from '../../data/ncertSyllabus';
 import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import FormulaCard, { formatMathString } from './FormulaCard';
 import { FormattedLatex } from './LatexView';
@@ -173,7 +173,7 @@ export default function ChapterDrillDown({
   onOpenWolframEngine,
   isCleanMode = false
 }) {
-  const subject = NCERT_SYLLABUS[selectedSubject];
+  const subject = getSubjectSyllabus(selectedSubject, isCleanMode);
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
   const [localNoteText, setLocalNoteText] = useState('');
   const [expandedReferences, setExpandedReferences] = useState({});

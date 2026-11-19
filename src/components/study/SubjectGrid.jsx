@@ -1,5 +1,5 @@
 import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, FileText, Calculator, TrendingUp, BookOpen } from 'lucide-react';
-import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../../data/ncertSyllabus';
+import { NCERT_SYLLABUS, EXAM_PORTIONS, getSubjectSyllabus } from '../../data/ncertSyllabus';
 
 export default function SubjectGrid({ 
   isCleanMode = false,
@@ -10,7 +10,7 @@ export default function SubjectGrid({
   onOpenUniversalSearch,
   onOpenSubjectSearch
 }) {
-  const subjects = Object.values(NCERT_SYLLABUS);
+  const subjects = Object.keys(NCERT_SYLLABUS).map(key => getSubjectSyllabus(key, isCleanMode));
 
   const getSubjectIcon = (id, size = 24) => {
     switch (id) {

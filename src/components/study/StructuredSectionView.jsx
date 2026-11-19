@@ -8,6 +8,7 @@ import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import { REACTION_DIAGRAMS } from '../../data/reactionDiagramsData';
 import { SingleReactionDiagram } from './ReactionDiagramCard';
 import { formatMathString } from './FormulaCard';
+import ChemistryExamDiagramCard from './ChemistryExamDiagramCard';
 
 // Intelligent fallback parser for sections without manual curation
 function parseFallbackContent(section, subtopicId, chapterId) {
@@ -94,9 +95,9 @@ function parseFallbackContent(section, subtopicId, chapterId) {
 }
 
 export default function StructuredSectionView({ section, subtopicId, chapterId, subjectId, isCleanMode = false }) {
-  // 1. Get structured data (either curated or parsed)
+  // 1. Get structured data (from inline section.structuredData, curated map, or parsed fallback)
   const structuredData = useMemo(() => {
-    const curated = STRUCTURED_NOTES_DATA[subtopicId];
+    const curated = section?.structuredData || STRUCTURED_NOTES_DATA[section?.id] || STRUCTURED_NOTES_DATA[subtopicId];
     if (curated) {
       // Enrich curated reactions with diagram references
       const enrichedReactions = (curated.reactions || []).map(r => {
@@ -117,8 +118,12 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
   }, [section, subtopicId, chapterId]);
 
   const { 
+    examBlueprintBadge,
+    visualDiagrams,
     definitions, 
     keyPoints, 
+    comparisonTables,
+    qaPairs,
     extraPoints, 
     reactions,
     oswaalMnemonic,
@@ -129,6 +134,28 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
+      {/* ==================================================================== */}
+      {/* 0. TEACHER EXAM FOCUS BADGE & VISUAL DIAGRAMS */}
+      {/* ==================================================================== */}
+      {examBlueprintBadge && (
+        <div className="px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] flex items-center gap-2.5 text-xs sm:text-sm text-[var(--text-primary)] font-medium">
+          <BookMarked size={15} className="text-[var(--accent-primary)] shrink-0" />
+          <span>{examBlueprintBadge}</span>
+        </div>
+      )}
+
+      {visualDiagrams && visualDiagrams.length > 0 && (
+        <div className="space-y-4">
+          {visualDiagrams.map((diag, idx) => (
+            <ChemistryExamDiagramCard
+              key={diag.id || idx}
+              diagramId={diag.id}
+              title={diag.title}
+              subtitle={diag.subtitle}
+            />
+          ))}
+        </div>
+      )}
       {/* ==================================================================== */}
       {/* 1. DEFINITIONS (Named Definitions Box) */}
       {/* ==================================================================== */}
@@ -188,6 +215,118 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
               );
             })}
           </ul>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* 2B. COMPARISON & DISTINGUISH TABLES */}
+      {/* ==================================================================== */}
+      {comparisonTables && comparisonTables.length > 0 && (
+        <div className="space-y-5">
+          {comparisonTables.map((tbl, tIdx) => (
+            <div
+              key={tIdx}
+              className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs overflow-hidden"
+            >
+              <div className="px-4 py-3 sm:px-5 sm:py-3.5 bg-[var(--bg-elevated)] border-b border-[var(--border-subtle)] flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Scale size={15} className="text-[var(--accent-primary)] shrink-0" />
+                  <h5 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
+                    {tbl.title}
+                  </h5>
+                </div>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-muted)] shrink-0">
+                  Distinguish Table
+                </span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-xs sm:text-sm">
+                  <thead>
+                    <tr className="bg-[var(--bg-base)] border-b border-[var(--border-subtle)]">
+                      {tbl.headers.map((h, hIdx) => (
+                        <th
+                          key={hIdx}
+                          className="px-3.5 py-2.5 sm:px-4 sm:py-3 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] border-r last:border-r-0 border-[var(--border-subtle)]"
+                        >
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[var(--border-subtle)]">
+                    {tbl.rows.map((row, rIdx) => (
+                      <tr key={rIdx} className="hover:bg-[var(--bg-elevated)]/40 transition-colors">
+                        {row.map((cell, cIdx) => (
+                          <td
+                            key={cIdx}
+                            className={`px-3.5 py-2.5 sm:px-4 sm:py-3 align-top leading-relaxed whitespace-pre-wrap border-r last:border-r-0 border-[var(--border-subtle)] ${
+                              cIdx === 0
+                                ? 'font-serif font-bold text-[var(--text-primary)] bg-[var(--bg-base)]/40 w-1/4 min-w-[120px]'
+                                : 'font-sans text-[var(--text-secondary)] min-w-[180px]'
+                            }`}
+                            dangerouslySetInnerHTML={{ __html: formatMathString(cell) }}
+                          />
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* 2C. EXAM QUESTIONS, MLM GIVE REASONS, REMEDIAL Qs & REACTIONS */}
+      {/* ==================================================================== */}
+      {qaPairs && qaPairs.length > 0 && (
+        <div className="space-y-3.5">
+          <div className="flex items-center justify-between gap-2 px-1">
+            <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-primary)]">
+              <ListChecks size={16} className="text-[var(--accent-primary)]" />
+              <span>Exam Questions, Give Reasons &amp; Reactions ({qaPairs.length})</span>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {qaPairs.map((qa, qIdx) => (
+              <div
+                key={qIdx}
+                className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] space-y-2.5"
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  {qa.number && (
+                    <span className="px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)]">
+                      {qa.number}
+                    </span>
+                  )}
+                  {qa.badge && (
+                    <span className="px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[10px] font-semibold text-[var(--text-secondary)]">
+                      {qa.badge}
+                    </span>
+                  )}
+                </div>
+
+                <h5
+                  className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug whitespace-pre-wrap"
+                  dangerouslySetInnerHTML={{ __html: formatMathString(qa.question) }}
+                />
+
+                <div
+                  className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)]/45"
+                  dangerouslySetInnerHTML={{ __html: formatMathString(qa.answer) }}
+                />
+
+                {qa.equation && (
+                  <div
+                    className="font-mono text-xs sm:text-sm font-bold p-3 rounded-xl bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-subtle)] overflow-x-auto whitespace-pre-wrap"
+                    dangerouslySetInnerHTML={{ __html: formatMathString(qa.equation) }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

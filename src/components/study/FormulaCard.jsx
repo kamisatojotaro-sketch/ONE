@@ -346,7 +346,18 @@ export function formatMathString(str) {
 
 // Find curated metadata for a formula or create clean default
 function resolveFormulaMetadata(formulaStr) {
-  const lower = formulaStr.toLowerCase();
+  if (formulaStr && typeof formulaStr === 'object') {
+    const rawEquation = String(formulaStr.formula || formulaStr.math || formulaStr.title || formulaStr.name || '');
+    return {
+      title: formulaStr.name || formulaStr.title || 'Formula Relation',
+      display: formatMathString(rawEquation),
+      description: formulaStr.description ? formatMathString(formulaStr.description) : null,
+      variables: Array.isArray(formulaStr.variables) ? formulaStr.variables : []
+    };
+  }
+
+  const safeStr = typeof formulaStr === 'string' ? formulaStr : String(formulaStr || '');
+  const lower = safeStr.toLowerCase();
 
   for (const [key, meta] of Object.entries(FORMULA_METADATA)) {
     if (lower.includes(key)) {
@@ -357,7 +368,7 @@ function resolveFormulaMetadata(formulaStr) {
   // Fallback: clean formatting with no hallucinated glossary
   return {
     title: 'Formula Relation',
-    display: formatMathString(formulaStr),
+    display: formatMathString(safeStr),
     variables: []
   };
 }
@@ -411,6 +422,13 @@ export default function FormulaCard({ formulaList, derivations }) {
                   dangerouslySetInnerHTML={{ __html: meta.display }}
                 />
               </div>
+
+              {meta.description && (
+                <div
+                  className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed pl-3 border-l-2 border-[var(--accent-primary)]/40"
+                  dangerouslySetInnerHTML={{ __html: meta.description }}
+                />
+              )}
 
               {/* Curated, Accurate Variable Breakdown (Only actual variables from this formula!) */}
               {meta.variables && meta.variables.length > 0 && (

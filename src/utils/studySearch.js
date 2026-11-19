@@ -1,4 +1,4 @@
-import { NCERT_SYLLABUS } from '../data/ncertSyllabus.js';
+import { NCERT_SYLLABUS, CLEAN_CHEMISTRY_SYLLABUS } from '../data/ncertSyllabus.js';
 import { STRUCTURED_NOTES_DATA } from '../data/structuredNotesData.js';
 import { REACTION_DIAGRAMS } from '../data/reactionDiagramsData.js';
 import { MCQ_DATABASE } from '../data/mcqData.js';
@@ -541,6 +541,125 @@ export function buildStudySearchIndex() {
     });
   }
 
+  // Index D-Version (Clean UI) Exam-Focused Chemistry Syllabus
+  if (CLEAN_CHEMISTRY_SYLLABUS?.volumes) {
+    CLEAN_CHEMISTRY_SYLLABUS.volumes.forEach((vol) => {
+      vol.chapters.forEach((ch) => {
+        items.push({
+          id: `clean-ch-${ch.id}`,
+          subjectId: 'chemistry',
+          subjectName: 'Chemistry',
+          volumeId: vol.id,
+          volumeTitle: vol.title,
+          chapterId: ch.id,
+          chapterTitle: ch.title,
+          chapterNumber: ch.number,
+          subchapterId: ch.subchapters?.[0]?.id || null,
+          subchapterTitle: ch.subchapters?.[0]?.title || null,
+          type: 'topic',
+          typeLabel: 'Chapter',
+          title: `Ch ${ch.number}: ${ch.title}`,
+          content: `${ch.description || ''} ${ch.tag || ''}`,
+          tab: 'NOTES',
+          cleanChemistryOnly: true,
+          rawItem: ch
+        });
+
+        ch.subchapters?.forEach((sub) => {
+          items.push({
+            id: `clean-sub-${sub.id}`,
+            subjectId: 'chemistry',
+            subjectName: 'Chemistry',
+            volumeId: vol.id,
+            volumeTitle: vol.title,
+            chapterId: ch.id,
+            chapterTitle: ch.title,
+            chapterNumber: ch.number,
+            subchapterId: sub.id,
+            subchapterTitle: sub.title,
+            type: 'topic',
+            typeLabel: 'Subtopic',
+            title: sub.title,
+            content: ch.title,
+            tab: 'NOTES',
+            cleanChemistryOnly: true,
+            rawItem: sub
+          });
+
+          sub.sections?.forEach((sec) => {
+            const sd = sec.structuredData || {};
+            items.push({
+              id: `clean-sec-${sec.id}`,
+              subjectId: 'chemistry',
+              subjectName: 'Chemistry',
+              volumeId: vol.id,
+              volumeTitle: vol.title,
+              chapterId: ch.id,
+              chapterTitle: ch.title,
+              chapterNumber: ch.number,
+              subchapterId: sub.id,
+              subchapterTitle: sub.title,
+              sectionId: sec.id,
+              type: 'key_point',
+              typeLabel: 'Exam Focus Section',
+              title: sec.title,
+              content: stripHtml(sec.explanation || ''),
+              tab: 'NOTES',
+              cleanChemistryOnly: true,
+              rawItem: sec
+            });
+
+            sd.definitions?.forEach((def, dIdx) => {
+              items.push({
+                id: `clean-def-${sec.id}-${dIdx}`,
+                subjectId: 'chemistry',
+                subjectName: 'Chemistry',
+                volumeId: vol.id,
+                volumeTitle: vol.title,
+                chapterId: ch.id,
+                chapterTitle: ch.title,
+                chapterNumber: ch.number,
+                subchapterId: sub.id,
+                subchapterTitle: sub.title,
+                sectionId: sec.id,
+                type: 'definition',
+                typeLabel: 'Definition',
+                title: def.term,
+                content: def.definition,
+                tab: 'NOTES',
+                cleanChemistryOnly: true,
+                rawItem: def
+              });
+            });
+
+            sd.qaPairs?.forEach((qa, qIdx) => {
+              items.push({
+                id: `clean-qa-${sec.id}-${qIdx}`,
+                subjectId: 'chemistry',
+                subjectName: 'Chemistry',
+                volumeId: vol.id,
+                volumeTitle: vol.title,
+                chapterId: ch.id,
+                chapterTitle: ch.title,
+                chapterNumber: ch.number,
+                subchapterId: sub.id,
+                subchapterTitle: sub.title,
+                sectionId: sec.id,
+                type: qa.equation ? 'reaction' : 'key_point',
+                typeLabel: qa.badge || 'Exam Focus',
+                title: `${qa.number ? qa.number + ': ' : ''}${qa.question}`,
+                content: `${qa.answer || ''} ${qa.equation || ''}`,
+                tab: 'NOTES',
+                cleanChemistryOnly: true,
+                rawItem: qa
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
   // Pre-calculate lowercased searchable text for every item
   items.forEach((item) => {
     item.searchableText = `${item.title} ${item.content} ${item.chapterTitle || ''} ${item.subchapterTitle || ''} ${item.subjectName}`.toLowerCase();
@@ -609,6 +728,9 @@ export function searchStudyContent({
 
     // 0. Clean mode filter: exclude questions, Oswaal mnemonics, common errors, extra exam points, and non-NOTES tabs
     if (cleanMode) {
+      if (item.subjectId === 'chemistry' && !item.cleanChemistryOnly) {
+        continue;
+      }
       if (
         item.type === 'question' ||
         item.type === 'mnemonic' ||
@@ -617,6 +739,8 @@ export function searchStudyContent({
       ) {
         continue;
       }
+    } else if (item.cleanChemistryOnly) {
+      continue;
     }
 
     // 1. Subject filter check

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target, ArrowDownUp, Filter, Flame, Compass } from 'lucide-react';
-import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import { getSubjectSyllabus } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 import { getDefaultPriority } from '../../data/priorityData';
 import { getDerivationsByChapter } from '../../data/physicsDerivationsReference';
@@ -21,7 +21,7 @@ export default function ChapterList({
   const [priorityFilter, setPriorityFilter] = useState('ALL'); // 'ALL' | 'HIGH' | 'MED' | 'LOW'
   const [sortBy, setSortBy] = useState('DEFAULT'); // 'DEFAULT' | 'PRIORITY_DESC' | 'PRIORITY_ASC'
 
-  const subject = NCERT_SYLLABUS[selectedSubject];
+  const subject = getSubjectSyllabus(selectedSubject, isCleanMode);
   if (!subject) return null;
 
   const volume = subject.volumes.find((v) => v.id === selectedVolume) || subject.volumes[0];

@@ -1,5 +1,5 @@
 import { ArrowLeft, Play, Pause, RotateCcw, Clock, BookOpen, Search, Globe } from 'lucide-react';
-import { NCERT_SYLLABUS } from '../../data/ncertSyllabus';
+import { getSubjectSyllabus } from '../../data/ncertSyllabus';
 import { useTimer } from '../../context/TimerContext';
 import CustomSelect from '../shared/CustomSelect';
 
@@ -14,7 +14,7 @@ export default function StudyHeader({
   onOpenSubjectSearch,
   onOpenPhysicsImportantQuestions
 }) {
-  const subject = NCERT_SYLLABUS[selectedSubject];
+  const subject = getSubjectSyllabus(selectedSubject, isCleanMode);
   const timer = useTimer();
 
   if (!subject) return null;

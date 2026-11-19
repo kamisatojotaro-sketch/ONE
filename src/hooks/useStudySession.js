@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { NCERT_SYLLABUS, EXAM_PORTIONS } from '../data/ncertSyllabus';
+import { NCERT_SYLLABUS, EXAM_PORTIONS, getSubjectSyllabus } from '../data/ncertSyllabus';
 import { getDefaultPriority } from '../data/priorityData';
 
 const STORAGE_KEY = 'one_study_session_v1';
@@ -15,8 +15,8 @@ export function useStudySession() {
             ? parsed.notesVersion
             : null;
         // Self-heal and validate state so no stale/mismatched IDs can break the app on page refresh
-        if (parsed.selectedSubject && NCERT_SYLLABUS[parsed.selectedSubject]) {
-          const subject = NCERT_SYLLABUS[parsed.selectedSubject];
+        if (parsed.selectedSubject && getSubjectSyllabus(parsed.selectedSubject, savedVersion === 'D')) {
+          const subject = getSubjectSyllabus(parsed.selectedSubject, savedVersion === 'D');
           let matchingChapter = null;
           let matchingVolume = null;
           let matchingSub = null;
@@ -37,6 +37,10 @@ export function useStudySession() {
             }
           }
 
+          const validSavedVolume = subject.volumes.some(v => v.id === parsed.selectedVolume)
+            ? parsed.selectedVolume
+            : subject.volumes[0]?.id;
+
           return {
             ...parsed,
             notesVersion: savedVersion,
@@ -46,7 +50,7 @@ export function useStudySession() {
                 : parsed.activeSidebarTab === 'IMPORTANT'
                 ? 'NOTES'
                 : (parsed.activeSidebarTab || 'NOTES'),
-            selectedVolume: matchingVolume || parsed.selectedVolume || subject.volumes[0]?.id,
+            selectedVolume: matchingVolume || validSavedVolume,
             selectedChapter: matchingChapter,
             selectedSubchapter: matchingSub,
             chapterStudyMode:
@@ -113,7 +117,7 @@ export function useStudySession() {
           selectedSubchapter: null
         };
       }
-      const subject = NCERT_SYLLABUS[subjectId];
+      const subject = getSubjectSyllabus(subjectId, prev.notesVersion === 'D');
       const firstVolume = subject?.volumes?.[0]?.id || null;
       return {
         ...prev,
@@ -130,14 +134,41 @@ export function useStudySession() {
   }, []);
 
   const setNotesVersion = useCallback((version) => {
-    setSessionState(prev => ({
-      ...prev,
-      notesVersion: version,
-      chapterStudyMode:
-        version === 'D' && prev.chapterStudyMode === 'CHEAT_SHEET'
-          ? 'GENERAL'
-          : prev.chapterStudyMode
-    }));
+    setSessionState(prev => {
+      const nextIsClean = version === 'D';
+      let nextVolume = prev.selectedVolume;
+      let nextChapter = prev.selectedChapter;
+      let nextSubchapter = prev.selectedSubchapter;
+
+      if (prev.selectedSubject) {
+        const subject = getSubjectSyllabus(prev.selectedSubject, nextIsClean);
+        if (subject) {
+          const hasVolume = subject.volumes.some(v => v.id === nextVolume);
+          if (!hasVolume) {
+            nextVolume = subject.volumes[0]?.id || null;
+          }
+          if (nextChapter) {
+            const hasChapter = subject.volumes.some(v => v.chapters.some(c => c.id === nextChapter));
+            if (!hasChapter) {
+              nextChapter = null;
+              nextSubchapter = null;
+            }
+          }
+        }
+      }
+
+      return {
+        ...prev,
+        notesVersion: version,
+        selectedVolume: nextVolume,
+        selectedChapter: nextChapter,
+        selectedSubchapter: nextSubchapter,
+        chapterStudyMode:
+          version === 'D' && prev.chapterStudyMode === 'CHEAT_SHEET'
+            ? 'GENERAL'
+            : prev.chapterStudyMode
+      };
+    });
   }, []);
 
   const setSelectedVolume = useCallback((volumeId) => {
@@ -155,7 +186,7 @@ export function useStudySession() {
         return { ...prev, selectedChapter: null, selectedSubchapter: null };
       }
       // If selecting a chapter, find its containing volume and first subchapter
-      const subject = NCERT_SYLLABUS[prev.selectedSubject];
+      const subject = getSubjectSyllabus(prev.selectedSubject, prev.notesVersion === 'D');
       let firstSub = null;
       let matchingVol = prev.selectedVolume;
       if (subject) {
@@ -251,9 +282,9 @@ export function useStudySession() {
   // Compute Volume Progress
   const volumeProgress = useMemo(() => {
     if (!sessionState.selectedSubject || !sessionState.selectedVolume) return 0;
-    const subject = NCERT_SYLLABUS[sessionState.selectedSubject];
+    const subject = getSubjectSyllabus(sessionState.selectedSubject, sessionState.notesVersion === 'D');
     if (!subject) return 0;
-    const volume = subject.volumes.find(v => v.id === sessionState.selectedVolume);
+    const volume = subject.volumes.find(v => v.id === sessionState.selectedVolume) || subject.volumes[0];
     if (!volume) return 0;
 
     let totalSections = 0;
@@ -276,7 +307,7 @@ export function useStudySession() {
 
     if (totalSections === 0) return 0;
     return Math.round((completedCount / totalSections) * 100);
-  }, [sessionState.selectedSubject, sessionState.selectedVolume, sessionState.completedSections]);
+  }, [sessionState.selectedSubject, sessionState.selectedVolume, sessionState.completedSections, sessionState.notesVersion]);
 
   // Compute Active Subchapter Progress
   const activeSubchapterStats = useMemo(() => {
@@ -284,7 +315,7 @@ export function useStudySession() {
       return { total: 0, completed: 0, percentage: 0, isAllCompleted: false };
     }
 
-    const subject = NCERT_SYLLABUS[sessionState.selectedSubject];
+    const subject = getSubjectSyllabus(sessionState.selectedSubject, sessionState.notesVersion === 'D');
     if (!subject) return { total: 0, completed: 0, percentage: 0, isAllCompleted: false };
 
     let foundSub = null;
@@ -336,7 +367,7 @@ export function useStudySession() {
 
   const jumpToLocation = useCallback(({ subjectId, volumeId, chapterId, subchapterId, tab = 'NOTES' }) => {
     setSessionState(prev => {
-      const subject = NCERT_SYLLABUS[subjectId];
+      const subject = getSubjectSyllabus(subjectId, prev.notesVersion === 'D');
       if (!subject) return prev;
 
       let resolvedVolume = volumeId;
