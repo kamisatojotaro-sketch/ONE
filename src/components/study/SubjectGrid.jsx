@@ -1,5 +1,6 @@
 import { Zap, FlaskConical, Dna, ArrowRight, CheckCircle2, Bookmark, Brain, Search, Globe, Sparkles, FileText, Calculator, TrendingUp, BookOpen } from 'lucide-react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS, getSubjectSyllabus } from '../../data/ncertSyllabus';
+import { getSectionTopicIds, isTopicCompleted } from '../../utils/studyTopicTicks';
 
 export default function SubjectGrid({ 
   isCleanMode = false,
@@ -34,7 +35,8 @@ export default function SubjectGrid({
   };
 
   const calculateSubjectProgress = (subject) => {
-    let totalSections = 0;
+    const completedSet = new Set(completedSections || []);
+    let totalTopics = 0;
     let completed = 0;
 
     subject.volumes.forEach(vol => {
@@ -43,10 +45,13 @@ export default function SubjectGrid({
           ch.subchapters.forEach(sub => {
             if (sub.sections) {
               sub.sections.forEach(sec => {
-                totalSections++;
-                if (completedSections.includes(sec.id)) {
-                  completed++;
-                }
+                const topicIds = getSectionTopicIds(sec, sub.id, ch.id, subject.id, isCleanMode);
+                topicIds.forEach(tId => {
+                  totalTopics++;
+                  if (isTopicCompleted(tId, sec.id, completedSet)) {
+                    completed++;
+                  }
+                });
               });
             }
           });
@@ -54,8 +59,8 @@ export default function SubjectGrid({
       });
     });
 
-    if (totalSections === 0) return 0;
-    return Math.round((completed / totalSections) * 100);
+    if (totalTopics === 0) return 0;
+    return Math.round((completed / totalTopics) * 100);
   };
 
   return (

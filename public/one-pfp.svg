@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#2D3827" />
+      <stop offset="65%" stop-color="#1E2619" />
+      <stop offset="100%" stop-color="#151B12" />
+    </radialGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9BAF8E" stop-opacity="0.7" />
+      <stop offset="50%" stop-color="#4A5A42" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#D4A0A0" stop-opacity="0.55" />
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Base Square Canvas -->
+  <rect width="512" height="512" rx="96" fill="url(#bgGrad)" />
+
+  <!-- Subtle Inner Editorial Frame (Safe for both square and circular PFP crops) -->
+  <circle cx="256" cy="256" r="216" fill="none" stroke="url(#ringGrad)" stroke-width="2.5" />
+  <circle cx="256" cy="256" r="198" fill="none" stroke="#4A5A42" stroke-width="1" stroke-dasharray="4 6" opacity="0.65" />
+
+  <!-- Top Minimal Bookmark / Botanical Crest -->
+  <g transform="translate(256, 98)" fill="none" stroke="#8B9F7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+    <path d="M-14 -16 H14 A4 4 0 0 1 18 -12 V20 L0 9 L-18 20 V-12 A4 4 0 0 1 -14 -16 Z" fill="#2A3325" />
+    <circle cx="0" cy="-2" r="2.5" fill="#D4A0A0" stroke="none" />
+  </g>
+
+  <!-- Corner Editorial Four-Point Stars -->
+  <path d="M256 46 L258.5 53.5 L266 56 L258.5 58.5 L256 66 L253.5 58.5 L246 56 L253.5 53.5 Z" fill="#9BAF8E" opacity="0.75" />
+  <path d="M256 446 L258.5 453.5 L266 456 L258.5 458.5 L256 466 L253.5 458.5 L246 456 L253.5 453.5 Z" fill="#D4A0A0" opacity="0.7" />
+
+  <!-- Centerpiece Wordmark: ONE. -->
+  <g transform="translate(256, 268)">
+    <text
+      x="-14"
+      y="0"
+      text-anchor="middle"
+      font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+      font-size="132"
+      font-weight="700"
+      letter-spacing="-2"
+      fill="#E8E0D4"
+    >ONE</text>
+    <!-- Signature Dusty Rose Period Dot -->
+    <circle cx="144" cy="-14" r="13" fill="#D4A0A0" filter="url(#softGlow)" />
+  </g>
+
+  <!-- Subtle Divider Line -->
+  <line x1="176" y1="316" x2="336" y2="316" stroke="#4A5A42" stroke-width="1.5" opacity="0.8" />
+  <circle cx="256" cy="316" r="3" fill="#8B9F7E" />
+
+  <!-- Tagline: softly tracked -->
+  <text
+    x="256"
+    y="354"
+    text-anchor="middle"
+    font-family="'Caveat', 'Georgia', serif"
+    font-style="italic"
+    font-size="30"
+    letter-spacing="1.5"
+    fill="#9BAF8E"
+  >softly tracked</text>
+</svg>

@@ -33,6 +33,35 @@ window.addEventListener('unhandledrejection', (event) => {
   box.innerHTML = `<strong>⚠️ Unhandled Promise Rejection:</strong><br/>${event.reason?.message || event.reason}<pre style="margin-top:8px;font-size:11px;background:#fff;padding:8px;">${event.reason?.stack || ''}</pre>`;
 });
 
+// Automatically reload open production tabs when a new build is deployed
+if (import.meta.env.PROD) {
+  let isCheckingUpdate = false;
+  const checkForDeployedUpdate = async () => {
+    if (isCheckingUpdate || document.visibilityState === 'hidden') return;
+    const currentScript = document.querySelector('script[src*="/assets/index-"]');
+    const currentSrc = currentScript?.getAttribute('src');
+    if (!currentSrc) return;
+    isCheckingUpdate = true;
+    try {
+      const res = await fetch(`/index.html?t=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) {
+        const html = await res.text();
+        const match = html.match(/\/assets\/index-[^"']+\.js/);
+        if (match && match[0] && !currentSrc.endsWith(match[0])) {
+          window.location.reload();
+        }
+      }
+    } catch {
+      // ignore offline or transient network errors
+    } finally {
+      isCheckingUpdate = false;
+    }
+  };
+  window.addEventListener('focus', checkForDeployedUpdate);
+  document.addEventListener('visibilitychange', checkForDeployedUpdate);
+  setInterval(checkForDeployedUpdate, 20000);
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>

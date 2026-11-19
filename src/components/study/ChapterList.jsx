@@ -1,17 +1,19 @@
 import { useState, useMemo } from 'react';
-import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target, ArrowDownUp, Filter, Flame, Compass } from 'lucide-react';
+import { CheckCircle2, ChevronRight, AlertCircle, Sparkles, BookOpen, Target, ArrowDownUp, Filter, Flame, Compass, FileDown } from 'lucide-react';
 import { getSubjectSyllabus } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 import { getDefaultPriority } from '../../data/priorityData';
 import { getDerivationsByChapter } from '../../data/physicsDerivationsReference';
 import PhysicsDerivationsReferencePanel from './PhysicsDerivationsReferencePanel';
 import CustomSelect from '../shared/CustomSelect';
+import { getSectionTopicIds, isTopicCompleted } from '../../utils/studyTopicTicks';
 
 export default function ChapterList({
   isCleanMode = false,
   selectedSubject,
   selectedVolume,
   onSelectChapter,
+  onDownloadChapterPdf,
   completedSections = [],
   completedPortionChapters = [],
   getPriority,
@@ -27,6 +29,8 @@ export default function ChapterList({
   const volume = subject.volumes.find((v) => v.id === selectedVolume) || subject.volumes[0];
   if (!volume) return null;
 
+  const completedSet = useMemo(() => new Set(completedSections), [completedSections]);
+
   const calculateChapterCompletion = (chapter) => {
     if (!chapter.subchapters) return { total: 0, completed: 0, percentage: 0 };
     let total = 0;
@@ -35,10 +39,13 @@ export default function ChapterList({
     chapter.subchapters.forEach((sub) => {
       if (sub.sections) {
         sub.sections.forEach((sec) => {
-          total++;
-          if (completedSections.includes(sec.id)) {
-            completed++;
-          }
+          const topicIds = getSectionTopicIds(sec, sub.id, chapter.id, selectedSubject, isCleanMode);
+          topicIds.forEach((tId) => {
+            total++;
+            if (isTopicCompleted(tId, sec.id, completedSet)) {
+              completed++;
+            }
+          });
         });
       }
     });
@@ -284,14 +291,14 @@ export default function ChapterList({
                     />
                   </div>
 
-                  {/* Mode Selector Buttons */}
-                  <div className={`grid ${(!isCleanMode || (selectedSubject === 'physics' && getDerivationsByChapter(ch.id).length > 0)) ? 'grid-cols-2' : 'grid-cols-1'} gap-2 pt-1`}>
+                  {/* Mode Selector & Full Chapter PDF Buttons */}
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onSelectChapter(ch.id, 'GENERAL');
                       }}
-                      className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-all cursor-pointer shadow-2xs"
+                      className="flex-1 min-w-[115px] flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] transition-all cursor-pointer shadow-2xs"
                       title="Read complete NCERT theory, derivations & notes"
                     >
                       <BookOpen size={13} className="text-[var(--accent-primary)] shrink-0" />
@@ -304,7 +311,7 @@ export default function ChapterList({
                           e.stopPropagation();
                           onSelectChapter(ch.id, 'DERIVATIONS');
                         }}
-                        className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-all cursor-pointer shadow-xs"
+                        className="flex-1 min-w-[125px] flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-all cursor-pointer shadow-xs"
                         title={`View all ${getDerivationsByChapter(ch.id).length} derivations of ${ch.title}`}
                       >
                         <Compass size={13} className="shrink-0" />
@@ -316,13 +323,29 @@ export default function ChapterList({
                           e.stopPropagation();
                           onSelectChapter(ch.id, 'CHEAT_SHEET');
                         }}
-                        className="flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-xs"
+                        className="flex-1 min-w-[110px] flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-xs"
                         title="Open whole-chapter quick cheat sheet"
                       >
                         <Target size={13} className="shrink-0" />
                         <span className="truncate">Cheat Sheet</span>
                       </button>
                     )}
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onDownloadChapterPdf) {
+                          onDownloadChapterPdf(ch.id);
+                        } else {
+                          onSelectChapter(ch.id, 'GENERAL');
+                        }
+                      }}
+                      className="flex items-center justify-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-mono font-bold bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-white border border-[var(--border-default)] hover:border-[var(--accent-primary)] transition-all cursor-pointer shadow-2xs shrink-0"
+                      title={`Download / Print Entire Chapter ${ch.number}: ${ch.title} as PDF`}
+                    >
+                      <FileDown size={13} className="shrink-0" />
+                      <span>Chapter PDF</span>
+                    </button>
                   </div>
                 </div>
               ) : (

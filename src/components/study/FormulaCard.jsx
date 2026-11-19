@@ -1,6 +1,9 @@
-import { Sparkles, BookOpen } from 'lucide-react';
+import { useState } from 'react';
+import { Sparkles, BookOpen, ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
 import katex from 'katex';
 import { FormattedLatex } from './LatexView';
+import ChemicalReactionDisplay from './ChemicalReactionDisplay';
+import { isTopicCompleted } from '../../utils/studyTopicTicks';
 
 // Curated dictionary of specific formulas and their exact, relevant variables
 const FORMULA_METADATA = {
@@ -320,15 +323,17 @@ export function formatMathString(str) {
 
   // 4. Chemical Reaction Arrows & Indicators
   out = out
-    .replace(/⟶|-->/g, ' <span class="font-bold text-[var(--accent-primary)] px-1">⟶</span> ')
+    .replace(/\\text\{\s*([^}]*)\s*\}/g, '$1')
+    .replace(/->\[([^\]]+)\]/g, ' <span class="inline-flex items-center gap-1 font-mono text-xs font-bold text-[var(--accent-primary)] px-1.5 py-0.5 rounded bg-[var(--bg-elevated)] border border-[var(--border-subtle)] mx-1">[$1] ⟶</span> ')
+    .replace(/⟶|-->|->/g, ' <span class="font-bold text-[var(--accent-primary)] px-1">⟶</span> ')
     .replace(/⇌|<=>/g, ' <span class="font-bold text-amber-500 px-1">⇌</span> ')
     .replace(/↑/g, '<sup>↑</sup>')
     .replace(/↓/g, '<sub>↓</sub>');
 
-  // 5. Convert any word_sub pattern to word<sub>sub</sub> (outside of tags)
+  // 5. Convert any word_sub or )_sub pattern to <sub>sub</sub> (outside of tags)
   if (!out.includes('class="katex')) {
     out = out
-      .replace(/([A-Za-z0-9α-ωΑ-Ω°]+)_([A-Za-z0-9°+−]+)/g, '$1<sub>$2</sub>')
+      .replace(/([A-Za-z0-9α-ωΑ-Ω°)\]]+)_([A-Za-z0-9°+−]+)/g, '$1<sub>$2</sub>')
       .replace(/\br\^2\b|\br²\b/g, 'r<sup>2</sup>')
       .replace(/\br\^3\b|\br³\b/g, 'r<sup>3</sup>')
       .replace(/\bx\^2\b|\bx²\b/g, 'x<sup>2</sup>')
@@ -344,11 +349,69 @@ export function formatMathString(str) {
   return out;
 }
 
+const SUBSCRIPT_DIGITS = {
+  '0': '₀',
+  '1': '₁',
+  '2': '₂',
+  '3': '₃',
+  '4': '₄',
+  '5': '₅',
+  '6': '₆',
+  '7': '₇',
+  '8': '₈',
+  '9': '₉',
+  'n': 'ₙ',
+};
+
+function normalizeChemicalReactionString(raw) {
+  if (!raw) return '';
+  return String(raw)
+    .replace(/\\text\{\s*([^}]*)\s*\}/g, ' $1')
+    .replace(/\\Delta/g, 'Heat')
+    .replace(/\\implies/g, '  ──►  ')
+    .replace(/\^+/g, '⁺')
+    .replace(/->\[([^\]]+)\]/g, (_, reagent) => `  ──(${reagent.trim()})──►  `)
+    .replace(/\s*->\s*/g, '  ──►  ')
+    .replace(/_([0-9n]+)/g, (_, digits) =>
+      digits
+        .split('')
+        .map((d) => SUBSCRIPT_DIGITS[d] || d)
+        .join('')
+    )
+    .replace(/\s{3,}/g, '  ')
+    .trim();
+}
+
 // Find curated metadata for a formula or create clean default
 function resolveFormulaMetadata(formulaStr) {
   if (formulaStr && typeof formulaStr === 'object') {
+    if (formulaStr.reaction) {
+      return {
+        title: formulaStr.name || formulaStr.title || 'Chemical Reaction',
+        reactionEquation: normalizeChemicalReactionString(formulaStr.reaction),
+        display: null,
+        description: formulaStr.description ? formatMathString(formulaStr.description) : null,
+        variables: Array.isArray(formulaStr.variables) ? formulaStr.variables : []
+      };
+    }
+
     let rawEquation = String(formulaStr.formula || formulaStr.math || formulaStr.title || formulaStr.name || '');
-    rawEquation = rawEquation.replace(/->\[([^\]]+)\]/g, '\\xrightarrow{$1}');
+    const isReactionLike =
+      rawEquation.includes('──►') ||
+      rawEquation.includes('──(') ||
+      rawEquation.includes('->[') ||
+      (rawEquation.includes('->') && !rawEquation.includes('\\frac') && !rawEquation.includes('\\log'));
+
+    if (isReactionLike) {
+      return {
+        title: formulaStr.name || formulaStr.title || 'Chemical Reaction',
+        reactionEquation: normalizeChemicalReactionString(rawEquation),
+        display: null,
+        description: formulaStr.description ? formatMathString(formulaStr.description) : null,
+        variables: Array.isArray(formulaStr.variables) ? formulaStr.variables : []
+      };
+    }
+
     if (rawEquation.includes('\\') && !rawEquation.includes('$')) {
       rawEquation = `$${rawEquation}$`;
     }
@@ -377,55 +440,138 @@ function resolveFormulaMetadata(formulaStr) {
   };
 }
 
-export default function FormulaCard({ formulaList, derivations }) {
+export default function FormulaCard({
+  formulaList,
+  derivations,
+  defaultMinimized = false,
+  sectionId = null,
+  completedSections = [],
+  onToggleTopic = null,
+  onToggleTopicGroup = null,
+  allSectionTopicIds = []
+}) {
+  const [isMinimized, setIsMinimized] = useState(defaultMinimized);
   if (!formulaList || formulaList.length === 0) return null;
 
+  const formulaTopicIds = sectionId
+    ? formulaList.map((_, idx) => `${sectionId}::eq-${idx}`)
+    : [];
+  const completedCount = sectionId
+    ? formulaTopicIds.filter((tId) => isTopicCompleted(tId, sectionId, completedSections)).length
+    : 0;
+  const allFormulasDone = sectionId && formulaTopicIds.length > 0 && completedCount === formulaTopicIds.length;
+
   return (
-    <div className="rounded-2xl sm:rounded-3xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-3.5 sm:p-6 md:p-7 shadow-xs space-y-3.5 sm:space-y-5">
-      {/* Pinterest-inspired Editorial Header */}
-      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 sm:pb-4">
-        <div className="flex items-center gap-2.5 sm:gap-3">
+    <div className="rounded-2xl sm:rounded-3xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-3.5 sm:p-6 md:p-7 shadow-xs space-y-3.5 sm:space-y-5 transition-all">
+      {/* Pinterest-inspired Editorial Header (Collapsible Dropdown + Group Tick) */}
+      <div
+        className={`flex items-center justify-between gap-2 ${
+          !isMinimized ? 'border-b border-[var(--border-subtle)] pb-3 sm:pb-4' : ''
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => setIsMinimized((prev) => !prev)}
+          className="text-left flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1 cursor-pointer group"
+          aria-expanded={!isMinimized}
+        >
           <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-[var(--text-accent)]/15 border border-[var(--text-accent)]/30 flex items-center justify-center text-[var(--text-accent)] shrink-0">
             <Sparkles size={15} />
           </div>
-          <div>
-            <h5 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)]">
-              Core Formulas & Variable Meanings
+          <div className="min-w-0 flex-1">
+            <h5 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">
+              Core Formulas & Variable Meanings ({formulaList.length})
             </h5>
             <span className="text-[11px] sm:text-xs font-cursive text-[var(--text-muted)] block">
               key mathematical relations with variable definitions
             </span>
           </div>
+        </button>
+
+        <div className="flex items-center gap-2 shrink-0" data-no-print="true">
+          {sectionId && onToggleTopicGroup && (
+            <button
+              type="button"
+              onClick={() => onToggleTopicGroup(formulaTopicIds, sectionId, allSectionTopicIds)}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-[10px] sm:text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                allFormulasDone
+                  ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-2xs'
+                  : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)] hover:border-[var(--accent-primary)]'
+              }`}
+              title={allFormulasDone ? 'Untick all formulas in this card' : 'Tick all formulas in this card completed'}
+            >
+              {allFormulasDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+              <span>{completedCount}/{formulaList.length}</span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setIsMinimized((prev) => !prev)}
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] sm:text-[11px] font-mono font-bold text-[var(--accent-primary)] shrink-0 transition-colors cursor-pointer"
+          >
+            <span>{isMinimized ? 'Expand' : 'Minimize'}</span>
+            {isMinimized ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+          </button>
         </div>
       </div>
 
       {/* Aesthetic Formula Cards */}
-      <div className="space-y-3 sm:space-y-4">
+      <div data-print-expand="true" className={`${isMinimized ? 'hidden' : 'block'} space-y-3 sm:space-y-4`}>
         {formulaList.map((formula, idx) => {
           const meta = resolveFormulaMetadata(formula);
+          const topicId = sectionId ? `${sectionId}::eq-${idx}` : null;
+          const isEqDone = topicId ? isTopicCompleted(topicId, sectionId, completedSections) : false;
 
           return (
             <div
               key={idx}
-              className="p-3.5 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3 sm:space-y-4 transition-all hover:border-[var(--accent-primary)]/50"
+              className={`p-3.5 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-surface)] border shadow-xs space-y-3 sm:space-y-4 transition-all ${
+                isEqDone
+                  ? 'border-[var(--accent-primary)] shadow-sm'
+                  : 'border-[var(--border-default)] hover:border-[var(--accent-primary)]/50'
+              }`}
             >
-              {/* Equation Title Tag */}
+              {/* Equation Title Tag + Individual Topic Completion Tick */}
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[11px] sm:text-xs font-mono font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)] truncate">
                   {meta.title}
                 </span>
-                <span className="text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)] shrink-0">
-                  Eq {idx + 1}
-                </span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-[10px] sm:text-[11px] font-mono text-[var(--text-muted)]">
+                    Eq {idx + 1}
+                  </span>
+                  {topicId && onToggleTopic && (
+                    <button
+                      type="button"
+                      data-no-print="true"
+                      onClick={() => onToggleTopic(topicId, sectionId, allSectionTopicIds)}
+                      className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+                        isEqDone
+                          ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                          : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                      }`}
+                      title={isEqDone ? `Mark Eq ${idx + 1} incomplete` : `Mark Eq ${idx + 1} completed`}
+                    >
+                      {isEqDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                    </button>
+                  )}
+                </div>
               </div>
 
-              {/* Big, Clean Mathematical Typography */}
-              <div className="py-2 px-2.5 sm:px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto scrollbar-none touch-pan-x">
-                <div
-                  className="font-serif text-sm sm:text-lg md:text-xl font-bold tracking-wide text-[var(--text-primary)] text-center py-1 sm:py-2 min-w-min"
-                  dangerouslySetInnerHTML={{ __html: meta.display }}
-                />
-              </div>
+              {/* Big, Clean Mathematical Typography or Chemical Reaction Structural Display */}
+              {meta.reactionEquation ? (
+                <div className="py-3 px-3 sm:px-4 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto scrollbar-none touch-pan-x flex justify-center">
+                  <ChemicalReactionDisplay equation={meta.reactionEquation} />
+                </div>
+              ) : (
+                <div className="py-2 px-2.5 sm:px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto scrollbar-none touch-pan-x">
+                  <div
+                    className="font-serif text-sm sm:text-lg md:text-xl font-bold tracking-wide text-[var(--text-primary)] text-center py-1 sm:py-2 min-w-min"
+                    dangerouslySetInnerHTML={{ __html: meta.display }}
+                  />
+                </div>
+              )}
 
               {meta.description && (
                 <div

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { NCERT_SYLLABUS, EXAM_PORTIONS, getSubjectSyllabus } from '../data/ncertSyllabus';
 import { getDefaultPriority } from '../data/priorityData';
+import { getSectionTopicIds, isTopicCompleted } from '../utils/studyTopicTicks';
 
 const STORAGE_KEY = 'one_study_session_v1';
 
@@ -219,13 +220,86 @@ export function useStudySession() {
     setSessionState(prev => ({ ...prev, selectedSubchapter: subchapterId }));
   }, []);
 
-  const toggleSection = useCallback((sectionId) => {
+  const toggleSection = useCallback((sectionId, allSectionTopicIds = []) => {
     setSessionState(prev => {
-      const isCompleted = prev.completedSections.includes(sectionId);
-      const newCompleted = isCompleted
-        ? prev.completedSections.filter(id => id !== sectionId)
-        : [...prev.completedSections, sectionId];
-      return { ...prev, completedSections: newCompleted };
+      const completedSet = new Set(prev.completedSections || []);
+      const hasTopics = Array.isArray(allSectionTopicIds) && allSectionTopicIds.length > 0;
+      const isCurrentlyDone = hasTopics
+        ? allSectionTopicIds.every(tId => isTopicCompleted(tId, sectionId, completedSet))
+        : completedSet.has(sectionId);
+
+      if (isCurrentlyDone) {
+        completedSet.delete(sectionId);
+        if (hasTopics) {
+          allSectionTopicIds.forEach(tId => completedSet.delete(tId));
+        }
+      } else {
+        completedSet.add(sectionId);
+        if (hasTopics) {
+          allSectionTopicIds.forEach(tId => completedSet.add(tId));
+        }
+      }
+      return { ...prev, completedSections: Array.from(completedSet) };
+    });
+  }, []);
+
+  const toggleTopic = useCallback((topicId, parentSectionId = null, allSectionTopicIds = []) => {
+    setSessionState(prev => {
+      const completedSet = new Set(prev.completedSections || []);
+      const parentWasCompleted = parentSectionId && completedSet.has(parentSectionId);
+      const topicIsCurrentlyDone = completedSet.has(topicId) || parentWasCompleted;
+
+      if (topicIsCurrentlyDone) {
+        // Untick this specific topic. If parentSectionId was marked as a whole, expand other topics first
+        if (parentWasCompleted) {
+          completedSet.delete(parentSectionId);
+          allSectionTopicIds.forEach(tId => {
+            if (tId !== topicId) completedSet.add(tId);
+          });
+        }
+        completedSet.delete(topicId);
+      } else {
+        completedSet.add(topicId);
+        if (
+          parentSectionId &&
+          Array.isArray(allSectionTopicIds) &&
+          allSectionTopicIds.length > 0 &&
+          allSectionTopicIds.every(tId => completedSet.has(tId))
+        ) {
+          completedSet.add(parentSectionId);
+        }
+      }
+
+      return { ...prev, completedSections: Array.from(completedSet) };
+    });
+  }, []);
+
+  const toggleTopicGroup = useCallback((groupTopicIds = [], parentSectionId = null, allSectionTopicIds = []) => {
+    if (!Array.isArray(groupTopicIds) || groupTopicIds.length === 0) return;
+    setSessionState(prev => {
+      const completedSet = new Set(prev.completedSections || []);
+      const parentWasCompleted = parentSectionId && completedSet.has(parentSectionId);
+      const allGroupDone = groupTopicIds.every(tId => completedSet.has(tId) || parentWasCompleted);
+
+      if (allGroupDone) {
+        if (parentWasCompleted) {
+          completedSet.delete(parentSectionId);
+          allSectionTopicIds.forEach(tId => completedSet.add(tId));
+        }
+        groupTopicIds.forEach(tId => completedSet.delete(tId));
+      } else {
+        groupTopicIds.forEach(tId => completedSet.add(tId));
+        if (
+          parentSectionId &&
+          Array.isArray(allSectionTopicIds) &&
+          allSectionTopicIds.length > 0 &&
+          allSectionTopicIds.every(tId => completedSet.has(tId))
+        ) {
+          completedSet.add(parentSectionId);
+        }
+      }
+
+      return { ...prev, completedSections: Array.from(completedSet) };
     });
   }, []);
 
@@ -279,15 +353,17 @@ export function useStudySession() {
     return getDefaultPriority(id);
   }, [sessionState.userPriorities]);
 
-  // Compute Volume Progress
+  // Compute Volume Progress (based on independent topics across all subtopics)
   const volumeProgress = useMemo(() => {
     if (!sessionState.selectedSubject || !sessionState.selectedVolume) return 0;
-    const subject = getSubjectSyllabus(sessionState.selectedSubject, sessionState.notesVersion === 'D');
+    const isClean = sessionState.notesVersion === 'D';
+    const subject = getSubjectSyllabus(sessionState.selectedSubject, isClean);
     if (!subject) return 0;
     const volume = subject.volumes.find(v => v.id === sessionState.selectedVolume) || subject.volumes[0];
     if (!volume) return 0;
 
-    let totalSections = 0;
+    const completedSet = new Set(sessionState.completedSections || []);
+    let totalTopics = 0;
     let completedCount = 0;
 
     volume.chapters.forEach(ch => {
@@ -295,27 +371,31 @@ export function useStudySession() {
         ch.subchapters.forEach(sub => {
           if (sub.sections) {
             sub.sections.forEach(sec => {
-              totalSections++;
-              if (sessionState.completedSections.includes(sec.id)) {
-                completedCount++;
-              }
+              const topicIds = getSectionTopicIds(sec, sub.id, ch.id, sessionState.selectedSubject, isClean);
+              topicIds.forEach(tId => {
+                totalTopics++;
+                if (isTopicCompleted(tId, sec.id, completedSet)) {
+                  completedCount++;
+                }
+              });
             });
           }
         });
       }
     });
 
-    if (totalSections === 0) return 0;
-    return Math.round((completedCount / totalSections) * 100);
+    if (totalTopics === 0) return 0;
+    return Math.round((completedCount / totalTopics) * 100);
   }, [sessionState.selectedSubject, sessionState.selectedVolume, sessionState.completedSections, sessionState.notesVersion]);
 
-  // Compute Active Subchapter Progress
+  // Compute Active Subchapter Progress (based on independent topics 1, 2, 3...)
   const activeSubchapterStats = useMemo(() => {
     if (!sessionState.selectedSubject || !sessionState.selectedChapter || !sessionState.selectedSubchapter) {
       return { total: 0, completed: 0, percentage: 0, isAllCompleted: false };
     }
 
-    const subject = getSubjectSyllabus(sessionState.selectedSubject, sessionState.notesVersion === 'D');
+    const isClean = sessionState.notesVersion === 'D';
+    const subject = getSubjectSyllabus(sessionState.selectedSubject, isClean);
     if (!subject) return { total: 0, completed: 0, percentage: 0, isAllCompleted: false };
 
     let foundSub = null;
@@ -331,9 +411,21 @@ export function useStudySession() {
       return { total: 0, completed: 0, percentage: 0, isAllCompleted: false };
     }
 
-    const total = foundSub.sections.length;
-    const completed = foundSub.sections.filter(s => sessionState.completedSections.includes(s.id)).length;
-    const percentage = Math.round((completed / total) * 100);
+    const completedSet = new Set(sessionState.completedSections || []);
+    let total = 0;
+    let completed = 0;
+
+    foundSub.sections.forEach(sec => {
+      const topicIds = getSectionTopicIds(sec, foundSub.id, sessionState.selectedChapter, sessionState.selectedSubject, isClean);
+      topicIds.forEach(tId => {
+        total++;
+        if (isTopicCompleted(tId, sec.id, completedSet)) {
+          completed++;
+        }
+      });
+    });
+
+    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
     return {
       total,
@@ -341,7 +433,7 @@ export function useStudySession() {
       percentage,
       isAllCompleted: total > 0 && completed === total
     };
-  }, [sessionState.selectedSubject, sessionState.selectedChapter, sessionState.selectedSubchapter, sessionState.completedSections]);
+  }, [sessionState.selectedSubject, sessionState.selectedChapter, sessionState.selectedSubchapter, sessionState.completedSections, sessionState.notesVersion]);
 
   // Compute Portions Stats
   const portionsStats = useMemo(() => {
@@ -417,6 +509,8 @@ export function useStudySession() {
     setSelectedSubchapter,
     setChapterStudyMode,
     toggleSection,
+    toggleTopic,
+    toggleTopicGroup,
     markSubchapterCompleted,
     togglePortionChapter,
     saveUserNote,

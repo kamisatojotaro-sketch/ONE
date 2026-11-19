@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Target, Calculator, Zap, Brain, AlertTriangle, Compass, ArrowRight } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { ArrowLeft, CheckCircle2, Circle, ChevronDown, Check, PenLine, Sparkles, BookOpen, AlertCircle, HelpCircle, BookMarked, ChevronUp, Target, Calculator, Zap, Brain, AlertTriangle, Compass, ArrowRight, Printer, FileDown, Layers } from 'lucide-react';
 import { getSubjectSyllabus } from '../../data/ncertSyllabus';
 import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
 import FormulaCard, { formatMathString } from './FormulaCard';
@@ -171,13 +171,19 @@ export default function ChapterDrillDown({
   onSetPriority,
   onResetPriority,
   onOpenWolframEngine,
-  isCleanMode = false
+  isCleanMode = false,
+  autoPrintChapterId = null,
+  onClearAutoPrintChapter
 }) {
   const subject = getSubjectSyllabus(selectedSubject, isCleanMode);
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
   const [localNoteText, setLocalNoteText] = useState('');
   const [expandedReferences, setExpandedReferences] = useState({});
   const [openPracticeSections, setOpenPracticeSections] = useState({});
+  const [minimizedSections, setMinimizedSections] = useState({});
+  const [isPrintingFullChapter, setIsPrintingFullChapter] = useState(false);
+  const subtopicPrintRef = useRef(null);
+  const fullChapterPrintRef = useRef(null);
 
   if (!subject) return null;
 
@@ -264,6 +270,285 @@ export default function ChapterDrillDown({
       [sectionId]: !prev[sectionId]
     }));
   };
+
+  // Shared PDF Printout builder for both Single Subtopic PDF and Complete Chapter PDF
+  const printDomNodeAsPdf = (
+    sourceNode,
+    { docTitle, headerSubtitle, headerMainTitle, subtopicList = null }
+  ) => {
+    if (!sourceNode) {
+      window.print();
+      return;
+    }
+
+    const clonedNode = sourceNode.cloneNode(true);
+
+    // 1. Remove interactive-only UI controls (checkbox circles, add/edit note buttons, closed practice toggles)
+    clonedNode.querySelectorAll('[data-no-print="true"]').forEach((el) => el.remove());
+
+    // 2. Reveal any collapsed textbook reference or print-expanded sections so nothing is omitted
+    clonedNode.querySelectorAll('[data-print-expand="true"]').forEach((el) => {
+      el.classList.remove('hidden');
+      el.style.display = 'block';
+    });
+
+    // 3. Remove line-clamp truncation so full personal notes and titles print completely
+    clonedNode.querySelectorAll('.line-clamp-2, .truncate').forEach((el) => {
+      el.classList.remove('line-clamp-2', 'truncate');
+      el.style.whiteSpace = 'normal';
+      el.style.overflow = 'visible';
+    });
+
+    // 4. Collect all loaded stylesheets (<style> and <link rel="stylesheet">) from main document
+    const headStylesHtml = Array.from(
+      document.querySelectorAll('style, link[rel="stylesheet"], link[href*="fonts.googleapis.com"]')
+    )
+      .map((node) => node.outerHTML)
+      .join('\n');
+
+    const versionBadge = isCleanMode ? 'D Version • Exam-Focused Clean Notes' : 'Complete NCERT Study Notes';
+    const volumeLabel = resolvedVolume?.title || `${subject.name} Syllabus`;
+    const subtopicsTocHtml =
+      Array.isArray(subtopicList) && subtopicList.length > 0
+        ? `<div class="print-chapter-toc">
+            <div class="print-chapter-toc-label">Included Subtopics (${subtopicList.length}):</div>
+            <div class="print-chapter-toc-pills">
+              ${subtopicList
+                .map((st, idx) => `<span class="print-chapter-toc-pill">${idx + 1}. ${st}</span>`)
+                .join('')}
+            </div>
+          </div>`
+        : '';
+
+    const printHtml = `<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>${docTitle}</title>
+  ${headStylesHtml}
+  <style>
+    :root, html, body, [data-theme="dark"], [data-theme="light"], .dark {
+      --bg-base: #ffffff !important;
+      --bg-surface: #f8faf9 !important;
+      --bg-elevated: #f1f5f3 !important;
+      --text-primary: #0f172a !important;
+      --text-secondary: #334155 !important;
+      --text-muted: #64748b !important;
+      --accent-primary: #166534 !important;
+      --accent-primary-hover: #14532d !important;
+      --text-accent: #166534 !important;
+      --border-default: #cbd5e1 !important;
+      --border-subtle: #e2e8f0 !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    @page {
+      size: A4 portrait;
+      margin: 12mm;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff !important;
+      color: #0f172a !important;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .print-sheet-wrapper {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 4px 0 16px 0;
+    }
+    .print-header-banner {
+      border: 1.5px solid #cbd5e1;
+      border-left: 5px solid #166534;
+      background: #f8faf9;
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+    }
+    .print-header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #166534;
+      margin-bottom: 6px;
+    }
+    .print-header-chapter {
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 2px;
+    }
+    .print-header-subtopic {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0;
+      line-height: 1.25;
+    }
+    .print-chapter-toc {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #cbd5e1;
+    }
+    .print-chapter-toc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+    .print-chapter-toc-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .print-chapter-toc-pill {
+      font-size: 11px;
+      font-weight: 600;
+      color: #166534;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 3px 8px;
+    }
+    .print-subtopic-divider {
+      border: 1.5px solid #cbd5e1;
+      border-left: 4px solid #166534;
+      background: #f1f5f3;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin: 18px 0 12px 0;
+    }
+    /* Ensure horizontal scroll containers & SVGs fit cleanly on A4 paper without clipping */
+    .overflow-x-auto {
+      overflow: visible !important;
+    }
+    svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
+    tr, svg, .katex-render {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+  </style>
+</head>
+<body>
+  <div class="print-sheet-wrapper">
+    <div class="print-header-banner">
+      <div class="print-header-meta">
+        <span>${subject.name} (${subject.code || 'NCERT Class 12'}) • ${volumeLabel}</span>
+        <span>${versionBadge}</span>
+      </div>
+      <div class="print-header-chapter">${headerSubtitle}</div>
+      <h1 class="print-header-subtopic">${headerMainTitle}</h1>
+      ${subtopicsTocHtml}
+    </div>
+    ${clonedNode.innerHTML}
+  </div>
+</body>
+</html>`;
+
+    // Remove any previous print iframe
+    const existingIframe = document.getElementById('one-subtopic-print-iframe');
+    if (existingIframe) existingIframe.remove();
+
+    const iframe = document.createElement('iframe');
+    iframe.id = 'one-subtopic-print-iframe';
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    iframe.style.opacity = '0';
+    iframe.style.pointerEvents = 'none';
+    document.body.appendChild(iframe);
+
+    const iframeDoc = iframe.contentWindow?.document || iframe.contentDocument;
+    if (!iframeDoc) {
+      window.print();
+      return;
+    }
+
+    iframeDoc.open();
+    iframeDoc.write(printHtml);
+    iframeDoc.close();
+
+    const previousTitle = document.title;
+    document.title = docTitle;
+
+    const triggerPrint = () => {
+      try {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+      } catch {
+        window.print();
+      } finally {
+        setTimeout(() => {
+          document.title = previousTitle;
+        }, 1200);
+      }
+    };
+
+    // Wait briefly for external stylesheet / font rules in iframe to settle
+    setTimeout(triggerPrint, 450);
+  };
+
+  // Print / Save Complete Subtopic as PDF
+  const handlePrintSubtopicPdf = () => {
+    printDomNodeAsPdf(subtopicPrintRef.current, {
+      docTitle: `${subject.name} — Ch ${chapter.number}: ${chapter.title} — ${currentSubchapter.title}`,
+      headerSubtitle: `Chapter ${chapter.number}: ${chapter.title}`,
+      headerMainTitle: currentSubchapter.title,
+      subtopicList: null
+    });
+  };
+
+  // Print / Save Complete Chapter (All Subtopics) as PDF
+  const handlePrintChapterPdf = () => {
+    setIsPrintingFullChapter(true);
+  };
+
+  useEffect(() => {
+    if (!isPrintingFullChapter) return;
+    const timer = setTimeout(() => {
+      if (fullChapterPrintRef.current) {
+        printDomNodeAsPdf(fullChapterPrintRef.current, {
+          docTitle: `${subject.name} — Chapter ${chapter.number}: ${chapter.title} (Complete Chapter PDF)`,
+          headerSubtitle: `Complete Chapter Handout • ${chapter.subchapters.length} Subtopics`,
+          headerMainTitle: `Chapter ${chapter.number}: ${chapter.title}`,
+          subtopicList: chapter.subchapters.map((s) => s.title)
+        });
+      }
+      setIsPrintingFullChapter(false);
+    }, 220);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPrintingFullChapter]);
+
+  useEffect(() => {
+    if (autoPrintChapterId && chapter && autoPrintChapterId === chapter.id) {
+      setIsPrintingFullChapter(true);
+      onClearAutoPrintChapter?.();
+    }
+  }, [autoPrintChapterId, chapter, onClearAutoPrintChapter]);
 
   // Derivation counters and chapter-level derivations bank
   const getSubtopicDerivationCount = (sub) => {
@@ -542,31 +827,44 @@ export default function ChapterDrillDown({
           </div>
         </div>
 
-        {/* Subchapter Selector Dropdown */}
-        <div className="relative w-full md:w-80 lg:w-96 shrink-0 max-w-full">
-          <CustomSelect
-            value={currentSubchapter.id}
-            onChange={(e) => onSelectSubchapter(e.target.value)}
-            className="w-full bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
+        {/* Subchapter Selector Dropdown + Download Entire Chapter PDF Button */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto shrink-0 max-w-full">
+          <div className="relative w-full sm:w-72 md:w-76 lg:w-88 shrink-0 max-w-full">
+            <CustomSelect
+              value={currentSubchapter.id}
+              onChange={(e) => onSelectSubchapter(e.target.value)}
+              className="w-full bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
+            >
+              {chapter.subchapters.map((sub) => {
+                const subCompleted = completedSubchapters.includes(sub.id);
+                const pRating = getPriority ? getPriority(sub.id) : undefined;
+                const pTag = !isCleanMode && pRating !== undefined ? `[P: ${pRating}/10] ` : '';
+                const drvCount = getSubtopicDerivationCount(sub);
+                const drvBadge = drvCount > 0 ? (drvCount > 1 ? `Derivation ×${drvCount}` : 'Derivation') : undefined;
+                return (
+                  <option
+                    key={sub.id}
+                    value={sub.id}
+                    data-completed={subCompleted}
+                    data-badge={drvBadge}
+                  >
+                    {pTag}{sub.title}
+                  </option>
+                );
+              })}
+            </CustomSelect>
+          </div>
+
+          <button
+            type="button"
+            onClick={handlePrintChapterPdf}
+            disabled={isPrintingFullChapter}
+            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 sm:py-2.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-white border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-xs font-mono font-bold transition-all shadow-2xs cursor-pointer shrink-0 whitespace-nowrap"
+            title={`Download / Print Entire Chapter ${chapter.number}: ${chapter.title} as PDF (${chapter.subchapters.length} Subtopics)`}
           >
-            {chapter.subchapters.map((sub) => {
-              const subCompleted = completedSubchapters.includes(sub.id);
-              const pRating = getPriority ? getPriority(sub.id) : undefined;
-              const pTag = !isCleanMode && pRating !== undefined ? `[P: ${pRating}/10] ` : '';
-              const drvCount = getSubtopicDerivationCount(sub);
-              const drvBadge = drvCount > 0 ? (drvCount > 1 ? `Derivation ×${drvCount}` : 'Derivation') : undefined;
-              return (
-                <option
-                  key={sub.id}
-                  value={sub.id}
-                  data-completed={subCompleted}
-                  data-badge={drvBadge}
-                >
-                  {pTag}{sub.title}
-                </option>
-              );
-            })}
-          </CustomSelect>
+            <FileDown size={14} className="shrink-0" />
+            <span>{isPrintingFullChapter ? 'Preparing PDF...' : 'Chapter PDF'}</span>
+          </button>
         </div>
       </div>
 
@@ -802,12 +1100,13 @@ export default function ChapterDrillDown({
 
       {/* Sections List */}
       {chapterStudyMode !== 'CHEAT_SHEET' && chapterStudyMode !== 'DERIVATIONS' && (
-      <div className="space-y-6 sm:space-y-8">
+      <div ref={subtopicPrintRef} id="subtopic-printable-area" className="space-y-6 sm:space-y-8">
         {currentSubchapter.sections?.map((section) => {
           const isDone = completedSections.includes(section.id);
           const hasCustomNote = userNotes[section.id];
           const isEditing = activeNoteEdit === section.id;
           const isRefExpanded = expandedReferences[section.id] !== false; // default expanded in general mode
+          const isSectionMinimized = Boolean(minimizedSections[section.id]);
           const sectionHasDerivation = currentSubDrvCount > 0 || Boolean(section.derivations);
 
           return (
@@ -819,8 +1118,8 @@ export default function ChapterDrillDown({
                   : 'bg-[var(--bg-surface)] border-[var(--border-default)] hover:border-[var(--border-default)]'
               }`}
             >
-              {/* Section Header with Clickable Circle Completion Tracker */}
-              <div className="flex items-start justify-between gap-3 sm:gap-4 border-b border-[var(--border-subtle)] pb-4 sm:pb-5">
+              {/* Section Header with Minimize Dropdown Toggle & Clickable Circle Completion Tracker */}
+              <div className={`flex items-start justify-between gap-3 sm:gap-4 ${!isSectionMinimized ? 'border-b border-[var(--border-subtle)] pb-4 sm:pb-5' : ''}`}>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap mb-1.5 sm:mb-2">
                     <div className="inline-flex max-w-full items-center gap-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[10px] sm:text-[11px] font-mono text-[var(--text-accent)] font-semibold uppercase tracking-wider">
@@ -837,23 +1136,43 @@ export default function ChapterDrillDown({
                   </h4>
                 </div>
 
-                {/* Interactive Clickable Circle Tracker (Pinterest Style Checkbox) */}
-                <button
-                  onClick={() => onToggleSection(section.id)}
-                  className={`p-2 sm:p-2.5 rounded-full transition-all duration-300 cursor-pointer flex items-center justify-center shrink-0 ${
-                    isDone
-                      ? 'bg-[var(--accent-primary)] text-white shadow-md scale-105 sm:scale-110 hover:bg-[var(--accent-primary-hover)]'
-                      : 'border-2 border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:scale-105'
-                  }`}
-                  title={isDone ? "Mark subtopic incomplete" : "Mark subtopic completed"}
-                >
-                  {isDone ? (
-                    <CheckCircle2 size={24} className="fill-current text-white stroke-[var(--accent-primary)]" />
-                  ) : (
-                    <Circle size={24} strokeWidth={2} />
-                  )}
-                </button>
+                <div className="flex items-center gap-2 shrink-0" data-no-print="true">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setMinimizedSections((prev) => ({
+                        ...prev,
+                        [section.id]: !prev[section.id]
+                      }))
+                    }
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[11px] font-mono font-bold text-[var(--accent-primary)] transition-colors cursor-pointer"
+                    title={isSectionMinimized ? 'Expand subtopic section' : 'Minimize subtopic section'}
+                    aria-expanded={!isSectionMinimized}
+                  >
+                    <span>{isSectionMinimized ? 'Expand' : 'Minimize'}</span>
+                    {isSectionMinimized ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
+                  </button>
+
+                  {/* Interactive Clickable Circle Tracker (Pinterest Style Checkbox) */}
+                  <button
+                    onClick={() => onToggleSection(section.id)}
+                    className={`p-2 sm:p-2.5 rounded-full transition-all duration-300 cursor-pointer flex items-center justify-center shrink-0 ${
+                      isDone
+                        ? 'bg-[var(--accent-primary)] text-white shadow-md scale-105 sm:scale-110 hover:bg-[var(--accent-primary-hover)]'
+                        : 'border-2 border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:scale-105'
+                    }`}
+                    title={isDone ? "Mark subtopic incomplete" : "Mark subtopic completed"}
+                  >
+                    {isDone ? (
+                      <CheckCircle2 size={24} className="fill-current text-white stroke-[var(--accent-primary)]" />
+                    ) : (
+                      <Circle size={24} strokeWidth={2} />
+                    )}
+                  </button>
+                </div>
               </div>
+
+              <div data-print-expand="true" className={`${isSectionMinimized ? 'hidden' : 'block'} space-y-4 sm:space-y-6`}>
 
               {selectedSubject === 'physics' ? (
                 <Physics4PartSectionView
@@ -933,22 +1252,22 @@ export default function ChapterDrillDown({
                       <BookMarked size={14} className="text-[var(--accent-primary)] shrink-0" />
                       Detailed NCERT Textbook Reference
                     </span>
-                    {isRefExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                    <span data-no-print="true">{isRefExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}</span>
                   </button>
 
-                  {isRefExpanded && (
-                    <div
-                      className="p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] break-words"
-                      dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }}
-                    />
-                  )}
+                  <div
+                    data-print-expand="true"
+                    className={`${isRefExpanded ? 'block' : 'hidden'} p-4 sm:p-5 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)] bg-[var(--bg-surface)] break-words`}
+                    dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }}
+                  />
                 </div>
               )}
 
               {/* 5. Subtopic-Level 20 MCQs and Board PYQs Practice Drawer */}
               {!isCleanMode && (
-              <div className="pt-1">
+              <div className="pt-1" data-no-print={!openPracticeSections[section.id] ? 'true' : undefined}>
                 <button
+                  data-no-print="true"
                   onClick={() => togglePracticeSection(section.id)}
                   className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs ${
                     openPracticeSections[section.id]
@@ -978,9 +1297,12 @@ export default function ChapterDrillDown({
               )}
 
               {/* 6. Custom User Notepad for this subtopic */}
-              <div className="pt-3 sm:pt-4 border-t border-[var(--border-subtle)]">
+              <div
+                className="pt-3 sm:pt-4 border-t border-[var(--border-subtle)]"
+                data-no-print={!hasCustomNote ? 'true' : undefined}
+              >
                 {isEditing ? (
-                  <div className="space-y-3">
+                  <div className="space-y-3" data-no-print="true">
                     <textarea
                       value={localNoteText}
                       onChange={(e) => setLocalNoteText(e.target.value)}
@@ -1016,6 +1338,7 @@ export default function ChapterDrillDown({
                     )}
 
                     <button
+                      data-no-print="true"
                       onClick={() => handleStartEditNote(section.id, hasCustomNote)}
                       className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shrink-0 shadow-xs cursor-pointer"
                     >
@@ -1024,6 +1347,7 @@ export default function ChapterDrillDown({
                     </button>
                   </div>
                 )}
+              </div>
               </div>
             </div>
           );
@@ -1038,38 +1362,218 @@ export default function ChapterDrillDown({
         </div>
       )}
 
-      {/* Subchapter Completed Button */}
-      <div className="pt-4 sm:pt-6 pb-8 sm:pb-12 flex flex-col items-center justify-center space-y-3">
-        <button
-          disabled={!activeSubchapterStats.isAllCompleted || isSubCompleted}
-          onClick={() => onMarkSubchapterCompleted(currentSubchapter.id)}
-          className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-serif text-sm sm:text-base font-bold transition-all duration-300 shadow-sm ${
-            isSubCompleted
-              ? 'bg-[var(--accent-primary)]/20 text-[var(--accent-primary)] border border-[var(--accent-primary)] cursor-default'
-              : activeSubchapterStats.isAllCompleted
-              ? 'bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] hover:shadow-lg hover:-translate-y-0.5 cursor-pointer animate-bounce'
-              : 'bg-[var(--bg-elevated)] text-[var(--text-muted)] border border-[var(--border-default)] opacity-60 cursor-not-allowed'
-          }`}
-        >
-          {isSubCompleted ? (
-            <>
-              <Check size={18} />
-              Subtopic Completed!
-            </>
-          ) : (
-            <>
-              <CheckCircle2 size={18} />
-              Mark Subtopic Completed
-            </>
-          )}
-        </button>
+      {/* Subtopic & Complete Chapter PDF Printout Card + Subtopic Completed Button */}
+      <div className="pt-4 sm:pt-6 pb-8 sm:pb-12 space-y-4">
+        <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          <div className="flex items-start gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-xl bg-[var(--accent-primary)]/15 border border-[var(--accent-primary)]/30 flex items-center justify-center text-[var(--accent-primary)] shrink-0 mt-0.5">
+              <Printer size={18} />
+            </div>
+            <div className="min-w-0 flex-1 space-y-1">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--accent-primary)] font-bold block">
+                Subtopic &amp; Full Chapter PDF Printout
+              </span>
+              <h5 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug break-words">
+                Print / Download PDF: {currentSubchapter.title} or All of Ch {chapter.number}: {chapter.title}
+              </h5>
+              <p className="font-sans text-xs text-[var(--text-secondary)] leading-relaxed">
+                Generates a clean, ink-friendly A4 PDF handout containing all diagrams, chemical structures &amp; reactions, formulas, definitions, distinguish tables, and Q&amp;A — for this subtopic or for the entire chapter ({chapter.subchapters.length} subtopics).
+              </p>
+            </div>
+          </div>
 
-        {!activeSubchapterStats.isAllCompleted && !isSubCompleted && (
-          <p className="text-xs text-[var(--text-muted)] font-sans text-center px-4">
-            Mark the completion circle for this subtopic above to unlock.
-          </p>
-        )}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto shrink-0">
+            <button
+              type="button"
+              onClick={handlePrintSubtopicPdf}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] font-sans text-xs sm:text-sm font-bold transition-all shadow-sm hover:shadow-md cursor-pointer shrink-0"
+            >
+              <Printer size={15} />
+              <span>Print / Save Subtopic PDF</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePrintChapterPdf}
+              disabled={isPrintingFullChapter}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-white border border-[var(--accent-primary)]/40 hover:border-[var(--accent-primary)] font-sans text-xs sm:text-sm font-bold transition-all shadow-2xs hover:shadow-md cursor-pointer shrink-0"
+            >
+              <FileDown size={15} />
+              <span>
+                {isPrintingFullChapter
+                  ? 'Preparing Chapter PDF...'
+                  : `Download Entire Chapter PDF (${chapter.subchapters.length})`}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center justify-center space-y-2.5 pt-1">
+          <button
+            disabled={!activeSubchapterStats.isAllCompleted || isSubCompleted}
+            onClick={() => onMarkSubchapterCompleted(currentSubchapter.id)}
+            className={`w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-serif text-sm sm:text-base font-bold transition-all duration-300 shadow-sm ${
+              isSubCompleted
+                ? 'bg-[var(--accent-primary)]/20 text-[var(--accent-primary)] border border-[var(--accent-primary)] cursor-default'
+                : activeSubchapterStats.isAllCompleted
+                ? 'bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] hover:shadow-lg hover:-translate-y-0.5 cursor-pointer animate-bounce'
+                : 'bg-[var(--bg-elevated)] text-[var(--text-muted)] border border-[var(--border-default)] opacity-60 cursor-not-allowed'
+            }`}
+          >
+            {isSubCompleted ? (
+              <>
+                <Check size={18} />
+                Subtopic Completed!
+              </>
+            ) : (
+              <>
+                <CheckCircle2 size={18} />
+                Mark Subtopic Completed
+              </>
+            )}
+          </button>
+
+          {!activeSubchapterStats.isAllCompleted && !isSubCompleted && (
+            <p className="text-xs text-[var(--text-muted)] font-sans text-center px-4">
+              Mark the completion circle for this subtopic above to unlock.
+            </p>
+          )}
+        </div>
       </div>
+
+      {/* Offscreen Full-Chapter Render Container (Mounted momentarily when generating Entire Chapter PDF) */}
+      {isPrintingFullChapter && (
+        <div
+          ref={fullChapterPrintRef}
+          id="full-chapter-printable-area"
+          className="fixed -left-[9999px] top-0 w-[900px] pointer-events-none opacity-0 space-y-8"
+          aria-hidden="true"
+        >
+          {chapter.subchapters.map((sub, subIdx) => (
+            <div
+              key={sub.id}
+              className="space-y-6"
+              style={
+                subIdx > 0
+                  ? { pageBreakBefore: 'always', breakBefore: 'page' }
+                  : undefined
+              }
+            >
+              <div className="print-subtopic-divider">
+                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
+                  Subtopic {subIdx + 1} of {chapter.subchapters.length} • Chapter {chapter.number}: {chapter.title}
+                </div>
+                <h2 className="font-serif text-lg font-bold text-[var(--text-primary)] mt-0.5">
+                  {sub.title}
+                </h2>
+              </div>
+
+              {sub.sections?.map((section) => {
+                const hasCustomNote = userNotes[section.id];
+                return (
+                  <div
+                    key={section.id}
+                    className="p-5 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] space-y-5"
+                  >
+                    <div className="border-b border-[var(--border-subtle)] pb-3">
+                      <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[var(--text-accent)] block mb-1">
+                        {sub.title}
+                      </span>
+                      <h3 className="font-serif text-xl font-bold text-[var(--text-primary)]">
+                        {section.title}
+                      </h3>
+                    </div>
+
+                    {selectedSubject === 'physics' ? (
+                      <Physics4PartSectionView
+                        section={section}
+                        subtopicId={sub.id}
+                        chapterId={selectedChapter}
+                        diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[sub.id]}
+                        diagramSubMode={PHYSICS_SUBTOPIC_SUBMODES[sub.id]}
+                        isCleanMode={isCleanMode}
+                      />
+                    ) : (
+                      <>
+                        <StructuredSectionView
+                          section={section}
+                          subtopicId={sub.id}
+                          chapterId={selectedChapter}
+                          subjectId={selectedSubject}
+                          isCleanMode={isCleanMode}
+                        />
+
+                        {section.keyFormulas && section.keyFormulas.length > 0 && (
+                          <FormulaCard
+                            formulaList={section.keyFormulas}
+                            derivations={section.derivations}
+                          />
+                        )}
+
+                        <ReactionDiagramCard
+                          subtopicId={sub.id}
+                          chapterId={selectedChapter}
+                          isCleanMode={isCleanMode}
+                        />
+
+                        {PHYSICS_SUBTOPIC_DIAGRAMS[sub.id] && (
+                          <div className="py-2">
+                            <PhysicsDiagramCard
+                              diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[sub.id]}
+                              subMode={PHYSICS_SUBTOPIC_SUBMODES[sub.id]}
+                            />
+                          </div>
+                        )}
+
+                        {!isCleanMode && section.questionFraming && (
+                          <div className="p-4 rounded-xl bg-[var(--bg-elevated)] border-l-4 border-l-[var(--text-accent)] border border-[var(--border-subtle)] space-y-2">
+                            <span className="text-xs font-mono font-bold text-[var(--text-accent)] uppercase tracking-wider block">
+                              Exam Question Blueprint
+                            </span>
+                            <div
+                              className="font-sans text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap"
+                              dangerouslySetInnerHTML={{ __html: formatMathString(section.questionFraming) }}
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {section.textbookRef && (
+                      <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden bg-[var(--bg-base)]">
+                        <div className="px-4 py-2 bg-[var(--bg-elevated)] text-xs font-mono font-semibold text-[var(--text-secondary)]">
+                          Detailed NCERT Textbook Reference
+                        </div>
+                        <div
+                          className="p-4 font-sans text-xs text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap border-t border-[var(--border-subtle)] bg-[var(--bg-surface)]"
+                          dangerouslySetInnerHTML={{ __html: formatMathString(section.textbookRef) }}
+                        />
+                      </div>
+                    )}
+
+                    {hasCustomNote && (
+                      <div className="pt-3 border-t border-[var(--border-subtle)] text-xs">
+                        <span className="font-semibold text-[var(--text-primary)] block mb-0.5">
+                          Your Personal Study Note:
+                        </span>
+                        <p className="italic text-[var(--text-secondary)] whitespace-pre-wrap">
+                          "{hasCustomNote}"
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+
+          {!isCleanMode && totalChapterDerivationsCount > 0 && (
+            <div style={{ pageBreakBefore: 'always', breakBefore: 'page' }}>
+              {renderChapterDerivationsSection()}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Fixed Viewport Bottom Progress Bar (Elevated above mobile nav on small screens) */}
       <div className="fixed bottom-14 md:bottom-0 left-0 right-0 z-40 bg-[var(--bg-surface)]/95 backdrop-blur-md border-t border-[var(--border-default)] py-2 sm:py-2.5 px-3.5 sm:px-6 shadow-xl">
@@ -1084,11 +1588,34 @@ export default function ChapterDrillDown({
             </span>
           </div>
 
-          <div className="w-20 xs:w-28 sm:w-48 md:w-80 h-2 sm:h-2.5 rounded-full bg-[var(--border-default)] overflow-hidden shrink-0">
-            <div
-              className="h-full rounded-full transition-all duration-300 bg-[var(--accent-primary)]"
-              style={{ width: `${activeSubchapterStats.percentage}%` }}
-            />
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            <button
+              type="button"
+              onClick={handlePrintSubtopicPdf}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-white border border-[var(--border-default)] text-[11px] font-mono font-bold transition-colors cursor-pointer"
+              title="Print or Save Complete Subtopic as PDF"
+            >
+              <Printer size={12} />
+              <span className="hidden sm:inline">Subtopic PDF</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePrintChapterPdf}
+              disabled={isPrintingFullChapter}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-white border border-[var(--border-default)] text-[11px] font-mono font-bold transition-colors cursor-pointer"
+              title={`Download / Print Entire Chapter ${chapter.number} as PDF`}
+            >
+              <FileDown size={12} />
+              <span className="hidden xs:inline">Chapter PDF</span>
+            </button>
+
+            <div className="w-14 xs:w-20 sm:w-36 md:w-52 h-2 sm:h-2.5 rounded-full bg-[var(--border-default)] overflow-hidden shrink-0">
+              <div
+                className="h-full rounded-full transition-all duration-300 bg-[var(--accent-primary)]"
+                style={{ width: `${activeSubchapterStats.percentage}%` }}
+              />
+            </div>
           </div>
         </div>
       </div>

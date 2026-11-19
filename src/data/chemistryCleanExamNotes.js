@@ -306,7 +306,7 @@ export const CLEAN_CHEMISTRY_VOL1_CHAPTERS = [
               },
               {
                 name: 'Pseudo-First-Order Reaction Formula (Acid Hydrolysis of Ester)',
-                formula: 'CH_3COOC_2H_5 + H_2O\\text{ (excess)} ->[H^+] CH_3COOH + C_2H_5OH \\implies \\text{Rate} = k[CH_3COOC_2H_5]',
+                reaction: 'CH₃COOC₂H₅ (Ethyl acetate) + H₂O (Excess)  ──(H⁺)──►  CH₃COOH (Acetic acid) + C₂H₅OH (Ethanol)',
                 description: 'Since water is present in large excess, [H₂O] remains practically constant: Rate = k′[CH₃COOC₂H₅][H₂O] = k[CH₃COOC₂H₅] (Order = 1, Molecularity = 2).'
               }
             ],
@@ -1528,6 +1528,33 @@ export const CLEAN_CHEMISTRY_VOL2_CHAPTERS = [
             title: 'Preparation of Glucose & The 5 Structural Proof Reactions (Open-Chain)',
             explanation:
               'Glucose (C₆H₁₂O₆) is an aldohexose. Its open-chain formula CHO–(CHOH)₄–CH₂OH is established by 5 classic chemical reactions, out of which 2 or 3 are directly asked in the exam.',
+            keyFormulas: [
+              {
+                name: '1. Reaction with HI / Heat (Proves 6 carbons in a straight chain)',
+                reaction: 'CHO–(CHOH)₄–CH₂OH  ──(HI, Heat)──►  CH₃–CH₂–CH₂–CH₂–CH₂–CH₃ (n-Hexane)',
+                description: 'On prolonged heating with HI, glucose forms n-hexane, proving all six carbon atoms are linked in a straight (linear) chain.'
+              },
+              {
+                name: '2. Reaction with NH₂OH or HCN (Proves presence of Carbonyl >C=O group)',
+                reaction: 'CHO–(CHOH)₄–CH₂OH + NH₂OH  ──►  H–C(=N–OH)–(CHOH)₄–CH₂OH (Glucose oxime) + H₂O\nCHO–(CHOH)₄–CH₂OH + HCN  ──►  CH(OH)(CN)–(CHOH)₄–CH₂OH (Glucose cyanohydrin)',
+                description: 'Glucose reacts with hydroxylamine (NH₂OH) to form an oxime and adds a molecule of HCN to give a cyanohydrin, confirming a carbonyl (>C=O) group.'
+              },
+              {
+                name: '3. Reaction with Bromine Water Br₂/H₂O (Proves Carbonyl is an Aldehyde –CHO group)',
+                reaction: 'CHO–(CHOH)₄–CH₂OH + [O]  ──(Br₂ / H₂O)──►  COOH–(CHOH)₄–CH₂OH (Gluconic acid)',
+                description: 'Glucose gets oxidised to a 6-carbon carboxylic acid (gluconic acid) on reaction with a mild oxidising agent like bromine water, proving the carbonyl group is present as an aldehydic (–CHO) group.'
+              },
+              {
+                name: '4. Acetylation with Acetic Anhydride (Proves presence of five –OH groups)',
+                reaction: 'CHO–(CHOH)₄–CH₂OH + 5 (CH₃CO)₂O  ──(Acetylation)──►  CHO–(CH–O–COCH₃)₄–CH₂–O–COCH₃ (Glucose pentaacetate) + 5 CH₃COOH',
+                description: 'Acetylation of glucose with acetic anhydride gives glucose pentaacetate, confirming the presence of five –OH groups attached to five different carbon atoms.'
+              },
+              {
+                name: '5. Oxidation with Conc. HNO₃ (Proves presence of one Primary Alcoholic –CH₂OH group)',
+                reaction: 'CHO–(CHOH)₄–CH₂OH + [O]  ──(Conc. HNO₃)──►  COOH–(CHOH)₄–COOH (Saccharic acid)',
+                description: 'On oxidation with nitric acid (HNO₃), both glucose and gluconic acid yield a dicarboxylic acid, saccharic acid (glucaric acid), indicating a primary alcoholic (–CH₂OH) group.'
+              }
+            ],
             structuredData: {
               examBlueprintBadge: 'Teacher Exam Focus • 2 or 3 out of these 5 Glucose reactions will come in the exam',
               visualDiagrams: [

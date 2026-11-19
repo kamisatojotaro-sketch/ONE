@@ -62,6 +62,12 @@ export default function Notes() {
   // Search Modal State
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchScope, setSearchScope] = useState('all');
+  const [autoPrintChapterId, setAutoPrintChapterId] = useState(null);
+
+  const handleDownloadChapterPdf = useCallback((chapterId) => {
+    session.setSelectedChapter(chapterId, 'GENERAL');
+    setAutoPrintChapterId(chapterId);
+  }, [session]);
 
   // Physics Important Questions Clean Pop-up State (for D Version Physics)
   const [physicsImpModal, setPhysicsImpModal] = useState({
@@ -321,6 +327,7 @@ export default function Notes() {
                       selectedSubject={session.selectedSubject}
                       selectedVolume={session.selectedVolume}
                       onSelectChapter={session.setSelectedChapter}
+                      onDownloadChapterPdf={handleDownloadChapterPdf}
                       completedSections={session.completedSections}
                       completedPortionChapters={session.completedPortionChapters}
                       getPriority={session.getPriority}
@@ -350,6 +357,8 @@ export default function Notes() {
                       onSetPriority={session.setItemPriority}
                       onResetPriority={session.resetItemPriority}
                       onOpenWolframEngine={() => session.setActiveSidebarTab('WOLFRAM_ENGINE')}
+                      autoPrintChapterId={autoPrintChapterId}
+                      onClearAutoPrintChapter={() => setAutoPrintChapterId(null)}
                     />
                   )}
                 </>

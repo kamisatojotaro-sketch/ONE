@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { 
   BookMarked, ListChecks, Sparkles, FlaskConical, ArrowRight, 
-  Info, CheckCircle2, ChevronRight, Zap, Award,
+  Info, CheckCircle2, Circle, ChevronRight, ChevronDown, ChevronUp, Zap, Award,
   Brain, AlertTriangle, Scale, Target, TrendingUp, XCircle, Lightbulb
 } from 'lucide-react';
 import { STRUCTURED_NOTES_DATA } from '../../data/structuredNotesData';
@@ -10,6 +10,7 @@ import { SingleReactionDiagram } from './ReactionDiagramCard';
 import { formatMathString } from './FormulaCard';
 import ChemistryExamDiagramCard from './ChemistryExamDiagramCard';
 import ChemicalReactionDisplay from './ChemicalReactionDisplay';
+import { isTopicCompleted } from '../../utils/studyTopicTicks';
 
 // Intelligent fallback parser for sections without manual curation
 function parseFallbackContent(section, subtopicId, chapterId) {
@@ -95,7 +96,27 @@ function parseFallbackContent(section, subtopicId, chapterId) {
   return { definitions, keyPoints, extraPoints, reactions, examTrend, commonlyMadeErrors };
 }
 
-export default function StructuredSectionView({ section, subtopicId, chapterId, subjectId, isCleanMode = false }) {
+export default function StructuredSectionView({
+  section,
+  subtopicId,
+  chapterId,
+  subjectId,
+  isCleanMode = false,
+  completedSections = [],
+  onToggleTopic = null,
+  onToggleTopicGroup = null,
+  allSectionTopicIds = []
+}) {
+  const [minimizedBlocks, setMinimizedBlocks] = useState({});
+  const secId = section?.id;
+
+  const toggleBlock = (key) => {
+    setMinimizedBlocks((prev) => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
   // 1. Get structured data (from inline section.structuredData, curated map, or parsed fallback)
   const structuredData = useMemo(() => {
     const curated = section?.structuredData || STRUCTURED_NOTES_DATA[section?.id] || STRUCTURED_NOTES_DATA[subtopicId];
@@ -153,180 +174,446 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
               diagramId={diag.id}
               title={diag.title}
               subtitle={diag.subtitle}
+              sectionId={secId}
+              completedSections={completedSections}
+              onToggleTopic={onToggleTopic}
+              onToggleTopicGroup={onToggleTopicGroup}
+              allSectionTopicIds={allSectionTopicIds}
             />
           ))}
         </div>
       )}
       {/* ==================================================================== */}
-      {/* 1. DEFINITIONS (Named Definitions Box) */}
+      {/* 1. DEFINITIONS (Named Definitions Box — Collapsible + Individual Ticks) */}
       {/* ==================================================================== */}
-      {definitions && definitions.length > 0 && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3">
-          <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
-            <BookMarked size={16} />
-            <span>Definitions</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-muted)] ml-auto">
-              {definitions.length} Standard NCERT Definition{definitions.length > 1 ? 's' : ''}
-            </span>
-          </div>
+      {definitions && definitions.length > 0 && (() => {
+        const defTopicIds = secId ? definitions.map((_, idx) => `${secId}::def-${idx}`) : [];
+        const defDoneCount = secId
+          ? defTopicIds.filter((tId) => isTopicCompleted(tId, secId, completedSections)).length
+          : 0;
+        const allDefsDone = secId && defTopicIds.length > 0 && defDoneCount === defTopicIds.length;
 
-          <div className="divide-y divide-[var(--border-subtle)] space-y-2">
-            {definitions.map((def, idx) => (
-              <div key={idx} className="pt-2 first:pt-0 space-y-1">
-                <div className="flex items-start gap-2">
-                  <span 
-                    className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]"
-                    dangerouslySetInnerHTML={{ __html: formatMathString(def.term) }}
-                  />
-                </div>
-                <p 
-                  className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed pl-3 border-l-2 border-[var(--accent-primary)]/40"
-                  dangerouslySetInnerHTML={{ __html: formatMathString(def.definition) }}
-                />
+        return (
+          <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3 transition-all">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
+              <button
+                type="button"
+                onClick={() => toggleBlock('definitions')}
+                className="text-left flex items-center gap-2 min-w-0 flex-1 cursor-pointer group"
+                aria-expanded={!minimizedBlocks.definitions}
+              >
+                <BookMarked size={16} />
+                <span className="group-hover:underline">Definitions ({definitions.length})</span>
+              </button>
+
+              <div className="flex items-center gap-2 shrink-0">
+                {secId && onToggleTopicGroup && (
+                  <button
+                    type="button"
+                    data-no-print="true"
+                    onClick={() => onToggleTopicGroup(defTopicIds, secId, allSectionTopicIds)}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[10px] font-mono font-bold normal-case transition-all cursor-pointer ${
+                      allDefsDone
+                        ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                        : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)] hover:border-[var(--accent-primary)]'
+                    }`}
+                    title={allDefsDone ? 'Untick all definitions' : 'Tick all definitions completed'}
+                  >
+                    {allDefsDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+                    <span>{defDoneCount}/{definitions.length}</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  data-no-print="true"
+                  onClick={() => toggleBlock('definitions')}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] font-mono font-bold text-[var(--accent-primary)] normal-case transition-colors cursor-pointer"
+                >
+                  <span>{minimizedBlocks.definitions ? 'Expand' : 'Minimize'}</span>
+                  {minimizedBlocks.definitions ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+                </button>
               </div>
-            ))}
+            </div>
+
+            <div
+              data-print-expand="true"
+              className={`${minimizedBlocks.definitions ? 'hidden' : 'block'} divide-y divide-[var(--border-subtle)] space-y-2`}
+            >
+              {definitions.map((def, idx) => {
+                const defTopicId = secId ? `${secId}::def-${idx}` : null;
+                const isDefDone = defTopicId ? isTopicCompleted(defTopicId, secId, completedSections) : false;
+
+                return (
+                  <div key={idx} className="pt-2.5 first:pt-0 space-y-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-start gap-2 min-w-0 flex-1">
+                        <span className="px-1.5 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[10px] font-bold text-[var(--accent-primary)] shrink-0 mt-0.5">
+                          #{idx + 1}
+                        </span>
+                        <span
+                          className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]"
+                          dangerouslySetInnerHTML={{ __html: formatMathString(def.term) }}
+                        />
+                      </div>
+
+                      {defTopicId && onToggleTopic && (
+                        <button
+                          type="button"
+                          data-no-print="true"
+                          onClick={() => onToggleTopic(defTopicId, secId, allSectionTopicIds)}
+                          className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                            isDefDone
+                              ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                              : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                          }`}
+                          title={isDefDone ? `Mark definition #${idx + 1} incomplete` : `Mark definition #${idx + 1} completed`}
+                        >
+                          {isDefDone ? <CheckCircle2 size={15} /> : <Circle size={15} />}
+                        </button>
+                      )}
+                    </div>
+                    <p
+                      className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed pl-3 border-l-2 border-[var(--accent-primary)]/40"
+                      dangerouslySetInnerHTML={{ __html: formatMathString(def.definition) }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ==================================================================== */}
-      {/* 2. KEY POINTS (Clean Bullet Points — NOT a paragraph!) */}
+      {/* 2. KEY POINTS (Clean Bullet Points — Collapsible + Individual Ticks) */}
       {/* ==================================================================== */}
-      {keyPoints && keyPoints.length > 0 && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3">
-          <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-primary)]">
-            <ListChecks size={16} className="text-emerald-600 dark:text-emerald-400" />
-            <span>Key Points</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)] ml-auto">
-              Core Concept Summary
-            </span>
+      {keyPoints && keyPoints.length > 0 && (() => {
+        const kpTopicIds = secId ? keyPoints.map((_, idx) => `${secId}::kp-${idx}`) : [];
+        const kpDoneCount = secId
+          ? kpTopicIds.filter((tId) => isTopicCompleted(tId, secId, completedSections)).length
+          : 0;
+        const allKpDone = secId && kpTopicIds.length > 0 && kpDoneCount === kpTopicIds.length;
+
+        return (
+          <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3 transition-all">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-primary)]">
+              <button
+                type="button"
+                onClick={() => toggleBlock('keyPoints')}
+                className="text-left flex items-center gap-2 min-w-0 flex-1 cursor-pointer group"
+                aria-expanded={!minimizedBlocks.keyPoints}
+              >
+                <ListChecks size={16} className="text-emerald-600 dark:text-emerald-400" />
+                <span className="group-hover:text-[var(--accent-primary)] transition-colors">Key Points ({keyPoints.length})</span>
+              </button>
+
+              <div className="flex items-center gap-2 shrink-0">
+                {secId && onToggleTopicGroup && (
+                  <button
+                    type="button"
+                    data-no-print="true"
+                    onClick={() => onToggleTopicGroup(kpTopicIds, secId, allSectionTopicIds)}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[10px] font-mono font-bold normal-case transition-all cursor-pointer ${
+                      allKpDone
+                        ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                        : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)] hover:border-[var(--accent-primary)]'
+                    }`}
+                    title={allKpDone ? 'Untick all key points' : 'Tick all key points completed'}
+                  >
+                    {allKpDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+                    <span>{kpDoneCount}/{keyPoints.length}</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  data-no-print="true"
+                  onClick={() => toggleBlock('keyPoints')}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] font-mono font-bold text-[var(--accent-primary)] normal-case transition-colors cursor-pointer"
+                >
+                  <span>{minimizedBlocks.keyPoints ? 'Expand' : 'Minimize'}</span>
+                  {minimizedBlocks.keyPoints ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+                </button>
+              </div>
+            </div>
+
+            <ul
+              data-print-expand="true"
+              className={`${minimizedBlocks.keyPoints ? 'hidden' : 'block'} space-y-2.5`}
+            >
+              {keyPoints.map((pt, idx) => {
+                const formattedPt = formatMathString(pt);
+                const kpTopicId = secId ? `${secId}::kp-${idx}` : null;
+                const isKpDone = kpTopicId ? isTopicCompleted(kpTopicId, secId, completedSections) : false;
+
+                return (
+                  <li
+                    key={idx}
+                    className={`flex items-start justify-between gap-2.5 p-2.5 rounded-xl border text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed transition-all ${
+                      isKpDone
+                        ? 'bg-[var(--bg-elevated)]/70 border-[var(--accent-primary)]'
+                        : 'bg-[var(--bg-elevated)]/35 border-[var(--border-subtle)]'
+                    }`}
+                  >
+                    <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                      <span className="px-1.5 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[10px] font-bold text-[var(--accent-primary)] shrink-0 mt-0.5">
+                        #{idx + 1}
+                      </span>
+                      <span
+                        className="flex-1 break-words font-medium"
+                        dangerouslySetInnerHTML={{ __html: formattedPt }}
+                      />
+                    </div>
+
+                    {kpTopicId && onToggleTopic && (
+                      <button
+                        type="button"
+                        data-no-print="true"
+                        onClick={() => onToggleTopic(kpTopicId, secId, allSectionTopicIds)}
+                        className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 mt-0.5 ${
+                          isKpDone
+                            ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                            : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                        }`}
+                        title={isKpDone ? `Mark Key Point #${idx + 1} incomplete` : `Mark Key Point #${idx + 1} completed`}
+                      >
+                        {isKpDone ? <CheckCircle2 size={15} /> : <Circle size={15} />}
+                      </button>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-
-          <ul className="space-y-2.5">
-            {keyPoints.map((pt, idx) => {
-              const formattedPt = formatMathString(pt);
-              return (
-                <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] mt-2 shrink-0" />
-                  <span 
-                    className="flex-1 break-words font-medium"
-                    dangerouslySetInnerHTML={{ __html: formattedPt }}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ==================================================================== */}
-      {/* 2B. COMPARISON & DISTINGUISH TABLES */}
+      {/* 2B. COMPARISON & DISTINGUISH TABLES (Collapsible + Individual Ticks) */}
       {/* ==================================================================== */}
       {comparisonTables && comparisonTables.length > 0 && (
         <div className="space-y-5">
-          {comparisonTables.map((tbl, tIdx) => (
-            <div
-              key={tIdx}
-              className="rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs overflow-hidden"
-            >
-              <div className="px-4 py-3 sm:px-5 sm:py-3.5 bg-[var(--bg-elevated)] border-b border-[var(--border-subtle)] flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <Scale size={15} className="text-[var(--accent-primary)] shrink-0" />
-                  <h5 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
-                    {tbl.title}
-                  </h5>
+          {comparisonTables.map((tbl, tIdx) => {
+            const tblKey = `table-${tIdx}`;
+            const isTblMinimized = Boolean(minimizedBlocks[tblKey]);
+            const tblTopicId = secId ? `${secId}::tbl-${tIdx}` : null;
+            const isTblDone = tblTopicId ? isTopicCompleted(tblTopicId, secId, completedSections) : false;
+
+            return (
+              <div
+                key={tIdx}
+                className={`rounded-2xl bg-[var(--bg-surface)] border shadow-xs overflow-hidden transition-all ${
+                  isTblDone ? 'border-[var(--accent-primary)]' : 'border-[var(--border-default)]'
+                }`}
+              >
+                <div
+                  className={`px-4 py-3 sm:px-5 sm:py-3.5 bg-[var(--bg-elevated)] flex items-center justify-between gap-2 ${
+                    !isTblMinimized ? 'border-b border-[var(--border-subtle)]' : ''
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleBlock(tblKey)}
+                    className="text-left flex items-center gap-2 min-w-0 flex-1 cursor-pointer group"
+                    aria-expanded={!isTblMinimized}
+                  >
+                    <Scale size={15} className="text-[var(--accent-primary)] shrink-0" />
+                    <h5 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">
+                      {tbl.title}
+                    </h5>
+                  </button>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="hidden sm:inline text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
+                      Distinguish Table
+                    </span>
+                    <button
+                      type="button"
+                      data-no-print="true"
+                      onClick={() => toggleBlock(tblKey)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] font-mono font-bold text-[var(--accent-primary)] transition-colors cursor-pointer"
+                    >
+                      <span>{isTblMinimized ? 'Expand' : 'Minimize'}</span>
+                      {isTblMinimized ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+                    </button>
+
+                    {tblTopicId && onToggleTopic && (
+                      <button
+                        type="button"
+                        data-no-print="true"
+                        onClick={() => onToggleTopic(tblTopicId, secId, allSectionTopicIds)}
+                        className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                          isTblDone
+                            ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                            : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                        }`}
+                        title={isTblDone ? 'Mark table incomplete' : 'Mark table completed'}
+                      >
+                        {isTblDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[var(--text-muted)] shrink-0">
-                  Distinguish Table
-                </span>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs sm:text-sm">
-                  <thead>
-                    <tr className="bg-[var(--bg-base)] border-b border-[var(--border-subtle)]">
-                      {tbl.headers.map((h, hIdx) => (
-                        <th
-                          key={hIdx}
-                          className="px-3.5 py-2.5 sm:px-4 sm:py-3 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] border-r last:border-r-0 border-[var(--border-subtle)]"
-                        >
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[var(--border-subtle)]">
-                    {tbl.rows.map((row, rIdx) => (
-                      <tr key={rIdx} className="hover:bg-[var(--bg-elevated)]/40 transition-colors">
-                        {row.map((cell, cIdx) => (
-                          <td
-                            key={cIdx}
-                            className={`px-3.5 py-2.5 sm:px-4 sm:py-3 align-top leading-relaxed whitespace-pre-wrap border-r last:border-r-0 border-[var(--border-subtle)] ${
-                              cIdx === 0
-                                ? 'font-serif font-bold text-[var(--text-primary)] bg-[var(--bg-base)]/40 w-1/4 min-w-[120px]'
-                                : 'font-sans text-[var(--text-secondary)] min-w-[180px]'
-                            }`}
-                            dangerouslySetInnerHTML={{ __html: formatMathString(cell) }}
-                          />
+                <div
+                  data-print-expand="true"
+                  className={`${isTblMinimized ? 'hidden' : 'block'} overflow-x-auto`}
+                >
+                  <table className="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead>
+                      <tr className="bg-[var(--bg-base)] border-b border-[var(--border-subtle)]">
+                        {tbl.headers.map((h, hIdx) => (
+                          <th
+                            key={hIdx}
+                            className="px-3.5 py-2.5 sm:px-4 sm:py-3 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] border-r last:border-r-0 border-[var(--border-subtle)]"
+                          >
+                            {h}
+                          </th>
                         ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="divide-y divide-[var(--border-subtle)]">
+                      {tbl.rows.map((row, rIdx) => (
+                        <tr key={rIdx} className="hover:bg-[var(--bg-elevated)]/40 transition-colors">
+                          {row.map((cell, cIdx) => (
+                            <td
+                              key={cIdx}
+                              className={`px-3.5 py-2.5 sm:px-4 sm:py-3 align-top leading-relaxed whitespace-pre-wrap border-r last:border-r-0 border-[var(--border-subtle)] ${
+                                cIdx === 0
+                                  ? 'font-serif font-bold text-[var(--text-primary)] bg-[var(--bg-base)]/40 w-1/4 min-w-[120px]'
+                                  : 'font-sans text-[var(--text-secondary)] min-w-[180px]'
+                              }`}
+                              dangerouslySetInnerHTML={{ __html: formatMathString(cell) }}
+                            />
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
       {/* ==================================================================== */}
       {/* 2C. EXAM QUESTIONS, MLM GIVE REASONS, REMEDIAL Qs & REACTIONS */}
       {/* ==================================================================== */}
-      {qaPairs && qaPairs.length > 0 && (
-        <div className="space-y-3.5">
-          <div className="flex items-center justify-between gap-2 px-1">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-primary)]">
-              <ListChecks size={16} className="text-[var(--accent-primary)]" />
-              <span>Exam Questions, Give Reasons &amp; Reactions ({qaPairs.length})</span>
+      {qaPairs && qaPairs.length > 0 && (() => {
+        const qaTopicIds = secId ? qaPairs.map((_, idx) => `${secId}::qa-${idx}`) : [];
+        const qaDoneCount = secId
+          ? qaTopicIds.filter((tId) => isTopicCompleted(tId, secId, completedSections)).length
+          : 0;
+        const allQaDone = secId && qaTopicIds.length > 0 && qaDoneCount === qaTopicIds.length;
+
+        return (
+          <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3.5 transition-all">
+            <div className="flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => toggleBlock('qaPairs')}
+                className="text-left flex items-center gap-2 min-w-0 flex-1 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-primary)] hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                aria-expanded={!minimizedBlocks.qaPairs}
+              >
+                <ListChecks size={16} className="text-[var(--accent-primary)] shrink-0" />
+                <span>Exam Questions, Give Reasons &amp; Reactions ({qaPairs.length})</span>
+              </button>
+
+              <div className="flex items-center gap-2 shrink-0" data-no-print="true">
+                {secId && onToggleTopicGroup && (
+                  <button
+                    type="button"
+                    onClick={() => onToggleTopicGroup(qaTopicIds, secId, allSectionTopicIds)}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                      allQaDone
+                        ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                        : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)] hover:border-[var(--accent-primary)]'
+                    }`}
+                    title={allQaDone ? 'Untick all questions' : 'Tick all questions completed'}
+                  >
+                    {allQaDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+                    <span>{qaDoneCount}/{qaPairs.length}</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => toggleBlock('qaPairs')}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] font-mono font-bold text-[var(--accent-primary)] shrink-0 transition-colors cursor-pointer"
+                >
+                  <span>{minimizedBlocks.qaPairs ? 'Expand' : 'Minimize'}</span>
+                  {minimizedBlocks.qaPairs ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+                </button>
+              </div>
+            </div>
+
+            <div
+              data-print-expand="true"
+              className={`${minimizedBlocks.qaPairs ? 'hidden' : 'block'} space-y-3`}
+            >
+              {qaPairs.map((qa, qIdx) => {
+                const qaTopicId = secId ? `${secId}::qa-${qIdx}` : null;
+                const isQaDone = qaTopicId ? isTopicCompleted(qaTopicId, secId, completedSections) : false;
+
+                return (
+                  <div
+                    key={qIdx}
+                    className={`p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border space-y-2.5 transition-all ${
+                      isQaDone ? 'border-[var(--accent-primary)] shadow-2xs' : 'border-[var(--border-default)]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {qa.number && (
+                          <span className="px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)]">
+                            {qa.number}
+                          </span>
+                        )}
+                        {qa.badge && (
+                          <span className="px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[10px] font-semibold text-[var(--text-secondary)]">
+                            {qa.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      {qaTopicId && onToggleTopic && (
+                        <button
+                          type="button"
+                          data-no-print="true"
+                          onClick={() => onToggleTopic(qaTopicId, secId, allSectionTopicIds)}
+                          className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                            isQaDone
+                              ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                              : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                          }`}
+                          title={isQaDone ? `Mark ${qa.number || `Question ${qIdx + 1}`} incomplete` : `Mark ${qa.number || `Question ${qIdx + 1}`} completed`}
+                        >
+                          {isQaDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                        </button>
+                      )}
+                    </div>
+
+                    <h5
+                      className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug whitespace-pre-wrap"
+                      dangerouslySetInnerHTML={{ __html: formatMathString(qa.question) }}
+                    />
+
+                    <div
+                      className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)]/45"
+                      dangerouslySetInnerHTML={{ __html: formatMathString(qa.answer) }}
+                    />
+
+                    {qa.equation && (
+                      <ChemicalReactionDisplay equation={qa.equation} />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
-
-          <div className="space-y-3">
-            {qaPairs.map((qa, qIdx) => (
-              <div
-                key={qIdx}
-                className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] space-y-2.5"
-              >
-                <div className="flex flex-wrap items-center gap-2">
-                  {qa.number && (
-                    <span className="px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)]">
-                      {qa.number}
-                    </span>
-                  )}
-                  {qa.badge && (
-                    <span className="px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[10px] font-semibold text-[var(--text-secondary)]">
-                      {qa.badge}
-                    </span>
-                  )}
-                </div>
-
-                <h5
-                  className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug whitespace-pre-wrap"
-                  dangerouslySetInnerHTML={{ __html: formatMathString(qa.question) }}
-                />
-
-                <div
-                  className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)]/45"
-                  dangerouslySetInnerHTML={{ __html: formatMathString(qa.answer) }}
-                />
-
-                {qa.equation && (
-                  <ChemicalReactionDisplay equation={qa.equation} />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ==================================================================== */}
       {/* 3. OSWAAL MEMORY BOOSTER & MNEMONICS (Brain Trick) */}
@@ -365,19 +652,43 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
         <div className="p-4 sm:p-5 rounded-2xl bg-[var(--badge-recommended-bg)]/15 border border-[var(--badge-recommended-bg)]/35 shadow-xs space-y-2.5">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-accent)]">
             <Sparkles size={16} className="text-[var(--text-accent)] shrink-0" />
-            <span>Extra Points & High-Yield Exam Notes</span>
+            <span>Extra Points & High-Yield Exam Notes ({extraPoints.length})</span>
           </div>
 
           <ul className="space-y-2 pl-1">
-            {extraPoints.map((ep, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-                <ChevronRight size={14} className="text-[var(--text-accent)] mt-0.5 shrink-0" />
-                <span 
-                  className="flex-1 break-words"
-                  dangerouslySetInnerHTML={{ __html: formatMathString(ep) }}
-                />
-              </li>
-            ))}
+            {extraPoints.map((ep, idx) => {
+              const epTopicId = secId ? `${secId}::ep-${idx}` : null;
+              const isEpDone = epTopicId ? isTopicCompleted(epTopicId, secId, completedSections) : false;
+
+              return (
+                <li key={idx} className="flex items-start justify-between gap-2 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                  <div className="flex items-start gap-2 min-w-0 flex-1">
+                    <span className="px-1.5 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[10px] font-bold text-[var(--text-accent)] shrink-0 mt-0.5">
+                      #{idx + 1}
+                    </span>
+                    <span 
+                      className="flex-1 break-words"
+                      dangerouslySetInnerHTML={{ __html: formatMathString(ep) }}
+                    />
+                  </div>
+                  {epTopicId && onToggleTopic && (
+                    <button
+                      type="button"
+                      data-no-print="true"
+                      onClick={() => onToggleTopic(epTopicId, secId, allSectionTopicIds)}
+                      className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 mt-0.5 ${
+                        isEpDone
+                          ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                          : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                      }`}
+                      title={isEpDone ? `Mark Extra Point #${idx + 1} incomplete` : `Mark Extra Point #${idx + 1} completed`}
+                    >
+                      {isEpDone ? <CheckCircle2 size={15} /> : <Circle size={15} />}
+                    </button>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
@@ -398,14 +709,25 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
           </div>
 
           <div className="space-y-5">
-            {reactions.map((rxn, idx) => (
+            {reactions.map((rxn, idx) => {
+              const rxnTopicId = secId ? `${secId}::rxn-${idx}` : null;
+              const isRxnDone = rxnTopicId ? isTopicCompleted(rxnTopicId, secId, completedSections) : false;
+
+              return (
               <div 
                 key={idx} 
-                className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-3.5 hover:border-[var(--accent-primary)]/50 transition-all"
+                className={`p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border shadow-xs space-y-3.5 transition-all ${
+                  isRxnDone
+                    ? 'border-[var(--accent-primary)] shadow-sm'
+                    : 'border-[var(--border-default)] hover:border-[var(--accent-primary)]/50'
+                }`}
               >
                 {/* 5a. Reaction Name & Named Reaction Pill */}
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2.5">
                   <div className="flex items-center gap-2">
+                    <span className="px-1.5 py-0.5 rounded bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono text-[10px] font-bold text-[var(--accent-primary)]">
+                      #{idx + 1}
+                    </span>
                     <span className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)]">
                       {rxn.name}
                     </span>
@@ -415,9 +737,26 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
                       </span>
                     )}
                   </div>
-                  <span className="text-[11px] font-mono text-[var(--text-muted)]">
-                    NCERT Class 12
-                  </span>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-[11px] font-mono text-[var(--text-muted)]">
+                      NCERT Class 12
+                    </span>
+                    {rxnTopicId && onToggleTopic && (
+                      <button
+                        type="button"
+                        data-no-print="true"
+                        onClick={() => onToggleTopic(rxnTopicId, secId, allSectionTopicIds)}
+                        className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                          isRxnDone
+                            ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                            : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                        }`}
+                        title={isRxnDone ? `Mark Reaction #${idx + 1} incomplete` : `Mark Reaction #${idx + 1} completed`}
+                      >
+                        {isRxnDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* 5b. Chemical Reaction Equation */}
@@ -458,7 +797,8 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
                   </div>
                 )}
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

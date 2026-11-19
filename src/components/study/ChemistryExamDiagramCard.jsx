@@ -1,8 +1,42 @@
-import React from 'react';
-import { BookOpen } from 'lucide-react';
+import React, { useState } from 'react';
+import { BookOpen, ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
+import { isTopicCompleted } from '../../utils/studyTopicTicks';
 
-export default function ChemistryExamDiagramCard({ diagramId, title, subtitle }) {
+export default function ChemistryExamDiagramCard({
+  diagramId,
+  title,
+  subtitle,
+  defaultMinimized = false,
+  sectionId = null,
+  completedSections = [],
+  onToggleTopic = null,
+  onToggleTopicGroup = null,
+  allSectionTopicIds = []
+}) {
+  const [isMinimized, setIsMinimized] = useState(defaultMinimized);
+  const [minimizedSubItems, setMinimizedSubItems] = useState({});
+
+  const toggleSubItem = (key) => {
+    setMinimizedSubItems((prev) => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
   if (!diagramId) return null;
+
+  const isMultiReactionScheme = diagramId === 'glucose-five-reactions';
+  const schemeTopicIds =
+    sectionId && isMultiReactionScheme
+      ? [1, 2, 3, 4, 5].map((n) => `${sectionId}::vdiag-rxn-${n}`)
+      : sectionId
+      ? [`${sectionId}::vdiag-${diagramId}`]
+      : [];
+  const schemeCompletedCount = sectionId
+    ? schemeTopicIds.filter((tId) => isTopicCompleted(tId, sectionId, completedSections)).length
+    : 0;
+  const isSchemeAllDone =
+    sectionId && schemeTopicIds.length > 0 && schemeCompletedCount === schemeTopicIds.length;
 
   const renderDiagram = () => {
     switch (diagramId) {
@@ -907,23 +941,72 @@ export default function ChemistryExamDiagramCard({ diagramId, title, subtitle })
                 highlight: 'top-bot',
                 productName: 'Saccharic acid (Glucaric acid)',
               },
-            ].map((rxn) => (
+            ].map((rxn) => {
+              const isRxnMinimized = Boolean(minimizedSubItems[`rxn-${rxn.num}`]);
+              const rxnTopicId = sectionId ? `${sectionId}::vdiag-rxn-${rxn.num}` : null;
+              const isRxnDone = rxnTopicId
+                ? isTopicCompleted(rxnTopicId, sectionId, completedSections)
+                : false;
+
+              return (
               <div
                 key={rxn.num}
-                className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] space-y-3"
+                className={`p-3.5 sm:p-4 rounded-xl bg-[var(--bg-surface)] border space-y-3 transition-all ${
+                  isRxnDone
+                    ? 'border-[var(--accent-primary)] shadow-2xs'
+                    : 'border-[var(--border-default)]'
+                }`}
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)]">
+                <div
+                  className={`flex flex-wrap items-center justify-between gap-2 ${
+                    !isRxnMinimized ? 'border-b border-[var(--border-subtle)] pb-2' : ''
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleSubItem(`rxn-${rxn.num}`)}
+                    className="text-left flex items-center gap-2 min-w-0 flex-1 cursor-pointer group"
+                    aria-expanded={!isRxnMinimized}
+                  >
+                    <span className="px-2 py-0.5 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)] shrink-0">
                       Reaction {rxn.num}
                     </span>
-                    <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                    <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">
                       {rxn.proof}
                     </span>
+                  </button>
+
+                  <div className="flex items-center gap-1.5 shrink-0" data-no-print="true">
+                    <button
+                      type="button"
+                      onClick={() => toggleSubItem(`rxn-${rxn.num}`)}
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-subtle)] text-[10px] font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
+                    >
+                      <span>{isRxnMinimized ? 'Show' : 'Hide'}</span>
+                      {isRxnMinimized ? <ChevronDown size={12} /> : <ChevronUp size={12} />}
+                    </button>
+
+                    {rxnTopicId && onToggleTopic && (
+                      <button
+                        type="button"
+                        onClick={() => onToggleTopic(rxnTopicId, sectionId, allSectionTopicIds)}
+                        className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+                          isRxnDone
+                            ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                            : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                        }`}
+                        title={isRxnDone ? `Mark Reaction ${rxn.num} incomplete` : `Mark Reaction ${rxn.num} completed`}
+                      >
+                        {isRxnDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                      </button>
+                    )}
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-5 overflow-x-auto py-1">
+                <div
+                  data-print-expand="true"
+                  className={`${isRxnMinimized ? 'hidden' : 'flex'} flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-5 overflow-x-auto py-1`}
+                >
                   {/* Left: D-Glucose Vertical Structure */}
                   <div className="inline-flex flex-col items-center px-3.5 py-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] min-w-[115px]">
                     <div className="flex flex-col items-center font-mono text-xs sm:text-sm font-bold leading-none text-[var(--text-primary)]">
@@ -1006,7 +1089,8 @@ export default function ChemistryExamDiagramCard({ diagramId, title, subtitle })
                   )}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         );
 
@@ -1019,21 +1103,85 @@ export default function ChemistryExamDiagramCard({ diagramId, title, subtitle })
   if (!content) return null;
 
   return (
-    <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xs space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2.5">
-        <div className="flex items-center gap-2">
+    <div
+      className={`p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface)] border shadow-2xs space-y-3 transition-all ${
+        isSchemeAllDone
+          ? 'border-[var(--accent-primary)] shadow-xs'
+          : 'border-[var(--border-default)]'
+      }`}
+    >
+      <div
+        className={`flex flex-wrap items-center justify-between gap-2 ${
+          !isMinimized ? 'border-b border-[var(--border-subtle)] pb-2.5' : ''
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => setIsMinimized((prev) => !prev)}
+          className="text-left flex items-center gap-2 min-w-0 flex-1 cursor-pointer group"
+          aria-expanded={!isMinimized}
+        >
           <BookOpen size={15} className="text-[var(--accent-primary)] shrink-0" />
-          <h5 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
+          <h5 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">
             {title || 'Exam Diagram Reference'}
           </h5>
+        </button>
+
+        <div className="flex items-center gap-2 shrink-0">
+          {subtitle && (
+            <span className="text-[10px] sm:text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
+              {subtitle}
+            </span>
+          )}
+
+          {sectionId && isMultiReactionScheme && onToggleTopicGroup && (
+            <button
+              type="button"
+              data-no-print="true"
+              onClick={() => onToggleTopicGroup(schemeTopicIds, sectionId, allSectionTopicIds)}
+              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[10px] sm:text-[11px] font-mono font-bold transition-all cursor-pointer ${
+                isSchemeAllDone
+                  ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                  : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)] hover:border-[var(--accent-primary)]'
+              }`}
+              title={isSchemeAllDone ? 'Untick all 5 reactions' : 'Tick all 5 reactions completed'}
+            >
+              {isSchemeAllDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+              <span>{schemeCompletedCount}/5</span>
+            </button>
+          )}
+
+          {sectionId && !isMultiReactionScheme && onToggleTopic && (
+            <button
+              type="button"
+              data-no-print="true"
+              onClick={() => onToggleTopic(schemeTopicIds[0], sectionId, allSectionTopicIds)}
+              className={`p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+                isSchemeAllDone
+                  ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                  : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+              }`}
+              title={isSchemeAllDone ? 'Mark diagram incomplete' : 'Mark diagram completed'}
+            >
+              {isSchemeAllDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+            </button>
+          )}
+
+          <button
+            type="button"
+            data-no-print="true"
+            onClick={() => setIsMinimized((prev) => !prev)}
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] sm:text-[11px] font-mono font-bold text-[var(--accent-primary)] transition-colors cursor-pointer"
+          >
+            <span>{isMinimized ? 'Expand' : 'Minimize'}</span>
+            {isMinimized ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+          </button>
         </div>
-        {subtitle && (
-          <span className="text-[10px] sm:text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--text-muted)]">
-            {subtitle}
-          </span>
-        )}
       </div>
-      {content}
+
+      <div data-print-expand="true" className={isMinimized ? 'hidden' : 'block'}>
+        {content}
+      </div>
     </div>
   );
 }
