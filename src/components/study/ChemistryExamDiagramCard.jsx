@@ -320,172 +320,236 @@ export default function ChemistryExamDiagramCard({ diagramId, title, subtitle })
       case 'glucose-structures':
         return (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {/* Open Chain (Fischer) Structure */}
+            {/* Panel 1: Open-Chain Fischer & Cyclic Fischer Hemiacetal (Structures 1 & 2) */}
             <div className="p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-2">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)]">
-                  1. Open-Chain (Straight-Chain Fischer) Structure
+                  1. Open-Chain &amp; Cyclic Fischer Projection of Glucose
                 </span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--accent-primary)]">
-                  D-(+)-Glucose &amp; D-(-)-Fructose
+                  Right in Fischer → Down in Haworth
                 </span>
               </div>
-              <svg viewBox="0 0 380 230" className="w-full h-auto text-[var(--text-primary)]">
-                {/* D-(+)-Glucose */}
-                <g transform="translate(20, 15)">
-                  <text x="75" y="12" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">D-(+)-Glucose (Aldohexose)</text>
-                  <text x="75" y="34" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">¹CHO</text>
-                  {/* Vertical backbone */}
-                  <line x1="75" y1="40" x2="75" y2="165" stroke="currentColor" strokeWidth="1.6" />
-                  {/* C2 to C5 horizontal bars */}
-                  {[62, 88, 114, 140].map((y, idx) => (
-                    <line key={idx} x1="45" y1={y} x2="105" y2={y} stroke="currentColor" strokeWidth="1.5" />
+              <svg viewBox="0 0 430 275" className="w-full h-auto text-[var(--text-primary)]">
+                {/* Structure 1: Open-Chain Fischer Projection (H-C=O at top) */}
+                <g transform="translate(15, 12)">
+                  <text x="85" y="12" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                    Open-Chain Fischer
+                  </text>
+
+                  {/* Top C1: H - C = O */}
+                  <text x="48" y="34" fontSize="12.5" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+                  <line x1="53" y1="31" x2="75" y2="46" stroke="currentColor" strokeWidth="1.7" />
+                  <text x="85" y="54" fontSize="13" fontWeight="bold" fill="currentColor" textAnchor="middle">C</text>
+                  {/* Double bond =O */}
+                  <line x1="94" y1="43" x2="114" y2="29" stroke="currentColor" strokeWidth="1.6" />
+                  <line x1="97" y1="48" x2="117" y2="34" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="122" y="34" fontSize="12.5" fontWeight="bold" fill="currentColor">O</text>
+
+                  {/* Vertical Fischer Spine */}
+                  <line x1="85" y1="59" x2="85" y2="205" stroke="currentColor" strokeWidth="1.8" />
+
+                  {/* 4 Horizontal Crossbars (C2, C3, C4, C5) */}
+                  {[85, 118, 151, 184].map((y, idx) => (
+                    <line key={idx} x1="48" y1={y} x2="122" y2={y} stroke="currentColor" strokeWidth="1.6" />
                   ))}
-                  {/* C2: H left, OH right */}
-                  <text x="36" y="66" fontSize="11" fill="currentColor" textAnchor="end">H</text>
-                  <text x="112" y="66" fontSize="11" fontWeight="bold" fill="var(--accent-primary)">OH</text>
-                  {/* C3: HO left, H right */}
-                  <text x="36" y="92" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="end">HO</text>
-                  <text x="112" y="92" fontSize="11" fill="currentColor">H</text>
-                  {/* C4: H left, OH right */}
-                  <text x="36" y="118" fontSize="11" fill="currentColor" textAnchor="end">H</text>
-                  <text x="112" y="118" fontSize="11" fontWeight="bold" fill="var(--accent-primary)">OH</text>
-                  {/* C5: H left, OH right (D-configuration box) */}
-                  <rect x="20" y="127" width="122" height="24" rx="4" fill="none" stroke="var(--accent-primary)" strokeWidth="1" strokeDasharray="3,2" />
-                  <text x="36" y="144" fontSize="11" fill="currentColor" textAnchor="end">H</text>
-                  <text x="112" y="144" fontSize="11" fontWeight="bold" fill="var(--accent-primary)">OH (C5)</text>
-                  {/* C6: CH2OH */}
-                  <text x="75" y="182" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">⁶CH₂OH</text>
-                  <text x="75" y="200" fontSize="9.5" fill="var(--text-muted)" textAnchor="middle">Condensed: CHO–(CHOH)₄–CH₂OH</text>
+
+                  {/* C2: H | OH */}
+                  <text x="42" y="89" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+                  <text x="128" y="89" fontSize="12" fontWeight="bold" fill="currentColor">OH</text>
+
+                  {/* C3: HO | H */}
+                  <text x="42" y="122" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">HO</text>
+                  <text x="128" y="122" fontSize="12" fontWeight="bold" fill="currentColor">H</text>
+
+                  {/* C4: H | OH */}
+                  <text x="42" y="155" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+                  <text x="128" y="155" fontSize="12" fontWeight="bold" fill="currentColor">OH</text>
+
+                  {/* C5: H | OH */}
+                  <text x="42" y="188" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+                  <text x="128" y="188" fontSize="12" fontWeight="bold" fill="currentColor">OH</text>
+
+                  {/* Bottom C6: CH2OH */}
+                  <text x="85" y="224" fontSize="12.5" fontWeight="bold" fill="currentColor" textAnchor="middle">
+                    CH₂OH
+                  </text>
+                  <text x="85" y="246" fontSize="9.5" fill="var(--text-muted)" textAnchor="middle">
+                    Straight-chain D-Glucose
+                  </text>
                 </g>
 
-                {/* D-(-)-Fructose */}
-                <g transform="translate(210, 15)">
-                  <text x="75" y="12" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">D-(-)-Fructose (Ketohexose)</text>
-                  <text x="75" y="34" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">¹CH₂OH</text>
-                  <line x1="75" y1="40" x2="75" y2="165" stroke="currentColor" strokeWidth="1.6" />
-                  {/* C2 = O keto group */}
-                  <rect x="48" y="50" width="54" height="20" rx="5" fill="var(--bg-elevated)" stroke="var(--accent-primary)" strokeWidth="1.3" />
-                  <text x="75" y="64" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">²C = O</text>
-                  {/* C3 to C5 bars */}
-                  {[88, 114, 140].map((y, idx) => (
-                    <line key={idx} x1="45" y1={y} x2="105" y2={y} stroke="currentColor" strokeWidth="1.5" />
+                {/* Structure 2: Cyclic Fischer Hemiacetal Projection (with circled right groups & C5-O-C1 loop) */}
+                <g transform="translate(215, 12)">
+                  <text x="95" y="12" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                    Cyclic Fischer (Hemiacetal)
+                  </text>
+
+                  {/* Top C1: H - C - (OH) */}
+                  <text x="48" y="34" fontSize="12.5" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+                  <line x1="53" y1="31" x2="75" y2="46" stroke="currentColor" strokeWidth="1.7" />
+                  <text x="85" y="54" fontSize="13" fontWeight="bold" fill="currentColor" textAnchor="middle">C</text>
+                  <line x1="94" y1="45" x2="114" y2="31" stroke="currentColor" strokeWidth="1.7" />
+                  <text x="131" y="33" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">OH</text>
+                  <ellipse cx="131" cy="29" rx="16" ry="11" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" />
+
+                  {/* Vertical Fischer Spine */}
+                  <line x1="85" y1="59" x2="85" y2="205" stroke="currentColor" strokeWidth="1.8" />
+
+                  {/* Horizontal Crossbars at C2, C3, C4 */}
+                  {[85, 118, 151].map((y, idx) => (
+                    <line key={idx} x1="48" y1={y} x2="122" y2={y} stroke="currentColor" strokeWidth="1.6" />
                   ))}
-                  {/* C3: HO left, H right */}
-                  <text x="36" y="92" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="end">HO</text>
-                  <text x="112" y="92" fontSize="11" fill="currentColor">H</text>
-                  {/* C4: H left, OH right */}
-                  <text x="36" y="118" fontSize="11" fill="currentColor" textAnchor="end">H</text>
-                  <text x="112" y="118" fontSize="11" fontWeight="bold" fill="var(--accent-primary)">OH</text>
-                  {/* C5: H left, OH right */}
-                  <text x="36" y="144" fontSize="11" fill="currentColor" textAnchor="end">H</text>
-                  <text x="112" y="144" fontSize="11" fontWeight="bold" fill="var(--accent-primary)">OH</text>
-                  {/* C6: CH2OH */}
-                  <text x="75" y="182" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">⁶CH₂OH</text>
-                  <text x="75" y="200" fontSize="9.5" fill="var(--text-muted)" textAnchor="middle">Keto group at C2</text>
+
+                  {/* C2: H | (OH) circled */}
+                  <text x="42" y="89" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+                  <text x="138" y="89" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">OH</text>
+                  <ellipse cx="138" cy="85" rx="16" ry="11" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" />
+
+                  {/* C3: HO | (H) circled */}
+                  <text x="42" y="122" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">HO</text>
+                  <text x="136" y="122" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">H</text>
+                  <ellipse cx="136" cy="118" rx="14" ry="11" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" />
+
+                  {/* C4: H | (OH) circled */}
+                  <text x="42" y="155" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+                  <text x="138" y="155" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">OH</text>
+                  <ellipse cx="138" cy="151" rx="16" ry="11" fill="none" stroke="var(--accent-primary)" strokeWidth="1.6" />
+
+                  {/* C5: H on left + Hemiacetal Oxygen Bridge to C1 on right */}
+                  <line x1="48" y1="184" x2="85" y2="184" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="42" y="188" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">H</text>
+
+                  {/* Hemiacetal bridge: C5(85,184) -> (180,184) -> O(180,120) -> (180,50) -> C1(96,50) */}
+                  <path
+                    d="M 85 184 L 180 184 L 180 132 M 180 104 L 180 50 L 96 50"
+                    fill="none"
+                    stroke="var(--accent-primary)"
+                    strokeWidth="1.8"
+                  />
+                  <text x="180" y="123" fontSize="13.5" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                    O
+                  </text>
+
+                  {/* Bottom C6: CH2OH */}
+                  <text x="85" y="224" fontSize="12.5" fontWeight="bold" fill="currentColor" textAnchor="middle">
+                    CH₂OH
+                  </text>
+                  <text x="105" y="246" fontSize="9.5" fill="var(--text-muted)" textAnchor="middle">
+                    Circled right groups go DOWN in ring
+                  </text>
                 </g>
               </svg>
             </div>
 
-            {/* Cyclic Haworth Structures */}
+            {/* Panel 2: Cyclic Haworth Pyranose Structures — α-form & β-form (Structures 3 & 4) */}
             <div className="p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-2">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)]">
-                  2. Cyclic (Haworth Pyranose) Structures of Glucose
+                  2. Cyclic Haworth Projections: α-form &amp; β-form
                 </span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--accent-primary)]">
-                  α &amp; β Anomers (C1)
+                  α-D &amp; β-D Glucopyranose
                 </span>
               </div>
-              <svg viewBox="0 0 420 230" className="w-full h-auto text-[var(--text-primary)]">
-                {/* α-D-(+)-Glucopyranose */}
-                <g transform="translate(10, 20)">
-                  <text x="95" y="10" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+              <svg viewBox="0 0 460 275" className="w-full h-auto text-[var(--text-primary)]">
+                {/* Structure 3: α-form (α-D-Glucopyranose) */}
+                <g transform="translate(8, 12)">
+                  <text x="102" y="12" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
                     α-D-(+)-Glucopyranose
                   </text>
-                  {/* Haworth Hexagon: C5(55,65) - O(135,65) - C1(165,105) - C2(135,145) - C3(55,145) - C4(25,105) */}
+
+                  {/* Pyranose Hexagon: C5(55,82) - O(145,82) - C1(178,132) - C2(145,182) - C3(55,182) - C4(22,132) */}
                   <polygon
-                    points="55,65 130,65 165,105 135,145 55,145 25,105"
+                    points="55,82 145,82 178,132 145,182 55,182 22,132"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="1.7"
+                    strokeWidth="1.8"
                   />
-                  {/* Ring Oxygen O at top-right vertex */}
-                  <circle cx="135" cy="65" r="9" fill="var(--bg-base)" />
-                  <text x="135" y="69" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">O</text>
+                  {/* Ring Oxygen O at top-right vertex (145,82) */}
+                  <circle cx="145" cy="82" r="10" fill="var(--bg-base)" />
+                  <text x="145" y="87" fontSize="13.5" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                    O
+                  </text>
 
-                  {/* Vertical substituent lines at C1, C2, C3, C4, C5 */}
-                  {/* C1 (165,105): H up, OH down (alpha!) */}
-                  <line x1="165" y1="78" x2="165" y2="135" stroke="var(--accent-primary)" strokeWidth="1.6" />
-                  <text x="165" y="74" fontSize="10" fill="currentColor" textAnchor="middle">H</text>
-                  <text x="165" y="148" fontSize="10.5" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">OH (C1 α)</text>
+                  {/* C5 (55,82): CH2OH up, H down */}
+                  <line x1="55" y1="45" x2="55" y2="110" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="55" y="38" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">CH₂OH</text>
+                  <text x="55" y="123" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
 
-                  {/* C2 (135,145): H up, OH down */}
-                  <line x1="135" y1="122" x2="135" y2="168" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="135" y="118" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
-                  <text x="135" y="180" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
+                  {/* C4 (22,132): H up, OH down */}
+                  <line x1="22" y1="96" x2="22" y2="168" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="22" y="89" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
+                  <text x="22" y="182" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
 
-                  {/* C3 (55,145): OH up, H down */}
-                  <line x1="55" y1="122" x2="55" y2="168" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="55" y="118" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
-                  <text x="55" y="180" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
+                  {/* C3 (55,182): OH up, H down */}
+                  <line x1="55" y1="154" x2="55" y2="214" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="55" y="148" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
+                  <text x="55" y="228" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
 
-                  {/* C4 (25,105): H up, OH down */}
-                  <line x1="25" y1="78" x2="25" y2="135" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="25" y="74" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
-                  <text x="25" y="147" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
+                  {/* C2 (145,182): H up, OH down */}
+                  <line x1="145" y1="154" x2="145" y2="214" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="145" y="148" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
+                  <text x="145" y="228" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
 
-                  {/* C5 (55,65): CH2OH up, H down */}
-                  <line x1="55" y1="40" x2="55" y2="88" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="55" y="35" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">⁶CH₂OH</text>
-                  <text x="55" y="99" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
+                  {/* C1 (178,132): H up, (OH) down circled (α-form!) */}
+                  <line x1="178" y1="96" x2="178" y2="168" stroke="var(--accent-primary)" strokeWidth="1.8" />
+                  <text x="178" y="89" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
+                  <text x="180" y="184" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">OH</text>
+                  <ellipse cx="180" cy="180" rx="17" ry="12" fill="none" stroke="var(--accent-primary)" strokeWidth="1.8" />
 
-                  <text x="95" y="200" fontSize="9.5" fill="var(--text-muted)" textAnchor="middle">
-                    C1 –OH is DOWN (trans to CH₂OH)
+                  <text x="102" y="250" fontSize="13" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                    α form (C1 –OH Down)
                   </text>
                 </g>
 
-                {/* β-D-(+)-Glucopyranose */}
-                <g transform="translate(215, 20)">
-                  <text x="95" y="10" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                {/* Structure 4: β-form (β-D-Glucopyranose) */}
+                <g transform="translate(238, 12)">
+                  <text x="102" y="12" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
                     β-D-(+)-Glucopyranose
                   </text>
+
+                  {/* Pyranose Hexagon */}
                   <polygon
-                    points="55,65 130,65 165,105 135,145 55,145 25,105"
+                    points="55,82 145,82 178,132 145,182 55,182 22,132"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="1.7"
+                    strokeWidth="1.8"
                   />
-                  <circle cx="135" cy="65" r="9" fill="var(--bg-base)" />
-                  <text x="135" y="69" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">O</text>
+                  {/* Ring Oxygen O at top-right vertex (145,82) */}
+                  <circle cx="145" cy="82" r="10" fill="var(--bg-base)" />
+                  <text x="145" y="87" fontSize="13.5" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                    O
+                  </text>
 
-                  {/* C1 (165,105): OH up (beta!), H down */}
-                  <line x1="165" y1="78" x2="165" y2="135" stroke="var(--accent-primary)" strokeWidth="1.6" />
-                  <text x="165" y="74" fontSize="10.5" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">OH (C1 β)</text>
-                  <text x="165" y="148" fontSize="10" fill="currentColor" textAnchor="middle">H</text>
+                  {/* C5 (55,82): CH2OH up, H down */}
+                  <line x1="55" y1="45" x2="55" y2="110" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="55" y="38" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">CH₂OH</text>
+                  <text x="55" y="123" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
 
-                  {/* C2 (135,145): H up, OH down */}
-                  <line x1="135" y1="122" x2="135" y2="168" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="135" y="118" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
-                  <text x="135" y="180" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
+                  {/* C4 (22,132): H up, OH down */}
+                  <line x1="22" y1="96" x2="22" y2="168" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="22" y="89" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
+                  <text x="22" y="182" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
 
-                  {/* C3 (55,145): OH up, H down */}
-                  <line x1="55" y1="122" x2="55" y2="168" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="55" y="118" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
-                  <text x="55" y="180" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
+                  {/* C3 (55,182): OH up, H down */}
+                  <line x1="55" y1="154" x2="55" y2="214" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="55" y="148" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
+                  <text x="55" y="228" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
 
-                  {/* C4 (25,105): H up, OH down */}
-                  <line x1="25" y1="78" x2="25" y2="135" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="25" y="74" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
-                  <text x="25" y="147" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
+                  {/* C2 (145,182): H up, OH down */}
+                  <line x1="145" y1="154" x2="145" y2="214" stroke="currentColor" strokeWidth="1.6" />
+                  <text x="145" y="148" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
+                  <text x="145" y="228" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">OH</text>
 
-                  {/* C5 (55,65): CH2OH up, H down */}
-                  <line x1="55" y1="40" x2="55" y2="88" stroke="currentColor" strokeWidth="1.4" />
-                  <text x="55" y="35" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">⁶CH₂OH</text>
-                  <text x="55" y="99" fontSize="9.5" fill="currentColor" textAnchor="middle">H</text>
+                  {/* C1 (178,132): (OH) up circled (β-form!), H down */}
+                  <line x1="178" y1="96" x2="178" y2="168" stroke="var(--accent-primary)" strokeWidth="1.8" />
+                  <text x="180" y="87" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">OH</text>
+                  <ellipse cx="180" cy="83" rx="17" ry="12" fill="none" stroke="var(--accent-primary)" strokeWidth="1.8" />
+                  <text x="178" y="183" fontSize="11.5" fontWeight="bold" fill="currentColor" textAnchor="middle">H</text>
 
-                  <text x="95" y="200" fontSize="9.5" fill="var(--text-muted)" textAnchor="middle">
-                    C1 –OH is UP (cis to CH₂OH)
+                  <text x="102" y="250" fontSize="13" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
+                    β form (C1 –OH Up)
                   </text>
                 </g>
               </svg>
