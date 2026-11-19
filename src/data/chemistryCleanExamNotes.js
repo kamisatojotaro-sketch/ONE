@@ -1252,20 +1252,544 @@ export const CLEAN_CHEMISTRY_CHAPTERS = [
   }
 ];
 
+export const ADDITIONAL_MLM_CHEMISTRY_CHAPTERS = {
+  solutions: {
+    id: 'chem-d-ch-solutions',
+    number: 3,
+    title: 'Solutions: MLM Gist — Raoult’s Law, Ideal vs Non-Ideal & Colligative Properties',
+    description:
+      'MLM Pages 1–3: Molarity vs Molality, Henry’s Law & Applications, Raoult’s Law, Ideal vs Non-Ideal Solutions, Positive vs Negative Deviation, Azeotropes, 4 Colligative Properties & Van’t Hoff Factor (i).',
+    available: true,
+    tag: 'MLM Pages 1–3 • Raoult’s Law & Colligative Properties',
+    subchapters: [
+      {
+        id: 'chem-d-sub-sol-1',
+        title: '3.1 Concentration Terms, Henry’s Law, Raoult’s Law & Ideal vs Non-Ideal Solutions',
+        sections: [
+          {
+            id: 'chem-d-sec-sol-1-1',
+            title: 'Concentration Terms, Henry’s Law, Raoult’s Law & Positive / Negative Deviations (MLM Pages 1–2)',
+            explanation:
+              'Complete Gist Points from MLM pages 1–2 covering Molarity, Molality, Mole Fraction, Henry’s Law, Raoult’s Law, Ideal vs Non-Ideal solutions, and Azeotropes.',
+            keyFormulas: [
+              {
+                name: '1. Molarity (M) vs Molality (m)',
+                formula: 'M = \\frac{n_{\\text{solute}}}{V_{\\text{solution (L)}}} \\text{ (Temp. dependent)} \\quad | \\quad m = \\frac{n_{\\text{solute}}}{W_{\\text{solvent (kg)}}} \\text{ (Temp. independent)}',
+                description: 'Molality (m) is independent of temperature because mass does not change with temperature, whereas Molarity (M) changes with temperature due to volume expansion.'
+              },
+              {
+                name: '2. Henry’s Law (Solubility of a Gas in a Liquid)',
+                formula: 'p = K_H \\cdot x',
+                description: 'The partial pressure of the gas in vapour phase (p) is directly proportional to the mole fraction of the gas (x) in the solution. Higher K_H = Lower solubility.'
+              },
+              {
+                name: '3. Raoult’s Law for Volatile Components',
+                formula: 'p_A = p_A^\\circ x_A, \\quad p_B = p_B^\\circ x_B \\quad \\Rightarrow \\quad P_{\\text{total}} = p_A + p_B = p_A^\\circ x_A + p_B^\\circ x_B',
+                description: 'For a solution of volatile liquids, the partial vapour pressure of each component in the solution is directly proportional to its mole fraction.'
+              }
+            ],
+            structuredData: {
+              examBlueprintBadge: 'MLM Pages 1–2 • Henry’s Law, Raoult’s Law, Ideal vs Non-Ideal & Azeotropes',
+              definitions: [
+                {
+                  term: 'Applications of Henry’s Law (MLM Page 1)',
+                  definition:
+                    '1. Packing of soda water and soft drinks: Bottles are sealed under high pressure to increase the solubility of CO₂.\n2. Deep-sea diving (Avoid Bends): Scuba divers use tanks diluted with Helium (11.7% He, 56.2% N₂, 32.1% O₂) because He is sparingly soluble in blood.\n3. High altitudes (Anoxia): At high altitudes, partial pressure of oxygen is lower than at ground level, leading to low blood oxygen causes weakness and inability to think clearly (anoxia).'
+                },
+                {
+                  term: 'Azeotropes (Constant Boiling Mixtures — MLM Page 2)',
+                  definition:
+                    'Binary mixtures having the same composition in liquid and vapour phase that boil at a constant temperature (cannot be separated by fractional distillation):\n• Minimum Boiling Azeotropes: Formed by non-ideal solutions showing large positive deviation from Raoult’s law (e.g., 95% Ethanol + 5% Water by volume).\n• Maximum Boiling Azeotropes: Formed by non-ideal solutions showing large negative deviation from Raoult’s law (e.g., 68% HNO₃ + 32% Water by mass).'
+                }
+              ],
+              comparisonTables: [
+                {
+                  title: '1. Distinguish: Ideal Solution vs Non-Ideal Solution (MLM Page 1)',
+                  headers: ['Basis', 'Ideal Solution', 'Non-Ideal Solution'],
+                  rows: [
+                    ['Raoult’s Law', 'Obeys Raoult’s law at all temperatures and concentrations (P = P_A + P_B = P°_A x_A + P°_B x_B).', 'Does not obey Raoult’s law over the entire range of concentration (P ≠ P°_A x_A + P°_B x_B).'],
+                    ['Molecular Interactions', 'A–B interactions are equal to A–A and B–B interactions.', 'A–B interactions are different from A–A and B–B interactions.'],
+                    ['Volume & Enthalpy of Mixing', 'ΔV_mix = 0 and ΔH_mix = 0.', 'ΔV_mix ≠ 0 and ΔH_mix ≠ 0.'],
+                    ['Examples', 'n-Hexane + n-Heptane; Benzene + Toluene.', 'Acetone + Water; Acetone + Chloroform (CHCl₃).']
+                  ]
+                },
+                {
+                  title: '2. Distinguish: Positive Deviation vs Negative Deviation from Raoult’s Law (MLM Page 2)',
+                  headers: ['Basis', 'Positive Deviation from Raoult’s Law', 'Negative Deviation from Raoult’s Law'],
+                  rows: [
+                    ['Vapour Pressure', 'Vapour pressure is GREATER than predicted by Raoult’s law (P > P°_A x_A + P°_B x_B).', 'Vapour pressure is LESS than predicted by Raoult’s law (P < P°_A x_A + P°_B x_B).'],
+                    ['Intermolecular Forces', 'A–B attractive forces are WEAKER than pure A–A and B–B forces.', 'A–B attractive forces are STRONGER than pure A–A and B–B forces (e.g., new H-bond formed).'],
+                    ['ΔV_mix & ΔH_mix', 'ΔV_mix = +ve (Volume increases) and ΔH_mix = +ve (Endothermic).', 'ΔV_mix = -ve (Volume decreases) and ΔH_mix = -ve (Exothermic).'],
+                    ['Azeotrope & Examples', 'Forms Minimum Boiling Azeotrope. Examples: Ethanol + Water, Acetone + Ethanol, Acetone + CS₂.', 'Forms Maximum Boiling Azeotrope. Examples: Acetone + Chloroform (CHCl₃), HNO₃ + Water.']
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        id: 'chem-d-sub-sol-2',
+        title: '3.2 Colligative Properties, Reverse Osmosis & Van’t Hoff Factor (i)',
+        sections: [
+          {
+            id: 'chem-d-sec-sol-2-1',
+            title: 'The 4 Colligative Properties, Reverse Osmosis & Van’t Hoff Factor (MLM Pages 2–3)',
+            explanation:
+              'Properties of dilute solutions that depend only on the number of solute particles and not on their nature: Relative lowering of vapour pressure, Elevation of boiling point, Depression of freezing point, and Osmotic pressure.',
+            keyFormulas: [
+              {
+                name: '1. Relative Lowering of Vapour Pressure (RLVP)',
+                formula: '\\frac{p_1^\\circ - p_1}{p_1^\\circ} = x_2 = \\frac{w_2 \\times M_1}{M_2 \\times w_1}',
+                description: 'Equal to the mole fraction (x₂) of the non-volatile solute.'
+              },
+              {
+                name: '2. Elevation of Boiling Point (ΔT_b) & Depression of Freezing Point (ΔT_f)',
+                formula: '\\Delta T_b = i \\cdot K_b \\cdot m = i \\cdot K_b \\frac{w_2 \\times 1000}{M_2 \\times w_1} \\quad | \\quad \\Delta T_f = i \\cdot K_f \\cdot m = i \\cdot K_f \\frac{w_2 \\times 1000}{M_2 \\times w_1}',
+                description: 'K_b = Molal elevation constant (Ebullioscopic constant); K_f = Molal depression constant (Cryoscopic constant).'
+              },
+              {
+                name: '3. Osmotic Pressure (π) & Van’t Hoff Factor (i)',
+                formula: '\\pi = i \\cdot C R T = i \\frac{n_2}{V} R T \\quad | \\quad i = \\frac{\\text{Observed Colligative Property}}{\\text{Calculated Colligative Property}} = \\frac{\\text{Normal Molar Mass}}{\\text{Abnormal Molar Mass}}',
+                description: 'For dissociation (NaCl → i=2, MgCl₂ → i=3, K₄[Fe(CN)₆] → i=5), i > 1. For association (dimerisation of acetic acid in benzene → i=1/2), i < 1.'
+              }
+            ],
+            structuredData: {
+              examBlueprintBadge: 'MLM Pages 2–3 • 4 Colligative Properties, Reverse Osmosis & Van’t Hoff Factor (i)',
+              definitions: [
+                {
+                  term: 'Colligative Properties',
+                  definition:
+                    'The properties of dilute solutions which depend only on the number of solute particles present in the solution and not on their chemical identity.'
+                },
+                {
+                  term: 'Osmosis, Osmotic Pressure (π) & Reverse Osmosis',
+                  definition:
+                    '• Osmosis: Spontaneous flow of pure solvent molecules from a region of lower solute concentration to higher solute concentration through a semi-permeable membrane (SPM).\n• Osmotic Pressure (π = CRT): The excess hydrostatic pressure that must be applied to the solution side just to prevent the flow of solvent through the semi-permeable membrane.\n• Reverse Osmosis (RO): If a pressure larger than the osmotic pressure is applied to the solution side, pure solvent flows out of the solution through the SPM. Application: Desalination of sea water.'
+                }
+              ],
+              comparisonTables: [
+                {
+                  title: 'Van’t Hoff Factor (i) Values for Association & Complete Dissociation (MLM Page 3)',
+                  headers: ['Process / Solute', 'Type / Formula', 'Van’t Hoff Factor (i)'],
+                  rows: [
+                    ['Association (in Benzene)', 'Dimerisation (e.g., CH₃COOH or Benzoic acid in benzene)', 'i = 1/2 = 0.5  (Trimerisation: i = 1/3; Tetramerisation: i = 1/4)'],
+                    ['Dissociation (Strong Electrolytes)', 'NaCl → Na⁺ + Cl⁻  |  MgCl₂ → Mg²⁺ + 2Cl⁻', 'NaCl: i = 2  |  MgCl₂ (or K₂SO₄): i = 3'],
+                    ['Dissociation (Polyvalent)', 'AlCl₃ → Al³⁺ + 3Cl⁻  |  K₄[Fe(CN)₆] → 4K⁺ + [Fe(CN)₆]⁴⁻', 'AlCl₃: i = 4  |  K₄[Fe(CN)₆]: i = 5']
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  electrochemistry: {
+    id: 'chem-d-ch-electro',
+    number: 4,
+    title: 'Electrochemistry: MLM Gist — Kohlrausch’s Law, Nernst Equation, Cells & Corrosion',
+    description:
+      'MLM Pages 3–5: Conductance, Conductivity (κ) vs Molar Conductivity (Λ_m) on dilution, Kohlrausch’s Law, Faraday’s 1st & 2nd Laws, Nernst Equation, ΔG° = -nFE°, Products of Electrolysis & Batteries.',
+    available: true,
+    tag: 'MLM Pages 3–5 • Kohlrausch, Nernst & Batteries',
+    subchapters: [
+      {
+        id: 'chem-d-sub-elec-1',
+        title: '4.1 Conductivity, Kohlrausch’s Law, Faraday’s Laws & Nernst Equation',
+        sections: [
+          {
+            id: 'chem-d-sec-elec-1-1',
+            title: 'Conductivity (κ), Molar Conductivity (Λ_m), Kohlrausch’s Law, Nernst Equation & Faraday’s Laws',
+            explanation:
+              'Complete formulas and definitions from MLM pages 3–4 for electrolytic conductance, variation with dilution, Kohlrausch’s Law, Nernst Equation, Gibbs energy, and Faraday’s laws.',
+            keyFormulas: [
+              {
+                name: '1. Molar Conductivity (Λ_m) & Degree of Dissociation (α)',
+                formula: '\\Lambda_m = \\frac{\\kappa \\times 1000}{M} \\ (\\text{S cm}^2\\text{mol}^{-1}) \\quad | \\quad \\alpha = \\frac{\\Lambda_m}{\\Lambda_m^\\circ} \\quad | \\quad K_a = \\frac{C\\alpha^2}{1 - \\alpha}',
+                description: 'κ (conductivity) always DECREASES with dilution (fewer ions per unit cm³), whereas Λ_m always INCREASES with dilution.'
+              },
+              {
+                name: '2. Nernst Equation at 298 K & Equilibrium Constant (K_c)',
+                formula: 'E_{\\text{cell}} = E_{\\text{cell}}^\\circ - \\frac{0.059}{n}\\log\\frac{[\\text{Product}]}{[\\text{Reactant}]} \\quad | \\quad E_{\\text{cell}}^\\circ = \\frac{0.059}{n}\\log K_c',
+                description: 'At equilibrium, E_cell = 0 and Q = K_c.'
+              },
+              {
+                name: '3. Gibbs Free Energy (Δ_rG°) & Faraday’s First Law of Electrolysis',
+                formula: '\\Delta_r G^\\circ = -n F E_{\\text{cell}}^\\circ = -2.303 R T \\log K_c \\quad | \\quad w = Z \\cdot I \\cdot t = \\frac{M \\cdot I \\cdot t}{n \\cdot F}',
+                description: 'F = 96500 C mol⁻¹; w is mass deposited at electrode in grams.'
+              }
+            ],
+            structuredData: {
+              examBlueprintBadge: 'MLM Pages 3–4 • Kohlrausch’s Law, Nernst Equation & Faraday’s Laws',
+              definitions: [
+                {
+                  term: 'Variation of Molar Conductivity (Λ_m) with Concentration / Dilution (MLM Page 3)',
+                  definition:
+                    '• Strong Electrolytes (e.g., KCl): Λ_m increases slowly with dilution (decreases slightly with increase in concentration) because it is already 100% ionised and dilution only reduces inter-ionic attractions (Λ_m = Λ°_m - A√C).\n• Weak Electrolytes (e.g., CH₃COOH): Λ_m increases sharply with dilution (especially near infinite dilution) because the degree of dissociation (α) increases rapidly on dilution.'
+                },
+                {
+                  term: 'Kohlrausch’s Law of Independent Migration of Ions & Applications',
+                  definition:
+                    'Limiting molar conductivity of an electrolyte at infinite dilution (Λ°_m) can be represented as the sum of the individual contributions of the anion and cation of the electrolyte. Example: Λ°_m(CaCl₂) = λ°(Ca²⁺) + 2λ°(Cl⁻).\n• Applications: (1) Calculation of Λ°_m for weak electrolytes (like CH₃COOH), (2) Calculation of degree of dissociation α = Λ_m / Λ°_m, (3) Calculation of dissociation constant K_a = Cα² / (1 - α).'
+                },
+                {
+                  term: 'Faraday’s First & Second Laws of Electrolysis',
+                  definition:
+                    '• First Law: The amount of chemical substance deposited at any electrode during electrolysis is directly proportional to the quantity of electricity (charge Q = I × t) passed through the electrolyte (w = ZIt).\n• Second Law: When the same quantity of electricity is passed through different electrolytic solutions connected in series, the masses of different substances liberated are directly proportional to their chemical equivalent weights (w₁ / w₂ = E₁ / E₂).'
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        id: 'chem-d-sub-elec-2',
+        title: '4.2 Products of Electrolysis, Primary/Secondary Batteries, Fuel Cells & Corrosion',
+        sections: [
+          {
+            id: 'chem-d-sec-elec-2-1',
+            title: 'Products of Electrolysis, Mercury/Dry/Lead Storage/Fuel Cells & Rusting (MLM Pages 4–5)',
+            explanation:
+              'Complete tables from MLM pages 4–5 covering cathode/anode electrolysis products, primary cells (Mercury, Dry cell), secondary batteries (Lead storage), H₂–O₂ Fuel cell, and Corrosion.',
+            structuredData: {
+              examBlueprintBadge: 'MLM Pages 4–5 • Products of Electrolysis & Commercial Cells Table',
+              comparisonTables: [
+                {
+                  title: '1. Products of Electrolysis (MLM Page 4)',
+                  headers: ['Electrolyte & Electrodes', 'Cathode Reaction (Reduction)', 'Anode Reaction (Oxidation)'],
+                  rows: [
+                    ['Molten NaCl (Pt electrodes)', 'Na⁺(l) + e⁻ → Na(s)', 'Cl⁻ → ½Cl₂(g) + e⁻'],
+                    ['Aqueous NaCl (Pt electrodes)', 'H₂O(l) + e⁻ → ½H₂(g) + OH⁻ (H₂ gas)', 'Cl⁻ → ½Cl₂(g) + e⁻ (Cl₂ gas due to overpotential of O₂)'],
+                    ['Dilute H₂SO₄ (Pt electrodes)', 'H⁺ + e⁻ → ½H₂(g)', '2H₂O(l) → O₂(g) + 4H⁺ + 4e⁻ (O₂ gas)'],
+                    ['Conc. H₂SO₄ (Pt electrodes)', 'H⁺ + e⁻ → ½H₂(g)', '2SO₄²⁻(aq) → S₂O₈²⁻(aq) + 2e⁻ (Peroxodisulphate)'],
+                    ['Aqueous AgNO₃ with Ag electrodes', 'Ag⁺(aq) + e⁻ → Ag(s)', 'Ag(s) → Ag⁺(aq) + e⁻ (Silver anode dissolves)'],
+                    ['Aqueous AgNO₃ with Pt electrodes', 'Ag⁺(aq) + e⁻ → Ag(s)', '2H₂O(l) → O₂(g) + 4H⁺ + 4e⁻']
+                  ]
+                },
+                {
+                  title: '2. Commercial Cells, Fuel Cell & Corrosion Summary (MLM Page 4)',
+                  headers: ['Cell / Process', 'Electrolyte', 'Anode & Cathode Reactions', 'Key Exam Remark'],
+                  rows: [
+                    [
+                      '1. Mercury Cell (Primary)',
+                      'Paste of KOH and ZnO',
+                      '• Anode (Zn–Hg): Zn(Hg) + 2OH⁻ → ZnO(s) + H₂O + 2e⁻\n• Cathode (HgO + C): HgO + H₂O + 2e⁻ → Hg(l) + 2OH⁻',
+                      'Gives a CONSTANT voltage (1.35 V) throughout its life because the overall reaction involves no ions in solution whose concentration can change.'
+                    ],
+                    [
+                      '2. Dry Cell / Leclanché Cell (Primary)',
+                      'Moist paste of NH₄Cl and ZnCl₂',
+                      '• Anode (Zn container): Zn(s) → Zn²⁺ + 2e⁻\n• Cathode (Graphite rod + MnO₂): MnO₂ + NH₄⁺ + e⁻ → MnO(OH) + NH₃',
+                      'Voltage = 1.5 V. NH₃ liberated forms complex [Zn(NH₃)₄]²⁺ with Zn²⁺.'
+                    ],
+                    [
+                      '3. Lead Storage Battery (Secondary)',
+                      '38% H₂SO₄ solution',
+                      '• Anode (Pb): Pb(s) + SO₄²⁻ → PbSO₄(s) + 2e⁻\n• Cathode (PbO₂): PbO₂(s) + SO₄²⁻ + 4H⁺ + 2e⁻ → PbSO₄(s) + 2H₂O(l)',
+                      'Overall discharging: Pb + PbO₂ + 2H₂SO₄ → 2PbSO₄ + 2H₂O. On recharging, reactions are reversed.'
+                    ],
+                    [
+                      '4. H₂–O₂ Fuel Cell',
+                      'Concentrated aq. KOH / NaOH',
+                      '• Anode: 2H₂(g) + 4OH⁻ → 4H₂O(l) + 4e⁻\n• Cathode: O₂(g) + 2H₂O(l) + 4e⁻ → 4OH⁻',
+                      'Overall: 2H₂ + O₂ → 2H₂O. Pollution-free, high efficiency (60–70%), used in Apollo space programme.'
+                    ],
+                    [
+                      '5. Corrosion of Iron (Rusting)',
+                      'H₂CO₃ (Moisture + CO₂)',
+                      '• Anode: 2Fe(s) → 2Fe²⁺ + 4e⁻\n• Cathode: O₂(g) + 4H⁺ + 4e⁻ → 2H₂O(l)',
+                      'Rust formula: Fe₂O₃·xH₂O. Prevented by painting, galvanisation (Zn sacrificial protection), or cathodic protection.'
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  dfBlock: {
+    id: 'chem-d-ch-dfblock',
+    number: 5,
+    title: 'd & f-Block Elements: MLM Give Reasons, K₂Cr₂O₇, KMnO₄ & Lanthanoid Contraction',
+    description:
+      'MLM Pages 9–11: Top Transition Metal Give Reasons, K₂Cr₂O₇ & KMnO₄ Preparation and Acidic Oxidising Reactions, Lanthanoid Contraction (Cause & Consequences) & Lanthanoids vs Actinoids.',
+    available: true,
+    tag: 'MLM Pages 9–11 • Give Reasons, KMnO₄/K₂Cr₂O₇ & Lanthanoids',
+    subchapters: [
+      {
+        id: 'chem-d-sub-df-1',
+        title: '5.1 d-Block MLM Give Reasons (Colour, Magnetism, Oxidation States, Catalytic & E° Trends)',
+        sections: [
+          {
+            id: 'chem-d-sec-df-1-1',
+            title: 'High-Yield d-Block Reasoning Questions from MLM Pages 9–10',
+            explanation:
+              'Every classic d-block reasoning question from the MLM table (pages 9–10) in clean Q&A format.',
+            structuredData: {
+              examBlueprintBadge: 'MLM Pages 9–10 • Transition Elements Reasoning Questions',
+              qaPairs: [
+                {
+                  number: 'MLM #1–3',
+                  badge: 'Transition Element Definition',
+                  question: 'Why are Zn, Cd, and Hg not regarded as transition elements, whereas Sc³⁺ (d⁰) and Cu (3d¹⁰) are transition metals?',
+                  answer:
+                    '• Transition elements are defined as elements having incompletely filled d-orbitals in their ground state or in any one of their common oxidation states.\n• Zn (3d¹⁰4s²), Cd (4d¹⁰5s²), and Hg (5d¹⁰6s²) have completely filled d¹⁰ orbitals in both their ground state and their common +2 oxidation state, so they are not regarded as transition elements.\n• Sc (3d¹4s²) has a partially filled d-orbital in its ground state, and Cu (3d¹⁰4s¹) has an incomplete 3d⁹ configuration in its +2 oxidation state (Cu²⁺), so both are transition elements.'
+                },
+                {
+                  number: 'MLM #7–8',
+                  badge: 'Enthalpy of Atomisation',
+                  question: 'Why do transition metals have high enthalpy of atomisation and high melting points, while Zn, Cd, and Hg are soft with low melting points?',
+                  answer:
+                    'Transition metals have a large number of unpaired electrons in their (n-1)d orbitals, leading to strong interatomic metallic bonding and high enthalpy of atomisation. Zn, Cd, and Hg have all paired electrons (d¹⁰), so metallic bonding is very weak.'
+                },
+                {
+                  number: 'MLM #9–11',
+                  badge: 'Variable Oxidation States',
+                  question: 'Why do transition elements show variable oxidation states? Which 3d metal shows the highest oxidation state (+7), and which shows only one (+3)?',
+                  answer:
+                    '• Variable oxidation states arise because the energy difference between (n-1)d and ns orbitals is very small, allowing both (n-1)d and ns electrons to participate in bonding.\n• Manganese (Mn, 3d⁵4s²) shows the highest oxidation state (+7 in MnO₄⁻) due to the maximum number of unpaired electrons.\n• Scandium (Sc) does not show variable oxidation states (shows only +3, achieving noble gas configuration).'
+                },
+                {
+                  number: 'MLM #12–13 & #20–22',
+                  badge: 'Stability & Electrode Potentials',
+                  question: 'Give reasons: (a) Cr³⁺ is more stable than Cr²⁺ (E° Cr³⁺/Cr²⁺ is -ve), whereas E° Mn³⁺/Mn²⁺ is highly +ve. (b) Cu²⁺ is more stable in aqueous solution than Cu⁺, and E°(Cu²⁺/Cu) is positive (+0.34 V).',
+                  answer:
+                    '• (a) Cr³⁺ (3d³) has a stable half-filled t_2g³ configuration in aqueous medium, so Cr²⁺ is a strong reducing agent. Conversely, Mn²⁺ (3d⁵) has an extra-stable half-filled d⁵ configuration, so Mn³⁺ readily reduces to Mn²⁺ (E° is +ve).\n• (b) In aqueous solution, Cu²⁺ is more stable than Cu⁺ (2Cu⁺ → Cu²⁺ + Cu disproportionation) due to the much more negative hydration enthalpy (Δ_hyd H°) of Cu²⁺, which more than compensates for IE₂ of Cu. E°(Cu²⁺/Cu) is +0.34 V because the high enthalpy of atomisation and high IE₁ + IE₂ of Cu are not balanced by its hydration enthalpy.'
+                },
+                {
+                  number: 'MLM #15–16 & #33',
+                  badge: 'Oxides & Fluorides',
+                  question: 'Why are the highest oxidation states of transition metals found in oxides and fluorides, and why are oxides outperforms fluorides (e.g., Mn₂O₇ vs MnF₄)?',
+                  answer:
+                    'Oxygen and fluorine have small size and high electronegativity, allowing them to oxidise the metal to its highest state. Oxygen outperforms fluorine because oxygen can form multiple bonds (dπ–pπ double bonds) with transition metals, whereas fluorine forms only single bonds. Higher oxides (e.g., Mn₂O₇, CrO₃) are acidic due to high polarizing power, while lower oxides (MnO, CrO) are basic.'
+                },
+                {
+                  number: 'MLM #23–26',
+                  badge: 'Colour & Paramagnetism',
+                  question: 'Why are most transition metal ions coloured and paramagnetic, whereas Sc³⁺, Ti⁴⁺, Zn²⁺, and Cu⁺ are colourless and diamagnetic?',
+                  answer:
+                    '• Colour is due to d–d transition of unpaired electrons (1 to 9 d-electrons) in split d-orbitals by absorbing visible light. Sc³⁺ and Ti⁴⁺ have empty d⁰ configuration, while Zn²⁺ and Cu⁺ have completely filled d¹⁰ configuration, so d–d transition is not possible and they are colourless.\n• Paramagnetism arises from the presence of unpaired d-electrons: μ = √(n(n+2)) BM.'
+                },
+                {
+                  number: 'MLM #27–32',
+                  badge: 'Catalysts, Interstitial & Alloys',
+                  question: 'Give reasons: Transition metals form (a) Good catalysts, (b) Interstitial compounds, and (c) Alloys.',
+                  answer:
+                    '• (a) Catalysts: Due to variable oxidation states, availability of vacant d-orbitals to form reaction intermediates, and large surface area.\n• (b) Interstitial compounds: Small non-metal atoms (H, B, C, N) get trapped in the vacant interstitial voids of the transition metal crystal lattice. They have high melting points, are very hard, retain metallic conductivity, and are chemically inert.\n• (c) Alloys: Transition metals have very similar atomic/metallic radii and can substitute each other in the crystal lattice.'
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        id: 'chem-d-sub-df-2',
+        title: '5.2 K₂Cr₂O₇, KMnO₄, Lanthanoid Contraction & Lanthanoids vs Actinoids (MLM Page 11)',
+        sections: [
+          {
+            id: 'chem-d-sec-df-2-1',
+            title: 'Potassium Dichromate (K₂Cr₂O₇), Potassium Permanganate (KMnO₄) & f-Block (MLM Page 11)',
+            explanation:
+              'Complete preparation equations, pH effect, acidic oxidising half-reactions, Lanthanoid Contraction cause/consequences, and Lanthanoids vs Actinoids comparison table.',
+            structuredData: {
+              examBlueprintBadge: 'MLM Page 11 • K₂Cr₂O₇ & KMnO₄ Equations + Lanthanoid Contraction',
+              definitions: [
+                {
+                  term: 'Lanthanoid Contraction — Cause & 3 Consequences (MLM Page 11)',
+                  definition:
+                    '• Definition: The steady and regular decrease in atomic and ionic radii (M³⁺) of lanthanoids with increasing atomic number from La to Lu.\n• Cause: Imperfect / poor shielding of one 4f electron by another 4f electron as nuclear charge increases along the series.\n• Consequences:\n  1. Similarity in atomic radii of 2nd (4d) and 3rd (5d) transition series (e.g., Zr [160 pm] and Hf [159 pm] have almost identical radii and occur together).\n  2. Difficulty in separation of lanthanoids due to very small differences in their chemical properties.\n  3. Basic strength of hydroxides decreases from La(OH)₃ (most basic) to Lu(OH)₃ (least basic).'
+                },
+                {
+                  term: 'Preparation & pH Equilibrium of Potassium Dichromate (K₂Cr₂O₇) from Chromite Ore (FeCr₂O₄)',
+                  definition:
+                    '• Step 1: 4FeCr₂O₄ + 8Na₂CO₃ + 7O₂ ──(Roasting)──► 8Na₂CrO₄ (Yellow) + 2Fe₂O₃ + 8CO₂\n• Step 2: 2Na₂CrO₄ (Yellow) + 2H⁺ ──► Na₂Cr₂O₇ (Orange) + 2Na⁺ + H₂O\n• Step 3: Na₂Cr₂O₇ + 2KCl ──► K₂Cr₂O₇ (Orange crystals) + 2NaCl\n• Effect of pH: Cr₂O₇²⁻ (Orange, stable in acidic pH) + 2OH⁻ ⇌ 2CrO₄²⁻ (Yellow, stable in basic pH) + H₂O.'
+                },
+                {
+                  term: 'Preparation of Potassium Permanganate (KMnO₄) from Pyrolusite Ore (MnO₂)',
+                  definition:
+                    '• Step 1: 2MnO₂ (Black) + 4KOH + O₂ ──(Heat)──► 2K₂MnO₄ (Potassium manganate, Green) + 2H₂O\n• Step 2 (Disproportionation in acidic/neutral medium): 3MnO₄²⁻ (Green) + 4H⁺ ──► 2MnO₄⁻ (Permanganate, Purple) + MnO₂ + 2H₂O.'
+                }
+              ],
+              keyPoints: [
+                'Oxidising Reactions of K₂Cr₂O₇ in Acidic Medium (Cr₂O₇²⁻ + 14H⁺ + 6e⁻ → 2Cr³⁺ + 7H₂O): Oxidises (1) I⁻ → I₂ (Cr₂O₇²⁻ + 14H⁺ + 6I⁻ → 2Cr³⁺ + 3I₂ + 7H₂O), (2) Fe²⁺ → Fe³⁺ (Cr₂O₇²⁻ + 14H⁺ + 6Fe²⁺ → 2Cr³⁺ + 6Fe³⁺ + 7H₂O), (3) Sn²⁺ → Sn⁴⁺ (+ 3Sn²⁺ → 3Sn⁴⁺), and (4) H₂S → S (+ 3H₂S + 8H⁺ → 2Cr³⁺ + 3S + 7H₂O).',
+                'Oxidising Reactions of KMnO₄ in Acidic Medium (MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O): Oxidises (1) Fe²⁺ → Fe³⁺ (MnO₄⁻ + 8H⁺ + 5Fe²⁺ → Mn²⁺ + 5Fe³⁺ + 4H₂O), (2) Oxalate C₂O₄²⁻ → CO₂ (2MnO₄⁻ + 16H⁺ + 5C₂O₄²⁻ → 2Mn²⁺ + 10CO₂ + 8H₂O), (3) I⁻ → I₂ (2MnO₄⁻ + 16H⁺ + 10I⁻ → 2Mn²⁺ + 5I₂ + 8H₂O), whereas in Neutral/Faintly Alkaline medium, KMnO₄ oxidises I⁻ to Iodate IO₃⁻ (2MnO₄⁻ + H₂O + I⁻ → 2MnO₂ + IO₃⁻ + 2OH⁻).'
+              ],
+              comparisonTables: [
+                {
+                  title: 'Distinguish: Lanthanoids vs Actinoids (MLM Page 11)',
+                  headers: ['Basis', 'Lanthanoids (4f Series)', 'Actinoids (5f Series)'],
+                  rows: [
+                    ['Subshell Filled', 'Last differentiating electron enters the 4f orbital.', 'Last differentiating electron enters the 5f orbital.'],
+                    ['Oxidation States', 'Show limited oxidation states: mainly +3 (and occasionally +2, +4).', 'Show a wide range of oxidation states: +3, +4, +5, +6, +7 (due to comparable energies of 5f, 6d, 7s).'],
+                    ['Radioactivity', 'All are non-radioactive except Promethium (Pm).', 'All actinoids are radioactive (elements after Uranium are synthetic transuranic elements).'],
+                    ['Contraction', 'Element-to-element lanthanoid contraction is smaller (4f shielding is better than 5f).', 'Element-to-element actinoid contraction is greater due to very poor shielding by 5f electrons.']
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  haloAlcohols: {
+    id: 'chem-d-ch-halo-alc',
+    number: 4,
+    title: 'Haloalkanes, Alcohols, Phenols & Ethers: MLM Give Reasons, SN1 vs SN2 & Mechanisms',
+    description:
+      'MLM Pages 20–28: SN1 vs SN2 Comparison Table, Alcohol Hydration & Dehydration 3-Step Mechanisms, Name Reactions (Wurtz, Fittig, Finkelstein, Swarts, Reimer-Tiemann, Kolbe, Williamson) & MLM Give Reasons.',
+    available: true,
+    tag: 'MLM Pages 20–28 • SN1/SN2, Mechanisms & Give Reasons',
+    subchapters: [
+      {
+        id: 'chem-d-sub-ha-1',
+        title: '4.1 SN1 vs SN2 Comparison, Alcohol Mechanisms & Name Reactions (MLM Pages 20–25)',
+        sections: [
+          {
+            id: 'chem-d-sec-ha-1-1',
+            title: 'SN1 vs SN2 Table, 3-Step Alcohol Hydration/Dehydration Mechanisms & Name Reactions',
+            explanation:
+              'Covers the MLM mechanisms (pages 23–25) and name reactions for Haloalkanes/Haloarenes and Alcohols/Phenols/Ethers (pages 20–21).',
+            structuredData: {
+              examBlueprintBadge: 'MLM Pages 20–25 • SN1 vs SN2 Table, 3-Step Alcohol Mechanisms & Name Reactions',
+              comparisonTables: [
+                {
+                  title: 'Distinguish: SN1 vs SN2 Nucleophilic Substitution Mechanism (MLM Page 23)',
+                  headers: ['Property', 'SN1 (Substitution Nucleophilic Unimolecular)', 'SN2 (Substitution Nucleophilic Bimolecular)'],
+                  rows: [
+                    ['Order & Molecularity', 'Order = 1, Unimolecular: Rate = k[RX]', 'Order = 2, Bimolecular: Rate = k[RX][Nu⁻]'],
+                    ['Number of Steps & Intermediate', 'Two-step reaction proceeding via a planar Carbocation intermediate.', 'Single-step concerted reaction via a 5-coordinate Transition State (no intermediate).'],
+                    ['Alkyl Halide Reactivity Order', '3° > 2° > 1° > CH₃X (governed by carbocation stability; allylic & benzylic are also fast).', 'CH₃X > 1° > 2° > 3° (governed by steric hindrance).'],
+                    ['Stereochemistry (Optical Activity)', 'Proceeds with Racemisation (50:50 d + l racemic mixture, optically inactive).', 'Proceeds with complete Inversion of Configuration (Walden inversion).'],
+                    ['Favoured Solvent & Nucleophile', 'Polar protic solvents (H₂O, ROH) and weak nucleophiles.', 'Polar aprotic solvents (acetone, DMSO) and strong nucleophiles.']
+                  ]
+                }
+              ],
+              qaPairs: [
+                {
+                  number: 'Mech 1',
+                  badge: 'MLM Page 23–24 (3 Steps)',
+                  question: 'Write the 3-step mechanism for the Acid-Catalysed Hydration of Alkenes (Ethene) to form Alcohol (Ethanol).',
+                  answer:
+                    '• Step 1 (Protonation of alkene to form carbocation by electrophilic attack of H₃O⁺):\n  CH₂=CH₂ + H₃O⁺ ──► CH₃–CH₂⁺ + H₂O\n• Step 2 (Nucleophilic attack of water molecule on carbocation):\n  CH₃–CH₂⁺ + H₂O ──► CH₃–CH₂–OH₂⁺ (Protonated ethanol)\n• Step 3 (Deprotonation to form ethanol):\n  CH₃–CH₂–OH₂⁺ + H₂O ──► CH₃–CH₂–OH + H₃O⁺'
+                },
+                {
+                  number: 'Mech 2',
+                  badge: 'MLM Page 24 (443 K vs 413 K)',
+                  question: 'Write the 3-step mechanism for the Acidic Dehydration of Ethanol to give Ethene (at 443 K) and Diethyl Ether (at 413 K).',
+                  answer:
+                    'A. Dehydration of Ethanol to Ethene (Conc. H₂SO₄ at 443 K — Elimination):\n• Step 1 (Fast protonation of ethanol): CH₃–CH₂–OH + H⁺ ⇌ CH₃–CH₂–OH₂⁺ (Ethyl oxonium ion)\n• Step 2 (Slow RDS — Formation of carbocation): CH₃–CH₂–OH₂⁺ ──(Slow)──► CH₃–CH₂⁺ + H₂O\n• Step 3 (Elimination of proton to form ethene): CH₃–CH₂⁺ ──► CH₂=CH₂ + H⁺\n\nB. Dehydration of Ethanol to Ethoxyethane at 413 K (SN2 Nucleophilic Attack):\n• At 413 K, unprotonated ethanol attacks protonated ethanol via SN2: CH₃CH₂OH + CH₃CH₂–OH₂⁺ → CH₃CH₂–O⁺(H)–CH₂CH₃ + H₂O →(-H⁺) CH₃CH₂–O–CH₂CH₃.'
+                },
+                {
+                  number: 'Name Rxns',
+                  badge: 'Haloalkanes & Alcohols/Phenols',
+                  question: 'Core Name Reactions of Haloalkanes & Alcohols/Phenols/Ethers (MLM Pages 20–21)',
+                  answer:
+                    '1. Finkelstein Reaction (Halide Exchange for R–I): R–Cl (or R–Br) + NaI ──(Dry Acetone)──► R–I + NaCl↓\n2. Swarts Reaction (Synthesis of Alkyl Fluoride R–F): CH₃–Br + AgF (or Hg₂F₂, CoF₂, SbF₃) ──(Heat)──► CH₃–F + AgBr\n3. Wurtz, Fittig & Wurtz-Fittig Reactions (Na / Dry Ether): 2R–X + 2Na → R–R; 2Ar–X + 2Na → Ar–Ar (Biphenyl); Ar–X + R–X + 2Na → Ar–R\n4. Reimer-Tiemann Reaction (Phenol → Salicylaldehyde): Phenol + CHCl₃ + aq. NaOH ──(1. 340 K  2. H⁺)──► Salicylaldehyde (2-Hydroxybenzaldehyde)\n5. Kolbe’s Reaction (Phenol → Salicylic Acid): Phenol ──(1. NaOH  2. CO₂, 400 K, 4–7 atm  3. H⁺)──► Salicylic acid (2-Hydroxybenzoic acid)\n6. Williamson Ether Synthesis (SN2 reaction): R–X (must be 1° alkyl halide) + R′–ONa ──► R–O–R′ + NaX. (If 3° halide like (CH₃)₃C–Br is used with NaOCH₃, alkene 2-methylpropene is formed by elimination!).'
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        id: 'chem-d-sub-ha-2',
+        title: '4.2 Top MLM Give Reasons for Haloalkanes, Alcohols, Phenols & Ethers (MLM Pages 25–28)',
+        sections: [
+          {
+            id: 'chem-d-sec-ha-2-1',
+            title: 'Key MLM Reasoning Questions for Haloalkanes & Alcohols/Phenols/Ethers',
+            explanation:
+              'High-yield reasoning questions from MLM pages 25–28 covering haloarene reactivity, Grignard reagents, chloroform storage, phenol acidity, and o-/p-nitrophenol boiling point.',
+            structuredData: {
+              examBlueprintBadge: 'MLM Pages 25–28 • Haloalkanes & Alcohols/Phenols/Ethers Give Reasons',
+              qaPairs: [
+                {
+                  number: 'MLM Halo #5 & #23',
+                  badge: 'Haloarene Reactivity',
+                  question: 'Why are haloarenes (chlorobenzene) much less reactive than haloalkanes towards nucleophilic substitution reactions?',
+                  answer:
+                    '1. Resonance effect: The C–Cl bond in chlorobenzene acquires a partial double-bond character due to resonance, making bond cleavage difficult.\n2. Hybridisation: The carbon in C–Cl of haloarene is sp²-hybridised (more electronegative, shorter bond length) vs sp³ in haloalkane.\n3. Instability of phenyl cation and electronic repulsion between electron-rich nucleophile and electron-rich benzene ring.'
+                },
+                {
+                  number: 'MLM Halo #17–19 & #22',
+                  badge: 'Classic Haloalkane Reasons',
+                  question: 'Give reasons: (a) Alkyl halides, though polar, are immiscible with water. (b) Grignard reagents must be prepared under anhydrous conditions. (c) Chloroform is stored in closed dark-brown bottles completely filled.',
+                  answer:
+                    '• (a) Alkyl halides cannot form hydrogen bonds with water molecules and cannot break the existing H-bonds between water molecules.\n• (b) Grignard reagents (R–Mg–X) are highly reactive and react with any moisture (H₂O) to form alkanes: R–MgX + H₂O → R–H + Mg(OH)X.\n• (c) Chloroform (CHCl₃) is slowly oxidised by air in the presence of light to form an extremely poisonous gas, carbonyl chloride (Phosgene, COCl₂): 2CHCl₃ + O₂ →(Light) 2COCl₂ + 2HCl.'
+                },
+                {
+                  number: 'MLM Halo #24',
+                  badge: 'aq. KOH vs alc. KOH',
+                  question: 'Alkyl halides on treatment with aqueous KOH form alcohols, but with alcoholic KOH alkenes are produced. Why?',
+                  answer:
+                    'In aqueous solution, KOH is almost completely ionised to give OH⁻ ions which act as a nucleophile (hydrated) and cause substitution to form alcohols. In alcoholic solution, it contains alkoxide (RO⁻) ions which are a much stronger base than OH⁻ and abstract a β-hydrogen atom from the alkyl halide, causing dehydrohalogenation (β-elimination) to give alkenes.'
+                },
+                {
+                  number: 'MLM Alc #1, #5, #9 & #17',
+                  badge: 'Phenol Acidity & Nitrophenols',
+                  question: 'Give reasons: (a) Phenol is more acidic than ethanol. (b) o-Nitrophenol is steam volatile whereas p-nitrophenol is not (and p-nitrophenol is more acidic than p-cresol).',
+                  answer:
+                    '• (a) In phenol, the phenoxide ion (C₆H₅O⁻) formed after losing H⁺ is stabilised by resonance (delocalisation of negative charge over the benzene ring), whereas the ethoxide ion (C₂H₅O⁻) has no resonance stabilisation (+I of ethyl destabilises it).\n• (b) o-Nitrophenol has intramolecular hydrogen bonding (exists as discrete molecules, lower boiling point, hence steam volatile), whereas p-nitrophenol has intermolecular hydrogen bonding (molecular association, higher boiling point, less volatile). The –NO₂ group (–I/–R) increases phenol acidity, whereas –CH₃ (+I/+R) decreases it.'
+                },
+                {
+                  number: 'MLM Alc #4 & #11',
+                  badge: 'Williamson & Ether Cleavage',
+                  question: 'Give reasons: (a) (CH₃)₃C–Br on reaction with sodium methoxide (NaOCH₃) gives an alkene (2-methylpropene) and not an ether. (b) (CH₃)₃C–O–CH₃ on reaction with HI gives CH₃OH and (CH₃)₃C–I as the main products.',
+                  answer:
+                    '• (a) (CH₃)₃C–Br is a tertiary (3°) alkyl halide and NaOCH₃ is a strong base as well as a nucleophile; steric hindrance prevents SN2 substitution, so it undergoes β-elimination to form 2-methylpropene.\n• (b) Protonated tert-butyl methyl ether cleaves via an SN1 pathway because the departure of CH₃OH forms a highly stable tertiary carbocation (CH₃)₃C⁺, which then combines with I⁻ to give (CH₃)₃C–I.'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+};
+
+export const CLEAN_CHEMISTRY_VOL1_CHAPTERS = [
+  { ...CLEAN_CHEMISTRY_CHAPTERS[2], number: 1 }, // Ch 1: Chemical Kinetics (Exam Focus & Numericals)
+  { ...CLEAN_CHEMISTRY_CHAPTERS[1], number: 2 }, // Ch 2: Coordination Compounds (CFT Diagrams & Revision Qs)
+  ADDITIONAL_MLM_CHEMISTRY_CHAPTERS.solutions,   // Ch 3: Solutions (MLM Gist)
+  ADDITIONAL_MLM_CHEMISTRY_CHAPTERS.electrochemistry, // Ch 4: Electrochemistry (MLM Gist)
+  ADDITIONAL_MLM_CHEMISTRY_CHAPTERS.dfBlock      // Ch 5: d & f-Block Elements (MLM Gist)
+];
+
+export const CLEAN_CHEMISTRY_VOL2_CHAPTERS = [
+  { ...CLEAN_CHEMISTRY_CHAPTERS[0], number: 1 }, // Ch 1: Biomolecules (5 Glucose Reactions, Structures & 6 Remedial Qs)
+  { ...CLEAN_CHEMISTRY_CHAPTERS[3], number: 2 }, // Ch 2: Organic Chem I (Teacher-Marked MLM Give Reasons & Property Trends)
+  { ...CLEAN_CHEMISTRY_CHAPTERS[4], number: 3 }, // Ch 3: Organic Chem II (6 Distinguish Tests & 18 Exam Reactions)
+  ADDITIONAL_MLM_CHEMISTRY_CHAPTERS.haloAlcohols // Ch 4: Haloalkanes, Alcohols, Phenols & Ethers (MLM Gist)
+];
+
 export const CLEAN_CHEMISTRY_SYLLABUS = {
   id: 'chemistry',
   name: 'Chemistry',
   code: '043',
   accentColor: '#C75B3B',
   description:
-    'Exam-Focused MLM & Remedial Notes: Biomolecules (5 Reactions & 6 Remedial Qs), Coordination Compounds (CFT Diagrams & Synergic Effect), Chemical Kinetics & Organic Chem (MLM Give Reasons, 6 Distinguish & 18 Reactions)',
+    'Exam-Focused MLM & Remedial Notes: Volume 1 (Kinetics, Coordination CFT, Solutions, Electrochemistry, d/f-Block) & Volume 2 (Biomolecules 5 Reactions & 6 Remedial Qs, MLM Give Reasons, 6 Distinguish & 18 Reactions)',
   volumes: [
     {
-      id: 'chem-d-vol-1',
-      title: 'D Version Chemistry • Exam Focus & MLM',
+      id: 'chem-vol-1',
+      title: 'NCERT Chemistry Volume 1 (Physical & Inorganic)',
       subtitle:
-        'Biomolecules, Coordination Compounds, Chemical Kinetics, MLM Give Reasons, 6 Distinguish Tests & 18 Name Reactions',
-      chapters: CLEAN_CHEMISTRY_CHAPTERS
+        'Chemical Kinetics, Coordination Compounds (CFT Diagrams & Synergic Effect), Solutions, Electrochemistry & d/f-Block (MLM & Exam Focus)',
+      chapters: CLEAN_CHEMISTRY_VOL1_CHAPTERS
+    },
+    {
+      id: 'chem-vol-2',
+      title: 'NCERT Chemistry Volume 2 (Organic & Biomolecules)',
+      subtitle:
+        'Biomolecules (5 Glucose Reactions, Structures & 6 Remedial Qs), Teacher-Marked MLM Give Reasons, 6 Distinguish Tests & 18 Name Reactions',
+      chapters: CLEAN_CHEMISTRY_VOL2_CHAPTERS
     }
   ]
 };
