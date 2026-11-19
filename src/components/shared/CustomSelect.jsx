@@ -152,7 +152,7 @@ export function CustomSelect({
     .trim();
 
   const defaultBaseClasses =
-    'flex items-center justify-between gap-2.5 text-left select-none transition-all cursor-pointer focus:outline-none';
+    'flex items-center justify-between gap-2.5 text-left select-none transition-all cursor-pointer focus:outline-none max-w-full min-w-0 overflow-hidden';
 
   const fallbackSurfaceClasses = cleanedClassName
     ? ''

@@ -9,6 +9,7 @@ import { REACTION_DIAGRAMS } from '../../data/reactionDiagramsData';
 import { SingleReactionDiagram } from './ReactionDiagramCard';
 import { formatMathString } from './FormulaCard';
 import ChemistryExamDiagramCard from './ChemistryExamDiagramCard';
+import ChemicalReactionDisplay from './ChemicalReactionDisplay';
 
 // Intelligent fallback parser for sections without manual curation
 function parseFallbackContent(section, subtopicId, chapterId) {
@@ -319,10 +320,7 @@ export default function StructuredSectionView({ section, subtopicId, chapterId, 
                 />
 
                 {qa.equation && (
-                  <div
-                    className="font-mono text-xs sm:text-sm font-bold p-3 rounded-xl bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-subtle)] overflow-x-auto whitespace-pre-wrap"
-                    dangerouslySetInnerHTML={{ __html: formatMathString(qa.equation) }}
-                  />
+                  <ChemicalReactionDisplay equation={qa.equation} />
                 )}
               </div>
             ))}

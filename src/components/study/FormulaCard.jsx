@@ -347,7 +347,11 @@ export function formatMathString(str) {
 // Find curated metadata for a formula or create clean default
 function resolveFormulaMetadata(formulaStr) {
   if (formulaStr && typeof formulaStr === 'object') {
-    const rawEquation = String(formulaStr.formula || formulaStr.math || formulaStr.title || formulaStr.name || '');
+    let rawEquation = String(formulaStr.formula || formulaStr.math || formulaStr.title || formulaStr.name || '');
+    rawEquation = rawEquation.replace(/->\[([^\]]+)\]/g, '\\xrightarrow{$1}');
+    if (rawEquation.includes('\\') && !rawEquation.includes('$')) {
+      rawEquation = `$${rawEquation}$`;
+    }
     return {
       title: formulaStr.name || formulaStr.title || 'Formula Relation',
       display: formatMathString(rawEquation),

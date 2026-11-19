@@ -510,7 +510,7 @@ export default function ChapterDrillDown({
     <div className="space-y-6 sm:space-y-8 pb-36 md:pb-24 animate-in fade-in duration-300">
       {/* Top Header: Breadcrumbs & Subchapter Dropdown */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5 sm:gap-4 border-b border-[var(--border-default)] pb-4 sm:pb-6">
-        <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
           <button
             onClick={onBackToChapters}
             className="p-2 sm:p-2.5 rounded-xl border border-[var(--border-default)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shrink-0 shadow-xs cursor-pointer"
@@ -518,7 +518,7 @@ export default function ChapterDrillDown({
           >
             <ArrowLeft size={16} />
           </button>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] font-mono">
                 <span className="truncate">{subject.name}</span>
@@ -536,18 +536,18 @@ export default function ChapterDrillDown({
                 />
               )}
             </div>
-            <h2 className="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] mt-0.5 line-clamp-2 sm:truncate leading-tight">
+            <h2 className="font-serif text-lg sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] mt-0.5 leading-tight break-words">
               {chapter.title}
             </h2>
           </div>
         </div>
 
         {/* Subchapter Selector Dropdown */}
-        <div className="relative w-full md:w-auto">
+        <div className="relative w-full md:w-80 lg:w-96 shrink-0 max-w-full">
           <CustomSelect
             value={currentSubchapter.id}
             onChange={(e) => onSelectSubchapter(e.target.value)}
-            className="w-full md:w-96 bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
+            className="w-full bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
           >
             {chapter.subchapters.map((sub) => {
               const subCompleted = completedSubchapters.includes(sub.id);
@@ -572,11 +572,11 @@ export default function ChapterDrillDown({
 
       {/* Subchapter Title Banner (Pinterest Style with soft accent bar) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] shadow-xs">
-        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
           <div className="w-8 h-8 rounded-xl bg-[var(--accent-primary)]/15 flex items-center justify-center text-[var(--accent-primary)] shrink-0">
             <BookOpen size={16} />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
                 Active NCERT Subtopic
@@ -597,7 +597,7 @@ export default function ChapterDrillDown({
                 />
               )}
             </div>
-            <h3 className="font-serif text-sm sm:text-lg md:text-xl font-bold text-[var(--text-primary)] line-clamp-2 sm:truncate leading-snug">
+            <h3 className="font-serif text-sm sm:text-lg md:text-xl font-bold text-[var(--text-primary)] leading-snug break-words">
               {currentSubchapter.title}
             </h3>
           </div>

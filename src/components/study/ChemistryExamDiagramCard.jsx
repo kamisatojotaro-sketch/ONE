@@ -787,6 +787,165 @@ export default function ChemistryExamDiagramCard({ diagramId, title, subtitle })
           </div>
         );
 
+      case 'glucose-five-reactions':
+        return (
+          <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-3">
+            {[
+              {
+                num: '1',
+                proof: 'Proves 6 Carbons in a Straight Chain',
+                reagent: 'HI, Heat (Δ)',
+                cond: 'Prolonged heating',
+                linearProduct: 'CH₃—CH₂—CH₂—CH₂—CH₂—CH₃',
+                productName: 'n-Hexane',
+              },
+              {
+                num: '2',
+                proof: 'Proves Presence of Carbonyl (>C=O) Group',
+                reagent: 'NH₂OH (or HCN)',
+                cond: '-H₂O',
+                top: 'CH = N—OH',
+                middle: '(CHOH)₄',
+                bottom: 'CH₂OH',
+                highlight: 'top',
+                productName: 'Glucose oxime (or Glucose cyanohydrin with HCN)',
+              },
+              {
+                num: '3',
+                proof: 'Proves Carbonyl is an Aldehyde (–CHO) Group',
+                reagent: 'Br₂ water (Br₂ / H₂O)',
+                cond: 'Mild oxidation [O]',
+                top: 'COOH',
+                middle: '(CHOH)₄',
+                bottom: 'CH₂OH',
+                highlight: 'top',
+                productName: 'Gluconic acid',
+              },
+              {
+                num: '4',
+                proof: 'Proves Presence of Five –OH Groups',
+                reagent: '5 (CH₃CO)₂O (Acetic anhydride)',
+                cond: 'Acetylation',
+                top: 'CHO',
+                middle: '(CH—O—COCH₃)₄',
+                bottom: 'CH₂—O—COCH₃',
+                highlight: 'mid-bot',
+                productName: 'Glucose pentaacetate',
+              },
+              {
+                num: '5',
+                proof: 'Proves Presence of One Primary (1°) Alcoholic (–CH₂OH) Group',
+                reagent: 'Conc. HNO₃',
+                cond: 'Strong oxidation [O]',
+                top: 'COOH',
+                middle: '(CHOH)₄',
+                bottom: 'COOH',
+                highlight: 'top-bot',
+                productName: 'Saccharic acid (Glucaric acid)',
+              },
+            ].map((rxn) => (
+              <div
+                key={rxn.num}
+                className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] space-y-3"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)]">
+                      Reaction {rxn.num}
+                    </span>
+                    <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                      {rxn.proof}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-5 overflow-x-auto py-1">
+                  {/* Left: D-Glucose Vertical Structure */}
+                  <div className="inline-flex flex-col items-center px-3.5 py-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] min-w-[115px]">
+                    <div className="flex flex-col items-center font-mono text-xs sm:text-sm font-bold leading-none text-[var(--text-primary)]">
+                      <span className="px-1.5 py-0.5">CHO</span>
+                      <span className="w-[1.5px] h-2.5 bg-[var(--text-muted)] my-0.5 block" />
+                      <span className="px-1.5 py-0.5">(CHOH)₄</span>
+                      <span className="w-[1.5px] h-2.5 bg-[var(--text-muted)] my-0.5 block" />
+                      <span className="px-1.5 py-0.5">CH₂OH</span>
+                    </div>
+                    <span className="mt-2 px-2 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-sans text-[10px] font-semibold text-[var(--text-secondary)]">
+                      D-Glucose
+                    </span>
+                  </div>
+
+                  {/* Center: Reagent Over Arrow */}
+                  <div className="inline-flex flex-col items-center justify-center min-w-[125px] sm:min-w-[155px] px-2">
+                    <span className="mb-1 px-2.5 py-0.5 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-default)] font-mono text-[10px] sm:text-xs font-bold text-[var(--accent-primary)] text-center">
+                      {rxn.reagent}
+                    </span>
+                    <div className="w-full flex items-center">
+                      <div className="h-[2px] flex-1 bg-[var(--accent-primary)] rounded-l-full" />
+                      <svg width="10" height="10" viewBox="0 0 10 10" className="text-[var(--accent-primary)] shrink-0 -ml-0.5">
+                        <polygon points="0,1 10,5 0,9" fill="currentColor" />
+                      </svg>
+                    </div>
+                    {rxn.cond && (
+                      <span className="mt-1 font-sans text-[10px] text-[var(--text-muted)] italic">
+                        {rxn.cond}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Right: Product Structure (Linear for n-Hexane or Vertical for others) */}
+                  {rxn.linearProduct ? (
+                    <div className="inline-flex flex-col items-center justify-center px-4 py-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)]">
+                      <span className="font-mono text-xs sm:text-sm font-bold text-[var(--accent-primary)] px-2 py-1 rounded-md bg-[var(--accent-primary)]/10 border border-[var(--accent-primary)]/30">
+                        {rxn.linearProduct}
+                      </span>
+                      <span className="mt-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-sans text-[10px] sm:text-[11px] font-bold text-[var(--accent-primary)]">
+                        {rxn.productName}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="inline-flex flex-col items-center px-3.5 py-2.5 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] min-w-[135px]">
+                      <div className="flex flex-col items-center font-mono text-xs sm:text-sm font-bold leading-none">
+                        <span
+                          className={`px-2 py-0.5 rounded-md ${
+                            rxn.highlight === 'top' || rxn.highlight === 'top-bot'
+                              ? 'bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border border-[var(--accent-primary)]/35'
+                              : 'text-[var(--text-primary)]'
+                          }`}
+                        >
+                          {rxn.top}
+                        </span>
+                        <span className="w-[1.5px] h-2.5 bg-[var(--text-muted)] my-0.5 block" />
+                        <span
+                          className={`px-2 py-0.5 rounded-md ${
+                            rxn.highlight === 'mid-bot'
+                              ? 'bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border border-[var(--accent-primary)]/35'
+                              : 'text-[var(--text-primary)]'
+                          }`}
+                        >
+                          {rxn.middle}
+                        </span>
+                        <span className="w-[1.5px] h-2.5 bg-[var(--text-muted)] my-0.5 block" />
+                        <span
+                          className={`px-2 py-0.5 rounded-md ${
+                            rxn.highlight === 'mid-bot' || rxn.highlight === 'top-bot'
+                              ? 'bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border border-[var(--accent-primary)]/35'
+                              : 'text-[var(--text-primary)]'
+                          }`}
+                        >
+                          {rxn.bottom}
+                        </span>
+                      </div>
+                      <span className="mt-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-sans text-[10px] sm:text-[11px] font-bold text-[var(--accent-primary)] text-center">
+                        {rxn.productName}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+
       default:
         return null;
     }
