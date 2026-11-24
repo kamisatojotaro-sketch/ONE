@@ -247,7 +247,7 @@ export default function BiologyImportantQuestionsModal({
                           onClick={() => {
                             onJumpToSubtopic({
                               subjectId: 'biology',
-                              volumeId: 'bio-vol-2',
+                              volumeId: 'bio-vol-1',
                               chapterId: q.chapterId,
                               subchapterId: `bio-sub-${q.chapterNum}-${q.chapterNum <= 10 ? 6 : 5}`
                             });

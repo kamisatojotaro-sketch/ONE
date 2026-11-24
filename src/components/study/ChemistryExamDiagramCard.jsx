@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BookOpen, ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
 import { isTopicCompleted } from '../../utils/studyTopicTicks';
+import ChemicalReactionDisplay from './ChemicalReactionDisplay';
 
 export default function ChemistryExamDiagramCard({
   diagramId,
@@ -1038,35 +1039,28 @@ export default function ChemistryExamDiagramCard({
 
       case 'diazonium-reaction-map':
         return (
-          <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
-              {[
-                { reagent: '1. Cu₂Cl₂ / HCl or Cu₂Br₂ / HBr', product: 'C₆H₅Cl or C₆H₅Br + N₂', tag: 'Sandmeyer Reaction' },
-                { reagent: '2. Cu / HCl or Cu / HBr', product: 'C₆H₅Cl or C₆H₅Br + N₂ + CuX', tag: 'Gatterman Reaction' },
-                { reagent: '3. CuCN / KCN', product: 'C₆H₅CN (Benzonitrile) + N₂', tag: 'Cyanobenzene' },
-                { reagent: '4. KI (Warm)', product: 'C₆H₅I (Iodobenzene) + KCl + N₂', tag: 'Iodination' },
-                { reagent: '5. HBF₄ then Heat (Δ)', product: 'C₆H₅N₂⁺BF₄⁻ → C₆H₅F (Fluorobenzene)', tag: 'Balz-Schiemann' },
-                { reagent: '6. HBF₄ then NaNO₂ / Cu, Δ', product: 'C₆H₅NO₂ (Nitrobenzene) + N₂ + NaBF₄', tag: 'Nitro Substitution' },
-                { reagent: '7. H₃PO₂ + H₂O or CH₃CH₂OH', product: 'C₆H₆ (Benzene) + N₂ + HCl', tag: 'Deamination to Benzene' },
-                { reagent: '8. H₂O (Warm to 283 K)', product: 'C₆H₅OH (Phenol) + N₂ + HCl', tag: 'Hydrolysis to Phenol' },
-                { reagent: '9. C₆H₅NH₂ (H⁺) or C₆H₅OH (OH⁻)', product: 'p-Aminoazobenzene (Yellow) / p-Hydroxyazobenzene (Orange)', tag: 'Azo Coupling' },
-              ].map((item, idx) => (
-                <div key={idx} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1">
-                  <div className="flex items-center justify-between gap-1.5">
-                    <span className="font-mono text-[10px] font-bold text-[var(--accent-primary)] uppercase">
-                      {item.tag}
-                    </span>
-                    <span className="font-mono text-[10px] text-[var(--text-muted)]">C₆H₅N₂⁺Cl⁻</span>
-                  </div>
-                  <div className="font-mono text-xs font-semibold text-[var(--text-secondary)]">
-                    + {item.reagent}
-                  </div>
-                  <div className="font-serif text-xs font-bold text-[var(--text-primary)] pt-0.5">
-                    → {item.product}
-                  </div>
+          <div className="p-3.5 sm:p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-3">
+            {[
+              { num: '1', tag: 'Sandmeyer Reaction (Chlorobenzene / Bromobenzene)', eq: 'C₆H₅N₂⁺Cl⁻ ->[Cu₂Cl₂ / HCl] C₆H₅Cl (Chlorobenzene) + N₂↑' },
+              { num: '2', tag: 'Gatterman Reaction (Copper Powder Catalyst)', eq: 'C₆H₅N₂⁺Cl⁻ ->[Cu / HCl] C₆H₅Cl (Chlorobenzene) + N₂↑ + CuX' },
+              { num: '3', tag: 'Replacement by Cyanide (–CN / Benzonitrile)', eq: 'C₆H₅N₂⁺Cl⁻ ->[CuCN / KCN] C₆H₅CN (Benzonitrile) + N₂↑' },
+              { num: '4', tag: 'Replacement by Iodide (Iodobenzene)', eq: 'C₆H₅N₂⁺Cl⁻ + KI ->[Warm] C₆H₅I (Iodobenzene) + KCl + N₂↑' },
+              { num: '5', tag: 'Balz-Schiemann Reaction (Fluorobenzene)', eq: 'C₆H₅N₂⁺Cl⁻ + HBF₄ ->[Heat (Δ)] C₆H₅F (Fluorobenzene) + BF₃ + N₂↑' },
+              { num: '6', tag: 'Replacement by Nitro Group (Nitrobenzene)', eq: 'C₆H₅N₂⁺Cl⁻ + HBF₄ ->[NaNO₂ / Cu, Δ] C₆H₅NO₂ (Nitrobenzene) + N₂↑ + NaBF₄' },
+              { num: '7', tag: 'Deamination / Reduction to Benzene', eq: 'C₆H₅N₂⁺Cl⁻ + H₃PO₂ + H₂O ->[Cu⁺] C₆H₆ (Benzene) + N₂↑ + H₃PO₃ + HCl' },
+              { num: '8', tag: 'Hydrolysis to Phenol (Warming to 283 K)', eq: 'C₆H₅N₂⁺Cl⁻ + H₂O ->[283 K (Warm)] C₆H₅OH (Phenol) + N₂↑ + HCl' },
+              { num: '9', tag: 'Azo Coupling Reaction (Orange & Yellow Azo Dyes)', eq: 'C₆H₅N₂⁺Cl⁻ + C₆H₅OH ->[OH⁻ (pH 9–10)] C₆H₅–N=N–C₆H₄OH (p-Hydroxyazobenzene, Orange Dye) + HCl' }
+            ].map((item) => (
+              <div key={item.num} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[11px] font-bold text-[var(--accent-primary)] uppercase">
+                    #{item.num} • {item.tag}
+                  </span>
+                  <span className="font-mono text-[10px] text-[var(--text-muted)]">2D Structural Pathway</span>
                 </div>
-              ))}
-            </div>
+                <ChemicalReactionDisplay formula={item.eq} />
+              </div>
+            ))}
           </div>
         );
 

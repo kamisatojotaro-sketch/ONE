@@ -562,7 +562,7 @@ export default function FormulaCard({
               {/* Big, Clean Mathematical Typography or Chemical Reaction Structural Display */}
               {meta.reactionEquation ? (
                 <div className="py-3 px-3 sm:px-4 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto scrollbar-none touch-pan-x flex justify-center">
-                  <ChemicalReactionDisplay equation={meta.reactionEquation} />
+                  <ChemicalReactionDisplay formula={meta.reactionEquation} />
                 </div>
               ) : (
                 <div className="py-2 px-2.5 sm:px-3 rounded-xl bg-[var(--bg-base)]/60 border border-[var(--border-subtle)] overflow-x-auto scrollbar-none touch-pan-x">

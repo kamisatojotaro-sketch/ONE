@@ -4,9 +4,18 @@ import { getDefaultPriority } from '../data/priorityData';
 import { getSectionTopicIds, isTopicCompleted } from '../utils/studyTopicTicks';
 
 const STORAGE_KEY = 'one_study_session_v1';
+const NOTES_VERSION_KEY = 'one_notes_version_preference';
 
 export function useStudySession() {
   const [sessionState, setSessionState] = useState(() => {
+    let standaloneSavedVersion = null;
+    try {
+      const v = localStorage.getItem(NOTES_VERSION_KEY);
+      if (v === 'D' || v === 'NON_D') {
+        standaloneSavedVersion = v;
+      }
+    } catch { /* ignore */ }
+
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
@@ -14,7 +23,7 @@ export function useStudySession() {
         const savedVersion =
           parsed.notesVersion === 'D' || parsed.notesVersion === 'NON_D'
             ? parsed.notesVersion
-            : null;
+            : standaloneSavedVersion;
         // Self-heal and validate state so no stale/mismatched IDs can break the app on page refresh
         if (parsed.selectedSubject && getSubjectSyllabus(parsed.selectedSubject, savedVersion === 'D')) {
           const subject = getSubjectSyllabus(parsed.selectedSubject, savedVersion === 'D');
@@ -83,7 +92,7 @@ export function useStudySession() {
     }
     return {
       selectedSubject: null,
-      notesVersion: null,
+      notesVersion: standaloneSavedVersion,
       activeSidebarTab: 'NOTES', // 'NOTES' | 'PYQ' | 'MCQ' | 'PORTIONS'
       selectedVolume: null,
       selectedChapter: null,
@@ -101,6 +110,9 @@ export function useStudySession() {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(sessionState));
+      if (sessionState.notesVersion === 'D' || sessionState.notesVersion === 'NON_D') {
+        localStorage.setItem(NOTES_VERSION_KEY, sessionState.notesVersion);
+      }
     } catch (e) {
       console.error('Error saving study session to storage:', e);
     }

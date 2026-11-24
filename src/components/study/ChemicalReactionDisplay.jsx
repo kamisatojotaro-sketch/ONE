@@ -274,9 +274,12 @@ export function parseReactionSegments(rawLine = '') {
         return `->[${above}]`;
     });
 
-    // Also normalize unicode arrows with parenthetical reagent immediately following: "→(H⁺)" or "—(-H₂O)→"
-    line = line.replace(/[—–-]+\(\s*([^)]+)\s*\)[—–-]*→/g, '->[$1]');
-    line = line.replace(/→\(\s*([^)]+)\s*\)/g, '->[$1]');
+    // Also normalize unicode arrows with parenthetical or bracketed reagent: "→(H⁺)", "──(H⁺)──►", "—[Reagent]→"
+    line = line.replace(/[─—–-]+\(\s*([^)]+)\s*\)[─—–-]*(?:→|►|⟶)/g, '->[$1]');
+    line = line.replace(/[─—–-]+\[\s*([^\]]+)\s*\][─—–-]*(?:→|►|⟶)/g, '->[$1]');
+    line = line.replace(/(?:→|►|⟶)\(\s*([^)]+)\s*\)/g, '->[$1]');
+    line = line.replace(/[─—–-]{2,}(?:→|►|⟶)/g, '->');
+    line = line.replace(/⟶|►/g, '→');
 
     const arrowRegex = /(?:<->|->|⇌|→)(?:\[([^\]]*)\])?(?:\[([^\]]*)\])?/g;
     const segments = [];
@@ -621,8 +624,9 @@ export function isChemicalReactionFormula(formula = '') {
  * Renders one or more chemical reaction equations (separated by ; or \quad | \quad or newlines)
  * as clean structural blocks and reagent-over-arrow visual cards.
  */
-export const ChemicalReactionDisplay = ({ formula = '' }) => {
-    const rawEquations = String(formula)
+export const ChemicalReactionDisplay = ({ formula = '', equation = '' }) => {
+    const sourceFormula = formula || equation || '';
+    const rawEquations = String(sourceFormula)
         .split(/(?:\\quad\s*\|\s*\\quad|\s+\|\s+|;\s+(?=[A-Z0-9\\]))/g)
         .map((eq) => eq.trim())
         .filter(Boolean);

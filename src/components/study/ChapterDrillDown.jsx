@@ -1565,8 +1565,9 @@ export default function ChapterDrillDown({
 
       {/* Subtopic & Complete Chapter PDF Printout Card + Subtopic Completed Button */}
       <div className="pt-4 sm:pt-6 pb-8 sm:pb-12 space-y-4">
-        <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-          <div className="flex items-start gap-3 min-w-0 flex-1">
+        {/* Subtopic & Complete Chapter PDF Printout Card */}
+        <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4">
+          <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-[var(--accent-primary)]/15 border border-[var(--accent-primary)]/30 flex items-center justify-center text-[var(--accent-primary)] shrink-0 mt-0.5">
               <Printer size={18} />
             </div>
@@ -1574,7 +1575,7 @@ export default function ChapterDrillDown({
               <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--accent-primary)] font-bold block">
                 Subtopic &amp; Full Chapter PDF Printout
               </span>
-              <h5 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug break-words">
+              <h5 className="font-serif text-base sm:text-lg font-bold text-[var(--text-primary)] leading-snug">
                 Print / Download PDF: {currentSubchapter.title} or All of Ch {chapter.number}: {chapter.title}
               </h5>
               <p className="font-sans text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -1583,11 +1584,11 @@ export default function ChapterDrillDown({
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto shrink-0">
+          <div className="flex flex-wrap items-center gap-2.5 pt-1">
             <button
               type="button"
               onClick={handlePrintSubtopicPdf}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] font-sans text-xs sm:text-sm font-bold transition-all shadow-sm hover:shadow-md cursor-pointer shrink-0"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3 rounded-xl bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] font-sans text-xs sm:text-sm font-bold transition-all shadow-sm hover:shadow-md cursor-pointer"
             >
               <Printer size={15} />
               <span>Print / Save Subtopic PDF</span>
@@ -1597,7 +1598,7 @@ export default function ChapterDrillDown({
               type="button"
               onClick={handlePrintChapterPdf}
               disabled={isPrintingFullChapter}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-white border border-[var(--accent-primary)]/40 hover:border-[var(--accent-primary)] font-sans text-xs sm:text-sm font-bold transition-all shadow-2xs hover:shadow-md cursor-pointer shrink-0"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--accent-primary)] hover:text-white border border-[var(--accent-primary)]/40 hover:border-[var(--accent-primary)] font-sans text-xs sm:text-sm font-bold transition-all shadow-2xs hover:shadow-md cursor-pointer"
             >
               <FileDown size={15} />
               <span>
@@ -1610,7 +1611,7 @@ export default function ChapterDrillDown({
             <button
               type="button"
               onClick={() => handleOpenCustomPdfSelector('CHAPTER')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--text-primary)] hover:text-white border border-[var(--border-default)] hover:border-[var(--accent-primary)] font-sans text-xs sm:text-sm font-bold transition-all shadow-2xs hover:shadow-md cursor-pointer shrink-0"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--text-primary)] hover:text-white border border-[var(--border-default)] hover:border-[var(--accent-primary)] font-sans text-xs sm:text-sm font-bold transition-all shadow-2xs hover:shadow-md cursor-pointer"
               title="Choose specific subtopics in this chapter or specific chapters of this subject to download as PDF"
             >
               <Layers size={15} />

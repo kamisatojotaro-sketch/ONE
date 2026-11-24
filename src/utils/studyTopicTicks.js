@@ -387,11 +387,18 @@ export function getSectionTopicIds(section, subtopicId, chapterId, subjectId, is
       });
     }
 
-    // 7. Non-Clean Mode Definitions
-    if (!isCleanMode && Array.isArray(pData.oswaalDefinitions)) {
-      pData.oswaalDefinitions.forEach((_, idx) => {
-        ids.push(`${secId}::phy-odef-${idx}`);
-      });
+    // 7. Non-Clean Mode Key Points & Definitions
+    if (!isCleanMode) {
+      if (Array.isArray(pData.keyPoints)) {
+        pData.keyPoints.forEach((_, idx) => {
+          ids.push(`${secId}::phy-kp-${idx}`);
+        });
+      }
+      if (Array.isArray(pData.oswaalDefinitions)) {
+        pData.oswaalDefinitions.forEach((_, idx) => {
+          ids.push(`${secId}::phy-odef-${idx}`);
+        });
+      }
     }
   } else {
     const sData = resolveStructuredSectionData(section, subtopicId, chapterId);

@@ -34,12 +34,6 @@ export default function AppShell({ children }) {
             <NavLink
               key={item.to}
               to={item.to}
-              onClick={() => {
-                if (item.to === '/notes') {
-                  try { sessionStorage.setItem('notes-ask-version', '1'); } catch { /* ignore */ }
-                  window.dispatchEvent(new CustomEvent('open-notes-version-prompt'));
-                }
-              }}
               className={({ isActive }) => `
                 flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer
                 ${isActive 
@@ -102,12 +96,6 @@ export default function AppShell({ children }) {
             <NavLink
               key={item.to}
               to={item.to}
-              onClick={() => {
-                if (item.to === '/notes') {
-                  try { sessionStorage.setItem('notes-ask-version', '1'); } catch { /* ignore */ }
-                  window.dispatchEvent(new CustomEvent('open-notes-version-prompt'));
-                }
-              }}
               className={({ isActive }) => `
                 flex flex-col items-center justify-center flex-1 py-1 px-0.5 rounded-lg transition-all
                 ${isActive ? 'text-[var(--accent-primary)] font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'}

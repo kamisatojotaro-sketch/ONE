@@ -10,9 +10,6 @@ import StatusBadge from '../components/shared/StatusBadge';
 export default function Home() {
   const navigate = useNavigate();
   const goTo = (route) => {
-    if (route === '/notes') {
-      try { sessionStorage.setItem('notes-ask-version', '1'); } catch { /* ignore */ }
-    }
     navigate(route);
   };
   const { games = [] } = useGames();

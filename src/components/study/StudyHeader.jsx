@@ -65,16 +65,6 @@ export default function StudyHeader({
                 <span>Imp Qs</span>
               </button>
             )}
-            {selectedSubject === 'biology' && onOpenBiologyImportantQuestions && (
-              <button
-                onClick={() => onOpenBiologyImportantQuestions()}
-                className="px-2.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] text-xs font-medium hover:bg-[var(--bg-surface-hover)] transition-all min-h-[36px] flex items-center gap-1.5 touch-manipulation cursor-pointer"
-                title="Open Biology Important & Repeated Past Board Questions (Ch 9–13)"
-              >
-                <BookOpen size={14} className="text-[var(--accent-primary)]" />
-                <span>Imp Qs (Ch 9–13)</span>
-              </button>
-            )}
             <button
               onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(selectedSubject)}
               className="p-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--accent-primary)] hover:bg-[var(--bg-surface-hover)] transition-all min-w-[36px] min-h-[36px] flex items-center justify-center touch-manipulation cursor-pointer"
@@ -106,16 +96,6 @@ export default function StudyHeader({
               <span>Important Questions</span>
             </button>
           )}
-          {selectedSubject === 'biology' && onOpenBiologyImportantQuestions && (
-            <button
-              onClick={() => onOpenBiologyImportantQuestions()}
-              className="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-[var(--text-primary)] font-medium text-xs sm:text-sm transition-all hover:shadow-xs cursor-pointer"
-              title="Open Biology Important & Repeated Past Board Questions (Ch 9–13)"
-            >
-              <BookOpen size={14} className="text-[var(--accent-primary)] shrink-0" />
-              <span>Important Questions (Ch 9–13)</span>
-            </button>
-          )}
 
           {/* Subject Search Button */}
           <button
@@ -145,20 +125,22 @@ export default function StudyHeader({
 
         {/* Bottom/Right: Volume Dropdown + Timer Widget */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap items-center gap-2 sm:gap-3 shrink-0">
-          {/* NCERT Volume Dropdown */}
-          <div className="relative w-full lg:w-auto">
-            <CustomSelect
-              value={selectedVolume || ''}
-              onChange={(e) => onSelectVolume(e.target.value)}
-              className="w-full lg:min-w-[230px] bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
-            >
-              {subject.volumes.map((vol) => (
-                <option key={vol.id} value={vol.id}>
-                  {vol.title}
-                </option>
-              ))}
-            </CustomSelect>
-          </div>
+          {/* NCERT Volume Dropdown (Only shown when a subject has multiple volumes) */}
+          {subject.volumes.length > 1 && (
+            <div className="relative w-full lg:w-auto">
+              <CustomSelect
+                value={selectedVolume || ''}
+                onChange={(e) => onSelectVolume(e.target.value)}
+                className="w-full lg:min-w-[230px] bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl font-medium text-xs sm:text-sm hover:border-[var(--accent-primary)] shadow-2xs"
+              >
+                {subject.volumes.map((vol) => (
+                  <option key={vol.id} value={vol.id}>
+                    {vol.title}
+                  </option>
+                ))}
+              </CustomSelect>
+            </div>
+          )}
 
           {/* Study Timer Widget */}
           <div className="flex items-center justify-between gap-2.5 sm:gap-3 bg-[var(--bg-elevated)] border border-[var(--border-default)] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl">

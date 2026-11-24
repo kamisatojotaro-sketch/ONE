@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
+import { ChevronDown, ChevronUp, Sparkles, CheckCircle2, Circle } from 'lucide-react';
+import { isTopicCompleted } from '../../utils/studyTopicTicks';
 
 /**
  * Clean, exam-ready SVG diagrams for NCERT Class 12 Biology Volume 2 (Chapters 9–13)
  * Important & Repeated Past Board Questions + User's Handwritten/Textbook Marked Notes.
  */
-export default function BiologyExamDiagramCard({ diagramId, title, subtitle }) {
+export default function BiologyExamDiagramCard({
+  diagramId,
+  title,
+  subtitle,
+  sectionId = null,
+  completedSections = [],
+  onToggleTopic = null,
+  allSectionTopicIds = []
+}) {
   const [isMinimized, setIsMinimized] = useState(false);
+  const topicId = sectionId ? `${sectionId}::vdiag-${diagramId}` : null;
+  const isDone = topicId ? isTopicCompleted(topicId, sectionId, completedSections) : false;
 
   const renderSvg = () => {
     switch (diagramId) {
@@ -298,7 +309,11 @@ export default function BiologyExamDiagramCard({ diagramId, title, subtitle }) {
   if (!content) return null;
 
   return (
-    <div className="p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3">
+    <div
+      className={`p-4 sm:p-5 rounded-2xl bg-[var(--bg-elevated)] border shadow-xs space-y-3 transition-all ${
+        isDone ? 'border-[var(--accent-primary)]' : 'border-[var(--border-default)]'
+      }`}
+    >
       <div className="flex items-center justify-between gap-2">
         <button
           type="button"
@@ -316,15 +331,31 @@ export default function BiologyExamDiagramCard({ diagramId, title, subtitle }) {
           </div>
         </button>
 
-        <button
-          type="button"
-          data-no-print="true"
-          onClick={() => setIsMinimized((p) => !p)}
-          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] font-mono font-bold text-[var(--accent-primary)] transition-colors cursor-pointer shrink-0"
-        >
-          <span>{isMinimized ? 'Expand' : 'Minimize'}</span>
-          {isMinimized ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
-        </button>
+        <div className="flex items-center gap-2 shrink-0" data-no-print="true">
+          {topicId && onToggleTopic && (
+            <button
+              type="button"
+              onClick={() => onToggleTopic(topicId, sectionId, allSectionTopicIds)}
+              className={`p-1.5 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+                isDone
+                  ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                  : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+              }`}
+              title={isDone ? 'Mark diagram incomplete' : 'Mark diagram completed'}
+            >
+              {isDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setIsMinimized((p) => !p)}
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] font-mono font-bold text-[var(--accent-primary)] transition-colors cursor-pointer shrink-0"
+          >
+            <span>{isMinimized ? 'Expand' : 'Minimize'}</span>
+            {isMinimized ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+          </button>
+        </div>
       </div>
 
       <div data-print-expand="true" className={isMinimized ? 'hidden' : 'block'}>

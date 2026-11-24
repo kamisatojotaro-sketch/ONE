@@ -218,6 +218,10 @@ export default function StructuredSectionView({
                 diagramId={diag.id}
                 title={diag.title}
                 subtitle={diag.subtitle}
+                sectionId={secId}
+                completedSections={completedSections}
+                onToggleTopic={onToggleTopic}
+                allSectionTopicIds={allSectionTopicIds}
               />
             ) : (
               <ChemistryExamDiagramCard
@@ -825,16 +829,13 @@ export default function StructuredSectionView({
                   </div>
                 </div>
 
-                {/* 5b. Chemical Reaction Equation */}
+                {/* 5b. Chemical Reaction Equation (Rendered via 2D Structural ChemicalReactionDisplay) */}
                 {rxn.equation && (
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] block">
-                      Chemical Equation:
+                      2D Structural Reaction Pathway:
                     </span>
-                    <div 
-                      className="font-mono text-xs sm:text-sm font-bold p-3 rounded-xl bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)] overflow-x-auto whitespace-pre-wrap break-words"
-                      dangerouslySetInnerHTML={{ __html: formatMathString(rxn.equation) }}
-                    />
+                    <ChemicalReactionDisplay formula={rxn.equation} />
                   </div>
                 )}
 

@@ -94,19 +94,13 @@ export const NCERT_SYLLABUS = {
     name: 'Biology',
     code: '044',
     accentColor: '#6B7F5E',
-    description: 'Reproduction, Genetics, Evolution, Biotechnology & Ecology',
+    description: 'Reproduction, Genetics, Evolution, Human Health, Microbes, Biotechnology & Ecology',
     volumes: [
       {
         id: 'bio-vol-1',
-        title: 'NCERT Biology Volume 1',
-        subtitle: 'Reproduction, Genetics, Evolution, Human Health & Microbes (Chapters 1–8)',
-        chapters: BIOLOGY_CHAPTERS
-      },
-      {
-        id: 'bio-vol-2',
-        title: 'NCERT Biology Volume 2',
-        subtitle: 'Biotechnology Principles & Applications, Organisms, Ecosystem & Biodiversity (Chapters 9–13)',
-        chapters: BIOLOGY_CHAPTERS_VOL2
+        title: 'NCERT Class 12 Biology',
+        subtitle: 'Reproduction, Genetics, Evolution, Human Welfare, Biotechnology & Ecology (Chapters 1–13)',
+        chapters: [...BIOLOGY_CHAPTERS, ...BIOLOGY_CHAPTERS_VOL2]
       }
     ]
   },

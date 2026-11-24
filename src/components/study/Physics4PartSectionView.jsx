@@ -490,11 +490,37 @@ export default function Physics4PartSectionView({
                     );
                   })}
                 </div>
-              ) : (
-                <div className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)] break-words">
-                  <FormattedLatex content={sectionDerivationText} />
-                </div>
-              )}
+              ) : (() => {
+                const dTopicId = secId ? `${secId}::phy-drv-0` : null;
+                const isDrvDone = dTopicId ? isTopicCompleted(dTopicId, secId, completedSections) : false;
+                return (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40">
+                        DERIVATION #1
+                      </span>
+                      {dTopicId && onToggleTopic && (
+                        <button
+                          type="button"
+                          data-no-print="true"
+                          onClick={() => onToggleTopic(dTopicId, secId, allSectionTopicIds)}
+                          className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                            isDrvDone
+                              ? 'bg-emerald-600 text-white shadow-2xs scale-105'
+                              : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-emerald-500 hover:text-emerald-600'
+                          }`}
+                          title={isDrvDone ? 'Mark Derivation incomplete' : 'Mark Derivation completed'}
+                        >
+                          {isDrvDone ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                        </button>
+                      )}
+                    </div>
+                    <div className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)] break-words">
+                      <FormattedLatex content={sectionDerivationText} />
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         );
@@ -580,28 +606,74 @@ export default function Physics4PartSectionView({
       {/* ==================================================================== */}
       {/* PART 4: KEY POINTS, KEYWORDS & BLUEPRINT */}
       {/* ==================================================================== */}
-      {!isCleanMode && (
+      {!isCleanMode && (() => {
+        const pKpTopicIds = secId && keyPoints ? keyPoints.map((_, idx) => `${secId}::phy-kp-${idx}`) : [];
+        const pKpDoneCount = secId
+          ? pKpTopicIds.filter((tId) => isTopicCompleted(tId, secId, completedSections)).length
+          : 0;
+        const allPKpDone = secId && pKpTopicIds.length > 0 && pKpDoneCount === pKpTopicIds.length;
+
+        return (
       <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs space-y-4">
-        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5 gap-2 flex-wrap">
           <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
             <Sparkles size={16} />
-            <span>Part 4: Key Points & Examiner Keywords</span>
+            <span>Part 4: Key Points &amp; Examiner Keywords ({keyPoints?.length || 0})</span>
           </div>
-          <span className="text-[10px] font-mono text-[var(--text-muted)]">
-            High-Yield Keywords
-          </span>
+          <div className="flex items-center gap-2" data-no-print="true">
+            {secId && onToggleTopicGroup && pKpTopicIds.length > 0 && (
+              <button
+                type="button"
+                onClick={() => onToggleTopicGroup(pKpTopicIds, secId, allSectionTopicIds)}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                  allPKpDone
+                    ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                    : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)]'
+                }`}
+              >
+                {allPKpDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+                <span>{pKpDoneCount}/{pKpTopicIds.length}</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {keyPoints && keyPoints.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {keyPoints.map((kw, idx) => (
-              <span 
-                key={idx}
-                className="px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--text-primary)] font-medium"
-              >
-                {kw}
-              </span>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {keyPoints.map((kw, idx) => {
+              const kwTopicId = secId ? `${secId}::phy-kp-${idx}` : null;
+              const isKwDone = kwTopicId ? isTopicCompleted(kwTopicId, secId, completedSections) : false;
+
+              return (
+                <div
+                  key={idx}
+                  className={`flex items-center justify-between gap-2 px-3 py-2 rounded-xl border text-xs font-mono text-[var(--text-primary)] font-medium transition-all ${
+                    isKwDone ? 'bg-[var(--bg-elevated)] border-[var(--accent-primary)]' : 'bg-[var(--bg-elevated)]/60 border-[var(--border-subtle)]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <span className="px-1.5 py-0.5 rounded bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-[10px] font-bold text-[var(--accent-primary)] shrink-0">
+                      #{idx + 1}
+                    </span>
+                    <span className="truncate">{kw}</span>
+                  </div>
+                  {kwTopicId && onToggleTopic && (
+                    <button
+                      type="button"
+                      data-no-print="true"
+                      onClick={() => onToggleTopic(kwTopicId, secId, allSectionTopicIds)}
+                      className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                        isKwDone
+                          ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                          : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                      }`}
+                    >
+                      {isKwDone ? <CheckCircle2 size={14} /> : <Circle size={14} />}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
 
@@ -618,7 +690,8 @@ export default function Physics4PartSectionView({
           </div>
         )}
       </div>
-      )}
+        );
+      })()}
 
       {/* ==================================================================== */}
       {/* DEDICATED TERMS & VARIABLES GLOSSARY (Shunt, Epsilon, Phi, etc.) */}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Sparkles, ArrowRight, BookOpen, Layers, CheckCircle2, AlertCircle, Info, ChevronDown, ChevronUp, Zap, Scale } from 'lucide-react';
 import { REACTION_DIAGRAMS } from '../../data/reactionDiagramsData';
+import ChemicalReactionDisplay from './ChemicalReactionDisplay';
 
 // Reusable SVG Chemical Structure Drawings
 function SvgBenzene({ label = '', sub = '', color = 'var(--text-primary)' }) {
@@ -1354,29 +1355,27 @@ export function SingleReactionDiagram({ rxn, isCleanMode = false }) {
 
         {/* Generic or Table Style Representation for other diagram types */}
         {!['cumene', 'reimer-tiemann', 'kolbe', 'sn2', 'sn1', 'saytzeff', 'daniell-cell', 'kmno4-flow', 'k2cr2o7-flow', 'williamson', 'dehydration', 'chromate-dichromate', 'corrosion', 'lead-storage', 'fuel-cell', 'kohlrausch-graph', 'reverse-osmosis', 'ideal-vs-nonideal', 'raoult-deviations', 'lanthanoid-contraction', 'sandmeyer', 'dows-process', 'phosgene', 'dehydrogenation', 'faraday-electrolysis', 'faraday-induction'].includes(rxn.diagramType) && (
-          <div className="space-y-2 p-2">
+          <div className="space-y-3 p-2">
             {rxn.equation && (
-              <div className="font-mono text-sm sm:text-base font-bold p-3 rounded-xl bg-[var(--bg-elevated)] text-[var(--accent-primary)] text-center overflow-x-auto">
-                {rxn.equation}
-              </div>
+              <ChemicalReactionDisplay formula={rxn.equation} />
             )}
             {rxn.reactions && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
+              <div className="grid grid-cols-1 gap-3 pt-1">
                 {rxn.reactions.map((r, idx) => (
-                  <div key={idx} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1">
+                  <div key={idx} className="p-3.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-2">
                     <span className="text-xs font-mono font-bold text-[var(--accent-primary)] block">{r.name}</span>
-                    <div className="font-mono text-xs font-bold text-[var(--text-primary)]">{r.equation}</div>
+                    <ChemicalReactionDisplay formula={r.equation} />
                     {r.note && <p className="text-[11px] text-[var(--text-secondary)]">{r.note}</p>}
                   </div>
                 ))}
               </div>
             )}
             {rxn.classes && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 pt-1">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
                 {rxn.classes.map((cls, idx) => (
-                  <div key={idx} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1.5">
+                  <div key={idx} className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-2">
                     <span className="text-xs font-mono font-bold text-[var(--text-primary)] block">{cls.class}</span>
-                    <div className="font-mono text-[11px] text-[var(--accent-primary)]">{cls.example}</div>
+                    <ChemicalReactionDisplay formula={cls.example} />
                     <p className="text-xs text-[var(--text-secondary)] leading-snug">{cls.observation}</p>
                   </div>
                 ))}

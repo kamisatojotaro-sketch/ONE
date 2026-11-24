@@ -21,15 +21,13 @@ export default function Notes() {
   const session = useStudySession();
 
   // Notes Version Prompt State ('D' = Clean UI, 'NON_D' = Full UI)
-  // Opens on first visit, and every time the user arrives via a "Notes" click
-  // (AppShell / Home set a sessionStorage flag because Notes isn't mounted yet at click time).
+  // Remembers the user's chosen version across visits in localStorage so it only prompts if no version has been chosen yet
+  // (or when the user clicks "Choose Version" in the top bar).
   const [isVersionPromptOpen, setIsVersionPromptOpen] = useState(() => {
-    let askFlag = false;
     try {
-      askFlag = sessionStorage.getItem('notes-ask-version') === '1';
       sessionStorage.removeItem('notes-ask-version');
     } catch { /* ignore */ }
-    return askFlag || !session.notesVersion;
+    return !session.notesVersion;
   });
 
   useEffect(() => {
@@ -237,36 +235,7 @@ export default function Notes() {
             onOpenUniversalSearch={handleOpenUniversalSearch}
             onOpenSubjectSearch={handleOpenSubjectSearch}
             onOpenPhysicsImportantQuestions={() => handleOpenPhysicsImpModal('THEORY_DERIVATIONS', 'ALL')}
-            onOpenBiologyImportantQuestions={() => handleOpenBiologyImpModal('ALL')}
           />
-
-          {/* Top Pop-up Bar for Biology Important & Repeated Past Board Questions (Ch 9–13) */}
-          {session.selectedSubject === 'biology' && (
-            <div className="max-w-4xl w-full mx-auto mb-3.5 sm:mb-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] px-3.5 py-3 sm:px-5 sm:py-3.5 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--accent-primary)] flex items-center justify-center shrink-0">
-                  <Sparkles size={16} />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug truncate">
-                    Important &amp; Repeated Past Board Questions (Ch 9–13)
-                  </h3>
-                  <p className="text-[11px] sm:text-xs text-[var(--text-muted)] truncate">
-                    21 point-wise past paper questions &amp; your crossed pages (DFC vs GFC &amp; Standing Crop pg 211, S-Sigmoid growth, Pyramids &amp; Humboldt curve)
-                  </p>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => handleOpenBiologyImpModal('ALL')}
-                className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--bg-surface-hover)] text-[var(--text-primary)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-xs font-semibold transition-colors shrink-0 cursor-pointer flex items-center justify-center gap-1.5"
-              >
-                <BookOpen size={13} className="text-[var(--accent-primary)] shrink-0" />
-                <span>Open Important Questions (Ch 9–13)</span>
-              </button>
-            </div>
-          )}
 
           {/* Clean UI Top Pop-up Bar for Recently Added Physics Important Questions */}
           {isCleanMode && session.selectedSubject === 'physics' && (
