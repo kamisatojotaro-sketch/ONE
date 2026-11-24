@@ -295,18 +295,23 @@ export const CLEAN_CHEMISTRY_VOL1_CHAPTERS = [
               'Covers every definition requested by Mam in Chemical Kinetics: Rate of reaction, Rate law, Order of reaction, Molecularity of a reaction, Distinguish between Order and Molecularity (at least 3–4 points), Factors affecting rate, and Pseudo-first-order reaction formula.',
             keyFormulas: [
               {
-                name: 'Rate Law & Order of Reaction (n = x + y)',
+                name: '1. Rate of a Reaction (Average & Instantaneous Rate)',
+                formula: '\\text{Rate} = -\\frac{\\Delta [R]}{\\Delta t} = +\\frac{\\Delta [P]}{\\Delta t} \\quad \\Big| \\quad r_{\\text{inst}} = -\\frac{1}{a}\\frac{d[A]}{dt} = -\\frac{1}{b}\\frac{d[B]}{dt} = +\\frac{1}{c}\\frac{d[C]}{dt}',
+                description: 'For N₂ + 3H₂ → 2NH₃: Rate = −d[N₂]/dt = −(1/3)d[H₂]/dt = +(1/2)d[NH₃]/dt  |  SI Unit: mol L⁻¹ s⁻¹ (or atm s⁻¹ for gases).'
+              },
+              {
+                name: '2. Rate Law & Order of Reaction (n = x + y)',
                 formula: '\\text{Rate} = k[A]^x[B]^y \\quad \\Rightarrow \\quad \\text{Order } (n) = x + y',
                 description: 'x and y are experimentally determined powers of reactant concentrations; k is the rate constant.'
               },
               {
-                name: 'General Unit of Rate Constant (k) for Order n',
+                name: '3. General Unit of Rate Constant (k) for Order n',
                 formula: '\\text{Unit of } k = (\\text{mol L}^{-1})^{1-n}\\text{s}^{-1}',
                 description: 'Zero Order (n=0): mol L⁻¹ s⁻¹  |  First Order (n=1): s⁻¹  |  Second Order (n=2): mol⁻¹ L s⁻¹'
               },
               {
-                name: 'Pseudo-First-Order Reaction Formula (Acid Hydrolysis of Ester)',
-                reaction: 'CH₃COOC₂H₅ (Ethyl acetate) + H₂O (Excess)  ──(H⁺)──►  CH₃COOH (Acetic acid) + C₂H₅OH (Ethanol)',
+                name: '4. Pseudo-First-Order Reaction Formula (Acid Hydrolysis of Ester)',
+                reaction: 'CH₃COOC₂H₅ (Ethyl acetate) + H₂O (Excess) ->[H⁺] CH₃COOH (Acetic acid) + C₂H₅OH (Ethanol)',
                 description: 'Since water is present in large excess, [H₂O] remains practically constant: Rate = k′[CH₃COOC₂H₅][H₂O] = k[CH₃COOC₂H₅] (Order = 1, Molecularity = 2).'
               }
             ],
@@ -316,27 +321,27 @@ export const CLEAN_CHEMISTRY_VOL1_CHAPTERS = [
                 {
                   term: 'Rate of a Reaction',
                   definition:
-                    'The change in molar concentration of either a reactant or a product per unit time. Unit: mol L⁻¹ s⁻¹ (or atm s⁻¹ for gases). For N₂ + 3H₂ → 2NH₃, Rate = -d[N₂]/dt = -(1/3)d[H₂]/dt = +(1/2)d[NH₃]/dt.'
+                    '• The change in molar concentration of either a reactant or a product per unit time.\n• Formula: Rate = −Δ[R]/Δt = +Δ[P]/Δt (Average) and r_inst = −d[R]/dt = +d[P]/dt (Instantaneous).\n• Unit: mol L⁻¹ s⁻¹ (or atm s⁻¹ for gaseous reactions).\n• Example (for N₂ + 3H₂ → 2NH₃): Rate = −d[N₂]/dt = −(1/3)d[H₂]/dt = +(1/2)d[NH₃]/dt.'
                 },
                 {
                   term: 'Rate Law (Rate Expression) & Specific Rate Constant (k)',
                   definition:
-                    'The mathematical expression that denotes the experimentally observed rate of a reaction in terms of the molar concentrations of reactants raised to some powers (which may or may not equal stoichiometric coefficients): Rate = k[A]ˣ[B]ʸ. The rate constant k (specific reaction rate) is equal to the rate of reaction when the concentration of each reactant is unity ([A] = [B] = 1 mol L⁻¹).'
+                    '• Rate Law: The mathematical expression that denotes the experimentally observed rate of a reaction in terms of the molar concentrations of reactants raised to some powers (which may or may not equal stoichiometric coefficients).\n• Formula: Rate = k[A]ˣ[B]ʸ.\n• Specific Rate Constant (k): Equal to the rate of reaction when the molar concentration of each reactant is unity ([A] = [B] = 1 mol L⁻¹).'
                 },
                 {
                   term: 'Order of a Reaction',
                   definition:
-                    'The sum of powers (exponents) of the concentration of the reactants in the rate law expression is called the order of that chemical reaction (Order = x + y). It is an experimental quantity and can be zero, a positive integer, negative, or a fraction.'
+                    '• The sum of powers (exponents) of the concentration of the reactants in the experimentally determined rate law expression.\n• Formula: Order (n) = x + y (where Rate = k[A]ˣ[B]ʸ).\n• It is purely an experimental quantity and can be zero, a positive integer, negative, or a fraction.'
                 },
                 {
                   term: 'Molecularity of a Reaction',
                   definition:
-                    'The number of reacting species (atoms, ions, or molecules) taking part in an elementary reaction which must collide simultaneously in order to bring about a chemical reaction. It is a theoretical concept and is always a positive whole number (1, 2, or 3); it can never be zero or fractional.'
+                    '• The number of reacting species (atoms, ions, or molecules) taking part in an elementary reaction which must collide simultaneously to bring about a chemical reaction.\n• It is a theoretical concept applicable only to elementary (single-step) reactions.\n• It is always a positive whole number (1, 2, or 3) and can never be zero or fractional.'
                 },
                 {
                   term: 'Pseudo-First-Order Reaction & Formula',
                   definition:
-                    'A chemical reaction which is truly of higher order (bimolecular, molecularity = 2) but behaves as a first-order reaction (order = 1) under given conditions because one of the reactants (usually the solvent H₂O) is present in large excess. Examples:\n1. Acid Hydrolysis of Ethyl Acetate: CH₃COOC₂H₅ + H₂O (excess) →(H⁺) CH₃COOH + C₂H₅OH; Formula: Rate = k[CH₃COOC₂H₅].\n2. Inversion of Cane Sugar: C₁₂H₂₂O₁₁ + H₂O (excess) →(H⁺) C₆H₁₂O₆ (Glucose) + C₆H₁₂O₆ (Fructose); Formula: Rate = k[C₁₂H₂₂O₁₁].'
+                    '• A chemical reaction which is truly of higher order (bimolecular, molecularity = 2) but behaves as a first-order reaction (order = 1) because one of the reactants (usually solvent H₂O) is present in large excess.\n• Example 1 (Acid Hydrolysis of Ethyl Acetate): CH₃COOC₂H₅ + H₂O (excess) →(H⁺) CH₃COOH + C₂H₅OH  |  Formula: Rate = k[CH₃COOC₂H₅].\n• Example 2 (Inversion of Cane Sugar): C₁₂H₂₂O₁₁ + H₂O (excess) →(H⁺) C₆H₁₂O₆ (Glucose) + C₆H₁₂O₆ (Fructose)  |  Formula: Rate = k[C₁₂H₂₂O₁₁].'
                 }
               ],
               keyPoints: [

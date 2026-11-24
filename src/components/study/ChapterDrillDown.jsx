@@ -13,6 +13,9 @@ import Physics4PartSectionView from './Physics4PartSectionView';
 import CustomSelect from '../shared/CustomSelect';
 import { getDerivationsByChapter, getDerivationsBySubtopic } from '../../data/physicsDerivationsReference';
 import { getPhysicsSectionEnrichment } from '../../data/physicsSectionEnrichments';
+import { getBiologyImportantQuestionsByChapter } from '../../data/biologyImportantQuestionsData';
+import BiologyExamDiagramCard from './BiologyExamDiagramCard';
+import { getSectionTopicIds, isTopicCompleted } from '../../utils/studyTopicTicks';
 
 const PHYSICS_SUBTOPIC_DIAGRAMS = {
   // Chapter 1: Electric Charges and Fields
@@ -163,6 +166,8 @@ export default function ChapterDrillDown({
   completedSections,
   completedSubchapters,
   onToggleSection,
+  onToggleTopic,
+  onToggleTopicGroup,
   onMarkSubchapterCompleted,
   userNotes,
   onSaveUserNote,
@@ -173,7 +178,9 @@ export default function ChapterDrillDown({
   onOpenWolframEngine,
   isCleanMode = false,
   autoPrintChapterId = null,
-  onClearAutoPrintChapter
+  onClearAutoPrintChapter,
+  autoOpenCustomPdfModal = false,
+  onClearAutoOpenCustomPdfModal
 }) {
   const subject = getSubjectSyllabus(selectedSubject, isCleanMode);
   const [activeNoteEdit, setActiveNoteEdit] = useState(null);
@@ -182,8 +189,14 @@ export default function ChapterDrillDown({
   const [openPracticeSections, setOpenPracticeSections] = useState({});
   const [minimizedSections, setMinimizedSections] = useState({});
   const [isPrintingFullChapter, setIsPrintingFullChapter] = useState(false);
+  const [isCustomPdfModalOpen, setIsCustomPdfModalOpen] = useState(false);
+  const [customPdfScope, setCustomPdfScope] = useState('CHAPTER'); // 'CHAPTER' | 'SUBJECT'
+  const [selectedPdfSubtopicIds, setSelectedPdfSubtopicIds] = useState([]);
+  const [selectedPdfChapterIds, setSelectedPdfChapterIds] = useState([]);
+  const [isPrintingCustomPdf, setIsPrintingCustomPdf] = useState(false);
   const subtopicPrintRef = useRef(null);
   const fullChapterPrintRef = useRef(null);
+  const customPdfPrintRef = useRef(null);
 
   if (!subject) return null;
 
@@ -550,6 +563,93 @@ export default function ChapterDrillDown({
     }
   }, [autoPrintChapterId, chapter, onClearAutoPrintChapter]);
 
+  // All available chapters across this subject (for Subject-wide Custom PDF Selection)
+  const allSubjectChapters = subject.volumes.flatMap((v) =>
+    (v.chapters || []).filter((c) => c.available && c.subchapters && c.subchapters.length > 0)
+  );
+
+  const handleOpenCustomPdfSelector = (initialScope = 'CHAPTER') => {
+    setCustomPdfScope(initialScope);
+    if (chapter?.subchapters) {
+      setSelectedPdfSubtopicIds(chapter.subchapters.map((s) => s.id));
+    }
+    setSelectedPdfChapterIds([chapter.id]);
+    setIsCustomPdfModalOpen(true);
+  };
+
+  useEffect(() => {
+    if (autoOpenCustomPdfModal && chapter) {
+      handleOpenCustomPdfSelector('SUBJECT');
+      onClearAutoOpenCustomPdfModal?.();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoOpenCustomPdfModal, chapter]);
+
+  const togglePdfSubtopicSelection = (subId) => {
+    setSelectedPdfSubtopicIds((prev) =>
+      prev.includes(subId) ? prev.filter((id) => id !== subId) : [...prev, subId]
+    );
+  };
+
+  const togglePdfChapterSelection = (chId) => {
+    setSelectedPdfChapterIds((prev) =>
+      prev.includes(chId) ? prev.filter((id) => id !== chId) : [...prev, chId]
+    );
+  };
+
+  // Resolve list of { chapterObj, subObj } pairs to render in Custom PDF
+  const customPdfItemsToPrint = (() => {
+    if (customPdfScope === 'CHAPTER') {
+      const subSet = new Set(selectedPdfSubtopicIds);
+      return (chapter.subchapters || [])
+        .filter((s) => subSet.has(s.id))
+        .map((s) => ({ chapterObj: chapter, subObj: s }));
+    }
+    const chSet = new Set(selectedPdfChapterIds);
+    const items = [];
+    allSubjectChapters.forEach((ch) => {
+      if (chSet.has(ch.id)) {
+        (ch.subchapters || []).forEach((s) => {
+          items.push({ chapterObj: ch, subObj: s });
+        });
+      }
+    });
+    return items;
+  })();
+
+  const handleTriggerCustomPdfDownload = () => {
+    if (customPdfItemsToPrint.length === 0) return;
+    setIsCustomPdfModalOpen(false);
+    setIsPrintingCustomPdf(true);
+  };
+
+  useEffect(() => {
+    if (!isPrintingCustomPdf) return;
+    const timer = setTimeout(() => {
+      if (customPdfPrintRef.current) {
+        const isSubjectMode = customPdfScope === 'SUBJECT';
+        const selectedChaptersList = allSubjectChapters.filter((c) => selectedPdfChapterIds.includes(c.id));
+        printDomNodeAsPdf(customPdfPrintRef.current, {
+          docTitle: isSubjectMode
+            ? `${subject.name} — Custom Chapters PDF (${selectedChaptersList.map((c) => `Ch ${c.number}`).join(', ')})`
+            : `${subject.name} — Ch ${chapter.number}: ${chapter.title} (${customPdfItemsToPrint.length} Selected Subtopics)`,
+          headerSubtitle: isSubjectMode
+            ? `Custom Subject Handout • ${selectedChaptersList.length} Chapter(s) • ${customPdfItemsToPrint.length} Subtopics`
+            : `Custom Chapter Handout • ${customPdfItemsToPrint.length} of ${chapter.subchapters.length} Subtopics`,
+          headerMainTitle: isSubjectMode
+            ? `${subject.name}: Selected Chapters (${selectedChaptersList.map((c) => `Ch ${c.number}`).join(', ')})`
+            : `Chapter ${chapter.number}: ${chapter.title} (Selected Subtopics)`,
+          subtopicList: customPdfItemsToPrint.map((item) =>
+            isSubjectMode ? `Ch ${item.chapterObj.number} • ${item.subObj.title}` : item.subObj.title
+          )
+        });
+      }
+      setIsPrintingCustomPdf(false);
+    }, 260);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPrintingCustomPdf]);
+
   // Derivation counters and chapter-level derivations bank
   const getSubtopicDerivationCount = (sub) => {
     if (!sub) return 0;
@@ -578,6 +678,55 @@ export default function ChapterDrillDown({
   const totalChapterDerivationsCount =
     selectedSubject === 'physics' ? chapterDerivations.length : chapterSectionDerivations.length;
   const currentSubDrvCount = getSubtopicDerivationCount(currentSubchapter);
+
+  const chapterImportantQuestions =
+    selectedSubject === 'biology' ? getBiologyImportantQuestionsByChapter(chapter.id) : [];
+  const totalChapterImportantQuestionsCount = chapterImportantQuestions.length;
+
+  const renderChapterImportantQuestionsSection = () => {
+    if (totalChapterImportantQuestionsCount === 0) return null;
+    // Find the dedicated important questions subchapter for this chapter if present
+    const impSub = chapter.subchapters.find((s) => s.title.includes('Important & Repeated Past Board Questions'));
+    const impSec = impSub?.sections?.[0];
+
+    return (
+      <section
+        id="chapter-important-questions-section"
+        className="space-y-5 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-[var(--bg-surface)] border-2 border-amber-500/40 shadow-sm"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4">
+          <div className="space-y-1">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/35">
+              ★ PAST BOARD PAPERS &amp; YOUR CROSSED TEXTBOOK NOTES
+            </span>
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[var(--text-primary)]">
+              Important &amp; Repeated Past Board Questions — Ch {chapter.number}: {chapter.title}
+            </h3>
+            <p className="text-xs text-[var(--text-secondary)] font-sans">
+              Dedicated chapter section containing all repeated CBSE Past Board Questions (2015–2025) and your crossed/handwritten reference notes in point-wise format.
+            </p>
+          </div>
+          <span className="self-start sm:self-auto shrink-0 px-3 py-1.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/35 text-xs font-mono font-bold">
+            {totalChapterImportantQuestionsCount} Repeated Question{totalChapterImportantQuestionsCount === 1 ? '' : 's'}
+          </span>
+        </div>
+
+        {impSec ? (
+          <StructuredSectionView
+            section={impSec}
+            subtopicId={impSub.id}
+            chapterId={chapter.id}
+            subjectId={selectedSubject}
+            isCleanMode={isCleanMode}
+            completedSections={completedSections}
+            onToggleTopic={onToggleTopic}
+            onToggleTopicGroup={onToggleTopicGroup}
+            allSectionTopicIds={getSectionTopicIds(impSec, impSub.id, chapter.id, selectedSubject, isCleanMode)}
+          />
+        ) : null}
+      </section>
+    );
+  };
 
   const renderChapterDerivationsSection = () => {
     if (totalChapterDerivationsCount === 0) {
@@ -917,18 +1066,20 @@ export default function ChapterDrillDown({
         </div>
       </div>
 
-      {/* Mode Switcher Banner: General Study vs Chapter Derivations vs Quick Cheat Sheet */}
-      {(!isCleanMode || totalChapterDerivationsCount > 0) && (
+      {/* Mode Switcher Banner: General Study vs Chapter Derivations vs Important Questions vs Quick Cheat Sheet */}
+      {(!isCleanMode || totalChapterDerivationsCount > 0 || totalChapterImportantQuestionsCount > 0) && (
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-xs">
         <div className="flex items-center gap-2.5">
           <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
             chapterStudyMode === 'DERIVATIONS'
               ? 'bg-emerald-600 text-white shadow-xs'
+              : chapterStudyMode === 'IMPORTANT_QUESTIONS'
+              ? 'bg-amber-600 text-white shadow-xs'
               : chapterStudyMode === 'CHEAT_SHEET'
               ? 'bg-[var(--accent-primary)] text-white shadow-xs'
               : 'bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]'
           }`}>
-            {chapterStudyMode === 'DERIVATIONS' ? <Compass size={16} /> : chapterStudyMode === 'CHEAT_SHEET' ? <Zap size={16} /> : <BookOpen size={16} />}
+            {chapterStudyMode === 'DERIVATIONS' ? <Compass size={16} /> : chapterStudyMode === 'IMPORTANT_QUESTIONS' ? <Sparkles size={16} /> : chapterStudyMode === 'CHEAT_SHEET' ? <Zap size={16} /> : <BookOpen size={16} />}
           </div>
           <div>
             <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
@@ -937,6 +1088,8 @@ export default function ChapterDrillDown({
             <h4 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)]">
               {chapterStudyMode === 'DERIVATIONS'
                 ? `All Chapter ${chapter.number} Derivations (${totalChapterDerivationsCount})`
+                : chapterStudyMode === 'IMPORTANT_QUESTIONS'
+                ? `Important & Repeated Past Board Questions (${totalChapterImportantQuestionsCount})`
                 : !isCleanMode && chapterStudyMode === 'CHEAT_SHEET'
                 ? 'Whole-Chapter Quick Cheat Sheet & Memory Boosters'
                 : isCleanMode
@@ -972,6 +1125,19 @@ export default function ChapterDrillDown({
               <span>Derivations ({totalChapterDerivationsCount})</span>
             </button>
           )}
+          {totalChapterImportantQuestionsCount > 0 && (
+            <button
+              onClick={() => onSetChapterStudyMode?.('IMPORTANT_QUESTIONS')}
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer touch-manipulation min-h-[38px] whitespace-nowrap ${
+                chapterStudyMode === 'IMPORTANT_QUESTIONS'
+                  ? 'bg-amber-600 text-white shadow-xs'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              <Sparkles size={13} />
+              <span>Important &amp; Repeated Qs ({totalChapterImportantQuestionsCount})</span>
+            </button>
+          )}
           {!isCleanMode && (
             <button
               onClick={() => onSetChapterStudyMode?.('CHEAT_SHEET')}
@@ -987,6 +1153,12 @@ export default function ChapterDrillDown({
           )}
         </div>
       </div>
+      )}
+
+      {chapterStudyMode === 'IMPORTANT_QUESTIONS' && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          {renderChapterImportantQuestionsSection()}
+        </div>
       )}
 
       {chapterStudyMode === 'DERIVATIONS' && (
@@ -1099,10 +1271,23 @@ export default function ChapterDrillDown({
       )}
 
       {/* Sections List */}
-      {chapterStudyMode !== 'CHEAT_SHEET' && chapterStudyMode !== 'DERIVATIONS' && (
+      {chapterStudyMode !== 'CHEAT_SHEET' && chapterStudyMode !== 'DERIVATIONS' && chapterStudyMode !== 'IMPORTANT_QUESTIONS' && (
       <div ref={subtopicPrintRef} id="subtopic-printable-area" className="space-y-6 sm:space-y-8">
         {currentSubchapter.sections?.map((section) => {
-          const isDone = completedSections.includes(section.id);
+          const sectionTopicIds = getSectionTopicIds(
+            section,
+            currentSubchapter.id,
+            selectedChapter,
+            selectedSubject,
+            isCleanMode
+          );
+          const sectionDoneCount = sectionTopicIds.filter((tId) =>
+            isTopicCompleted(tId, section.id, completedSections)
+          ).length;
+          const isDone =
+            sectionTopicIds.length > 0
+              ? sectionDoneCount === sectionTopicIds.length
+              : completedSections.includes(section.id);
           const hasCustomNote = userNotes[section.id];
           const isEditing = activeNoteEdit === section.id;
           const isRefExpanded = expandedReferences[section.id] !== false; // default expanded in general mode
@@ -1125,6 +1310,9 @@ export default function ChapterDrillDown({
                     <div className="inline-flex max-w-full items-center gap-2 px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[10px] sm:text-[11px] font-mono text-[var(--text-accent)] font-semibold uppercase tracking-wider">
                       <span className="truncate">{currentSubchapter.title}</span>
                     </div>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[10px] font-mono font-bold text-[var(--accent-primary)]">
+                      {sectionDoneCount} / {sectionTopicIds.length} Topics Done
+                    </span>
                     {sectionHasDerivation && (
                       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/35 text-[10px] font-mono font-bold uppercase tracking-wider">
                         📐 DERIVATION
@@ -1153,15 +1341,15 @@ export default function ChapterDrillDown({
                     {isSectionMinimized ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
                   </button>
 
-                  {/* Interactive Clickable Circle Tracker (Pinterest Style Checkbox) */}
+                  {/* Interactive Clickable Circle Tracker (Toggles all independent topics in this section) */}
                   <button
-                    onClick={() => onToggleSection(section.id)}
+                    onClick={() => onToggleSection(section.id, sectionTopicIds)}
                     className={`p-2 sm:p-2.5 rounded-full transition-all duration-300 cursor-pointer flex items-center justify-center shrink-0 ${
                       isDone
                         ? 'bg-[var(--accent-primary)] text-white shadow-md scale-105 sm:scale-110 hover:bg-[var(--accent-primary-hover)]'
                         : 'border-2 border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] hover:scale-105'
                     }`}
-                    title={isDone ? "Mark subtopic incomplete" : "Mark subtopic completed"}
+                    title={isDone ? 'Untick all topics in this section' : 'Tick all topics in this section completed'}
                   >
                     {isDone ? (
                       <CheckCircle2 size={24} className="fill-current text-white stroke-[var(--accent-primary)]" />
@@ -1182,6 +1370,10 @@ export default function ChapterDrillDown({
                   diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[currentSubchapter.id]}
                   diagramSubMode={PHYSICS_SUBTOPIC_SUBMODES[currentSubchapter.id]}
                   isCleanMode={isCleanMode}
+                  completedSections={completedSections}
+                  onToggleTopic={onToggleTopic}
+                  onToggleTopicGroup={onToggleTopicGroup}
+                  allSectionTopicIds={sectionTopicIds}
                 />
               ) : (
                 <>
@@ -1193,6 +1385,10 @@ export default function ChapterDrillDown({
                     chapterId={selectedChapter}
                     subjectId={selectedSubject}
                     isCleanMode={isCleanMode}
+                    completedSections={completedSections}
+                    onToggleTopic={onToggleTopic}
+                    onToggleTopicGroup={onToggleTopicGroup}
+                    allSectionTopicIds={sectionTopicIds}
                   />
 
                   {/* 2. Key Formulas with Variable Breakdown Card */}
@@ -1200,6 +1396,11 @@ export default function ChapterDrillDown({
                     <FormulaCard
                       formulaList={section.keyFormulas}
                       derivations={section.derivations}
+                      sectionId={section.id}
+                      completedSections={completedSections}
+                      onToggleTopic={onToggleTopic}
+                      onToggleTopicGroup={onToggleTopicGroup}
+                      allSectionTopicIds={sectionTopicIds}
                     />
                   )}
 
@@ -1405,6 +1606,16 @@ export default function ChapterDrillDown({
                   : `Download Entire Chapter PDF (${chapter.subchapters.length})`}
               </span>
             </button>
+
+            <button
+              type="button"
+              onClick={() => handleOpenCustomPdfSelector('CHAPTER')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--text-primary)] hover:text-white border border-[var(--border-default)] hover:border-[var(--accent-primary)] font-sans text-xs sm:text-sm font-bold transition-all shadow-2xs hover:shadow-md cursor-pointer shrink-0"
+              title="Choose specific subtopics in this chapter or specific chapters of this subject to download as PDF"
+            >
+              <Layers size={15} />
+              <span>Custom PDF (Select Topics / Chapters)</span>
+            </button>
           </div>
         </div>
 
@@ -1575,6 +1786,312 @@ export default function ChapterDrillDown({
         </div>
       )}
 
+      {/* Offscreen Custom-Selection Render Container (Mounted when generating Custom Selected Subtopics / Chapters PDF) */}
+      {isPrintingCustomPdf && (
+        <div
+          ref={customPdfPrintRef}
+          id="custom-selection-printable-area"
+          className="fixed -left-[9999px] top-0 w-[900px] pointer-events-none opacity-0 space-y-8"
+          aria-hidden="true"
+        >
+          {customPdfItemsToPrint.map(({ chapterObj, subObj }, itemIdx) => (
+            <div
+              key={`${chapterObj.id}-${subObj.id}`}
+              className="space-y-6"
+              style={
+                itemIdx > 0
+                  ? { pageBreakBefore: 'always', breakBefore: 'page' }
+                  : undefined
+              }
+            >
+              <div className="print-subtopic-divider">
+                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--accent-primary)]">
+                  Item {itemIdx + 1} of {customPdfItemsToPrint.length} • Chapter {chapterObj.number}: {chapterObj.title}
+                </div>
+                <h2 className="font-serif text-lg font-bold text-[var(--text-primary)] mt-0.5">
+                  {subObj.title}
+                </h2>
+              </div>
+
+              {subObj.sections?.map((section) => {
+                const hasCustomNote = userNotes[section.id];
+                return (
+                  <div
+                    key={section.id}
+                    className="p-5 rounded-2xl border border-[var(--border-default)] bg-[var(--bg-surface)] space-y-5"
+                  >
+                    <div className="border-b border-[var(--border-subtle)] pb-3">
+                      <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[var(--text-accent)] block mb-1">
+                        Chapter {chapterObj.number}: {chapterObj.title} • {subObj.title}
+                      </span>
+                      <h3 className="font-serif text-xl font-bold text-[var(--text-primary)]">
+                        {section.title}
+                      </h3>
+                    </div>
+
+                    {selectedSubject === 'physics' ? (
+                      <Physics4PartSectionView
+                        section={section}
+                        subtopicId={subObj.id}
+                        chapterId={chapterObj.id}
+                        diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[subObj.id]}
+                        diagramSubMode={PHYSICS_SUBTOPIC_SUBMODES[subObj.id]}
+                        isCleanMode={isCleanMode}
+                      />
+                    ) : (
+                      <>
+                        <StructuredSectionView
+                          section={section}
+                          subtopicId={subObj.id}
+                          chapterId={chapterObj.id}
+                          subjectId={selectedSubject}
+                          isCleanMode={isCleanMode}
+                        />
+
+                        {section.keyFormulas && section.keyFormulas.length > 0 && (
+                          <FormulaCard
+                            formulaList={section.keyFormulas}
+                            derivations={section.derivations}
+                          />
+                        )}
+
+                        <ReactionDiagramCard
+                          subtopicId={subObj.id}
+                          chapterId={chapterObj.id}
+                          isCleanMode={isCleanMode}
+                        />
+
+                        {PHYSICS_SUBTOPIC_DIAGRAMS[subObj.id] && (
+                          <div className="py-2">
+                            <PhysicsDiagramCard
+                              diagramId={PHYSICS_SUBTOPIC_DIAGRAMS[subObj.id]}
+                              subMode={PHYSICS_SUBTOPIC_SUBMODES[subObj.id]}
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {hasCustomNote && (
+                      <div className="pt-3 border-t border-[var(--border-subtle)] text-xs">
+                        <span className="font-semibold text-[var(--text-primary)] block mb-0.5">
+                          Your Personal Study Note:
+                        </span>
+                        <p className="italic text-[var(--text-secondary)] whitespace-pre-wrap">
+                          "{hasCustomNote}"
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Custom PDF Selection Modal (Select Specific Subtopics in Chapter OR Specific Chapters in Subject) */}
+      {isCustomPdfModalOpen && (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setIsCustomPdfModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-2xl max-h-[88dvh] flex flex-col rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-default)] shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="p-4 sm:p-6 border-b border-[var(--border-subtle)] flex items-start justify-between gap-3 bg-[var(--bg-elevated)]">
+              <div className="space-y-1">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border border-[var(--accent-primary)]/30 text-[10px] font-mono font-bold uppercase tracking-wider">
+                  <FileDown size={12} />
+                  <span>Custom A4 PDF Builder • {subject.name}</span>
+                </span>
+                <h3 className="font-serif text-lg sm:text-xl font-bold text-[var(--text-primary)]">
+                  Download Specific Subtopics or Specific Chapters
+                </h3>
+                <p className="text-xs text-[var(--text-secondary)] font-sans">
+                  Tick the exact subtopics in this chapter or choose multiple chapters across {subject.name} to combine into one printable PDF.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsCustomPdfModalOpen(false)}
+                className="px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] border border-[var(--border-default)] text-xs font-mono font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Scope Switcher Tabs */}
+            <div className="px-4 sm:px-6 pt-3 pb-2 border-b border-[var(--border-subtle)] flex flex-wrap items-center justify-between gap-2 bg-[var(--bg-surface)]">
+              <div className="inline-flex p-1 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+                <button
+                  type="button"
+                  onClick={() => setCustomPdfScope('CHAPTER')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    customPdfScope === 'CHAPTER'
+                      ? 'bg-[var(--accent-primary)] text-white shadow-2xs'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                  }`}
+                >
+                  Specific Subtopics in Ch {chapter.number} ({chapter.subchapters.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCustomPdfScope('SUBJECT')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    customPdfScope === 'SUBJECT'
+                      ? 'bg-[var(--accent-primary)] text-white shadow-2xs'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                  }`}
+                >
+                  Specific Chapters of {subject.name} ({allSubjectChapters.length})
+                </button>
+              </div>
+
+              {/* Select All / Clear All */}
+              {customPdfScope === 'CHAPTER' ? (
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPdfSubtopicIds(chapter.subchapters.map((s) => s.id))}
+                    className="px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[11px] font-mono font-bold text-[var(--accent-primary)] cursor-pointer"
+                  >
+                    Select All
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPdfSubtopicIds([])}
+                    className="px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[11px] font-mono font-semibold text-[var(--text-secondary)] cursor-pointer"
+                  >
+                    Clear
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPdfChapterIds(allSubjectChapters.map((c) => c.id))}
+                    className="px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[11px] font-mono font-bold text-[var(--accent-primary)] cursor-pointer"
+                  >
+                    Select All Chapters
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPdfChapterIds([])}
+                    className="px-2.5 py-1 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[11px] font-mono font-semibold text-[var(--text-secondary)] cursor-pointer"
+                  >
+                    Clear
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Checklist Body */}
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-2.5">
+              {customPdfScope === 'CHAPTER' ? (
+                chapter.subchapters.map((sub, idx) => {
+                  const isChecked = selectedPdfSubtopicIds.includes(sub.id);
+                  return (
+                    <button
+                      key={sub.id}
+                      type="button"
+                      onClick={() => togglePdfSubtopicSelection(sub.id)}
+                      className={`w-full text-left p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                        isChecked
+                          ? 'bg-[var(--accent-primary)]/10 border-[var(--accent-primary)] text-[var(--text-primary)]'
+                          : 'bg-[var(--bg-elevated)] border-[var(--border-default)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)]/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="px-2 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)] shrink-0">
+                          #{idx + 1}
+                        </span>
+                        <span className="font-serif text-sm sm:text-base font-bold truncate">
+                          {sub.title}
+                        </span>
+                      </div>
+                      <span
+                        className={`p-1 rounded-full shrink-0 ${
+                          isChecked ? 'bg-[var(--accent-primary)] text-white' : 'text-[var(--text-muted)]'
+                        }`}
+                      >
+                        {isChecked ? <CheckCircle2 size={18} /> : <Circle size={18} />}
+                      </span>
+                    </button>
+                  );
+                })
+              ) : (
+                allSubjectChapters.map((ch) => {
+                  const isChecked = selectedPdfChapterIds.includes(ch.id);
+                  return (
+                    <button
+                      key={ch.id}
+                      type="button"
+                      onClick={() => togglePdfChapterSelection(ch.id)}
+                      className={`w-full text-left p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                        isChecked
+                          ? 'bg-[var(--accent-primary)]/10 border-[var(--accent-primary)] text-[var(--text-primary)]'
+                          : 'bg-[var(--bg-elevated)] border-[var(--border-default)] text-[var(--text-secondary)] hover:border-[var(--accent-primary)]/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="px-2.5 py-0.5 rounded-md bg-[var(--bg-surface)] border border-[var(--border-subtle)] font-mono text-[11px] font-bold text-[var(--accent-primary)] shrink-0">
+                          Ch {ch.number}
+                        </span>
+                        <div className="min-w-0">
+                          <div className="font-serif text-sm sm:text-base font-bold truncate">
+                            {ch.title}
+                          </div>
+                          <div className="text-[11px] font-mono text-[var(--text-muted)]">
+                            {ch.subchapters?.length || 0} subtopics included
+                          </div>
+                        </div>
+                      </div>
+                      <span
+                        className={`p-1 rounded-full shrink-0 ${
+                          isChecked ? 'bg-[var(--accent-primary)] text-white' : 'text-[var(--text-muted)]'
+                        }`}
+                      >
+                        {isChecked ? <CheckCircle2 size={18} /> : <Circle size={18} />}
+                      </span>
+                    </button>
+                  );
+                })
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 sm:p-5 border-t border-[var(--border-subtle)] bg-[var(--bg-elevated)] flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-xs font-mono font-semibold text-[var(--text-secondary)]">
+                {customPdfItemsToPrint.length} Subtopic{customPdfItemsToPrint.length === 1 ? '' : 's'} selected for PDF printout
+              </span>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => setIsCustomPdfModalOpen(false)}
+                  className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-default)] text-xs font-bold text-[var(--text-secondary)] cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={customPdfItemsToPrint.length === 0}
+                  onClick={handleTriggerCustomPdfDownload}
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] disabled:opacity-50 text-white text-xs sm:text-sm font-bold shadow-sm cursor-pointer"
+                >
+                  <FileDown size={15} />
+                  <span>Download Selected PDF ({customPdfItemsToPrint.length})</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Fixed Viewport Bottom Progress Bar (Elevated above mobile nav on small screens) */}
       <div className="fixed bottom-14 md:bottom-0 left-0 right-0 z-40 bg-[var(--bg-surface)]/95 backdrop-blur-md border-t border-[var(--border-default)] py-2 sm:py-2.5 px-3.5 sm:px-6 shadow-xl">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2.5 sm:gap-4">
@@ -1608,6 +2125,16 @@ export default function ChapterDrillDown({
             >
               <FileDown size={12} />
               <span className="hidden xs:inline">Chapter PDF</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleOpenCustomPdfSelector('CHAPTER')}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-[var(--bg-elevated)] hover:bg-[var(--accent-primary)] text-[var(--text-primary)] hover:text-white border border-[var(--border-default)] text-[11px] font-mono font-bold transition-colors cursor-pointer"
+              title="Select specific subtopics or chapters to download as PDF"
+            >
+              <Layers size={12} />
+              <span className="hidden md:inline">Custom PDF</span>
             </button>
 
             <div className="w-14 xs:w-20 sm:w-36 md:w-52 h-2 sm:h-2.5 rounded-full bg-[var(--border-default)] overflow-hidden shrink-0">

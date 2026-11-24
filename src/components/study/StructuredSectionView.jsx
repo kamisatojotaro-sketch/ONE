@@ -9,8 +9,51 @@ import { REACTION_DIAGRAMS } from '../../data/reactionDiagramsData';
 import { SingleReactionDiagram } from './ReactionDiagramCard';
 import { formatMathString } from './FormulaCard';
 import ChemistryExamDiagramCard from './ChemistryExamDiagramCard';
+import BiologyExamDiagramCard from './BiologyExamDiagramCard';
 import ChemicalReactionDisplay from './ChemicalReactionDisplay';
 import { isTopicCompleted } from '../../utils/studyTopicTicks';
+
+/**
+ * Splits a multi-sentence or multi-line definition / Q&A answer into clean bullet points
+ * so answers and definitions always render in easy-to-scan points.
+ */
+function splitIntoBulletPoints(rawText = '') {
+  if (!rawText) return [];
+  const text = String(rawText).trim();
+  if (!text) return [];
+
+  // First split by explicit newlines or pipe separators " | "
+  const rawLines = text
+    .split(/\n+|\s+\|\s+/)
+    .map((l) => l.replace(/^[•\-\*]\s*/, '').trim())
+    .filter(Boolean);
+
+  const points = [];
+  rawLines.forEach((line) => {
+    // Split multi-sentence or semicolon-separated lines into individual points while avoiding abbreviations like e.g., i.e., Fig., Eq., No., Dr., vs., conc., dil., aq., mol.
+    const sentences = line
+      .split(/(?:;\s+|(?<=[.!?])\s+(?=(?:\([0-9a-zA-Z]+\)|[0-9]+\.\s|[A-ZΔαβγ\[<])))/)
+      .map((s) => s.replace(/^[•\-\*]\s*/, '').trim())
+      .filter(Boolean);
+
+    if (sentences.length > 1) {
+      let buffer = '';
+      sentences.forEach((s) => {
+        if (buffer && /(?:\b(?:e\.g|i\.e|vs|Fig|Eq|Dr|Mr|No|conc|dil|aq|at|mol|wt|sp|var)\.|^[0-9]+\.)$/i.test(buffer)) {
+          buffer = `${buffer} ${s}`;
+        } else {
+          if (buffer) points.push(buffer);
+          buffer = s;
+        }
+      });
+      if (buffer) points.push(buffer);
+    } else {
+      points.push(line);
+    }
+  });
+
+  return points.length > 0 ? points : [text];
+}
 
 // Intelligent fallback parser for sections without manual curation
 function parseFallbackContent(section, subtopicId, chapterId) {
@@ -168,19 +211,28 @@ export default function StructuredSectionView({
 
       {visualDiagrams && visualDiagrams.length > 0 && (
         <div className="space-y-4">
-          {visualDiagrams.map((diag, idx) => (
-            <ChemistryExamDiagramCard
-              key={diag.id || idx}
-              diagramId={diag.id}
-              title={diag.title}
-              subtitle={diag.subtitle}
-              sectionId={secId}
-              completedSections={completedSections}
-              onToggleTopic={onToggleTopic}
-              onToggleTopicGroup={onToggleTopicGroup}
-              allSectionTopicIds={allSectionTopicIds}
-            />
-          ))}
+          {visualDiagrams.map((diag, idx) =>
+            diag.subject === 'biology' ? (
+              <BiologyExamDiagramCard
+                key={diag.id || idx}
+                diagramId={diag.id}
+                title={diag.title}
+                subtitle={diag.subtitle}
+              />
+            ) : (
+              <ChemistryExamDiagramCard
+                key={diag.id || idx}
+                diagramId={diag.id}
+                title={diag.title}
+                subtitle={diag.subtitle}
+                sectionId={secId}
+                completedSections={completedSections}
+                onToggleTopic={onToggleTopic}
+                onToggleTopicGroup={onToggleTopicGroup}
+                allSectionTopicIds={allSectionTopicIds}
+              />
+            )
+          )}
         </div>
       )}
       {/* ==================================================================== */}
@@ -273,10 +325,17 @@ export default function StructuredSectionView({
                         </button>
                       )}
                     </div>
-                    <p
-                      className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed pl-3 border-l-2 border-[var(--accent-primary)]/40"
-                      dangerouslySetInnerHTML={{ __html: formatMathString(def.definition) }}
-                    />
+                    <ul className="space-y-1.5 pl-3 border-l-2 border-[var(--accent-primary)]/40">
+                      {splitIntoBulletPoints(def.definition).map((pt, pIdx) => (
+                        <li
+                          key={pIdx}
+                          className="flex items-start gap-2 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed"
+                        >
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] shrink-0" />
+                          <span dangerouslySetInnerHTML={{ __html: formatMathString(pt) }} />
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 );
               })}
@@ -599,13 +658,20 @@ export default function StructuredSectionView({
                       dangerouslySetInnerHTML={{ __html: formatMathString(qa.question) }}
                     />
 
-                    <div
-                      className="font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-wrap pl-3 border-l-2 border-[var(--accent-primary)]/45"
-                      dangerouslySetInnerHTML={{ __html: formatMathString(qa.answer) }}
-                    />
+                    <ul className="space-y-1.5 pl-3 border-l-2 border-[var(--accent-primary)]/45">
+                      {splitIntoBulletPoints(qa.answer).map((pt, pIdx) => (
+                        <li
+                          key={pIdx}
+                          className="flex items-start gap-2 font-sans text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed"
+                        >
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] shrink-0" />
+                          <span dangerouslySetInnerHTML={{ __html: formatMathString(pt) }} />
+                        </li>
+                      ))}
+                    </ul>
 
                     {qa.equation && (
-                      <ChemicalReactionDisplay equation={qa.equation} />
+                      <ChemicalReactionDisplay formula={qa.equation} />
                     )}
                   </div>
                 );

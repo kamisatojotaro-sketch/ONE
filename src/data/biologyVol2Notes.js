@@ -3,7 +3,43 @@
 // Curated deep-dive content (definitions, mnemonics, errors, A-R, PYQ trends) lives in
 // biologyVol2StructuredNotes.js and is merged into STRUCTURED_NOTES_DATA.
 
+import { getBiologyImportantQuestionsByChapter } from './biologyImportantQuestionsData';
+
 const imp = (examTag, importantReason) => ({ isImportant: true, examTag, importantReason });
+
+const buildChapterImportantQuestionsSubchapter = (chapterId, chapterNum, subNum, chapterTitle, customConfig = {}) => {
+  const questions = getBiologyImportantQuestionsByChapter(chapterId);
+  return {
+    id: `bio-sub-${chapterNum}-${subNum}`,
+    title: `${chapterNum}.${subNum} Important & Repeated Past Board Questions (${chapterTitle})`,
+    ...imp('Past Board Questions', `Dedicated section with ${questions.length} most repeated CBSE past paper questions & your marked textbook/handwritten notes`),
+    sections: [
+      {
+        id: `bio-sec-${chapterNum}-${subNum}`,
+        title: `Important & Repeated Past Board Questions — Chapter ${chapterNum}: ${chapterTitle}`,
+        explanation:
+          customConfig.explanation ||
+          `• Dedicated compilation of the most repeated CBSE Class 12 Past Board Questions (2015–2025) and your marked NCERT textbook / handwritten notes for Chapter ${chapterNum}: ${chapterTitle}.\n• Every answer is structured in clear, exam-ready bullet points following the official CBSE marking scheme.`,
+        structuredData: {
+          examBlueprintBadge:
+            customConfig.badge ||
+            `★ Important & Repeated Past Board Questions + Your Marked Notes • Chapter ${chapterNum}`,
+          visualDiagrams: customConfig.visualDiagrams || [],
+          comparisonTables: customConfig.comparisonTables || [],
+          qaPairs: questions.map((q) => ({
+            number: q.number,
+            badge: `${q.badge} • ${q.frequency}`,
+            question: q.question,
+            answer: q.answerPoints.join('\n')
+          }))
+        },
+        keyFormulas: questions.map((q) => q.formulaOrEquation).filter(Boolean),
+        isImportant: true,
+        examTag: 'Important Question'
+      }
+    ]
+  };
+};
 
 export const BIOLOGY_CHAPTERS_VOL2 = [
   // ==========================================================================
@@ -125,7 +161,10 @@ export const BIOLOGY_CHAPTERS_VOL2 = [
             examTag: 'Important Diagram'
           }
         ]
-      }
+      },
+      buildChapterImportantQuestionsSubchapter('bio-ch-9', 9, 6, 'Biotechnology: Principles and Processes', {
+        badge: '★ CBSE Past 10-Year Repeated Questions • EcoRI Palindrome • Gel Electrophoresis • pBR322 & Blue-White Screening • PCR & Taq Polymerase'
+      })
     ]
   },
 
@@ -248,7 +287,10 @@ export const BIOLOGY_CHAPTERS_VOL2 = [
             examTag: 'Important Question'
           }
         ]
-      }
+      },
+      buildChapterImportantQuestionsSubchapter('bio-ch-10', 10, 6, 'Biotechnology and its Applications', {
+        badge: '★ CBSE Past 10-Year Repeated Questions • Bt Cotton & cry Genes • RNAi (Meloidogyne incognita) • Eli Lilly Humulin (C-Peptide) • ADA Gene Therapy • Rosie & Biopiracy'
+      })
     ]
   },
 
@@ -348,7 +390,30 @@ export const BIOLOGY_CHAPTERS_VOL2 = [
             examTag: 'Important Question'
           }
         ]
-      }
+      },
+      buildChapterImportantQuestionsSubchapter('bio-ch-11', 11, 5, 'Organisms and Populations', {
+        badge: '★ Your Handwritten Growth Curve Notes + Crossed NCERT Pages (Fig. 11.2, Predation, Competition, Parasitism) + CBSE Repeated Questions',
+        visualDiagrams: [
+          {
+            id: 'population-density-and-growth-curves',
+            subject: 'biology',
+            title: 'NCERT Fig. 11.2 Population Density Flowchart & Handwritten J-Shape vs S-Sigmoid Growth Curves',
+            subtitle: 'Natality (B), Immigration (I), Mortality (D), Emigration (E) & Lag → Log → Decelerating → Asymptote (K)'
+          }
+        ],
+        comparisonTables: [
+          {
+            title: 'Exponential Growth (J-Shape) vs Logistic Growth (S-Shape / Sigmoid) — Handwritten Note Reference',
+            headers: ['Parameter', 'Exponential Growth (J-Shaped Curve)', 'Logistic Growth (S-Shaped / Sigmoid Curve)'],
+            rows: [
+              ['Resource Availability', 'Occurs when resources (food and space) in the habitat are unlimited.', 'Occurs when resources in the habitat are finite and limiting (more realistic).'],
+              ['Curve Shape & Phases', 'J-shaped curve (Lag phase → Exponential / Log phase; crashes abruptly when resources deplete).', 'S-shaped (Sigmoid) curve with 4 phases: Lag phase (initial) → Log phase (accelerating) → Decelerating phase → Asymptote (resting phase at N = K).'],
+              ['Differential Equation', 'dN/dt = rN  (or integral form N_t = N_0 e^(rt))', 'dN/dt = rN [(K − N) / K]  (Verhulst-Pearl Logistic Equation)'],
+              ['Carrying Capacity (K)', 'No carrying capacity limit is reached during growth.', 'Upper asymptote is fixed by Carrying Capacity (K), where r = intrinsic rate of natural increase.']
+            ]
+          }
+        ]
+      })
     ]
   },
 
@@ -446,7 +511,30 @@ export const BIOLOGY_CHAPTERS_VOL2 = [
             examTag: 'Important Diagram'
           }
         ]
-      }
+      },
+      buildChapterImportantQuestionsSubchapter('bio-ch-12', 12, 5, 'Ecosystem', {
+        badge: '★ Your Note: DFC vs GFC Difference & Standing Crop (pg 211) + Crossed Pages 212–214 (Inverted Sea Biomass & Limitations) + CBSE Past Papers',
+        visualDiagrams: [
+          {
+            id: 'ecological-pyramids-comparison',
+            subject: 'biology',
+            title: 'Inverted Pyramid of Biomass in Sea (Fig. 12.4c, pg 212) vs Always-Upright Pyramid of Energy (pg 213)',
+            subtitle: 'Small standing crop of phytoplankton (4 g m⁻²) supports large standing crop of zooplankton/fishes (21 g m⁻²)'
+          }
+        ],
+        comparisonTables: [
+          {
+            title: 'Grazing Food Chain (GFC) vs Detritus Food Chain (DFC) — NCERT Page 211 Reference',
+            headers: ['Feature', 'Grazing Food Chain (GFC)', 'Detritus Food Chain (DFC)'],
+            rows: [
+              ['1. Primary Energy Source', 'Begins with living green plants (autotrophic producers) utilising solar radiation.', 'Begins with dead organic matter (detritus — dead plant/animal remains and fecal matter).'],
+              ['2. First Trophic Level', 'Producers (green plants / phytoplankton) form the first trophic level.', 'Decomposers (saprotrophs — heterotrophic fungi and bacteria) that secrete digestive enzymes.'],
+              ['3. Major Conduit of Energy Flow', 'In an aquatic ecosystem, GFC is the major conduit for energy flow.', 'In a terrestrial ecosystem, a much larger fraction of energy flows through the DFC than through the GFC.'],
+              ['4. Example & Connection', 'Grass (Producer) → Goat (Primary Consumer) → Man (Secondary Consumer).', 'Detritus → Earthworm / Fungi → Birds (DFC is connected with GFC at several levels).']
+            ]
+          }
+        ]
+      })
     ]
   },
 
@@ -549,7 +637,28 @@ export const BIOLOGY_CHAPTERS_VOL2 = [
             examTag: 'Important Question'
           }
         ]
-      }
+      },
+      buildChapterImportantQuestionsSubchapter('bio-ch-13', 13, 5, 'Biodiversity and Conservation', {
+        badge: '★ Your Crossed Pages 218–223 (Fig. 13.1 Pie Charts, Tropical Richness, Humboldt S = CA^Z Curve & Alien Species Invasions) + CBSE Past Papers',
+        visualDiagrams: [
+          {
+            id: 'biodiversity-pie-and-humboldt-graph',
+            subject: 'biology',
+            title: 'Global Biodiversity Proportionate Taxa (Fig. 13.1) & Alexander von Humboldt Species-Area Curve (Fig. 13.2)',
+            subtitle: 'S = C A^Z (Rectangular Hyperbola) and log S = log C + Z log A (Straight line on log-log scale)'
+          }
+        ],
+        comparisonTables: [
+          {
+            title: 'In-Situ (On-Site) Conservation vs Ex-Situ (Off-Site) Conservation',
+            headers: ['Basis', 'In-Situ Conservation (On-Site)', 'Ex-Situ Conservation (Off-Site)'],
+            rows: [
+              ['1. Principle', 'Conserving and protecting the whole natural ecosystem so that target species and all levels of biodiversity are protected in their natural habitat.', 'Threatened animals and plants are taken out from their natural habitat and placed in special settings for protection and care.'],
+              ['2. Examples', '34 Global Biodiversity Hotspots (Western Ghats & Sri Lanka, Indo-Burma, Himalaya), 14 Biosphere Reserves, 90 National Parks, 448 Wildlife Sanctuaries, and Sacred Groves.', 'Zoological Parks, Botanical Gardens, Wildlife Safari Parks, Cryopreservation of gametes (−196 °C in liquid nitrogen), Seed Banks, and Tissue Culture.']
+            ]
+          }
+        ]
+      })
     ]
   }
 ];

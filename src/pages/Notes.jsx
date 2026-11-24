@@ -14,6 +14,7 @@ import TestMakerTabContent from '../components/study/TestMakerTabContent';
 import SamplePaperTabContent from '../components/study/SamplePaperTabContent';
 import StudySearchModal from '../components/study/StudySearchModal';
 import PhysicsImportantQuestionsModal from '../components/study/PhysicsImportantQuestionsModal';
+import BiologyImportantQuestionsModal from '../components/study/BiologyImportantQuestionsModal';
 import WolframEngine from '../components/calculator/WolframEngine';
 
 export default function Notes() {
@@ -63,10 +64,17 @@ export default function Notes() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchScope, setSearchScope] = useState('all');
   const [autoPrintChapterId, setAutoPrintChapterId] = useState(null);
+  const [autoOpenCustomPdfModal, setAutoOpenCustomPdfModal] = useState(false);
 
   const handleDownloadChapterPdf = useCallback((chapterId) => {
     session.setSelectedChapter(chapterId, 'GENERAL');
     setAutoPrintChapterId(chapterId);
+  }, [session]);
+
+  const handleOpenCustomPdfFromChapterList = useCallback((chapterId) => {
+    const targetChapter = chapterId || session.selectedChapter || 'chem-ch-1';
+    session.setSelectedChapter(targetChapter, 'GENERAL');
+    setAutoOpenCustomPdfModal(true);
   }, [session]);
 
   // Physics Important Questions Clean Pop-up State (for D Version Physics)
@@ -78,6 +86,16 @@ export default function Notes() {
 
   const handleOpenPhysicsImpModal = useCallback((filter = 'THEORY_DERIVATIONS', chapter = 'ALL') => {
     setPhysicsImpModal({ open: true, filter, chapter });
+  }, []);
+
+  // Biology Important & Repeated Past Board Questions Pop-up State (Ch 9–13)
+  const [biologyImpModal, setBiologyImpModal] = useState({
+    open: false,
+    chapter: 'ALL',
+  });
+
+  const handleOpenBiologyImpModal = useCallback((chapter = 'ALL') => {
+    setBiologyImpModal({ open: true, chapter });
   }, []);
 
   const handleOpenUniversalSearch = useCallback(() => {
@@ -219,7 +237,36 @@ export default function Notes() {
             onOpenUniversalSearch={handleOpenUniversalSearch}
             onOpenSubjectSearch={handleOpenSubjectSearch}
             onOpenPhysicsImportantQuestions={() => handleOpenPhysicsImpModal('THEORY_DERIVATIONS', 'ALL')}
+            onOpenBiologyImportantQuestions={() => handleOpenBiologyImpModal('ALL')}
           />
+
+          {/* Top Pop-up Bar for Biology Important & Repeated Past Board Questions (Ch 9–13) */}
+          {session.selectedSubject === 'biology' && (
+            <div className="max-w-4xl w-full mx-auto mb-3.5 sm:mb-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-default)] px-3.5 py-3 sm:px-5 sm:py-3.5 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)] text-[var(--accent-primary)] flex items-center justify-center shrink-0">
+                  <Sparkles size={16} />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-serif text-sm sm:text-base font-bold text-[var(--text-primary)] leading-snug truncate">
+                    Important &amp; Repeated Past Board Questions (Ch 9–13)
+                  </h3>
+                  <p className="text-[11px] sm:text-xs text-[var(--text-muted)] truncate">
+                    21 point-wise past paper questions &amp; your crossed pages (DFC vs GFC &amp; Standing Crop pg 211, S-Sigmoid growth, Pyramids &amp; Humboldt curve)
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handleOpenBiologyImpModal('ALL')}
+                className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] hover:bg-[var(--bg-surface-hover)] text-[var(--text-primary)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-xs font-semibold transition-colors shrink-0 cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <BookOpen size={13} className="text-[var(--accent-primary)] shrink-0" />
+                <span>Open Important Questions (Ch 9–13)</span>
+              </button>
+            </div>
+          )}
 
           {/* Clean UI Top Pop-up Bar for Recently Added Physics Important Questions */}
           {isCleanMode && session.selectedSubject === 'physics' && (
@@ -328,6 +375,10 @@ export default function Notes() {
                       selectedVolume={session.selectedVolume}
                       onSelectChapter={session.setSelectedChapter}
                       onDownloadChapterPdf={handleDownloadChapterPdf}
+                      onOpenCustomPdfModal={() => {
+                        const firstCh = session.selectedSubject === 'chemistry' ? 'chem-ch-1' : `${session.selectedSubject?.slice(0, 3)}-ch-1`;
+                        handleOpenCustomPdfFromChapterList(firstCh);
+                      }}
                       completedSections={session.completedSections}
                       completedPortionChapters={session.completedPortionChapters}
                       getPriority={session.getPriority}
@@ -349,6 +400,8 @@ export default function Notes() {
                       completedSections={session.completedSections}
                       completedSubchapters={session.completedSubchapters}
                       onToggleSection={session.toggleSection}
+                      onToggleTopic={session.toggleTopic}
+                      onToggleTopicGroup={session.toggleTopicGroup}
                       onMarkSubchapterCompleted={session.markSubchapterCompleted}
                       userNotes={session.userNotes}
                       onSaveUserNote={session.saveUserNote}
@@ -359,6 +412,8 @@ export default function Notes() {
                       onOpenWolframEngine={() => session.setActiveSidebarTab('WOLFRAM_ENGINE')}
                       autoPrintChapterId={autoPrintChapterId}
                       onClearAutoPrintChapter={() => setAutoPrintChapterId(null)}
+                      autoOpenCustomPdfModal={autoOpenCustomPdfModal}
+                      onClearAutoOpenCustomPdfModal={() => setAutoOpenCustomPdfModal(false)}
                     />
                   )}
                 </>
@@ -522,6 +577,14 @@ export default function Notes() {
         onClose={() => setPhysicsImpModal((prev) => ({ ...prev, open: false }))}
         initialFilter={physicsImpModal.filter}
         initialChapter={physicsImpModal.chapter}
+        onJumpToSubtopic={(loc) => session.jumpToLocation(loc)}
+      />
+
+      {/* Pop-up Modal for Biology Important & Repeated Past Board Questions (Ch 9–13) */}
+      <BiologyImportantQuestionsModal
+        isOpen={biologyImpModal.open}
+        onClose={() => setBiologyImpModal((prev) => ({ ...prev, open: false }))}
+        initialChapter={biologyImpModal.chapter}
         onJumpToSubtopic={(loc) => session.jumpToLocation(loc)}
       />
     </div>

@@ -623,81 +623,204 @@ export default function Physics4PartSectionView({
       {/* ==================================================================== */}
       {/* DEDICATED TERMS & VARIABLES GLOSSARY (Shunt, Epsilon, Phi, etc.) */}
       {/* ==================================================================== */}
-      {termsGlossary && termsGlossary.length > 0 && (
-        <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3.5">
-          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-primary)]">
-              <Layers size={16} />
-              <span>Physical Terms & Symbols Glossary</span>
-            </div>
-            <span className="text-[10px] font-mono text-[var(--text-muted)]">
-              Variables & SI Units
-            </span>
-          </div>
+      {termsGlossary && termsGlossary.length > 0 && (() => {
+        const termTopicIds = secId ? termsGlossary.map((_, idx) => `${secId}::phy-term-${idx}`) : [];
+        const termDoneCount = secId
+          ? termTopicIds.filter((tId) => isTopicCompleted(tId, secId, completedSections)).length
+          : 0;
+        const allTermsDone = secId && termTopicIds.length > 0 && termDoneCount === termTopicIds.length;
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5">
-            {termsGlossary.map((item, idx) => (
-              <div 
-                key={idx}
-                className="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-start gap-2.5"
+        return (
+          <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3.5">
+            <div className={`flex flex-wrap items-center justify-between gap-2 ${!minimizedBlocks.terms ? 'border-b border-[var(--border-subtle)] pb-2.5' : ''}`}>
+              <button
+                type="button"
+                onClick={() => toggleBlock('terms')}
+                className="text-left flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-primary)] cursor-pointer group"
+                aria-expanded={!minimizedBlocks.terms}
               >
-                <div className="px-2 py-1 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-default)] font-serif font-bold text-xs shrink-0 text-center min-w-[36px]">
-                  <FormattedLatex content={`$${item.symbol}$`} />
-                </div>
-                <div className="space-y-0.5">
-                  <div className="font-sans text-xs font-bold text-[var(--text-primary)]">
-                    {item.term}
-                  </div>
-                  <div 
-                    className="font-sans text-[11px] text-[var(--text-secondary)] leading-snug"
-                    dangerouslySetInnerHTML={{ __html: formatMathString(item.definition) }}
-                  />
-                </div>
+                <Layers size={16} />
+                <span className="group-hover:text-[var(--accent-primary)] transition-colors">
+                  Physical Terms & Symbols Glossary ({termsGlossary.length})
+                </span>
+              </button>
+
+              <div className="flex items-center gap-2 shrink-0" data-no-print="true">
+                {secId && onToggleTopicGroup && termTopicIds.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => onToggleTopicGroup(termTopicIds, secId, allSectionTopicIds)}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                      allTermsDone
+                        ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                        : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)] hover:border-[var(--accent-primary)]'
+                    }`}
+                    title={allTermsDone ? 'Untick all terms' : 'Tick all terms completed'}
+                  >
+                    {allTermsDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+                    <span>{termDoneCount}/{termsGlossary.length}</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => toggleBlock('terms')}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--accent-primary)]/15 border border-[var(--border-default)] text-[10px] font-mono font-bold text-[var(--accent-primary)] transition-colors cursor-pointer"
+                >
+                  <span>{minimizedBlocks.terms ? 'Expand' : 'Minimize'}</span>
+                  {minimizedBlocks.terms ? <ChevronDown size={13} /> : <ChevronUp size={13} />}
+                </button>
               </div>
-            ))}
+            </div>
+
+            <div
+              data-print-expand="true"
+              className={`${minimizedBlocks.terms ? 'hidden' : 'grid'} grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5`}
+            >
+              {termsGlossary.map((item, idx) => {
+                const termTopicId = secId ? `${secId}::phy-term-${idx}` : null;
+                const isTermDone = termTopicId ? isTopicCompleted(termTopicId, secId, completedSections) : false;
+
+                return (
+                  <div 
+                    key={idx}
+                    className={`p-3 rounded-xl bg-[var(--bg-surface)] border flex items-start justify-between gap-2.5 transition-all ${
+                      isTermDone ? 'border-[var(--accent-primary)]' : 'border-[var(--border-subtle)]'
+                    }`}
+                  >
+                    <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                      <div className="px-2 py-1 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-default)] font-serif font-bold text-xs shrink-0 text-center min-w-[36px]">
+                        <FormattedLatex content={`$${item.symbol}$`} />
+                      </div>
+                      <div className="space-y-0.5 min-w-0 flex-1">
+                        <div className="font-sans text-xs font-bold text-[var(--text-primary)]">
+                          {item.term}
+                        </div>
+                        <div 
+                          className="font-sans text-[11px] text-[var(--text-secondary)] leading-snug"
+                          dangerouslySetInnerHTML={{ __html: formatMathString(item.definition) }}
+                        />
+                      </div>
+                    </div>
+
+                    {termTopicId && onToggleTopic && (
+                      <button
+                        type="button"
+                        data-no-print="true"
+                        onClick={() => onToggleTopic(termTopicId, secId, allSectionTopicIds)}
+                        className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                          isTermDone
+                            ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                            : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                        }`}
+                        title={isTermDone ? `Mark ${item.term} incomplete` : `Mark ${item.term} completed`}
+                      >
+                        {isTermDone ? <CheckCircle2 size={15} /> : <Circle size={15} />}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Formula Cards with Curated Variable Metadata */}
       {section.keyFormulas && section.keyFormulas.length > 0 && (
         <FormulaCard 
           formulaList={section.keyFormulas} 
-          derivations={null} 
+          derivations={null}
+          sectionId={secId}
+          completedSections={completedSections}
+          onToggleTopic={onToggleTopic}
+          onToggleTopicGroup={onToggleTopicGroup}
+          allSectionTopicIds={allSectionTopicIds}
         />
       )}
 
       {/* ==================================================================== */}
       {/* OSWAAL STRUCTURED DEFINITIONS, MEMORY BOOSTER & COMMONLY MADE ERRORS */}
       {/* ==================================================================== */}
-      {!isCleanMode && oswaalDefinitions.length > 0 && (
-        <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3">
-          <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-              <Award size={16} />
-              <span>Exact Board Definitions &amp; SI Units</span>
-            </div>
-            {examTrend && (
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-500/30">
-                {typeof examTrend === 'object' ? (examTrend.pastYears || examTrend.frequency || 'High Yield') : examTrend}
-              </span>
-            )}
-          </div>
-          <div className="grid grid-cols-1 gap-2.5">
-            {oswaalDefinitions.map((def, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] space-y-1">
-                <span className="text-xs font-serif font-bold text-[var(--accent-primary)] block">
-                  {def.term}
-                </span>
-                <div
-                  className="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: formatMathString(def.definition || def.meaning || '') }}
-                />
+      {!isCleanMode && oswaalDefinitions.length > 0 && (() => {
+        const odefTopicIds = secId ? oswaalDefinitions.map((_, idx) => `${secId}::phy-odef-${idx}`) : [];
+        const odefDoneCount = secId
+          ? odefTopicIds.filter((tId) => isTopicCompleted(tId, secId, completedSections)).length
+          : 0;
+        const allOdefDone = secId && odefTopicIds.length > 0 && odefDoneCount === odefTopicIds.length;
+
+        return (
+          <div className="p-4 sm:p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-default)] shadow-xs space-y-3">
+            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5 gap-2 flex-wrap">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                <Award size={16} />
+                <span>Exact Board Definitions &amp; SI Units ({oswaalDefinitions.length})</span>
               </div>
-            ))}
+              <div className="flex items-center gap-2">
+                {examTrend && (
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-500/30">
+                    {typeof examTrend === 'object' ? (examTrend.pastYears || examTrend.frequency || 'High Yield') : examTrend}
+                  </span>
+                )}
+                {secId && onToggleTopicGroup && (
+                  <button
+                    type="button"
+                    data-no-print="true"
+                    onClick={() => onToggleTopicGroup(odefTopicIds, secId, allSectionTopicIds)}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                      allOdefDone
+                        ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)]'
+                        : 'bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:text-[var(--accent-primary)] border-[var(--border-default)]'
+                    }`}
+                  >
+                    {allOdefDone ? <CheckCircle2 size={13} /> : <Circle size={13} />}
+                    <span>{odefDoneCount}/{oswaalDefinitions.length}</span>
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-2.5">
+              {oswaalDefinitions.map((def, idx) => {
+                const odefTopicId = secId ? `${secId}::phy-odef-${idx}` : null;
+                const isOdefDone = odefTopicId ? isTopicCompleted(odefTopicId, secId, completedSections) : false;
+
+                return (
+                  <div
+                    key={idx}
+                    className={`p-3.5 rounded-xl bg-[var(--bg-surface)] border space-y-1 transition-all ${
+                      isOdefDone ? 'border-[var(--accent-primary)]' : 'border-[var(--border-subtle)]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-serif font-bold text-[var(--accent-primary)] block">
+                        #{idx + 1}. {def.term}
+                      </span>
+                      {odefTopicId && onToggleTopic && (
+                        <button
+                          type="button"
+                          data-no-print="true"
+                          onClick={() => onToggleTopic(odefTopicId, secId, allSectionTopicIds)}
+                          className={`p-1 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+                            isOdefDone
+                              ? 'bg-[var(--accent-primary)] text-white shadow-2xs scale-105'
+                              : 'border border-[var(--border-default)] text-[var(--text-muted)] hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)]'
+                          }`}
+                        >
+                          {isOdefDone ? <CheckCircle2 size={15} /> : <Circle size={15} />}
+                        </button>
+                      )}
+                    </div>
+                    <div
+                      className="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: formatMathString(def.definition || def.meaning || '') }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {!isCleanMode && oswaalMnemonic && (
         <div className="p-4 sm:p-5 rounded-2xl bg-purple-500/10 border-2 border-purple-500/30 shadow-xs space-y-1.5">

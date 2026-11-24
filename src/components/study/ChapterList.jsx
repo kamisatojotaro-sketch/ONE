@@ -4,6 +4,7 @@ import { getSubjectSyllabus } from '../../data/ncertSyllabus';
 import PriorityBadge from './PriorityBadge';
 import { getDefaultPriority } from '../../data/priorityData';
 import { getDerivationsByChapter } from '../../data/physicsDerivationsReference';
+import { getBiologyImportantQuestionsByChapter } from '../../data/biologyImportantQuestionsData';
 import PhysicsDerivationsReferencePanel from './PhysicsDerivationsReferencePanel';
 import CustomSelect from '../shared/CustomSelect';
 import { getSectionTopicIds, isTopicCompleted } from '../../utils/studyTopicTicks';
@@ -14,6 +15,7 @@ export default function ChapterList({
   selectedVolume,
   onSelectChapter,
   onDownloadChapterPdf,
+  onOpenCustomPdfModal,
   completedSections = [],
   completedPortionChapters = [],
   getPriority,
@@ -117,8 +119,21 @@ export default function ChapterList({
             {volume.subtitle}
           </h2>
         </div>
-        <div className="text-xs font-sans text-[var(--text-secondary)]">
-          <span className="font-semibold text-[var(--text-primary)]">{volume.chapters.length}</span> Chapters in this volume
+        <div className="flex flex-wrap items-center gap-2.5">
+          {onOpenCustomPdfModal && (
+            <button
+              type="button"
+              onClick={() => onOpenCustomPdfModal()}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold bg-[var(--accent-primary)] text-white hover:bg-[var(--accent-primary-hover)] transition-all cursor-pointer shadow-xs"
+              title="Select specific chapters or subtopics of this subject to download as a custom PDF"
+            >
+              <FileDown size={14} className="shrink-0" />
+              <span>Select Chapters / Subtopics PDF</span>
+            </button>
+          )}
+          <div className="text-xs font-sans text-[var(--text-secondary)]">
+            <span className="font-semibold text-[var(--text-primary)]">{volume.chapters.length}</span> Chapters in this volume
+          </div>
         </div>
       </div>
 
@@ -278,6 +293,11 @@ export default function ChapterList({
                           📐 {getDerivationsByChapter(ch.id).length} Derivations
                         </span>
                       )}
+                      {selectedSubject === 'biology' && getBiologyImportantQuestionsByChapter(ch.id).length > 0 && (
+                        <span className="text-amber-700 dark:text-amber-300 font-mono font-bold text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 border border-amber-500/30">
+                          ★ {getBiologyImportantQuestionsByChapter(ch.id).length} Repeated Qs
+                        </span>
+                      )}
                     </span>
                     <span className="font-mono font-medium text-[var(--accent-primary)]">
                       {stats.percentage}%
@@ -316,6 +336,18 @@ export default function ChapterList({
                       >
                         <Compass size={13} className="shrink-0" />
                         <span className="truncate">Derivations ({getDerivationsByChapter(ch.id).length})</span>
+                      </button>
+                    ) : selectedSubject === 'biology' && getBiologyImportantQuestionsByChapter(ch.id).length > 0 ? (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSelectChapter(ch.id, 'IMPORTANT_QUESTIONS');
+                        }}
+                        className="flex-1 min-w-[135px] flex items-center justify-center gap-1.5 px-2.5 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-amber-600 text-white hover:bg-amber-700 transition-all cursor-pointer shadow-xs"
+                        title={`Open all ${getBiologyImportantQuestionsByChapter(ch.id).length} Important & Repeated Past Board Questions for ${ch.title}`}
+                      >
+                        <Sparkles size={13} className="shrink-0" />
+                        <span className="truncate">Repeated Qs ({getBiologyImportantQuestionsByChapter(ch.id).length})</span>
                       </button>
                     ) : !isCleanMode && (
                       <button

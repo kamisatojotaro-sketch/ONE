@@ -12,7 +12,8 @@ export default function StudyHeader({
   volumeProgress,
   onOpenUniversalSearch,
   onOpenSubjectSearch,
-  onOpenPhysicsImportantQuestions
+  onOpenPhysicsImportantQuestions,
+  onOpenBiologyImportantQuestions
 }) {
   const subject = getSubjectSyllabus(selectedSubject, isCleanMode);
   const timer = useTimer();
@@ -64,6 +65,16 @@ export default function StudyHeader({
                 <span>Imp Qs</span>
               </button>
             )}
+            {selectedSubject === 'biology' && onOpenBiologyImportantQuestions && (
+              <button
+                onClick={() => onOpenBiologyImportantQuestions()}
+                className="px-2.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] text-xs font-medium hover:bg-[var(--bg-surface-hover)] transition-all min-h-[36px] flex items-center gap-1.5 touch-manipulation cursor-pointer"
+                title="Open Biology Important & Repeated Past Board Questions (Ch 9–13)"
+              >
+                <BookOpen size={14} className="text-[var(--accent-primary)]" />
+                <span>Imp Qs (Ch 9–13)</span>
+              </button>
+            )}
             <button
               onClick={() => onOpenSubjectSearch && onOpenSubjectSearch(selectedSubject)}
               className="p-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--accent-primary)] hover:bg-[var(--bg-surface-hover)] transition-all min-w-[36px] min-h-[36px] flex items-center justify-center touch-manipulation cursor-pointer"
@@ -93,6 +104,16 @@ export default function StudyHeader({
             >
               <BookOpen size={14} className="text-[var(--accent-primary)] shrink-0" />
               <span>Important Questions</span>
+            </button>
+          )}
+          {selectedSubject === 'biology' && onOpenBiologyImportantQuestions && (
+            <button
+              onClick={() => onOpenBiologyImportantQuestions()}
+              className="flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-default)] hover:border-[var(--accent-primary)] text-[var(--text-primary)] font-medium text-xs sm:text-sm transition-all hover:shadow-xs cursor-pointer"
+              title="Open Biology Important & Repeated Past Board Questions (Ch 9–13)"
+            >
+              <BookOpen size={14} className="text-[var(--accent-primary)] shrink-0" />
+              <span>Important Questions (Ch 9–13)</span>
             </button>
           )}
 

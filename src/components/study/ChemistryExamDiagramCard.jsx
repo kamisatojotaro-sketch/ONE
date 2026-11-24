@@ -593,64 +593,241 @@ export default function ChemistryExamDiagramCard({
 
       case 'zwitter-peptide-structures':
         return (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {/* Zwitter Ion */}
-            <div className="p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-2">
-              <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)] block">
-                1. Zwitter Ion (Dipolar Ion in Aqueous Solution)
-              </span>
-              <svg viewBox="0 0 360 125" className="w-full h-auto text-[var(--text-primary)]">
-                {/* Neutral Amino Acid */}
-                <text x="75" y="45" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">
-                  R — CH — COOH
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
+            {/* 1. Zwitter Ion (Dipolar Ion in Aqueous Solution) */}
+            <div className="xl:col-span-5 p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-2 flex flex-col justify-between">
+              <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2">
+                <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                  1. Zwitter Ion (Dipolar Ion Formation)
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]">
+                  Aqueous Medium
+                </span>
+              </div>
+              <svg viewBox="0 0 400 220" className="w-full h-auto text-[var(--text-primary)]">
+                {/* Left: Neutral α-Amino Acid */}
+                <text x="95" y="22" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle" textDecoration="underline">
+                  Neutral Amino Acid
                 </text>
-                <line x1="65" y1="52" x2="65" y2="72" stroke="currentColor" strokeWidth="1.5" />
-                <text x="65" y="88" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="middle">
-                  NH₂
-                </text>
+                {/* Top H above Cα */}
+                <text x="88" y="52" fontSize="12" fontWeight="bold" fill="#D4A843" textAnchor="middle">H</text>
+                <line x1="88" y1="57" x2="88" y2="75" stroke="currentColor" strokeWidth="1.6" />
+                {/* Top =O above C */}
+                <text x="132" y="52" fontSize="12" fontWeight="bold" fill="#38BDF8" textAnchor="middle">O</text>
+                <line x1="129" y1="57" x2="129" y2="75" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="135" y1="57" x2="135" y2="75" stroke="currentColor" strokeWidth="1.5" />
+                {/* Main horizontal backbone: H2N — Cα — C — OH */}
+                <text x="42" y="90" fontSize="12.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H₂N</text>
+                <line x1="60" y1="86" x2="76" y2="86" stroke="currentColor" strokeWidth="1.6" />
+                <text x="88" y="90" fontSize="12.5" fontWeight="bold" fill="#F87171" textAnchor="middle">Cα</text>
+                <line x1="101" y1="86" x2="121" y2="86" stroke="currentColor" strokeWidth="1.6" />
+                <text x="132" y="90" fontSize="12.5" fontWeight="bold" fill="#38BDF8" textAnchor="middle">C</text>
+                <line x1="142" y1="86" x2="156" y2="86" stroke="currentColor" strokeWidth="1.6" />
+                <text x="172" y="90" fontSize="12.5" fontWeight="bold" fill="#38BDF8" textAnchor="middle">OH</text>
+                {/* Bottom R group box below Cα */}
+                <line x1="88" y1="96" x2="88" y2="116" stroke="currentColor" strokeWidth="1.6" />
+                <rect x="74" y="118" width="28" height="24" rx="5" fill="var(--bg-elevated)" stroke="var(--accent-primary)" strokeWidth="1.3" />
+                <text x="88" y="135" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">R</text>
 
-                {/* Equilibrium Arrows */}
-                <text x="175" y="55" fontSize="18" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
-                  ⇌
-                </text>
+                {/* Equilibrium Arrow */}
+                <text x="204" y="84" fontSize="10" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">H⁺ shift</text>
+                <text x="204" y="102" fontSize="20" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">⇌</text>
 
-                {/* Zwitter Ion */}
-                <text x="275" y="45" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
-                  R — CH — COO⁻
+                {/* Right: Zwitter Ion (Dipolar Ion) */}
+                <text x="312" y="22" fontSize="11" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle" textDecoration="underline">
+                  Zwitter Ion (Dipolar)
                 </text>
-                <line x1="265" y1="52" x2="265" y2="72" stroke="var(--accent-primary)" strokeWidth="1.5" />
-                <text x="265" y="88" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
-                  ⁺NH₃
+                {/* Top H above Cα */}
+                <text x="305" y="52" fontSize="12" fontWeight="bold" fill="#D4A843" textAnchor="middle">H</text>
+                <line x1="305" y1="57" x2="305" y2="75" stroke="currentColor" strokeWidth="1.6" />
+                {/* Top =O above C */}
+                <text x="348" y="52" fontSize="12" fontWeight="bold" fill="#38BDF8" textAnchor="middle">O</text>
+                <line x1="345" y1="57" x2="345" y2="75" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="351" y1="57" x2="351" y2="75" stroke="currentColor" strokeWidth="1.5" />
+                {/* Main horizontal backbone: +H3N — Cα — C — O- */}
+                <text x="255" y="90" fontSize="12.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">⁺H₃N</text>
+                <line x1="276" y1="86" x2="292" y2="86" stroke="currentColor" strokeWidth="1.6" />
+                <text x="305" y="90" fontSize="12.5" fontWeight="bold" fill="#F87171" textAnchor="middle">Cα</text>
+                <line x1="318" y1="86" x2="337" y2="86" stroke="currentColor" strokeWidth="1.6" />
+                <text x="348" y="90" fontSize="12.5" fontWeight="bold" fill="#38BDF8" textAnchor="middle">C</text>
+                <line x1="358" y1="86" x2="371" y2="86" stroke="currentColor" strokeWidth="1.6" />
+                <text x="385" y="90" fontSize="12.5" fontWeight="bold" fill="#F87171" textAnchor="middle">O⁻</text>
+                {/* Bottom R group box below Cα */}
+                <line x1="305" y1="96" x2="305" y2="116" stroke="currentColor" strokeWidth="1.6" />
+                <rect x="291" y="118" width="28" height="24" rx="5" fill="var(--bg-elevated)" stroke="var(--accent-primary)" strokeWidth="1.3" />
+                <text x="305" y="135" fontSize="12" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">R</text>
+
+                <text x="200" y="185" fontSize="11" fontWeight="bold" fill="var(--text-secondary)" textAnchor="middle">
+                  –COOH loses H⁺ (→ –COO⁻) and –NH₂ accepts H⁺ (→ –NH₃⁺)
                 </text>
-                <text x="275" y="110" fontSize="10" fill="var(--text-muted)" textAnchor="middle">
-                  Zwitter Ion (Dipolar Ion)
+                <text x="200" y="203" fontSize="10" fill="var(--text-muted)" textAnchor="middle">
+                  Amphoteric &amp; electrically neutral dipolar ion at isoelectric point
                 </text>
               </svg>
             </div>
 
-            {/* Peptide Bond / Linkage */}
-            <div className="p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-2">
-              <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)] block">
-                2. Peptide Bond / Linkage (–CO–NH–) Formation
-              </span>
-              <svg viewBox="0 0 380 125" className="w-full h-auto text-[var(--text-primary)]">
-                <text x="190" y="30" fontSize="11" fontWeight="bold" fill="currentColor" textAnchor="middle">
-                  H₂N–CH₂–CO[OH  +  H]NH–CH₂–COOH   ──(-H₂O)──►
+            {/* 2. Formation of Peptide Bond (Matches User Reference Image) */}
+            <div className="xl:col-span-7 p-4 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-2">
+              <div className="flex items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-2">
+                <span className="font-serif text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                  2. Formation of Peptide Bond / Peptide Linkage (–CO–NH–)
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--accent-primary)] border border-[var(--border-subtle)]">
+                  Condensation (–H₂O)
+                </span>
+              </div>
+
+              <svg viewBox="0 0 540 330" className="w-full h-auto text-[var(--text-primary)]">
+                {/* ==================== TOP ROW: AMINO ACID 1 + AMINO ACID 2 ==================== */}
+                <text x="125" y="22" fontSize="13" fontWeight="bold" fill="currentColor" textAnchor="middle" textDecoration="underline">
+                  Amino Acid 1
                 </text>
-                {/* Boxed Peptide Linkage */}
-                <text x="95" y="75" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="end">
-                  H₂N — CH₂ —
+                <text x="256" y="25" fontSize="20" fontWeight="bold" fill="currentColor" textAnchor="middle">
+                  +
                 </text>
-                <rect x="102" y="57" width="88" height="26" rx="5" fill="var(--bg-elevated)" stroke="var(--accent-primary)" strokeWidth="1.8" />
-                <text x="146" y="75" fontSize="12.5" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
-                  CO — NH
+                <text x="395" y="22" fontSize="13" fontWeight="bold" fill="currentColor" textAnchor="middle" textDecoration="underline">
+                  Amino Acid 2
                 </text>
-                <text x="198" y="75" fontSize="12" fontWeight="bold" fill="currentColor" textAnchor="start">
-                  — CH₂ — COOH
+
+                {/* --- Amino Acid 1 --- */}
+                {/* Top H above Cα1 (x=108) and =O above C1 (x=166) */}
+                <text x="108" y="48" fontSize="13" fontWeight="bold" fill="#D4A843" textAnchor="middle">H</text>
+                <line x1="108" y1="53" x2="108" y2="73" stroke="currentColor" strokeWidth="1.8" />
+
+                <text x="166" y="48" fontSize="13" fontWeight="bold" fill="#38BDF8" textAnchor="middle">O</text>
+                <line x1="163" y1="53" x2="163" y2="73" stroke="currentColor" strokeWidth="1.7" />
+                <line x1="169" y1="53" x2="169" y2="73" stroke="currentColor" strokeWidth="1.7" />
+
+                {/* Backbone: H2N — Cα — C — [OH */}
+                <text x="50" y="90" fontSize="13.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H₂N</text>
+                <line x1="70" y1="85" x2="93" y2="85" stroke="currentColor" strokeWidth="1.8" />
+                <text x="108" y="90" fontSize="13.5" fontWeight="bold" fill="#F87171" textAnchor="middle">Cα</text>
+                <line x1="123" y1="85" x2="153" y2="85" stroke="currentColor" strokeWidth="1.8" />
+                <text x="166" y="90" fontSize="13.5" fontWeight="bold" fill="#38BDF8" textAnchor="middle">C</text>
+                <line x1="178" y1="85" x2="202" y2="85" stroke="currentColor" strokeWidth="1.8" />
+
+                {/* Bottom H box below Cα1 */}
+                <line x1="108" y1="96" x2="108" y2="114" stroke="currentColor" strokeWidth="1.8" />
+                <rect x="94" y="116" width="28" height="24" rx="5" fill="#4ADE80" fillOpacity="0.16" stroke="#4ADE80" strokeWidth="1.3" />
+                <text x="108" y="133" fontSize="13" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H</text>
+
+                {/* Dashed Highlight Capsule enclosing OH (from AA1) and H (from AA2) */}
+                <rect
+                  x="192"
+                  y="68"
+                  width="124"
+                  height="34"
+                  rx="17"
+                  fill="#FACC15"
+                  fillOpacity="0.18"
+                  stroke="#F87171"
+                  strokeWidth="1.6"
+                  strokeDasharray="4,3"
+                />
+                <text x="220" y="90" fontSize="13.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">OH</text>
+                <text x="292" y="90" fontSize="13.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H</text>
+
+                {/* --- Amino Acid 2 --- */}
+                <line x1="304" y1="85" x2="326" y2="85" stroke="currentColor" strokeWidth="1.8" />
+                <text x="338" y="90" fontSize="13.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">N</text>
+                {/* Bottom H below N */}
+                <line x1="338" y1="96" x2="338" y2="114" stroke="currentColor" strokeWidth="1.8" />
+                <text x="338" y="129" fontSize="13" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H</text>
+
+                <line x1="350" y1="85" x2="375" y2="85" stroke="currentColor" strokeWidth="1.8" />
+                <text x="390" y="90" fontSize="13.5" fontWeight="bold" fill="#F87171" textAnchor="middle">Cα</text>
+
+                {/* Top H above Cα2 */}
+                <text x="390" y="48" fontSize="13" fontWeight="bold" fill="#D4A843" textAnchor="middle">H</text>
+                <line x1="390" y1="53" x2="390" y2="73" stroke="currentColor" strokeWidth="1.8" />
+
+                {/* Bottom H box below Cα2 */}
+                <line x1="390" y1="96" x2="390" y2="114" stroke="currentColor" strokeWidth="1.8" />
+                <rect x="376" y="116" width="28" height="24" rx="5" fill="#4ADE80" fillOpacity="0.16" stroke="#4ADE80" strokeWidth="1.3" />
+                <text x="390" y="133" fontSize="13" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H</text>
+
+                <line x1="406" y1="85" x2="432" y2="85" stroke="currentColor" strokeWidth="1.8" />
+                <text x="462" y="90" fontSize="13.5" fontWeight="bold" fill="#38BDF8" textAnchor="middle">COOH</text>
+
+                {/* ==================== MIDDLE: REACTION ARROW & -H2O ==================== */}
+                {/* Main vertical downward arrow */}
+                <line x1="254" y1="112" x2="254" y2="202" stroke="#60A5FA" strokeWidth="2.4" />
+                <polygon points="254,210 248,199 260,199" fill="#60A5FA" />
+
+                {/* Curved side arrow branching off to H2O */}
+                <path d="M 254 126 Q 260 165 296 165" fill="none" stroke="#60A5FA" strokeWidth="2.2" />
+                <polygon points="304,165 294,160 294,170" fill="#60A5FA" />
+
+                {/* Dashed capsule for eliminated H2O */}
+                <rect
+                  x="312"
+                  y="149"
+                  width="64"
+                  height="32"
+                  rx="16"
+                  fill="#FACC15"
+                  fillOpacity="0.18"
+                  stroke="#F87171"
+                  strokeWidth="1.6"
+                  strokeDasharray="4,3"
+                />
+                <text x="344" y="170" fontSize="13.5" fontWeight="bold" fill="#60A5FA" textAnchor="middle">H₂O</text>
+
+                {/* ==================== BOTTOM ROW: DIPEPTIDE PRODUCT ==================== */}
+                {/* Top H above Cα1 (x=150), =O above C (x=208), H above Cα2 (x=320) */}
+                <text x="150" y="218" fontSize="13" fontWeight="bold" fill="#D4A843" textAnchor="middle">H</text>
+                <line x1="150" y1="223" x2="150" y2="243" stroke="currentColor" strokeWidth="1.8" />
+
+                <text x="208" y="218" fontSize="13" fontWeight="bold" fill="#38BDF8" textAnchor="middle">O</text>
+                <line x1="205" y1="223" x2="205" y2="243" stroke="currentColor" strokeWidth="1.7" />
+                <line x1="211" y1="223" x2="211" y2="243" stroke="currentColor" strokeWidth="1.7" />
+
+                <text x="320" y="218" fontSize="13" fontWeight="bold" fill="#D4A843" textAnchor="middle">H</text>
+                <line x1="320" y1="223" x2="320" y2="243" stroke="currentColor" strokeWidth="1.8" />
+
+                {/* Main Dipeptide Backbone: H2N — Cα — C ===[Peptide Bond]=== N — Cα — COOH */}
+                <text x="92" y="260" fontSize="13.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H₂N</text>
+                <line x1="112" y1="255" x2="135" y2="255" stroke="currentColor" strokeWidth="1.8" />
+                <text x="150" y="260" fontSize="13.5" fontWeight="bold" fill="#F87171" textAnchor="middle">Cα</text>
+                <line x1="165" y1="255" x2="195" y2="255" stroke="currentColor" strokeWidth="1.8" />
+                <text x="208" y="260" fontSize="13.5" fontWeight="bold" fill="#38BDF8" textAnchor="middle">C</text>
+
+                {/* Highlighted New Peptide C—N Bond */}
+                <line x1="220" y1="255" x2="256" y2="255" stroke="#F59E0B" strokeWidth="4" strokeLinecap="round" />
+
+                <text x="268" y="260" fontSize="13.5" fontWeight="bold" fill="#4ADE80" textAnchor="middle">N</text>
+                <line x1="280" y1="255" x2="305" y2="255" stroke="currentColor" strokeWidth="1.8" />
+                <text x="320" y="260" fontSize="13.5" fontWeight="bold" fill="#F87171" textAnchor="middle">Cα</text>
+                <line x1="336" y1="255" x2="362" y2="255" stroke="currentColor" strokeWidth="1.8" />
+                <text x="392" y="260" fontSize="13.5" fontWeight="bold" fill="#38BDF8" textAnchor="middle">COOH</text>
+
+                {/* Dashed red pointer from Peptide Bond C—N up-right to "Peptide Bond" label */}
+                <path
+                  d="M 238 246 L 278 202 L 408 202"
+                  fill="none"
+                  stroke="#F87171"
+                  strokeWidth="1.8"
+                  strokeDasharray="5,4"
+                />
+                <polygon points="415,202 406,197 406,207" fill="#F87171" />
+                <text x="422" y="206" fontSize="13.5" fontStyle="italic" fontWeight="bold" fill="currentColor" fontFamily="serif">
+                  Peptide Bond
                 </text>
-                <line x1="146" y1="84" x2="146" y2="98" stroke="var(--accent-primary)" strokeWidth="1.4" />
-                <text x="146" y="112" fontSize="10.5" fontWeight="bold" fill="var(--accent-primary)" textAnchor="middle">
-                  Peptide Bond / Peptide Linkage (Glycylglycine)
+
+                {/* Bottom H boxes and N—H */}
+                <line x1="150" y1="266" x2="150" y2="284" stroke="currentColor" strokeWidth="1.8" />
+                <rect x="136" y="286" width="28" height="24" rx="5" fill="#4ADE80" fillOpacity="0.16" stroke="#4ADE80" strokeWidth="1.3" />
+                <text x="150" y="303" fontSize="13" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H</text>
+
+                <line x1="268" y1="266" x2="268" y2="284" stroke="currentColor" strokeWidth="1.8" />
+                <text x="268" y="299" fontSize="13" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H</text>
+
+                <line x1="320" y1="266" x2="320" y2="284" stroke="currentColor" strokeWidth="1.8" />
+                <rect x="306" y="286" width="28" height="24" rx="5" fill="#4ADE80" fillOpacity="0.16" stroke="#4ADE80" strokeWidth="1.3" />
+                <text x="320" y="303" fontSize="13" fontWeight="bold" fill="#4ADE80" textAnchor="middle">H</text>
+
+                <text x="256" y="325" fontSize="13" fontWeight="bold" fill="currentColor" textAnchor="middle" fontFamily="serif">
+                  Formation of Peptide Bond (Glycylglycine Dipeptide)
                 </text>
               </svg>
             </div>
@@ -665,16 +842,18 @@ export default function ChemistryExamDiagramCard({
               <span className="font-serif text-xs font-bold text-[var(--text-primary)] block">
                 1. Zero Order: [R] vs Time (t)
               </span>
-              <svg viewBox="0 0 220 165" className="w-full h-auto text-[var(--text-primary)]">
-                <line x1="35" y1="20" x2="35" y2="135" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="35" y1="135" x2="195" y2="135" stroke="currentColor" strokeWidth="1.5" />
+              <svg viewBox="0 0 250 175" className="w-full h-auto text-[var(--text-primary)]">
+                <line x1="46" y1="18" x2="46" y2="140" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="46" y1="140" x2="230" y2="140" stroke="currentColor" strokeWidth="1.5" />
                 {/* Straight line with negative slope */}
-                <line x1="35" y1="38" x2="175" y2="122" stroke="var(--accent-primary)" strokeWidth="2.2" />
-                <circle cx="35" cy="38" r="3" fill="var(--accent-primary)" />
-                <text x="42" y="34" fontSize="10" fontWeight="bold" fill="var(--accent-primary)">[R]₀ (Intercept)</text>
-                <text x="125" y="72" fontSize="10" fontWeight="bold" fill="currentColor">Slope = -k</text>
-                <text x="18" y="80" fontSize="10" fill="currentColor" transform="rotate(-90 18 80)" textAnchor="middle">[R]</text>
-                <text x="115" y="152" fontSize="10" fill="currentColor" textAnchor="middle">Time (t) →</text>
+                <line x1="46" y1="36" x2="205" y2="126" stroke="var(--accent-primary)" strokeWidth="2.2" />
+                <circle cx="46" cy="36" r="3" fill="var(--accent-primary)" />
+                <text x="54" y="33" fontSize="10" fontWeight="bold" fill="var(--accent-primary)">[R]₀ (Intercept)</text>
+                <text x="135" y="72" fontSize="10" fontWeight="bold" fill="currentColor">Slope = -k</text>
+                <text x="16" y="80" fontSize="9.5" fontWeight="bold" fill="currentColor" transform="rotate(-90 16 80)" textAnchor="middle">
+                  Concentration [R] ↑
+                </text>
+                <text x="138" y="160" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">Time (t) →</text>
               </svg>
             </div>
 
@@ -683,46 +862,52 @@ export default function ChemistryExamDiagramCard({
               <span className="font-serif text-xs font-bold text-[var(--text-primary)] block">
                 2. First Order: log[R] (or ln[R]) vs t
               </span>
-              <svg viewBox="0 0 220 165" className="w-full h-auto text-[var(--text-primary)]">
-                <line x1="35" y1="20" x2="35" y2="135" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="35" y1="135" x2="195" y2="135" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="35" y1="38" x2="175" y2="122" stroke="var(--accent-primary)" strokeWidth="2.2" />
-                <circle cx="35" cy="38" r="3" fill="var(--accent-primary)" />
-                <text x="42" y="34" fontSize="10" fontWeight="bold" fill="var(--accent-primary)">log[R]₀ (or ln[R]₀)</text>
-                <text x="130" y="72" fontSize="9.5" fontWeight="bold" fill="currentColor">Slope = -k / 2.303</text>
-                <text x="130" y="84" fontSize="8.5" fill="var(--text-muted)">(or -k for ln[R])</text>
-                <text x="18" y="80" fontSize="10" fill="currentColor" transform="rotate(-90 18 80)" textAnchor="middle">log[R]</text>
-                <text x="115" y="152" fontSize="10" fill="currentColor" textAnchor="middle">Time (t) →</text>
+              <svg viewBox="0 0 250 175" className="w-full h-auto text-[var(--text-primary)]">
+                <line x1="46" y1="18" x2="46" y2="140" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="46" y1="140" x2="230" y2="140" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="46" y1="36" x2="205" y2="126" stroke="var(--accent-primary)" strokeWidth="2.2" />
+                <circle cx="46" cy="36" r="3" fill="var(--accent-primary)" />
+                <text x="54" y="33" fontSize="10" fontWeight="bold" fill="var(--accent-primary)">log[R]₀ (or ln[R]₀)</text>
+                <text x="135" y="70" fontSize="9.5" fontWeight="bold" fill="currentColor">Slope = -k / 2.303</text>
+                <text x="135" y="83" fontSize="8.5" fill="var(--text-muted)">(or -k for ln[R])</text>
+                <text x="16" y="80" fontSize="9.5" fontWeight="bold" fill="currentColor" transform="rotate(-90 16 80)" textAnchor="middle">
+                  log [R] or ln [R] ↑
+                </text>
+                <text x="138" y="160" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">Time (t) →</text>
               </svg>
             </div>
 
-            {/* 3. Activation Energy Profile (Handwritten 1.38.55 PM) */}
+            {/* 3. Activation Energy Profile (with Y-axis Potential Energy title & unclipped ΔH) */}
             <div className="p-3.5 rounded-xl bg-[var(--bg-base)] border border-[var(--border-subtle)] space-y-1.5">
               <span className="font-serif text-xs font-bold text-[var(--text-primary)] block">
                 3. Activation Energy (Eₐ) &amp; ΔH Profile
               </span>
-              <svg viewBox="0 0 220 165" className="w-full h-auto text-[var(--text-primary)]">
-                <line x1="35" y1="18" x2="35" y2="135" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="35" y1="135" x2="200" y2="135" stroke="currentColor" strokeWidth="1.5" />
-                {/* Energy labels 100, 200, 300 */}
-                <text x="31" y="112" fontSize="8.5" fill="var(--text-muted)" textAnchor="end">100</text>
-                <text x="31" y="82" fontSize="8.5" fill="var(--text-muted)" textAnchor="end">200</text>
-                <text x="31" y="38" fontSize="8.5" fill="var(--text-muted)" textAnchor="end">300</text>
+              <svg viewBox="0 0 265 175" className="w-full h-auto text-[var(--text-primary)]">
+                {/* Rotated Y-axis label */}
+                <text x="14" y="80" fontSize="9.5" fontWeight="bold" fill="currentColor" transform="rotate(-90 14 80)" textAnchor="middle">
+                  Potential Energy (kJ/mol) ↑
+                </text>
+                <line x1="52" y1="18" x2="52" y2="140" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="52" y1="140" x2="252" y2="140" stroke="currentColor" strokeWidth="1.5" />
+                {/* Energy labels 100, 200, 300 on Y-axis */}
+                <text x="47" y="114" fontSize="8.5" fontWeight="bold" fill="var(--text-secondary)" textAnchor="end">100</text>
+                <text x="47" y="84" fontSize="8.5" fontWeight="bold" fill="var(--text-secondary)" textAnchor="end">200</text>
+                <text x="47" y="39" fontSize="8.5" fontWeight="bold" fill="var(--text-secondary)" textAnchor="end">300</text>
                 {/* Dashed baselines */}
-                <line x1="35" y1="108" x2="185" y2="108" stroke="var(--text-muted)" strokeWidth="0.9" strokeDasharray="3,2" />
-                <line x1="35" y1="78" x2="185" y2="78" stroke="var(--text-muted)" strokeWidth="0.9" strokeDasharray="3,2" />
-                <line x1="35" y1="35" x2="145" y2="35" stroke="var(--text-muted)" strokeWidth="0.9" strokeDasharray="3,2" />
+                <line x1="52" y1="110" x2="215" y2="110" stroke="var(--text-muted)" strokeWidth="0.9" strokeDasharray="3,2" />
+                <line x1="52" y1="80" x2="215" y2="80" stroke="var(--text-muted)" strokeWidth="0.9" strokeDasharray="3,2" />
+                <line x1="52" y1="36" x2="165" y2="36" stroke="var(--text-muted)" strokeWidth="0.9" strokeDasharray="3,2" />
                 {/* Reaction Profile Curve: R(100) -> Peak(300) -> P(200) */}
-                <path d="M 40 108 L 65 108 Q 105 -25 145 78 L 185 78" fill="none" stroke="var(--accent-primary)" strokeWidth="2.2" />
-                <text x="52" y="103" fontSize="10" fontWeight="bold" fill="currentColor">R</text>
-                <text x="175" y="73" fontSize="10" fontWeight="bold" fill="currentColor">P</text>
-                {/* Ea arrow (100 to 300) */}
-                <line x1="105" y1="108" x2="105" y2="35" stroke="var(--accent-primary)" strokeWidth="1.3" />
-                <text x="122" y="65" fontSize="9.5" fontWeight="bold" fill="var(--accent-primary)">Eₐ=200</text>
-                {/* ΔH arrow (100 to 200) */}
-                <line x1="155" y1="108" x2="155" y2="78" stroke="currentColor" strokeWidth="1.3" />
-                <text x="180" y="96" fontSize="9" fontWeight="bold" fill="currentColor">ΔH=+100</text>
-                <text x="115" y="152" fontSize="10" fill="currentColor" textAnchor="middle">Progress of Reaction →</text>
+                <path d="M 56 110 L 82 110 Q 122 -24 162 80 L 205 80" fill="none" stroke="var(--accent-primary)" strokeWidth="2.3" />
+                <text x="68" y="104" fontSize="10" fontWeight="bold" fill="currentColor">R</text>
+                <text x="192" y="74" fontSize="10" fontWeight="bold" fill="currentColor">P</text>
+                {/* Ea vertical double arrow (100 to 300) */}
+                <line x1="122" y1="110" x2="122" y2="36" stroke="var(--accent-primary)" strokeWidth="1.4" />
+                <text x="127" y="66" fontSize="9.5" fontWeight="bold" fill="var(--accent-primary)">Eₐ = 200</text>
+                {/* ΔH vertical line (100 to 200) */}
+                <line x1="175" y1="110" x2="175" y2="80" stroke="currentColor" strokeWidth="1.4" />
+                <text x="180" y="99" fontSize="9.5" fontWeight="bold" fill="currentColor">ΔH = +100</text>
+                <text x="152" y="160" fontSize="10" fontWeight="bold" fill="currentColor" textAnchor="middle">Progress of Reaction →</text>
               </svg>
             </div>
           </div>
